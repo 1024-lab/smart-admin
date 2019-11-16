@@ -1,0 +1,43 @@
+{
+  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+  "jetbrainsKeymap.promptV3Features": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.formatOnPaste": true,
+  "debug.allowBreakpointsEverywhere": true,
+  "files.autoSave": "afterDelay",
+  "workbench.colorTheme": "One Dark Pro",
+  "workbench.iconTheme": "vscode-icons",
+  "vetur.validation.template": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "workbench.startupEditor": "newUntitledFile",
+  //"vetur.format.defaultFormatter.html": "js-beautify-html",
+  //"vetur.format.defaultFormatter.js": "vscode-typescript", //让vue中的js按编辑器自带的ts格式进行格式化
+  "vetur.format.defaultFormatterOptions": {
+    // "js-beautify-html": {
+    //     // force|force-aligned | force-expand-multiline
+    //     "wrap_line_length": 100,
+    //     "wrap_attributes": "auto",
+    //     "end_with_newline": false
+    //     //"wrap_attributes": "auto"
+    // },
+    "prettyhtml": {
+      "printWidth": 100,
+      "singleQuote": false,
+      "wrapAttributes": false,
+      "sortAttributes": true
+    },
+    "prettier": {
+      "semi": true,
+      "singleQuote": true
+    }
+  },
+  "search.location": "panel",
+}

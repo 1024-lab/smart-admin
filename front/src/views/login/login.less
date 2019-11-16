@@ -1,0 +1,128 @@
+.center {
+  text-align: center;
+}
+
+.login {
+  font-family: Arial, "PingFang SC", "Microsoft YaHei";
+  width: 100%;
+  height: 100%;
+  background: url(../../assets/images/login-bg.jpg) no-repeat fixed;
+  background-size: cover;
+
+  .content {
+    width: 424px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -56%)
+  }
+  .ivu-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  .form-con {
+    margin: 32px 0;
+    width: 424px;
+    background: #fff;
+    padding: 32px 32px;
+    border-radius: 0 8px 8px 0;
+    .ivu-input {
+      border: 1px solid #E8E8EE;
+      border-radius: 4px;
+      font-size: 16px;
+      color: #525252;
+      padding: 0 20px;
+      &:focus {
+        border: 1px solid #0097F6;
+        box-shadow: none;
+      }
+    }
+    .ivu-form-item-error-tip {
+      height: 30px;
+      line-height: 30px;
+      padding: 0;
+      color: #f66;
+      top:90%;
+    }
+    .ivu-form-item {
+      margin-bottom: 22px;
+    }
+    .remember {
+      margin: -10px 0 10px;
+    }
+    .ivu-input,
+    .ivu-btn {
+      height: 48px;
+    }
+    .ivu-btn {
+      font-size: 16px;
+    }
+    .ivu-input-group-prepend {
+      padding: 4px 15px;
+    }
+    .code-input {
+      width: 172px;
+    }
+    .codeUrl {
+      height: 80%;
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      right: 24px;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+  }
+  .login-tip {
+    font-size: 10px;
+    text-align: center;
+    color: #c3c3c3;
+  }
+  .footerDesc {
+    font-family: "MicrosoftYaHei";
+    color: #A6A6A8;
+    font-size: 14px;
+  }
+  .otherWay {
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    .inline {
+      display: inline-block;
+    }
+    .align {
+      vertical-align: middle;
+    }
+    .marginLeft {
+      margin-left: 20px;
+      float:right;
+    }
+  }
+  .remember {
+    font-size: 14px;
+  }
+}
+.draw {
+  position: fixed;
+  width: 1px;
+  z-index: 99999;
+  line-height: 1px;
+  pointer-events: none;
+}
+
+@keyframes floatOne {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3D(0, -20px, 0) scale(5) rotate(45deg);
+  }
+}

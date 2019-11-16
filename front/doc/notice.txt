@@ -1,0 +1,2 @@
+1 login-form.vue 去掉登录帐号提示
+2 login-form.vue 修改默认登录绑定帐号

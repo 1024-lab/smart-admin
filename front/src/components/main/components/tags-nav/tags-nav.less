@@ -1,0 +1,136 @@
+.no-select{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.size{
+  height: 100%;
+}
+.tags-nav{
+  position: relative;
+  margin:0 auto;
+  // border-top: 1px solid #F0F0F0;
+  // border-bottom: 1px solid #F0F0F0;
+  background: #f4f6f8;
+  padding:0 20px;
+
+  .no-select;
+  .size;
+  .close-con{
+    position: absolute;
+    right: 0;
+    top: 5px;
+    height: 30px;
+    width: 42px;
+    background: #f3f5f7;
+    text-align: center;
+    z-index: 10;
+    margin-top:5px;
+    
+    border-top: 1px solid #F5F7FC;
+    border-bottom: 1px solid #F5F7FC;
+    i{
+      color:#666666;
+    }
+    button{
+      margin-top:3px;
+     
+    }
+  }
+  .btn-con{
+    margin-top:10px;
+    position: absolute;
+    top: 0px;
+    height: 30px;
+    line-height: 30px;
+    // padding:0 10px;
+     background: #f3f5f7;
+    z-index: 10;
+
+    button{
+      position: relative;
+      top:-1px;
+      line-height: 14px;
+      text-align: center;
+      color:#666666;
+      
+    }
+    &.left-btn{
+      left: 0px;
+      border: 1px solid #F5F7FC;
+    }
+    &.right-btn{
+      right: 42px;
+      border: 1px solid #F5F7FC;
+    }
+  }
+  .scroll-outer{
+    position: absolute;
+    left: 52px;
+    right: 61px;
+    top: 0;
+    bottom: 0;
+    padding:10px 0;
+    .scroll-body{
+      display: inline-block;
+      position: absolute;
+      box-shadow: border-box;
+      overflow: visible;
+      white-space: nowrap;
+      transition: left .3s ease;
+      .ivu-tag{
+        height:34px;
+        margin:0;
+      }
+      .ivu-tag{
+        // min-width:10px;
+        height:30px;
+        line-height: 30px;
+        border-radius: 3px;
+        padding:0 10px;
+        background: #fff!important;
+        border:none;
+        text-align: center;
+        color:#1C2B36;
+        font-size: 14px;
+        margin:0 5px;
+        span{
+          color:#1C2B36!important;
+          padding:0 5px;
+        }
+        i{
+          color:#1C2B36!important;
+          font-size: 4px;
+        }
+      }
+      .ivu-tag-primary{
+        transition: background .2s ease;
+        background: #2D8CF0!important;
+        span,i{
+          color:#fff!important;
+        }
+      }
+    }
+  }
+  .contextmenu {
+    position: absolute;
+    margin: 0;
+    padding: 5px 0;
+    background: #fff;
+    z-index: 1000;
+    list-style-type: none;
+    border-radius: 3px;
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .1);
+    li {
+      margin: 0;
+      padding: 5px 15px;
+      cursor: pointer;
+      &:hover {
+        background: #eee;
+      }
+    }
+  }
+}
