@@ -1283,7 +1283,7 @@ INSERT INTO `t_system_config` (`id`, `config_name`, `config_key`, `config_value`
 	(1, '超级管理员', 'employee_superman', '12,13,1', 'employee', 1, '123r8566456', '2019-11-14 16:40:48', '2018-08-18 16:28:03'),
 	(13, '本地上传URL前缀', 'local_upload_url_prefix', 'http://172.16.0.145/smartAdmin/file/', 'upload', 1, '', '2019-09-04 16:23:49', '2019-04-26 17:06:53'),
 	(14, '阿里云上传配置', 'ali_oss', '{"accessKeyId":"","accessKeySecret":"","bucketName":"sit","endpoint":"http://oss-cn-beijing.aliyuncs.com"}', 'upload', 1, 'eefwfwfds', '2019-11-16 18:04:30', '2019-05-11 18:00:06'),
-	(15, '邮件发配置', 'email_config', '{"password":"wy656112","smtpHost":"smtp.163.com","username":"simajq@163.com"}', 'email', 1, NULL, '2019-09-04 16:42:17', '2019-05-13 16:57:48'),
+	(15, '邮件发配置', 'email_config', '{"password":"smartadmin","smtpHost":"smtp.163.com","username":"smartadmin1024@163.com"}', 'email', 1, NULL, '2019-09-04 16:42:17', '2019-05-13 16:57:48'),
 	(16, '七牛云上传配置', 'qi_niu_oss', '{"accessKeyId":"rX7HgY1ZLpUD25JrA-uwMM_jj-","accessKeySecret":"","bucketName":"sun-smart-admin","endpoint":"http://puvpyay08.bkt.clouddn.com"}', 'upload', 1, NULL, '2019-11-16 18:04:42', '2019-07-19 16:05:56'),
 	(17, 'test', 'ww_1', 'ewr', '3', 1, 'testoo', '2019-11-08 09:43:36', '2019-11-08 09:27:19'),
 	(18, '4234', '42342', '423423', '23423', 1, '423423111111111111111111111111111111111111423423111111111111111111111111111111111111423423111111111111111111111111111111111111423423111111111111111111111111111111111111423423111111111111111111111111111111111111', '2019-11-14 14:58:39', '2019-11-14 11:22:49'),
