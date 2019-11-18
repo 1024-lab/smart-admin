@@ -90,6 +90,10 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
 
 ![](http://cdn.1024lab.net/img/smart-admin/1024lab-wechat.png)
 
+SmartAdmin 官方微信群
+
+![](http://cdn.1024lab.net/img/smart-admin/smart-admin-wechat-group-v1.png)
+
 SmartAdmin 官方QQ群：914442584
 
 ![](http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png)
