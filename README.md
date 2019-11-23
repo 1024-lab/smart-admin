@@ -1,22 +1,17 @@
 #### 简介
-SmartAdmin由河南·洛阳 [1024创新实验室](https://www.1024lab.net/) （钢圈网旗下）团队研发的一套互联网企业级的通用型中后台解决方案！ 使用最前沿的前后台技术栈 SpringBoot 和 Vue，开发出的一套简洁、易用的中后台系统，为广大开发者们节省时间！
+SmartAdmin由河南·洛阳 [1024创新实验室](https://www.1024lab.net/)团队研发的一套互联网企业级的通用型中后台解决方案！使用最前沿的前后台技术栈SpringBoot和Vue，前后端分离，<font color="#DC143C">我们开源一套漂亮的代码和一套整洁的代码规范</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，热爱生活。SmartAdmin 让你从认识到忘不了，绝对是你最想要的！
 
-我们希望用一套漂亮优雅的代码和一套整洁高效的代码规范，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！ 同时对我们而言，这不仅是一套系统，也是我们团队的一次自我审视与成长。身为开发者，我们希望在一次次的披荆斩棘之后，能收获和留下些什么，这正是我们存在的意义！
-
-保持谦逊，不断学习，热爱代码，热爱生活 !
-
-#### 在线预览
-
-在线预览： [http://smartadmin.1024lab.net](http://smartadmin.1024lab.net)
-
-演示用户1：demo 密码：123456
-
-演示用户2：demo2 密码：123456
+#### 开源地址   (*欢迎 Star ~ ~  ╰(￣▽￣)╭*)
+github: [https://github.com/1024-lab/smart-admin](https://github.com/1024-lab/smart-admin)  
+gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-admin)  
+在线预览： [http://preview.smartadmin.1024lab.net](http://preview.smartadmin.1024lab.net) 
 
 #### 疑惑
 有人问：又是个“轮子”？ 轮子靠谱吗？为什么要选择你这个轮子？
 
-**1024Lab**回答：它不是“轮子”，而是一套代码，一套规范，一套开发理念，一套思想。
+<font color="#DC143C">**1024Lab**回答：
+它不是“轮子”，目的不是为了重复造轮子！ 我们开源的是一套 “漂亮的代码” 和 “代码规范”。
+</font>
 
 #### 理念与思想
 - 我们分享的不是代码，不是徒劳无功的堆砌功能，而是你必须的基础功能，比如Vue前端权限、心跳、动态Reload、Keepalived标签页等等，可能还有一些正是你当前项目中缺失的功能。
@@ -86,19 +81,16 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
 #### 联系我们
 [1024创新实验室](https://www.1024lab.net/)
 
-1024Lab官方微信号：
-
-![](http://cdn.1024lab.net/img/smart-admin/1024lab-wechat.png)
+1024Lab官方微信号（**加我拉你入群！**）：
+![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat.jpg)
 
 SmartAdmin 官方微信群
+![](http://cdn.1024lab.net/img/smart-admin/smart-admin-wechat-group-v2.jpg)
 
-![](http://cdn.1024lab.net/img/smart-admin/smart-admin-wechat-group-v1.png)
 
 SmartAdmin 官方QQ群：914442584
-
 ![](http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png)
 
 官方捐助（微信）
-
 ![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat-money.jpg)
 
