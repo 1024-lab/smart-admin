@@ -8,6 +8,7 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 
 #### 疑惑
 有人问：又是个“轮子”？ 轮子靠谱吗？为什么要选择你这个轮子？
+
 <font color="#DC143C">**1024Lab**回答：
 它不是“轮子”，目的不是为了重复造轮子！ 我们开源的是一套 “漂亮的代码” 和 “代码规范”。
 </font>
