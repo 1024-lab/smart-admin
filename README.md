@@ -4,11 +4,11 @@ SmartAdmin由河南·洛阳 [1024创新实验室](https://www.1024lab.net/)团�
 #### 开源地址   (*欢迎 Star ~ ~  ╰(￣▽￣)╭*)
 github: [https://github.com/1024-lab/smart-admin](https://github.com/1024-lab/smart-admin)  
 gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-admin)  
-在线预览： [http://smartadmin.1024lab.net](http://smartadmin.1024lab.net) 
+在线预览： [http://preview.smartadmin.1024lab.net](http://preview.smartadmin.1024lab.net) 
+快速启动：[http://smartadmin.1024lab.net/doc/1/68](http://smartadmin.1024lab.net/doc/1/68)
 
 #### 疑惑
 有人问：又是个“轮子”？ 轮子靠谱吗？为什么要选择你这个轮子？
-
 <font color="#DC143C">**1024Lab**回答：
 它不是“轮子”，目的不是为了重复造轮子！ 我们开源的是一套 “漂亮的代码” 和 “代码规范”。
 </font>
@@ -82,18 +82,12 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
 [1024创新实验室](https://www.1024lab.net/)
 
 1024Lab官方微信号（**加我拉你入群！**）：
+![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat.jpg) ![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat-money-v1.jpg)
 
-![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat.jpg)
+SmartAdmin 官方微信群; 官方QQ群：914442584
+![](http://cdn.1024lab.net/img/smart-admin/smart-admin-wechat-group-v3.jpg) ![](http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png)
 
-SmartAdmin 官方微信群
 
-![](http://cdn.1024lab.net/img/smart-admin/smart-admin-wechat-group-v2.jpg)
-
-SmartAdmin 官方QQ群：914442584
-
-![](http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png)
-
-官方捐助（微信）
-
-![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat-money.jpg)
-
+---
+作者简介:
+[卓大](http://zhuoluodada.cn)， 1024创新实验室主任，混迹于各个技术，熟悉点java，略懂点前端。
