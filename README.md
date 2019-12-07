@@ -4,7 +4,7 @@ SmartAdmin由河南·洛阳 [1024创新实验室](https://www.1024lab.net/)团�
 #### 开源地址   (*欢迎 Star ~ ~  ╰(￣▽￣)╭*)
 github: [https://github.com/1024-lab/smart-admin](https://github.com/1024-lab/smart-admin)  
 gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-admin)  
-在线预览： [http://preview.smartadmin.1024lab.net](http://preview.smartadmin.1024lab.net) 
+在线预览： [http://preview.smartadmin.1024lab.net](http://preview.smartadmin.1024lab.net)  
 快速启动：[http://smartadmin.1024lab.net/doc/1/68](http://smartadmin.1024lab.net/doc/1/68)
 
 #### 疑惑
