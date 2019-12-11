@@ -55,7 +55,7 @@
         <foreach collection="roleIds" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
-        order by r.create_time desc
+        order by p.create_time desc
     </select>
 
     <select id="listByRoleId" resultMap="PrivilegeEntity">
