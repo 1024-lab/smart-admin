@@ -14,6 +14,7 @@ import com.gangquan360.smartadmin.module.employee.domain.dto.*;
 import com.gangquan360.smartadmin.module.employee.domain.entity.EmployeeEntity;
 import com.gangquan360.smartadmin.module.employee.domain.vo.EmployeeVO;
 import com.gangquan360.smartadmin.module.login.domain.RequestTokenBO;
+import com.gangquan360.smartadmin.module.position.PositionDao;
 import com.gangquan360.smartadmin.module.position.PositionService;
 import com.gangquan360.smartadmin.module.position.domain.dto.PositionRelationAddDTO;
 import com.gangquan360.smartadmin.module.position.domain.dto.PositionRelationResultDTO;
@@ -26,12 +27,15 @@ import com.gangquan360.smartadmin.util.SmartPaginationUtil;
 import com.gangquan360.smartadmin.util.SmartVerificationUtil;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -58,6 +62,9 @@ public class EmployeeService {
 
     @Autowired
     private PositionService positionService;
+
+    @Autowired
+    private PositionDao positionDao;
 
     @Autowired
     private PrivilegeEmployeeService privilegeEmployeeService;
@@ -90,15 +97,32 @@ public class EmployeeService {
     public ResponseDTO<PageResultDTO<EmployeeVO>> selectEmployeeList(EmployeeQueryDTO queryDTO) {
         Page pageParam = SmartPaginationUtil.convert2PageQueryInfo(queryDTO);
         queryDTO.setIsDelete(JudgeEnum.NO.getValue());
-        List<EmployeeDTO> empList = employeeDao.selectEmployeeList(pageParam, queryDTO);
-        empList.stream().forEach(e -> {
-            List<PositionRelationResultDTO> positionRelationList = positionService.queryPositionByEmployeeId(e.getId());
-            if (CollectionUtils.isNotEmpty(positionRelationList)) {
-                e.setPositionRelationList(positionRelationList);
-                e.setPositionName(positionRelationList.stream().map(PositionRelationResultDTO::getPositionName).collect(Collectors.joining(",")));
+        List<EmployeeDTO> employeeList = employeeDao.selectEmployeeList(pageParam, queryDTO);
+        List<Long> employeeIdList = employeeList.stream().map(EmployeeDTO::getId).collect(Collectors.toList());
+
+        if (CollectionUtils.isNotEmpty(employeeIdList)) {
+            List<PositionRelationResultDTO> positionRelationResultDTOList = positionDao.selectEmployeesRelation(employeeIdList);
+            Map<Long, List<PositionRelationResultDTO>> employeePositionMap = new HashedMap();
+
+            for (PositionRelationResultDTO positionRelationResultDTO : positionRelationResultDTOList) {
+                List<PositionRelationResultDTO> relationResultDTOList = employeePositionMap.get(positionRelationResultDTO.getEmployeeId());
+                //匹配对应的岗位
+                if (relationResultDTOList == null) {
+                    relationResultDTOList = new ArrayList<>();
+                    employeePositionMap.put(positionRelationResultDTO.getEmployeeId(), relationResultDTOList);
+                }
+                relationResultDTOList.add(positionRelationResultDTO);
             }
-        });
-        return ResponseDTO.succData(SmartPaginationUtil.convert2PageInfoDTO(pageParam, empList, EmployeeVO.class));
+
+            for (EmployeeDTO employeeDTO : employeeList) {
+                List<PositionRelationResultDTO> relationResultDTOList = employeePositionMap.get(employeeDTO.getId());
+                if(relationResultDTOList != null){
+                    employeeDTO.setPositionRelationList(relationResultDTOList);
+                    employeeDTO.setPositionName(relationResultDTOList.stream().map(PositionRelationResultDTO::getPositionName).collect(Collectors.joining(",")));
+                }
+            }
+        }
+        return ResponseDTO.succData(SmartPaginationUtil.convert2PageInfoDTO(pageParam, employeeList, EmployeeVO.class));
     }
 
     /**

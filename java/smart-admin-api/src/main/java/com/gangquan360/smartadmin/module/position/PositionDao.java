@@ -38,6 +38,13 @@ public interface PositionDao extends BaseMapper<PositionEntity> {
     List<PositionRelationResultDTO> selectRelation(PositionRelationQueryDTO positionRelationQueryDTO);
 
     /**
+     * 批量查询员工岗位信息
+     * @param employeeIdList
+     * @return
+     */
+    List<PositionRelationResultDTO> selectEmployeesRelation(@Param("employeeIdList") List<Long> employeeIdList);
+
+    /**
      * 批量添加岗位 人员 关联关系
      *
      * @param positionRelationAddDTO

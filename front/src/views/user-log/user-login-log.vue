@@ -85,6 +85,10 @@ export default {
           key: 'remoteOs'
         },
         {
+          title: 'Ip',
+          key: 'remoteIp'
+        },
+        {
           title: '用户端口',
           key: 'remotePort'
         },
