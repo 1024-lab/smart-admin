@@ -2,7 +2,7 @@
 
 #### 下载代码
 
-smart-admin-parent和smart-admin-api
+smart-admin-service
 
 将两个项目导入idea
 
