@@ -6,6 +6,9 @@ import iView from 'iview';
 import cookie from '@/lib/cookie';
 import { localRead } from '@/lib/local';
 import { setTitle } from '@/lib/menu-func';
+import config from '@/config';
+
+const { homeName } = config;
 
 Vue.use(Router);
 const router = new Router({
@@ -62,8 +65,12 @@ router.beforeEach((to, from, next) => {
   } else if (token && to.name === LOGIN_PAGE_NAME) {
     // 已登录且要跳转的页面是登录页
     next({
-      name: 'home' // 跳转到home页
+      // 跳转到home页
+      name: homeName
     });
+    setTitle(to, router.app);
+    iView.LoadingBar.finish();
+    window.scrollTo(0, 0);
   } else {
     // 特殊页面直接放行
     if (to.meta.access) {
