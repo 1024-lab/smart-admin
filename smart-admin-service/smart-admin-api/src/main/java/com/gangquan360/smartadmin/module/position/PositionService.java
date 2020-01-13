@@ -33,7 +33,7 @@ public class PositionService {
         Page page = SmartPaginationUtil.convert2PageQueryInfo(queryDTO);
         List<PositionEntity> entityList = positionDao.selectByPage(page, queryDTO);
         page.setRecords(entityList.stream().map(e -> SmartBeanUtil.copy(e, PositionResultVO.class)).collect(Collectors.toList()));
-        PageResultDTO<PositionResultVO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page);
+        PageResultDTO<PositionResultVO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page);
         return ResponseDTO.succData(pageResultDTO);
     }
 

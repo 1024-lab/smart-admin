@@ -1,7 +1,6 @@
 package ${basePackage}.module.${modulePackage}.controller;
 
-import ${basePackage}.common.constant.SwaggerTagConst;
-import ${basePackage}.common.domain.PageInfoDTO;
+import ${basePackage}.common.domain.PageResultDTO;
 import ${basePackage}.common.domain.ResponseDTO;
 import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}DTO;
 import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}QueryDTO;
@@ -32,7 +31,7 @@ public class ${moduleClass}Controller {
 
     @ApiOperation(value = "分页查询${tableDesc}",notes = "@author ${author}")
     @PostMapping("/${moduleVar}/page/query")
-    public ResponseDTO<PageInfoDTO<${moduleClass}DTO>> queryByPage(@RequestBody ${moduleClass}QueryDTO queryDTO) {
+    public ResponseDTO<PageResultDTO<${moduleClass}DTO>> queryByPage(@RequestBody ${moduleClass}QueryDTO queryDTO) {
         return ${moduleVar}Service.queryByPage(queryDTO);
     }
 

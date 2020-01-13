@@ -158,7 +158,7 @@ public class FileService {
                 e.setFileUrl(fileService.getFileUrl(e.getFilePath()).getData());
             });
         }
-        PageResultDTO<FileVO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page, fileList);
+        PageResultDTO<FileVO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page, fileList);
         return ResponseDTO.succData(pageResultDTO);
     }
 

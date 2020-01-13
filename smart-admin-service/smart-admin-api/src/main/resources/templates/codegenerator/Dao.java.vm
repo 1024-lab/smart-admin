@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}QueryDTO;
 import ${basePackage}.module.${modulePackage}.domain.entity.${moduleClass}Entity;
-import ${basePackage}.utils.PaginationUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;

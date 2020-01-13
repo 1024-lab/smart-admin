@@ -40,7 +40,7 @@ public class UserOperateLogService {
         List<UserOperateLogEntity> entities = userOperateLogDao.queryByPage(page, queryDTO);
         List<UserOperateLogDTO> dtoList = SmartBeanUtil.copyList(entities, UserOperateLogDTO.class);
         page.setRecords(dtoList);
-        PageResultDTO<UserOperateLogDTO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page);
+        PageResultDTO<UserOperateLogDTO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page);
         return ResponseDTO.succData(pageResultDTO);
     }
 

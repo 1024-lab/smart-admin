@@ -55,7 +55,7 @@ public class RoleEmployeeService {
             DepartmentEntity departmentEntity = departmentDao.selectById(employeeDTO.getDepartmentId());
             employeeDTO.setDepartmentName(departmentEntity.getName());
         });
-        PageResultDTO<EmployeeVO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page, employeeDTOS, EmployeeVO.class);
+        PageResultDTO<EmployeeVO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page, employeeDTOS, EmployeeVO.class);
         return ResponseDTO.succData(pageResultDTO);
     }
 

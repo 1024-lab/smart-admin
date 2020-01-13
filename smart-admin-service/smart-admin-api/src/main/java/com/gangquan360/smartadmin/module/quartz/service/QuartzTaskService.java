@@ -56,7 +56,7 @@ public class QuartzTaskService {
         Page pageParam = SmartPaginationUtil.convert2PageQueryInfo(queryDTO);
         List<QuartzTaskVO> taskList = quartzTaskDao.queryList(pageParam, queryDTO);
         pageParam.setRecords(taskList);
-        return ResponseDTO.succData(SmartPaginationUtil.convert2PageInfoDTO(pageParam));
+        return ResponseDTO.succData(SmartPaginationUtil.convert2PageResultDTO(pageParam));
     }
 
     /**
@@ -69,7 +69,7 @@ public class QuartzTaskService {
         Page pageParam = SmartPaginationUtil.convert2PageQueryInfo(queryDTO);
         List<QuartzTaskLogVO> taskList = quartzTaskLogDao.queryList(pageParam, queryDTO);
         pageParam.setRecords(taskList);
-        return ResponseDTO.succData(SmartPaginationUtil.convert2PageInfoDTO(pageParam));
+        return ResponseDTO.succData(SmartPaginationUtil.convert2PageResultDTO(pageParam));
     }
 
     /**

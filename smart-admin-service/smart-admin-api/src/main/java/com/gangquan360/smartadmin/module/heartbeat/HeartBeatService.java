@@ -12,7 +12,6 @@ import com.gangquan360.smartadmin.config.SmartHeartBeatConfig;
 import com.gangquan360.smartadmin.util.SmartBeanUtil;
 import com.gangquan360.smartadmin.util.SmartPaginationUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,7 +83,7 @@ public class HeartBeatService extends AbstractHeartBeatCommand {
     public ResponseDTO<PageResultDTO<HeartBeatRecordVO>> pageQuery(PageParamDTO pageParamDTO) {
         Page pageQueryInfo = SmartPaginationUtil.convert2PageQueryInfo(pageParamDTO);
         List<HeartBeatRecordVO> recordVOList = heartBeatRecordDao.pageQuery(pageQueryInfo);
-        PageResultDTO<HeartBeatRecordVO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(pageQueryInfo, recordVOList);
+        PageResultDTO<HeartBeatRecordVO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(pageQueryInfo, recordVOList);
         return ResponseDTO.succData(pageResultDTO);
 
     }

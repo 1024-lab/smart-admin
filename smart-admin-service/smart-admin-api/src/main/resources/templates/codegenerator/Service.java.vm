@@ -1,14 +1,14 @@
 package ${basePackage}.module.${modulePackage}.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import ${basePackage}.common.domain.PageInfoDTO;
+import ${basePackage}.common.domain.PageResultDTO;
 import ${basePackage}.common.domain.ResponseDTO;
 import ${basePackage}.module.${modulePackage}.dao.${moduleClass}Dao;
 import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}DTO;
 import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}QueryDTO;
 import ${basePackage}.module.${modulePackage}.domain.entity.${moduleClass}Entity;
-import ${basePackage}.utils.PaginationUtil;
-import com.gangquan360.smartutil.bean.SmartBeanUtil;
+import ${basePackage}.util.SmartPaginationUtil;
+import ${basePackage}.util.SmartBeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,12 +37,12 @@ public class ${moduleClass}Service {
      * @description 分页查询
      * @date ${date}
      */
-    public ResponseDTO<PageInfoDTO<${moduleClass}DTO>> queryByPage(${moduleClass}QueryDTO queryDTO) {
-        Page page = PaginationUtil.convert2PageQueryInfo(queryDTO);
+    public ResponseDTO<PageResultDTO<${moduleClass}DTO>> queryByPage(${moduleClass}QueryDTO queryDTO) {
+        Page page = SmartPaginationUtil.convert2PageQueryInfo(queryDTO);
         List<${moduleClass}Entity> entities = ${moduleVar}Dao.queryByPage(page, queryDTO);
         List<${moduleClass}DTO> dtoList = SmartBeanUtil.copyList(entities, ${moduleClass}DTO.class);
         page.setRecords(dtoList);
-        PageInfoDTO<${moduleClass}DTO> pageResultDTO = PaginationUtil.convert2PageInfoDTO(page);
+        PageResultDTO<${moduleClass}DTO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page);
         return ResponseDTO.succData(pageResultDTO);
     }
 

@@ -58,7 +58,7 @@ public class NoticeService {
         Page page = SmartPaginationUtil.convert2PageQueryInfo(queryDTO);
         List<NoticeVO> dtoList = noticeDao.queryByPage(page, queryDTO);
         page.setRecords(dtoList);
-        PageResultDTO<NoticeVO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page);
+        PageResultDTO<NoticeVO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page);
         return ResponseDTO.succData(pageResultDTO);
     }
 
@@ -82,7 +82,7 @@ public class NoticeService {
             }
         });
         page.setRecords(dtoList);
-        PageResultDTO<NoticeReceiveDTO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page);
+        PageResultDTO<NoticeReceiveDTO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page);
         return ResponseDTO.succData(pageResultDTO);
     }
 
@@ -97,7 +97,7 @@ public class NoticeService {
         Page page = SmartPaginationUtil.convert2PageQueryInfo(queryDTO);
         List<NoticeVO> dtoList = noticeDao.queryUnreadByPage(page, requestToken.getRequestUserId(), JudgeEnum.YES.getValue());
         page.setRecords(dtoList);
-        PageResultDTO<NoticeVO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page);
+        PageResultDTO<NoticeVO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page);
         return ResponseDTO.succData(pageResultDTO);
     }
 

@@ -122,7 +122,7 @@ public class EmployeeService {
                 }
             }
         }
-        return ResponseDTO.succData(SmartPaginationUtil.convert2PageInfoDTO(pageParam, employeeList, EmployeeVO.class));
+        return ResponseDTO.succData(SmartPaginationUtil.convert2PageResultDTO(pageParam, employeeList, EmployeeVO.class));
     }
 
     /**

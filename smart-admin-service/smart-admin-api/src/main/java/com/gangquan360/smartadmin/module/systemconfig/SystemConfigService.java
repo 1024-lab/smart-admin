@@ -84,7 +84,7 @@ public class SystemConfigService {
     public ResponseDTO<PageResultDTO<SystemConfigVO>> getSystemConfigPage(SystemConfigQueryDTO queryDTO) {
         Page page = SmartPaginationUtil.convert2PageQueryInfo(queryDTO);
         List<SystemConfigEntity> entityList = systemConfigDao.selectSystemSettingList(page, queryDTO);
-        PageResultDTO<SystemConfigVO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page, entityList, SystemConfigVO.class);
+        PageResultDTO<SystemConfigVO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page, entityList, SystemConfigVO.class);
         return ResponseDTO.succData(pageResultDTO);
     }
 

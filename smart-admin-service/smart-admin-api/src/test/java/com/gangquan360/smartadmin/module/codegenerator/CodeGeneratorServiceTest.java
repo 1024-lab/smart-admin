@@ -33,8 +33,8 @@ public class CodeGeneratorServiceTest extends BaseTest {
 
                 List<CodeGeneratorQueryColumnDTO> queryColumnList = Lists.newArrayList(createTimeBetween,like);
                 CodeGeneratorDTO codeGenerator = CodeGeneratorDTO.builder()
-                        .author("yandanyang")
-                        .company("钢圈")
+                        .author("zhuoda")
+                        .company("1024创新( www.1024lab.net )")
                         .tableName("t_notice")
                         .tablePrefix("t_")
                         .basePackage("com.gangquan360.smartadmin")

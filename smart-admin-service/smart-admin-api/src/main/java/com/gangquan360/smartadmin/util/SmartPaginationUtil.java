@@ -16,7 +16,7 @@ import java.util.List;
 
 public class SmartPaginationUtil {
 
-    public static <T> PageResultDTO<T> convert2PageInfoDTO(Page<T> page) {
+    public static <T> PageResultDTO<T> convert2PageResultDTO(Page<T> page) {
         PageResultDTO<T> result = new PageResultDTO<>();
         result.setPageNum(page.getCurrent());
         result.setPageSize(page.getSize());
@@ -51,7 +51,7 @@ public class SmartPaginationUtil {
      * @author yandanyang
      * @date 2018年5月16日 下午6:05:28
      */
-    public static <T, E> PageResultDTO<T> convert2PageInfoDTO(Page page, List<E> sourceList, Class<T> targetClazz) {
+    public static <T, E> PageResultDTO<T> convert2PageResultDTO(Page page, List<E> sourceList, Class<T> targetClazz) {
         PageResultDTO pageResultDTO = setPage(page);
         List<T> records = SmartBeanUtil.copyList(sourceList, targetClazz);
         page.setRecords(records);
@@ -68,7 +68,7 @@ public class SmartPaginationUtil {
      * @author yandanyang
      * @date 2018年5月16日 下午6:05:28
      */
-    public static <T, E> PageResultDTO<T> convert2PageInfoDTO(Page page, List<E> sourceList) {
+    public static <T, E> PageResultDTO<T> convert2PageResultDTO(Page page, List<E> sourceList) {
         PageResultDTO pageResultDTO = setPage(page);
         page.setRecords(sourceList);
         pageResultDTO.setList(sourceList);

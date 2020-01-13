@@ -48,7 +48,7 @@ public class UserLoginLogService {
         List<UserLoginLogEntity> entities = userLoginLogDao.queryByPage(page, queryDTO);
         List<UserLoginLogDTO> dtoList = SmartBeanUtil.copyList(entities, UserLoginLogDTO.class);
         page.setRecords(dtoList);
-        PageResultDTO<UserLoginLogDTO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page);
+        PageResultDTO<UserLoginLogDTO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page);
         return ResponseDTO.succData(pageResultDTO);
     }
 

@@ -1,6 +1,6 @@
 package ${basePackage}.module.${modulePackage}.domain.dto;
 
-import ${basePackage}.common.domain.PageBaseDTO;
+import ${basePackage}.common.domain.PageParamDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 #foreach ($queryImport in $queryImports)
@@ -18,7 +18,7 @@ $queryImport
  * @since JDK1.8
  */
 @Data
-public class ${moduleClass}QueryDTO extends PageBaseDTO {
+public class ${moduleClass}QueryDTO extends PageParamDTO {
 
 #foreach ($queryField in $queryFieldList)
 

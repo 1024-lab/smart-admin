@@ -50,7 +50,7 @@ public class EmailService {
         List<EmailEntity> entities = emailDao.queryByPage(page, queryDTO);
         List<EmailVO> dtoList = SmartBeanUtil.copyList(entities, EmailVO.class);
         page.setRecords(dtoList);
-        PageResultDTO<EmailVO> pageResultDTO = SmartPaginationUtil.convert2PageInfoDTO(page);
+        PageResultDTO<EmailVO> pageResultDTO = SmartPaginationUtil.convert2PageResultDTO(page);
         return ResponseDTO.succData(pageResultDTO);
     }
 
