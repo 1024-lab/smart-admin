@@ -78,7 +78,12 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 
 ps：以上规范基础都是以团队出发，让团队开心快乐的写代码，而不是为了代码规范而规范。
 #### 演示图
-![](http://cdn.1024lab.net/img/smart-admin/cut/11.png)![](http://cdn.1024lab.net/img/smart-admin/cut/12.png)
+<table>
+    <tr>
+        <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/11.png"/></td>
+        <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/12.png"/></td>
+    </tr>
+</table>
 
 
 #### 联系我们
