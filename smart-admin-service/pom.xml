@@ -31,7 +31,7 @@
         <swagger.version>2.7.0</swagger.version>
         <mybatis-spring-boot.version>1.3.0</mybatis-spring-boot.version>
         <sql-server.version>6.3.2.jre8-preview</sql-server.version>
-        <fastjson.version>1.2.9</fastjson.version>
+        <fastjson.version>1.2.25</fastjson.version>
         <feign-gson-version>8.18.0</feign-gson-version>
         <guava-version>23.1-jre</guava-version>
         <pagehelper-version>1.2.3</pagehelper-version>
