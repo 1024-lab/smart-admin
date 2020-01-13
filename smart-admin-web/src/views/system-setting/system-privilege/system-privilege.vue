@@ -241,7 +241,8 @@ export default {
         isChange =
           serverMenu.menuName !== menu.menuName ||
           serverMenu.menuKey !== menu.menuKey ||
-          serverMenu.parentKey !== menu.parentKey;
+          serverMenu.parentKey !== menu.parentKey||
+          serverMenu.url !== menu.url;
       } else {
         isChange = true;
       }

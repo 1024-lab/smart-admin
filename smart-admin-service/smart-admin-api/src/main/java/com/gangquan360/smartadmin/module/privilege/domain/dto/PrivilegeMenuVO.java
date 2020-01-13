@@ -3,6 +3,7 @@ package com.gangquan360.smartadmin.module.privilege.domain.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  * @since JDK1.8
  */
 @Data
-public class PrivilegeMenuListVO {
+public class PrivilegeMenuVO {
 
     @ApiModelProperty("菜单名")
     private String menuName;
@@ -30,8 +31,8 @@ public class PrivilegeMenuListVO {
     @ApiModelProperty("顺序")
     private Integer sort;
 
-    @ApiModelProperty("子菜单列表")
-    private List<PrivilegeMenuListVO> menuList;
+    @ApiModelProperty("前端路由path")
+    private String url;
 
 
 }

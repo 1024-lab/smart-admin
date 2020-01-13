@@ -6,7 +6,6 @@ import com.gangquan360.smartadmin.module.privilege.dao.PrivilegeDao;
 import com.gangquan360.smartadmin.module.privilege.domain.dto.*;
 import com.gangquan360.smartadmin.module.privilege.domain.entity.PrivilegeEntity;
 import com.gangquan360.smartadmin.module.role.roleprivilege.RolePrivilegeDao;
-import com.gangquan360.smartadmin.util.SmartBeanUtil;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,18 +139,19 @@ public class PrivilegeService {
      *
      * @return
      */
-    public ResponseDTO<List<PrivilegeMenuListVO>> menuQueryAll() {
+    public ResponseDTO<List<PrivilegeMenuVO>> menuQueryAll() {
         List<PrivilegeEntity> privilegeEntityList = privilegeDao.selectByType(PrivilegeTypeEnum.MENU.getValue());
         if (CollectionUtils.isEmpty(privilegeEntityList)) {
             return ResponseDTO.succData(Lists.newArrayList());
         }
 
-        List<PrivilegeMenuListVO> voList = privilegeEntityList.stream().map( e-> {
-            PrivilegeMenuListVO vo = new PrivilegeMenuListVO();
+        List<PrivilegeMenuVO> voList = privilegeEntityList.stream().map(e-> {
+            PrivilegeMenuVO vo = new PrivilegeMenuVO();
             vo.setMenuKey(e.getKey());
             vo.setMenuName(e.getName());
             vo.setParentKey(e.getParentKey());
             vo.setSort(e.getSort());
+            vo.setUrl(e.getUrl());
             return vo;
         }).collect(Collectors.toList());
 

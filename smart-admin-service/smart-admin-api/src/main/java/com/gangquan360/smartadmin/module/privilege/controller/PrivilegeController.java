@@ -46,7 +46,7 @@ public class PrivilegeController {
 
     @ApiOperation(value = "查询所有菜单项")
     @PostMapping("/privilege/menu/queryAll")
-    public ResponseDTO<List<PrivilegeMenuListVO>> queryAll() {
+    public ResponseDTO<List<PrivilegeMenuVO>> queryAll() {
         return privilegeService.menuQueryAll();
     }
 

@@ -38,7 +38,6 @@
         <oss.version>2.7.0</oss.version>
         <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
         <fileupload.version>1.3.1</fileupload.version>
-        <fastjson.version>1.2.9</fastjson.version>
         <jjwt.version>0.9.0</jjwt.version>
         <openhtml.version>0.0.1-RC11</openhtml.version>
         <hibernate-validator-version>6.0.2.Final</hibernate-validator-version>
@@ -485,11 +484,6 @@
         </resources>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
-                    <version>2.2.4</version>
-                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
