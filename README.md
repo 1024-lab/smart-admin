@@ -77,18 +77,53 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 - 以上举例，只是沧海一粟，更多的细节等待你的发现！
 
 ps：以上规范基础都是以团队出发，让团队开心快乐的写代码，而不是为了代码规范而规范。
+#### 演示图
+<table>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/11.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/12.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/21.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/22.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/31.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/32.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/41.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/42.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/51.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/52.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/61.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/62.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/71.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/72.png"/></td>
+</tr>
+</table>
+
 
 #### 联系我们
 [1024创新实验室](https://www.1024lab.net/)
 
-1024Lab官方微信号（**加我拉你入群！**）：
+官方QQ群：914442584
 
-![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat.jpg)![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat-money-v1.jpg)
+SmartAdmin微信群（**加我拉你入群！**）：
 
-SmartAdmin 官方微信群; 官方QQ群：914442584
-
-![](http://cdn.1024lab.net/img/smart-admin/smart-admin-wechat-group-v3.jpg)![](http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png)
-
+<table>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat.jpg"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat-money-v1.jpg"/></td>
+</tr>
+</table>
 
 ---
 作者简介:

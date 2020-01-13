@@ -1,1 +1,0 @@
-admin的项目采用maven bom和maven module的形式
