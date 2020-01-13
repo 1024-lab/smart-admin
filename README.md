@@ -79,10 +79,30 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 ps：以上规范基础都是以团队出发，让团队开心快乐的写代码，而不是为了代码规范而规范。
 #### 演示图
 <table>
-    <tr>
-        <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/11.png"/></td>
-        <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/12.png"/></td>
-    </tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/11.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/12.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/21.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/22.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/31.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/32.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/41.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/42.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/51.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/52.png"/></td>
+</tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/61.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/62.png"/></td>
+</tr>
 </table>
 
 
