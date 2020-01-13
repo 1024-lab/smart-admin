@@ -109,14 +109,17 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
 #### 联系我们
 [1024创新实验室](https://www.1024lab.net/)
 
-1024Lab官方微信号（**加我拉你入群！**）：
+官方QQ群：914442584
 
-![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat.jpg)![](http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat-money-v1.jpg)
+SmartAdmin微信群（**加我拉你入群！**）：
 
-SmartAdmin 官方微信群; 官方QQ群：914442584
-
-![](http://cdn.1024lab.net/img/smart-admin/smart-admin-wechat-group-v3.jpg)![](http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png)
-
+<table>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat.jpg"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png"/></td>\
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat-money-v1.jpg"/></td>
+</tr>
+</table>
 
 ---
 作者简介:
