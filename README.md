@@ -103,6 +103,10 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
   <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/61.png"/></td>
   <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/62.png"/></td>
 </tr>
+<tr>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/71.png"/></td>
+  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/72.png"/></td>
+</tr>
 </table>
 
 

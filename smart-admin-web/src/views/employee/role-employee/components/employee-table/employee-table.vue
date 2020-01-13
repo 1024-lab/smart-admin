@@ -134,7 +134,7 @@ export default {
       // 员工id
       mid: '',
       totalPage: 0,
-      pageSize: 10,
+      pageSize: 20,
       pageNum: 1,
       isShowManageRoleModal: false,
       isShowTablesLoading: false,
