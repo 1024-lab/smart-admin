@@ -5,7 +5,7 @@ SmartAdmin由河南·洛阳 [1024创新实验室](https://www.1024lab.net/)团�
 github: [https://github.com/1024-lab/smart-admin](https://github.com/1024-lab/smart-admin)  
 gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-admin)  
 在线预览： [http://preview.smartadmin.1024lab.net](http://preview.smartadmin.1024lab.net)  
-快速启动：[http://smartadmin.1024lab.net/doc/1/68](http://smartadmin.1024lab.net/doc/1/68)
+部署文档：[http://smartadmin.1024lab.net/doc/1/68](http://smartadmin.1024lab.net/doc/1/68)
 
 #### 疑惑
 有人问：又是个“轮子”？ 轮子靠谱吗？为什么要选择你这个轮子？
@@ -21,62 +21,6 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 - 我们热爱编程，热爱代码，保持谦逊，不断学习，快乐工作，热爱生活。
 - **请相信并认真阅读下面的每一个点，让你感受不一样的编码体验**
 
-#### 技术体系
-
-- 前端：Vue + Vue-Router + Vuex + ViewUI(iview) + vue-enum
-- 后端：SpringBoot2 + Mybatis-plus + jwt + druid + mysql
-- 前端代码规范smart-front-standard -guide
-- 基于阿里规范之上的后端规范smart-backend-standard-guide
-
-
-#### 前端特点
-- 高质量的代码、代码结构、和代码注释
-- 漂亮的UI，菜单栏、标签页等等
-- 优化基于Keepalive的标签页，做到标签页该缓存的时候缓存，比如左右切换等，不该缓存的时候不缓存，比如新建，表单提交结束等
-- 前端常量维护: vue-enum，拒绝出现魔法数字，代码不可维护的现象
-- 全新的基于前端的权限设计（忘掉传统的权限设计吧，已经不适合这个前端时代）
-- 体验、交互更好用的员工、部门、角色、菜单管理
-- 基于websocket的在线人数
-- 支持一级、二级、三级菜单
-- 支持菜单搜索功能
-- 其他功能：邮件、富文本、消息、系统配置等等
-- 定时任务
-- 写不完了，太多好的细节需要你的发现
-
-#### 后端特点
-- 高质量的Java代码、分包结构、和代码注释
-- 业内独创的请求返回码维护，非常值得一看
-- 基于一个注解和controller的权限设计放弃更复杂的shiro
-- 完整的数据权限支持
-- 四层架构（controller, service, manager, dao）
-- 代码阅读性强、扩展性极高的员工、部门、角色、菜单管理
-- 基于LRU策略的内存级权限缓存
-- 自定义枚举表单验证，BigDecimal验证等
-- 配合前端vue-enum的swagger文档注解
-- 心跳服务，让你发现有哪些机器再跑，哪些人在偷偷的跑你的Job
-- 自定义的quartz job添加和修改，方便测试人员测试
-- smart-reload，为系统预留钩子，动态加载，在不重启程序前提下执行一些代码，你懂的
-- 其他功能：邮件、富文本、消息、系统配置等等
-- 以上只是一些举例，更多灿若繁星的惊喜和细节，等待着你的发现！
-
-#### 前端代码规范
-- 文件、文件夹、目录结构、组建、变量等等怎么命名
-- html、css、less等如何规范
-- vue项目目录结构如何划分
-- router和store该怎么划分扩展性更好
-- vue组件规范该选择哪些
-- 以及更多，数不胜数让你觉得实用，同时身心愉悦的规范
-
-#### 后端代码规范
-- 好多种分包，哪种更合理一些
-- 四层架构（controller, service, manager, dao） 是什么，为什么要有四层
-- 各个层的代码该怎么写才能让团队配合默契，高度一致
-- vo, bo, dto, entity 怎么区分和使用
-- spring的 @Transactional 你用对了吗
-- 方法参数个数、注释、todo这些也要有规范，你遵守过吗
-- 以上举例，只是沧海一粟，更多的细节等待你的发现！
-
-ps：以上规范基础都是以团队出发，让团队开心快乐的写代码，而不是为了代码规范而规范。
 #### 演示图
 <table>
 <tr>
@@ -109,6 +53,54 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
 </tr>
 </table>
 
+
+#### 技术体系
+- 前端：Vue + Vue-Router + Vuex + ViewUI(iview) + vue-enum
+- 后端：SpringBoot2 + Mybatis-plus + jwt + druid + mysql
+- 前端代码规范smart-front-standard -guide（大力推荐）
+- 基于阿里规范之上的后端规范smart-backend-standard-guide（大力推荐）
+
+#### 前端特点
+- 高质量的代码、代码结构、和代码注释
+- 漂亮的UI，菜单栏、标签页，体验、交互更好用的员工、部门、角色、菜单管理等等
+- 优化基于Keepalive的标签页，做到标签页该缓存的时候缓存，比如左右切换等，不该缓存的时候不缓存，比如新建，表单提交结束等
+- 前端常量维护: vue-enum，拒绝出现魔法数字，代码不可维护的现象
+- 全新的基于前端的权限设计（忘掉传统的权限设计吧，已经不适合这个前端时代）
+- 基于websocket的在线人数
+- 支持一级、二级、三级菜单，单搜索功能
+- 其他功能：邮件、富文本、消息、系统配置等等
+- 写不完了，太多好的细节需要你的发现......
+
+#### 后端特点
+- 高质量的Java代码、分包结构、和代码注释
+- 业内独创的请求返回码维护，非常值得一看
+- 基于一个注解和controller的权限设计放弃更复杂的shiro，以及一套数据权限支持
+- 四层架构（controller, service, manager, dao）
+- 代码阅读性强、扩展性极高的员工、部门、角色、菜单管理
+- 基于LRU策略的内存级权限缓存
+- 配合前端vue-enum的swagger文档注解
+- 心跳服务，让你发现有哪些机器再跑，哪些人在偷偷的跑你的Job
+- 自定义的quartz job添加和修改，方便测试人员测试
+- smart-reload，为系统预留钩子，动态加载，在不重启程序前提下执行一些代码，你懂的
+- 以上只是一些举例，更多灿若繁星的惊喜和细节，等待着你的发现！
+
+#### 前端代码规范
+- 文件、文件夹、目录结构、组建、变量等等怎么命名
+- html、css、less等如何规范
+- vue项目目录结构如何划分
+- router和store该怎么划分扩展性更好
+- vue组件规范该选择哪些
+- 以及更多，数不胜数让你觉得实用，同时身心愉悦的规范
+
+#### 后端代码规范
+- 四层架构（controller, service, manager, dao） 是什么，为什么要有四层
+- 各个层的代码该怎么写才能让团队配合默契，高度一致
+- vo, bo, dto, entity ，各种javabean 怎么区分和使用
+- spring的 @Transactional 你用对了吗
+- 方法参数个数、注释、todo这些也要有规范，你遵守过吗
+- 以上举例，只是沧海一粟，更多的细节等待你的发现！
+
+ps：以上规范基础都是以团队出发，让团队开心快乐的写代码，而不是为了代码规范而规范，不喜勿喷！谢谢。
 
 #### 联系我们
 [1024创新实验室](https://www.1024lab.net/)
