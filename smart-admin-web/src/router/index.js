@@ -51,7 +51,6 @@ Router.prototype.closeCurrentPageAndPush = function (pushParam) {
 };
 let storeSelf = store;
 router.beforeEach((to, from, next) => {
-  console.log(to);
   iView.LoadingBar.start();
   const token = cookie.getToken();
   if (!token && to.name !== LOGIN_PAGE_NAME) {
@@ -73,7 +72,13 @@ router.beforeEach((to, from, next) => {
     window.scrollTo(0, 0);
   } else {
     // 特殊页面直接放行
-    if (to.meta.access) {
+    if (to.meta.noValidatePrivilege) {
+      next();
+      return;
+    }
+
+    //如果是超管，直接放行
+    if (store.state.user.userLoginInfo.isSuperMan) {
       next();
       return;
     }

@@ -28,7 +28,7 @@ export default {
     LoginForm
   },
   data () {
-    return {};
+    return {}
   },
   computed: {},
   watch: {},

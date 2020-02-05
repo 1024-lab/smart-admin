@@ -16,7 +16,7 @@ export const emailSetting = [
         name: 'EmailList',
         meta: {
           title: '邮件管理',
-          childrenPoints: [
+          privilege: [
             { title: '查询', name: 'email-query' },
             { title: '新增', name: 'email-add' },
             { title: '编辑', name: 'email-update' },
@@ -31,7 +31,7 @@ export const emailSetting = [
         name: 'SendMail',
         meta: {
           title: '发送邮件',
-          childrenPoints: [{ title: '发送', name: 'email-send' }]
+          privilege: [{ title: '发送', name: 'email-send' }]
         },
         component: () => import('@/views/email/send-mail.vue')
       }

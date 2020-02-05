@@ -15,7 +15,7 @@ export const notice = [
         name: 'NoticeList',
         meta: {
           title: '通知管理',
-          childrenPoints: [
+          privilege: [
             { title: '查询', name: 'notice-query' },
             { title: '添加', name: 'notice-add' },
             { title: '修改', name: 'notice-edit' },
@@ -31,12 +31,21 @@ export const notice = [
         name: 'PersonNotice',
         meta: {
           title: '个人消息',
-          childrenPoints: [
+          privilege: [
             { title: '查询', name: 'person-notice-query' },
             { title: '详情', name: 'person-notice-detail' }
           ]
         },
         component: () => import('@/views/notice/person-notice.vue')
+      },
+      {
+        path: '/notice/notice-detail',
+        name: 'NoticeDetail',
+        meta: {
+          title: '消息详情',
+          hideInMenu:true
+        },
+        component: () => import('@/views/notice/notice-detail.vue')
       }
     ]
   }

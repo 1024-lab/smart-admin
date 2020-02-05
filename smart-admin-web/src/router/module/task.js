@@ -17,7 +17,7 @@ export const task = [
         meta: {
           title: '任务管理',
           icon: 'icon iconfont icondingshirenwu',
-          childrenPoints: [
+          privilege: [
             {
               title: '查询任务',
               name: 'task-search'

@@ -5,7 +5,7 @@ export const error = [
     name: 'Error401',
     meta: {
       hideInMenu: true,
-      access: true
+      noValidatePrivilege: true
     },
     component: () => import('@/views/error-page/401.vue')
   },
@@ -14,7 +14,7 @@ export const error = [
     name: 'Error500',
     meta: {
       hideInMenu: true,
-      access: true
+      noValidatePrivilege: true
     },
     component: () => import('@/views/error-page/500.vue')
   },
@@ -23,7 +23,7 @@ export const error = [
     name: 'http://localhost:8080/#employee/role-employee-manage',
     meta: {
       hideInMenu: true,
-      access: true
+      noValidatePrivilege: true
     },
     component: () => import('@/views/error-page/404.vue')
   }

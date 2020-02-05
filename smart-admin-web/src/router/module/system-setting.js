@@ -16,7 +16,7 @@ export const systemSetting = [
         name: 'SystemConfig',
         meta: {
           title: '系统参数',
-          childrenPoints: [
+          privilege: [
             {
               title: '查询系统参数',
               name: 'system-params-search'
@@ -42,8 +42,8 @@ export const systemSetting = [
         path: '/system-setting/system-privilege',
         name: 'SystemPrivilege',
         meta: {
-          title: '菜单管理',
-          childrenPoints: [
+          title: '菜单权限',
+          privilege: [
             {
               title: '编辑',
               name: 'privilege-main-update'

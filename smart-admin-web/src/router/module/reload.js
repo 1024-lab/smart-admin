@@ -17,7 +17,7 @@ export const reload = [
         meta: {
           title: 'SmartReload',
           icon: 'icon iconfont icondongtaijiazai',
-          childrenPoints: [
+          privilege: [
             {
               title: '查询',
               name: 'smart-reload-search'

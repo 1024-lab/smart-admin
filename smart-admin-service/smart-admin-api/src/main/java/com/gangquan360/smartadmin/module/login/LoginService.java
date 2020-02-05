@@ -195,12 +195,17 @@ public class LoginService {
     public LoginDetailVO getSession(RequestTokenBO requestUser) {
         LoginDetailVO loginDTO = SmartBeanUtil.copy(requestUser.getEmployeeBO(), LoginDetailVO.class);
         List<PrivilegeEntity> privilegeEntityList = privilegeEmployeeService.getEmployeeAllPrivilege(requestUser.getRequestUserId());
+        //======  开启缓存   ======
         if (privilegeEntityList == null) {
             List<LoginPrivilegeDTO> loginPrivilegeDTOS = initEmployeePrivilege(requestUser.getRequestUserId());
             loginDTO.setPrivilegeList(loginPrivilegeDTOS);
         } else {
             loginDTO.setPrivilegeList(SmartBeanUtil.copyList(privilegeEntityList, LoginPrivilegeDTO.class));
         }
+
+        //======  不开启缓存   ======
+//        List<LoginPrivilegeDTO> loginPrivilegeDTOS = initEmployeePrivilege(requestUser.getRequestUserId());
+//        loginDTO.setPrivilegeList(loginPrivilegeDTOS);
 
         //判断是否为超管
         Boolean isSuperman = privilegeEmployeeService.isSuperman(loginDTO.getId());

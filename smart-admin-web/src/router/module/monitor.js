@@ -10,12 +10,13 @@ export const monitor = [
       icon: 'icon iconfont iconxitongjiankong'
     },
     children: [
+      // 在线人数
       {
         path: '/monitor/online-user',
         name: 'OnlineUser',
         meta: {
           title: '在线人数',
-          childrenPoints: [{ title: '查询', name: 'online-user-search' }]
+          privilege: [{ title: '查询', name: 'online-user-search' }]
         },
         component: () => import('@/views/monitor/online-user.vue')
       },

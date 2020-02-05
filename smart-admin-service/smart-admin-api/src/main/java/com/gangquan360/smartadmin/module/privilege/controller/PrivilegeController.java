@@ -2,6 +2,7 @@ package com.gangquan360.smartadmin.module.privilege.controller;
 
 import com.gangquan360.smartadmin.common.anno.OperateLog;
 import com.gangquan360.smartadmin.common.domain.ResponseDTO;
+import com.gangquan360.smartadmin.common.domain.ValidateList;
 import com.gangquan360.smartadmin.constant.SwaggerTagConst;
 import com.gangquan360.smartadmin.module.privilege.domain.dto.*;
 import com.gangquan360.smartadmin.module.privilege.service.PrivilegeService;
@@ -39,10 +40,11 @@ public class PrivilegeController {
 
     @ApiOperation(value = "菜单批量保存")
     @PostMapping("/privilege/menu/batchSaveMenu")
-    public ResponseDTO<String> menuBatchSave(@Valid @RequestBody List<PrivilegeMenuDTO> menuList) {
+    public ResponseDTO<String> menuBatchSave(@Valid @RequestBody ValidateList<PrivilegeMenuDTO> menuList) {
         return privilegeService.menuBatchSave(menuList);
 //        return ResponseDTO.succ();
     }
+
 
     @ApiOperation(value = "查询所有菜单项")
     @PostMapping("/privilege/menu/queryAll")

@@ -273,9 +273,9 @@ export const canvasParticle = (function () {
         if (i != j) {
           dist = Math.round(canvas.points[i].x - canvas.points[j].x) * Math.round(canvas.points[i].x - canvas.points[j].x) +
             Math.round(canvas.points[i].y - canvas.points[j].y) * Math.round(canvas.points[i].y - canvas.points[j].y); if (dist <= canvas.config.dist && canvas.points[i].max_conn < canvas.config.max_conn) {
-            canvas.points[i].max_conn++; context.lineWidth = 0.5 - dist / canvas.config.dist; context.strokeStyle = 'rgba(' + canvas.config.stroke + ',' + (1 - dist / canvas.config.dist) + ')'
-            context.beginPath(); context.moveTo(canvas.points[i].x, canvas.points[i].y); context.lineTo(canvas.points[j].x, canvas.points[j].y); context.stroke()
-          }
+              canvas.points[i].max_conn++; context.lineWidth = 0.5 - dist / canvas.config.dist; context.strokeStyle = 'rgba(' + canvas.config.stroke + ',' + (1 - dist / canvas.config.dist) + ')'
+              context.beginPath(); context.moveTo(canvas.points[i].x, canvas.points[i].y); context.lineTo(canvas.points[j].x, canvas.points[j].y); context.stroke()
+            }
         }
       }
       if (mouse) {
