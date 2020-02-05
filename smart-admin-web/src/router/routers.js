@@ -24,9 +24,9 @@ import { file } from './module/file';
  *         可以传入一个回调函数，参数是当前路由对象，例子看动态路由和带参路由
  *  hideInBread: (false) 设为true后此级路由将不会出现在面包屑中，示例看QQ群路由配置
  *  hideInMenu: (false) 设为true后在左侧菜单不会显示该页面选项,
- *  group:{String} 同一功能模块下子页面的功能点权限继承菜单模块创建的路由权限  by lihaifan&lipeng
+ *  privilegeExtend:{String} 同一功能模块下子页面的功能点权限继承菜单模块创建的路由权限  by lihaifan&lipeng
  *  noKeepAlive: (false) 设为true后页面在切换标签后不会缓存，如果需要缓存，无需设置这个字段，而且需要设置页面组件name属性和路由配置的name一致
- *  access: (null) 可访问该页面的权限数组，当前路由设置的权限会影响子路由
+ *  noValidatePrivilege: (true) 表示此路由不需要验证权限
  * }
  */
 // 登录模块
@@ -35,7 +35,8 @@ export const login = {
   name: 'login',
   meta: {
     hideInMenu: true,
-    title: 'Login - 登录'
+    title: 'Login - 登录',
+    noValidatePrivilege:true
   },
   component: () => import('@/views/login/login.vue')
 };

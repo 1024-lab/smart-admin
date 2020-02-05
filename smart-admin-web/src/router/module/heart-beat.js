@@ -17,7 +17,7 @@ export const heartBeat = [
         meta: {
           title: '心跳服务',
           icon: 'icon iconfont icondingshirenwu',
-          childrenPoints: [
+          privilege: [
             {
               title: '查询任务',
               name: 'heart-beat-query'

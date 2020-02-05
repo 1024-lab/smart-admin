@@ -40,9 +40,7 @@ export default {
     hasReadErrorPage: false
   },
   getters: {
-    // 左侧菜单
-    menuList: (state, getters, rootState) =>
-      getMenuByRouter(routers, rootState.user.access),
+
     errorCount: state => state.errorList.length
   },
   mutations: {

@@ -16,7 +16,7 @@ export const employee = [
         name: 'RoleManage',
         meta: {
           title: '角色管理',
-          childrenPoints: [
+          privilege: [
             {
               title: '添加角色',
               name: 'add-role'
@@ -67,7 +67,7 @@ export const employee = [
         name: 'PositionList',
         meta: {
           title: '岗位管理',
-          childrenPoints: [
+          privilege: [
             {
               title: '查询',
               name: 'search-position'
@@ -94,7 +94,7 @@ export const employee = [
         name: 'RoleEmployeeManage',
         meta: {
           title: '员工管理',
-          childrenPoints: [
+          privilege: [
             {
               title: '添加部门',
               name: 'add-department'

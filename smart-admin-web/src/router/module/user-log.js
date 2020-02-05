@@ -16,7 +16,7 @@ export const userLog = [
         name: 'UserOperateLog',
         meta: {
           title: '用户操作日志',
-          childrenPoints: [
+          privilege: [
             { title: '查询', name: 'user-operate-log-search' },
             { title: '详情', name: 'user-operate-log-detail' },
             { title: '删除', name: 'user-operate-log-delete' }
@@ -30,7 +30,7 @@ export const userLog = [
         name: 'UserLoginLog',
         meta: {
           title: '用户登录日志',
-          childrenPoints: [
+          privilege: [
             { title: '查询', name: 'user-login-log-search' },
             { title: '删除', name: 'user-login-log-delete' }
           ]

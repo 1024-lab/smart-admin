@@ -16,7 +16,7 @@ export const file = [
         meta: {
           title: '文件列表',
           icon: 'ios-cloud-upload',
-          childrenPoints: [
+          privilege: [
             { title: '查询', name: 'file-filePage-query' },
             { title: '上传', name: 'file-filePage-upload' },
             { title: '下载', name: 'file-filePage-download' }

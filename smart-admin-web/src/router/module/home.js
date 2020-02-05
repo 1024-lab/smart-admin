@@ -7,9 +7,10 @@ export const home = [
     redirect: '/home',
     component: Main,
     meta: {
+      title: '首页',
       noKeepAlive: true,
       hideInMenu: true,
-      access: true,
+      noValidatePrivilege: true,
       icon: 'icon iconfont iconxitongshezhi'
     },
     children: [
@@ -18,7 +19,7 @@ export const home = [
         name: 'Home',
         meta: {
           title: '首页',
-          access: true,
+          noValidatePrivilege: true,
           noKeepAlive: true
         },
         component: () => import('@/views/home')

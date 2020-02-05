@@ -24,7 +24,7 @@ export const threeRouter = [
             name: 'RoleOneTwo',
             meta: {
               title: '三级A',
-              childrenPoints: [
+              privilege: [
                 { title: '添加', name: 'roleOneTwo-add' },
                 { title: '删除', name: 'roleOneTwo-delete' }
               ]
@@ -36,7 +36,7 @@ export const threeRouter = [
             name: 'RoleTwoTwo',
             meta: {
               title: '三级B',
-              childrenPoints: [
+              privilege: [
                 { title: '添加', name: 'roleTwoTwo-add' },
                 { title: '删除', name: 'roleTwoTwo-delete' }
               ]
@@ -50,7 +50,7 @@ export const threeRouter = [
         name: 'RoleOneOne',
         meta: {
           title: '二级菜单',
-          childrenPoints: [
+          privilege: [
             { title: '添加', name: 'roleOneOne-add' },
             { title: '删除', name: 'roleOneOne-delete' }
           ]

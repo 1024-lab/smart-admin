@@ -65,22 +65,8 @@
           ></Input>
         </FormItem>
       </Form>
+      </Modal>
       <!-- 添加修改消息 -->
-      <!-- 消息详情 -->
-    </Modal>
-    <Modal
-      :loading="saveLoading"
-      :title="formData.title"
-      class="detail-modal"
-      v-model="detailModal"
-    >
-      <div class="detail">{{formData.content}}</div>
-      <p class="time">{{formData.updateTime}}</p>
-      <div slot="footer">
-        <Button @click="cancelSave" size="large" type="primary">知道了</Button>
-      </div>
-    </Modal>
-    <!-- 消息详情 -->
   </div>
 </template>
 
@@ -93,7 +79,6 @@ export default {
   props: {},
   data() {
     return {
-      detailModal: false,
       searchData: {
         title: ''
       },
@@ -158,7 +143,10 @@ export default {
                   }
                 ],
                 action: () => {
-                  this.openModal('detail', params.row);
+                  this.$router.push({
+                    name:'NoticeDetail',
+                    params:{notice:params.row}
+                  })
                 }
               },
               {
@@ -289,10 +277,6 @@ export default {
           this.getNoticeDetail(data.id);
           this.editModal = true;
           break;
-        case 'detail':
-          this.getNoticeDetail(data.id);
-          this.detailModal = true;
-          break;
       }
     },
     // 分页
@@ -371,7 +355,6 @@ export default {
     // 取消添加/修改
     cancelSave() {
       this.editModal = false;
-      this.detailModal = false;
       this.$refs['formRef'].resetFields();
     },
     // 重置
@@ -384,14 +367,3 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-.detail-modal {
-  .detail {
-    margin-bottom: 20px;
-  }
-  .time {
-    text-align: right;
-    color: #999;
-  }
-}
-</style>

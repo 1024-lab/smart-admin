@@ -26,20 +26,39 @@
           <template v-for="(item, i) in menuTree">
             <Submenu :key="i" :name="item.menuKey">
               <template slot="title">
-                <span>{{item.menuName}}</span>
+                <span><Icon type="md-menu" />{{item.menuName}}</span>
               </template>
               <!--遍历得到子模块-->
               <template v-for="(children, j) in item.children">
                 <Submenu :key="j" :name="children.menuKey" v-if="children.children.length > 0">
                   <template slot="title">
-                    <span>{{children.menuName}}</span>
+                      <template v-if="children.hideInMenu">
+                        <Icon type="md-open" /><i style="font-size:0.85rem"> {{children.menuName}}</i>
+                      </template>
+                      <template v-else>
+                        <Icon type="md-menu" /> {{children.menuName}}
+                      </template>
                   </template>
                   <!--遍历得到子模块页面-->
                   <template v-for="(childrenPages, k) in children.children">
-                    <MenuItem :key="k" :name="childrenPages.menuKey">{{childrenPages.menuName}}</MenuItem>
+                    <MenuItem :key="k" :name="childrenPages.menuKey">
+                      <template v-if="childrenPages.hideInMenu">
+                        <Icon type="md-open" /><i style="font-size:0.85rem"> {{childrenPages.menuName}}</i>
+                      </template>
+                      <template v-else>
+                        <Icon type="md-menu" /> {{childrenPages.menuName}}
+                      </template>
+                    </MenuItem>
                   </template>
                 </Submenu>
-                <MenuItem :key="j" :name="children.menuKey" v-else>{{children.menuName}}</MenuItem>
+                <MenuItem :key="j" :name="children.menuKey" v-else>
+                  <template v-if="children.hideInMenu">
+                    <Icon type="md-open" /><i style="font-size:0.85rem"> {{children.menuName}}</i>
+                  </template>
+                  <template v-else>
+                   <Icon type="md-menu" /> {{children.menuName}}
+                  </template>
+                </MenuItem>
               </template>
             </Submenu>
           </template>
@@ -166,17 +185,10 @@ export default {
 
       for (const router of routers) {
         //过滤非菜单
-        if (!router.meta.hideInMenu) {
+        if (!router.meta.noValidatePrivilege) {
           this.routerMap.set(router.name, router);
-          let menu = {
-            type: PRIVILEGE_TYPE_ENUM.MENU.value,
-            menuName: router.meta.title,
-            menuKey: router.name,
-            parentKey: null,
-            url: router.path,
-            children: [],
-            sort: 0
-          };
+          let menu = this.convert2Menu(router,null);
+          console.log('change menu : ', JSON.stringify(menu))
           privilegeTree.push(menu);
           privilegeList.push(menu);
           //判断是否有更新菜单
@@ -188,7 +200,7 @@ export default {
         }
       }
 
-      if (privilegeList.length !== serverMenuList.length) {
+      if (privilegeList.length < serverMenuList.length) {
         this.menusChange = true;
         this.menusChangeNum =
           this.menusChangeNum +
@@ -200,21 +212,26 @@ export default {
       this.$Spin.hide();
     },
 
-    recursion(children, parentMenu, menuList, serverMenuMap) {
-      for (const router of children) {
-        //过滤非菜单
-        if (!router.meta.hideInMenu) {
-          this.routerMap.set(router.name, router);
-          let menu = {
+    convert2Menu(router, parent){
+      return {
             type: PRIVILEGE_TYPE_ENUM.MENU.value,
             menuName: router.meta.title,
             menuKey: router.name,
-            parentKey: parentMenu.menuKey,
+            parentKey: parent,
             url: router.path,
             children: [],
-            sort: 0
+            sort: 0,
+            hideInMenu:router.meta.hideInMenu
           };
 
+    },
+
+    recursion(children, parentMenu, menuList, serverMenuMap) {
+      for (const router of children) {
+        //过滤非需要权限的
+        if (!router.meta.noValidatePrivilege) {
+          this.routerMap.set(router.name, router);
+          let menu = this.convert2Menu(router,parentMenu.menuKey);
           parentMenu.children.push(menu);
           menuList.push(menu);
           //判断是否有更新菜单
@@ -248,6 +265,7 @@ export default {
       }
 
       if (isChange) {
+        console.log('==============  change menu : ', menu, serverMenu,'   ===================')
         this.menusChange = true;
         this.menusChangeNum = this.menusChangeNum + 1;
       }
@@ -295,8 +313,8 @@ export default {
     // 点击菜单事件
     loadPrivilegeTableData(name) {
       let router = this.routerMap.get(name);
-      if (!_.isUndefined(router) && router.meta && router.meta.childrenPoints) {
-        this.privilegeTableData = router.meta.childrenPoints.map(e =>
+      if (!_.isUndefined(router) && router.meta && router.meta.privilege) {
+        this.privilegeTableData = router.meta.privilege.map(e =>
           Object.assign({}, e, { parentKey: name })
         );
       }
