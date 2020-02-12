@@ -16,7 +16,7 @@ import { file } from './module/file';
 
 /**
  *
- * iview-admin中meta除了原生参数外可配置的参数:
+ * meta除了原生参数外可配置的参数:
  * meta: {
  *  title: { String|Number|Function }
  *         显示在侧边栏、面包屑和标签栏的文字

@@ -12,7 +12,6 @@ const productionGzipExtensions = ['js', 'css'];
 // 如果您的应用程序部署在子路径中，则需要在这指定子路径
 // 例如：https://www.foobar.com/my-app/
 // 需要将它改为'/my-app/'
-// iview-admin线上演示打包路径： https://file.iviewui.com-dist/
 const publicPath = process.env.NODE_ENV === 'production' ? '/' : '/';
 const lintOnSave = process.env.NODE_ENV === 'production';
 
@@ -35,8 +34,8 @@ module.exports = {
       vendors: './src/vendors'
     };
     config.module
-      .rule('iview')
-      .test(/iview.src.*?js$/)
+      .rule('view-design')
+      .test(/view-design.src.*?js$/)
       .use('babel')
       .loader('babel-loader')
       .end();

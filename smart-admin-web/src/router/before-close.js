@@ -1,4 +1,4 @@
-import { Modal } from 'iview';
+import { Modal } from 'view-design';
 
 const beforeClose = {
   before_close_normal: resolve => {

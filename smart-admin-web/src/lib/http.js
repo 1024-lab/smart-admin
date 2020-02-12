@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import config from '@/config';
-import { Message, Spin } from 'iview';
+import { Message, Spin } from 'view-design';
 import cookie from '@/lib/cookie';
 // 之所以封装这个axios，是因为在一些请求中，无法上传信息，很尴尬，估计原因是继承的有问题，无法携带headers
 export const baseUrl = config.baseUrl.apiUrl;
