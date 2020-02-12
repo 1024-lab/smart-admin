@@ -4,9 +4,9 @@ import { localRead } from '@/lib/local';
 import customZhCn from './lang/zh-CN';
 import customZhTw from './lang/zh-TW';
 import customEnUs from './lang/en-US';
-import zhCnLocale from 'iview/src/locale/lang/zh-CN';
-import enUsLocale from 'iview/src/locale/lang/en-US';
-import zhTwLocale from 'iview/src/locale/lang/zh-TW';
+import zhCnLocale from 'view-design/src/locale/lang/zh-CN';
+import enUsLocale from 'view-design/src/locale/lang/en-US';
+import zhTwLocale from 'view-design/src/locale/lang/zh-TW';
 
 Vue.use(VueI18n);
 

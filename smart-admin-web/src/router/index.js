@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import { routers } from './routers';
 import store from '@/store';
-import iView from 'iview';
+import ViewUI from 'view-design';
 import cookie from '@/lib/cookie';
 import { localRead } from '@/lib/local';
 import { setTitle } from '@/lib/menu-func';
@@ -51,7 +51,7 @@ Router.prototype.closeCurrentPageAndPush = function (pushParam) {
 };
 let storeSelf = store;
 router.beforeEach((to, from, next) => {
-  iView.LoadingBar.start();
+  ViewUI.LoadingBar.start();
   const token = cookie.getToken();
   if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页
@@ -68,7 +68,7 @@ router.beforeEach((to, from, next) => {
       name: homeName
     });
     setTitle(to, router.app);
-    iView.LoadingBar.finish();
+    ViewUI.LoadingBar.finish();
     window.scrollTo(0, 0);
   } else {
     // 特殊页面直接放行
@@ -98,7 +98,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(to => {
   setTitle(to, router.app);
-  iView.LoadingBar.finish();
+  ViewUI.LoadingBar.finish();
   window.scrollTo(0, 0);
 });
 
