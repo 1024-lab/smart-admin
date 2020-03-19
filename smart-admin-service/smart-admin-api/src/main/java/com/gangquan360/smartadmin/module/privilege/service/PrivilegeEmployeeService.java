@@ -115,16 +115,19 @@ public class PrivilegeEmployeeService {
      * @return
      */
     public List<PrivilegeEntity> getPrivilegesByEmployeeId(Long employeeId) {
+        List<PrivilegeEntity> privilegeEntities = null;
         // 如果是超管的话
         Boolean isSuperman = this.isSuperman(employeeId);
         if (isSuperman) {
-            List<PrivilegeEntity> privilegeEntities = privilegeDao.selectAll();
-            if (privilegeEntities == null) {
-                return Lists.newArrayList();
-            }
-            return privilegeEntities;
+            privilegeEntities = privilegeDao.selectAll();
+        } else {
+            privilegeEntities = loadPrivilegeFromDb(employeeId);
         }
-        List<PrivilegeEntity> privilegeEntities = loadPrivilegeFromDb(employeeId);
+
+        if (privilegeEntities == null) {
+            privilegeEntities = Lists.newArrayList();
+        }
+
         this.updateCachePrivilege(employeeId, privilegeEntities);
         return privilegeEntities;
     }

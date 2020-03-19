@@ -10,9 +10,10 @@ import config from '@/config';
 
 const { homeName } = config;
 
-Vue.use(Router);
+Vue.use(Router); 
 const router = new Router({
-  routes: routers
+  // routes: routers,
+  routes: buildRouters(routers)
   // mode: 'history'
 });
 const LOGIN_PAGE_NAME = 'login';
@@ -107,6 +108,63 @@ let tempCheckObj = {
   checkRouterPathMap: new Map()
 };
 
+function buildRouters (routerArray) {
+  let lineRouters = [];
+  for (let routerItem of routerArray) {
+    //如果是顶层菜单
+    if (routerItem.meta.topMenu) {
+      // for (let children of routerItem.children) {
+      let lineRouterArray = convertRouterTree2Line(routerItem.children);
+      lineRouters.push(...lineRouterArray);
+      // }
+    } else {
+      let lineRouterArray = convertRouterTree2Line([routerItem]);
+      lineRouters.push(...lineRouterArray);
+    }
+  }
+  return lineRouters;
+}
+
+function convertRouterTree2Line (routerArray) {
+  //一级,比如 人员管理
+  let topArray = [];
+  for (let router1Item of routerArray) {
+    let level2Array = [];
+    //二级，比如员工管理
+    if (router1Item.children) {
+      for (let level2Item of router1Item.children) {
+
+        let level2ItemCopy = {};
+        for (let property in level2Item) {
+          if ('children' !== property) {
+            level2ItemCopy[property] = level2Item[property];
+          }
+        }
+
+        //三级，
+        if (level2Item.children) {
+          level2Array.push(...level2Item.children)
+        }
+
+        level2ItemCopy.children = [];
+        level2Array.push(level2Item);
+      }
+    }
+
+    let newTopRouterItem = {};
+    for (let property in router1Item) {
+      if ('children' !== property) {
+        newTopRouterItem[property] = router1Item[property];
+      }
+    }
+
+    newTopRouterItem.children = level2Array;
+    topArray.push(newTopRouterItem);
+  }
+
+  return topArray;
+}
+
 function recursionRouter (routerArray) {
   for (let routerItem of routerArray) {
     if (!routerItem.name) {
@@ -146,9 +204,12 @@ function recursionRouter (routerArray) {
   }
 }
 
-recursionRouter(routers);
 
-delete tempCheckObj.checkRouterNameMap;
-delete tempCheckObj.checkRouterPathMap;
+//如果是开发环境，需要检测router的规范性
+if (process.env.NODE_ENV === 'development') {
+  recursionRouter(routers);
+  delete tempCheckObj.checkRouterNameMap;
+  delete tempCheckObj.checkRouterPathMap;
+}
 
 export default router;

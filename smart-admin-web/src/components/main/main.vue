@@ -10,6 +10,7 @@
       v-model="collapsed"
     >
       <SideMenu
+        :menuNameMatchedMap="menuNameMatchedMap"
         :active-name="$route.name"
         :collapsed="collapsed"
         :menu-list="menuList"
@@ -123,7 +124,8 @@ export default {
       searchKeyWord: '',
       searchList: [],
       searchListResult: [],
-      menuList: []
+      menuList: [],
+      menuNameMatchedMap:new Map()
     };
   },
   computed: {
@@ -284,6 +286,7 @@ export default {
               icon: _.isUndefined(router.meta.icon) ? '' : router.meta.icon,
               children: []
             };
+            this.menuNameMatchedMap.set(menu.name,[menu.name]);
             privilegeTree.push(menu);
             //存在孩子节点，开始递归
             if (router.children && router.children.length > 0) {
@@ -292,11 +295,17 @@ export default {
           }
         }
       }
+      console.log('privilegeTree',privilegeTree)
       this.menuList = privilegeTree;
     },
 
     recursion(children, parentMenu) {
       for (const router of children) {
+          //验证权限
+        if (this.$store.state.user.privilegeMenuKeyList.indexOf(router.name) ===-1) {
+          continue;
+        }  
+
         //过滤非菜单
         if (!router.meta.hideInMenu) {
           let menu = {
@@ -309,6 +318,10 @@ export default {
             name: router.name,
             title: router.meta.title
           });
+
+          let menuNameArray = this.menuNameMatchedMap.get(parentMenu.name);
+          this.menuNameMatchedMap.set(menu.name,[...menuNameArray,menu.name]);
+
           parentMenu.children.push(menu);
           //存在孩子节点，开始递归
           if (router.children && router.children.length > 0) {
