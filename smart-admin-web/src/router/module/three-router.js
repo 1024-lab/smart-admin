@@ -17,7 +17,6 @@ export const threeRouter = [
         meta: {
           title: '三级菜单'
         },
-        component: () => import('@/views/home'),
         children: [
           {
             path: '/three-router/level-two/level-three1',
@@ -29,7 +28,7 @@ export const threeRouter = [
                 { title: '删除', name: 'roleOneTwo-delete' }
               ]
             },
-            component: () => import('@/views/home')
+            component: () => import('@/views/three-router/three-content')
           },
           {
             path: '/three-router/level-two/level-three2',
@@ -41,7 +40,7 @@ export const threeRouter = [
                 { title: '删除', name: 'roleTwoTwo-delete' }
               ]
             },
-            component: () => import('@/views/home')
+            component: () => import('@/views/three-router/three-content')
           }
         ]
       },
@@ -55,7 +54,7 @@ export const threeRouter = [
             { title: '删除', name: 'roleOneOne-delete' }
           ]
         },
-        component: () => import('@/views/home')
+        component: () => import('@/views/three-router/three-content')
       }
     ]
   }

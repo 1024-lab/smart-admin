@@ -8,6 +8,7 @@ import com.gangquan360.smartadmin.module.quartz.task.ITask;
 import com.gangquan360.smartadmin.third.SmartApplicationContext;
 import com.gangquan360.smartadmin.util.SmartIPUtil;
 import com.gangquan360.smartadmin.util.SmartQuartzUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -28,6 +29,7 @@ import java.util.Date;
  * @date
  * @since JDK1.8
  */
+@Slf4j
 public class QuartzTask extends QuartzJobBean {
 
     @Override
@@ -59,7 +61,7 @@ public class QuartzTask extends QuartzJobBean {
             ITask taskClass = (ITask) SmartApplicationContext.getBean(quartzTaskEntity.getTaskBean());
             taskClass.execute(paramsStr);
             taskLogEntity.setProcessStatus(TaskResultEnum.SUCCESS.getStatus());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw, true);
             e.printStackTrace(pw);
@@ -67,6 +69,7 @@ public class QuartzTask extends QuartzJobBean {
             sw.flush();
             taskLogEntity.setProcessStatus(TaskResultEnum.FAIL.getStatus());
             taskLogEntity.setProcessLog(sw.toString());
+            log.error("",e);
         } finally {
             long times = System.currentTimeMillis() - startTime;
             taskLogEntity.setProcessDuration(times);

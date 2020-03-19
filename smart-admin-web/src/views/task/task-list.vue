@@ -80,19 +80,8 @@
           <span>任务调度日志</span>
         </Col>
       </Row>
-      <Tables
-        :columns="logColumns"
-        :current="logPageNum"
-        :page-size="changeLogPageSize"
-        :pageShow="true"
-        :show-elevator="false"
-        :show-sizer="false"
-        :total="logPageTotal"
-        :value="logData"
-        @on-change="logChangePage"
-        style="height: 420px;"
-        v-if="hasLog"
-      ></Tables>
+      <Table border :columns="logColumns" :data="logData"></Table>
+       <Page show-total @on-change="changeLogPageNum" :current="logPageNum" :total="logTotal" show-sizer />
       <div slot="footer">
         <Button @click="closeLog" type="primary">关闭</Button>
       </div>
@@ -125,8 +114,8 @@ export default {
       pageSize: 10,
       pageTotal: 0,
       logPageNum: 1,
-      logPageSize: 6,
-      logPageTotal: 0,
+      logPageSize: 10,
+      logTotal: 0,
       updateItem: {
         taskBean: '',
         taskCron: '',
@@ -387,7 +376,7 @@ export default {
         taskId: this.taskId
       });
       this.logData = result.data.list;
-      this.logPageTotal = result.data.total;
+      this.logTotal = result.data.total;
       this.logPageNum = result.data.pageNum;
       this.logPageSize = result.data.pageSize;
       this.hasLog = true;
@@ -405,7 +394,7 @@ export default {
       this.getTaskList();
     },
     // 日志分页
-    changeLogPageSize(pageNum) {
+    changeLogPageNum(pageNum) {
       this.logPageNum = pageNum;
       this.getTaskLog();
     },

@@ -29,7 +29,7 @@ export const taskApi = {
     return getAxios(`/quartz/task/resume/${taskId}`);
   },
   //   删除任务
-  deleteTasks: (taskId) => {
+  deleteTask: (taskId) => {
     return getAxios(`/quartz/task/delete/${taskId}`);
   }
 };

@@ -149,6 +149,10 @@ public class CodeGeneratorService {
         int targetIndex = StringUtils.indexOf(projectPath, targetDir);
         projectPath = projectPath.substring(0, targetIndex + targetDir.length() + 1);
         projectPath = projectPath.replace("target/", "").replaceFirst("/", "");
+
+        Velocity.setProperty("input.encoding", "UTF-8");
+        Velocity.setProperty("output.encoding", "UTF-8");
+
         for (Entry<String, String> entry : codeTemplates.entrySet()) {
             String template = entry.getKey();
             String filePath = projectPath + entry.getValue();
