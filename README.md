@@ -112,7 +112,6 @@ SmartAdmin微信群（**加我拉你入群！**）：
 <table>
 <tr>
   <td><img src="http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat.jpg"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png"/></td>
   <td><img src="http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat-money-v1.jpg"/></td>
 </tr>
 </table>
