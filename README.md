@@ -5,7 +5,7 @@ SmartAdmin由河南·洛阳 [1024创新实验室](https://www.1024lab.net/)团�
 github: [https://github.com/1024-lab/smart-admin](https://github.com/1024-lab/smart-admin)  
 gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-admin)  
 在线预览： [http://preview.smartadmin.1024lab.net](http://preview.smartadmin.1024lab.net)  
-部署文档：[http://smartadmin.1024lab.net/doc/1/68](http://smartadmin.1024lab.net/doc/1/68)
+部署文档：[http://smartadmin.1024lab.net/doc/2/168](http://smartadmin.1024lab.net/doc/2/168)
 
 #### 疑惑
 有人问：又是个“轮子”？ 轮子靠谱吗？为什么要选择你这个轮子？
@@ -24,38 +24,38 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 #### 演示图
 <table>
 <tr>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/11.png"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/12.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/11.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/12.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/21.png"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/22.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/11.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/21.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/31.png"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/32.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/31.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/32.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/41.png"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/42.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/41.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/42.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/51.png"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/52.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/51.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/52.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/61.png"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/62.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/61.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/62.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/71.png"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/cut/72.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/71.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/72.png"/></td>
 </tr>
 </table>
 
 
 #### 技术体系
-- 前端：Vue + Vue-Router + Vuex + ViewUI(iview) + vue-enum
+- 前端：Vue + Vue-Router + Vuex + ViewUI + vue-enum
 - 后端：SpringBoot2 + Mybatis-plus + jwt + druid + mysql
 - 前端代码规范smart-front-standard -guide（大力推荐）
 - 基于阿里规范之上的后端规范smart-backend-standard-guide（大力推荐）
@@ -67,7 +67,7 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 - 前端常量维护: vue-enum，拒绝出现魔法数字，代码不可维护的现象
 - 全新的基于前端的权限设计（忘掉传统的权限设计吧，已经不适合这个前端时代）
 - 基于websocket的在线人数
-- 支持一级、二级、三级菜单，单搜索功能
+- 支持一级、二级、三级菜单，四级菜单以及搜索功能
 - 其他功能：邮件、富文本、消息、系统配置等等
 - 写不完了，太多好的细节需要你的发现......
 
@@ -103,19 +103,27 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 ps：以上规范基础都是以团队出发，让团队开心快乐的写代码，而不是为了代码规范而规范，不喜勿喷！谢谢。
 
 #### 联系我们
+
 [1024创新实验室](https://www.1024lab.net/)
 
-官方QQ群：914442584
-
-SmartAdmin微信群（**加我拉你入群！**）：
+SmartAdmin微信群（**加我微信拉你入群！**）
 
 <table>
 <tr>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat.jpg"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/smart-admin-qq-group.png"/></td>
-  <td><img src="http://cdn.1024lab.net/img/smart-admin/zhuoda-wechat-money-v1.jpg"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/wechat/zhuoda-wechat.jpg"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/qq/smart-admin-qq-group.png"/></td>
 </tr>
 </table>
+
+#### 捐赠
+开源不易，感谢捐赠
+>*佛祖保佑捐赠这些人写程序永无bug，工资翻倍，迎娶白富美，走上人生巅峰！*
+<table>
+<tr>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/wechat/zhuoda-wechat-money-v1.jpg"/></td>
+</tr>
+</table>
+
 
 ---
 作者简介:

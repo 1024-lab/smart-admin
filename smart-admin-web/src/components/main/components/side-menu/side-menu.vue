@@ -13,7 +13,7 @@
     >
       <template v-for="item in menuList">
         <template v-if="item.children && item.children.length === 1">
-          <side-menu-item :key="`menu-${item.name}`" :parent-item="item" v-if="showChildren(item)"></side-menu-item>
+          <side-menu-item :key="`menu-${item.name}`" :parent-item="item.children[0]" v-if="item.children[0].children && item.children[0].children.length > 0 "></side-menu-item>
           <menu-item
             :key="`menu-${item.children[0].name}`"
             :name="getNameOrHref(item, true)"
@@ -24,7 +24,7 @@
           </menu-item>
         </template>
         <template v-else>
-          <side-menu-item :key="`menu-${item.name}`" :parent-item="item" v-if="showChildren(item)"></side-menu-item>
+          <side-menu-item :key="`menu-${item.name}`" :parent-item="item" v-if="item.children && item.children.length > 0"></side-menu-item>
           <menu-item :key="`menu-${item.name}`" :name="getNameOrHref(item)" v-else>
             <common-icon :type="item.icon || ''" />
             <span>{{ showTitle(item) }}</span>
@@ -81,6 +81,13 @@ export default {
     CollapsedMenu
   },
   props: {
+    // 菜单path数组
+    menuNameMatchedMap:{
+      type: Map,
+      default() {
+        return new Map();
+      }
+    },
     // 菜单集合
     menuList: {
       type: Array,
@@ -161,6 +168,7 @@ export default {
   },
   methods: {
     updateActiveName(name){
+      this.updateOpenName(name)
       this.$nextTick(() => {
         this.$refs.menu.updateOpened();
         this.$refs.menu.updateActiveName(name);
@@ -171,13 +179,20 @@ export default {
     },
     // 从激活菜单的名称中获取打开的菜单
     getOpenedNamesByActiveName(name) {
-      return this.$route.matched
-        .map(item => item.name)
-        .filter(item => item !== name);
+      // return this.$route.matched
+      //   .map(item => item.name)
+      //   .filter(item => item !== name);
+        let array =  this.menuNameMatchedMap.get(name);
+        if(array){
+            return array;
+        }else{
+          return [];
+        }
     },
     updateOpenName(name) {
-      if (name === this.$config.homeName) this.openedNames = [];
-      else this.openedNames = this.getOpenedNamesByActiveName(name);
+      // if (name === this.$config.homeName) this.openedNames = [];
+      // else this.openedNames = this.getOpenedNamesByActiveName(name);
+      this.openedNames = this.menuNameMatchedMap.get(name);
     }
   }
 };

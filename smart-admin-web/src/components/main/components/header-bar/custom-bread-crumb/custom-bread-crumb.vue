@@ -21,7 +21,7 @@ export default {
     // 面包屑显示字体大小
     fontSize: {
       type: Number,
-      default: 14
+      default: 12
     },
     // 是否显示图标
     showIcon: {

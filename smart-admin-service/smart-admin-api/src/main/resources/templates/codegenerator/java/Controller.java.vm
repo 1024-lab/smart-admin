@@ -1,0 +1,88 @@
+package ${basePackage}.module.${modulePackage}.controller;
+
+import ${basePackage}.common.domain.PageResultDTO;
+import ${basePackage}.common.controller.BaseController;
+import ${basePackage}.common.domain.ResponseDTO;
+import ${basePackage}.common.domain.ValidateList;
+import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}AddDTO;
+import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}UpdateDTO;
+import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}QueryDTO;
+import ${basePackage}.module.${modulePackage}.domain.vo.${moduleClass}VO;
+import ${basePackage}.module.${modulePackage}.domain.vo.${moduleClass}ExcelVO;
+import ${basePackage}.module.${modulePackage}.service.${moduleClass}Service;
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import org.apache.poi.ss.usermodel.Workbook;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+/**
+ * [ ${tableDesc} ]
+ *
+ * @author ${author}
+ * @version 1.0
+ * @company ${company}
+ * @copyright (c)  ${company}Inc. All rights reserved.
+ * @date ${date}
+ * @since JDK1.8
+ */
+@RestController
+@Api(tags = {"${tableDesc}"})
+public class ${moduleClass}Controller extends BaseController {
+
+    @Autowired
+    private ${moduleClass}Service ${moduleVar}Service;
+
+    @ApiOperation(value = "分页查询${tableDesc}",notes = "@author ${author}")
+    @PostMapping("/${moduleVar}/page/query")
+    public ResponseDTO<PageResultDTO<${moduleClass}VO>> queryByPage(@RequestBody ${moduleClass}QueryDTO queryDTO) {
+        return ${moduleVar}Service.queryByPage(queryDTO);
+    }
+
+    @ApiOperation(value = "添加${tableDesc}",notes = "@author ${author}")
+    @PostMapping("/${moduleVar}/add")
+    public ResponseDTO<String> add(@RequestBody @Validated ${moduleClass}AddDTO addTO){
+        return ${moduleVar}Service.add(addTO);
+    }
+
+    @ApiOperation(value="修改${tableDesc}",notes = "@author ${author}")
+    @PostMapping("/${moduleVar}/update")
+    public ResponseDTO<String> update(@RequestBody @Validated ${moduleClass}UpdateDTO updateDTO){
+        return ${moduleVar}Service.update(updateDTO);
+    }
+
+    @ApiOperation(value="批量删除${tableDesc}",notes = "@author ${author}")
+    @PostMapping("/${moduleVar}/deleteByIds")
+    public ResponseDTO<String> delete(@RequestBody @Validated ValidateList<Long> idList) {
+        return ${moduleVar}Service.deleteByIds(idList);
+    }
+
+    @ApiOperation(value = "批量导出", notes = "@author ${author}")
+    @PostMapping("/${moduleVar}/export/batch")
+    public void batchExport(@RequestBody @Validated ValidateList<Long> idList, HttpServletResponse response) {
+        //查询数据
+        List<${moduleClass}ExcelVO> ${moduleVar}List = ${moduleVar}Service.queryBatchExportData(idList);
+        //导出操作
+        ExportParams ex = new ExportParams("${tableDesc}", "Sheet1");
+        Workbook workbook = ExcelExportUtil.exportExcel(ex, ${moduleClass}ExcelVO.class, ${moduleVar}List);
+        downloadExcel("${tableDesc}", workbook, response);
+    }
+
+    @ApiOperation(value = "导出全部", notes = "@author ${author}")
+    @PostMapping("/${moduleVar}/export/all")
+    public void exportAll(@RequestBody @Validated ${moduleClass}QueryDTO queryDTO, HttpServletResponse response) {
+        //查询数据
+        List<${moduleClass}ExcelVO> ${moduleVar}List = ${moduleVar}Service.queryAllExportData(queryDTO);
+        //导出操作
+        ExportParams ex = new ExportParams("${tableDesc}", "Sheet1");
+        Workbook workbook = ExcelExportUtil.exportExcel(ex, ${moduleClass}ExcelVO.class, ${moduleVar}List);
+        downloadExcel("${tableDesc}", workbook, response);
+    }
+
+}

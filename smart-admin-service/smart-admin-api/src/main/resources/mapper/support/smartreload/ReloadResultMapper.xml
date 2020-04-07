@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.smartadmin.module.support.smartreload.dao.ReloadResultDao">
+
+    <resultMap id="reloadResultEntity"
+               type="net.lab1024.smartadmin.module.support.smartreload.domain.entity.ReloadResultEntity"></resultMap>
+
+    <select id="query" resultMap="reloadResultEntity">
+        SELECT
+        *
+        FROM
+            t_reload_result
+        WHERE
+            tag = #{tag}
+        ORDER BY
+            create_time DESC
+    </select>
+</mapper>

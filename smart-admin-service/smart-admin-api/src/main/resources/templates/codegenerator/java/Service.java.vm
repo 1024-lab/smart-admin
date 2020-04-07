@@ -1,0 +1,108 @@
+package ${basePackage}.module.${modulePackage}.service;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import ${basePackage}.common.domain.PageResultDTO;
+import ${basePackage}.common.domain.ResponseDTO;
+import ${basePackage}.module.${modulePackage}.dao.${moduleClass}Dao;
+import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}AddDTO;
+import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}UpdateDTO;
+import ${basePackage}.module.${modulePackage}.domain.dto.${moduleClass}QueryDTO;
+import ${basePackage}.module.${modulePackage}.domain.entity.${moduleClass}Entity;
+import ${basePackage}.module.${modulePackage}.domain.vo.${moduleClass}VO;
+import ${basePackage}.module.${modulePackage}.domain.vo.${moduleClass}ExcelVO;
+import ${basePackage}.util.SmartPageUtil;
+import ${basePackage}.util.SmartBeanUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * [ ${tableDesc} ]
+ *
+ * @author ${author}
+ * @version 1.0
+ * @company ${company}
+ * @copyright (c)  ${company}Inc. All rights reserved.
+ * @date ${date}
+ * @since JDK1.8
+ */
+@Service
+public class ${moduleClass}Service {
+
+    @Autowired
+    private ${moduleClass}Dao ${moduleVar}Dao;
+
+    /**
+     * 根据id查询
+     */
+    public ${moduleClass}Entity getById(Long id){
+        return  ${moduleVar}Dao.selectById(id);
+    }
+
+    /**
+     * 分页查询
+     * @author ${author}
+     * @date ${date}
+     */
+    public ResponseDTO<PageResultDTO<${moduleClass}VO>> queryByPage(${moduleClass}QueryDTO queryDTO) {
+        Page page = SmartPageUtil.convert2QueryPage(queryDTO);
+        IPage<${moduleClass}VO> voList = ${moduleVar}Dao.queryByPage(page, queryDTO);
+        PageResultDTO<${moduleClass}VO> pageResultDTO = SmartPageUtil.convert2PageResult(voList);
+        return ResponseDTO.succData(pageResultDTO);
+    }
+
+    /**
+     * 添加
+     * @author ${author}
+     * @date ${date}
+     */
+    public ResponseDTO<String> add(${moduleClass}AddDTO addDTO) {
+        ${moduleClass}Entity entity = SmartBeanUtil.copy(addDTO, ${moduleClass}Entity.class);
+        ${moduleVar}Dao.insert(entity);
+        return ResponseDTO.succ();
+    }
+
+    /**
+     * 编辑
+     * @author ${author}
+     * @date ${date}
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<String> update(${moduleClass}UpdateDTO updateDTO) {
+        ${moduleClass}Entity entity = SmartBeanUtil.copy(updateDTO, ${moduleClass}Entity.class);
+        ${moduleVar}Dao.updateById(entity);
+        return ResponseDTO.succ();
+    }
+
+    /**
+     * 删除
+     * @author ${author}
+     * @date ${date}
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<String> deleteByIds(List<Long> idList) {
+        ${moduleVar}Dao.deleteByIdList(idList);
+        return ResponseDTO.succ();
+    }
+
+    /**
+     * 查询全部导出对象
+     * @author ${author}
+     * @date ${date}
+     */
+    public List<${moduleClass}ExcelVO> queryAllExportData(${moduleClass}QueryDTO queryDTO) {
+        return ${moduleVar}Dao.queryAllExportData( queryDTO);
+    }
+
+    /**
+     * 批量查询导出对象
+     * @author ${author}
+     * @date ${date}
+     */
+    public List<${moduleClass}ExcelVO> queryBatchExportData(List<Long> idList) {
+        return ${moduleVar}Dao.queryBatchExportData(idList);
+    }
+}

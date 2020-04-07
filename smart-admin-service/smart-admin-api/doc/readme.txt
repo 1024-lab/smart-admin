@@ -1,5 +1,5 @@
 1 更新密码
-com.gangquan360.smartadmin.module.employee.EmployeeController.updatePwd
+EmployeeController.updatePwd
 
 2 更新功能点
 PrivilegeController functionSaveOrUpdate和menuBatchSave
@@ -14,4 +14,9 @@ sa/123456
 5 除dev之外文件
 
 6 刷新页面，获取权限是否走缓存
-com.gangquan360.smartadmin.module.login.LoginService.getSession
+LoginService.getSession
+
+7 test类中去掉代码生成run
+
+8 RoleController 更新角色
+  updateRole

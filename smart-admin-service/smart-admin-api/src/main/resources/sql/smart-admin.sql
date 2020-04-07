@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
--- 主机:                           127.0.0.1
--- 服务器版本:                        5.7.20-log - MySQL Community Server (GPL)
--- 服务器操作系统:                      Win64
--- HeidiSQL 版本:                  10.2.0.5670
+-- Host:                         127.0.0.1
+-- Server version:               5.7.28 - MySQL Community Server (GPL)
+-- Server OS:                    Win64
+-- HeidiSQL Version:             10.2.0.5670
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -12,12 +12,243 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
--- 导出 smart-admin-dev 的数据库结构
+-- Dumping database structure for smart-admin-dev
 DROP DATABASE IF EXISTS `smart-admin-dev`;
 CREATE DATABASE IF NOT EXISTS `smart-admin-dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `smart-admin-dev`;
 
--- 导出  表 smart-admin-dev.t_department 结构
+-- Dumping structure for table smart-admin-dev.qrtz_blob_triggers
+DROP TABLE IF EXISTS `qrtz_blob_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_blob_triggers` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `BLOB_DATA` blob,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  KEY `SCHED_NAME` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_blob_triggers: ~0 rows (approximately)
+DELETE FROM `qrtz_blob_triggers`;
+/*!40000 ALTER TABLE `qrtz_blob_triggers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_blob_triggers` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_calendars
+DROP TABLE IF EXISTS `qrtz_calendars`;
+CREATE TABLE IF NOT EXISTS `qrtz_calendars` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `CALENDAR_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `CALENDAR` blob NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`CALENDAR_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_calendars: ~0 rows (approximately)
+DELETE FROM `qrtz_calendars`;
+/*!40000 ALTER TABLE `qrtz_calendars` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_calendars` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_cron_triggers
+DROP TABLE IF EXISTS `qrtz_cron_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_cron_triggers` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `CRON_EXPRESSION` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TIME_ZONE_ID` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_cron_triggers: ~0 rows (approximately)
+DELETE FROM `qrtz_cron_triggers`;
+/*!40000 ALTER TABLE `qrtz_cron_triggers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_cron_triggers` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_fired_triggers
+DROP TABLE IF EXISTS `qrtz_fired_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_fired_triggers` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ENTRY_ID` varchar(95) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `INSTANCE_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `FIRED_TIME` bigint(13) NOT NULL,
+  `SCHED_TIME` bigint(13) NOT NULL,
+  `PRIORITY` int(11) NOT NULL,
+  `STATE` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_NAME` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `JOB_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `IS_NONCONCURRENT` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `REQUESTS_RECOVERY` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`),
+  KEY `IDX_QRTZ_FT_TRIG_INST_NAME` (`SCHED_NAME`,`INSTANCE_NAME`),
+  KEY `IDX_QRTZ_FT_INST_JOB_REQ_RCVRY` (`SCHED_NAME`,`INSTANCE_NAME`,`REQUESTS_RECOVERY`),
+  KEY `IDX_QRTZ_FT_J_G` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_FT_JG` (`SCHED_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_FT_T_G` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  KEY `IDX_QRTZ_FT_TG` (`SCHED_NAME`,`TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_fired_triggers: ~0 rows (approximately)
+DELETE FROM `qrtz_fired_triggers`;
+/*!40000 ALTER TABLE `qrtz_fired_triggers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_fired_triggers` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_job_details
+DROP TABLE IF EXISTS `qrtz_job_details`;
+CREATE TABLE IF NOT EXISTS `qrtz_job_details` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `DESCRIPTION` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `JOB_CLASS_NAME` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `IS_DURABLE` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `IS_NONCONCURRENT` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `IS_UPDATE_DATA` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `REQUESTS_RECOVERY` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_DATA` blob,
+  PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_J_REQ_RECOVERY` (`SCHED_NAME`,`REQUESTS_RECOVERY`),
+  KEY `IDX_QRTZ_J_GRP` (`SCHED_NAME`,`JOB_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_job_details: ~0 rows (approximately)
+DELETE FROM `qrtz_job_details`;
+/*!40000 ALTER TABLE `qrtz_job_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_job_details` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_locks
+DROP TABLE IF EXISTS `qrtz_locks`;
+CREATE TABLE IF NOT EXISTS `qrtz_locks` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `LOCK_NAME` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_locks: ~2 rows (approximately)
+DELETE FROM `qrtz_locks`;
+/*!40000 ALTER TABLE `qrtz_locks` DISABLE KEYS */;
+INSERT INTO `qrtz_locks` (`SCHED_NAME`, `LOCK_NAME`) VALUES
+	('devClusteredScheduler', 'STATE_ACCESS'),
+	('devClusteredScheduler', 'TRIGGER_ACCESS');
+/*!40000 ALTER TABLE `qrtz_locks` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_paused_trigger_grps
+DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
+CREATE TABLE IF NOT EXISTS `qrtz_paused_trigger_grps` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_paused_trigger_grps: ~0 rows (approximately)
+DELETE FROM `qrtz_paused_trigger_grps`;
+/*!40000 ALTER TABLE `qrtz_paused_trigger_grps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_paused_trigger_grps` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_scheduler_state
+DROP TABLE IF EXISTS `qrtz_scheduler_state`;
+CREATE TABLE IF NOT EXISTS `qrtz_scheduler_state` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `INSTANCE_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
+  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_scheduler_state: ~1 rows (approximately)
+DELETE FROM `qrtz_scheduler_state`;
+/*!40000 ALTER TABLE `qrtz_scheduler_state` DISABLE KEYS */;
+INSERT INTO `qrtz_scheduler_state` (`SCHED_NAME`, `INSTANCE_NAME`, `LAST_CHECKIN_TIME`, `CHECKIN_INTERVAL`) VALUES
+	('devClusteredScheduler', 'PC2017A1586244610775', 1586261378403, 10000);
+/*!40000 ALTER TABLE `qrtz_scheduler_state` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_simple_triggers
+DROP TABLE IF EXISTS `qrtz_simple_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_simple_triggers` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `REPEAT_COUNT` bigint(7) NOT NULL,
+  `REPEAT_INTERVAL` bigint(12) NOT NULL,
+  `TIMES_TRIGGERED` bigint(10) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_simple_triggers: ~0 rows (approximately)
+DELETE FROM `qrtz_simple_triggers`;
+/*!40000 ALTER TABLE `qrtz_simple_triggers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_simple_triggers` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_simprop_triggers
+DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_simprop_triggers` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `STR_PROP_1` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `STR_PROP_2` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `STR_PROP_3` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `INT_PROP_1` int(11) DEFAULT NULL,
+  `INT_PROP_2` int(11) DEFAULT NULL,
+  `LONG_PROP_1` bigint(20) DEFAULT NULL,
+  `LONG_PROP_2` bigint(20) DEFAULT NULL,
+  `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
+  `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
+  `BOOL_PROP_1` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `BOOL_PROP_2` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_simprop_triggers: ~0 rows (approximately)
+DELETE FROM `qrtz_simprop_triggers`;
+/*!40000 ALTER TABLE `qrtz_simprop_triggers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_simprop_triggers` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.qrtz_triggers
+DROP TABLE IF EXISTS `qrtz_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_triggers` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `DESCRIPTION` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `NEXT_FIRE_TIME` bigint(13) DEFAULT NULL,
+  `PREV_FIRE_TIME` bigint(13) DEFAULT NULL,
+  `PRIORITY` int(11) DEFAULT NULL,
+  `TRIGGER_STATE` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_TYPE` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `START_TIME` bigint(13) NOT NULL,
+  `END_TIME` bigint(13) DEFAULT NULL,
+  `CALENDAR_NAME` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `MISFIRE_INSTR` smallint(2) DEFAULT NULL,
+  `JOB_DATA` blob,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  KEY `IDX_QRTZ_T_J` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_T_JG` (`SCHED_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_T_C` (`SCHED_NAME`,`CALENDAR_NAME`),
+  KEY `IDX_QRTZ_T_G` (`SCHED_NAME`,`TRIGGER_GROUP`),
+  KEY `IDX_QRTZ_T_STATE` (`SCHED_NAME`,`TRIGGER_STATE`),
+  KEY `IDX_QRTZ_T_N_STATE` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
+  KEY `IDX_QRTZ_T_N_G_STATE` (`SCHED_NAME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
+  KEY `IDX_QRTZ_T_NEXT_FIRE_TIME` (`SCHED_NAME`,`NEXT_FIRE_TIME`),
+  KEY `IDX_QRTZ_T_NFT_ST` (`SCHED_NAME`,`TRIGGER_STATE`,`NEXT_FIRE_TIME`),
+  KEY `IDX_QRTZ_T_NFT_MISFIRE` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`),
+  KEY `IDX_QRTZ_T_NFT_ST_MISFIRE` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_STATE`),
+  KEY `IDX_QRTZ_T_NFT_ST_MISFIRE_GRP` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
+  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table smart-admin-dev.qrtz_triggers: ~0 rows (approximately)
+DELETE FROM `qrtz_triggers`;
+/*!40000 ALTER TABLE `qrtz_triggers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_triggers` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.t_department
 DROP TABLE IF EXISTS `t_department`;
 CREATE TABLE IF NOT EXISTS `t_department` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '部门主键id',
@@ -32,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `t_department` (
   KEY `parent_id` (`parent_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
 
--- 正在导出表  smart-admin-dev.t_department 的数据：~20 rows (大约)
+-- Dumping data for table smart-admin-dev.t_department: ~20 rows (approximately)
 DELETE FROM `t_department`;
 /*!40000 ALTER TABLE `t_department` DISABLE KEYS */;
 INSERT INTO `t_department` (`id`, `name`, `short_name`, `manager_id`, `parent_id`, `sort`, `update_time`, `create_time`) VALUES
@@ -52,13 +283,13 @@ INSERT INTO `t_department` (`id`, `name`, `short_name`, `manager_id`, `parent_id
 	(18, '测试部门', NULL, 16, 17, 18, '2019-04-26 11:54:06', '2019-04-26 11:54:06'),
 	(19, '张娇测试', NULL, NULL, 2, 22, '2019-04-26 14:36:18', '2019-04-26 14:36:18'),
 	(20, '子部门', NULL, NULL, 2, 23, '2019-04-26 14:36:28', '2019-04-26 14:36:28'),
-	(22, '张静如', NULL, 16, 1, 2, '2019-04-28 14:21:44', '2019-04-28 14:21:44'),
-	(23, '张静如2', NULL, 22, 4, 19, '2019-04-28 14:22:48', '2019-04-28 14:22:48'),
+	(22, '销售部门', NULL, 16, 1, 2, '2019-04-28 14:21:44', '2019-04-28 14:21:44'),
+	(23, '研发', NULL, 22, 4, 19, '2019-04-28 14:22:48', '2019-04-28 14:22:48'),
 	(24, '测试', NULL, 18, 23, 24, '2019-04-29 10:12:42', '2019-04-29 10:12:42'),
 	(25, '测试', NULL, 18, 23, 25, '2019-04-29 10:12:42', '2019-04-29 10:12:42');
 /*!40000 ALTER TABLE `t_department` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_email 结构
+-- Dumping structure for table smart-admin-dev.t_email
 DROP TABLE IF EXISTS `t_email`;
 CREATE TABLE IF NOT EXISTS `t_email` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -69,13 +300,12 @@ CREATE TABLE IF NOT EXISTS `t_email` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  smart-admin-dev.t_email 的数据：~56 rows (大约)
+-- Dumping data for table smart-admin-dev.t_email: ~56 rows (approximately)
 DELETE FROM `t_email`;
 /*!40000 ALTER TABLE `t_email` DISABLE KEYS */;
 INSERT INTO `t_email` (`id`, `title`, `to_emails`, `send_status`, `content`, `create_time`, `update_time`) VALUES
-	(20, '新增测试12345', '新增测试@11.com', 1, '<p>这是内容</p>', '2019-08-30 15:35:12', '2019-08-30 15:35:12'),
 	(21, 'b', 'asdf@33.com', 1, '<p>c</p>', '2019-09-06 14:25:33', '2019-09-06 14:25:33'),
 	(23, 'string', 'string', 0, 'string', '2019-09-06 06:55:01', '2019-09-06 06:55:01'),
 	(24, 'string', 'string', 0, 'string', '2019-09-06 06:55:01', '2019-09-06 06:55:01'),
@@ -130,10 +360,11 @@ INSERT INTO `t_email` (`id`, `title`, `to_emails`, `send_status`, `content`, `cr
 	(83, 'asdasd', 'asd@qq.vv', 0, '<p>asdas</p>', '2019-11-16 09:09:18', '2019-11-16 09:09:18'),
 	(84, 'asdasd', 'asd@qq.vv', 0, '<p>asdas</p>', '2019-11-16 09:09:42', '2019-11-16 09:09:42'),
 	(85, 'asdasd', 'asd@qq.vv', 0, '<p>asdas</p>', '2019-11-16 09:09:46', '2019-11-16 09:09:46'),
-	(86, 'dasdad', 'dasda@ss.cc', 1, '<p>dasasdas</p>', '2019-11-16 09:10:05', '2019-11-16 09:10:05');
+	(86, 'dasdad', 'dasda@ss.cc', 1, '<p>dasasdas</p>', '2019-11-16 09:10:05', '2019-11-16 09:10:05'),
+	(87, 'gggg', 'gggg@qqd.gg', 1, '<p>ffdgdf</p>', '2020-03-20 13:46:21', '2020-03-20 13:46:21');
 /*!40000 ALTER TABLE `t_email` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_employee 结构
+-- Dumping structure for table smart-admin-dev.t_employee
 DROP TABLE IF EXISTS `t_employee`;
 CREATE TABLE IF NOT EXISTS `t_employee` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -156,41 +387,41 @@ CREATE TABLE IF NOT EXISTS `t_employee` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COMMENT='员工表';
 
--- 正在导出表  smart-admin-dev.t_employee 的数据：~28 rows (大约)
+-- Dumping data for table smart-admin-dev.t_employee: ~28 rows (approximately)
 DELETE FROM `t_employee`;
 /*!40000 ALTER TABLE `t_employee` DISABLE KEYS */;
 INSERT INTO `t_employee` (`id`, `login_name`, `login_pwd`, `actual_name`, `nick_name`, `phone`, `id_card`, `birthday`, `email`, `department_id`, `is_leave`, `is_disabled`, `remark`, `create_user`, `update_time`, `create_time`, `is_delete`) VALUES
 	(1, 'sa', 'c655798e4648c540812a1b8f48759af7', '管理员', '15515515515', '13112312131', '410306199202020020', '1992-02-02', NULL, 1, 0, 0, NULL, 0, '2019-04-27 09:56:17', '2018-05-11 09:38:54', 0),
-	(11, 'role1', 'c655798e4648c540812a1b8f48759af7', '角色测试1', '', '18123245230', '', '1970-01-01', '', 4, 0, 0, NULL, 1, '2019-04-27 09:56:17', '2019-04-25 12:30:22', 0),
-	(12, 'role2', 'c655798e4648c540812a1b8f48759af7', '角色测试2', '', '18121451241', '', NULL, '', 4, 0, 0, NULL, 1, '2019-08-01 10:04:38', '2019-04-25 12:31:11', 0),
-	(13, 'lihaifan', 'c655798e4648c540812a1b8f48759af7', 'lihaifan', '', '18399485774', '', NULL, '', 1, 0, 0, NULL, 1, '2019-04-27 09:56:17', '2019-04-25 13:50:44', 0),
-	(14, 'lipeng', 'c655798e4648c540812a1b8f48759af7', '李鹏1', '', '13937988294', '', NULL, '', 2, 0, 0, NULL, 1, '2019-04-27 09:56:17', '2019-04-25 14:34:47', 0),
-	(15, 'huangwenli', 'c655798e4648c540812a1b8f48759af7', '黄文丽', '', '15515515515', '', NULL, '', 16, 0, 0, NULL, 1, '2019-04-27 09:56:17', '2019-04-26 10:05:05', 0),
-	(16, 'huangwenli1', 'c655798e4648c540812a1b8f48759af7', '黄文丽', '', '15515515515', '', NULL, '', 15, 0, 0, NULL, 1, '2019-04-27 14:04:19', '2019-04-26 10:25:04', 0),
-	(17, 'zhangjiao', 'c655798e4648c540812a1b8f48759af7', '张娇', '阿娇', '15670390391', '410305199102020020', '1991-02-02', '86484@qq.com', 19, 0, 0, NULL, 1, '2019-08-05 16:33:57', '2019-04-26 14:37:23', 0),
-	(18, 'zhangjiao1', 'c655798e4648c540812a1b8f48759af7', '张娇1', '', '15670390391', '', '2019-04-18', '6666@qq.com', 20, 0, 0, NULL, 1, '2019-08-05 16:33:57', '2019-04-26 14:45:55', 0),
-	(19, 'zhenxiaocang', 'c655798e4648c540812a1b8f48759af7', '珍小藏', '', '15670390391', '', NULL, '', 19, 0, 1, NULL, 1, '2019-09-09 08:34:35', '2019-04-26 14:46:57', 0),
-	(20, 'matengfei', 'c655798e4648c540812a1b8f48759af7', '马腾飞', '', '15670390393', '', NULL, '', 19, 0, 0, NULL, 1, '2019-08-05 16:33:57', '2019-04-26 14:47:24', 0),
-	(21, 'ceshi123', 'c655798e4648c540812a1b8f48759af7', '测试人员', '', '18829938477', '', NULL, '', 1, 0, 1, NULL, 13, '2019-04-27 09:56:17', '2019-04-27 09:38:07', 1),
-	(22, 'zhangjingru', 'c655798e4648c540812a1b8f48759af7', '张静如', '', '15600000000', '', NULL, '', 1, 0, 0, NULL, 1, '2019-09-04 09:06:47', '2019-04-28 14:05:03', 0),
-	(23, 'sdfsdfdsfsdfdsfdsf', 'c655798e4648c540812a1b8f48759af7', 'werewr', '', '15698585858', '', NULL, '', 19, 0, 0, NULL, 1, '2019-09-05 16:13:03', '2019-04-28 16:26:27', 0),
-	(25, 'shq2019', 'c655798e4648c540812a1b8f48759af7', 'shq', 'shq', '18798801298', '410281199309024040', '1993-09-02', '', 17, 0, 0, NULL, 1, '2019-08-05 16:33:57', '2019-05-05 09:13:41', 0),
-	(26, 'zhangjiao666', 'c655798e4648c540812a1b8f48759af7', 'tom我是五个字12', '', '15612345678', '', NULL, '', 18, 0, 0, NULL, 1, '2019-08-05 16:33:57', '2019-05-05 15:34:10', 0),
-	(28, 'dfsfgds', 'c655798e4648c540812a1b8f48759af7', 'fds', '', '15854127845', '', NULL, '', 22, 0, 1, NULL, 1, '2019-09-06 08:58:40', '2019-05-06 10:36:57', 0),
-	(29, 'abcabc', 'c655798e4648c540812a1b8f48759af7', 'abccba', 'aaabac', '13311112222', '', NULL, '', 17, 0, 0, NULL, 1, '2019-08-05 16:33:57', '2019-07-10 17:00:58', 0),
-	(30, 'gengweigang', 'c655798e4648c540812a1b8f48759af7', '耿为刚', 'geng', '15038588418', '', NULL, '', 17, 0, 0, NULL, 1, '2019-08-08 14:35:51', '2019-08-08 14:35:51', 0),
-	(31, 'gengweigang1', 'c655798e4648c540812a1b8f48759af7', '耿为刚1', '这是别名', '15038588418', '410322193312123232', '1933-12-12', '32@qq.com', 18, 0, 0, NULL, 30, '2019-08-23 09:27:22', '2019-08-23 09:25:50', 0),
-	(32, 'ceshi123', 'c655798e4648c540812a1b8f48759af7', '测试', '测试', '15670702651', '', NULL, '', 17, 0, 0, NULL, 1, '2019-09-04 09:05:48', '2019-09-03 11:48:04', 0),
-	(33, 'ceshi321', 'c655798e4648c540812a1b8f48759af7', '测试', '测试', '15670702651', '', NULL, '', 17, 0, 1, NULL, 1, '2019-09-03 15:51:16', '2019-09-03 11:49:17', 0),
-	(34, 'ceshi123321', 'c655798e4648c540812a1b8f48759af7', '123', '', '15600000000', '', NULL, '', 22, 0, 1, NULL, 1, '2019-09-06 08:58:37', '2019-09-04 09:13:54', 0),
-	(35, 'guoqingfeng', 'c655798e4648c540812a1b8f48759af7', '郭青枫', '', '15670702651', '', NULL, '', 18, 0, 0, NULL, 1, '2019-09-04 15:09:00', '2019-09-04 15:09:00', 0),
-	(36, 'li327263458', 'c655798e4648c540812a1b8f48759af7', 'lipeng', '', '13937988294', '', NULL, '', 17, 0, 0, NULL, 1, '2019-09-09 17:01:39', '2019-09-09 17:01:39', 0),
-	(37, 'test123', 'c655798e4648c540812a1b8f48759af7', 'test', '', '13211110201', '', NULL, '', 18, 0, 1, NULL, 1, '2019-11-14 16:08:08', '2019-11-08 09:32:39', 0),
-	(38, 'tiantian', 'c655798e4648c540812a1b8f48759af7', '天天管理员', '', '13574502368', '', NULL, '', 17, 0, 0, NULL, 1, '2019-11-14 02:08:08', '2019-11-08 11:09:46', 0),
-	(39, 'wang13211111', 'c655798e4648c540812a1b8f48759af7', 'ceshi111', 'dddd', '13244553212', '', NULL, '', 25, 0, 0, NULL, 38, '2019-11-15 17:14:34', '2019-11-15 17:03:04', 0);
+	(11, 'role1', 'c655798e4648c540812a1b8f48759af7', '角色测试1', '', '13112312131', '', '1970-01-01', '', 4, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-25 12:30:22', 0),
+	(12, 'role2', 'c655798e4648c540812a1b8f48759af7', '角色测试2', '', '13112312131', '', NULL, '', 4, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-25 12:31:11', 0),
+	(13, 'lihaifan', 'c655798e4648c540812a1b8f48759af7', 'lihaifan', '', '13112312131', '', NULL, '', 1, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-25 13:50:44', 0),
+	(14, 'lipeng', 'c655798e4648c540812a1b8f48759af7', '李鹏1', '', '13112312131', '', NULL, '', 2, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-25 14:34:47', 0),
+	(15, 'huangwenli', 'c655798e4648c540812a1b8f48759af7', '黄文丽', '', '13112312131', '', NULL, '', 16, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-26 10:05:05', 0),
+	(16, 'huangwenli1', 'c655798e4648c540812a1b8f48759af7', '黄文丽', '', '13112312131', '', NULL, '', 15, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-26 10:25:04', 0),
+	(17, 'zhangjiao', 'c655798e4648c540812a1b8f48759af7', '张娇', '阿娇', '13112312131', '410305199102020020', '1991-02-02', '86484@qq.com', 19, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-26 14:37:23', 0),
+	(18, 'zhangjiao1', 'c655798e4648c540812a1b8f48759af7', '张娇1', '', '13112312131', '', '2019-04-18', '6666@qq.com', 20, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-26 14:45:55', 0),
+	(19, 'zhenxiaocang', 'c655798e4648c540812a1b8f48759af7', '珍小藏', '', '13112312131', '', NULL, '', 19, 0, 1, NULL, 1, '2020-01-13 10:58:03', '2019-04-26 14:46:57', 0),
+	(20, 'matengfei', 'c655798e4648c540812a1b8f48759af7', '马腾飞', '', '13112312131', '', NULL, '', 19, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-26 14:47:24', 0),
+	(21, 'ceshi123', 'c655798e4648c540812a1b8f48759af7', '测试人员', '', '13112312131', '', NULL, '', 1, 0, 1, NULL, 13, '2020-01-13 10:58:03', '2019-04-27 09:38:07', 1),
+	(22, 'zhangjingru', 'c655798e4648c540812a1b8f48759af7', '张静如', '', '13112312131', '', NULL, '', 1, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-28 14:05:03', 0),
+	(23, 'sdfsdfdsfsdfdsfdsf', 'c655798e4648c540812a1b8f48759af7', 'werewr', '', '13112312131', '', NULL, '', 19, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-04-28 16:26:27', 0),
+	(25, 'shq2019', 'c655798e4648c540812a1b8f48759af7', 'shq', 'shq', '13112312131', '410281199309024040', '1993-09-02', '', 17, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-05-05 09:13:41', 0),
+	(26, 'zhangjiao666', 'c655798e4648c540812a1b8f48759af7', 'tom我是五个字12', '', '13112312131', '', NULL, '', 18, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-05-05 15:34:10', 0),
+	(28, 'dfsfgds', 'c655798e4648c540812a1b8f48759af7', 'fds', '', '13112312131', '', NULL, '', 22, 0, 1, NULL, 1, '2020-01-13 10:58:03', '2019-05-06 10:36:57', 0),
+	(29, 'abcabc', 'c655798e4648c540812a1b8f48759af7', 'abccba', 'aaabac', '13112312131', '', NULL, '', 17, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-07-10 17:00:58', 0),
+	(30, 'gengweigang', 'c655798e4648c540812a1b8f48759af7', '耿为刚', 'geng', '13112312131', '', NULL, '', 17, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-08-08 14:35:51', 0),
+	(31, 'gengweigang1', 'c655798e4648c540812a1b8f48759af7', '耿为刚1', '这是别名', '13112312131', '410322193312123232', '1933-12-12', '32@qq.com', 18, 0, 0, NULL, 30, '2020-01-13 10:58:03', '2019-08-23 09:25:50', 0),
+	(32, 'ceshi1234', 'c655798e4648c540812a1b8f48759af7', '测试', '测试', '13112312131', '', NULL, '', 17, 0, 0, NULL, 1, '2020-01-13 11:03:39', '2019-09-03 11:48:04', 0),
+	(33, 'ceshi321', 'c655798e4648c540812a1b8f48759af7', '测试', '测试', '13112312131', '', NULL, '', 17, 0, 1, NULL, 1, '2020-01-13 10:58:03', '2019-09-03 11:49:17', 0),
+	(34, 'ceshi123321', 'c655798e4648c540812a1b8f48759af7', '123', '', '13112312131', '', NULL, '', 22, 0, 1, NULL, 1, '2020-01-13 10:58:03', '2019-09-04 09:13:54', 0),
+	(35, 'guoqingfeng', 'c655798e4648c540812a1b8f48759af7', '郭青枫', '', '13112312131', '', NULL, '', 18, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-09-04 15:09:00', 0),
+	(36, 'li327263458', 'c655798e4648c540812a1b8f48759af7', 'lipeng', '', '13112312131', '', NULL, '', 17, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-09-09 17:01:39', 0),
+	(37, 'test123', 'c655798e4648c540812a1b8f48759af7', 'test', '', '13112312131', '', NULL, '', 18, 0, 1, NULL, 1, '2020-01-13 10:58:03', '2019-11-08 09:32:39', 0),
+	(38, 'tiantian', 'c655798e4648c540812a1b8f48759af7', '天天管理员', '', '13112312131', '', NULL, '', 17, 0, 0, NULL, 1, '2020-01-13 10:58:03', '2019-11-08 11:09:46', 0),
+	(39, 'wang13211111', 'c655798e4648c540812a1b8f48759af7', '卓大', 'zhuoda', '13112312131', '410926200011111234', '2000-11-11', 'zhuoluodada@qq.com', 25, 0, 0, NULL, 38, '2020-04-07 07:57:13', '2019-11-15 17:03:04', 0);
 /*!40000 ALTER TABLE `t_employee` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_file 结构
+-- Dumping structure for table smart-admin-dev.t_file
 DROP TABLE IF EXISTS `t_file`;
 CREATE TABLE IF NOT EXISTS `t_file` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -207,9 +438,9 @@ CREATE TABLE IF NOT EXISTS `t_file` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `module_id_module_type` (`module_id`,`module_type`) USING BTREE,
   KEY `module_type` (`module_type`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
--- 正在导出表  smart-admin-dev.t_file 的数据：~23 rows (大约)
+-- Dumping data for table smart-admin-dev.t_file: ~23 rows (approximately)
 DELETE FROM `t_file`;
 /*!40000 ALTER TABLE `t_file` DISABLE KEYS */;
 INSERT INTO `t_file` (`id`, `module_id`, `module_type`, `file_name`, `file_size`, `file_type`, `file_path`, `file_location_type`, `creater_user`, `update_time`, `create_time`) VALUES
@@ -235,10 +466,12 @@ INSERT INTO `t_file` (`id`, `module_id`, `module_type`, `file_name`, `file_size`
 	(22, '1', '1', '201911130802024b8a2ebf80543a98241bb464682650d.jpg', NULL, NULL, 'backUser/config/201911130802024b8a2ebf80543a98241bb464682650d.jpg', 1, 1, NULL, '2019-11-13 06:02:01'),
 	(23, '1', '1', '20191113080210d1d98eea46364d268b2a03fa03f7a446.jpg', NULL, NULL, 'backUser/config/20191113080210d1d98eea46364d268b2a03fa03f7a446.jpg', 1, 1, NULL, '2019-11-13 06:02:14'),
 	(24, '1', '1', '20191115043844e92b25e70fb140a1885614b978469ca9.jpg', NULL, NULL, 'backUser/config/20191115043844e92b25e70fb140a1885614b978469ca9.jpg', 1, 38, NULL, '2019-11-15 02:38:45'),
-	(25, '1', '1', '20191116060546d3a2c703cb5546b3851612907cc3786f.png', NULL, NULL, 'backUser/config/20191116060546d3a2c703cb5546b3851612907cc3786f.png', 1, 1, NULL, '2019-11-16 10:05:47');
+	(25, '1', '1', '20191116060546d3a2c703cb5546b3851612907cc3786f.png', NULL, NULL, 'backUser/config/20191116060546d3a2c703cb5546b3851612907cc3786f.png', 1, 1, NULL, '2019-11-16 10:05:47'),
+	(26, '1', '1', '202003200145315f824776be194d0e923c5337b6ec4472.png', NULL, NULL, 'backUser/config/202003200145315f824776be194d0e923c5337b6ec4472.png', 1, 1, NULL, '2020-03-20 05:45:31'),
+	(27, '1', '1', '202003200529416e0e54c624b24e96a7e2806f4a76a57b.png', NULL, NULL, 'backUser/config/202003200529416e0e54c624b24e96a7e2806f4a76a57b.png', 1, 1, NULL, '2020-03-20 09:29:42');
 /*!40000 ALTER TABLE `t_file` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_heart_beat_record 结构
+-- Dumping structure for table smart-admin-dev.t_heart_beat_record
 DROP TABLE IF EXISTS `t_heart_beat_record`;
 CREATE TABLE IF NOT EXISTS `t_heart_beat_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
@@ -248,17 +481,61 @@ CREATE TABLE IF NOT EXISTS `t_heart_beat_record` (
   `process_start_time` datetime DEFAULT NULL COMMENT '进程开启时间',
   `heart_beat_time` datetime DEFAULT NULL COMMENT '心跳时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
--- 正在导出表  smart-admin-dev.t_heart_beat_record 的数据：~2 rows (大约)
+-- Dumping data for table smart-admin-dev.t_heart_beat_record: ~46 rows (approximately)
 DELETE FROM `t_heart_beat_record`;
 /*!40000 ALTER TABLE `t_heart_beat_record` DISABLE KEYS */;
 INSERT INTO `t_heart_beat_record` (`id`, `project_path`, `server_ip`, `process_no`, `process_start_time`, `heart_beat_time`) VALUES
 	(1, '/home/server/smart-admin/dev', '192.168.122.1;172.16.0.145', 14843, '2019-11-16 03:11:50', '2019-11-16 03:58:01'),
-	(2, 'F:\\codespace\\idea\\gangquan360\\foundation', '172.16.1.188;192.168.56.1', 227992, '2019-11-16 10:02:39', '2019-11-16 10:06:50');
+	(2, 'F:\\codespace\\idea\\gangquan360\\foundation', '172.16.1.188;192.168.56.1', 227992, '2019-11-16 10:02:39', '2019-11-16 10:06:50'),
+	(3, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 11336, '2020-01-09 08:53:32', '2020-01-11 00:55:04'),
+	(4, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 6964, '2020-01-11 01:05:55', '2020-01-11 01:19:04'),
+	(5, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 5320, '2020-01-13 00:38:40', '2020-01-13 00:52:05'),
+	(6, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 13632, '2020-01-13 00:54:05', '2020-01-13 01:37:18'),
+	(7, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 1652, '2020-01-13 02:29:39', '2020-01-13 02:32:52'),
+	(8, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 7432, '2020-01-13 02:33:12', '2020-01-13 02:34:21'),
+	(9, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 17712, '2020-01-13 02:36:07', '2020-01-13 02:40:15'),
+	(10, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 17400, '2020-01-13 02:41:39', '2020-01-13 02:42:47'),
+	(11, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 7308, '2020-01-13 02:50:30', '2020-01-13 03:24:39'),
+	(12, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 6564, '2020-02-03 03:15:43', '2020-02-03 09:10:57'),
+	(13, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 11156, '2020-02-03 09:12:18', '2020-02-03 09:22:17'),
+	(14, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 2100, '2020-02-03 09:22:25', '2020-02-03 09:38:34'),
+	(15, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 13152, '2020-02-03 09:40:25', '2020-02-03 10:02:37'),
+	(16, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 17172, '2020-02-04 01:24:45', '2020-02-04 06:46:56'),
+	(17, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 13916, '2020-02-04 09:11:54', '2020-02-04 09:13:04'),
+	(18, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 19308, '2020-02-04 09:14:49', '2020-02-04 09:24:59'),
+	(19, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 19076, '2020-02-04 09:26:56', '2020-02-04 10:01:07'),
+	(20, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 804, '2020-02-04 10:04:12', '2020-02-04 10:05:21'),
+	(21, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 15304, '2020-02-05 00:45:53', '2020-02-05 08:08:13'),
+	(22, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 20488, '2020-02-12 03:41:47', '2020-02-12 10:13:05'),
+	(23, 'F:\\codespace\\idea\\smart-git-log', '172.16.1.188', 6688, '2020-03-09 03:10:22', '2020-03-09 03:20:35'),
+	(24, 'F:\\codespace\\idea\\smart-git-log', '172.16.1.188', 15288, '2020-03-09 05:44:24', '2020-03-09 05:54:32'),
+	(25, 'F:\\codespace\\idea\\smart-git-log', '172.16.1.188', 7616, '2020-03-09 05:55:11', '2020-03-10 08:32:32'),
+	(26, 'F:\\codespace\\idea\\badminton', '172.16.1.188', 16512, '2020-03-12 11:31:10', '2020-03-12 11:32:43'),
+	(27, 'F:\\codespace\\idea\\badminton', '172.16.1.188', 8636, '2020-03-13 09:14:33', '2020-03-13 09:39:54'),
+	(28, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 20320, '2020-03-18 13:23:21', '2020-03-18 13:42:35'),
+	(29, 'F:\\codespace\\idea\\zhuoluodada', '172.16.1.188', 4108, '2020-03-18 13:43:06', '2020-03-19 06:20:22'),
+	(30, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 17948, '2020-03-20 02:09:20', '2020-03-20 02:34:32'),
+	(31, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 10888, '2020-03-20 02:55:03', '2020-03-20 02:56:11'),
+	(32, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 3320, '2020-03-20 02:56:54', '2020-03-20 02:58:01'),
+	(33, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 9980, '2020-03-20 02:59:29', '2020-03-20 03:09:38'),
+	(34, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 10992, '2020-03-20 03:10:42', '2020-03-20 03:11:52'),
+	(35, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 11256, '2020-03-20 05:36:25', '2020-03-20 05:40:32'),
+	(36, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 11024, '2020-03-20 05:43:20', '2020-03-20 09:11:29'),
+	(37, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 6840, '2020-03-20 09:11:59', '2020-03-20 10:07:18'),
+	(38, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 15016, '2020-03-20 10:07:54', '2020-03-21 00:24:31'),
+	(39, 'F:\\codespace\\idea\\zhuoda', '172.16.1.188', 10520, '2020-03-21 00:26:28', '2020-03-21 01:36:36'),
+	(40, 'F:\\codespace\\idea\\smart-admin', '172.16.1.188', 20276, '2020-04-06 10:08:34', '2020-04-06 10:15:46'),
+	(41, 'F:\\codespace\\idea\\smart-admin', '172.16.1.188', 18932, '2020-04-06 10:32:00', '2020-04-06 10:33:11'),
+	(42, 'F:\\codespace\\idea\\smart-admin', '172.16.1.188', 19464, '2020-04-06 10:34:07', '2020-04-06 13:35:19'),
+	(43, 'F:\\codespace\\idea\\smart-admin', '172.16.1.188', 20240, '2020-04-06 13:38:51', '2020-04-06 14:07:01'),
+	(44, 'F:\\codespace\\idea\\smart-admin', '172.16.1.188', 20956, '2020-04-06 14:13:04', '2020-04-07 02:02:29'),
+	(45, 'F:\\codespace\\idea\\smart-admin', '172.16.1.188', 18904, '2020-04-07 02:08:43', '2020-04-07 03:30:51'),
+	(46, 'F:\\codespace\\idea\\smart-admin', '172.16.1.188', 2548, '2020-04-07 07:30:00', '2020-04-07 12:07:12');
 /*!40000 ALTER TABLE `t_heart_beat_record` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_id_generator 结构
+-- Dumping structure for table smart-admin-dev.t_id_generator
 DROP TABLE IF EXISTS `t_id_generator`;
 CREATE TABLE IF NOT EXISTS `t_id_generator` (
   `id` int(11) DEFAULT NULL,
@@ -273,7 +550,7 @@ CREATE TABLE IF NOT EXISTS `t_id_generator` (
   UNIQUE KEY `key_name` (`key_name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='id生成器定义表';
 
--- 正在导出表  smart-admin-dev.t_id_generator 的数据：~2 rows (大约)
+-- Dumping data for table smart-admin-dev.t_id_generator: ~2 rows (approximately)
 DELETE FROM `t_id_generator`;
 /*!40000 ALTER TABLE `t_id_generator` DISABLE KEYS */;
 INSERT INTO `t_id_generator` (`id`, `key_name`, `rule_format`, `rule_type`, `init_number`, `last_number`, `remark`, `update_time`, `create_time`) VALUES
@@ -281,7 +558,7 @@ INSERT INTO `t_id_generator` (`id`, `key_name`, `rule_format`, `rule_type`, `ini
 	(1, 'order', '[yyyy][mm][dd][nnnnn]', 'DAY_CYCLE', 1, 1, '订单编号', '2019-03-30 11:25:42', '2019-03-29 14:14:12');
 /*!40000 ALTER TABLE `t_id_generator` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_id_generator_record 结构
+-- Dumping structure for table smart-admin-dev.t_id_generator_record
 DROP TABLE IF EXISTS `t_id_generator_record`;
 CREATE TABLE IF NOT EXISTS `t_id_generator_record` (
   `generator_id` int(11) NOT NULL,
@@ -292,7 +569,7 @@ CREATE TABLE IF NOT EXISTS `t_id_generator_record` (
   PRIMARY KEY (`generator_id`,`year`,`month`,`day`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='id_generator记录表';
 
--- 正在导出表  smart-admin-dev.t_id_generator_record 的数据：~5 rows (大约)
+-- Dumping data for table smart-admin-dev.t_id_generator_record: ~5 rows (approximately)
 DELETE FROM `t_id_generator_record`;
 /*!40000 ALTER TABLE `t_id_generator_record` DISABLE KEYS */;
 INSERT INTO `t_id_generator_record` (`generator_id`, `year`, `month`, `day`, `last_number`) VALUES
@@ -303,7 +580,7 @@ INSERT INTO `t_id_generator_record` (`generator_id`, `year`, `month`, `day`, `la
 	(2, 2019, 4, 9, 1);
 /*!40000 ALTER TABLE `t_id_generator_record` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_notice 结构
+-- Dumping structure for table smart-admin-dev.t_notice
 DROP TABLE IF EXISTS `t_notice`;
 CREATE TABLE IF NOT EXISTS `t_notice` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -315,9 +592,9 @@ CREATE TABLE IF NOT EXISTS `t_notice` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  smart-admin-dev.t_notice 的数据：~14 rows (大约)
+-- Dumping data for table smart-admin-dev.t_notice: ~14 rows (approximately)
 DELETE FROM `t_notice`;
 /*!40000 ALTER TABLE `t_notice` DISABLE KEYS */;
 INSERT INTO `t_notice` (`id`, `title`, `content`, `deleted`, `send_status`, `create_user`, `create_time`, `update_time`) VALUES
@@ -332,12 +609,47 @@ INSERT INTO `t_notice` (`id`, `title`, `content`, `deleted`, `send_status`, `cre
 	(102, '1', '2', 0, 1, 1, '2019-09-05 14:28:10', '2019-09-05 14:28:10'),
 	(103, '12', '22', 0, 1, 1, '2019-09-05 14:29:30', '2019-09-05 14:29:30'),
 	(104, 'a', 'b', 1, 1, 30, '2019-09-06 14:21:18', '2019-09-06 14:24:07'),
+	(105, '22222222222', '1111', 0, 1, 1, '2019-11-07 19:05:56', '2019-11-07 19:05:56'),
+	(106, '423', '234', 0, 1, 37, '2019-11-08 21:48:19', '2019-11-08 21:48:19'),
+	(107, 'AAS', 's\'da\'ssdas', 1, 1, 1, '2019-11-13 19:06:55', '2019-11-14 09:07:06'),
+	(108, '出租车 ', '阿三大苏打', 0, 1, 1, '2020-01-13 03:01:28', '2020-01-13 03:01:28');
+/*!40000 ALTER TABLE `t_notice` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.t_notice_copy
+DROP TABLE IF EXISTS `t_notice_copy`;
+CREATE TABLE IF NOT EXISTS `t_notice_copy` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息标题',
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息内容',
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '删除状态：0未删除 0删除 ',
+  `send_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '发送状态 0未发送 1发送',
+  `create_user` bigint(20) NOT NULL COMMENT '消息创建人',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table smart-admin-dev.t_notice_copy: ~14 rows (approximately)
+DELETE FROM `t_notice_copy`;
+/*!40000 ALTER TABLE `t_notice_copy` DISABLE KEYS */;
+INSERT INTO `t_notice_copy` (`id`, `title`, `content`, `deleted`, `send_status`, `create_user`, `create_time`, `update_time`) VALUES
+	(93, '大扫把', '晓冬吃大便', 1, 1, 1, '2019-07-13 17:54:13', '2019-07-13 17:54:21'),
+	(95, '4444444', '444444444444', 1, 1, 1, '2019-07-13 17:54:53', '2019-09-04 09:42:02'),
+	(96, '3434', '444444', 1, 1, 1, '2019-07-13 17:58:42', '2019-11-08 09:05:24'),
+	(97, '44444', '555555555555', 1, 1, 1, '2019-07-13 17:58:54', '2019-09-03 16:19:50'),
+	(98, '《青花瓷》', '素胚勾勒出青花笔锋浓转淡\n瓶身描绘的牡丹一如你初妆\n冉冉檀香透过窗心事我了然\n周杰伦 青花瓷\n周杰伦 青花瓷\n宣纸上走笔至此搁一半\n釉色渲染仕女图韵味被私藏\n而你嫣然的一笑如含苞待放\n你的美一缕飘散\n去到我去不了的地方\n天青色等烟雨 而我在等你\n炊烟袅袅升起 隔江千万里\n在瓶底书刻隶仿前朝的飘逸\n就当我为遇见你伏笔\n天青色等烟雨 而我在等你\n月色被打捞起 晕开了结局\n如传世的青花瓷自顾自美丽\n你眼带笑意\n色白花青的锦鲤跃然于碗底\n临摹宋体落款时却惦记着你\n你隐藏在窑烧里千年的秘密\n极细腻犹如绣花针落地\n篱外芭蕉惹骤雨门环惹铜绿\n而我路过那江南小镇惹了你\n在泼墨山水画里\n你从墨色深处被隐去\n天青色等烟雨 而我在等你\n炊烟袅袅升起 隔江千万里\n在瓶底书刻隶仿前朝的飘逸\n就当我为遇见你伏笔\n天青色等烟雨 而我在等你\n月色被打捞起 晕开了结局\n如传世的青花瓷自顾自美丽\n你眼带笑意\n天青色等烟雨 而我在等你\n炊烟袅袅升起 隔江千万里\n在瓶底书刻隶仿前朝的飘逸\n就当我为遇见你伏笔\n天青色等烟雨 而我在等你\n月色被打捞起 晕开了结局\n如传世的青花瓷自顾自美丽\n你眼带笑意 ', 1, 1, 1, '2019-08-05 16:36:44', '2019-09-02 17:53:12'),
+	(99, '1', '2', 1, 1, 30, '2019-08-08 14:53:58', '2019-08-08 14:54:07'),
+	(100, '呵呵', '呵呵', 1, 1, 1, '2019-08-20 16:52:53', '2019-09-02 17:46:59'),
+	(101, 'aa', 'bbcc', 1, 1, 30, '2019-08-23 09:51:01', '2019-08-23 09:51:28'),
+	(102, '1', '2', 0, 1, 1, '2019-09-05 14:28:10', '2019-09-05 14:28:10'),
+	(103, '12', '22', 0, 1, 1, '2019-09-05 14:29:30', '2019-09-05 14:29:30'),
+	(104, 'a', 'b', 1, 1, 30, '2019-09-06 14:21:18', '2019-09-06 14:24:07'),
 	(105, '22222222222', '1111', 0, 0, 1, '2019-11-07 19:05:56', '2019-11-07 19:05:56'),
 	(106, '423', '234', 0, 0, 37, '2019-11-08 21:48:19', '2019-11-08 21:48:19'),
 	(107, 'AAS', 's\'da\'ssdas', 1, 1, 1, '2019-11-13 19:06:55', '2019-11-14 09:07:06');
-/*!40000 ALTER TABLE `t_notice` ENABLE KEYS */;
+/*!40000 ALTER TABLE `t_notice_copy` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_notice_receive_record 结构
+-- Dumping structure for table smart-admin-dev.t_notice_receive_record
 DROP TABLE IF EXISTS `t_notice_receive_record`;
 CREATE TABLE IF NOT EXISTS `t_notice_receive_record` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -346,9 +658,9 @@ CREATE TABLE IF NOT EXISTS `t_notice_receive_record` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  smart-admin-dev.t_notice_receive_record 的数据：~27 rows (大约)
+-- Dumping data for table smart-admin-dev.t_notice_receive_record: ~32 rows (approximately)
 DELETE FROM `t_notice_receive_record`;
 /*!40000 ALTER TABLE `t_notice_receive_record` DISABLE KEYS */;
 INSERT INTO `t_notice_receive_record` (`id`, `notice_id`, `employee_id`, `create_time`, `update_time`) VALUES
@@ -378,10 +690,16 @@ INSERT INTO `t_notice_receive_record` (`id`, `notice_id`, `employee_id`, `create
 	(137, 104, 38, '2019-11-15 02:11:17', '2019-11-15 02:11:17'),
 	(138, 101, 38, '2019-11-15 02:26:33', '2019-11-15 02:26:33'),
 	(139, 98, 38, '2019-11-15 02:29:32', '2019-11-15 02:29:32'),
-	(140, 100, 38, '2019-11-15 03:19:18', '2019-11-15 03:19:18');
+	(140, 100, 38, '2019-11-15 03:19:18', '2019-11-15 03:19:18'),
+	(141, 106, 1, '2020-01-13 03:01:16', '2020-01-13 03:01:16'),
+	(142, 105, 1, '2020-01-13 03:01:18', '2020-01-13 03:01:18'),
+	(143, 108, 1, '2020-01-13 03:01:32', '2020-01-13 03:01:32'),
+	(144, 108, 16, '2020-01-13 03:04:54', '2020-01-13 03:04:54'),
+	(145, 107, 16, '2020-01-13 03:04:55', '2020-01-13 03:04:55'),
+	(146, 106, 16, '2020-01-13 03:05:05', '2020-01-13 03:05:05');
 /*!40000 ALTER TABLE `t_notice_receive_record` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_order_operate_log 结构
+-- Dumping structure for table smart-admin-dev.t_order_operate_log
 DROP TABLE IF EXISTS `t_order_operate_log`;
 CREATE TABLE IF NOT EXISTS `t_order_operate_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -399,12 +717,34 @@ CREATE TABLE IF NOT EXISTS `t_order_operate_log` (
   KEY `order_id_order_type` (`order_id`,`order_type`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='各种单据操作记录\r\n';
 
--- 正在导出表  smart-admin-dev.t_order_operate_log 的数据：~0 rows (大约)
+-- Dumping data for table smart-admin-dev.t_order_operate_log: ~0 rows (approximately)
 DELETE FROM `t_order_operate_log`;
 /*!40000 ALTER TABLE `t_order_operate_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t_order_operate_log` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_position 结构
+-- Dumping structure for table smart-admin-dev.t_peony
+DROP TABLE IF EXISTS `t_peony`;
+CREATE TABLE IF NOT EXISTS `t_peony` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `kind` varchar(500) DEFAULT NULL COMMENT '品种',
+  `name` varchar(500) DEFAULT NULL COMMENT '名字',
+  `color` varchar(500) DEFAULT NULL COMMENT '颜色',
+  `image_url` text COMMENT '图片链接',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='牡丹花';
+
+-- Dumping data for table smart-admin-dev.t_peony: ~3 rows (approximately)
+DELETE FROM `t_peony`;
+/*!40000 ALTER TABLE `t_peony` DISABLE KEYS */;
+INSERT INTO `t_peony` (`id`, `kind`, `name`, `color`, `image_url`, `create_time`, `update_time`) VALUES
+	(5, '复色类', '什样锦', '红色', 'https://bkimg.cdn.bcebos.com/pic/3c6d55fbb2fb43160ee185da2aa4462308f7d390?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2UxNTA=,xp_5,yp_5', '2020-04-06 22:02:32', '2020-04-06 22:03:30'),
+	(6, '绿色', '绿香球', '绿色', '11', '2020-04-06 22:14:35', '2020-04-06 22:17:51'),
+	(7, '墨紫色类', '冠世墨玉', '紫色', '34534534534', '2020-04-06 22:15:19', '2020-04-06 22:18:21');
+/*!40000 ALTER TABLE `t_peony` ENABLE KEYS */;
+
+-- Dumping structure for table smart-admin-dev.t_position
 DROP TABLE IF EXISTS `t_position`;
 CREATE TABLE IF NOT EXISTS `t_position` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -413,9 +753,9 @@ CREATE TABLE IF NOT EXISTS `t_position` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='岗位表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='岗位表';
 
--- 正在导出表  smart-admin-dev.t_position 的数据：~13 rows (大约)
+-- Dumping data for table smart-admin-dev.t_position: ~13 rows (approximately)
 DELETE FROM `t_position`;
 /*!40000 ALTER TABLE `t_position` DISABLE KEYS */;
 INSERT INTO `t_position` (`id`, `position_name`, `remark`, `update_time`, `create_time`) VALUES
@@ -431,10 +771,11 @@ INSERT INTO `t_position` (`id`, `position_name`, `remark`, `update_time`, `creat
 	(14, '测试岗位8', '测试岗位8', '2019-09-05 14:40:09', '2019-09-05 14:40:09'),
 	(15, '测试岗位9', '测试岗位9', '2019-09-05 14:40:19', '2019-09-05 14:40:19'),
 	(16, 'aaa22222', 'ddddddddddd', '2019-11-15 17:04:29', '2019-11-06 15:58:37'),
-	(17, 'ddd', 'fsdef', '2019-11-15 17:04:40', '2019-11-15 17:04:40');
+	(17, 'ddd', 'fsdef', '2019-11-15 17:04:40', '2019-11-15 17:04:40'),
+	(18, '11', '11', '2020-03-20 13:43:52', '2020-03-20 13:43:52');
 /*!40000 ALTER TABLE `t_position` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_position_relation 结构
+-- Dumping structure for table smart-admin-dev.t_position_relation
 DROP TABLE IF EXISTS `t_position_relation`;
 CREATE TABLE IF NOT EXISTS `t_position_relation` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -445,9 +786,9 @@ CREATE TABLE IF NOT EXISTS `t_position_relation` (
   PRIMARY KEY (`id`),
   KEY `job_id` (`position_id`) USING BTREE,
   KEY `employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='岗位关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='岗位关联表';
 
--- 正在导出表  smart-admin-dev.t_position_relation 的数据：~27 rows (大约)
+-- Dumping data for table smart-admin-dev.t_position_relation: ~27 rows (approximately)
 DELETE FROM `t_position_relation`;
 /*!40000 ALTER TABLE `t_position_relation` DISABLE KEYS */;
 INSERT INTO `t_position_relation` (`id`, `position_id`, `employee_id`, `update_time`, `create_time`) VALUES
@@ -475,12 +816,12 @@ INSERT INTO `t_position_relation` (`id`, `position_id`, `employee_id`, `update_t
 	(43, 14, 36, '2019-09-09 17:01:39', '2019-09-09 17:01:39'),
 	(44, 3, 37, '2019-11-08 09:32:39', '2019-11-08 09:32:39'),
 	(46, 8, 38, '2019-11-14 16:08:05', '2019-11-14 16:08:05'),
-	(50, 16, 39, '2019-11-15 17:07:04', '2019-11-15 17:07:04'),
-	(51, 13, 39, '2019-11-15 17:07:04', '2019-11-15 17:07:04'),
-	(52, 14, 39, '2019-11-15 17:07:04', '2019-11-15 17:07:04');
+	(53, 16, 39, '2020-04-07 15:57:13', '2020-04-07 15:57:13'),
+	(54, 13, 39, '2020-04-07 15:57:13', '2020-04-07 15:57:13'),
+	(55, 14, 39, '2020-04-07 15:57:13', '2020-04-07 15:57:13');
 /*!40000 ALTER TABLE `t_position_relation` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_privilege 结构
+-- Dumping structure for table smart-admin-dev.t_privilege
 DROP TABLE IF EXISTS `t_privilege`;
 CREATE TABLE IF NOT EXISTS `t_privilege` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '功能权限表主键id',
@@ -496,9 +837,9 @@ CREATE TABLE IF NOT EXISTS `t_privilege` (
   UNIQUE KEY `key` (`key`) USING BTREE,
   KEY `type` (`type`) USING BTREE,
   KEY `parent_key` (`parent_key`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8 COMMENT='权限功能表';
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='权限功能表';
 
--- 正在导出表  smart-admin-dev.t_privilege 的数据：~103 rows (大约)
+-- Dumping data for table smart-admin-dev.t_privilege: ~44 rows (approximately)
 DELETE FROM `t_privilege`;
 /*!40000 ALTER TABLE `t_privilege` DISABLE KEYS */;
 INSERT INTO `t_privilege` (`id`, `type`, `name`, `key`, `url`, `sort`, `parent_key`, `update_time`, `create_time`) VALUES
@@ -607,7 +948,8 @@ INSERT INTO `t_privilege` (`id`, `type`, `name`, `key`, `url`, `sort`, `parent_k
 	(105, 2, '下载', 'file-filePage-download', 'fileController.downLoadById', 2, 'FileList', '2019-11-16 10:05:02', '2019-11-16 10:05:02');
 /*!40000 ALTER TABLE `t_privilege` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_quartz_task 结构
+
+-- Dumping structure for table smart-admin-dev.t_quartz_task
 DROP TABLE IF EXISTS `t_quartz_task`;
 CREATE TABLE IF NOT EXISTS `t_quartz_task` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -622,7 +964,7 @@ CREATE TABLE IF NOT EXISTS `t_quartz_task` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  smart-admin-dev.t_quartz_task 的数据：~5 rows (大约)
+-- Dumping data for table smart-admin-dev.t_quartz_task: ~5 rows (approximately)
 DELETE FROM `t_quartz_task`;
 /*!40000 ALTER TABLE `t_quartz_task` DISABLE KEYS */;
 INSERT INTO `t_quartz_task` (`id`, `task_name`, `task_bean`, `task_params`, `task_cron`, `task_status`, `remark`, `update_time`, `create_time`) VALUES
@@ -633,7 +975,7 @@ INSERT INTO `t_quartz_task` (`id`, `task_name`, `task_bean`, `task_params`, `tas
 	(23, '1', 'exampleTask', '3', '*/5 * * * * ?', 0, NULL, '2019-09-05 17:21:12', '2019-04-26 17:29:50');
 /*!40000 ALTER TABLE `t_quartz_task` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_quartz_task_log 结构
+-- Dumping structure for table smart-admin-dev.t_quartz_task_log
 DROP TABLE IF EXISTS `t_quartz_task_log`;
 CREATE TABLE IF NOT EXISTS `t_quartz_task_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -647,9 +989,9 @@ CREATE TABLE IF NOT EXISTS `t_quartz_task_log` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=732881 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=732939 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  smart-admin-dev.t_quartz_task_log 的数据：~11 rows (大约)
+-- Dumping data for table smart-admin-dev.t_quartz_task_log: ~66 rows (approximately)
 DELETE FROM `t_quartz_task_log`;
 /*!40000 ALTER TABLE `t_quartz_task_log` DISABLE KEYS */;
 INSERT INTO `t_quartz_task_log` (`id`, `task_id`, `task_name`, `task_params`, `process_status`, `process_duration`, `process_log`, `ip_address`, `update_time`, `create_time`) VALUES
@@ -663,10 +1005,68 @@ INSERT INTO `t_quartz_task_log` (`id`, `task_id`, `task_name`, `task_params`, `p
 	(732877, 9, '2312332', '2131', 0, 27, NULL, '172.16.0.145', '2019-09-05 14:34:51', '2019-09-05 14:34:51'),
 	(732878, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-05 17:18:17', '2019-09-05 17:18:17'),
 	(732879, 9, '2312332', '2131', 0, 1, NULL, '172.16.0.145', '2019-09-05 17:20:15', '2019-09-05 17:20:15'),
-	(732880, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-06 14:42:04', '2019-09-06 14:42:04');
+	(732880, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-06 14:42:04', '2019-09-06 14:42:04'),
+	(732881, 9, '231233', '2131', 0, 5, NULL, '127.0.0.1', '2019-05-05 15:28:01', '2019-05-05 15:28:01'),
+	(732882, 9, '231233', '2131', 0, 32, NULL, '172.16.0.145', '2019-05-05 15:54:40', '2019-05-05 15:54:40'),
+	(732883, 9, '231233', '2131', 0, 304, NULL, '172.16.0.145', '2019-08-02 09:29:36', '2019-08-02 09:29:36'),
+	(732884, 9, '231233', '2131', 0, 24, NULL, '172.16.0.145', '2019-08-08 16:48:49', '2019-08-08 16:48:49'),
+	(732885, 9, '231233', '2131', 0, 147, NULL, '172.16.0.145', '2019-08-23 09:41:08', '2019-08-23 09:41:08'),
+	(732886, 9, '231233', '2131', 0, 610, NULL, '172.16.0.145', '2019-08-26 16:16:34', '2019-08-26 16:16:34'),
+	(732887, 9, '2312332', '2131', 0, 27, NULL, '172.16.0.145', '2019-09-05 14:34:51', '2019-09-05 14:34:51'),
+	(732888, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-05 17:18:17', '2019-09-05 17:18:17'),
+	(732889, 9, '2312332', '2131', 0, 1, NULL, '172.16.0.145', '2019-09-05 17:20:15', '2019-09-05 17:20:15'),
+	(732890, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-06 14:42:04', '2019-09-06 14:42:04'),
+	(732891, 22, '33', '333', 0, 31, NULL, '172.16.0.145', '2019-05-07 16:20:31', '2019-05-07 16:20:31'),
+	(732892, 9, '231233', '2131', 0, 5, NULL, '127.0.0.1', '2019-05-05 15:28:01', '2019-05-05 15:28:01'),
+	(732893, 9, '231233', '2131', 0, 32, NULL, '172.16.0.145', '2019-05-05 15:54:40', '2019-05-05 15:54:40'),
+	(732894, 9, '231233', '2131', 0, 304, NULL, '172.16.0.145', '2019-08-02 09:29:36', '2019-08-02 09:29:36'),
+	(732895, 9, '231233', '2131', 0, 24, NULL, '172.16.0.145', '2019-08-08 16:48:49', '2019-08-08 16:48:49'),
+	(732896, 9, '231233', '2131', 0, 147, NULL, '172.16.0.145', '2019-08-23 09:41:08', '2019-08-23 09:41:08'),
+	(732897, 9, '231233', '2131', 0, 610, NULL, '172.16.0.145', '2019-08-26 16:16:34', '2019-08-26 16:16:34'),
+	(732898, 9, '2312332', '2131', 0, 27, NULL, '172.16.0.145', '2019-09-05 14:34:51', '2019-09-05 14:34:51'),
+	(732899, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-05 17:18:17', '2019-09-05 17:18:17'),
+	(732900, 9, '2312332', '2131', 0, 1, NULL, '172.16.0.145', '2019-09-05 17:20:15', '2019-09-05 17:20:15'),
+	(732901, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-06 14:42:04', '2019-09-06 14:42:04'),
+	(732902, 22, '33', '333', 0, 31, NULL, '172.16.0.145', '2019-05-07 16:20:31', '2019-05-07 16:20:31'),
+	(732903, 9, '231233', '2131', 0, 5, NULL, '127.0.0.1', '2019-05-05 15:28:01', '2019-05-05 15:28:01'),
+	(732904, 9, '231233', '2131', 0, 32, NULL, '172.16.0.145', '2019-05-05 15:54:40', '2019-05-05 15:54:40'),
+	(732905, 9, '231233', '2131', 0, 304, NULL, '172.16.0.145', '2019-08-02 09:29:36', '2019-08-02 09:29:36'),
+	(732906, 9, '231233', '2131', 0, 24, NULL, '172.16.0.145', '2019-08-08 16:48:49', '2019-08-08 16:48:49'),
+	(732907, 9, '231233', '2131', 0, 147, NULL, '172.16.0.145', '2019-08-23 09:41:08', '2019-08-23 09:41:08'),
+	(732908, 9, '231233', '2131', 0, 610, NULL, '172.16.0.145', '2019-08-26 16:16:34', '2019-08-26 16:16:34'),
+	(732909, 9, '2312332', '2131', 0, 27, NULL, '172.16.0.145', '2019-09-05 14:34:51', '2019-09-05 14:34:51'),
+	(732910, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-05 17:18:17', '2019-09-05 17:18:17'),
+	(732911, 9, '2312332', '2131', 0, 1, NULL, '172.16.0.145', '2019-09-05 17:20:15', '2019-09-05 17:20:15'),
+	(732912, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-06 14:42:04', '2019-09-06 14:42:04'),
+	(732913, 22, '33', '333', 0, 31, NULL, '172.16.0.145', '2019-05-07 16:20:31', '2019-05-07 16:20:31'),
+	(732914, 9, '231233', '2131', 0, 5, NULL, '127.0.0.1', '2019-05-05 15:28:01', '2019-05-05 15:28:01'),
+	(732915, 9, '231233', '2131', 0, 32, NULL, '172.16.0.145', '2019-05-05 15:54:40', '2019-05-05 15:54:40'),
+	(732916, 9, '231233', '2131', 0, 304, NULL, '172.16.0.145', '2019-08-02 09:29:36', '2019-08-02 09:29:36'),
+	(732917, 9, '231233', '2131', 0, 24, NULL, '172.16.0.145', '2019-08-08 16:48:49', '2019-08-08 16:48:49'),
+	(732918, 9, '231233', '2131', 0, 147, NULL, '172.16.0.145', '2019-08-23 09:41:08', '2019-08-23 09:41:08'),
+	(732919, 9, '231233', '2131', 0, 610, NULL, '172.16.0.145', '2019-08-26 16:16:34', '2019-08-26 16:16:34'),
+	(732920, 9, '2312332', '2131', 0, 27, NULL, '172.16.0.145', '2019-09-05 14:34:51', '2019-09-05 14:34:51'),
+	(732921, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-05 17:18:17', '2019-09-05 17:18:17'),
+	(732922, 9, '2312332', '2131', 0, 1, NULL, '172.16.0.145', '2019-09-05 17:20:15', '2019-09-05 17:20:15'),
+	(732923, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-06 14:42:04', '2019-09-06 14:42:04'),
+	(732924, 22, '33', '333', 0, 31, NULL, '172.16.0.145', '2019-05-07 16:20:31', '2019-05-07 16:20:31'),
+	(732925, 9, '231233', '2131', 0, 5, NULL, '127.0.0.1', '2019-05-05 15:28:01', '2019-05-05 15:28:01'),
+	(732926, 9, '231233', '2131', 0, 32, NULL, '172.16.0.145', '2019-05-05 15:54:40', '2019-05-05 15:54:40'),
+	(732927, 9, '231233', '2131', 0, 304, NULL, '172.16.0.145', '2019-08-02 09:29:36', '2019-08-02 09:29:36'),
+	(732928, 9, '231233', '2131', 0, 24, NULL, '172.16.0.145', '2019-08-08 16:48:49', '2019-08-08 16:48:49'),
+	(732929, 9, '231233', '2131', 0, 147, NULL, '172.16.0.145', '2019-08-23 09:41:08', '2019-08-23 09:41:08'),
+	(732930, 9, '231233', '2131', 0, 610, NULL, '172.16.0.145', '2019-08-26 16:16:34', '2019-08-26 16:16:34'),
+	(732931, 9, '2312332', '2131', 0, 27, NULL, '172.16.0.145', '2019-09-05 14:34:51', '2019-09-05 14:34:51'),
+	(732932, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-05 17:18:17', '2019-09-05 17:18:17'),
+	(732933, 9, '2312332', '2131', 0, 1, NULL, '172.16.0.145', '2019-09-05 17:20:15', '2019-09-05 17:20:15'),
+	(732934, 9, '2312332', '2131', 0, 5, NULL, '172.16.0.145', '2019-09-06 14:42:04', '2019-09-06 14:42:04'),
+	(732935, 22, '33', '333', 0, 31, NULL, '172.16.0.145', '2019-05-07 16:20:31', '2019-05-07 16:20:31'),
+	(732936, 9, '231233', '2131', 0, 5, NULL, '127.0.0.1', '2019-05-05 15:28:01', '2019-05-05 15:28:01'),
+	(732937, 9, '231233', '2131', 0, 32, NULL, '172.16.0.145', '2019-05-05 15:54:40', '2019-05-05 15:54:40'),
+	(732938, 9, '231233', '2131', 0, 304, NULL, '172.16.0.145', '2019-08-02 09:29:36', '2019-08-02 09:29:36');
 /*!40000 ALTER TABLE `t_quartz_task_log` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_reload_item 结构
+-- Dumping structure for table smart-admin-dev.t_reload_item
 DROP TABLE IF EXISTS `t_reload_item`;
 CREATE TABLE IF NOT EXISTS `t_reload_item` (
   `tag` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '项名称',
@@ -677,14 +1077,14 @@ CREATE TABLE IF NOT EXISTS `t_reload_item` (
   PRIMARY KEY (`tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 正在导出表  smart-admin-dev.t_reload_item 的数据：~1 rows (大约)
+-- Dumping data for table smart-admin-dev.t_reload_item: ~0 rows (approximately)
 DELETE FROM `t_reload_item`;
 /*!40000 ALTER TABLE `t_reload_item` DISABLE KEYS */;
 INSERT INTO `t_reload_item` (`tag`, `args`, `identification`, `update_time`, `create_time`) VALUES
-	('system_config', '234', 'xxxx', '2019-11-14 16:46:21', '2019-04-18 11:48:27');
+	('system_config', '123123', 'xxxx1', '2020-03-20 09:15:49', '2019-04-18 11:48:27');
 /*!40000 ALTER TABLE `t_reload_item` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_reload_result 结构
+-- Dumping structure for table smart-admin-dev.t_reload_result
 DROP TABLE IF EXISTS `t_reload_result`;
 CREATE TABLE IF NOT EXISTS `t_reload_result` (
   `tag` varchar(255) NOT NULL,
@@ -695,7 +1095,7 @@ CREATE TABLE IF NOT EXISTS `t_reload_result` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 正在导出表  smart-admin-dev.t_reload_result 的数据：~126 rows (大约)
+-- Dumping data for table smart-admin-dev.t_reload_result: ~179 rows (approximately)
 DELETE FROM `t_reload_result`;
 /*!40000 ALTER TABLE `t_reload_result` DISABLE KEYS */;
 INSERT INTO `t_reload_result` (`tag`, `identification`, `args`, `result`, `exception`, `create_time`) VALUES
@@ -824,10 +1224,63 @@ INSERT INTO `t_reload_result` (`tag`, `identification`, `args`, `result`, `excep
 	('system_config', 'xxxx', '234', 1, NULL, '2019-11-15 14:39:55'),
 	('system_config', 'xxxx', '234', 1, NULL, '2019-11-16 08:47:43'),
 	('system_config', 'xxxx', '234', 1, NULL, '2019-11-16 17:12:10'),
-	('system_config', 'xxxx', '234', 1, NULL, '2019-11-16 18:02:57');
+	('system_config', 'xxxx', '234', 1, NULL, '2019-11-16 18:02:57'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-09 16:53:51'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-11 09:06:12'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 08:39:05'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 08:54:27'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:00:17'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:14:56'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:27:57'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:29:56'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:32:01'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:33:30'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:36:24'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:39:24'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:41:56'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-01-13 10:50:48'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-03 11:16:02'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-03 17:12:38'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-03 17:22:42'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-03 17:40:44'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-04 09:25:02'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-04 17:12:12'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-04 17:15:07'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-04 17:27:15'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-04 18:04:30'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-05 08:46:18'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-02-12 11:42:09'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-09 11:10:42'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-09 13:44:41'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-09 13:55:29'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-12 19:31:46'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-13 17:14:59'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-18 21:23:42'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-18 21:43:24'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-20 10:09:41'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-20 10:55:20'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-20 10:57:10'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-20 10:59:46'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-20 11:11:01'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-20 13:36:41'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-03-20 13:43:37'),
+	('system_config', 'xxxx', 'erre', 1, NULL, '2020-03-20 17:12:16'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-03-20 17:15:51'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-03-20 18:09:30'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-03-21 08:26:01'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-03-21 08:26:44'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-03-21 09:38:17'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-03-21 10:17:32'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-04-06 18:08:55'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-04-06 18:32:20'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-04-06 18:34:29'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-04-06 21:39:09'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-04-06 22:13:26'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-04-07 10:09:01'),
+	('system_config', 'xxxx1', '123123', 1, NULL, '2020-04-07 15:30:20');
 /*!40000 ALTER TABLE `t_reload_result` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_role 结构
+-- Dumping structure for table smart-admin-dev.t_role
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE IF NOT EXISTS `t_role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -836,9 +1289,9 @@ CREATE TABLE IF NOT EXISTS `t_role` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
--- 正在导出表  smart-admin-dev.t_role 的数据：~14 rows (大约)
+-- Dumping data for table smart-admin-dev.t_role: ~14 rows (approximately)
 DELETE FROM `t_role`;
 /*!40000 ALTER TABLE `t_role` DISABLE KEYS */;
 INSERT INTO `t_role` (`id`, `role_name`, `remark`, `update_time`, `create_time`) VALUES
@@ -858,7 +1311,7 @@ INSERT INTO `t_role` (`id`, `role_name`, `remark`, `update_time`, `create_time`)
 	(48, '测试角色9', '测试角色9', '2019-11-15 17:06:11', '2019-09-05 15:06:30');
 /*!40000 ALTER TABLE `t_role` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_role_data_scope 结构
+-- Dumping structure for table smart-admin-dev.t_role_data_scope
 DROP TABLE IF EXISTS `t_role_data_scope`;
 CREATE TABLE IF NOT EXISTS `t_role_data_scope` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -868,19 +1321,19 @@ CREATE TABLE IF NOT EXISTS `t_role_data_scope` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  smart-admin-dev.t_role_data_scope 的数据：~4 rows (大约)
+-- Dumping data for table smart-admin-dev.t_role_data_scope: ~4 rows (approximately)
 DELETE FROM `t_role_data_scope`;
 /*!40000 ALTER TABLE `t_role_data_scope` DISABLE KEYS */;
 INSERT INTO `t_role_data_scope` (`id`, `data_scope_type`, `view_type`, `role_id`, `update_time`, `create_time`) VALUES
 	(5, 0, 2, 9, '2019-04-29 15:01:04', '2019-04-29 15:01:04'),
 	(14, 0, 2, 40, '2019-09-05 15:25:37', '2019-09-05 15:25:37'),
-	(15, 0, 0, 1, '2019-09-06 08:35:45', '2019-09-06 08:35:45'),
-	(16, 0, 3, 34, '2019-11-06 16:08:02', '2019-11-06 16:08:02');
+	(16, 0, 3, 34, '2019-11-06 16:08:02', '2019-11-06 16:08:02'),
+	(18, 0, 0, 1, '2020-03-20 13:45:44', '2020-03-20 13:45:44');
 /*!40000 ALTER TABLE `t_role_data_scope` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_role_employee 结构
+-- Dumping structure for table smart-admin-dev.t_role_employee
 DROP TABLE IF EXISTS `t_role_employee`;
 CREATE TABLE IF NOT EXISTS `t_role_employee` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -889,15 +1342,13 @@ CREATE TABLE IF NOT EXISTS `t_role_employee` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8mb4 COMMENT='角色员工功能表';
+) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=utf8mb4 COMMENT='角色员工功能表';
 
--- 正在导出表  smart-admin-dev.t_role_employee 的数据：~25 rows (大约)
+-- Dumping data for table smart-admin-dev.t_role_employee: ~22 rows (approximately)
 DELETE FROM `t_role_employee`;
 /*!40000 ALTER TABLE `t_role_employee` DISABLE KEYS */;
 INSERT INTO `t_role_employee` (`id`, `role_id`, `employee_id`, `update_time`, `create_time`) VALUES
 	(121, 38, 22, '2019-09-04 09:23:09', '2019-09-04 09:23:09'),
-	(130, 1, 30, '2019-09-05 15:32:40', '2019-09-05 15:32:40'),
-	(131, 1, 17, '2019-09-05 15:32:40', '2019-09-05 15:32:40'),
 	(132, 1, 26, '2019-09-05 15:32:40', '2019-09-05 15:32:40'),
 	(135, 1, 12, '2019-09-05 15:32:40', '2019-09-05 15:32:40'),
 	(136, 1, 11, '2019-09-05 15:32:40', '2019-09-05 15:32:40'),
@@ -908,21 +1359,20 @@ INSERT INTO `t_role_employee` (`id`, `role_id`, `employee_id`, `update_time`, `c
 	(141, 1, 23, '2019-09-05 15:32:40', '2019-09-05 15:32:40'),
 	(147, 1, 35, '2019-09-06 09:00:27', '2019-09-06 09:00:27'),
 	(148, 40, 35, '2019-09-06 09:00:27', '2019-09-06 09:00:27'),
-	(165, 40, 32, '2019-11-08 10:39:35', '2019-11-08 10:39:35'),
-	(166, 34, 32, '2019-11-08 10:39:35', '2019-11-08 10:39:35'),
-	(167, 38, 32, '2019-11-08 10:39:35', '2019-11-08 10:39:35'),
 	(168, 38, 36, '2019-11-08 10:40:16', '2019-11-08 10:40:16'),
 	(169, 40, 36, '2019-11-08 10:40:16', '2019-11-08 10:40:16'),
 	(170, 37, 36, '2019-11-08 10:40:16', '2019-11-08 10:40:16'),
 	(174, 38, 37, '2019-11-08 11:05:39', '2019-11-08 11:05:39'),
 	(175, 42, 37, '2019-11-08 11:05:39', '2019-11-08 11:05:39'),
 	(188, 1, 1, '2019-11-15 16:05:33', '2019-11-15 16:05:33'),
-	(211, 40, 38, '2019-11-15 16:54:54', '2019-11-15 16:54:54'),
 	(212, 34, 29, '2019-11-16 18:04:04', '2019-11-16 18:04:04'),
-	(213, 45, 29, '2019-11-16 18:04:04', '2019-11-16 18:04:04');
+	(213, 45, 29, '2019-11-16 18:04:04', '2019-11-16 18:04:04'),
+	(214, 40, 38, '2020-02-12 11:42:56', '2020-02-12 11:42:56'),
+	(217, 34, 39, '2020-03-10 10:53:27', '2020-03-10 10:53:27'),
+	(218, 34, 32, '2020-04-07 09:03:47', '2020-04-07 09:03:47');
 /*!40000 ALTER TABLE `t_role_employee` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_role_privilege 结构
+-- Dumping structure for table smart-admin-dev.t_role_privilege
 DROP TABLE IF EXISTS `t_role_privilege`;
 CREATE TABLE IF NOT EXISTS `t_role_privilege` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -931,9 +1381,9 @@ CREATE TABLE IF NOT EXISTS `t_role_privilege` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10835 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限功能表';
+) ENGINE=InnoDB AUTO_INCREMENT=11996 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限功能表';
 
--- 正在导出表  smart-admin-dev.t_role_privilege 的数据：~322 rows (大约)
+-- Dumping data for table smart-admin-dev.t_role_privilege: ~399 rows (approximately)
 DELETE FROM `t_role_privilege`;
 /*!40000 ALTER TABLE `t_role_privilege` DISABLE KEYS */;
 INSERT INTO `t_role_privilege` (`id`, `role_id`, `privilege_key`, `update_time`, `create_time`) VALUES
@@ -1032,9 +1482,6 @@ INSERT INTO `t_role_privilege` (`id`, `role_id`, `privilege_key`, `update_time`,
 	(8554, 35, 'PersonNotice', '2019-11-15 15:47:52', '2019-11-15 15:47:52'),
 	(8555, 35, 'Email', '2019-11-15 15:47:52', '2019-11-15 15:47:52'),
 	(8556, 35, 'EmailList', '2019-11-15 15:47:52', '2019-11-15 15:47:52'),
-	(8557, 35, 'UserLog', '2019-11-15 15:47:52', '2019-11-15 15:47:52'),
-	(8558, 35, 'UserOperateLog', '2019-11-15 15:47:52', '2019-11-15 15:47:52'),
-	(8559, 35, 'UserLoginLog', '2019-11-15 15:47:52', '2019-11-15 15:47:52'),
 	(8560, 35, 'system-config-search', '2019-11-15 15:47:52', '2019-11-15 15:47:52'),
 	(8561, 35, 'privilege-main-update', '2019-11-15 15:47:52', '2019-11-15 15:47:52'),
 	(8562, 35, 'privilege-main-search', '2019-11-15 15:47:52', '2019-11-15 15:47:52'),
@@ -1055,23 +1502,6 @@ INSERT INTO `t_role_privilege` (`id`, `role_id`, `privilege_key`, `update_time`,
 	(9007, 37, 'system-params-search', '2019-11-15 16:33:09', '2019-11-15 16:33:09'),
 	(9008, 37, 'system-params-add', '2019-11-15 16:33:09', '2019-11-15 16:33:09'),
 	(9009, 37, 'system-config-update', '2019-11-15 16:33:09', '2019-11-15 16:33:09'),
-	(9368, 34, 'SystemSetting', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9369, 34, 'SystemConfig', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9370, 34, 'SystemPrivilege', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9371, 34, 'system-params-search', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9372, 34, 'system-params-add', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9373, 34, 'privilege-main-search', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9374, 34, 'Task', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9375, 34, 'TaskList', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9376, 34, 'task-search', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9377, 34, 'task-refresh', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9378, 34, 'task-add', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9379, 34, 'task-update', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9380, 34, 'task-pause', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9381, 34, 'task-resume', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9382, 34, 'task-run', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9383, 34, 'task-query-log', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
-	(9384, 34, 'task-delete', '2019-11-15 16:45:39', '2019-11-15 16:45:39'),
 	(9536, 42, 'Task', '2019-11-15 16:50:40', '2019-11-15 16:50:40'),
 	(9537, 42, 'TaskList', '2019-11-15 16:50:40', '2019-11-15 16:50:40'),
 	(9538, 42, 'task-search', '2019-11-15 16:50:40', '2019-11-15 16:50:40'),
@@ -1157,111 +1587,208 @@ INSERT INTO `t_role_privilege` (`id`, `role_id`, `privilege_key`, `update_time`,
 	(10628, 40, 'task-query-log', '2019-11-15 17:19:42', '2019-11-15 17:19:42'),
 	(10629, 40, 'task-delete', '2019-11-15 17:19:42', '2019-11-15 17:19:42'),
 	(10630, 40, 'delete-department', '2019-11-15 17:19:42', '2019-11-15 17:19:42'),
-	(10733, 1, 'Employee', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10734, 1, 'RoleManage', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10735, 1, 'PositionList', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10736, 1, 'RoleEmployeeManage', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10737, 1, 'SystemSetting', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10738, 1, 'SystemConfig', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10739, 1, 'SystemPrivilege', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10740, 1, 'Notice', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10741, 1, 'NoticeList', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10742, 1, 'PersonNotice', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10743, 1, 'Email', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10744, 1, 'EmailList', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10745, 1, 'SendMail', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10746, 1, 'UserLog', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10747, 1, 'UserOperateLog', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10748, 1, 'UserLoginLog', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10749, 1, 'Monitor', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10750, 1, 'OnlineUser', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10751, 1, 'Sql', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10752, 1, 'Task', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10753, 1, 'TaskList', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10754, 1, 'Reload', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10755, 1, 'SmartReloadList', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10756, 1, 'ApiDoc', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10757, 1, 'Swagger', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10758, 1, 'ThreeRouter', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10759, 1, 'LevelTwo', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10760, 1, 'RoleOneTwo', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10761, 1, 'RoleTwoTwo', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10762, 1, 'RoleOneOne', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10763, 1, 'KeepAlive', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10764, 1, 'KeepAliveContentList', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10765, 1, 'KeepAliveAddContent', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10766, 1, 'HeartBeat', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10767, 1, 'HeartBeatList', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10768, 1, 'File', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10769, 1, 'FileList', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10770, 1, 'add-role', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10771, 1, 'delete-role', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10772, 1, 'update-role', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10773, 1, 'update-role-privilege', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10774, 1, 'add-employee-role', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10775, 1, 'search-employee-list', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10776, 1, 'delete-employee-role', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10777, 1, 'delete-employee-role-batch', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10778, 1, 'query-data-scope', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10779, 1, 'update-data-scope', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10780, 1, 'search-position', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10781, 1, 'add-position', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10782, 1, 'update-position', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10783, 1, 'delete-position', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10784, 1, 'add-department', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10785, 1, 'update-department', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10786, 1, 'delete-department', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10787, 1, 'search-department', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10788, 1, 'add-employee', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10789, 1, 'update-employee', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10790, 1, 'disabled-employee', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10791, 1, 'disabled-employee-batch', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10792, 1, 'update-employee-role', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10793, 1, 'reset-employee-password', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10794, 1, 'delete-employee', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10795, 1, 'system-params-search', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10796, 1, 'system-params-add', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10797, 1, 'system-config-update', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10798, 1, 'system-config-search', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10799, 1, 'privilege-main-update', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10800, 1, 'privilege-main-search', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10801, 1, 'notice-query', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10802, 1, 'notice-add', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10803, 1, 'notice-edit', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10804, 1, 'notice-delete', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10805, 1, 'notice-detail', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10806, 1, 'notice-send', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10807, 1, 'person-notice-query', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10808, 1, 'person-notice-detail', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10809, 1, 'email-query', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10810, 1, 'email-add', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10811, 1, 'email-update', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10812, 1, 'email-delete', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10813, 1, 'email-send', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10814, 1, 'user-operate-log-search', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10815, 1, 'user-operate-log-detail', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10816, 1, 'user-operate-log-delete', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10817, 1, 'user-login-log-search', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10818, 1, 'user-login-log-delete', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10819, 1, 'online-user-search', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10820, 1, 'task-search', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10821, 1, 'task-refresh', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10822, 1, 'task-add', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10823, 1, 'task-update', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10824, 1, 'task-pause', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10825, 1, 'task-resume', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10826, 1, 'task-run', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10827, 1, 'task-query-log', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10828, 1, 'task-delete', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10829, 1, 'smart-reload-search', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10830, 1, 'smart-reload-update', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10831, 1, 'smart-reload-result', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10832, 1, 'heart-beat-query', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10833, 1, 'file-filePage-query', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10834, 1, 'file-filePage-upload', '2019-11-16 18:04:10', '2019-11-16 18:04:10');
+	(11797, 1, 'Employee', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11798, 1, 'RoleManage', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11799, 1, 'PositionList', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11800, 1, 'RoleEmployeeManage', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11801, 1, 'SystemSetting', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11802, 1, 'SystemConfig', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11803, 1, 'SystemPrivilege', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11804, 1, 'Notice', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11805, 1, 'NoticeList', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11806, 1, 'PersonNotice', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11807, 1, 'Email', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11808, 1, 'EmailList', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11809, 1, 'SendMail', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11810, 1, 'Monitor', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11811, 1, 'OnlineUser', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11812, 1, 'Sql', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11813, 1, 'Task', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11814, 1, 'TaskList', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11815, 1, 'Reload', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11816, 1, 'SmartReloadList', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11817, 1, 'ApiDoc', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11818, 1, 'Swagger', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11819, 1, 'ThreeRouter', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11820, 1, 'LevelTwo', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11821, 1, 'RoleOneTwo', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11822, 1, 'RoleTwoTwo', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11823, 1, 'RoleOneOne', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11824, 1, 'KeepAlive', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11825, 1, 'KeepAliveContentList', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11826, 1, 'KeepAliveAddContent', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11827, 1, 'HeartBeat', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11828, 1, 'HeartBeatList', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11829, 1, 'File', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11830, 1, 'FileList', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11831, 1, 'add-role', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11832, 1, 'delete-role', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11833, 1, 'update-role', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11834, 1, 'update-role-privilege', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11835, 1, 'add-employee-role', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11836, 1, 'search-employee-list', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11837, 1, 'delete-employee-role', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11838, 1, 'delete-employee-role-batch', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11839, 1, 'query-data-scope', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11840, 1, 'update-data-scope', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11841, 1, 'search-position', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11842, 1, 'add-position', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11843, 1, 'update-position', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11844, 1, 'delete-position', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11845, 1, 'add-department', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11846, 1, 'update-department', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11847, 1, 'delete-department', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11848, 1, 'search-department', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11849, 1, 'add-employee', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11850, 1, 'update-employee', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11851, 1, 'disabled-employee', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11852, 1, 'disabled-employee-batch', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11853, 1, 'update-employee-role', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11854, 1, 'reset-employee-password', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11855, 1, 'delete-employee', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11856, 1, 'system-params-search', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11857, 1, 'system-params-add', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11858, 1, 'system-config-update', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11859, 1, 'system-config-search', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11860, 1, 'privilege-main-update', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11861, 1, 'privilege-main-search', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11862, 1, 'notice-query', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11863, 1, 'notice-add', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11864, 1, 'notice-edit', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11865, 1, 'notice-delete', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11866, 1, 'notice-detail', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11867, 1, 'notice-send', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11868, 1, 'person-notice-query', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11869, 1, 'person-notice-detail', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11870, 1, 'email-query', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11871, 1, 'email-add', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11872, 1, 'email-update', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11873, 1, 'email-delete', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11874, 1, 'email-send', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11875, 1, 'online-user-search', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11876, 1, 'task-search', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11877, 1, 'task-refresh', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11878, 1, 'task-add', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11879, 1, 'task-update', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11880, 1, 'task-pause', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11881, 1, 'task-resume', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11882, 1, 'task-run', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11883, 1, 'task-query-log', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11884, 1, 'task-delete', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11885, 1, 'smart-reload-search', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11886, 1, 'smart-reload-update', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11887, 1, 'smart-reload-result', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11888, 1, 'heart-beat-query', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11889, 1, 'file-filePage-query', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11890, 1, 'file-filePage-upload', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11891, 1, 'file-filePage-download', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11892, 1, 'NoticeDetail', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11893, 1, 'System', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11894, 1, 'Business', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11895, 1, 'Support', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11896, 1, 'Peony', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11897, 1, 'PeonyList', '2020-04-07 09:57:28', '2020-04-07 09:57:28'),
+	(11898, 34, 'Employee', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11899, 34, 'RoleManage', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11900, 34, 'PositionList', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11901, 34, 'RoleEmployeeManage', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11902, 34, 'SystemSetting', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11903, 34, 'SystemConfig', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11904, 34, 'SystemPrivilege', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11905, 34, 'Notice', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11906, 34, 'NoticeList', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11907, 34, 'PersonNotice', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11908, 34, 'Email', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11909, 34, 'EmailList', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11910, 34, 'SendMail', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11911, 34, 'Monitor', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11912, 34, 'Sql', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11913, 34, 'Task', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11914, 34, 'TaskList', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11915, 34, 'Reload', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11916, 34, 'SmartReloadList', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11917, 34, 'ApiDoc', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11918, 34, 'Swagger', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11919, 34, 'ThreeRouter', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11920, 34, 'LevelTwo', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11921, 34, 'RoleOneTwo', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11922, 34, 'RoleTwoTwo', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11923, 34, 'RoleOneOne', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11924, 34, 'KeepAlive', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11925, 34, 'KeepAliveContentList', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11926, 34, 'KeepAliveAddContent', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11927, 34, 'HeartBeat', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11928, 34, 'HeartBeatList', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11929, 34, 'File', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11930, 34, 'FileList', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11931, 34, 'add-role', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11932, 34, 'delete-role', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11933, 34, 'update-role', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11934, 34, 'update-role-privilege', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11935, 34, 'add-employee-role', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11936, 34, 'search-employee-list', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11937, 34, 'delete-employee-role', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11938, 34, 'delete-employee-role-batch', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11939, 34, 'query-data-scope', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11940, 34, 'update-data-scope', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11941, 34, 'search-position', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11942, 34, 'add-position', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11943, 34, 'update-position', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11944, 34, 'delete-position', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11945, 34, 'add-department', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11946, 34, 'update-department', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11947, 34, 'delete-department', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11948, 34, 'search-department', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11949, 34, 'add-employee', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11950, 34, 'update-employee', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11951, 34, 'disabled-employee', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11952, 34, 'disabled-employee-batch', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11953, 34, 'update-employee-role', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11954, 34, 'reset-employee-password', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11955, 34, 'delete-employee', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11956, 34, 'system-params-search', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11957, 34, 'system-params-add', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11958, 34, 'system-config-update', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11959, 34, 'system-config-search', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11960, 34, 'privilege-main-update', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11961, 34, 'privilege-main-search', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11962, 34, 'notice-query', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11963, 34, 'notice-add', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11964, 34, 'notice-edit', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11965, 34, 'notice-delete', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11966, 34, 'notice-detail', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11967, 34, 'notice-send', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11968, 34, 'person-notice-query', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11969, 34, 'person-notice-detail', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11970, 34, 'email-query', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11971, 34, 'email-add', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11972, 34, 'email-update', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11973, 34, 'email-delete', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11974, 34, 'email-send', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11975, 34, 'task-search', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11976, 34, 'task-refresh', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11977, 34, 'task-update', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11978, 34, 'task-pause', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11979, 34, 'task-resume', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11980, 34, 'task-run', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11981, 34, 'task-query-log', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11982, 34, 'task-delete', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11983, 34, 'smart-reload-search', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11984, 34, 'smart-reload-update', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11985, 34, 'smart-reload-result', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11986, 34, 'heart-beat-query', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11987, 34, 'file-filePage-query', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11988, 34, 'file-filePage-upload', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11989, 34, 'file-filePage-download', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11990, 34, 'NoticeDetail', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11991, 34, 'System', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11992, 34, 'Business', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11993, 34, 'Support', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11994, 34, 'Peony', '2020-04-07 09:58:06', '2020-04-07 09:58:06'),
+	(11995, 34, 'PeonyList', '2020-04-07 09:58:06', '2020-04-07 09:58:06');
 /*!40000 ALTER TABLE `t_role_privilege` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_system_config 结构
+-- Dumping structure for table smart-admin-dev.t_system_config
 DROP TABLE IF EXISTS `t_system_config`;
 CREATE TABLE IF NOT EXISTS `t_system_config` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -1274,23 +1801,24 @@ CREATE TABLE IF NOT EXISTS `t_system_config` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '上次修改时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
--- 正在导出表  smart-admin-dev.t_system_config 的数据：~8 rows (大约)
+-- Dumping data for table smart-admin-dev.t_system_config: ~8 rows (approximately)
 DELETE FROM `t_system_config`;
 /*!40000 ALTER TABLE `t_system_config` DISABLE KEYS */;
 INSERT INTO `t_system_config` (`id`, `config_name`, `config_key`, `config_value`, `config_group`, `is_using`, `remark`, `update_time`, `create_time`) VALUES
-	(1, '超级管理员', 'employee_superman', '12,13,1', 'employee', 1, '123r8566456', '2019-11-14 16:40:48', '2018-08-18 16:28:03'),
+	(1, '超级管理员', 'employee_superman', '12,13,1,11', 'employee', 1, '123r85664569222565456', '2020-03-20 17:30:52', '2018-08-18 16:28:03'),
 	(13, '本地上传URL前缀', 'local_upload_url_prefix', 'http://172.16.0.145/smartAdmin/file/', 'upload', 1, '', '2019-09-04 16:23:49', '2019-04-26 17:06:53'),
 	(14, '阿里云上传配置', 'ali_oss', '{"accessKeyId":"","accessKeySecret":"","bucketName":"sit","endpoint":"http://oss-cn-beijing.aliyuncs.com"}', 'upload', 1, 'eefwfwfds', '2019-11-16 18:04:30', '2019-05-11 18:00:06'),
 	(15, '邮件发配置', 'email_config', '{"password":"smartadmin","smtpHost":"smtp.163.com","username":"smartadmin1024@163.com"}', 'email', 1, NULL, '2019-09-04 16:42:17', '2019-05-13 16:57:48'),
 	(16, '七牛云上传配置', 'qi_niu_oss', '{"accessKeyId":"rX7HgY1ZLpUD25JrA-uwMM_jj-","accessKeySecret":"","bucketName":"sun-smart-admin","endpoint":"http://puvpyay08.bkt.clouddn.com"}', 'upload', 1, NULL, '2019-11-16 18:04:42', '2019-07-19 16:05:56'),
 	(17, 'test', 'ww_1', 'ewr', '3', 1, 'testoo', '2019-11-08 09:43:36', '2019-11-08 09:27:19'),
 	(18, '4234', '42342', '423423', '23423', 1, '423423111111111111111111111111111111111111423423111111111111111111111111111111111111423423111111111111111111111111111111111111423423111111111111111111111111111111111111423423111111111111111111111111111111111111', '2019-11-14 14:58:39', '2019-11-14 11:22:49'),
-	(19, 'test323@', 'test', '123456', '11_', 1, 'gggggg', '2019-11-15 16:24:52', '2019-11-15 16:24:52');
+	(19, 'test323@', 'test', '123456', '11_', 1, 'gggggg', '2019-11-15 16:24:52', '2019-11-15 16:24:52'),
+	(20, 'aaaaaa', 'aaaaaa', '11', 'int', 1, 'asda', '2020-03-20 13:45:02', '2020-03-20 13:45:02');
 /*!40000 ALTER TABLE `t_system_config` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_user_login_log 结构
+-- Dumping structure for table smart-admin-dev.t_user_login_log
 DROP TABLE IF EXISTS `t_user_login_log`;
 CREATE TABLE IF NOT EXISTS `t_user_login_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -1306,190 +1834,34 @@ CREATE TABLE IF NOT EXISTS `t_user_login_log` (
   PRIMARY KEY (`id`),
   KEY `customer_id` (`user_id`) USING BTREE,
   KEY `auditor_id` (`remote_browser`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1742 DEFAULT CHARSET=utf8mb4 COMMENT='用户登录日志';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户登录日志';
 
--- 正在导出表  smart-admin-dev.t_user_login_log 的数据：~122 rows (大约)
+-- Dumping data for table smart-admin-dev.t_user_login_log: ~130 rows (approximately)
 DELETE FROM `t_user_login_log`;
 /*!40000 ALTER TABLE `t_user_login_log` DISABLE KEYS */;
-INSERT INTO `t_user_login_log` (`id`, `user_id`, `user_name`, `remote_ip`, `remote_port`, `remote_browser`, `remote_os`, `login_status`, `update_time`, `create_time`) VALUES
-	(1501, 30, '耿为刚', '172.16.1.234', 61406, 'Chrome', 'Windows 10', 1, '2019-09-06 14:19:47', '2019-09-06 14:19:47'),
-	(1502, 30, '耿为刚', '172.16.1.234', 61405, 'Chrome', 'Windows 10', 1, '2019-09-06 14:20:46', '2019-09-06 14:20:46'),
-	(1503, 30, '耿为刚', '172.16.1.234', 62213, 'Chrome', 'Windows 10', 1, '2019-09-06 14:28:50', '2019-09-06 14:28:50'),
-	(1505, 30, '耿为刚', '172.16.1.234', 62478, 'Chrome', 'Windows 10', 1, '2019-09-06 14:32:57', '2019-09-06 14:32:57'),
-	(1506, 1, '管理员', '127.0.0.1', 55613, 'Chrome', 'Windows 10', 1, '2019-09-06 14:35:48', '2019-09-06 14:35:48'),
-	(1507, 1, '管理员', '172.16.1.234', 63132, 'Chrome', 'Windows 10', 1, '2019-09-06 14:38:43', '2019-09-06 14:38:43'),
-	(1508, 30, '耿为刚', '172.16.1.234', 63132, 'Chrome', 'Windows 10', 1, '2019-09-06 14:41:36', '2019-09-06 14:41:36'),
-	(1509, 1, '管理员', '172.16.1.234', 63332, 'Chrome', 'Windows 10', 1, '2019-09-06 14:42:37', '2019-09-06 14:42:37'),
-	(1511, 1, '管理员', '172.16.1.166', 29923, 'Chrome', 'Windows 10', 1, '2019-09-06 15:09:22', '2019-09-06 15:09:22'),
-	(1512, 1, '管理员', '172.16.1.113', 58150, 'Chrome', 'Windows 7', 1, '2019-09-06 15:23:31', '2019-09-06 15:23:31'),
-	(1513, 1, '管理员', '172.16.1.166', 31226, 'Chrome', 'Windows 10', 1, '2019-09-06 15:24:51', '2019-09-06 15:24:51'),
-	(1514, 1, '管理员', '172.16.1.113', 58300, 'Chrome', 'Windows 7', 1, '2019-09-06 15:25:04', '2019-09-06 15:25:04'),
-	(1515, 1, '管理员', '172.16.1.113', 58300, 'Chrome', 'Windows 7', 1, '2019-09-06 15:25:26', '2019-09-06 15:25:26'),
-	(1516, 1, '管理员', '172.16.1.166', 31243, 'Chrome', 'Windows 10', 1, '2019-09-06 15:25:29', '2019-09-06 15:25:29'),
-	(1517, 1, '管理员', '172.16.1.221', 61458, 'Chrome', 'Windows 10', 1, '2019-09-06 15:27:07', '2019-09-06 15:27:07'),
-	(1518, 1, '管理员', '172.16.1.166', 31243, 'Chrome', 'Windows 10', 1, '2019-09-06 15:27:09', '2019-09-06 15:27:09'),
-	(1519, 1, '管理员', '172.16.1.113', 58300, 'Chrome', 'Windows 7', 1, '2019-09-06 15:27:10', '2019-09-06 15:27:10'),
-	(1520, 1, '管理员', '172.16.1.166', 31551, 'Chrome', 'Windows 10', 1, '2019-09-06 15:30:01', '2019-09-06 15:30:01'),
-	(1521, 1, '管理员', '172.16.4.160', 50527, 'Chrome', 'Windows 10', 1, '2019-09-06 15:50:20', '2019-09-06 15:50:20'),
-	(1522, 1, '管理员', '172.16.1.166', 36381, 'Chrome', 'Windows 10', 1, '2019-09-06 16:20:46', '2019-09-06 16:20:46'),
-	(1523, 1, '管理员', '172.16.1.166', 40039, 'Chrome', 'Windows 10', 1, '2019-09-06 17:02:33', '2019-09-06 17:02:33'),
-	(1524, 1, '管理员', '172.16.1.166', 41014, 'Chrome', 'Windows 10', 1, '2019-09-06 17:16:09', '2019-09-06 17:16:09'),
-	(1525, 1, '管理员', '172.16.1.188', 56577, 'Chrome', 'Windows 7', 1, '2019-09-07 08:36:31', '2019-09-07 08:36:31'),
-	(1526, 1, '管理员', '172.16.1.48', 60852, 'Chrome', 'Windows 10', 1, '2019-09-07 08:45:02', '2019-09-07 08:45:02'),
-	(1527, 1, '管理员', '172.16.4.85', 4818, 'Chrome', 'Windows 10', 1, '2019-09-07 09:04:44', '2019-09-07 09:04:44'),
-	(1528, 1, '管理员', '172.16.4.85', 5230, 'Chrome', 'Windows 10', 1, '2019-09-07 09:25:41', '2019-09-07 09:25:41'),
-	(1529, 1, '管理员', '172.16.1.166', 10251, 'Chrome', 'Windows 10', 1, '2019-09-07 10:15:20', '2019-09-07 10:15:20'),
-	(1530, 1, '管理员', '172.16.1.48', 63877, 'Chrome', 'Windows 10', 1, '2019-09-07 11:26:19', '2019-09-07 11:26:19'),
-	(1531, 1, '管理员', '172.16.1.166', 26667, 'Chrome', 'Windows 10', 1, '2019-09-07 14:08:15', '2019-09-07 14:08:15'),
-	(1532, 1, '管理员', '172.16.4.85', 10604, 'Chrome', 'Windows 10', 1, '2019-09-07 14:08:33', '2019-09-07 14:08:33'),
-	(1533, 1, '管理员', '172.16.4.85', 10604, 'Chrome', 'Windows 10', 1, '2019-09-07 14:08:50', '2019-09-07 14:08:50'),
-	(1534, 1, '管理员', '172.16.1.166', 26812, 'Chrome', 'Windows 10', 1, '2019-09-07 14:14:09', '2019-09-07 14:14:09'),
-	(1535, 1, '管理员', '172.16.1.188', 52924, 'Chrome', 'Windows 7', 1, '2019-09-07 14:37:16', '2019-09-07 14:37:16'),
-	(1536, 1, '管理员', '172.16.1.188', 56721, 'Chrome', 'Windows 7', 1, '2019-09-07 14:49:37', '2019-09-07 14:49:37'),
-	(1537, 1, '管理员', '172.16.1.188', 52839, 'Chrome', 'Windows 7', 1, '2019-09-07 15:33:04', '2019-09-07 15:33:04'),
-	(1538, 1, '管理员', '172.16.1.166', 32489, 'Chrome', 'Windows 10', 1, '2019-09-07 15:48:02', '2019-09-07 15:48:02'),
-	(1539, 1, '管理员', '172.16.1.166', 32847, 'Chrome', 'Windows 10', 1, '2019-09-07 15:52:25', '2019-09-07 15:52:25'),
-	(1540, 1, '管理员', '172.16.1.166', 33456, 'Chrome', 'Windows 10', 1, '2019-09-07 16:00:01', '2019-09-07 16:00:01'),
-	(1541, 1, '管理员', '172.16.1.188', 61015, 'Chrome', 'Windows 7', 1, '2019-09-07 17:05:49', '2019-09-07 17:05:49'),
-	(1542, 1, '管理员', '127.0.0.1', 51566, 'Chrome', 'Windows 7', 1, '2019-09-07 17:31:20', '2019-09-07 17:31:20'),
-	(1543, 1, '管理员', '127.0.0.1', 54228, 'Chrome', 'Windows 7', 1, '2019-09-07 17:41:12', '2019-09-07 17:41:12'),
-	(1544, 1, '管理员', '127.0.0.1', 54957, 'Chrome', 'Windows 7', 1, '2019-09-07 17:43:21', '2019-09-07 17:43:21'),
-	(1545, 1, '管理员', '172.16.4.85', 2336, 'Chrome', 'Windows 10', 1, '2019-09-07 18:25:51', '2019-09-07 18:25:51'),
-	(1546, 1, '管理员', '127.0.0.1', 52161, 'Chrome', 'Windows 7', 1, '2019-09-09 08:30:47', '2019-09-09 08:30:47'),
-	(1547, 1, '管理员', '172.16.4.85', 5903, 'Chrome', 'Windows 10', 1, '2019-09-09 08:47:47', '2019-09-09 08:47:47'),
-	(1548, 1, '管理员', '172.16.1.243', 55673, 'Chrome', 'Windows 10', 1, '2019-09-09 11:25:02', '2019-09-09 11:25:02'),
-	(1549, 1, '管理员', '172.16.4.85', 4672, 'Chrome', 'Windows 10', 1, '2019-09-09 11:25:34', '2019-09-09 11:25:34'),
-	(1550, 1, '管理员', '172.16.1.188', 61186, 'Chrome', 'Windows 7', 1, '2019-09-09 11:39:24', '2019-09-09 11:39:24'),
-	(1551, 1, '管理员', '172.16.4.85', 3032, 'Chrome', 'Windows 10', 1, '2019-09-09 14:17:53', '2019-09-09 14:17:53'),
-	(1552, 1, '管理员', '172.16.4.85', 5829, 'Chrome', 'Windows 10', 1, '2019-09-09 14:54:27', '2019-09-09 14:54:27'),
-	(1553, 1, '管理员', '172.16.1.166', 23398, 'Chrome', 'Windows 10', 1, '2019-09-09 15:06:50', '2019-09-09 15:06:50'),
-	(1554, 1, '管理员', '172.16.5.60', 61094, 'Chrome', 'Windows 10', 1, '2019-09-09 15:20:50', '2019-09-09 15:20:50'),
-	(1555, 1, '管理员', '172.16.4.85', 10566, 'Chrome', 'Windows 10', 1, '2019-09-09 15:51:22', '2019-09-09 15:51:22'),
-	(1556, 1, '管理员', '172.16.1.166', 32190, 'Chrome', 'Windows 10', 1, '2019-09-09 17:00:59', '2019-09-09 17:00:59'),
-	(1557, 1, '管理员', '172.16.5.60', 54502, 'Chrome', 'Windows 10', 1, '2019-09-10 09:10:48', '2019-09-10 09:10:48'),
-	(1558, 1, '管理员', '172.16.4.85', 10659, 'Chrome', 'Windows 10', 1, '2019-09-10 09:21:48', '2019-09-10 09:21:48'),
-	(1559, 1, '管理员', '172.16.4.85', 3363, 'Chrome', 'Windows 10', 1, '2019-09-10 10:56:23', '2019-09-10 10:56:23'),
-	(1560, 1, '管理员', '172.16.4.85', 4460, 'Chrome', 'Windows 10', 1, '2019-09-10 14:23:44', '2019-09-10 14:23:44'),
-	(1561, 1, '管理员', '172.16.4.85', 7344, 'Chrome', 'Windows 10', 1, '2019-09-10 14:59:52', '2019-09-10 14:59:52'),
-	(1562, 1, '管理员', '172.16.5.89', 49996, 'Chrome', 'Windows 10', 1, '2019-09-10 18:08:04', '2019-09-10 18:08:04'),
-	(1563, 1, '管理员', '172.16.1.38', 50152, 'Chrome', 'Windows 10', 1, '2019-09-11 10:19:27', '2019-09-11 10:19:27'),
-	(1564, 1, '管理员', '172.16.1.38', 50173, 'Chrome', 'Windows 10', 1, '2019-09-11 10:20:38', '2019-09-11 10:20:38'),
-	(1565, 1, '管理员', '172.16.4.141', 60881, 'Chrome', 'Windows 10', 1, '2019-09-11 14:52:02', '2019-09-11 14:52:02'),
-	(1566, 1, '管理员', '172.16.4.93', 52688, 'Chrome', 'Windows 10', 1, '2019-09-11 15:15:14', '2019-09-11 15:15:14'),
-	(1567, 1, '管理员', '172.16.5.127', 54993, 'Chrome', 'Windows 10', 1, '2019-09-12 14:29:58', '2019-09-12 14:29:58'),
-	(1568, 1, '管理员', '172.16.5.127', 57424, 'Chrome', 'Windows 10', 1, '2019-09-12 15:26:46', '2019-09-12 15:26:46'),
-	(1569, 1, '管理员', '172.16.5.127', 58073, 'Chrome', 'Windows 10', 1, '2019-09-12 15:41:54', '2019-09-12 15:41:54'),
-	(1570, 1, '管理员', '172.16.5.146', 63230, 'Chrome', 'Windows 10', 1, '2019-09-16 10:17:15', '2019-09-16 10:17:15'),
-	(1571, 1, '管理员', '172.16.5.146', 52857, 'Chrome', 'Windows 10', 1, '2019-09-16 11:17:18', '2019-09-16 11:17:18'),
-	(1572, 1, '管理员', '172.16.1.190', 64527, 'Chrome', 'Windows 10', 1, '2019-09-19 14:06:45', '2019-09-19 14:06:45'),
-	(1573, 1, '管理员', '127.0.0.1', 53267, 'Chrome', 'Windows 7', 1, '2019-09-20 17:24:33', '2019-09-20 17:24:33'),
-	(1574, 1, '管理员', '127.0.0.1', 53267, 'Chrome', 'Windows 7', 1, '2019-09-20 17:24:43', '2019-09-20 17:24:43'),
-	(1575, 1, '管理员', '127.0.0.1', 53267, 'Chrome', 'Windows 7', 1, '2019-09-20 17:24:59', '2019-09-20 17:24:59'),
-	(1576, 1, '管理员', '127.0.0.1', 53267, 'Chrome', 'Windows 7', 1, '2019-09-20 17:26:05', '2019-09-20 17:26:05'),
-	(1577, 1, '管理员', '127.0.0.1', 60612, 'Chrome', 'Windows 7', 1, '2019-09-20 17:56:06', '2019-09-20 17:56:06'),
-	(1578, 1, '管理员', '172.16.1.202', 58066, 'Chrome', 'Windows 7', 1, '2019-09-22 18:25:03', '2019-09-22 18:25:03'),
-	(1579, 1, '管理员', '172.16.1.48', 52290, 'Chrome', 'Windows 10', 1, '2019-09-23 16:01:16', '2019-09-23 16:01:16'),
-	(1580, 1, '管理员', '172.16.4.141', 60997, 'Chrome', 'Windows 10', 1, '2019-09-23 17:16:55', '2019-09-23 17:16:55'),
-	(1581, 1, '管理员', '172.16.5.146', 53246, 'Chrome', 'Windows 10', 1, '2019-09-23 17:54:14', '2019-09-23 17:54:14'),
-	(1582, 1, '管理员', '127.0.0.1', 51987, 'Chrome', 'Windows 7', 1, '2019-09-24 09:16:37', '2019-09-24 09:16:37'),
-	(1583, 1, '管理员', '172.16.1.202', 55724, 'Chrome', 'Windows 7', 1, '2019-09-24 12:57:39', '2019-09-24 12:57:39'),
-	(1584, 1, '管理员', '172.16.1.166', 51876, 'Chrome', 'Windows 10', 1, '2019-09-24 16:24:37', '2019-09-24 16:24:37'),
-	(1585, 1, '管理员', '172.16.1.202', 51648, 'Chrome', 'Windows 7', 1, '2019-09-24 19:26:39', '2019-09-24 19:26:39'),
-	(1586, 1, '管理员', '172.16.1.234', 60984, 'Chrome', 'Windows 10', 1, '2019-09-26 10:52:07', '2019-09-26 10:52:07'),
-	(1587, 1, '管理员', '172.16.1.234', 63440, 'Chrome', 'Windows 10', 1, '2019-09-26 11:30:54', '2019-09-26 11:30:54'),
-	(1588, 1, '管理员', '172.16.1.202', 51956, 'Chrome', 'Windows 7', 1, '2019-09-27 20:55:08', '2019-09-27 20:55:08'),
-	(1589, 1, '管理员', '172.16.1.48', 56166, 'Chrome', 'Windows 10', 1, '2019-09-30 08:59:13', '2019-09-30 08:59:13'),
-	(1590, 1, '管理员', '172.16.1.202', 51448, 'Chrome', 'Windows 7', 1, '2019-09-30 09:00:13', '2019-09-30 09:00:13'),
-	(1591, 1, '管理员', '172.16.1.188', 62679, 'Chrome', 'Windows 7', 1, '2019-10-15 11:25:26', '2019-10-15 11:25:26'),
-	(1592, 1, '管理员', '172.16.1.234', 54034, 'Chrome', 'Windows 10', 1, '2019-10-18 10:47:14', '2019-10-18 10:47:14'),
-	(1593, 1, '管理员', '172.16.1.234', 64515, 'Chrome', 'Windows 10', 1, '2019-10-18 13:32:10', '2019-10-18 13:32:10'),
-	(1594, 1, '管理员', '172.16.1.234', 50211, 'Chrome', 'Windows 10', 1, '2019-10-18 13:56:19', '2019-10-18 13:56:19'),
-	(1595, 1, '管理员', '172.16.1.234', 55469, 'Chrome', 'Windows 10', 1, '2019-10-18 14:56:24', '2019-10-18 14:56:24'),
-	(1596, 1, '管理员', '172.16.1.234', 56392, 'Chrome', 'Windows 10', 1, '2019-10-18 15:08:25', '2019-10-18 15:08:25'),
-	(1597, 1, '管理员', '172.16.1.234', 60896, 'Chrome', 'Windows 10', 1, '2019-10-18 16:14:15', '2019-10-18 16:14:15'),
-	(1598, 1, '管理员', '172.16.1.234', 50590, 'Chrome', 'Windows 10', 1, '2019-10-19 08:38:54', '2019-10-19 08:38:54'),
-	(1599, 1, '管理员', '172.16.1.166', 4879, 'Chrome', 'Windows 10', 1, '2019-10-19 09:19:08', '2019-10-19 09:19:08'),
-	(1600, 1, '管理员', '172.16.1.188', 62895, 'Chrome', 'Windows 7', 1, '2019-10-19 13:49:29', '2019-10-19 13:49:29'),
-	(1601, 1, '管理员', '172.16.1.234', 58144, 'Chrome', 'Windows 10', 1, '2019-10-19 14:55:50', '2019-10-19 14:55:50'),
-	(1602, 1, '管理员', '127.0.0.1', 61033, 'Chrome', 'Windows 7', 1, '2019-10-19 15:19:38', '2019-10-19 15:19:38'),
-	(1603, 1, '管理员', '172.16.1.188', 58944, 'Chrome', 'Windows 7', 1, '2019-10-19 16:48:49', '2019-10-19 16:48:49'),
-	(1604, 1, '管理员', '172.16.1.188', 63950, 'Chrome', 'Windows 7', 1, '2019-10-21 08:10:38', '2019-10-21 08:10:38'),
-	(1605, 1, '管理员', '172.16.1.188', 64899, 'Chrome', 'Windows 7', 1, '2019-10-21 08:17:40', '2019-10-21 08:17:40'),
-	(1606, 1, '管理员', '172.16.1.221', 53180, 'Chrome', 'Windows 10', 1, '2019-10-21 15:52:36', '2019-10-21 15:52:36'),
-	(1607, 1, '管理员', '172.16.1.221', 56067, 'Chrome', 'Windows 10', 1, '2019-10-23 10:19:39', '2019-10-23 10:19:39'),
-	(1608, 1, '管理员', '172.16.1.221', 57692, 'Chrome', 'Windows 10', 1, '2019-10-23 16:36:39', '2019-10-23 16:36:39'),
-	(1609, 1, '管理员', '172.16.1.188', 57180, 'Chrome', 'Windows 7', 1, '2019-10-24 08:26:21', '2019-10-24 08:26:21'),
-	(1610, 1, '管理员', '172.16.0.196', 61409, 'Chrome', 'Windows 10', 1, '2019-10-24 08:26:55', '2019-10-24 08:26:55'),
-	(1611, 1, '管理员', '172.16.1.234', 51906, 'Chrome', 'Windows 10', 1, '2019-10-24 15:56:50', '2019-10-24 15:56:50'),
-	(1612, 1, '管理员', '172.16.1.234', 56793, 'Chrome', 'Windows 10', 1, '2019-10-24 17:04:54', '2019-10-24 17:04:54'),
-	(1613, 30, '耿为刚', '172.16.1.234', 60368, 'Chrome', 'Windows 10', 1, '2019-10-24 17:51:13', '2019-10-24 17:51:13'),
-	(1614, 1, '管理员', '172.16.1.234', 60368, 'Chrome', 'Windows 10', 1, '2019-10-24 17:51:56', '2019-10-24 17:51:56'),
-	(1615, 30, '耿为刚', '172.16.1.234', 60589, 'Chrome 65', 'Windows 10', 1, '2019-10-24 17:52:52', '2019-10-24 17:52:52'),
-	(1616, 1, '管理员', '172.16.1.234', 52998, 'Chrome', 'Windows 10', 1, '2019-10-25 09:28:13', '2019-10-25 09:28:13'),
-	(1617, 1, '管理员', '172.16.1.234', 54948, 'Chrome', 'Windows 10', 1, '2019-10-25 10:01:34', '2019-10-25 10:01:34'),
-	(1618, 1, '管理员', '172.16.1.234', 56800, 'Chrome', 'Windows 10', 1, '2019-10-25 10:32:53', '2019-10-25 10:32:53'),
-	(1619, 1, '管理员', '127.0.0.1', 59071, 'Chrome', 'Windows 7', 1, '2019-10-28 16:05:21', '2019-10-28 16:05:21'),
-	(1620, 1, '管理员', '127.0.0.1', 60106, 'Chrome', 'Windows 7', 1, '2019-10-28 16:11:29', '2019-10-28 16:11:29'),
-	(1621, 1, '管理员', '127.0.0.1', 63479, 'Chrome', 'Windows 7', 1, '2019-10-28 16:28:59', '2019-10-28 16:28:59'),
-	(1622, 1, '管理员', '127.0.0.1', 63479, 'Chrome', 'Windows 7', 1, '2019-10-28 16:29:55', '2019-10-28 16:29:55'),
-	(1623, 1, '管理员', '127.0.0.1', 57588, 'Chrome', 'Windows 7', 1, '2019-10-29 15:37:03', '2019-10-29 15:37:03'),
-	(1741, 1, '管理员', '127.0.0.1', 54621, 'Chrome', 'Windows 7', 1, '2019-11-16 18:03:45', '2019-11-16 18:03:45');
 /*!40000 ALTER TABLE `t_user_login_log` ENABLE KEYS */;
 
--- 导出  表 smart-admin-dev.t_user_operate_log 结构
+-- Dumping structure for table smart-admin-dev.t_user_operate_log
 DROP TABLE IF EXISTS `t_user_operate_log`;
 CREATE TABLE IF NOT EXISTS `t_user_operate_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `user_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名称',
   `module` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作模块',
-  `content` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作内容',
+  `content` text COLLATE utf8mb4_unicode_ci COMMENT '操作内容',
   `url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '请求路径',
-  `method` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '请求方法',
+  `method` text COLLATE utf8mb4_unicode_ci COMMENT '请求方法',
   `param` text COLLATE utf8mb4_unicode_ci COMMENT '请求参数',
   `result` tinyint(4) DEFAULT NULL COMMENT '请求结果 0失败 1成功',
   `fail_reason` longtext COLLATE utf8mb4_unicode_ci COMMENT '失败原因',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  smart-admin-dev.t_user_operate_log 的数据：~32 rows (大约)
+-- Dumping data for table smart-admin-dev.t_user_operate_log: ~1,971 rows (approximately)
 DELETE FROM `t_user_operate_log`;
 /*!40000 ALTER TABLE `t_user_operate_log` DISABLE KEYS */;
-INSERT INTO `t_user_operate_log` (`id`, `user_id`, `user_name`, `module`, `content`, `url`, `method`, `param`, `result`, `fail_reason`, `update_time`, `create_time`) VALUES
-	(1, 1, '管理员', '管理端-角色权限', '获取角色可选的功能权限', '/smart-admin-api/privilege/listPrivilegeByRoleId/0', 'com.gangquan360.smartadmin.module.role.roleprivilege.RolePrivilegeController.listPrivilegeByRoleId', 'Long[0]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(2, 1, '管理员', '管理端-角色', '获取所有角色', '/smart-admin-api/role/getAll', 'com.gangquan360.smartadmin.module.role.basic.RoleController.getAllRole', '', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(3, 1, '管理员', '管理端-角色权限', '获取角色可选的功能权限', '/smart-admin-api/privilege/listPrivilegeByRoleId/1', 'com.gangquan360.smartadmin.module.role.roleprivilege.RolePrivilegeController.listPrivilegeByRoleId', 'Long[1]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(4, 1, '管理员', '管理端-岗位', '分页查询所有岗位', '/smart-admin-api/position/getListPage', 'com.gangquan360.smartadmin.module.position.PositionController.getJobPage', 'PositionQueryDTO[{"pageNum":1,"pageSize":10,"positionName":"","searchCount":true,"sort":false}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(5, 1, '管理员', '管理端-角色', '获取所有角色', '/smart-admin-api/role/getAll', 'com.gangquan360.smartadmin.module.role.basic.RoleController.getAllRole', '', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(6, 1, '管理员', '管理端-部门', '根据部门名称查询部门及员工列表', '/smart-admin-api/department/listEmployeeByDepartmentName', 'com.gangquan360.smartadmin.module.department.DepartmentController.listDepartmentEmployee', 'String[""]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(7, 1, '管理员', '管理端-部门', '查询部门及员工列表', '/smart-admin-api/department/listEmployee', 'com.gangquan360.smartadmin.module.department.DepartmentController.listDepartmentEmployee', '', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(8, 1, '管理员', '管理端-用户', '员工管理查询', '/smart-admin-api/employee/query', 'com.gangquan360.smartadmin.module.employee.EmployeeController.query', 'EmployeeQueryDTO[{"isDelete":0,"isDisabled":0,"keyword":"","pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(9, 1, '管理员', '管理端-用户', '员工重置密码', '/smart-admin-api/employee/resetPasswd/29', 'com.gangquan360.smartadmin.module.employee.EmployeeController.resetPasswd', 'Integer[29]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(10, 1, '管理员', '管理端-用户', '员工管理查询', '/smart-admin-api/employee/query', 'com.gangquan360.smartadmin.module.employee.EmployeeController.query', 'EmployeeQueryDTO[{"isDelete":0,"isDisabled":0,"keyword":"","pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(11, 1, '管理员', '管理端-角色用户', '通过员工id获取所有角色以及员工具有的角色', '/smart-admin-api/role/getRoles/29', 'com.gangquan360.smartadmin.module.role.roleemployee.RoleEmployeeController.getRoleByEmployeeId', 'Long[29]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(12, 1, '管理员', '管理端-用户', '单个员工角色授权', '/smart-admin-api/employee/updateRoles', 'com.gangquan360.smartadmin.module.employee.EmployeeController.updateRoles', 'EmployeeUpdateRolesDTO[{"employeeId":29,"roleIds":[34,45]}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(13, 1, '管理员', '管理端-用户', '员工管理查询', '/smart-admin-api/employee/query', 'com.gangquan360.smartadmin.module.employee.EmployeeController.query', 'EmployeeQueryDTO[{"isDelete":0,"isDisabled":0,"keyword":"","pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(14, 1, '管理员', '管理端-角色权限', '更新角色权限', '/smart-admin-api/privilege/updateRolePrivilege', 'com.gangquan360.smartadmin.module.role.roleprivilege.RolePrivilegeController.updateRolePrivilege', 'RolePrivilegeDTO[{"privilegeKeyList":["Employee","RoleManage","PositionList","RoleEmployeeManage","SystemSetting","SystemConfig","SystemPrivilege","Notice","NoticeList","PersonNotice","Email","EmailList","SendMail","UserLog","UserOperateLog","UserLoginLog","Monitor","OnlineUser","Sql","Task","TaskList","Reload","SmartReloadList","ApiDoc","Swagger","ThreeRouter","LevelTwo","RoleOneTwo","RoleTwoTwo","RoleOneOne","KeepAlive","KeepAliveContentList","KeepAliveAddContent","HeartBeat","HeartBeatList","File","FileList","add-role","delete-role","update-role","update-role-privilege","add-employee-role","search-employee-list","delete-employee-role","delete-employee-role-batch","query-data-scope","update-data-scope","search-position","add-position","update-position","delete-position","add-department","update-department","delete-department","search-department","add-employee","update-employee","disabled-employee","disabled-employee-batch","update-employee-role","reset-employee-password","delete-employee","system-params-search","system-params-add","system-config-update","system-config-search","privilege-main-update","privilege-main-search","notice-query","notice-add","notice-edit","notice-delete","notice-detail","notice-send","person-notice-query","person-notice-detail","email-query","email-add","email-update","email-delete","email-send","user-operate-log-search","user-operate-log-detail","user-operate-log-delete","user-login-log-search","user-login-log-delete","online-user-search","task-search","task-refresh","task-add","task-update","task-pause","task-resume","task-run","task-query-log","task-delete","smart-reload-search","smart-reload-update","smart-reload-result","heart-beat-query","file-filePage-query","file-filePage-upload"],"roleId":1}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(15, 1, '管理员', '管理端-角色权限', '获取角色可选的功能权限', '/smart-admin-api/privilege/listPrivilegeByRoleId/1', 'com.gangquan360.smartadmin.module.role.roleprivilege.RolePrivilegeController.listPrivilegeByRoleId', 'Long[1]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(16, 1, '管理员', '管理端-系统配置', '分页查询所有系统配置', '/smart-admin-api/systemConfig/getListPage', 'com.gangquan360.smartadmin.module.systemconfig.SystemConfigController.getSystemConfigPage', 'SystemConfigQueryDTO[{"key":"","pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(17, 1, '管理员', '管理端-系统配置', '修改配置参数', '/smart-admin-api/systemConfig/update', 'com.gangquan360.smartadmin.module.systemconfig.SystemConfigController.updateSystemConfig', 'SystemConfigUpdateDTO[{"configGroup":"upload","configKey":"ali_oss","configName":"阿里云上传配置","configValue":"{\\"accessKeyId\\":\\"\\",\\"accessKeySecret\\":\\"\\",\\"bucketName\\":\\"sit\\",\\"endpoint\\":\\"http://oss-cn-beijing.aliyuncs.com\\"}","id":14,"remark":"eefwfwfds"}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(18, 1, '管理员', '管理端-系统配置', '分页查询所有系统配置', '/smart-admin-api/systemConfig/getListPage', 'com.gangquan360.smartadmin.module.systemconfig.SystemConfigController.getSystemConfigPage', 'SystemConfigQueryDTO[{"key":"","pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(19, 1, '管理员', '管理端-系统配置', '修改配置参数', '/smart-admin-api/systemConfig/update', 'com.gangquan360.smartadmin.module.systemconfig.SystemConfigController.updateSystemConfig', 'SystemConfigUpdateDTO[{"configGroup":"upload","configKey":"qi_niu_oss","configName":"七牛云上传配置","configValue":"{\\"accessKeyId\\":\\"rX7HgY1ZLpUD25JrA-uwMM_jj-\\",\\"accessKeySecret\\":\\"\\",\\"bucketName\\":\\"sun-smart-admin\\",\\"endpoint\\":\\"http://puvpyay08.bkt.clouddn.com\\"}","id":16}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(20, 1, '管理员', '管理端-系统配置', '分页查询所有系统配置', '/smart-admin-api/systemConfig/getListPage', 'com.gangquan360.smartadmin.module.systemconfig.SystemConfigController.getSystemConfigPage', 'SystemConfigQueryDTO[{"key":"","pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(21, 1, '管理员', '通用-权限', '获取所有请求路径', '/smart-admin-api/privilege/getAllUrl', 'com.gangquan360.smartadmin.module.privilege.controller.PrivilegeController.getAllUrl', '', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(22, 1, '管理员', '通用-权限', '查询所有菜单项', '/smart-admin-api/privilege/menu/queryAll', 'com.gangquan360.smartadmin.module.privilege.controller.PrivilegeController.queryAll', '', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(23, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/FileList', 'com.gangquan360.smartadmin.module.privilege.controller.PrivilegeController.functionQuery', 'String["FileList"]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(24, 1, '管理员', '通用-权限', '保存更新功能点', '/smart-admin-api/privilege/function/saveOrUpdate', 'com.gangquan360.smartadmin.module.privilege.controller.PrivilegeController.functionSaveOrUpdate', 'PrivilegeFunctionDTO[{"functionKey":"file-filePage-download","functionName":"下载","menuKey":"FileList","sort":2,"url":"fileController.downLoadById"}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(25, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/FileList', 'com.gangquan360.smartadmin.module.privilege.controller.PrivilegeController.functionQuery', 'String["FileList"]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(26, 1, '管理员', '通用-邮件发送', '分页查询', '/smart-admin-api/email/page/query', 'com.gangquan360.smartadmin.module.email.EmailController.queryByPage', 'EmailQueryDTO[{"endDate":"","pageNum":1,"pageSize":10,"searchCount":true,"startDate":""}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(27, 1, '管理员', '管理端-用户操作日志', '分页查询', '/smart-admin-api/userOperateLog/page/query', 'com.gangquan360.smartadmin.module.log.useroperatelog.UserOperateLogController.queryByPage', 'UserOperateLogQueryDTO[{"endDate":"","pageNum":1,"pageSize":10,"searchCount":true,"sort":false,"startDate":"","userName":""}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(28, 1, '管理员', '管理端-用户登录日志', '分页查询用户登录日志', '/smart-admin-api/userLoginLog/page/query', 'com.gangquan360.smartadmin.module.log.userloginlog.UserLoginLogController.queryByPage', 'UserLoginLogQueryDTO[{"endDate":"","pageNum":1,"pageSize":10,"searchCount":true,"sort":false,"startDate":"","userName":""}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(29, 1, '管理员', '管理端-用户登录日志', '查询员工在线状态', '/smart-admin-api/userOnLine/query', 'com.gangquan360.smartadmin.module.log.userloginlog.UserLoginLogController.queryUserOnLine', 'EmployeeQueryDTO[{"actualName":"","employeeIds":[1],"isDelete":0,"pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(30, 1, '管理员', '管理端-任务调度', '查询任务', '/smart-admin-api/quartz/task/query', 'com.gangquan360.smartadmin.module.quartz.controller.QuartzController.query', 'QuartzQueryDTO[{"pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(31, 1, '管理员', '管理端-smart reload', '获取全部Smart-reload项', '/smart-admin-api/smartReload/all', 'com.gangquan360.smartadmin.module.smartreload.SmartReloadController.listAllReloadItem', '', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(32, 1, '管理员', '通用-心跳服务', '查询心跳记录 @author zhuoda', '/smart-admin-api/heartBeat/query', 'com.gangquan360.smartadmin.module.heartbeat.HeartBeatController.query', 'PageParamDTO[{"pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00');
 /*!40000 ALTER TABLE `t_user_operate_log` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

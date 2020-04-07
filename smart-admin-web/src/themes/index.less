@@ -176,6 +176,7 @@
         }
         .ivu-table-cell {
           padding: 0 8px;
+          overflow: inherit;
         }
         .table-line {
           background: @tableColor;
@@ -261,24 +262,6 @@
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-// 重写4.0 table样式
-.ivu-table-wrapper{
-  border: 1px solid #dcdee2;
-  border-bottom: 0;
-  border-right: 0;
-  .ivu-table{
-    &:after{
-      content: "";
-      position: absolute;
-      background-color: #dcdee2;
-      width: 1px;
-      height: 100%;
-      top: 0;
-      right: 0;
-      z-index: 3;
-    }
-  }
-}
 // 重写字体大小
 .ivu-select,
 .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
@@ -297,4 +280,49 @@ textarea.ivu-input,
 .ivu-select-item,
 .ivu-dropdown-item{
   font-size: 12px !important;
+}
+
+/****自定义样式***/
+
+.search-card .ivu-form-item {
+    margin-bottom: 0px !important;
+}
+
+.marginRight10{
+  margin-right: 10px !important;
+}
+.marginLeft10{
+  margin-left: 10px !important;
+}
+
+.marginBottom10{
+  margin-bottom: 10px !important;
+}
+
+.float-right{
+  float:right;
+}
+
+.float-left{
+  float:left;
+}
+
+.error-color{
+ color: #ed4014; 
+}
+
+.smart-query-card .ivu-card-body{
+  padding: 10px !important;
+}
+
+.smart-query-form-row:not(:first-child){
+  margin-top: 8px;
+}
+
+.smart-query-form-row span{
+  margin-right: 8px;
+}
+
+.smart-query-table-page{
+  margin-top: 10px;
 }
