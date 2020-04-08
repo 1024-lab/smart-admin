@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.smartadmin.module.support.heartbeat.HeartBeatRecordDao">
+
+    <!-- 心跳日志 -->
+    <insert id="insertHeartBeat" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_heart_beat_record (
+            project_path,
+            server_ip,
+            process_no,
+            process_start_time,
+            heart_beat_time
+        )
+        VALUES
+            (#{projectPath},
+            #{serverIp},
+            #{processNo},
+            #{processStartTime},
+            #{heartBeatTime})
+    </insert>
+    
+    <update id="updateHeartBeatTimeById">
+        update t_heart_beat_record
+        set heart_beat_time = #{heartBeatTime}
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    
+    <select id="query" resultType="net.lab1024.smartadmin.module.support.heartbeat.HeartBeatRecordEntity">
+      select * from t_heart_beat_record where project_path = #{projectPath} and server_ip = #{serverIp} and process_no =#{processNo}
+    </select>
+
+    <select id="pageQuery" resultType="net.lab1024.smartadmin.module.support.heartbeat.HeartBeatRecordVO">
+       SELECT
+        *
+        FROM
+        t_heart_beat_record
+        order by heart_beat_time desc
+    </select>
+</mapper>

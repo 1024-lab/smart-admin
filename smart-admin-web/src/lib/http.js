@@ -13,18 +13,6 @@ let axios = Axios.create({
     'Content-Type': 'application/json; charset=utf-8'
   }
 });
-// 添加请求拦截器
-
-// download url
-const downloadUrl = url => {
-  let iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  iframe.src = url;
-  iframe.onload = function () {
-    document.body.removeChild(iframe);
-  };
-  document.body.appendChild(iframe);
-};
 
 axios.interceptors.request.use(
   function (config) {
@@ -43,34 +31,28 @@ axios.interceptors.request.use(
 // 添加响应拦截器
 axios.interceptors.response.use(
   res => {
-    // 处理请求是下载的接口
-    if (
-      res.headers &&
-      (res.headers['content-type'] === 'application/x-msdownload' ||
-        res.headers['content-type'] ===
-          'application/octet-stream;charset=utf-8')
-    ) {
-      downloadUrl(res.request.responseURL);
-      res.data = '';
-      res.headers['content-type'] = 'text/json';
-      return res;
-    }
-    let { data } = res;
-    if (data.code !== 1) {
-      if (data.code === 1001) {
-        cookie.clearToken();
-        localStorage.clear();
-        window.location.href = window.location.pathname + '#/login';
-        Message.error('未登录，或登录失效，请登录');
-      } else if (data.code === 502) {
-        window.location.href = window.location.pathname + '#/500';
+    if (res.config.responseType === 'blob') {
+      let isReturnJson = res.headers && res.headers['content-type'] && res.headers['content-type'].indexOf("json") > -1;
+      //后端返回错误信息
+      if (isReturnJson) {
+        let reader = new FileReader()
+        reader.onload = function (event) {
+          let content = reader.result
+          let parseRes = JSON.parse(content) // 错误信息
+          return validateResponseCode({
+            data: parseRes
+          });
+        }
+        reader.readAsText(res.data);
+        return true
       } else {
-        Message.error(data.msg);
+        //下载文件
+        download(res);
       }
-      Spin.hide();
-      return Promise.reject(res);
+    } else {
+      //正常json请求
+      return validateResponseCode(res);
     }
-    return data;
   },
   error => {
     Spin.hide();
@@ -81,11 +63,95 @@ axios.interceptors.response.use(
   }
 );
 
+function validateResponseCode (res) {
+  let { data } = res;
+  if (data && data.code && data.code !== 1) {
+    if (data.code === 1001) {
+      cookie.clearToken();
+      localStorage.clear();
+      window.location.href = window.location.pathname + '#/login';
+      Message.error('未登录，或登录失效，请登录');
+      return;
+    } else if (data.code === 502) {
+      window.location.href = window.location.pathname + '#/500';
+      return;
+    } else {
+      Spin.hide();
+      Message.error(data.msg);
+      return Promise.reject(res);
+    }
+  }
+  return Promise.resolve(data);
+}
+
+function blobToText (blob) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsText(blob);
+    fileReader.onload = function () {
+      try {
+        const result = JSON.parse(this.result);
+        if (result && result['resultCode'] === 'fail') {
+          resolve(result);
+        } else {
+          reject();
+        }
+      } catch (e) {
+        //TODO handle the exception
+        reject();
+      }
+    }
+  })
+}
+
 export const postAxios = (url, data) => {
   return axios.post(url, data);
 };
+
+export const postFileUploadAxios = (url, data) => {
+  return axios.post(url, data, { headers: { 'Content-Type': 'multipart/form-data' } });
+};
+
+export const postDownloadAxios = (url, data) => {
+  return axios.post(url, data, { responseType: 'blob' });
+};
+
 export const getAxios = (url, data) => {
   return axios.get(url, {
     params: data
   });
 };
+
+function download (res) {
+  let reader = new FileReader();
+  let data = res.data;
+  reader.onload = e => {
+    if (e.target.result.indexOf('Result') != -1 && JSON.parse(e.target.result).Result == false) {
+      // 进行错误处理
+    } else {
+      let fileName = "download";
+      let contentDisposition = res.headers['Content-Disposition'];
+      contentDisposition = contentDisposition ? contentDisposition : res.headers['content-disposition'];
+      if (contentDisposition) {
+        fileName = window.decodeURI(contentDisposition.split('=')[1], "UTF-8");
+      }
+      executeDownload(data, fileName);
+    }
+  };
+  reader.readAsText(data);
+}
+
+//  模拟点击a 标签进行下载
+function executeDownload (data, fileName) {
+  if (!data) {
+    return
+  }
+  let url = window.URL.createObjectURL(new Blob([data]));
+  let link = document.createElement('a');
+  link.style.display = 'none';
+  link.href = url;
+  link.setAttribute('download', fileName);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.smartadmin.module.system.role.roleprivilege.RolePrivilegeDao">
+
+    <resultMap id="RolePrivilegeEntity"
+               type="net.lab1024.smartadmin.module.system.role.roleprivilege.domain.entity.RolePrivilegeEntity"></resultMap>
+
+    <resultMap id="PrivilegeEntity"
+               type="net.lab1024.smartadmin.module.system.privilege.domain.entity.PrivilegeEntity"></resultMap>
+
+    <sql id="baseSql">
+        rp.id,
+        rp.role_id,
+        rp.privilege_key,
+        rp.update_time,
+        rp.create_time
+    </sql>
+
+
+    <delete id="deleteByRoleId">
+        DELETE FROM t_role_privilege
+        WHERE role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteByPrivilegeKey">
+        DELETE FROM t_role_privilege
+        WHERE privilege_key in
+        <foreach collection="privilegeKeyList" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        INSERT INTO t_role_privilege (role_id, privilege_key, update_time, create_time) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.roleId},
+                #{item.privilegeKey},
+                now(),
+                now()
+            )
+        </foreach>
+    </insert>
+
+
+
+    <select id="listByRoleIds" resultMap="PrivilegeEntity">
+        SELECT DISTINCT p.*
+        FROM
+        t_privilege p
+        left JOIN t_role_privilege rp on p.key = rp.privilege_key
+        WHERE
+        rp.role_id IN
+        <foreach collection="roleIds" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        order by p.create_time desc
+    </select>
+
+    <select id="listByRoleId" resultMap="PrivilegeEntity">
+        SELECT p.*
+        FROM
+        t_privilege p
+        left JOIN t_role_privilege rp on p.key = rp.privilege_key
+        WHERE
+        rp.role_id = #{roleId}
+
+    </select>
+
+
+</mapper>

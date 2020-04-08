@@ -1,0 +1,36 @@
+package ${basePackage}.module.${modulePackage}.domain.dto;
+
+import lombok.Data;
+#foreach ($dtoImport in $dtoImports)
+$dtoImport
+#end
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * 新建 [ ${tableDesc} ]
+ *
+ * @author ${author}
+ * @version 1.0
+ * @company ${company}
+ * @copyright (c) 2018 ${company}Inc. All rights reserved.
+ * @date  ${date}
+ * @since JDK1.8
+ */
+@Data
+public class ${moduleClass}AddDTO {
+#foreach ($column in $columnList)
+#if($column.fieldName != 'id')
+#if($column.fieldType == 'Date')
+    @ApiModelProperty("${column.columnDesc}")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private $column.fieldType $column.fieldName;
+#else
+    @ApiModelProperty("${column.columnDesc}")
+    private $column.fieldType $column.fieldName;
+#end
+
+#end
+#end
+
+}

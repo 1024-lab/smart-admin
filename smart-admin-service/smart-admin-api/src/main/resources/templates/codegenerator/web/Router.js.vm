@@ -1,0 +1,32 @@
+import Main from '@/components/main';
+// ${tableName}路由
+export const ${moduleVar} = [
+    {
+        path: '/${webModuleName}',
+        name: '${moduleClass}',
+        component: Main,
+        meta: {
+            title: '${tableDesc}管理',
+            icon: 'icon iconfont iconyoujianguanli'
+        },
+        children: [
+            //  ${tableDesc}列表
+            {
+                path: '/${webModuleName}/${webModuleName}-list',
+                name: '${moduleClass}List',
+                meta: {
+                    title: '${tableDesc}列表',
+                    privilege: [
+                        { title: '查询', name: '${webModuleName}-list-query' },
+                        { title: '新增', name: '${webModuleName}-list-add' },
+                        { title: '编辑', name: '${webModuleName}-list-update' },
+                        { title: '批量删除', name: '${webModuleName}-list-batch-delete' },
+                        { title: '批量导出', name: '${webModuleName}-list-batch-export' },
+                        { title: '导出全部', name: '${webModuleName}-list-export-all' }
+                    ]
+                },
+                component: () => import('@/views/business/${webModuleName}/${webModuleName}-list.vue')
+             }
+        ]
+    }
+];

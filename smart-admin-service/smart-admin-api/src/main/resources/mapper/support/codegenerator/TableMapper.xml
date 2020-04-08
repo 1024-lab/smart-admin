@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.smartadmin.module.support.codegenerator.dao.TableDao">
+    <resultMap id="ColumnDTO"
+               type="net.lab1024.smartadmin.module.support.codegenerator.domain.ColumnVO"></resultMap>
+
+
+
+    <select id="selectTableDesc" resultType="String">
+        select
+        table_comment
+        from information_schema.tables
+		where table_schema = (select database()) and table_name = #{tableName}
+    </select>
+
+    <select id="selectTableColumn" resultMap="ColumnDTO">
+        select
+        column_name as columnName,
+        data_type as columnType,
+        column_comment as columnDesc
+        from information_schema.columns
+        where table_schema = (select database()) AND  table_name = #{tableName} order by ordinal_position
+    </select>
+
+
+
+</mapper>

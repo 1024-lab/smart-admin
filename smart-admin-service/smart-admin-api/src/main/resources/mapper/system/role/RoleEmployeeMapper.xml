@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.smartadmin.module.system.role.roleemployee.RoleEmployeeDao">
+
+
+    <resultMap id="EmployeeDTO"
+               type="net.lab1024.smartadmin.module.system.employee.domain.dto.EmployeeDTO"></resultMap>
+
+
+    <sql id="baseSql">
+        er.id,
+        er.role_id,
+        er.employee_id,
+        er.update_time,
+        er.create_time
+    </sql>
+
+
+    <select id="selectRoleIdByEmployeeId" resultType="java.lang.Long">
+        SELECT
+        er.role_id
+        FROM
+        t_role_employee er
+        WHERE
+        er.employee_id = #{employeeId}
+    </select>
+
+
+    <select id="selectEmployeeByNamePage" resultMap="EmployeeDTO">
+        SELECT
+        e.id,
+        e.login_name,
+        e.login_pwd,
+        e.actual_name,
+        e.nick_name,
+        e.phone,
+        e.id_card,
+        e.birthday,
+        e.email,
+        e.department_id,
+        e.is_leave,
+        e.is_disabled,
+        e.remark,
+        e.update_time,
+        e.create_time
+        FROM
+        t_role_employee er
+        left join t_employee e on er.employee_id = e.id
+        left join t_role r on er.role_id = r.id
+        <where>
+            <if test="queryDTO.roleName != null and queryDTO.roleName != ''">
+                <bind name="likeRoleName" value=" '%' + queryDTO.roleName +'%' "></bind>
+                AND r.role_name like #{likeRoleName}
+            </if>
+            <if test="queryDTO.roleId != null">
+                AND er.role_id = #{queryDTO.roleId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEmployeeByRoleId" resultMap="EmployeeDTO">
+        SELECT
+            e.id,
+            e.login_name,
+            e.login_pwd,
+            e.actual_name,
+            e.nick_name,
+            e.phone,
+            e.id_card,
+            e.birthday,
+            e.email,
+            e.department_id,
+            e.is_leave,
+            e.is_disabled,
+            e.remark,
+            e.update_time,
+            e.create_time
+        FROM
+        t_role_employee er
+        left join t_employee e on er.employee_id = e.id
+        WHERE
+        er.role_id = #{roleId}
+    </select>
+
+
+    <delete id="deleteByEmployeeId">
+        DELETE FROM t_role_employee
+        WHERE employee_id = #{employeeId}
+    </delete>
+
+
+    <delete id="deleteByRoleId">
+        DELETE FROM t_role_employee
+        WHERE role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteByEmployeeIdRoleId">
+        DELETE FROM t_role_employee
+        WHERE role_id = #{roleId} and employee_id = #{employeeId}
+    </delete>
+
+
+    <delete id="batchDeleteEmployeeRole">
+        DELETE FROM t_role_employee
+        WHERE role_id = #{roleId} and employee_id in
+        <foreach collection="employeeIds" item="item" open="(" close= ")"  separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        INSERT INTO t_role_employee (role_id, employee_id, update_time, create_time) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.roleId},
+            #{item.employeeId},
+            now(),
+            now()
+            )
+        </foreach>
+    </insert>
+
+
+</mapper>

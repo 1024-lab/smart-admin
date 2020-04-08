@@ -1,0 +1,28 @@
+import { postAxios, getAxios, postDownloadAxios } from '@/lib/http';
+
+export const ${moduleVar}Api = {
+    // 添加${tableDesc} @author ${author}
+    add${moduleClass}: (data) => {
+        return postAxios('/${moduleVar}/add', data);
+    },
+    // 分页查询${tableDesc} @author ${author}
+    query${moduleClass}: (data) => {
+        return postAxios('/${moduleVar}/page/query', data);
+    },
+    // 批量删除${tableDesc} @author ${author}
+    batchDelete${moduleClass}: (idList) => {
+        return postAxios('/${moduleVar}/deleteByIds', idList);
+    },
+    // 修改${tableDesc}  @author ${author}
+    update${moduleClass}: (data) => {
+        return postAxios('/${moduleVar}/update',data);
+    },
+    // 导出全部  @author ${author}
+    exportAll:(data)=>{
+        return postDownloadAxios('/${moduleVar}/export/all',data);
+    },
+    // 批量导出  @author ${author}
+    batchExport: (idList) => {
+        return postDownloadAxios('/${moduleVar}/export/batch', idList);
+    },
+};

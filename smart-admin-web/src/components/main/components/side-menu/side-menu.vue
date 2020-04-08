@@ -168,7 +168,7 @@ export default {
   },
   methods: {
     updateActiveName(name){
-      this.updateOpenName(name);
+      this.updateOpenName(name)
       this.$nextTick(() => {
         this.$refs.menu.updateOpened();
         this.$refs.menu.updateActiveName(name);

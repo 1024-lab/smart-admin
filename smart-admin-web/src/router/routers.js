@@ -1,18 +1,8 @@
 import { home } from './module/home';
-import { employee } from './module/employee';
-import { systemSetting } from './module/system-setting';
-import { notice } from './module/notice';
-import { emailSetting } from './module/email';
-import { monitor } from './module/monitor';
-import { userLog } from './module/user-log';
 import { error } from './module/error';
-import { task } from './module/task';
-import { reload } from './module/reload';
-import { apiDoc } from './module/api-doc';
-import { threeRouter } from './module/three-router';
-import { keepAlive } from './module/keep-alive';
-import { heartBeat } from './module/heart-beat';
-import { file } from './module/file';
+import { business } from './module/business';
+import { support } from './module/support';
+import { system } from './module/system';
 
 /**
  *
@@ -27,6 +17,7 @@ import { file } from './module/file';
  *  privilegeExtend:{String} 同一功能模块下子页面的功能点权限继承菜单模块创建的路由权限  by lihaifan&lipeng
  *  noKeepAlive: (false) 设为true后页面在切换标签后不会缓存，如果需要缓存，无需设置这个字段，而且需要设置页面组件name属性和路由配置的name一致
  *  noValidatePrivilege: (true) 表示此路由不需要验证权限
+ *  topMenu:(true)，表示为顶级菜单
  * }
  */
 // 登录模块
@@ -36,7 +27,7 @@ export const login = {
   meta: {
     hideInMenu: true,
     title: 'Login - 登录',
-    noValidatePrivilege:true
+    noValidatePrivilege: true
   },
   component: () => import('@/views/login/login.vue')
 };
@@ -45,18 +36,8 @@ export const login = {
 export const routers = [
   login,
   ...home,
-  ...employee,
-  ...systemSetting,
-  ...notice,
-  ...emailSetting,
-  ...userLog,
-  ...monitor,
   ...error,
-  ...task,
-  ...reload,
-  ...apiDoc,
-  ...threeRouter,
-  ...keepAlive,
-  ...heartBeat,
-  ...file
+  ...business, 
+  ...system,
+  ...support
 ];

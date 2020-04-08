@@ -1,0 +1,33 @@
+package ${basePackage}.module.${modulePackage}.domain.vo;
+
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import lombok.Data;
+#foreach ($dtoImport in $dtoImports)
+$dtoImport
+#end
+
+/**
+ *  [ ${tableDesc} ]
+ *
+ * @author ${author}
+ * @version 1.0
+ * @company ${company}
+ * @copyright (c) ${company}Inc. All rights reserved.
+ * @date  ${date}
+ * @since JDK1.8
+ */
+@Data
+public class ${moduleClass}ExcelVO {
+#foreach ($column in $columnList)
+#if($column.fieldType == 'Date')
+    @Excel(name = "${column.columnDesc}", format = "yyyy-MM-dd HH:mm:ss")
+    private $column.fieldType $column.fieldName;
+#else
+    @Excel(name = "${column.columnDesc}")
+    private $column.fieldType $column.fieldName;
+#end
+
+#end
+
+
+}

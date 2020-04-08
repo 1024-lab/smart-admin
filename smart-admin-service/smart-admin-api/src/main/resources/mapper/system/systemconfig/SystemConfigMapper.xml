@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.smartadmin.module.system.systemconfig.SystemConfigDao">
+
+    <resultMap id="systemConfigMap" type="net.lab1024.smartadmin.module.system.systemconfig.domain.entity.SystemConfigEntity"></resultMap>
+
+    <select id="selectAll" resultMap="systemConfigMap">
+        select * from t_system_config
+    </select>
+
+    <!-- 查询所有系统配置(分页) -->
+    <select id="selectSystemSettingList" resultMap="systemConfigMap">
+        SELECT
+            id,
+            config_name,
+            config_key,
+            config_value,
+            config_group,
+            is_using,
+            remark,
+            create_time,
+            update_time
+        FROM
+            t_system_config
+        <where>
+            <if test="queryDTO.key != null and queryDTO.key != ''">
+                <bind name="keyLike" value=" '%' + queryDTO.key +'%' "></bind>
+                AND config_key LIKE #{keyLike}
+            </if>
+            <if test="queryDTO.configGroup != null and queryDTO.configGroup != ''">
+                <bind name="configGroupLike" value=" '%' + queryDTO.configGroup +'%' "></bind>
+                AND config_group like #{configGroupLike}
+            </if>
+        </where>
+    </select>
+    <select id="getListByGroup" resultMap="systemConfigMap">
+        SELECT
+        id,
+        config_name,
+        config_key,
+        config_value,
+        config_group,
+        is_using,
+        remark,
+        create_time,
+        update_time
+        FROM
+        t_system_config where config_group= #{group}
+    </select>
+    <!-- 根据key查询获取数据 -->
+    <select id="getByKey" resultMap="systemConfigMap">
+        SELECT
+            id,
+            config_name,
+            config_key,
+            config_value,
+            config_group,
+            is_using,
+            remark,
+            create_time,
+            update_time
+        FROM
+            t_system_config
+        WHERE
+            config_key = #{key}
+    </select>
+
+
+
+    <select id="getByKeyExcludeId" resultMap="systemConfigMap">
+        SELECT
+        id,
+        config_name,
+        config_key,
+        config_value,
+        config_group,
+        is_using,
+        remark,
+        create_time,
+        update_time
+        FROM
+        t_system_config
+        WHERE
+        config_key = #{key} and id &lt;&gt; #{excludeId}
+    </select>
+
+    <select id="selectByKeyAndGroup" resultMap="systemConfigMap">
+        SELECT
+        id,
+        config_name,
+        config_key,
+        config_value,
+        config_group,
+        is_using,
+        remark,
+        create_time,
+        update_time
+        FROM
+        t_system_config
+        WHERE  config_group = #{group} AND config_key =  #{configKey}
+    </select>
+</mapper>

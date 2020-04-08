@@ -103,11 +103,6 @@ router.afterEach(to => {
   window.scrollTo(0, 0);
 });
 
-let tempCheckObj = {
-  checkRouterNameMap: new Map(),
-  checkRouterPathMap: new Map()
-};
-
 function buildRouters (routerArray) {
   let lineRouters = [];
   for (let routerItem of routerArray) {
@@ -165,7 +160,12 @@ function convertRouterTree2Line (routerArray) {
   return topArray;
 }
 
-function recursionRouter (routerArray) {
+let tempCheckObj = {
+  checkRouterNameMap: new Map(),
+  checkRouterPathMap: new Map()
+};
+
+function recursionCheckRouter (routerArray) {
   for (let routerItem of routerArray) {
     if (!routerItem.name) {
       console.error('没有配置router name', routerItem);
@@ -199,17 +199,20 @@ function recursionRouter (routerArray) {
     }
 
     if (routerItem.children) {
-      recursionRouter(routerItem.children);
+      recursionCheckRouter(routerItem.children);
     }
   }
 }
 
-
 //如果是开发环境，需要检测router的规范性
 if (process.env.NODE_ENV === 'development') {
-  recursionRouter(routers);
+  recursionCheckRouter(routers);
   delete tempCheckObj.checkRouterNameMap;
   delete tempCheckObj.checkRouterPathMap;
 }
 
+const topMenuArray = routers.filter(e => e.meta.topMenu);
+export { topMenuArray };
+
 export default router;
+

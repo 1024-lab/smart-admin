@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.smartadmin.module.business.log.orderoperatelog.OrderOperateLogDao">
+    <resultMap id="orderOperateLogSaveDTOMap"
+               type="net.lab1024.smartadmin.module.business.log.orderoperatelog.domain.entity.OrderOperateLogEntity"></resultMap>
+
+
+    <select id="listOrderOperateLogsByOrderTypeAndOrderId" resultMap="orderOperateLogSaveDTOMap">
+        select * from t_order_operate_log where order_id= #{orderId}
+        AND order_type IN
+        <foreach collection="orderTypeList" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        order by id desc
+    </select>
+
+    <select id="listOrderOperateLogsByOrderTypeAndOrderIds" resultMap="orderOperateLogSaveDTOMap">
+        select * from t_order_operate_log where
+        order_id IN
+        <foreach collection="orderIds" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        AND order_type IN
+        <foreach collection="orderTypeList" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        order by id desc
+    </select>
+
+
+
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        INSERT INTO t_order_operate_log (order_id,order_type, operate_type, operate_content, operate_remark, employee_id, employee_name,ext_data,update_time,create_time) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.orderId},
+            #{item.orderType},
+            #{item.operateType},
+            #{item.operateContent},
+            #{item.operateRemark},
+            #{item.employeeId},
+            #{item.employeeName},
+            #{item.extData},
+            #{item.updateTime}
+            #{item.createTime}
+            )
+        </foreach>
+    </insert>
+
+
+</mapper>

@@ -1,0 +1,45 @@
+package ${basePackage}.module.${modulePackage}.domain.dto;
+
+import ${basePackage}.common.domain.PageParamDTO;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import java.util.Date;
+#foreach ($queryImport in $queryImports)
+$queryImport
+#end
+
+/**
+ * [ ${tableDesc} ]
+ *
+ * @author ${author}
+ * @version 1.0
+ * @company ${company}
+ * @copyright (c)  ${company}Inc. All rights reserved.
+ * @date ${date}
+ * @since JDK1.8
+ */
+@Data
+public class ${moduleClass}QueryDTO extends PageParamDTO {
+#foreach ($queryField in $queryFieldList)
+
+#if($queryField.sqlOperate == 'in')
+    @ApiModelProperty("${queryField.columnDesc}")
+    private List<${queryField.fieldType}> ${queryField.fieldName}List;
+#else
+    @ApiModelProperty("${queryField.columnDesc}")
+    private ${queryField.fieldType} ${queryField.fieldName};
+#end
+#end
+
+    @ApiModelProperty("创建时间-开始")
+    private Date createTimeBegin;
+
+    @ApiModelProperty("创建时间-截止")
+    private Date createTimeEnd;
+
+    @ApiModelProperty("上次更新时间-开始")
+    private Date updateTimeBegin;
+
+    @ApiModelProperty("上次更新创建时间-开始")
+    private Date updateTimeEnd;
+}

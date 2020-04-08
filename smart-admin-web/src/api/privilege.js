@@ -13,6 +13,10 @@ export const privilegeApi = {
   addBatchSaveMenu: data => {
     return postAxios('/privilege/menu/batchSaveMenu', data);
   },
+  // 功能点批量保存
+  addBatchSavePoints: data => {
+    return postAxios('/privilege/function/batchSave', data);
+  },
   // 查询菜单功能点
   queryPrivilegeFunctionList: menuKey => {
     return postAxios('/privilege/function/query/' + menuKey);

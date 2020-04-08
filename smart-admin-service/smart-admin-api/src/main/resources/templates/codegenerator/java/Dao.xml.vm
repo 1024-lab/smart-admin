@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${basePackage}.module.${modulePackage}.dao.${moduleClass}Dao">
+
+    <resultMap id="${moduleClass}VO" type="${basePackage}.module.${modulePackage}.domain.vo.${moduleClass}VO"></resultMap>
+    <resultMap id="${moduleClass}ExcelVO" type="${basePackage}.module.${modulePackage}.domain.vo.${moduleClass}ExcelVO"></resultMap>
+
+
+    <select id="queryByPage" resultMap="${moduleClass}VO">
+        select
+#foreach($column in $columnList)
+#if($velocityCount != $columnList.size())
+          $column.columnName,
+#else
+          $column.columnName
+#end
+#end
+        from ${tableName}
+        <where>
+#foreach($queryField in $queryFieldList)
+#if ($queryField.sqlOperate == 'like')
+            <if test="queryDTO.${queryField.fieldName} != null and queryDTO.${queryField.fieldName} != ''">
+                AND INSTR($queryField.columnName,#{queryDTO.$queryField.fieldName})
+            </if>
+#end
+#if ($queryField.sqlOperate == 'equals')
+#if ($queryField.fieldType == 'String')
+            <if test="queryDTO.${queryField.fieldName} != null and queryDTO.${queryField.fieldName} != ''">
+                AND $queryField.columnName = #{queryDTO.$queryField.fieldName}
+            </if>
+#else
+            <if test="queryDTO.${queryField.fieldName} != null">
+                AND $queryField.columnName = #{queryDTO.$queryField.fieldName}
+            </if>
+#end
+#end
+#if ($queryField.sqlOperate == 'in')
+            <if test="queryDTO.${queryField.fieldName}List !=null and queryDTO.${queryField.fieldName}List.size() > 0">
+                and $queryField.columnName in
+                <foreach collection="queryDTO.${queryField.fieldName}List" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+#end
+#end
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllExportData" resultMap="${moduleClass}ExcelVO">
+        select
+#foreach($column in $columnList)
+#if($velocityCount != $columnList.size())
+           $column.columnName,
+#else
+           $column.columnName
+#end
+#end
+        from ${tableName}
+        <where>
+#foreach($queryField in $queryFieldList)
+#if ($queryField.sqlOperate == 'like')
+            <if test="queryDTO.${queryField.fieldName} != null and queryDTO.${queryField.fieldName} != ''">
+                AND INSTR($queryField.columnName,#{queryDTO.$queryField.fieldName})
+            </if>
+#end
+#if ($queryField.sqlOperate == 'equals')
+#if ($queryField.fieldType == 'String')
+            <if test="queryDTO.${queryField.fieldName} != null and queryDTO.${queryField.fieldName} != ''">
+                AND $queryField.columnName = #{queryDTO.$queryField.fieldName}
+            </if>
+#else
+            <if test="queryDTO.${queryField.fieldName} != null">
+                AND $queryField.columnName = #{queryDTO.$queryField.fieldName}
+            </if>
+#end
+#end
+#if ($queryField.sqlOperate == 'in')
+            <if test="queryDTO.${queryField.fieldName}List !=null and queryDTO.${queryField.fieldName}List.size() > 0">
+                and $queryField.columnName in
+                <foreach collection="queryDTO.${queryField.fieldName}List" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+#end
+#end
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryBatchExportData" resultMap="${moduleClass}ExcelVO">
+        select
+#foreach($column in $columnList)
+#if($velocityCount != $columnList.size())
+         $column.columnName,
+#else
+         $column.columnName
+#end
+#end
+        from ${tableName}
+        where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteById">
+        delete from ${tableName} where id = #{id}
+    </delete>
+
+    <delete id="deleteByIdList">
+        delete from ${tableName} where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

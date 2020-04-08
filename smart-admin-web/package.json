@@ -30,6 +30,7 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.15",
     "mavon-editor": "^2.7.5",
+    "moment": "^2.24.0",
     "simplemde": "^1.11.2",
     "sortablejs": "^1.7.0",
     "tree-table-vue": "^1.1.0",

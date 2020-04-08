@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.smartadmin.module.support.idgenerator.IdGeneratorDao">
+    <resultMap id="idGeneratorLastNumberDTO"
+               type="net.lab1024.smartadmin.module.support.idgenerator.domain.IdGeneratorLastNumberDTO">
+    </resultMap>
+    <resultMap id="idGeneratorEntity" type="net.lab1024.smartadmin.module.support.idgenerator.domain.IdGeneratorEntity">
+    </resultMap>
+
+    <resultMap id="idGeneratorRecordDTO"
+               type="net.lab1024.smartadmin.module.support.idgenerator.domain.IdGeneratorRecordDTO">
+    </resultMap>
+
+
+    <!-- 查询上次id -->
+    <select id="selectAll" resultMap="idGeneratorEntity">
+        select * from t_id_generator
+    </select>
+
+
+    <!-- 查询上次id -->
+    <select id="selectLastNumber" resultMap="idGeneratorLastNumberDTO">
+       select
+        update_time,last_number, now() as database_time
+        from t_id_generator
+         where id = #{id}
+         for update
+    </select>
+
+    <select id="selectHistoryLastNumber" resultMap="idGeneratorRecordDTO">
+        select
+        generator_id,year, month,day,last_number
+        from t_id_generator_record
+        where generator_id = #{generatorId} and year=#{year} and month=#{month} and day=#{day}
+    </select>
+
+
+    <!-- 更新id_generator -->
+    <update id="updateLastNumber">
+        update t_id_generator set last_number = #{lastNumber}, update_time = now() where id = #{generatorId}
+    </update>
+
+    <update id="replaceIdGeneratorRecord">
+        replace into `t_id_generator_record` (`generator_id`, `year`, `month`, `day`, `last_number`) values (#{generatorId}, #{year}, #{month}, #{day}, #{lastNumber})
+    </update>
+
+
+</mapper>
