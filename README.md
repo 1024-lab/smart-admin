@@ -6,6 +6,7 @@ github: [https://github.com/1024-lab/smart-admin](https://github.com/1024-lab/sm
 gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-admin)  
 在线预览： [http://preview.smartadmin.1024lab.net](http://preview.smartadmin.1024lab.net)  
 部署文档：[http://smartadmin.1024lab.net/doc/2/168](http://smartadmin.1024lab.net/doc/2/168)
+平滑升级：[http://smartadmin.1024lab.net/doc/2/173](http://smartadmin.1024lab.net/doc/2/173)
 
 #### 疑惑
 有人问：又是个“轮子”？ 轮子靠谱吗？为什么要选择你这个轮子？
@@ -114,6 +115,7 @@ SmartAdmin微信群（**加我微信拉你入群！**）
   <td><img src="http://q8expnedf.bkt.clouddn.com/qq/smart-admin-qq-group.png"/></td>
 </tr>
 </table>
+
 
 #### 捐赠
 开源不易，感谢捐赠
