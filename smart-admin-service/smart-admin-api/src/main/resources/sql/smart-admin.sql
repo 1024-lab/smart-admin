@@ -17,6 +17,27 @@ DROP DATABASE IF EXISTS `smart-admin-dev`;
 CREATE DATABASE IF NOT EXISTS `smart-admin-dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `smart-admin-dev`;
 
+
+DROP TABLE IF EXISTS `t_peony`;
+CREATE TABLE IF NOT EXISTS `t_peony` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `kind` varchar(500) DEFAULT NULL COMMENT '品种',
+  `name` varchar(500) DEFAULT NULL COMMENT '名字',
+  `color` varchar(500) DEFAULT NULL COMMENT '颜色',
+  `image_url` text COMMENT '图片链接',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='牡丹花';
+
+
+DELETE FROM `t_peony`;
+
+INSERT INTO `t_peony` (`id`, `kind`, `name`, `color`, `image_url`, `create_time`, `update_time`) VALUES
+	(5, '复色类', '什样锦', '红色', 'https://bkimg.cdn.bcebos.com/pic/3c6d55fbb2fb43160ee185da2aa4462308f7d390?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2UxNTA=,xp_5,yp_5', '2020-04-06 22:02:32', '2020-04-06 22:03:30'),
+	(6, '绿色', '绿香球', '绿色', '11', '2020-04-06 22:14:35', '2020-04-06 22:17:51'),
+	(7, '墨紫色类', '冠世墨玉', '紫色', '34534534534', '2020-04-06 22:15:19', '2020-04-06 22:18:21');
+
 -- 导出  表 smart-admin-dev.t_department 结构
 DROP TABLE IF EXISTS `t_department`;
 CREATE TABLE IF NOT EXISTS `t_department` (
