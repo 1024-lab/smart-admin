@@ -29,8 +29,8 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
   <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/12.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/11.png"/></td>
   <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/21.png"/></td>
+  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/22.png"/></td>
 </tr>
 <tr>
   <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/31.png"/></td>
