@@ -82,6 +82,9 @@ public class SystemConfigService {
      */
     public ResponseDTO<PageResultDTO<SystemConfigVO>> getSystemConfigPage(SystemConfigQueryDTO queryDTO) {
         Page page = SmartPageUtil.convert2QueryPage(queryDTO);
+        if(queryDTO.getKey() != null){
+            queryDTO.setKey(queryDTO.getKey().toLowerCase());
+        }
         List<SystemConfigEntity> entityList = systemConfigDao.selectSystemSettingList(page, queryDTO);
         PageResultDTO<SystemConfigVO> pageResultDTO = SmartPageUtil.convert2PageResult(page, entityList, SystemConfigVO.class);
         return ResponseDTO.succData(pageResultDTO);
@@ -94,7 +97,9 @@ public class SystemConfigService {
      * @return
      */
     public ResponseDTO<SystemConfigVO> selectByKey(String configKey) {
-        configKey = configKey.toLowerCase();
+        if(configKey != null){
+            configKey = configKey.toLowerCase();
+        }
         SystemConfigEntity entity = systemConfigDao.getByKey(configKey);
         if (entity == null) {
             return ResponseDTO.wrap(SystemConfigResponseCodeConst.NOT_EXIST);
@@ -112,7 +117,9 @@ public class SystemConfigService {
      * @return
      */
     public <T> T selectByKey2Obj(String configKey, Class<T> clazz) {
-        configKey = configKey.toLowerCase();
+        if(configKey != null){
+            configKey = configKey.toLowerCase();
+        }
         SystemConfigEntity entity = systemConfigDao.getByKey(configKey);
         if (entity == null) {
             return null;
@@ -150,6 +157,7 @@ public class SystemConfigService {
         if(!valueValid.isSuccess()){
             return valueValid;
         }
+        configAddDTO.setConfigKey(configAddDTO.getConfigKey().toLowerCase());
         SystemConfigEntity addEntity = SmartBeanUtil.copy(configAddDTO, SystemConfigEntity.class);
         addEntity.setIsUsing(JudgeEnum.YES.getValue());
         systemConfigDao.insert(addEntity);
@@ -171,7 +179,7 @@ public class SystemConfigService {
         if (entity == null) {
             return ResponseDTO.wrap(SystemConfigResponseCodeConst.NOT_EXIST);
         }
-        SystemConfigEntity alreadyEntity = systemConfigDao.getByKeyExcludeId(updateDTO.getConfigKey(), updateDTO.getId());
+        SystemConfigEntity alreadyEntity = systemConfigDao.getByKeyExcludeId(updateDTO.getConfigKey().toLowerCase(), updateDTO.getId());
         if (alreadyEntity != null) {
             return ResponseDTO.wrap(SystemConfigResponseCodeConst.ALREADY_EXIST);
         }
@@ -180,6 +188,7 @@ public class SystemConfigService {
             return valueValid;
         }
         entity = SmartBeanUtil.copy(updateDTO, SystemConfigEntity.class);
+        updateDTO.setConfigKey(updateDTO.getConfigKey().toLowerCase());
         systemConfigDao.updateById(entity);
 
         //刷新缓存

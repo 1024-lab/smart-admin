@@ -2,7 +2,7 @@
 EmployeeController.updatePwd
 
 2 更新功能点
-PrivilegeController functionSaveOrUpdate和menuBatchSave
+PrivilegeController functionSaveOrUpdate和menuBatchSave、batchSaveFunctionList
 
 3 超管默认账号
 sa/123456

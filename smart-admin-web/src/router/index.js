@@ -10,7 +10,7 @@ import config from '@/config';
 
 const { homeName } = config;
 
-Vue.use(Router);
+Vue.use(Router); 
 const router = new Router({
   // routes: routers,
   routes: buildRouters(routers)
@@ -210,9 +210,6 @@ if (process.env.NODE_ENV === 'development') {
   delete tempCheckObj.checkRouterNameMap;
   delete tempCheckObj.checkRouterPathMap;
 }
-
-delete tempCheckObj.checkRouterNameMap;
-delete tempCheckObj.checkRouterPathMap;
 
 const topMenuArray = routers.filter(e => e.meta.topMenu);
 export { topMenuArray };

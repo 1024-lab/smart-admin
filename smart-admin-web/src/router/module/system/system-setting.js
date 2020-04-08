@@ -49,6 +49,10 @@ export const systemSetting = [
               name: 'privilege-main-update'
             },
             {
+              title: '批量保存功能点',
+              name: 'privilege-batch-save-points'
+            },
+            {
               title: '查询',
               name: 'privilege-main-search'
             }

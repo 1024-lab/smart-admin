@@ -1,21 +1,20 @@
 package net.lab1024.smartadmin.module.system.privilege.service;
 
+import com.google.common.collect.Lists;
 import net.lab1024.smartadmin.common.domain.ResponseDTO;
+import net.lab1024.smartadmin.common.domain.ValidateList;
+import net.lab1024.smartadmin.module.system.privilege.constant.PrivilegeResponseCodeConst;
 import net.lab1024.smartadmin.module.system.privilege.constant.PrivilegeTypeEnum;
 import net.lab1024.smartadmin.module.system.privilege.dao.PrivilegeDao;
+import net.lab1024.smartadmin.module.system.privilege.domain.dto.*;
 import net.lab1024.smartadmin.module.system.privilege.domain.entity.PrivilegeEntity;
 import net.lab1024.smartadmin.module.system.role.roleprivilege.RolePrivilegeDao;
-import com.google.common.collect.Lists;
-import net.lab1024.smartadmin.module.system.privilege.domain.dto.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -150,7 +149,7 @@ public class PrivilegeService {
             return ResponseDTO.succData(Lists.newArrayList());
         }
 
-        List<PrivilegeMenuVO> voList = privilegeEntityList.stream().map(e-> {
+        List<PrivilegeMenuVO> voList = privilegeEntityList.stream().map(e -> {
             PrivilegeMenuVO vo = new PrivilegeMenuVO();
             vo.setMenuKey(e.getKey());
             vo.setMenuName(e.getName());
@@ -174,23 +173,14 @@ public class PrivilegeService {
         String functionKey = privilegeFunctionDTO.getFunctionKey();
         PrivilegeEntity functionEntity = privilegeDao.selectByKey(functionKey);
         if (functionEntity == null) {
-            functionEntity = new PrivilegeEntity();
-            functionEntity.setName(privilegeFunctionDTO.getFunctionName());
-            functionEntity.setParentKey(privilegeFunctionDTO.getMenuKey());
-            functionEntity.setType(PrivilegeTypeEnum.POINTS.getValue());
-            functionEntity.setUrl(privilegeFunctionDTO.getUrl());
-            functionEntity.setKey(privilegeFunctionDTO.getFunctionKey());
-            functionEntity.setSort(privilegeFunctionDTO.getSort());
-            functionEntity.setCreateTime(new Date());
-            functionEntity.setUpdateTime(new Date());
-            privilegeDao.insert(functionEntity);
-        } else {
-            functionEntity.setUrl(privilegeFunctionDTO.getUrl());
-            functionEntity.setName(privilegeFunctionDTO.getFunctionName());
-            functionEntity.setParentKey(privilegeFunctionDTO.getMenuKey());
-            functionEntity.setSort(privilegeFunctionDTO.getSort());
-            privilegeDao.updateById(functionEntity);
+            return ResponseDTO.wrap(PrivilegeResponseCodeConst.POINT_NOT_EXIST);
         }
+        functionEntity.setUrl(privilegeFunctionDTO.getUrl());
+        functionEntity.setName(privilegeFunctionDTO.getFunctionName());
+        functionEntity.setParentKey(privilegeFunctionDTO.getMenuKey());
+        functionEntity.setSort(privilegeFunctionDTO.getSort());
+        privilegeDao.updateById(functionEntity);
+
         return ResponseDTO.succ();
     }
 
@@ -206,9 +196,8 @@ public class PrivilegeService {
             return ResponseDTO.succData(Lists.newArrayList());
         }
         List<PrivilegeFunctionVO> functionList = Lists.newArrayList();
-        PrivilegeFunctionVO functionDTO;
         for (PrivilegeEntity functionEntity : functionPrivilegeList) {
-            functionDTO = new PrivilegeFunctionVO();
+            PrivilegeFunctionVO functionDTO = new PrivilegeFunctionVO();
             functionDTO.setFunctionKey(functionEntity.getKey());
             functionDTO.setFunctionName(functionEntity.getName());
             functionDTO.setMenuKey(functionEntity.getParentKey());
@@ -219,4 +208,70 @@ public class PrivilegeService {
         return ResponseDTO.succData(functionList);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<String> batchSaveFunctionList(ValidateList<PrivilegeFunctionDTO> functionList) {
+        String menuKey = functionList.get(0).getMenuKey();
+        PrivilegeEntity privilegeEntity = privilegeDao.selectByKey(menuKey);
+        if (privilegeEntity == null) {
+            return ResponseDTO.wrap(PrivilegeResponseCodeConst.MENU_NOT_EXIST);
+        }
+
+        //数据库中存在的数据
+        List<PrivilegeEntity> existFunctionList = privilegeDao.selectByParentKey(menuKey);
+        Map<String, PrivilegeEntity> privilegeEntityMap = existFunctionList.stream().collect(Collectors.toMap(PrivilegeEntity::getKey, e -> e));
+
+        //如果没有，则保存全部
+        if (existFunctionList.isEmpty()) {
+            List<PrivilegeEntity> privilegeEntityList = functionList.stream().map(e -> function2Privilege(e)).collect(Collectors.toList());
+            privilegeDao.batchInsert(privilegeEntityList);
+            return ResponseDTO.succ();
+        }
+
+        Set<String> functionKeySet = functionList.stream().map(PrivilegeFunctionDTO::getFunctionKey).collect(Collectors.toSet());
+        //删除的
+        List<Long> deleteIdList = existFunctionList.stream().filter(e -> !functionKeySet.contains(e.getKey())).map(PrivilegeEntity::getId).collect(Collectors.toList());
+        List<String> deleteKeyList = existFunctionList.stream().filter(e -> !functionKeySet.contains(e.getKey())).map(PrivilegeEntity::getKey).collect(Collectors.toList());
+        if (!deleteIdList.isEmpty()) {
+            privilegeDao.deleteBatchIds(deleteIdList);
+            rolePrivilegeDao.deleteByPrivilegeKey(deleteKeyList);
+        }
+
+        //需要更新的
+        ArrayList<PrivilegeEntity> batchUpdateList = Lists.newArrayList();
+        for (PrivilegeFunctionDTO privilegeFunctionDTO : functionList) {
+            PrivilegeEntity existPrivilege = privilegeEntityMap.get(privilegeFunctionDTO.getFunctionKey());
+            if (existPrivilege != null) {
+                existPrivilege.setSort(privilegeFunctionDTO.getSort());
+                existPrivilege.setName(privilegeFunctionDTO.getFunctionName());
+                batchUpdateList.add(existPrivilege);
+            }
+        }
+
+        if (!batchUpdateList.isEmpty()) {
+            privilegeDao.batchUpdate(batchUpdateList);
+        }
+
+        //新增的
+        List<PrivilegeEntity> batchInsertList = functionList.stream()
+                .filter(e -> !privilegeEntityMap.containsKey(e.getFunctionKey()))
+                .map(e -> function2Privilege(e))
+                .collect(Collectors.toList());
+
+        if (!batchInsertList.isEmpty()) {
+            privilegeDao.batchInsert(batchInsertList);
+        }
+
+        return ResponseDTO.succ();
+    }
+
+    private PrivilegeEntity function2Privilege(PrivilegeFunctionDTO privilegeFunction) {
+        PrivilegeEntity privilegeEntity = new PrivilegeEntity();
+        privilegeEntity.setKey(privilegeFunction.getFunctionKey());
+        privilegeEntity.setName(privilegeFunction.getFunctionName());
+        privilegeEntity.setParentKey(privilegeFunction.getMenuKey());
+        privilegeEntity.setType(PrivilegeTypeEnum.POINTS.getValue());
+        privilegeEntity.setSort(privilegeFunction.getSort());
+        privilegeEntity.setUrl("");
+        return privilegeEntity;
+    }
 }

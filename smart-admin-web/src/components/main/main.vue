@@ -363,11 +363,17 @@ export default {
           }
         }
       }
+      console.log('privilegeTree',privilegeTree)
       this.menuList = privilegeTree;
     },
 
     recursion(children, parentMenu) {
       for (const router of children) {
+          //验证权限
+        if (this.$store.state.user.privilegeMenuKeyList.indexOf(router.name) ===-1) {
+          continue;
+        }  
+
         //过滤非菜单
         if (!router.meta.hideInMenu) {
           //验证权限
@@ -393,7 +399,6 @@ export default {
 
           let menuNameArray = this.menuNameMatchedMap.get(parentMenu.name);
           this.menuNameMatchedMap.set(menu.name, [...menuNameArray, menu.name]);
-
           parentMenu.children.push(menu);
           //存在孩子节点，开始递归
           if (router.children && router.children.length > 0) {

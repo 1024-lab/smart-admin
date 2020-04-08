@@ -90,6 +90,17 @@
         <div class="card-title" slot="title">
           <Icon type="ios-cog"></Icon>功能点
         </div>
+         <div slot="extra">
+          <Button
+            @click="addBatchSavePoints"
+            icon="ios-albums-outline"
+            type="primary"
+            size="small"
+            v-privilege="'privilege-batch-save-points'"
+            v-if="pointsChangeNum > 0"
+          >批量保存功能点</Button>
+        </div>
+         <Alert show-icon type="warning" v-if="pointsChangeNum > 0">有 {{this.pointsChangeNum}} 个功能点更新，请立即批量保存！</Alert>
         <Row>
           <Table :columns="privilegeTableColumn" :data="privilegeTableData" border></Table>
         </Row>
@@ -135,8 +146,11 @@ export default {
       },
       menuTree: [],
       menusChange: false,
+      //菜单差异数量
       menusChangeNum: 0,
       menuList: [],
+      //功能点差异数量
+      pointsChangeNum:0,
       routerMap: new Map(),
       privilegeTableData: [],
       privilegeTableColumn: [
@@ -290,7 +304,24 @@ console.error(privilegeTree)
         this.menusChangeNum = this.menusChangeNum + 1;
       }
     },
-    // 菜单批量保存
+    // 批量保存功能点
+    async addBatchSavePoints(){
+      this.$Spin.show();
+      let result = await privilegeApi.addBatchSavePoints(
+        this.privilegeTableData.map(e =>{
+          return Object.assign({},{
+            functionName:e.title,
+            menuKey:e.parentKey,
+            functionKey:e.name,
+            sort:e.sort
+          });
+        })
+      );
+      this.$Message.success('批量保存成功');
+      this.$Spin.hide();
+      this.loadPrivilegeTableData(this.privilegeTableData[0].parentKey);
+    },
+    // 批量保存菜单
     async addBatchSaveMenu() {
       this.$Spin.show();
       let result = await privilegeApi.addBatchSaveMenu(this.menuList);
@@ -312,33 +343,45 @@ console.error(privilegeTree)
       this.formData.show = true;
     },
     // 查询菜单对应的页面以及功能点
-    async getPrivilegeList(menuKey) {
+    async getPrivilegeList(menuKey,frontPrivilegeData) {
       this.$Spin.show();
       this.formData.show = false;
       let result = await privilegeApi.queryPrivilegeFunctionList(menuKey);
       this.$Spin.hide();
-      let datas = result.data;
-      let functionKey = new Map();
-      datas.map(item => {
-        functionKey.set(item.functionKey, item.url);
+      //处理服务端存储的功能点
+      let serverPointData = result.data;
+      let serverFunctionKeyUrlMap = new Map();
+      serverPointData.map(item => {
+        serverFunctionKeyUrlMap.set(item.functionKey, {url:item.url?item.url:''});
       });
-      let privilegeTableData = [];
-      this.privilegeTableData.map(item => {
-        let url = functionKey.get(item.name) || '';
-        item.url = url;
-        privilegeTableData.push(item);
-      });
-      this.privilegeTableData = privilegeTableData;
+      
+      let pointsChangeNum = 0;
+      for (let frontPrivilege of frontPrivilegeData) {
+        let serverUrlObject = serverFunctionKeyUrlMap.get(frontPrivilege.name);
+        if(serverUrlObject){
+            frontPrivilege.url = serverUrlObject.url;
+        }else{
+          frontPrivilege.url = '';
+          //服务端没有此功能点
+          pointsChangeNum++;
+        }
+      }
+      this.pointsChangeNum = pointsChangeNum;
+      this.privilegeTableData = frontPrivilegeData;
     },
     // 点击菜单事件
     loadPrivilegeTableData(name) {
       let router = this.routerMap.get(name);
+      let frontPrivilegeData = [];
       if (!_.isUndefined(router) && router.meta && router.meta.privilege) {
-        this.privilegeTableData = router.meta.privilege.map(e =>
-          Object.assign({}, e, { parentKey: name })
+        let sort = 0;
+        frontPrivilegeData = router.meta.privilege.map(e =>{
+            sort++;
+           return Object.assign({}, e, { parentKey: name },{sort});
+          }
         );
       }
-      this.getPrivilegeList(name);
+      this.getPrivilegeList(name,frontPrivilegeData);
     }
   }
 };
