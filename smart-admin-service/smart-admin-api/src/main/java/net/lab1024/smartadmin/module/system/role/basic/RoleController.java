@@ -42,8 +42,7 @@ public class RoleController {
     @ApiOperation(value = "更新角色", notes = "更新角色")
     @PostMapping("/role/update")
     public ResponseDTO<String> updateRole(@Valid @RequestBody RoleUpdateDTO roleUpdateDTO) {
-//        return roleService.updateRole(roleUpdateDTO);
-          return ResponseDTO.succ();
+        return roleService.updateRole(roleUpdateDTO);
     }
 
     @ApiOperation(value = "获取角色数据", notes = "根据id获取角色数据")

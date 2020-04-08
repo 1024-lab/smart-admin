@@ -17,6 +17,3 @@ sa/123456
 LoginService.getSession
 
 7 test类中去掉代码生成run
-
-8 RoleController 更新角色
-  updateRole
