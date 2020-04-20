@@ -112,6 +112,10 @@ export const postFileUploadAxios = (url, data) => {
   return axios.post(url, data, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
+export const getDownloadAxios = (url) => {
+  return axios.get(url, { responseType: 'blob' });
+};
+
 export const postDownloadAxios = (url, data) => {
   return axios.post(url, data, { responseType: 'blob' });
 };

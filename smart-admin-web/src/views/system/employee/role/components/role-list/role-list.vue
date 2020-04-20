@@ -86,7 +86,7 @@
               style="overflow-y:scroll;height: 290px;text-align: center"
             >
               <Row :key="index" v-for="(item,index) in prepAddEmployees">
-                <Col span="24" style="font-size: 15px;text-align: center;">
+                <Col span="24" style="font-size: 15px;text-align: left;">
                   <icon type="ios-people"></icon>
                   {{item.manageName}}
                   <Button @click.native="deletePrepEmployee(index)" icon="md-close" type="text"></Button>

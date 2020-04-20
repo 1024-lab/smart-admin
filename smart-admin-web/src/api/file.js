@@ -1,4 +1,4 @@
-import { postAxios, getAxios } from '@/lib/http';
+import { postAxios, getAxios, getDownloadAxios} from '@/lib/http';
 import config from '@/config';
 const baseUrl = config.baseUrl.apiUrl;
 export const fileApi = {
@@ -8,7 +8,7 @@ export const fileApi = {
   },
   // 系统文件下载通过接口
   downLoadFile: id => {
-    return getAxios('/api/file/downLoad?id=' + id);
+    return getDownloadAxios('/api/file/downLoad?id=' + id);
   },
   // 文件上传
   fileUpload: (type, data) => {

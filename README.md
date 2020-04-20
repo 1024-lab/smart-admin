@@ -25,32 +25,32 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 #### 演示图
 <table>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/11.png"/></td>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/12.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/11.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/12.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/11.png"/></td>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/21.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/21.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/22.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/31.png"/></td>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/32.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/31.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/32.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/41.png"/></td>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/42.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/41.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/42.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/51.png"/></td>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/52.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/51.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/52.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/61.png"/></td>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/62.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/61.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/62.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/71.png"/></td>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/cut/1.1.0/72.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/71.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/72.png"/></td>
 </tr>
 </table>
 
@@ -111,8 +111,8 @@ SmartAdmin微信群（**加我微信拉你入群！**）
 
 <table>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/wechat/zhuoda-wechat.jpg"/></td>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/qq/smart-admin-qq-group.png"/></td>
+  <td><img src="http://img.zhuoluodada.cn/wechat/zhuoda-wechat.jpg"/></td>
+  <td><img src="http://img.zhuoluodada.cn/qq/smart-admin-qq-group.png"/></td>
 </tr>
 </table>
 
@@ -122,7 +122,7 @@ SmartAdmin微信群（**加我微信拉你入群！**）
 >*佛祖保佑捐赠这些人写程序永无bug，工资翻倍，迎娶白富美，走上人生巅峰！*
 <table>
 <tr>
-  <td><img src="http://q8expnedf.bkt.clouddn.com/wechat/zhuoda-wechat-money-v1.jpg"/></td>
+  <td><img src="http://img.zhuoluodada.cn/wechat/zhuoda-wechat-money-v1.jpg"/></td>
 </tr>
 </table>
 

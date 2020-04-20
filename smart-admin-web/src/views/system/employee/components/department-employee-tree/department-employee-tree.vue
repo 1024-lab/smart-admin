@@ -5,11 +5,11 @@
         <Input
           @on-change="filterEmployee"
           placeholder="请输入员工名称"
-          style="max-width: 300px"
+          style="max-width: 300px;position:fixed;z-index:9999"
           v-if="!isDepartment"
           v-model="searchKeywords"
         />
-        <Tree :data="treeData"></Tree>
+        <Tree style="margin-top:40px" :data="treeData"></Tree>
       </Col>
     </Row>
   </div>
