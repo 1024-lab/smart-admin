@@ -112,7 +112,6 @@ SmartAdmin微信群（**加我微信拉你入群！**）
 <table>
 <tr>
   <td><img src="http://img.zhuoluodada.cn/wechat/zhuoda-wechat.jpg"/></td>
-  <td><img src="http://img.zhuoluodada.cn/qq/smart-admin-qq-group.png"/></td>
 </tr>
 </table>
 
