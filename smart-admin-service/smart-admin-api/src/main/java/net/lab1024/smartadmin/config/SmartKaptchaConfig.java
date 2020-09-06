@@ -30,8 +30,8 @@ public class SmartKaptchaConfig {
         properties.setProperty("kaptcha.border.color", "34,114,200");
         properties.setProperty("kaptcha.image.width", "125");
         properties.setProperty("kaptcha.image.height", "45");
-        properties.setProperty("kaptcha.textproducer.char.string", "ABCDEFG23456789");
-        properties.setProperty("kaptcha.textproducer.char.length", "5");
+        properties.setProperty("kaptcha.textproducer.char.string", "0123456789");
+        properties.setProperty("kaptcha.textproducer.char.length", "4");
         properties.setProperty("kaptcha.textproducer.font.names", "Arial,Arial Narrow,Serif,Helvetica,Tahoma,Times New Roman,Verdana");
         properties.setProperty("kaptcha.textproducer.font.size", "38");
 

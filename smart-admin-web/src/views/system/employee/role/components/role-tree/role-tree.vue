@@ -21,19 +21,19 @@
             <div class="level-one">
               <Checkbox
                 :label="module.key"
-                @click.prevent.native="selectCheckbox(tree, moduleIndex)"
-              >{{module.name}}</Checkbox>
+                @click.prevent.native="selectCheckbox(module)"
+              >{{module.name}} </Checkbox>
             </div>
             <!--div 二级权限模块 start-->
             <div
               :key="childrenModule.key"
-              class="level-teo"
+              class="level-two"
               v-for="(childrenModule, childrenModuleIndex) in module.children"
             >
               <Checkbox
                 :label="childrenModule.key"
-                @click.prevent.native="selectCheckbox(module.children,childrenModuleIndex,tree)"
-                class="level-teo-label"
+                @click.prevent.native="selectCheckbox(childrenModule)"
+                class="level-two-label"
               >{{childrenModule.name}}</Checkbox>
               <!--div 三级权限模块 start-->
               <div class="level-three">
@@ -46,23 +46,56 @@
                     <Checkbox
                       :key="pages.key"
                       :label="pages.key"
-                      @click.prevent.native="selectCheckbox(childrenModule.children,pagesIndex,module.children)"
+                      @click.prevent.native="selectCheckbox(pages)"
                       class="level-three-label"
                     >{{pages.name}}</Checkbox>
-                    <div :key="pagesIndex" class="Level-four" v-if="pages.children.length > 0">
+                    <!--div 四级权限模块 start-->
+                    <div :key="pagesIndex" class="level-four" v-if="pages.children.length > 0">
                       <template v-for="(page, pageIndex) in pages.children">
-                        <Checkbox
-                          :key="page.key"
-                          :label="page.key"
-                          @click.prevent.native="selectCheckbox(pages.children, pageIndex,childrenModule.children,module.children)"
-                        >{{page.name}}</Checkbox>
+                        <!---
+                          如果是第四级菜单的话，会继续往下一层遍历
+                        -->
+                        <template v-if="page.children && page.children.length > 0">
+                          <!--div 五级权限模块 start-->
+                          <div :key="page.key" class="isLevel-four">
+                            <Checkbox
+                              :label="page.key"
+                              @click.prevent.native="selectCheckbox(page)"
+                              class="level-three-label"
+                            >{{page.name}}</Checkbox>
+                            <!--div 五级权限的功能点 start-->
+                            <div
+                              class="level-four"
+                              v-if="page.children && page.children.length > 0"
+                            >
+                              <template
+                                v-for="(fiveLevelFunction, fiveLevelIndex) in page.children"
+                              >
+                                <Checkbox
+                                  :label="fiveLevelFunction.key"
+                                  @click.prevent.native="selectCheckbox(fiveLevelFunction)"
+                                >{{fiveLevelFunction.name}}</Checkbox>
+                              </template>
+                            </div>
+                            <!--div 五级权限的功能点 start-->
+                          </div>
+                          <!--div 五级权限模块 start-->
+                        </template>
+                        <template v-else>
+                          <Checkbox
+                            :key="page.key"
+                            :label="page.key"
+                            @click.prevent.native="selectCheckbox(page)"
+                          >{{page.name}}</Checkbox>
+                        </template>
                       </template>
                     </div>
+                    <!--div 四级权限模块 start-->
                   </div>
                   <Checkbox
                     :key="pages.key"
                     :label="pages.key"
-                    @click.prevent.native="selectCheckbox(childrenModule.children,pagesIndex,module.children)"
+                    @click.prevent.native="selectCheckbox(pages)"
                     v-else
                   >{{pages.name}}</Checkbox>
                 </template>
@@ -101,6 +134,8 @@ export default {
     return {
       // 权限数据
       tree: [],
+      //权限铺平的map
+      treeMap: null,
       loading: false,
       // 提交保存数据
       rolePower: {
@@ -133,118 +168,95 @@ export default {
   activated() {},
   methods: {
     // 勾选权限
-    selectCheckbox(
-      currentModuleList,
-      moduleIndex,
-      upOneModuleList,
-      upTwoModuleList
-    ) {
-      let module = currentModuleList[moduleIndex];
+    selectCheckbox(module) {
       // 是否勾选
       let findIndex = this.checkedData.indexOf(module.key);
       if (findIndex !== -1) {
-        this.spliceCheck(module);
-        // 取消的上级ID
-        // 判断同级是否全部已取消勾选
-        let currentLevelAllUnchecked = this.isUnCheckedThisLevel(
-          currentModuleList
-        );
-        if (currentLevelAllUnchecked && upOneModuleList) {
-          // 判断上级是否全部已取消勾选
-          let upOneLevelAllUnchecked = this.isUnCheckedThisLevel(
-            upOneModuleList
-          );
-          if (upOneLevelAllUnchecked && upTwoModuleList) {
-            // 判断上上级是否全部已取消勾选
-            this.isUnCheckedThisLevel(upTwoModuleList);
+        //取消自己和孩子
+        this.removeCheckAndChidlrenCheck(module);
+        //判断父级及其以上是否有重复
+        if (module.parentKey) {
+          let parentPrivilege = this.treeMap.get(module.parentKey);
+          if (parentPrivilege) {
+            this.unCheckedParent(parentPrivilege);
           }
         }
       } else {
         // 选中子级所有checkBox
-        this.addCheck(module);
-        // 选中上级组件
-        if (module.parentKey) {
-          if (
-            this.checkedData.findIndex(val => val === module.parentKey) === -1
-          ) {
-            this.checkedData.push(module.parentKey);
-          }
-        }
-        // 选中上上级组件
-        if (upOneModuleList) {
-          let upOneFindIndex = upOneModuleList.findIndex(
-            e => e.key === module.parentKey
-          );
-          let upOneFind =
-            upOneFindIndex === -1 ? null : upOneModuleList[upOneFindIndex];
-          if (
-            upOneFind &&
-            upOneFind.parentKey &&
-            this.checkedData.findIndex(val => val === upOneFind.parentKey) ===
-              -1
-          ) {
-            this.checkedData.push(upOneFind.parentKey);
-          }
-          // 选中上上上级组件
-          if (upTwoModuleList) {
-            console.log(1111, upTwoModuleList, upOneFind);
-            let upTwoFindIndex = upTwoModuleList.findIndex(
-              e => e.key === upOneFind.parentKey
-            );
-            let upTwoFind =
-              upTwoFindIndex === -1 ? null : upTwoModuleList[upTwoFindIndex];
-            if (
-              upTwoFind &&
-              upTwoFind.parentKey &&
-              this.checkedData.findIndex(val => val === upTwoFind.parentKey) ===
-                -1
-            ) {
-              this.checkedData.push(upTwoFind.parentKey);
+        this.addCheckAndChildrenCheck(module);
+        // 父类集合选中
+        let parentKey = module.parentKey;
+        while (parentKey != null) {
+          let parentPrivilege = this.treeMap.get(parentKey);
+          if (parentPrivilege) {
+            let findIndex = this.checkedData.findIndex(val => val == parentKey);
+            if (findIndex == -1) {
+              this.checkedData.push(parentKey);
             }
+            parentKey = parentPrivilege.parentKey;
+          } else {
+            parentKey = null;
           }
         }
       }
     },
-    // 判断同级是否全部已取消勾选
-    isUnCheckedThisLevel(moduleList) {
-      let thisLevelAllUnchecked = true;
-      moduleList.forEach(e => {
-        let brotherIndex = this.checkedData.findIndex(val => val == e.key);
-        if (brotherIndex != -1) {
-          thisLevelAllUnchecked = false;
-        }
-      });
-      if (thisLevelAllUnchecked) {
-        let number = this.checkedData.findIndex(
-          e => e == moduleList[0].parentKey
-        );
-        if (number != -1) {
-          this.checkedData.splice(number, 1);
+    // 取消父级check
+    unCheckedParent(parentPrivilege) {
+      if (
+        parentPrivilege &&
+        parentPrivilege.children &&
+        parentPrivilege.children.length > 0
+      ) {
+        if (!this.judgeArrayExistCheck(parentPrivilege.children)) {
+          let findIndex = this.checkedData.findIndex(
+            val => val == parentPrivilege.key
+          );
+          if (findIndex != -1) {
+            this.checkedData.splice(findIndex, 1);
+          }
+
+          parentPrivilege = this.treeMap.get(parentPrivilege.parentKey);
+          this.unCheckedParent(parentPrivilege);
         }
       }
-      return thisLevelAllUnchecked;
     },
+    //判断权限数组是否有选中的，有返回true,没有任何选中返回false
+    judgeArrayExistCheck(privilegeArray) {
+      if (!privilegeArray) {
+        return false;
+      }
+
+      for (let privilege of privilegeArray) {
+        let findIndex = this.checkedData.findIndex(val => val == privilege.key);
+        if (findIndex != -1) {
+          return true;
+        }
+      }
+      return false;
+    },
+
     // 选中子级所有checkBox
-    addCheck(module) {
+    addCheckAndChildrenCheck(module) {
       let findIndex = this.checkedData.findIndex(val => val == module.key);
       if (findIndex == -1) {
         this.checkedData.push(module.key);
       }
+
       if (module.children) {
         module.children.forEach(item => {
-          this.addCheck(item);
+          this.addCheckAndChildrenCheck(item);
         });
       }
     },
     // 取消自己和下级勾选
-    spliceCheck(module) {
+    removeCheckAndChidlrenCheck(module) {
       let findIndex = this.checkedData.findIndex(val => val == module.key);
       if (findIndex != -1) {
         this.checkedData.splice(findIndex, 1);
       }
       if (module.children) {
         module.children.forEach(item => {
-          this.spliceCheck(item);
+          this.removeCheckAndChidlrenCheck(item);
         });
       }
     },
@@ -272,13 +284,23 @@ export default {
         this.$Spin.hide();
       }
     },
+    //将权限tree 打平成map
+    tree2map(tree) {
+      if (tree) {
+        for (const privilege of tree) {
+          this.treeMap.set(privilege.key, privilege);
+          this.tree2map(privilege.children);
+        }
+      }
+    },
     // 获取角色可选的功能权限
     async getListPrivilegeByRoleId(id) {
       try {
         let response = await privilegeApi.getListPrivilegeByRoleId(id);
         let datas = response.data;
         this.tree = datas.privilege;
-        console.log('tree', this.tree);
+        this.treeMap = new Map();
+        this.tree2map(this.tree);
         this.checkedData = datas.selectedKey || [];
       } catch (e) {
         console.error(e);
@@ -360,14 +382,14 @@ export default {
         border-bottom: 1px solid rgb(240, 240, 240);
         padding: 10px 0;
       }
-      .level-teo {
+      .level-two {
         display: flex;
         align-items: center;
         margin-left: 4%;
         position: relative;
         border-bottom: 1px solid rgb(240, 240, 240);
         line-height: 40px;
-        .level-teo-label {
+        .level-two-label {
           width: 12%;
           min-width: 120px;
         }
@@ -381,15 +403,21 @@ export default {
           .isLevel-four {
             display: flex;
             align-items: center;
+            border-bottom: 1px rgb(240, 240, 240) solid;
             .level-three-label {
               width: 12%;
               min-width: 120px;
             }
-            .Level-four {
+            .level-four {
               padding-left: 4%;
               flex: 1;
               min-height: 40px;
               border-left: 1px rgb(240, 240, 240) solid;
+              .level-five {
+                padding-left: 4%;
+                min-height: 40px;
+                border-left: 1px rgb(240, 240, 240) solid;
+              }
             }
           }
         }

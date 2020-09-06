@@ -42,7 +42,7 @@ export const systemSetting = [
         path: '/system-setting/system-privilege',
         name: 'SystemPrivilege',
         meta: {
-          title: '菜单权限',
+          title: '菜单设置',
           privilege: [
             {
               title: '编辑',

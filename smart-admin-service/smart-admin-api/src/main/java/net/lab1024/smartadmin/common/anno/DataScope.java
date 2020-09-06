@@ -1,6 +1,7 @@
 package net.lab1024.smartadmin.common.anno;
 
 import net.lab1024.smartadmin.module.system.datascope.constant.DataScopeTypeEnum;
+import net.lab1024.smartadmin.module.system.datascope.constant.DataScopeWhereInTypeEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -22,6 +23,8 @@ import java.lang.annotation.Target;
 public @interface DataScope {
 
     DataScopeTypeEnum dataScopeType() default DataScopeTypeEnum.DEFAULT;
+
+    DataScopeWhereInTypeEnum whereInType() default DataScopeWhereInTypeEnum.EMPLOYEE;
 
     /**
      * 第几个where 条件 从0开始

@@ -7,7 +7,7 @@ import net.lab1024.smartadmin.common.domain.ResponseDTO;
 import net.lab1024.smartadmin.constant.SwaggerTagConst;
 import net.lab1024.smartadmin.module.system.employee.domain.dto.*;
 import net.lab1024.smartadmin.module.system.employee.domain.vo.EmployeeVO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.util.SmartRequestTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

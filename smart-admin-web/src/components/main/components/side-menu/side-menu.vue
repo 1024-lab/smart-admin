@@ -20,14 +20,14 @@
             v-else
           >
             <common-icon :type="item.children[0].icon || ''" />
-            <span>{{ showTitle(item.children[0]) }}</span>
+            <span>{{ showTitle(item.children[0]) }} </span>
           </menu-item>
         </template>
         <template v-else>
           <side-menu-item :key="`menu-${item.name}`" :parent-item="item" v-if="item.children && item.children.length > 0"></side-menu-item>
           <menu-item :key="`menu-${item.name}`" :name="getNameOrHref(item)" v-else>
             <common-icon :type="item.icon || ''" />
-            <span>{{ showTitle(item) }}</span>
+            <span>{{ showTitle(item) }} </span>
           </menu-item>
         </template>
       </template>

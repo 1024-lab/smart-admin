@@ -109,10 +109,16 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
-        <!--druid  -->
+        <!-- druid -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
+        </dependency>
+
+        <!-- p6spy -->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
         </dependency>
 
         <!-- swagger begin -->
@@ -125,6 +131,14 @@
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
         <!-- swagger end -->
+
+        <!-- knife4j begin -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
+        </dependency>
+        <!-- knife4j end -->
 
         <!-- guava -->
         <dependency>

@@ -35,7 +35,7 @@ public class QuartzTask extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         JobDetail jobDetail = context.getJobDetail();
-        Object params = jobDetail.getJobDataMap().get(QuartzConst.QUARTZ_PARAMS_KEY);
+        Object params = context.getMergedJobDataMap().get(QuartzConst.QUARTZ_PARAMS_KEY);
         JobKey jobKey = jobDetail.getKey();
 
         Long taskId = SmartQuartzUtil.getTaskIdByJobKey(jobKey);

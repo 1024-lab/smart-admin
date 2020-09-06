@@ -3,7 +3,7 @@ package net.lab1024.smartadmin.module.system.datascope.service;
 import net.lab1024.smartadmin.common.anno.DataScope;
 import net.lab1024.smartadmin.module.system.datascope.constant.DataScopeWhereInTypeEnum;
 import net.lab1024.smartadmin.module.system.datascope.domain.dto.DataScopeSqlConfigDTO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.util.SmartRequestTokenUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -70,6 +70,7 @@ public class DataScopeSqlConfigService {
                 configDTO.setDataScopeType(dataScopeAnnotation.dataScopeType().getType());
                 configDTO.setJoinSql(dataScopeAnnotation.joinSql());
                 configDTO.setWhereIndex(dataScopeAnnotation.whereIndex());
+                configDTO.setDataScopeWhereInType(dataScopeAnnotation.whereInType().getType());
                 dataScopeMethodMap.put(method.getDeclaringClass().getSimpleName() + "." + method.getName(), configDTO);
             }
         }

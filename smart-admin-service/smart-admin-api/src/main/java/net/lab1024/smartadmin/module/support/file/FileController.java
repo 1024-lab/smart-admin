@@ -10,7 +10,7 @@ import net.lab1024.smartadmin.module.support.file.domain.dto.FileQueryDTO;
 import net.lab1024.smartadmin.module.support.file.domain.vo.FileVO;
 import net.lab1024.smartadmin.module.support.file.domain.vo.UploadVO;
 import net.lab1024.smartadmin.module.support.file.service.FileService;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.util.SmartRequestTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

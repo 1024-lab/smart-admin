@@ -1,4 +1,4 @@
-package net.lab1024.smartadmin.module.business.login;
+package net.lab1024.smartadmin.module.system.login;
 
 import net.lab1024.smartadmin.common.anno.NoNeedLogin;
 import net.lab1024.smartadmin.common.anno.NoValidPrivilege;
@@ -6,9 +6,9 @@ import net.lab1024.smartadmin.common.anno.OperateLog;
 import net.lab1024.smartadmin.common.domain.ResponseDTO;
 import net.lab1024.smartadmin.constant.SwaggerTagConst;
 import net.lab1024.smartadmin.module.system.employee.domain.dto.EmployeeLoginFormDTO;
-import net.lab1024.smartadmin.module.business.login.domain.KaptchaVO;
-import net.lab1024.smartadmin.module.business.login.domain.LoginDetailVO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.KaptchaVO;
+import net.lab1024.smartadmin.module.system.login.domain.LoginDetailVO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.util.SmartRequestTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

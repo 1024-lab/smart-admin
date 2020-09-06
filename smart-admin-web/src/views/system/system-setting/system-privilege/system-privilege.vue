@@ -113,7 +113,7 @@
         :title="formData.title"
         :typeDisabled="typeDisabled"
         @closeModal="closeModal"
-        @updateMenuSuccess="getPrivilegeList"
+        @updateMenuSuccess="loadPrivilegeTableData"
       ></privilege-form>
     </Col>
   </Row>
@@ -365,6 +365,16 @@ console.error(privilegeTree)
           //服务端没有此功能点
           pointsChangeNum++;
         }
+      }
+
+      //如果服务端比前端的要多，则说明需要删除
+      if(serverPointData.length > frontPrivilegeData.length){
+          for (const serverFunction of serverPointData) {
+              if(frontPrivilegeData.findIndex(e => e.name === serverFunction.functionKey ) === -1){
+                 //前端的功能点呗删除
+                 pointsChangeNum++;
+              }
+          }
       }
       this.pointsChangeNum = pointsChangeNum;
       this.privilegeTableData = frontPrivilegeData;

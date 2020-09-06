@@ -1,4 +1,4 @@
-package net.lab1024.smartadmin.module.business.login.domain;
+package net.lab1024.smartadmin.module.system.login.domain;
 
 import net.lab1024.smartadmin.module.system.employee.domain.dto.EmployeeDTO;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package net.lab1024.smartadmin.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import net.lab1024.smartadmin.constant.SwaggerTagConst;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
@@ -48,6 +49,7 @@ import java.util.Map;
  */
 @Slf4j
 @EnableSwagger2
+@EnableKnife4j
 @Configuration
 @Profile({"dev", "sit", "pre", "prod"})
 public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDefinitionRegistryPostProcessor {

@@ -99,6 +99,19 @@
         p.key = #{key}
     </select>
 
+    <select id="selectByKeyList" resultMap="PrivilegeEntity">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_privilege p
+        WHERE
+        p.key in
+        <foreach item="item" collection="keyList" open="(" close=")"
+                 separator=",">
+            #{item}
+        </foreach>
+    </select>
+
     <select id="selectAll" resultMap="PrivilegeEntity">
         SELECT
         <include refid="baseSql"></include>,

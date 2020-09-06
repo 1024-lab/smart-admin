@@ -1,4 +1,4 @@
-package net.lab1024.smartadmin.module.business.login;
+package net.lab1024.smartadmin.module.system.login;
 
 import net.lab1024.smartadmin.common.constant.ResponseCodeConst;
 

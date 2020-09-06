@@ -1,4 +1,4 @@
-package net.lab1024.smartadmin.module.business.login;
+package net.lab1024.smartadmin.module.system.login;
 
 import net.lab1024.smartadmin.common.constant.JudgeEnum;
 import net.lab1024.smartadmin.common.domain.ResponseDTO;
@@ -12,10 +12,10 @@ import net.lab1024.smartadmin.module.system.employee.domain.dto.EmployeeDTO;
 import net.lab1024.smartadmin.module.system.employee.domain.dto.EmployeeLoginFormDTO;
 import net.lab1024.smartadmin.module.business.log.LogService;
 import net.lab1024.smartadmin.module.business.log.userloginlog.domain.UserLoginLogEntity;
-import net.lab1024.smartadmin.module.business.login.domain.KaptchaVO;
-import net.lab1024.smartadmin.module.business.login.domain.LoginDetailVO;
-import net.lab1024.smartadmin.module.business.login.domain.LoginPrivilegeDTO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.KaptchaVO;
+import net.lab1024.smartadmin.module.system.login.domain.LoginDetailVO;
+import net.lab1024.smartadmin.module.system.login.domain.LoginPrivilegeDTO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.module.system.privilege.domain.entity.PrivilegeEntity;
 import net.lab1024.smartadmin.module.system.privilege.service.PrivilegeEmployeeService;
 import net.lab1024.smartadmin.util.SmartBeanUtil;

@@ -23,7 +23,7 @@
 <script>
   import { ${moduleVar}Api } from '@/api/${webModuleName}';
   export default {
-    name: 'CodeReviewListForm',
+    name: '${moduleClass}ListForm',
     components: {
     },
     props: {
@@ -103,7 +103,7 @@
     resetForm() {
         this.form = {
 #foreach ($column in $columnList)
-#if($column.columnName != 'id' && $column.fieldName != 'updateTime' && $column.fieldName != 'createTime')
+#if( $column.fieldName != 'updateTime' && $column.fieldName != 'createTime')
           //${column.columnDesc}
           ${column.fieldName}:null,
 #end

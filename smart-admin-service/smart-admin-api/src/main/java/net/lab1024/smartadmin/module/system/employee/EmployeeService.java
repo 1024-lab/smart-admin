@@ -13,7 +13,7 @@ import net.lab1024.smartadmin.module.system.employee.domain.bo.EmployeeBO;
 import net.lab1024.smartadmin.module.system.employee.domain.dto.*;
 import net.lab1024.smartadmin.module.system.employee.domain.entity.EmployeeEntity;
 import net.lab1024.smartadmin.module.system.employee.domain.vo.EmployeeVO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.module.system.position.PositionDao;
 import net.lab1024.smartadmin.module.system.position.PositionService;
 import net.lab1024.smartadmin.module.system.position.domain.dto.PositionRelationAddDTO;
