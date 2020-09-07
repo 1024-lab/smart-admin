@@ -17,6 +17,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -53,8 +54,8 @@ public class QuartzTask extends QuartzJobBean {
             paramsStr = params.toString();
             taskLogEntity.setTaskParams(paramsStr);
         }
-        taskLogEntity.setUpdateTime(new Date());
-        taskLogEntity.setCreateTime(new Date());
+        taskLogEntity.setUpdateTime(LocalDateTime.now());
+        taskLogEntity.setCreateTime(LocalDateTime.now());
         //任务开始时间
         long startTime = System.currentTimeMillis();
         try {

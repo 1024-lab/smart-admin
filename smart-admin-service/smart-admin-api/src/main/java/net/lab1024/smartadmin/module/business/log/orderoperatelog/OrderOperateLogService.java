@@ -9,6 +9,7 @@ import net.lab1024.smartadmin.util.SmartStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +42,7 @@ public class OrderOperateLogService {
             }
             orderOperateLogEntity.setOperateRemark(e.getOperateRemark());
             orderOperateLogEntity.setExtData(e.getExtData());
-            orderOperateLogEntity.setCreateTime(new Date());
+            orderOperateLogEntity.setCreateTime(LocalDateTime.now());
             orderOperateLogEntity.setOrderType(e.getOrderType().getType());
             entityList.add(orderOperateLogEntity);
         });

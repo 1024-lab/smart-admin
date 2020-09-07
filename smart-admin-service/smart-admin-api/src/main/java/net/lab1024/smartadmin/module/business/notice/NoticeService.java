@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -108,8 +109,8 @@ public class NoticeService {
      */
     public ResponseDTO<String> add(NoticeAddDTO addDTO, RequestTokenBO requestToken) {
         NoticeEntity entity = SmartBeanUtil.copy(addDTO, NoticeEntity.class);
-        entity.setCreateTime(new Date());
-        entity.setUpdateTime(new Date());
+        entity.setCreateTime(LocalDateTime.now());
+        entity.setUpdateTime(LocalDateTime.now());
         entity.setCreateUser(requestToken.getRequestUserId());
         entity.setSendStatus(JudgeEnum.NO.getValue());
         entity.setDeleted(JudgeEnum.NO.getValue());

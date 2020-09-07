@@ -32,6 +32,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -266,7 +267,7 @@ public class EmployeeService {
             updateDTO.setLoginPwd(employeeEntity.getLoginPwd());
         }
         EmployeeEntity entity = SmartBeanUtil.copy(updateDTO, EmployeeEntity.class);
-        entity.setUpdateTime(new Date());
+        entity.setUpdateTime(LocalDateTime.now());
         if (StringUtils.isEmpty(entity.getBirthday())) {
             entity.setBirthday(null);
         }
@@ -280,7 +281,7 @@ public class EmployeeService {
         entity.setIsLeave(employeeEntity.getIsLeave());
         entity.setCreateUser(employeeEntity.getCreateUser());
         entity.setCreateTime(employeeEntity.getCreateTime());
-        entity.setUpdateTime(new Date());
+        entity.setUpdateTime(LocalDateTime.now());
         employeeDao.updateById(entity);
         employeeCache.remove(employeeId);
         return ResponseDTO.succ();

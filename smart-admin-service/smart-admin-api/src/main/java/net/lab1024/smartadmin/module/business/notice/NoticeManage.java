@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -45,8 +46,8 @@ public class NoticeManage {
         NoticeReceiveRecordEntity recordEntity = new NoticeReceiveRecordEntity();
         recordEntity.setEmployeeId(requestToken.getRequestUserId());
         recordEntity.setNoticeId(entity.getId());
-        recordEntity.setCreateTime(new Date());
-        recordEntity.setUpdateTime(new Date());
+        recordEntity.setCreateTime(LocalDateTime.now());
+        recordEntity.setUpdateTime(LocalDateTime.now());
         noticeReceiveRecordDao.insert(recordEntity);
     }
 
@@ -60,8 +61,8 @@ public class NoticeManage {
         NoticeReceiveRecordEntity recordEntity = new NoticeReceiveRecordEntity();
         recordEntity.setEmployeeId(requestToken.getRequestUserId());
         recordEntity.setNoticeId(noticeId);
-        recordEntity.setCreateTime(new Date());
-        recordEntity.setUpdateTime(new Date());
+        recordEntity.setCreateTime(LocalDateTime.now());
+        recordEntity.setUpdateTime(LocalDateTime.now());
         noticeReceiveRecordDao.insert(recordEntity);
     }
 

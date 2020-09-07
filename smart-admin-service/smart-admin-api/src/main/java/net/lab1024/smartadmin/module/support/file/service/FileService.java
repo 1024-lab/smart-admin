@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -190,7 +191,7 @@ public class FileService {
     public ResponseDTO<String> saveFile(FileAddDTO addDTO, RequestTokenBO requestToken) {
         FileEntity entity = SmartBeanUtil.copy(addDTO,FileEntity.class);
         entity.setCreaterUser(requestToken.getRequestUserId());
-        entity.setCreateTime(new Date());
+        entity.setCreateTime(LocalDateTime.now());
         fileDao.insert(entity);
         return ResponseDTO.succ();
     }

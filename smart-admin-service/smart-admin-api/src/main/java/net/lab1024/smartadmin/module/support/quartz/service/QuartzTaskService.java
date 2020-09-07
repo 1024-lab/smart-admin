@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class QuartzTaskService {
     @Transactional(rollbackFor = Throwable.class)
     public ResponseDTO<String> saveOrUpdateTask(QuartzTaskDTO quartzTaskDTO) throws Exception {
         ResponseDTO baseValid = this.baseValid(quartzTaskDTO);
-        if (! baseValid.isSuccess()) {
+        if (!baseValid.isSuccess()) {
             return baseValid;
         }
         Long taskId = quartzTaskDTO.getId();
@@ -103,7 +104,7 @@ public class QuartzTaskService {
         if (taskBean == null) {
             return ResponseDTO.wrap(ResponseCodeConst.ERROR_PARAM, "taskBean 不存在");
         }
-        if (! CronExpression.isValidExpression(quartzTaskDTO.getTaskCron())) {
+        if (!CronExpression.isValidExpression(quartzTaskDTO.getTaskCron())) {
             return ResponseDTO.wrap(ResponseCodeConst.ERROR_PARAM, "请传入正确的正则表达式");
         }
         return ResponseDTO.succ();
@@ -112,8 +113,8 @@ public class QuartzTaskService {
     private ResponseDTO<String> saveTask(QuartzTaskDTO quartzTaskDTO) throws Exception {
         QuartzTaskEntity taskEntity = SmartBeanUtil.copy(quartzTaskDTO, QuartzTaskEntity.class);
         taskEntity.setTaskStatus(TaskStatusEnum.NORMAL.getStatus());
-        taskEntity.setUpdateTime(new Date());
-        taskEntity.setCreateTime(new Date());
+        taskEntity.setUpdateTime(LocalDateTime.now());
+        taskEntity.setCreateTime(LocalDateTime.now());
         quartzTaskDao.insert(taskEntity);
         this.createQuartzTask(scheduler, taskEntity);
         return ResponseDTO.succ();
@@ -127,7 +128,7 @@ public class QuartzTaskService {
         QuartzTaskEntity taskEntity = SmartBeanUtil.copy(quartzTaskDTO, QuartzTaskEntity.class);
         //任务状态不能更新
         taskEntity.setTaskStatus(updateEntity.getTaskStatus());
-        taskEntity.setUpdateTime(new Date());
+        taskEntity.setUpdateTime(LocalDateTime.now());
         quartzTaskDao.updateById(taskEntity);
         this.updateQuartzTask(scheduler, taskEntity);
         return ResponseDTO.succ();

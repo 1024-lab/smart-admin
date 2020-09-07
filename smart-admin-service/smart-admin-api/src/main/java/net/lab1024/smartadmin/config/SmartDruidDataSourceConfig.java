@@ -65,7 +65,7 @@ public class SmartDruidDataSourceConfig {
     @Value("${spring.datasource.time-between-eviction-runs-millis}")
     long timeBetweenEvictionRunsMillis;
 
-    @Value("${spring.datasource.min-evictable-edle-time-millis}")
+    @Value("${spring.datasource.min-evictable-idle-time-millis}")
     long minEvictableIdleTimeMillis;
 
     @Value("${spring.datasource.filters}")
