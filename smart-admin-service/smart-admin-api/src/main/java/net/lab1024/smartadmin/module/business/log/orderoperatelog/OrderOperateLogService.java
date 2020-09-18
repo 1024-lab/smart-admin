@@ -42,7 +42,7 @@ public class OrderOperateLogService {
             }
             orderOperateLogEntity.setOperateRemark(e.getOperateRemark());
             orderOperateLogEntity.setExtData(e.getExtData());
-            orderOperateLogEntity.setCreateTime(LocalDateTime.now());
+            orderOperateLogEntity.setCreateTime(new Date());
             orderOperateLogEntity.setOrderType(e.getOrderType().getType());
             entityList.add(orderOperateLogEntity);
         });
