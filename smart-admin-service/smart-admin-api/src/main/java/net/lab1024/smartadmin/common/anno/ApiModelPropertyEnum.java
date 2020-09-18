@@ -26,6 +26,18 @@ public @interface ApiModelPropertyEnum {
 
     String example() default "";
 
+    /**
+     * 是否隐藏
+     *
+     * @return
+     */
+    boolean hidden() default false;
+
+    /**
+     * 是否必须
+     *
+     * @return
+     */
     boolean required() default true;
 
     String dataType() default "";
