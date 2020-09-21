@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class QuartzTaskService {
     @Transactional(rollbackFor = Throwable.class)
     public ResponseDTO<String> saveOrUpdateTask(QuartzTaskDTO quartzTaskDTO) throws Exception {
         ResponseDTO baseValid = this.baseValid(quartzTaskDTO);
-        if (! baseValid.isSuccess()) {
+        if (!baseValid.isSuccess()) {
             return baseValid;
         }
         Long taskId = quartzTaskDTO.getId();
@@ -103,7 +104,7 @@ public class QuartzTaskService {
         if (taskBean == null) {
             return ResponseDTO.wrap(ResponseCodeConst.ERROR_PARAM, "taskBean 不存在");
         }
-        if (! CronExpression.isValidExpression(quartzTaskDTO.getTaskCron())) {
+        if (!CronExpression.isValidExpression(quartzTaskDTO.getTaskCron())) {
             return ResponseDTO.wrap(ResponseCodeConst.ERROR_PARAM, "请传入正确的正则表达式");
         }
         return ResponseDTO.succ();

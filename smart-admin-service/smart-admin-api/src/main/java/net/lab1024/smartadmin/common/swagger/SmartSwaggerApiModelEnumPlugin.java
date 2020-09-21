@@ -45,22 +45,23 @@ public class SmartSwaggerApiModelEnumPlugin implements ModelPropertyBuilderPlugi
 
     @Override
     public void apply(ModelPropertyContext context) {
-        Optional<ApiModelPropertyEnum> annotation = Optional.absent();
+        Optional<ApiModelPropertyEnum> enumOptional = Optional.absent();
 
         if (context.getAnnotatedElement().isPresent()) {
-            annotation = annotation.or(findApiModePropertyAnnotation(context.getAnnotatedElement().get()));
+            enumOptional = enumOptional.or(findApiModePropertyAnnotation(context.getAnnotatedElement().get()));
         }
         if (context.getBeanPropertyDefinition().isPresent()) {
-            annotation = annotation.or(findPropertyAnnotation(context.getBeanPropertyDefinition().get(), ApiModelPropertyEnum.class));
+            enumOptional = enumOptional.or(findPropertyAnnotation(context.getBeanPropertyDefinition().get(), ApiModelPropertyEnum.class));
         }
 
-        if (annotation.isPresent()) {
-            Class<? extends BaseEnum> aClass = annotation.get().value();
-            String enumInfo = BaseEnum.getInfo(aClass);
-            String enumDesc = annotation.get().enumDesc();
-            context.getBuilder().required(annotation.transform(toIsRequired()).or(false))
-                .description(enumDesc +":"+enumInfo)
-                .example(annotation.transform(toExample()).orNull());
+        if (enumOptional.isPresent()) {
+            ApiModelPropertyEnum anEnum = enumOptional.get();
+            String enumInfo = BaseEnum.getInfo(anEnum.value());
+            context.getBuilder()
+                    .required(enumOptional.transform(toIsRequired()).or(false))
+                    .description(anEnum.enumDesc() + ":" + enumInfo)
+                    .example(enumOptional.transform(toExample()).orNull())
+                    .isHidden(anEnum.hidden());
         }
     }
 
