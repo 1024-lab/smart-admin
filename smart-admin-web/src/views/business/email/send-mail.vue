@@ -94,6 +94,7 @@ export default {
       let g = this;
       g.editor = new WangEditor('#editor');
       g.editor.customConfig = {
+        zIndex:1,
         // 功能键
         menus: [
           'head', // 标题

@@ -41,7 +41,7 @@ public interface NoticeDao extends BaseMapper<NoticeEntity> {
      * @param employeeId
      * @return
      */
-    @DataScope(joinSql = "n.create_user_department_id in (#departmentIds)", whereInType = DataScopeWhereInTypeEnum.DEPARTMENT)
+    @DataScope(joinSql = "e.department_id in (#departmentIds)", whereInType = DataScopeWhereInTypeEnum.DEPARTMENT)
     List<NoticeVO> queryUnreadByPage(Page page, @Param("employeeId") Long employeeId, @Param("sendStatus") Integer sendStatus);
 
 
