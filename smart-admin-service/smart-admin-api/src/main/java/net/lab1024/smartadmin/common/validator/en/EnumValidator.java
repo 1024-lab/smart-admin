@@ -1,10 +1,17 @@
 package net.lab1024.smartadmin.common.validator.en;
 
+import com.google.common.collect.Lists;
 import net.lab1024.smartadmin.common.domain.BaseEnum;
+import net.lab1024.smartadmin.module.support.file.constant.FileServiceTypeEnum;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 枚举类校验器
@@ -58,9 +65,14 @@ public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
             // 必须的情况下 list 不能为空
             return false;
         }
+        // 校验是否重复
+        long count = list.stream().distinct().count();
+        if (count != list.size()) {
+            return false;
+        }
+        List<Object> enumValList = Stream.of(enumClass.getEnumConstants()).map(BaseEnum::getValue).collect(Collectors.toList());
         for (Object obj : list) {
-            boolean hasEnum = this.hasEnum(obj);
-            if (!hasEnum) {
+            if (!enumValList.contains(obj)) {
                 return false;
             }
         }
