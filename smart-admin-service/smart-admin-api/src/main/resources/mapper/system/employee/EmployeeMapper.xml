@@ -146,7 +146,7 @@
         t_employee e
         WHERE
         e.department_id IN
-        <foreach collection="departmentIds" item="item" separator=",">
+        <foreach collection="departmentIds" open="(" close=")" item="item" separator=",">
             #{item}
         </foreach>
         order by e.create_time desc
@@ -158,7 +158,7 @@
         FROM
         t_employee e
         where e.id IN
-        <foreach collection="ids" item="item" separator=",">
+        <foreach collection="ids" open="(" close=")" item="item" separator=",">
             #{item}
         </foreach>
         order by e.create_time desc
