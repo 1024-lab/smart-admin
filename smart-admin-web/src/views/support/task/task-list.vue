@@ -365,6 +365,7 @@ export default {
       } catch (e) {
         //TODO zhuoda sentry
         console.error(e);
+      } finally {
         this.loading = false;
       }
     },
@@ -400,33 +401,52 @@ export default {
     },
     // 删除任务
     async deleteTask(id) {
-      let result = await taskApi.deleteTask(id);
-      this.$Message.success('删除任务成功!');
-      this.getTaskList();
+      this.$Spin.show();
+      try{
+        let result = await taskApi.deleteTask(id);
+        this.$Message.success('删除任务成功!');
+        this.getTaskList();
+      } catch (error) {
+        console.error(e);
+      } finally {
+        this.$Spin.hide();
+      }
     },
     // 操作任务
     async controlTask(type, id) {
       this.$Spin.show();
-      switch (type) {
-        case 'RUN':
-          await taskApi.updateTaskRun(id);
-          break;
-        case 'PAUSE':
-          await taskApi.updateTaskPause(id);
-          break;
-        case 'RESUME':
-          await taskApi.updateTaskResume(id);
-          break;
+      try{
+        switch (type) {
+          case 'RUN':
+            await taskApi.updateTaskRun(id);
+            break;
+          case 'PAUSE':
+            await taskApi.updateTaskPause(id);
+            break;
+          case 'RESUME':
+            await taskApi.updateTaskResume(id);
+            break;
+        }
+        this.$Message.success('操作成功');
+        this.getTaskList();
+      } catch (error) {
+        console.error(e);
+      } finally {
+        this.$Spin.hide();
       }
-      this.$Spin.hide();
-      this.$Message.success('操作成功');
-      this.getTaskList();
     },
     // 触发更新
     handleUpdate() {
       this.$refs['updateRef'].validate(valid => {
         if (valid) {
-          this.updateTask();
+          this.$Spin.show();
+          try{
+            this.updateTask();
+          } catch (error) {
+            console.error(e);
+          } finally {
+            this.$Spin.hide();
+          }
         } else {
           this.$Message.success('验证信息不通过');
         }
@@ -444,6 +464,7 @@ export default {
       } catch (e) {
         //TODO zhuoda sentry
         console.error(e);
+      } finally {
         this.updateLoading = false;
       }
     },
@@ -464,6 +485,7 @@ export default {
       } catch (e) {
         //TODO zhuoda sentry
         console.error(e);
+      } finally {
         this.saveLoading = false;
       }
     },

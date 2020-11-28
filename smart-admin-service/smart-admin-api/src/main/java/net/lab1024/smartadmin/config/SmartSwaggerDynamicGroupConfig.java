@@ -19,6 +19,7 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -194,7 +195,11 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
             return false;
         };
         groupIndex++;
-        return Predicates.and(RequestHandlerSelectors.withClassAnnotation(RestController.class), methodPredicate);
+        return Predicates.or(
+                Predicates.and(RequestHandlerSelectors.withClassAnnotation(RestController.class),methodPredicate),
+                Predicates.and(
+                        RequestHandlerSelectors.withMethodAnnotation(ResponseBody.class),methodPredicate)
+        );
     }
 
     private ApiInfo serviceApiInfo() {
