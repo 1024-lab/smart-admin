@@ -1,6 +1,8 @@
 package net.lab1024.smartadmin.module.system.datascope.constant;
 
 
+import net.lab1024.smartadmin.common.domain.BaseEnum;
+
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -14,7 +16,7 @@ import java.util.Optional;
  * @date 2019/4/28 0028 下午 15:37
  * @since JDK1.8
  */
-public enum DataScopeViewTypeEnum {
+public enum DataScopeViewTypeEnum implements BaseEnum {
 
     ME(0,0,"本人"),
 
@@ -24,32 +26,29 @@ public enum DataScopeViewTypeEnum {
 
     ALL(3,15,"全部");
 
-    private Integer type;
+    private Integer value;
     private Integer level;
-    private String name;
+    private String desc;
 
-    DataScopeViewTypeEnum(Integer type,Integer level, String name) {
-        this.type = type;
+    DataScopeViewTypeEnum(Integer value,Integer level, String desc) {
+        this.value = value;
         this.level = level;
-        this.name = name;
+        this.desc = desc;
     }
 
-    public Integer getType() {
-        return type;
+    @Override
+    public Integer getValue() {
+        return value;
     }
 
     public Integer getLevel() {
         return level;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getDesc() {
+        return desc;
     }
 
-    public static DataScopeViewTypeEnum valueOf(Integer type) {
-        DataScopeViewTypeEnum[] values = DataScopeViewTypeEnum.values();
-        Optional<DataScopeViewTypeEnum> first = Arrays.stream(values).filter(e -> e.getType().equals(type)).findFirst();
-        return !first.isPresent() ? null : first.get();
-    }
 
 }

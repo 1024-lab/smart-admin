@@ -1,6 +1,8 @@
 package net.lab1024.smartadmin.module.system.datascope.service;
 
+import com.google.common.collect.Lists;
 import net.lab1024.smartadmin.module.system.datascope.DataScopeRoleDao;
+import net.lab1024.smartadmin.module.system.datascope.constant.DataScopeTypeEnum;
 import net.lab1024.smartadmin.module.system.datascope.constant.DataScopeViewTypeEnum;
 import net.lab1024.smartadmin.module.system.datascope.domain.entity.DataScopeRoleEntity;
 import net.lab1024.smartadmin.module.system.department.DepartmentTreeService;
@@ -10,7 +12,7 @@ import net.lab1024.smartadmin.module.system.employee.domain.entity.EmployeeEntit
 import net.lab1024.smartadmin.module.system.employee.domain.vo.EmployeeVO;
 import net.lab1024.smartadmin.module.system.privilege.service.PrivilegeEmployeeService;
 import net.lab1024.smartadmin.module.system.role.roleemployee.RoleEmployeeDao;
-import com.google.common.collect.Lists;
+import net.lab1024.smartadmin.util.SmartBaseEnumUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,33 +53,40 @@ public class DataScopeViewService {
     /**
      * 获取某人可以查看的所有人员信息
      *
-     * @param dataScopeType
+     * @param dataScopeTypeEnum
      * @param employeeId
      * @return
      */
-    public List<Long> getCanViewEmployeeId(Integer dataScopeType, Long employeeId) {
-        Integer viewType = this.getEmployeeDataScopeViewType(dataScopeType, employeeId);
-        if (DataScopeViewTypeEnum.ME.getType().equals(viewType)) {
+    public List<Long> getCanViewEmployeeId(DataScopeTypeEnum dataScopeTypeEnum, Long employeeId) {
+        DataScopeViewTypeEnum viewType = this.getEmployeeDataScopeViewType(dataScopeTypeEnum, employeeId);
+        if (DataScopeViewTypeEnum.ME == viewType) {
             return this.getMeEmployeeIdList(employeeId);
         }
-        if (DataScopeViewTypeEnum.DEPARTMENT.getType().equals(viewType)) {
+        if (DataScopeViewTypeEnum.DEPARTMENT == viewType) {
             return this.getDepartmentEmployeeIdList(employeeId);
         }
-        if (DataScopeViewTypeEnum.DEPARTMENT_AND_SUB.getType().equals(viewType)) {
+        if (DataScopeViewTypeEnum.DEPARTMENT_AND_SUB == viewType) {
             return this.getDepartmentAndSubEmployeeIdList(employeeId);
         }
         return Lists.newArrayList();
     }
 
-    public List<Long> getCanViewDepartmentId(Integer dataScopeType, Long employeeId) {
-        Integer viewType = this.getEmployeeDataScopeViewType(dataScopeType, employeeId);
-        if (DataScopeViewTypeEnum.ME.getType().equals(viewType)) {
+    /**
+     * 获取某人可以查看的所有部门信息
+     *
+     * @param dataScopeTypeEnum
+     * @param employeeId
+     * @return
+     */
+    public List<Long> getCanViewDepartmentId(DataScopeTypeEnum dataScopeTypeEnum, Long employeeId) {
+        DataScopeViewTypeEnum viewType = this.getEmployeeDataScopeViewType(dataScopeTypeEnum, employeeId);
+        if (DataScopeViewTypeEnum.ME == viewType) {
             return this.getMeDepartmentIdList(employeeId);
         }
-        if (DataScopeViewTypeEnum.DEPARTMENT.getType().equals(viewType)) {
+        if (DataScopeViewTypeEnum.DEPARTMENT == viewType) {
             return this.getMeDepartmentIdList(employeeId);
         }
-        if (DataScopeViewTypeEnum.DEPARTMENT_AND_SUB.getType().equals(viewType)) {
+        if (DataScopeViewTypeEnum.DEPARTMENT_AND_SUB == viewType) {
             return this.getDepartmentAndSubIdList(employeeId);
         }
         return Lists.newArrayList();
@@ -101,28 +110,28 @@ public class DataScopeViewService {
      * @param employeeId
      * @return
      */
-    private Integer getEmployeeDataScopeViewType(Integer dataScopeType, Long employeeId) {
+    public DataScopeViewTypeEnum getEmployeeDataScopeViewType(DataScopeTypeEnum dataScopeTypeEnum, Long employeeId) {
         if (employeeId == null) {
-            return DataScopeViewTypeEnum.ME.getType();
+            return DataScopeViewTypeEnum.ME;
         }
 
         if (privilegeEmployeeService.isSuperman(employeeId)) {
-            return DataScopeViewTypeEnum.ALL.getType();
+            return DataScopeViewTypeEnum.ALL;
         }
         List<Long> roleIdList = roleEmployeeDao.selectRoleIdByEmployeeId(employeeId);
         //未设置角色 默认本人
         if (CollectionUtils.isEmpty(roleIdList)) {
-            return DataScopeViewTypeEnum.ME.getType();
+            return DataScopeViewTypeEnum.ME;
         }
         //未设置角色数据范围 默认本人
         List<DataScopeRoleEntity> dataScopeRoleList = dataScopeRoleDao.listByRoleIdList(roleIdList);
         if (CollectionUtils.isEmpty(dataScopeRoleList)) {
-            return DataScopeViewTypeEnum.ME.getType();
+            return DataScopeViewTypeEnum.ME;
         }
-        Map<Integer, List<DataScopeRoleEntity>> listMap = dataScopeRoleList.stream().collect(Collectors.groupingBy(DataScopeRoleEntity :: getDataScopeType));
-        List<DataScopeRoleEntity> viewLevelList = listMap.get(dataScopeType);
-        DataScopeRoleEntity maxLevel = viewLevelList.stream().max(Comparator.comparing(e -> DataScopeViewTypeEnum.valueOf(e.getViewType()).getLevel())).get();
-        return maxLevel.getViewType();
+        Map<Integer, List<DataScopeRoleEntity>> listMap = dataScopeRoleList.stream().collect(Collectors.groupingBy(DataScopeRoleEntity::getDataScopeType));
+        List<DataScopeRoleEntity> viewLevelList = listMap.get(dataScopeTypeEnum.getValue());
+        DataScopeRoleEntity maxLevel = viewLevelList.stream().max(Comparator.comparing(e -> SmartBaseEnumUtil.getEnumByValue(e.getViewType(), DataScopeViewTypeEnum.class).getLevel())).get();
+        return SmartBaseEnumUtil.getEnumByValue(maxLevel.getViewType(), DataScopeViewTypeEnum.class);
     }
 
     /**
@@ -134,6 +143,7 @@ public class DataScopeViewService {
     private List<Long> getMeEmployeeIdList(Long employeeId) {
         return Lists.newArrayList(employeeId);
     }
+
     /**
      * 获取本部门相关 可查看员工id
      *
