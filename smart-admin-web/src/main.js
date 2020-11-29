@@ -36,7 +36,7 @@ Vue.use(JsonViewer);
 Vue.use(vClickOutside);
 
 
-Number.prototype.toFixed = function (length) {
+Number.prototype.toFixed = function (length) {·
   let x = new Decimal(this);
   return x.toFixed(length);
 };

@@ -1,0 +1,7 @@
+
+# 忽略项目中某些文件的提交代码规范
+
+build/*.js
+src/assets
+public
+dist
