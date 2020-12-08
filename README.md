@@ -25,7 +25,7 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 #### 演示图
 <table>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/11.png"/></td>
+  <td><img src="![输入图片说明](https://images.gitee.com/uploads/images/2020/1208/180453_252f5e9f_5469596.png "11.png")"/></td>
   <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/12.png"/></td>
 </tr>
 <tr>
