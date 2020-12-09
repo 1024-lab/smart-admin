@@ -106,7 +106,7 @@
         FROM
         t_employee e
         WHERE
-        e.login_name = #{phone} and e.is_disabled = #{isDisabled}
+        e.phone = #{phone} and e.is_disabled = #{isDisabled}
     </select>
 
 

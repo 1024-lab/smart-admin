@@ -1,6 +1,7 @@
 package net.lab1024.smartadmin.module.system.employee;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import net.lab1024.smartadmin.common.constant.JudgeEnum;
 import net.lab1024.smartadmin.common.domain.PageResultDTO;
 import net.lab1024.smartadmin.common.domain.ResponseDTO;
@@ -25,14 +26,12 @@ import net.lab1024.smartadmin.util.SmartBeanUtil;
 import net.lab1024.smartadmin.util.SmartDigestUtil;
 import net.lab1024.smartadmin.util.SmartPageUtil;
 import net.lab1024.smartadmin.util.SmartVerificationUtil;
-import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,7 +74,7 @@ public class EmployeeService {
      */
     private static final ConcurrentHashMap<Long, EmployeeBO> employeeCache = new ConcurrentHashMap<>();
 
-    public List<EmployeeVO> getAllEmployee(){
+    public List<EmployeeVO> getAllEmployee() {
         return employeeDao.selectAll();
     }
 
@@ -120,7 +119,7 @@ public class EmployeeService {
 
             for (EmployeeDTO employeeDTO : employeeList) {
                 List<PositionRelationResultDTO> relationResultDTOList = employeePositionMap.get(employeeDTO.getId());
-                if(relationResultDTOList != null){
+                if (relationResultDTOList != null) {
                     employeeDTO.setPositionRelationList(relationResultDTOList);
                     employeeDTO.setPositionName(relationResultDTOList.stream().map(PositionRelationResultDTO::getPositionName).collect(Collectors.joining(",")));
                 }
@@ -156,7 +155,7 @@ public class EmployeeService {
             return ResponseDTO.wrap(EmployeeResponseCodeConst.LOGIN_NAME_EXISTS);
         }
         //同电话员工
-        EmployeeDTO samePhoneEmployee = employeeDao.getByPhone(entity.getLoginName(), EmployeeStatusEnum.NORMAL.getValue());
+        EmployeeDTO samePhoneEmployee = employeeDao.getByPhone(entity.getPhone(), EmployeeStatusEnum.NORMAL.getValue());
         if (null != samePhoneEmployee) {
             return ResponseDTO.wrap(EmployeeResponseCodeConst.PHONE_EXISTS);
         }
