@@ -47,7 +47,11 @@ public class QuartzTask extends QuartzJobBean {
         QuartzTaskLogEntity taskLogEntity = new QuartzTaskLogEntity();
         taskLogEntity.setTaskId(taskId);
         taskLogEntity.setIpAddress(SmartIPUtil.getLocalHostIP());
-        taskLogEntity.setTaskName(quartzTaskEntity.getTaskName());
+        try {
+            taskLogEntity.setTaskName(quartzTaskEntity.getTaskName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String paramsStr = null;
         if (params != null) {
             paramsStr = params.toString();

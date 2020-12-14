@@ -86,7 +86,6 @@ public class EmployeeController {
     public ResponseDTO<String> updatePwd(@Valid @RequestBody EmployeeUpdatePwdDTO updatePwdDTO) {
         RequestTokenBO requestToken = SmartRequestTokenUtil.getRequestUser();
         return employeeService.updatePwd(updatePwdDTO, requestToken);
-//        return ResponseDTO.succ();
     }
 
     @ApiOperation(value = "通过部门id获取当前部门的人员&没有部门的人", notes = "@author yandanyang")

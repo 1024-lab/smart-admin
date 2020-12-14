@@ -6,7 +6,7 @@
       icon="icon iconfont icondaohangzhedie"
     />
 
-    <div class="custom-bread-crumb" style="margin-left: 30px;">
+    <div class="custom-bread-crumb" style="margin-left: 30px;" id="topMenuSelectDiv">
       <div class="ivu-breadcrumb" >
          <Dropdown @on-click="changeTopMenu">
           <a href="javascript:void(0)" style="font-size:15px;font-weight:600">
@@ -35,6 +35,11 @@
     <div class="custom-content-con">
       <slot></slot>
     </div>
+
+    <e-guide-layer
+      :current-index.sync="guideActiveIndex"
+      :guide-list="guideList"
+    />
   </div>
 </template>
 <script>
@@ -64,6 +69,27 @@ export default {
       required:true
     }
   },
+  data(){
+    return {
+      guideActiveIndex: 0,
+      guideList: [
+        {
+          confirmBtnText: '第一步：选择顶级菜单（SmartAdmin是支持四级菜单的哦）',
+          targetDom: '#topMenuSelectDiv',
+          clickHandle: () => {
+            this.guideActiveIndex = 1
+          },
+        },
+        {
+          confirmBtnText: '第二步：选择顶级下单下的三级菜单',
+          targetDom: '.side-menu-wrapper',
+          clickHandle: () => {
+            this.guideActiveIndex = 2
+          }
+        }
+      ],
+    }
+  },
   computed: {
     // 面包屑集合
     breadCrumbList() {
@@ -80,3 +106,5 @@ export default {
   }
 };
 </script>
+
+

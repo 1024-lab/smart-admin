@@ -23,9 +23,13 @@ import enumInfo from '@/constants';
 // 处理table操作按钮
 import tableAction from './lib/table-action';
 
-//时间
+// 时间
 import moment from 'moment';
 
+import 'e-guide-layer/dist/e-guide-layer.css'
+import eGuideLayer from 'e-guide-layer'
+
+Vue.use(eGuideLayer);
 
 Vue.prototype.$tableAction = tableAction;
 Vue.use(Enum, { enumInfo });
