@@ -24,7 +24,7 @@ import enumInfo from '@/constants';
 import tableAction from './lib/table-action';
 
 //时间
-import moment from 'moment'; 
+import moment from 'moment';
 
 
 Vue.prototype.$tableAction = tableAction;
@@ -36,13 +36,13 @@ Vue.use(JsonViewer);
 Vue.use(vClickOutside);
 
 
-Number.prototype.toFixed = function (length) {·
+Number.prototype.toFixed = function (length) {
   let x = new Decimal(this);
   return x.toFixed(length);
 };
 
 //时间处理
-moment.locale('zh-cn'); //设置语言 或 moment.lang('zh-cn'); 
+moment.locale('zh-cn'); //设置语言 或 moment.lang('zh-cn');
 Vue.prototype.$moment = moment;//赋值使用
 
 

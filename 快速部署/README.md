@@ -1,8 +1,18 @@
 ### 快速启动
 如果你是全栈开发者，你完全可以快速过一遍此文章，甚至也可以不用看，如果你是前端OR后端，请仔细阅读。
+>*前置条件：*
+>*1、java版本1.8+（含1.8）*
+>*2、Mysql 5.7+(含5.7)*
+>*3、Redis*
+>*4、Maven*
+>*5、idea 、eclipse 必须安装lombok*
+>*6、nodejs*
+>*7、npm*
+>*8、vscode、webstorm*
+
 
 ### 1 拉取代码
-从  [https://github.com/1024-lab/smart-admin](https://github.com/1024-lab/smart-admin) 或者 [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-admin) 拉取最新代码
+从   [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-admin) 拉取最新代码
 
 ### 2 启动后端
 #### 2.1 执行Sql脚本（Mysql5.7+）
