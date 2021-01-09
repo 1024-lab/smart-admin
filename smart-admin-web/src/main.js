@@ -23,9 +23,13 @@ import enumInfo from '@/constants';
 // 处理table操作按钮
 import tableAction from './lib/table-action';
 
-//时间
-import moment from 'moment'; 
+// 时间
+import moment from 'moment';
 
+import 'e-guide-layer/dist/e-guide-layer.css'
+import eGuideLayer from 'e-guide-layer'
+
+Vue.use(eGuideLayer);
 
 Vue.prototype.$tableAction = tableAction;
 Vue.use(Enum, { enumInfo });
@@ -42,7 +46,7 @@ Number.prototype.toFixed = function (length) {
 };
 
 //时间处理
-moment.locale('zh-cn'); //设置语言 或 moment.lang('zh-cn'); 
+moment.locale('zh-cn'); //设置语言 或 moment.lang('zh-cn');
 Vue.prototype.$moment = moment;//赋值使用
 
 

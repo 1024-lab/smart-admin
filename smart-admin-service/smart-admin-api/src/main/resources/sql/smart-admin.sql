@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- 主机:                           127.0.0.1
--- 服务器版本:                        5.7.20-log - MySQL Community Server (GPL)
+-- 服务器版本:                        8.0.20 - MySQL Community Server - GPL
 -- 服务器操作系统:                      Win64
--- HeidiSQL 版本:                  10.2.0.5670
+-- HeidiSQL 版本:                  11.0.0.5919
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -14,46 +14,25 @@
 
 -- 导出 smart-admin-dev 的数据库结构
 DROP DATABASE IF EXISTS `smart-admin-dev`;
-CREATE DATABASE IF NOT EXISTS `smart-admin-dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+CREATE DATABASE IF NOT EXISTS `smart-admin-dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `smart-admin-dev`;
-
-
-DROP TABLE IF EXISTS `t_peony`;
-CREATE TABLE IF NOT EXISTS `t_peony` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `kind` varchar(500) DEFAULT NULL COMMENT '品种',
-  `name` varchar(500) DEFAULT NULL COMMENT '名字',
-  `color` varchar(500) DEFAULT NULL COMMENT '颜色',
-  `image_url` text COMMENT '图片链接',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='牡丹花';
-
-
-DELETE FROM `t_peony`;
-
-INSERT INTO `t_peony` (`id`, `kind`, `name`, `color`, `image_url`, `create_time`, `update_time`) VALUES
-	(5, '复色类', '什样锦', '红色', 'https://bkimg.cdn.bcebos.com/pic/3c6d55fbb2fb43160ee185da2aa4462308f7d390?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2UxNTA=,xp_5,yp_5', '2020-04-06 22:02:32', '2020-04-06 22:03:30'),
-	(6, '绿色', '绿香球', '绿色', '11', '2020-04-06 22:14:35', '2020-04-06 22:17:51'),
-	(7, '墨紫色类', '冠世墨玉', '紫色', '34534534534', '2020-04-06 22:15:19', '2020-04-06 22:18:21');
 
 -- 导出  表 smart-admin-dev.t_department 结构
 DROP TABLE IF EXISTS `t_department`;
 CREATE TABLE IF NOT EXISTS `t_department` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '部门主键id',
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '部门主键id',
   `name` varchar(50) NOT NULL COMMENT '部门名称',
   `short_name` varchar(50) DEFAULT NULL COMMENT '部门简称',
-  `manager_id` int(10) unsigned DEFAULT NULL COMMENT '部门负责人id',
-  `parent_id` int(10) unsigned DEFAULT NULL COMMENT '部门的父级id',
-  `sort` int(10) NOT NULL COMMENT '部门排序',
+  `manager_id` int unsigned DEFAULT NULL COMMENT '部门负责人id',
+  `parent_id` int unsigned DEFAULT NULL COMMENT '部门的父级id',
+  `sort` int NOT NULL COMMENT '部门排序',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='部门表';
 
--- 正在导出表  smart-admin-dev.t_department 的数据：~20 rows (大约)
+-- 正在导出表  smart-admin-dev.t_department 的数据：~4 rows (大约)
 DELETE FROM `t_department`;
 /*!40000 ALTER TABLE `t_department` DISABLE KEYS */;
 INSERT INTO `t_department` (`id`, `name`, `short_name`, `manager_id`, `parent_id`, `sort`, `update_time`, `create_time`) VALUES
@@ -82,11 +61,11 @@ INSERT INTO `t_department` (`id`, `name`, `short_name`, `manager_id`, `parent_id
 -- 导出  表 smart-admin-dev.t_email 结构
 DROP TABLE IF EXISTS `t_email`;
 CREATE TABLE IF NOT EXISTS `t_email` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',
-  `to_emails` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '收件人',
-  `send_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '发送状态 0未发送 1已发送',
-  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮件内容',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',
+  `to_emails` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '收件人',
+  `send_status` tinyint NOT NULL DEFAULT '0' COMMENT '发送状态 0未发送 1已发送',
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮件内容',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -157,25 +136,25 @@ INSERT INTO `t_email` (`id`, `title`, `to_emails`, `send_status`, `content`, `cr
 -- 导出  表 smart-admin-dev.t_employee 结构
 DROP TABLE IF EXISTS `t_employee`;
 CREATE TABLE IF NOT EXISTS `t_employee` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `login_name` varchar(30) CHARACTER SET utf8 NOT NULL COMMENT '登录帐号',
-  `login_pwd` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT '登录密码',
-  `actual_name` varchar(30) CHARACTER SET utf8 NOT NULL COMMENT '员工名称',
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `login_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录帐号',
+  `login_pwd` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录密码',
+  `actual_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '员工名称',
   `nick_name` varchar(30) DEFAULT '' COMMENT '别名',
-  `phone` varchar(15) CHARACTER SET utf8 DEFAULT NULL COMMENT '手机号码',
-  `id_card` varchar(18) CHARACTER SET utf8 DEFAULT NULL COMMENT '身份证',
+  `phone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '手机号码',
+  `id_card` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '身份证',
   `birthday` date DEFAULT NULL COMMENT '出生日期',
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
-  `department_id` int(10) unsigned NOT NULL COMMENT '部门id',
-  `is_leave` int(10) NOT NULL DEFAULT '0' COMMENT '是否离职1是',
-  `is_disabled` int(10) NOT NULL DEFAULT '0' COMMENT '是否被禁用 0否1是',
+  `department_id` int unsigned NOT NULL COMMENT '部门id',
+  `is_leave` int NOT NULL DEFAULT '0' COMMENT '是否离职1是',
+  `is_disabled` int NOT NULL DEFAULT '0' COMMENT '是否被禁用 0否1是',
   `remark` varchar(200) DEFAULT NULL COMMENT '备注',
-  `create_user` int(10) unsigned NOT NULL COMMENT '创建者id',
+  `create_user` int unsigned NOT NULL COMMENT '创建者id',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `is_delete` int(10) NOT NULL DEFAULT '0' COMMENT '是否删除0否 1是',
+  `is_delete` int NOT NULL DEFAULT '0' COMMENT '是否删除0否 1是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COMMENT='员工表';
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工表';
 
 -- 正在导出表  smart-admin-dev.t_employee 的数据：~28 rows (大约)
 DELETE FROM `t_employee`;
@@ -214,21 +193,21 @@ INSERT INTO `t_employee` (`id`, `login_name`, `login_pwd`, `actual_name`, `nick_
 -- 导出  表 smart-admin-dev.t_file 结构
 DROP TABLE IF EXISTS `t_file`;
 CREATE TABLE IF NOT EXISTS `t_file` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `module_id` varchar(50) NOT NULL COMMENT '相关业务id',
   `module_type` varchar(50) NOT NULL COMMENT '相关业务类型',
   `file_name` varchar(255) DEFAULT NULL COMMENT '文件名称',
   `file_size` varchar(255) DEFAULT NULL COMMENT '文件大小',
   `file_type` varchar(50) DEFAULT NULL COMMENT '文件类型，程序中枚举控制，文件类型：如身份证正面，三证合一等等',
   `file_path` varchar(255) NOT NULL COMMENT '文件key，用于文件下载',
-  `file_location_type` int(10) NOT NULL COMMENT '文件位置类型',
-  `creater_user` int(10) NOT NULL COMMENT '创建人，即上传人',
+  `file_location_type` int NOT NULL COMMENT '文件位置类型',
+  `creater_user` int NOT NULL COMMENT '创建人，即上传人',
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '上次更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `module_id_module_type` (`module_id`,`module_type`) USING BTREE,
   KEY `module_type` (`module_type`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- 正在导出表  smart-admin-dev.t_file 的数据：~23 rows (大约)
 DELETE FROM `t_file`;
@@ -262,37 +241,40 @@ INSERT INTO `t_file` (`id`, `module_id`, `module_type`, `file_name`, `file_size`
 -- 导出  表 smart-admin-dev.t_heart_beat_record 结构
 DROP TABLE IF EXISTS `t_heart_beat_record`;
 CREATE TABLE IF NOT EXISTS `t_heart_beat_record` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `project_path` varchar(100) DEFAULT NULL COMMENT '项目名称',
   `server_ip` varchar(200) DEFAULT NULL COMMENT '服务器ip',
-  `process_no` int(10) DEFAULT NULL COMMENT '进程号',
+  `process_no` int DEFAULT NULL COMMENT '进程号',
   `process_start_time` datetime DEFAULT NULL COMMENT '进程开启时间',
   `heart_beat_time` datetime DEFAULT NULL COMMENT '心跳时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- 正在导出表  smart-admin-dev.t_heart_beat_record 的数据：~2 rows (大约)
 DELETE FROM `t_heart_beat_record`;
 /*!40000 ALTER TABLE `t_heart_beat_record` DISABLE KEYS */;
 INSERT INTO `t_heart_beat_record` (`id`, `project_path`, `server_ip`, `process_no`, `process_start_time`, `heart_beat_time`) VALUES
 	(1, '/home/server/smart-admin/dev', '192.168.122.1;172.16.0.145', 14843, '2019-11-16 03:11:50', '2019-11-16 03:58:01'),
-	(2, 'F:\\codespace\\idea\\gangquan360\\foundation', '172.16.1.188;192.168.56.1', 227992, '2019-11-16 10:02:39', '2019-11-16 10:06:50');
+	(2, 'F:\\codespace\\idea\\gangquan360\\foundation', '172.16.1.188;192.168.56.1', 227992, '2019-11-16 10:02:39', '2019-11-16 10:06:50'),
+	(3, 'E:\\codespace\\zhuoda', '192.168.8.188', 17564, '2020-12-14 07:11:12', '2020-12-14 07:13:34'),
+	(4, 'E:\\codespace\\zhuoda', '192.168.8.188', 15568, '2020-12-14 07:13:53', '2020-12-14 07:15:00'),
+	(5, 'E:\\codespace\\zhuoda', '192.168.8.188', 16548, '2020-12-14 07:16:07', '2020-12-14 07:17:14');
 /*!40000 ALTER TABLE `t_heart_beat_record` ENABLE KEYS */;
 
 -- 导出  表 smart-admin-dev.t_id_generator 结构
 DROP TABLE IF EXISTS `t_id_generator`;
 CREATE TABLE IF NOT EXISTS `t_id_generator` (
-  `id` int(11) DEFAULT NULL,
+  `id` int DEFAULT NULL,
   `key_name` varchar(50) NOT NULL COMMENT '英文key',
   `rule_format` varchar(500) NOT NULL COMMENT '规则格式。no_cycle没有周期, year_cycle 年周期, month_cycle月周期, day_cycle 日周期',
   `rule_type` varchar(50) NOT NULL COMMENT '格式[yyyy]表示年,[mm]标识月,[dd]表示日,[nnn]表示三位数字',
-  `init_number` int(11) NOT NULL DEFAULT '1' COMMENT '初始值',
-  `last_number` int(11) DEFAULT NULL COMMENT '上次产生的id, 默认为空',
+  `init_number` int NOT NULL DEFAULT '1' COMMENT '初始值',
+  `last_number` int DEFAULT NULL COMMENT '上次产生的id, 默认为空',
   `remark` varchar(1000) NOT NULL COMMENT '备注',
   `update_time` datetime DEFAULT NULL,
   `create_time` datetime NOT NULL,
   UNIQUE KEY `key_name` (`key_name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='id生成器定义表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='id生成器定义表';
 
 -- 正在导出表  smart-admin-dev.t_id_generator 的数据：~2 rows (大约)
 DELETE FROM `t_id_generator`;
@@ -305,13 +287,13 @@ INSERT INTO `t_id_generator` (`id`, `key_name`, `rule_format`, `rule_type`, `ini
 -- 导出  表 smart-admin-dev.t_id_generator_record 结构
 DROP TABLE IF EXISTS `t_id_generator_record`;
 CREATE TABLE IF NOT EXISTS `t_id_generator_record` (
-  `generator_id` int(11) NOT NULL,
-  `year` int(11) NOT NULL,
-  `month` int(11) NOT NULL,
-  `day` int(11) NOT NULL,
-  `last_number` int(11) NOT NULL,
+  `generator_id` int NOT NULL,
+  `year` int NOT NULL,
+  `month` int NOT NULL,
+  `day` int NOT NULL,
+  `last_number` int NOT NULL,
   PRIMARY KEY (`generator_id`,`year`,`month`,`day`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='id_generator记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='id_generator记录表';
 
 -- 正在导出表  smart-admin-dev.t_id_generator_record 的数据：~5 rows (大约)
 DELETE FROM `t_id_generator_record`;
@@ -327,12 +309,12 @@ INSERT INTO `t_id_generator_record` (`generator_id`, `year`, `month`, `day`, `la
 -- 导出  表 smart-admin-dev.t_notice 结构
 DROP TABLE IF EXISTS `t_notice`;
 CREATE TABLE IF NOT EXISTS `t_notice` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息标题',
-  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息内容',
-  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '删除状态：0未删除 0删除 ',
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息标题',
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息内容',
+  `deleted` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '删除状态：0未删除 0删除 ',
   `send_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '发送状态 0未发送 1发送',
-  `create_user` bigint(20) NOT NULL COMMENT '消息创建人',
+  `create_user` bigint NOT NULL COMMENT '消息创建人',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -361,9 +343,9 @@ INSERT INTO `t_notice` (`id`, `title`, `content`, `deleted`, `send_status`, `cre
 -- 导出  表 smart-admin-dev.t_notice_receive_record 结构
 DROP TABLE IF EXISTS `t_notice_receive_record`;
 CREATE TABLE IF NOT EXISTS `t_notice_receive_record` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `notice_id` bigint(20) NOT NULL COMMENT '消息id',
-  `employee_id` bigint(20) NOT NULL COMMENT '用户id',
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `notice_id` bigint NOT NULL COMMENT '消息id',
+  `employee_id` bigint NOT NULL COMMENT '用户id',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -405,32 +387,54 @@ INSERT INTO `t_notice_receive_record` (`id`, `notice_id`, `employee_id`, `create
 -- 导出  表 smart-admin-dev.t_order_operate_log 结构
 DROP TABLE IF EXISTS `t_order_operate_log`;
 CREATE TABLE IF NOT EXISTS `t_order_operate_log` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL COMMENT '各种单据的id',
-  `order_type` int(11) NOT NULL COMMENT '单据类型',
-  `operate_type` int(11) NOT NULL COMMENT '操作类型',
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL COMMENT '各种单据的id',
+  `order_type` int NOT NULL COMMENT '单据类型',
+  `operate_type` int NOT NULL COMMENT '操作类型',
   `operate_content` text NOT NULL COMMENT '操作类型 对应的中文',
   `operate_remark` text COMMENT '操作备注',
-  `employee_id` int(11) NOT NULL COMMENT '员工id',
+  `employee_id` int NOT NULL COMMENT '员工id',
   `employee_name` varchar(1000) NOT NULL COMMENT '员工名称',
   `ext_data` text COMMENT '额外信息',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `order_id_order_type` (`order_id`,`order_type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='各种单据操作记录\r\n';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='各种单据操作记录\r\n';
 
 -- 正在导出表  smart-admin-dev.t_order_operate_log 的数据：~0 rows (大约)
 DELETE FROM `t_order_operate_log`;
 /*!40000 ALTER TABLE `t_order_operate_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t_order_operate_log` ENABLE KEYS */;
 
+-- 导出  表 smart-admin-dev.t_peony 结构
+DROP TABLE IF EXISTS `t_peony`;
+CREATE TABLE IF NOT EXISTS `t_peony` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `kind` varchar(500) DEFAULT NULL COMMENT '品种',
+  `name` varchar(500) DEFAULT NULL COMMENT '名字',
+  `color` varchar(500) DEFAULT NULL COMMENT '颜色',
+  `image_url` text COMMENT '图片链接',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='牡丹花';
+
+-- 正在导出表  smart-admin-dev.t_peony 的数据：~3 rows (大约)
+DELETE FROM `t_peony`;
+/*!40000 ALTER TABLE `t_peony` DISABLE KEYS */;
+INSERT INTO `t_peony` (`id`, `kind`, `name`, `color`, `image_url`, `create_time`, `update_time`) VALUES
+	(5, '复色类', '什样锦', '红色', 'https://bkimg.cdn.bcebos.com/pic/3c6d55fbb2fb43160ee185da2aa4462308f7d390?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2UxNTA=,xp_5,yp_5', '2020-04-06 22:02:32', '2020-04-06 22:03:30'),
+	(6, '绿色', '绿香球', '绿色', '11', '2020-04-06 22:14:35', '2020-04-06 22:17:51'),
+	(7, '墨紫色类', '冠世墨玉', '紫色', '34534534534', '2020-04-06 22:15:19', '2020-04-06 22:18:21');
+/*!40000 ALTER TABLE `t_peony` ENABLE KEYS */;
+
 -- 导出  表 smart-admin-dev.t_position 结构
 DROP TABLE IF EXISTS `t_position`;
 CREATE TABLE IF NOT EXISTS `t_position` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `position_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '岗位名称',
-  `remark` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '岗位描述',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `position_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '岗位名称',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '岗位描述',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
@@ -458,9 +462,9 @@ INSERT INTO `t_position` (`id`, `position_name`, `remark`, `update_time`, `creat
 -- 导出  表 smart-admin-dev.t_position_relation 结构
 DROP TABLE IF EXISTS `t_position_relation`;
 CREATE TABLE IF NOT EXISTS `t_position_relation` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `position_id` int(10) DEFAULT NULL COMMENT '岗位ID',
-  `employee_id` int(10) DEFAULT NULL COMMENT '员工ID',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `position_id` int DEFAULT NULL COMMENT '岗位ID',
+  `employee_id` int DEFAULT NULL COMMENT '员工ID',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
@@ -504,12 +508,12 @@ INSERT INTO `t_position_relation` (`id`, `position_id`, `employee_id`, `update_t
 -- 导出  表 smart-admin-dev.t_privilege 结构
 DROP TABLE IF EXISTS `t_privilege`;
 CREATE TABLE IF NOT EXISTS `t_privilege` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '功能权限表主键id',
-  `type` tinyint(11) NOT NULL COMMENT '1.菜单 2.功能点',
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '功能权限表主键id',
+  `type` tinyint NOT NULL COMMENT '1.菜单 2.功能点',
   `name` varchar(50) NOT NULL COMMENT '菜单名称',
   `key` varchar(1000) NOT NULL COMMENT '路由name 英文关键字',
   `url` text COMMENT '路由path/type=3为API接口',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `sort` int NOT NULL DEFAULT '0' COMMENT '排序',
   `parent_key` varchar(1000) DEFAULT NULL COMMENT '父级key',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -517,49 +521,48 @@ CREATE TABLE IF NOT EXISTS `t_privilege` (
   UNIQUE KEY `key` (`key`) USING BTREE,
   KEY `type` (`type`) USING BTREE,
   KEY `parent_key` (`parent_key`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8 COMMENT='权限功能表';
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8 COMMENT='权限功能表';
 
 -- 正在导出表  smart-admin-dev.t_privilege 的数据：~103 rows (大约)
 DELETE FROM `t_privilege`;
 /*!40000 ALTER TABLE `t_privilege` DISABLE KEYS */;
 INSERT INTO `t_privilege` (`id`, `type`, `name`, `key`, `url`, `sort`, `parent_key`, `update_time`, `create_time`) VALUES
-	(1, 1, '人员管理', 'Employee', '/employee', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(2, 1, '角色管理', 'RoleManage', '/employee/role', 0, 'Employee', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(3, 1, '岗位管理', 'PositionList', '/employee/position', 0, 'Employee', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(4, 1, '员工管理', 'RoleEmployeeManage', '/employee/role-employee-manage', 0, 'Employee', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(5, 1, '系统设置', 'SystemSetting', '/system-setting', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(6, 1, '系统参数', 'SystemConfig', '/system-setting/system-config', 0, 'SystemSetting', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(8, 1, '菜单管理', 'SystemPrivilege', '/system-setting/system-privilege', 0, 'SystemSetting', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(9, 1, '消息管理', 'Notice', '/notice', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(10, 1, '通知管理', 'NoticeList', '/notice/notice-list', 0, 'Notice', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(11, 1, '个人消息', 'PersonNotice', '/notice/person-notice', 0, 'Notice', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(12, 1, '邮件管理', 'Email', '/email', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(13, 1, '邮件管理', 'EmailList', '/email/email-list', 0, 'Email', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(14, 1, '发送邮件', 'SendMail', '/email/send-mail', 0, 'Email', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(15, 1, '用户日志', 'UserLog', '/user-log', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(16, 1, '用户操作日志', 'UserOperateLog', '/user-log/user-operate-log', 0, 'UserLog', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(17, 1, '用户登录日志', 'UserLoginLog', '/user-log/user-login-log', 0, 'UserLog', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(18, 1, '系统监控', 'Monitor', '/monitor', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(19, 1, '在线人数', 'OnlineUser', '/monitor/online-user', 0, 'Monitor', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(20, 1, 'SQL监控', 'Sql', '/monitor/sql', 0, 'Monitor', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(21, 1, '定时任务', 'Task', '/task', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(22, 1, '任务管理', 'TaskList', '/system-setting/task-list', 0, 'Task', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(23, 1, '动态加载', 'Reload', '/reload', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(24, 1, 'SmartReload', 'SmartReloadList', '/reload/smart-reload-list', 0, 'Reload', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(25, 1, '接口文档', 'ApiDoc', '/api-doc', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(26, 1, 'Swagger接口文档', 'Swagger', '/api-doc/swagger', 0, 'ApiDoc', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(27, 1, '三级路由', 'ThreeRouter', '/three-router', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(28, 1, '三级菜单', 'LevelTwo', '/three-router/level-two', 0, 'ThreeRouter', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(29, 1, '三级A', 'RoleOneTwo', '/three-router/level-two/level-three1', 0, 'LevelTwo', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(30, 1, '三级B', 'RoleTwoTwo', '/three-router/level-two/level-three2', 0, 'LevelTwo', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(31, 1, '二级菜单', 'RoleOneOne', '/three-router/level-two2', 0, 'ThreeRouter', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(32, 1, 'KeepAlive', 'KeepAlive', '/keep-alive', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(33, 1, 'KeepAlive列表', 'KeepAliveContentList', '/keep-alive/content-list', 0, 'KeepAlive', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(34, 1, 'KeepAlive表单', 'KeepAliveAddContent', '/keep-alive/add-content', 0, 'KeepAlive', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(35, 1, '心跳服务', 'HeartBeat', '/heart-beat', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(36, 1, '心跳服务', 'HeartBeatList', '/heart-beat/heart-beat-list', 0, 'HeartBeat', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(37, 1, '文件服务', 'File', '/file', 0, NULL, '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
-	(38, 1, '文件列表', 'FileList', '/file/file-list', 0, 'File', '2019-11-14 14:05:10', '2019-11-01 11:28:07'),
+	(1, 1, '人员管理', 'Employee', '/employee', 20, 'System', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(2, 1, '角色管理', 'RoleManage', '/employee/role', 21, 'Employee', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(3, 1, '岗位管理', 'PositionList', '/employee/position', 22, 'Employee', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(4, 1, '员工管理', 'RoleEmployeeManage', '/employee/role-employee-manage', 23, 'Employee', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(5, 1, '系统设置', 'SystemSetting', '/system-setting', 29, 'System', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(6, 1, '系统参数', 'SystemConfig', '/system-setting/system-config', 30, 'SystemSetting', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(8, 1, '菜单设置', 'SystemPrivilege', '/system-setting/system-privilege', 31, 'SystemSetting', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(9, 1, '消息管理', 'Notice', '/notice', 10, 'Business', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(10, 1, '通知管理', 'NoticeList', '/notice/notice-list', 11, 'Notice', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(11, 1, '个人消息', 'PersonNotice', '/notice/person-notice', 12, 'Notice', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(12, 1, '邮件管理', 'Email', '/email', 4, 'Business', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(13, 1, '邮件管理', 'EmailList', '/email/email-list', 5, 'Email', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(14, 1, '发送邮件', 'SendMail', '/email/send-mail', 6, 'Email', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(15, 1, '用户日志', 'UserLog', '/user-log', 26, 'System', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(16, 1, '用户操作日志', 'UserOperateLog', '/user-log/user-operate-log', 27, 'UserLog', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(17, 1, '用户登录日志', 'UserLoginLog', '/user-log/user-login-log', 28, 'UserLog', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(18, 1, '系统监控', 'Monitor', '/monitor', 37, 'Support', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(19, 1, '在线人数', 'OnlineUser', '/monitor/online-user', 38, 'Monitor', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(20, 1, 'SQL监控', 'Sql', '/monitor/sql', 39, 'Monitor', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(21, 1, '定时任务', 'Task', '/task', 42, 'Support', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(22, 1, '任务管理', 'TaskList', '/system-setting/task-list', 43, 'Task', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(23, 1, '动态加载', 'Reload', '/reload', 40, 'Support', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(24, 1, 'SmartReload', 'SmartReloadList', '/reload/smart-reload-list', 41, 'Reload', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(25, 1, '接口文档', 'ApiDoc', '/api-doc', 33, 'Support', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(26, 1, 'Swagger接口文档', 'Swagger', '/api-doc/swagger', 34, 'ApiDoc', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(27, 1, '三级路由', 'ThreeRouter', '/three-router', 14, 'Business', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(28, 1, '三级菜单', 'LevelTwo', '/three-router/level-two', 15, 'ThreeRouter', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(30, 1, '三级菜单子哈', 'RoleTwoTwo', '/three-router/level-two/level-three2', 17, 'LevelTwo', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(31, 1, '二级菜单', 'RoleOneOne', '/three-router/level-two2', 18, 'ThreeRouter', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(32, 1, 'KeepAlive', 'KeepAlive', '/keep-alive', 7, 'Business', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(33, 1, 'KeepAlive列表', 'KeepAliveContentList', '/keep-alive/content-list', 8, 'KeepAlive', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(34, 1, 'KeepAlive表单', 'KeepAliveAddContent', '/keep-alive/add-content', 9, 'KeepAlive', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(35, 1, '心跳服务', 'HeartBeat', '/heart-beat', 35, 'Support', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(36, 1, '心跳服务', 'HeartBeatList', '/heart-beat/heart-beat-list', 36, 'HeartBeat', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(37, 1, '文件服务', 'File', '/file', 24, 'System', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
+	(38, 1, '文件列表', 'FileList', '/file/file-list', 25, 'File', '2020-12-14 15:16:26', '2019-11-01 11:28:07'),
 	(39, 2, '添加角色', 'add-role', 'roleController.addRole', 0, 'RoleManage', '2019-11-01 11:47:29', '2019-11-01 11:47:29'),
 	(40, 2, '删除角色', 'delete-role', 'roleController.deleteRole', 1, 'RoleManage', '2019-11-01 11:47:43', '2019-11-01 11:47:43'),
 	(41, 2, '编辑角色', 'update-role', 'roleController.updateRole', 2, 'RoleManage', '2019-11-01 11:47:55', '2019-11-01 11:47:55'),
@@ -589,8 +592,8 @@ INSERT INTO `t_privilege` (`id`, `type`, `name`, `key`, `url`, `sort`, `parent_k
 	(65, 2, '添加系统参数', 'system-params-add', 'systemConfigController.addSystemConfig', 1, 'SystemConfig', '2019-11-05 17:26:00', '2019-11-05 17:26:00'),
 	(66, 2, '修改系统参数', 'system-config-update', 'systemConfigController.updateSystemConfig', 2, 'SystemConfig', '2019-11-05 17:26:07', '2019-11-05 17:26:07'),
 	(67, 2, '搜索系统参数', 'system-config-search', 'systemConfigController.selectByKey,systemConfigController.getListByGroup,systemConfigController.getSystemConfigPage', 3, 'SystemConfig', '2019-11-05 17:26:44', '2019-11-05 17:26:44'),
-	(69, 2, '编辑', 'privilege-main-update', 'privilegeController.menuBatchSave,privilegeController.functionSaveOrUpdate', 0, 'SystemPrivilege', '2019-11-05 17:27:28', '2019-11-05 17:27:28'),
-	(70, 2, '查询', 'privilege-main-search', 'privilegeController.queryAll,privilegeController.getAllUrl,privilegeController.functionQuery', 1, 'SystemPrivilege', '2019-11-05 17:28:45', '2019-11-05 17:28:45'),
+	(69, 2, '编辑', 'privilege-main-update', 'privilegeController.menuBatchSave,privilegeController.functionSaveOrUpdate', 1, 'SystemPrivilege', '2020-12-14 15:17:11', '2019-11-05 17:27:28'),
+	(70, 2, '查询', 'privilege-main-search', 'privilegeController.queryAll,privilegeController.getAllUrl,privilegeController.functionQuery', 3, 'SystemPrivilege', '2020-12-14 15:17:11', '2019-11-05 17:28:45'),
 	(71, 2, '查询', 'notice-query', 'noticeController.queryReceiveByPage,noticeController.queryUnreadByPage,noticeController.queryByPage,noticeController.detail', 0, 'NoticeList', '2019-11-05 17:30:16', '2019-11-05 17:30:16'),
 	(72, 2, '添加', 'notice-add', 'noticeController.add', 1, 'NoticeList', '2019-11-05 17:30:28', '2019-11-05 17:30:28'),
 	(73, 2, '修改', 'notice-edit', 'noticeController.update', 2, 'NoticeList', '2019-11-05 17:31:24', '2019-11-05 17:31:24'),
@@ -625,19 +628,40 @@ INSERT INTO `t_privilege` (`id`, `type`, `name`, `key`, `url`, `sort`, `parent_k
 	(102, 2, '查询任务', 'heart-beat-query', 'heartBeatController.query', 0, 'HeartBeatList', '2019-11-06 11:18:38', '2019-11-06 11:18:38'),
 	(103, 2, '查询', 'file-filePage-query', 'fileController.queryListByPage,fileController.localGetFile,fileController.downLoadById', 0, 'FileList', '2019-11-06 11:19:06', '2019-11-06 11:19:06'),
 	(104, 2, '上传', 'file-filePage-upload', 'fileController.qiNiuUpload,fileController.localUpload,fileController.aliYunUpload,fileController.saveFile', 1, 'FileList', '2019-11-06 11:19:36', '2019-11-06 11:19:36'),
-	(105, 2, '下载', 'file-filePage-download', 'fileController.downLoadById', 2, 'FileList', '2019-11-16 10:05:02', '2019-11-16 10:05:02');
+	(105, 2, '下载', 'file-filePage-download', 'fileController.downLoadById', 2, 'FileList', '2019-11-16 10:05:02', '2019-11-16 10:05:02'),
+	(106, 1, '业务功能', 'Business', '/business', 0, NULL, '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(107, 1, '牡丹管理', 'Peony', '/peony', 1, 'Business', '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(108, 1, '牡丹花列表', 'PeonyList', '/peony/peony-list', 2, 'Peony', '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(109, 1, '牡丹花列表1', 'PeonyList1', '/peony/peony-list1', 3, 'Peony', '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(110, 1, '消息详情', 'NoticeDetail', '/notice/notice-detail', 13, 'Notice', '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(111, 1, '三级菜单子颗粒', 'ThreeLevelRouterView', '/three-router/level-two/level-three1', 16, 'LevelTwo', '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(112, 1, '系统设置', 'System', '/system', 19, NULL, '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(113, 1, '开发专用', 'Support', '/support', 32, NULL, '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(114, 2, '查询', 'peony-list-query', '', 1, 'PeonyList', '2020-12-14 15:16:30', '2020-12-14 15:16:30'),
+	(115, 2, '新增', 'peony-list-add', '', 2, 'PeonyList', '2020-12-14 15:16:30', '2020-12-14 15:16:30'),
+	(116, 2, '编辑', 'peony-list-update', '', 3, 'PeonyList', '2020-12-14 15:16:30', '2020-12-14 15:16:30'),
+	(117, 2, '批量删除', 'peony-list-batch-delete', '', 4, 'PeonyList', '2020-12-14 15:16:30', '2020-12-14 15:16:30'),
+	(118, 2, '批量导出', 'peony-list-batch-export', '', 5, 'PeonyList', '2020-12-14 15:16:30', '2020-12-14 15:16:30'),
+	(119, 2, '导出全部', 'peony-list-export-all', '', 6, 'PeonyList', '2020-12-14 15:16:30', '2020-12-14 15:16:30'),
+	(120, 2, '查询', 'peony1-list-query', '', 1, 'PeonyList1', '2020-12-14 15:16:33', '2020-12-14 15:16:33'),
+	(121, 2, '新增', 'peony1-list-add', '', 2, 'PeonyList1', '2020-12-14 15:16:33', '2020-12-14 15:16:33'),
+	(122, 2, '编辑', 'peony1-list-update', '', 3, 'PeonyList1', '2020-12-14 15:16:33', '2020-12-14 15:16:33'),
+	(123, 2, '批量删除', 'peony1-list-batch-delete', '', 4, 'PeonyList1', '2020-12-14 15:16:33', '2020-12-14 15:16:33'),
+	(124, 2, '批量导出', 'peony1-list-batch-export', '', 5, 'PeonyList1', '2020-12-14 15:16:33', '2020-12-14 15:16:33'),
+	(125, 2, '导出全部', 'peony1-list-export-all', '', 6, 'PeonyList1', '2020-12-14 15:16:33', '2020-12-14 15:16:33'),
+	(126, 2, '批量保存功能点', 'privilege-batch-save-points', 'privilegeController.functionSaveOrUpdate', 1, 'SystemPrivilege', '2020-12-14 15:17:11', '2020-12-14 15:17:11');
 /*!40000 ALTER TABLE `t_privilege` ENABLE KEYS */;
 
 -- 导出  表 smart-admin-dev.t_quartz_task 结构
 DROP TABLE IF EXISTS `t_quartz_task`;
 CREATE TABLE IF NOT EXISTS `t_quartz_task` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `task_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '任务名称',
-  `task_bean` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'spring bean名称',
-  `task_params` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '任务参数',
-  `task_cron` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '运行cron表达式',
-  `task_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '任务状态0:正常，1:暂停',
-  `remark` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `task_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '任务名称',
+  `task_bean` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'spring bean名称',
+  `task_params` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '任务参数',
+  `task_cron` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '运行cron表达式',
+  `task_status` tinyint NOT NULL DEFAULT '0' COMMENT '任务状态0:正常，1:暂停',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
@@ -657,14 +681,14 @@ INSERT INTO `t_quartz_task` (`id`, `task_name`, `task_bean`, `task_params`, `tas
 -- 导出  表 smart-admin-dev.t_quartz_task_log 结构
 DROP TABLE IF EXISTS `t_quartz_task_log`;
 CREATE TABLE IF NOT EXISTS `t_quartz_task_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `task_id` int(11) NOT NULL COMMENT '任务id',
-  `task_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '任务名称',
-  `task_params` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '任务参数',
-  `process_status` tinyint(4) NOT NULL COMMENT '任务处理状态0:成功，1:失败',
-  `process_duration` bigint(11) NOT NULL DEFAULT '0' COMMENT '运行时长',
-  `process_log` text COLLATE utf8mb4_unicode_ci COMMENT '日志',
-  `ip_address` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '运行主机ip',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `task_id` int NOT NULL COMMENT '任务id',
+  `task_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '任务名称',
+  `task_params` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '任务参数',
+  `process_status` tinyint NOT NULL COMMENT '任务处理状态0:成功，1:失败',
+  `process_duration` bigint NOT NULL DEFAULT '0' COMMENT '运行时长',
+  `process_log` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '日志',
+  `ip_address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '运行主机ip',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
@@ -690,15 +714,15 @@ INSERT INTO `t_quartz_task_log` (`id`, `task_id`, `task_name`, `task_params`, `p
 -- 导出  表 smart-admin-dev.t_reload_item 结构
 DROP TABLE IF EXISTS `t_reload_item`;
 CREATE TABLE IF NOT EXISTS `t_reload_item` (
-  `tag` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '项名称',
+  `tag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '项名称',
   `args` varchar(255) DEFAULT NULL COMMENT '参数 可选',
-  `identification` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '运行标识',
+  `identification` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '运行标识',
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  smart-admin-dev.t_reload_item 的数据：~1 rows (大约)
+-- 正在导出表  smart-admin-dev.t_reload_item 的数据：~0 rows (大约)
 DELETE FROM `t_reload_item`;
 /*!40000 ALTER TABLE `t_reload_item` DISABLE KEYS */;
 INSERT INTO `t_reload_item` (`tag`, `args`, `identification`, `update_time`, `create_time`) VALUES
@@ -711,12 +735,12 @@ CREATE TABLE IF NOT EXISTS `t_reload_result` (
   `tag` varchar(255) NOT NULL,
   `identification` varchar(255) NOT NULL COMMENT '运行标识',
   `args` varchar(255) DEFAULT NULL,
-  `result` tinyint(3) unsigned NOT NULL COMMENT '是否成功 ',
+  `result` tinyint unsigned NOT NULL COMMENT '是否成功 ',
   `exception` text,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  smart-admin-dev.t_reload_result 的数据：~126 rows (大约)
+-- 正在导出表  smart-admin-dev.t_reload_result 的数据：~127 rows (大约)
 DELETE FROM `t_reload_result`;
 /*!40000 ALTER TABLE `t_reload_result` DISABLE KEYS */;
 INSERT INTO `t_reload_result` (`tag`, `identification`, `args`, `result`, `exception`, `create_time`) VALUES
@@ -845,13 +869,17 @@ INSERT INTO `t_reload_result` (`tag`, `identification`, `args`, `result`, `excep
 	('system_config', 'xxxx', '234', 1, NULL, '2019-11-15 14:39:55'),
 	('system_config', 'xxxx', '234', 1, NULL, '2019-11-16 08:47:43'),
 	('system_config', 'xxxx', '234', 1, NULL, '2019-11-16 17:12:10'),
-	('system_config', 'xxxx', '234', 1, NULL, '2019-11-16 18:02:57');
+	('system_config', 'xxxx', '234', 1, NULL, '2019-11-16 18:02:57'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-12-14 15:09:53'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-12-14 15:13:33'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-12-14 15:14:09'),
+	('system_config', 'xxxx', '234', 1, NULL, '2020-12-14 15:16:23');
 /*!40000 ALTER TABLE `t_reload_result` ENABLE KEYS */;
 
 -- 导出  表 smart-admin-dev.t_role 结构
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE IF NOT EXISTS `t_role` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `role_name` varchar(20) NOT NULL COMMENT '角色名称',
   `remark` varchar(255) DEFAULT NULL COMMENT '角色描述',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -882,10 +910,10 @@ INSERT INTO `t_role` (`id`, `role_name`, `remark`, `update_time`, `create_time`)
 -- 导出  表 smart-admin-dev.t_role_data_scope 结构
 DROP TABLE IF EXISTS `t_role_data_scope`;
 CREATE TABLE IF NOT EXISTS `t_role_data_scope` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `data_scope_type` int(11) NOT NULL COMMENT '数据范围id',
-  `view_type` int(11) NOT NULL COMMENT '数据范围类型',
-  `role_id` int(11) NOT NULL COMMENT '角色id',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `data_scope_type` int NOT NULL COMMENT '数据范围id',
+  `view_type` int NOT NULL COMMENT '数据范围类型',
+  `role_id` int NOT NULL COMMENT '角色id',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
@@ -904,13 +932,13 @@ INSERT INTO `t_role_data_scope` (`id`, `data_scope_type`, `view_type`, `role_id`
 -- 导出  表 smart-admin-dev.t_role_employee 结构
 DROP TABLE IF EXISTS `t_role_employee`;
 CREATE TABLE IF NOT EXISTS `t_role_employee` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_id` int(11) NOT NULL COMMENT '角色id',
-  `employee_id` int(11) NOT NULL COMMENT '员工id',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `role_id` int NOT NULL COMMENT '角色id',
+  `employee_id` int NOT NULL COMMENT '员工id',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8mb4 COMMENT='角色员工功能表';
+) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色员工功能表';
 
 -- 正在导出表  smart-admin-dev.t_role_employee 的数据：~25 rows (大约)
 DELETE FROM `t_role_employee`;
@@ -946,13 +974,13 @@ INSERT INTO `t_role_employee` (`id`, `role_id`, `employee_id`, `update_time`, `c
 -- 导出  表 smart-admin-dev.t_role_privilege 结构
 DROP TABLE IF EXISTS `t_role_privilege`;
 CREATE TABLE IF NOT EXISTS `t_role_privilege` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_id` int(11) NOT NULL COMMENT '角色id',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `role_id` int NOT NULL COMMENT '角色id',
   `privilege_key` varchar(1000) NOT NULL COMMENT '权限key',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10835 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限功能表';
+) ENGINE=InnoDB AUTO_INCREMENT=10835 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色权限功能表';
 
 -- 正在导出表  smart-admin-dev.t_role_privilege 的数据：~322 rows (大约)
 DELETE FROM `t_role_privilege`;
@@ -1205,7 +1233,6 @@ INSERT INTO `t_role_privilege` (`id`, `role_id`, `privilege_key`, `update_time`,
 	(10757, 1, 'Swagger', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
 	(10758, 1, 'ThreeRouter', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
 	(10759, 1, 'LevelTwo', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
-	(10760, 1, 'RoleOneTwo', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
 	(10761, 1, 'RoleTwoTwo', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
 	(10762, 1, 'RoleOneOne', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
 	(10763, 1, 'KeepAlive', '2019-11-16 18:04:10', '2019-11-16 18:04:10'),
@@ -1285,17 +1312,17 @@ INSERT INTO `t_role_privilege` (`id`, `role_id`, `privilege_key`, `update_time`,
 -- 导出  表 smart-admin-dev.t_system_config 结构
 DROP TABLE IF EXISTS `t_system_config`;
 CREATE TABLE IF NOT EXISTS `t_system_config` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `config_name` varchar(255) NOT NULL COMMENT '参数名字',
   `config_key` varchar(255) NOT NULL COMMENT '参数key',
   `config_value` text NOT NULL,
   `config_group` varchar(255) NOT NULL COMMENT '参数类别',
-  `is_using` int(10) NOT NULL COMMENT '是否使用0 否 1 是',
+  `is_using` int NOT NULL COMMENT '是否使用0 否 1 是',
   `remark` varchar(255) DEFAULT NULL,
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '上次修改时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- 正在导出表  smart-admin-dev.t_system_config 的数据：~8 rows (大约)
 DELETE FROM `t_system_config`;
@@ -1314,20 +1341,20 @@ INSERT INTO `t_system_config` (`id`, `config_name`, `config_key`, `config_value`
 -- 导出  表 smart-admin-dev.t_user_login_log 结构
 DROP TABLE IF EXISTS `t_user_login_log`;
 CREATE TABLE IF NOT EXISTS `t_user_login_log` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `user_id` int(11) NOT NULL COMMENT '员工id',
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` int NOT NULL COMMENT '员工id',
   `user_name` varchar(50) NOT NULL COMMENT '用户名',
   `remote_ip` varchar(50) DEFAULT NULL COMMENT '用户ip',
-  `remote_port` int(11) DEFAULT NULL COMMENT '用户端口',
+  `remote_port` int DEFAULT NULL COMMENT '用户端口',
   `remote_browser` varchar(100) DEFAULT NULL COMMENT '浏览器',
   `remote_os` varchar(50) DEFAULT NULL COMMENT '操作系统',
-  `login_status` tinyint(4) NOT NULL COMMENT '登录状态 0 失败  1成功',
+  `login_status` tinyint NOT NULL COMMENT '登录状态 0 失败  1成功',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `customer_id` (`user_id`) USING BTREE,
   KEY `auditor_id` (`remote_browser`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1742 DEFAULT CHARSET=utf8mb4 COMMENT='用户登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1743 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户登录日志';
 
 -- 正在导出表  smart-admin-dev.t_user_login_log 的数据：~122 rows (大约)
 DELETE FROM `t_user_login_log`;
@@ -1454,26 +1481,27 @@ INSERT INTO `t_user_login_log` (`id`, `user_id`, `user_name`, `remote_ip`, `remo
 	(1621, 1, '管理员', '127.0.0.1', 63479, 'Chrome', 'Windows 7', 1, '2019-10-28 16:28:59', '2019-10-28 16:28:59'),
 	(1622, 1, '管理员', '127.0.0.1', 63479, 'Chrome', 'Windows 7', 1, '2019-10-28 16:29:55', '2019-10-28 16:29:55'),
 	(1623, 1, '管理员', '127.0.0.1', 57588, 'Chrome', 'Windows 7', 1, '2019-10-29 15:37:03', '2019-10-29 15:37:03'),
-	(1741, 1, '管理员', '127.0.0.1', 54621, 'Chrome', 'Windows 7', 1, '2019-11-16 18:03:45', '2019-11-16 18:03:45');
+	(1741, 1, '管理员', '127.0.0.1', 54621, 'Chrome', 'Windows 7', 1, '2019-11-16 18:03:45', '2019-11-16 18:03:45'),
+	(1742, 1, '管理员', '127.0.0.1', 60932, 'Chrome 8', 'Windows 10', 1, '2020-12-14 15:14:55', '2020-12-14 15:14:55');
 /*!40000 ALTER TABLE `t_user_login_log` ENABLE KEYS */;
 
 -- 导出  表 smart-admin-dev.t_user_operate_log 结构
 DROP TABLE IF EXISTS `t_user_operate_log`;
 CREATE TABLE IF NOT EXISTS `t_user_operate_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `user_id` int(11) NOT NULL COMMENT '用户id',
-  `user_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名称',
-  `module` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作模块',
-  `content` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作内容',
-  `url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '请求路径',
-  `method` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '请求方法',
-  `param` text COLLATE utf8mb4_unicode_ci COMMENT '请求参数',
-  `result` tinyint(4) DEFAULT NULL COMMENT '请求结果 0失败 1成功',
-  `fail_reason` longtext COLLATE utf8mb4_unicode_ci COMMENT '失败原因',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` int NOT NULL COMMENT '用户id',
+  `user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名称',
+  `module` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作模块',
+  `content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作内容',
+  `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '请求路径',
+  `method` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '请求方法',
+  `param` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '请求参数',
+  `result` tinyint DEFAULT NULL COMMENT '请求结果 0失败 1成功',
+  `fail_reason` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '失败原因',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 正在导出表  smart-admin-dev.t_user_operate_log 的数据：~32 rows (大约)
 DELETE FROM `t_user_operate_log`;
@@ -1510,7 +1538,49 @@ INSERT INTO `t_user_operate_log` (`id`, `user_id`, `user_name`, `module`, `conte
 	(29, 1, '管理员', '管理端-用户登录日志', '查询员工在线状态', '/smart-admin-api/userOnLine/query', 'com.gangquan360.smartadmin.module.log.userloginlog.UserLoginLogController.queryUserOnLine', 'EmployeeQueryDTO[{"actualName":"","employeeIds":[1],"isDelete":0,"pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
 	(30, 1, '管理员', '管理端-任务调度', '查询任务', '/smart-admin-api/quartz/task/query', 'com.gangquan360.smartadmin.module.quartz.controller.QuartzController.query', 'QuartzQueryDTO[{"pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
 	(31, 1, '管理员', '管理端-smart reload', '获取全部Smart-reload项', '/smart-admin-api/smartReload/all', 'com.gangquan360.smartadmin.module.smartreload.SmartReloadController.listAllReloadItem', '', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
-	(32, 1, '管理员', '通用-心跳服务', '查询心跳记录 @author zhuoda', '/smart-admin-api/heartBeat/query', 'com.gangquan360.smartadmin.module.heartbeat.HeartBeatController.query', 'PageParamDTO[{"pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00');
+	(32, 1, '管理员', '通用-心跳服务', '查询心跳记录 @author zhuoda', '/smart-admin-api/heartBeat/query', 'com.gangquan360.smartadmin.module.heartbeat.HeartBeatController.query', 'PageParamDTO[{"pageNum":1,"pageSize":10}]', 1, NULL, '2019-11-01 00:00:00', '2019-11-01 00:00:00'),
+	(33, 1, '管理员', '通用-权限', '获取所有请求路径', '/smart-admin-api/privilege/getAllUrl', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.getAllUrl', '', 1, NULL, '2020-12-14 15:15:06', '2020-12-14 15:15:06'),
+	(34, 1, '管理员', '通用-权限', '查询所有菜单项', '/smart-admin-api/privilege/menu/queryAll', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.queryAll', '', 1, NULL, '2020-12-14 15:15:06', '2020-12-14 15:15:06'),
+	(35, 1, '管理员', '通用-权限', '菜单批量保存', '/smart-admin-api/privilege/menu/batchSaveMenu', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.menuBatchSave', 'ValidateList[[{"menuKey":"Business","menuName":"业务功能","sort":0,"type":1,"url":"/business"},{"menuKey":"Peony","menuName":"牡丹管理","parentKey":"Business","sort":0,"type":1,"url":"/peony"},{"menuKey":"PeonyList","menuName":"牡丹花列表","parentKey":"Peony","sort":0,"type":1,"url":"/peony/peony-list"},{"menuKey":"PeonyList1","menuName":"牡丹花列表1","parentKey":"Peony","sort":0,"type":1,"url":"/peony/peony-list1"},{"menuKey":"Email","menuName":"邮件管理","parentKey":"Business","sort":0,"type":1,"url":"/email"},{"menuKey":"EmailList","menuName":"邮件管理","parentKey":"Email","sort":0,"type":1,"url":"/email/email-list"},{"menuKey":"SendMail","menuName":"发送邮件","parentKey":"Email","sort":0,"type":1,"url":"/email/send-mail"},{"menuKey":"KeepAlive","menuName":"KeepAlive","parentKey":"Business","sort":0,"type":1,"url":"/keep-alive"},{"menuKey":"KeepAliveContentList","menuName":"KeepAlive列表","parentKey":"KeepAlive","sort":0,"type":1,"url":"/keep-alive/content-list"},{"menuKey":"KeepAliveAddContent","menuName":"KeepAlive表单","parentKey":"KeepAlive","sort":0,"type":1,"url":"/keep-alive/add-content"},{"menuKey":"Notice","menuName":"消息管理","parentKey":"Business","sort":0,"type":1,"url":"/notice"},{"menuKey":"NoticeList","menuName":"通知管理","parentKey":"Notice","sort":0,"type":1,"url":"/notice/notice-list"},{"menuKey":"PersonNotice","menuName":"个人消息","parentKey":"Notice","sort":0,"type":1,"url":"/notice/person-notice"},{"menuKey":"NoticeDetail","menuName":"消息详情","parentKey":"Notice","sort":0,"type":1,"url":"/notice/notice-detail"},{"menuKey":"ThreeRouter","menuName":"三级路由","parentKey":"Business","sort":0,"type":1,"url":"/three-router"},{"menuKey":"LevelTwo","menuName":"三级菜单","parentKey":"ThreeRouter","sort":0,"type":1,"url":"/three-router/level-two"},{"menuKey":"ThreeLevelRouterView","menuName":"三级菜单子颗粒","parentKey":"LevelTwo","sort":0,"type":1,"url":"/three-router/level-two/level-three1"},{"menuKey":"RoleTwoTwo","menuName":"三级菜单子哈","parentKey":"LevelTwo","sort":0,"type":1,"url":"/three-router/level-two/level-three2"},{"menuKey":"RoleOneOne","menuName":"二级菜单","parentKey":"ThreeRouter","sort":0,"type":1,"url":"/three-router/level-two2"},{"menuKey":"System","menuName":"系统设置","sort":0,"type":1,"url":"/system"},{"menuKey":"Employee","menuName":"人员管理","parentKey":"System","sort":0,"type":1,"url":"/employee"},{"menuKey":"RoleManage","menuName":"角色管理","parentKey":"Employee","sort":0,"type":1,"url":"/employee/role"},{"menuKey":"PositionList","menuName":"岗位管理","parentKey":"Employee","sort":0,"type":1,"url":"/employee/position"},{"menuKey":"RoleEmployeeManage","menuName":"员工管理","parentKey":"Employee","sort":0,"type":1,"url":"/employee/role-employee-manage"},{"menuKey":"File","menuName":"文件服务","parentKey":"System","sort":0,"type":1,"url":"/file"},{"menuKey":"FileList","menuName":"文件列表","parentKey":"File","sort":0,"type":1,"url":"/file/file-list"},{"menuKey":"UserLog","menuName":"用户日志","parentKey":"System","sort":0,"type":1,"url":"/user-log"},{"menuKey":"UserOperateLog","menuName":"用户操作日志","parentKey":"UserLog","sort":0,"type":1,"url":"/user-log/user-operate-log"},{"menuKey":"UserLoginLog","menuName":"用户登录日志","parentKey":"UserLog","sort":0,"type":1,"url":"/user-log/user-login-log"},{"menuKey":"SystemSetting","menuName":"系统设置","parentKey":"System","sort":0,"type":1,"url":"/system-setting"},{"menuKey":"SystemConfig","menuName":"系统参数","parentKey":"SystemSetting","sort":0,"type":1,"url":"/system-setting/system-config"},{"menuKey":"SystemPrivilege","menuName":"菜单设置","parentKey":"SystemSetting","sort":0,"type":1,"url":"/system-setting/system-privilege"},{"menuKey":"Support","menuName":"开发专用","sort":0,"type":1,"url":"/support"},{"menuKey":"ApiDoc","menuName":"接口文档","parentKey":"Support","sort":0,"type":1,"url":"/api-doc"},{"menuKey":"Swagger","menuName":"Swagger接口文档","parentKey":"ApiDoc","sort":0,"type":1,"url":"/api-doc/swagger"},{"menuKey":"HeartBeat","menuName":"心跳服务","parentKey":"Support","sort":0,"type":1,"url":"/heart-beat"},{"menuKey":"HeartBeatList","menuName":"心跳服务","parentKey":"HeartBeat","sort":0,"type":1,"url":"/heart-beat/heart-beat-list"},{"menuKey":"Monitor","menuName":"系统监控","parentKey":"Support","sort":0,"type":1,"url":"/monitor"},{"menuKey":"OnlineUser","menuName":"在线人数","parentKey":"Monitor","sort":0,"type":1,"url":"/monitor/online-user"},{"menuKey":"Sql","menuName":"SQL监控","parentKey":"Monitor","sort":0,"type":1,"url":"/monitor/sql"},{"menuKey":"Reload","menuName":"动态加载","parentKey":"Support","sort":0,"type":1,"url":"/reload"},{"menuKey":"SmartReloadList","menuName":"SmartReload","parentKey":"Reload","sort":0,"type":1,"url":"/reload/smart-reload-list"},{"menuKey":"Task","menuName":"定时任务","parentKey":"Support","sort":0,"type":1,"url":"/task"},{"menuKey":"TaskList","menuName":"任务管理","parentKey":"Task","sort":0,"type":1,"url":"/system-setting/task-list"}]]', 1, NULL, '2020-12-14 15:15:07', '2020-12-14 15:15:07'),
+	(36, 1, '管理员', '通用-权限', '查询所有菜单项', '/smart-admin-api/privilege/menu/queryAll', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.queryAll', '', 1, NULL, '2020-12-14 15:15:07', '2020-12-14 15:15:07'),
+	(37, 1, '管理员', '管理端-用户登录', '获取session', '/smart-admin-api/session/get', 'net.lab1024.smartadmin.module.system.login.LoginController.getSession', '', 1, NULL, '2020-12-14 15:15:29', '2020-12-14 15:15:29'),
+	(38, 1, '管理员', '通用-权限', '获取所有请求路径', '/smart-admin-api/privilege/getAllUrl', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.getAllUrl', '', 1, NULL, '2020-12-14 15:16:25', '2020-12-14 15:16:25'),
+	(39, 1, '管理员', '通用-权限', '查询所有菜单项', '/smart-admin-api/privilege/menu/queryAll', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.queryAll', '', 1, NULL, '2020-12-14 15:16:25', '2020-12-14 15:16:25'),
+	(40, 1, '管理员', '通用-权限', '菜单批量保存', '/smart-admin-api/privilege/menu/batchSaveMenu', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.menuBatchSave', 'ValidateList[[{"menuKey":"Business","menuName":"业务功能","sort":0,"type":1,"url":"/business"},{"menuKey":"Peony","menuName":"牡丹管理","parentKey":"Business","sort":1,"type":1,"url":"/peony"},{"menuKey":"PeonyList","menuName":"牡丹花列表","parentKey":"Peony","sort":2,"type":1,"url":"/peony/peony-list"},{"menuKey":"PeonyList1","menuName":"牡丹花列表1","parentKey":"Peony","sort":3,"type":1,"url":"/peony/peony-list1"},{"menuKey":"Email","menuName":"邮件管理","parentKey":"Business","sort":4,"type":1,"url":"/email"},{"menuKey":"EmailList","menuName":"邮件管理","parentKey":"Email","sort":5,"type":1,"url":"/email/email-list"},{"menuKey":"SendMail","menuName":"发送邮件","parentKey":"Email","sort":6,"type":1,"url":"/email/send-mail"},{"menuKey":"KeepAlive","menuName":"KeepAlive","parentKey":"Business","sort":7,"type":1,"url":"/keep-alive"},{"menuKey":"KeepAliveContentList","menuName":"KeepAlive列表","parentKey":"KeepAlive","sort":8,"type":1,"url":"/keep-alive/content-list"},{"menuKey":"KeepAliveAddContent","menuName":"KeepAlive表单","parentKey":"KeepAlive","sort":9,"type":1,"url":"/keep-alive/add-content"},{"menuKey":"Notice","menuName":"消息管理","parentKey":"Business","sort":10,"type":1,"url":"/notice"},{"menuKey":"NoticeList","menuName":"通知管理","parentKey":"Notice","sort":11,"type":1,"url":"/notice/notice-list"},{"menuKey":"PersonNotice","menuName":"个人消息","parentKey":"Notice","sort":12,"type":1,"url":"/notice/person-notice"},{"menuKey":"NoticeDetail","menuName":"消息详情","parentKey":"Notice","sort":13,"type":1,"url":"/notice/notice-detail"},{"menuKey":"ThreeRouter","menuName":"三级路由","parentKey":"Business","sort":14,"type":1,"url":"/three-router"},{"menuKey":"LevelTwo","menuName":"三级菜单","parentKey":"ThreeRouter","sort":15,"type":1,"url":"/three-router/level-two"},{"menuKey":"ThreeLevelRouterView","menuName":"三级菜单子颗粒","parentKey":"LevelTwo","sort":16,"type":1,"url":"/three-router/level-two/level-three1"},{"menuKey":"RoleTwoTwo","menuName":"三级菜单子哈","parentKey":"LevelTwo","sort":17,"type":1,"url":"/three-router/level-two/level-three2"},{"menuKey":"RoleOneOne","menuName":"二级菜单","parentKey":"ThreeRouter","sort":18,"type":1,"url":"/three-router/level-two2"},{"menuKey":"System","menuName":"系统设置","sort":19,"type":1,"url":"/system"},{"menuKey":"Employee","menuName":"人员管理","parentKey":"System","sort":20,"type":1,"url":"/employee"},{"menuKey":"RoleManage","menuName":"角色管理","parentKey":"Employee","sort":21,"type":1,"url":"/employee/role"},{"menuKey":"PositionList","menuName":"岗位管理","parentKey":"Employee","sort":22,"type":1,"url":"/employee/position"},{"menuKey":"RoleEmployeeManage","menuName":"员工管理","parentKey":"Employee","sort":23,"type":1,"url":"/employee/role-employee-manage"},{"menuKey":"File","menuName":"文件服务","parentKey":"System","sort":24,"type":1,"url":"/file"},{"menuKey":"FileList","menuName":"文件列表","parentKey":"File","sort":25,"type":1,"url":"/file/file-list"},{"menuKey":"UserLog","menuName":"用户日志","parentKey":"System","sort":26,"type":1,"url":"/user-log"},{"menuKey":"UserOperateLog","menuName":"用户操作日志","parentKey":"UserLog","sort":27,"type":1,"url":"/user-log/user-operate-log"},{"menuKey":"UserLoginLog","menuName":"用户登录日志","parentKey":"UserLog","sort":28,"type":1,"url":"/user-log/user-login-log"},{"menuKey":"SystemSetting","menuName":"系统设置","parentKey":"System","sort":29,"type":1,"url":"/system-setting"},{"menuKey":"SystemConfig","menuName":"系统参数","parentKey":"SystemSetting","sort":30,"type":1,"url":"/system-setting/system-config"},{"menuKey":"SystemPrivilege","menuName":"菜单设置","parentKey":"SystemSetting","sort":31,"type":1,"url":"/system-setting/system-privilege"},{"menuKey":"Support","menuName":"开发专用","sort":32,"type":1,"url":"/support"},{"menuKey":"ApiDoc","menuName":"接口文档","parentKey":"Support","sort":33,"type":1,"url":"/api-doc"},{"menuKey":"Swagger","menuName":"Swagger接口文档","parentKey":"ApiDoc","sort":34,"type":1,"url":"/api-doc/swagger"},{"menuKey":"HeartBeat","menuName":"心跳服务","parentKey":"Support","sort":35,"type":1,"url":"/heart-beat"},{"menuKey":"HeartBeatList","menuName":"心跳服务","parentKey":"HeartBeat","sort":36,"type":1,"url":"/heart-beat/heart-beat-list"},{"menuKey":"Monitor","menuName":"系统监控","parentKey":"Support","sort":37,"type":1,"url":"/monitor"},{"menuKey":"OnlineUser","menuName":"在线人数","parentKey":"Monitor","sort":38,"type":1,"url":"/monitor/online-user"},{"menuKey":"Sql","menuName":"SQL监控","parentKey":"Monitor","sort":39,"type":1,"url":"/monitor/sql"},{"menuKey":"Reload","menuName":"动态加载","parentKey":"Support","sort":40,"type":1,"url":"/reload"},{"menuKey":"SmartReloadList","menuName":"SmartReload","parentKey":"Reload","sort":41,"type":1,"url":"/reload/smart-reload-list"},{"menuKey":"Task","menuName":"定时任务","parentKey":"Support","sort":42,"type":1,"url":"/task"},{"menuKey":"TaskList","menuName":"任务管理","parentKey":"Task","sort":43,"type":1,"url":"/system-setting/task-list"}]]', 1, NULL, '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(41, 1, '管理员', '通用-权限', '查询所有菜单项', '/smart-admin-api/privilege/menu/queryAll', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.queryAll', '', 1, NULL, '2020-12-14 15:16:26', '2020-12-14 15:16:26'),
+	(42, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/PeonyList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["PeonyList"]', 1, NULL, '2020-12-14 15:16:28', '2020-12-14 15:16:28'),
+	(43, 1, '管理员', '通用-权限', '批量保存功能点', '/smart-admin-api/privilege/function/batchSave', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.batchSaveFunctionList', 'ValidateList[[{"functionKey":"peony-list-query","functionName":"查询","menuKey":"PeonyList","sort":1},{"functionKey":"peony-list-add","functionName":"新增","menuKey":"PeonyList","sort":2},{"functionKey":"peony-list-update","functionName":"编辑","menuKey":"PeonyList","sort":3},{"functionKey":"peony-list-batch-delete","functionName":"批量删除","menuKey":"PeonyList","sort":4},{"functionKey":"peony-list-batch-export","functionName":"批量导出","menuKey":"PeonyList","sort":5},{"functionKey":"peony-list-export-all","functionName":"导出全部","menuKey":"PeonyList","sort":6}]]', 1, NULL, '2020-12-14 15:16:30', '2020-12-14 15:16:30'),
+	(44, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/PeonyList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["PeonyList"]', 1, NULL, '2020-12-14 15:16:30', '2020-12-14 15:16:30'),
+	(45, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/PeonyList1', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["PeonyList1"]', 1, NULL, '2020-12-14 15:16:32', '2020-12-14 15:16:32'),
+	(46, 1, '管理员', '通用-权限', '批量保存功能点', '/smart-admin-api/privilege/function/batchSave', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.batchSaveFunctionList', 'ValidateList[[{"functionKey":"peony1-list-query","functionName":"查询","menuKey":"PeonyList1","sort":1},{"functionKey":"peony1-list-add","functionName":"新增","menuKey":"PeonyList1","sort":2},{"functionKey":"peony1-list-update","functionName":"编辑","menuKey":"PeonyList1","sort":3},{"functionKey":"peony1-list-batch-delete","functionName":"批量删除","menuKey":"PeonyList1","sort":4},{"functionKey":"peony1-list-batch-export","functionName":"批量导出","menuKey":"PeonyList1","sort":5},{"functionKey":"peony1-list-export-all","functionName":"导出全部","menuKey":"PeonyList1","sort":6}]]', 1, NULL, '2020-12-14 15:16:33', '2020-12-14 15:16:33'),
+	(47, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/PeonyList1', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["PeonyList1"]', 1, NULL, '2020-12-14 15:16:33', '2020-12-14 15:16:33'),
+	(48, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/EmailList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["EmailList"]', 1, NULL, '2020-12-14 15:16:34', '2020-12-14 15:16:34'),
+	(49, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/SendMail', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["SendMail"]', 1, NULL, '2020-12-14 15:16:36', '2020-12-14 15:16:36'),
+	(50, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/KeepAliveContentList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["KeepAliveContentList"]', 1, NULL, '2020-12-14 15:16:38', '2020-12-14 15:16:38'),
+	(51, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/KeepAliveAddContent', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["KeepAliveAddContent"]', 1, NULL, '2020-12-14 15:16:38', '2020-12-14 15:16:38'),
+	(52, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/NoticeList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["NoticeList"]', 1, NULL, '2020-12-14 15:16:40', '2020-12-14 15:16:40'),
+	(53, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/PersonNotice', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["PersonNotice"]', 1, NULL, '2020-12-14 15:16:41', '2020-12-14 15:16:41'),
+	(54, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/NoticeDetail', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["NoticeDetail"]', 1, NULL, '2020-12-14 15:16:42', '2020-12-14 15:16:42'),
+	(55, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/ThreeLevelRouterView', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["ThreeLevelRouterView"]', 1, NULL, '2020-12-14 15:16:44', '2020-12-14 15:16:44'),
+	(56, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/RoleManage', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["RoleManage"]', 1, NULL, '2020-12-14 15:16:47', '2020-12-14 15:16:47'),
+	(57, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/PositionList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["PositionList"]', 1, NULL, '2020-12-14 15:16:48', '2020-12-14 15:16:48'),
+	(58, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/RoleEmployeeManage', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["RoleEmployeeManage"]', 1, NULL, '2020-12-14 15:16:53', '2020-12-14 15:16:53'),
+	(59, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/FileList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["FileList"]', 1, NULL, '2020-12-14 15:17:00', '2020-12-14 15:17:00'),
+	(60, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/UserOperateLog', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["UserOperateLog"]', 1, NULL, '2020-12-14 15:17:03', '2020-12-14 15:17:03'),
+	(61, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/UserLoginLog', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["UserLoginLog"]', 1, NULL, '2020-12-14 15:17:03', '2020-12-14 15:17:03'),
+	(62, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/SystemConfig', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["SystemConfig"]', 1, NULL, '2020-12-14 15:17:04', '2020-12-14 15:17:04'),
+	(63, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/SystemPrivilege', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["SystemPrivilege"]', 1, NULL, '2020-12-14 15:17:06', '2020-12-14 15:17:06'),
+	(64, 1, '管理员', '通用-权限', '批量保存功能点', '/smart-admin-api/privilege/function/batchSave', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.batchSaveFunctionList', 'ValidateList[[{"functionKey":"privilege-main-update","functionName":"编辑","menuKey":"SystemPrivilege","sort":1},{"functionKey":"privilege-batch-save-points","functionName":"批量保存功能点","menuKey":"SystemPrivilege","sort":2},{"functionKey":"privilege-main-search","functionName":"查询","menuKey":"SystemPrivilege","sort":3}]]', 1, NULL, '2020-12-14 15:17:11', '2020-12-14 15:17:11'),
+	(65, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/SystemPrivilege', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["SystemPrivilege"]', 1, NULL, '2020-12-14 15:17:11', '2020-12-14 15:17:11'),
+	(66, 1, '管理员', '通用-权限', '保存更新功能点', '/smart-admin-api/privilege/function/saveOrUpdate', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionSaveOrUpdate', 'PrivilegeFunctionDTO[{"functionKey":"privilege-batch-save-points","functionName":"批量保存功能点","menuKey":"SystemPrivilege","sort":1,"url":"privilegeController.functionSaveOrUpdate"}]', 1, NULL, '2020-12-14 15:17:30', '2020-12-14 15:17:30'),
+	(67, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/SystemPrivilege', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["SystemPrivilege"]', 1, NULL, '2020-12-14 15:17:30', '2020-12-14 15:17:30'),
+	(68, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/Swagger', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["Swagger"]', 1, NULL, '2020-12-14 15:17:36', '2020-12-14 15:17:36'),
+	(69, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/HeartBeatList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["HeartBeatList"]', 1, NULL, '2020-12-14 15:17:37', '2020-12-14 15:17:37'),
+	(70, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/SmartReloadList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["SmartReloadList"]', 1, NULL, '2020-12-14 15:17:42', '2020-12-14 15:17:42'),
+	(71, 1, '管理员', '通用-权限', '查询菜单功能点', '/smart-admin-api/privilege/function/query/TaskList', 'net.lab1024.smartadmin.module.system.privilege.controller.PrivilegeController.functionQuery', 'String["TaskList"]', 1, NULL, '2020-12-14 15:17:43', '2020-12-14 15:17:43'),
+	(72, 1, '管理员', '通用-邮件发送', '分页查询', '/smart-admin-api/email/page/query', 'net.lab1024.smartadmin.module.business.email.EmailController.queryByPage', 'EmailQueryDTO[{"endDate":"","pageNum":1,"pageSize":10,"searchCount":true,"startDate":""}]', 1, NULL, '2020-12-14 15:17:57', '2020-12-14 15:17:57'),
+	(73, 1, '管理员', '管理端-用户登录', '获取session', '/smart-admin-api/session/get', 'net.lab1024.smartadmin.module.system.login.LoginController.getSession', '', 1, NULL, '2020-12-14 15:18:14', '2020-12-14 15:18:14'),
+	(74, 1, '管理员', '管理端-用户登录', '获取session', '/smart-admin-api/session/get', 'net.lab1024.smartadmin.module.system.login.LoginController.getSession', '', 1, NULL, '2020-12-14 15:18:27', '2020-12-14 15:18:27');
 /*!40000 ALTER TABLE `t_user_operate_log` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

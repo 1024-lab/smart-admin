@@ -1,0 +1,15 @@
+root = true
+
+[*]
+# 字符
+charset = utf-8
+# 空格
+indent_style = space
+# 2个空格缩进
+indent_size = 2
+# 换行符
+end_of_line = lf
+# 文件的最后插入一个空行
+insert_final_newline = true
+# 删除行尾的空格
+trim_trailing_whitespace = true

@@ -130,7 +130,12 @@ public class QuartzTaskService {
         taskEntity.setTaskStatus(updateEntity.getTaskStatus());
         taskEntity.setUpdateTime(new Date());
         quartzTaskDao.updateById(taskEntity);
-        this.updateQuartzTask(scheduler, taskEntity);
+        if(this.checkExist(taskEntity.getId())){
+            this.updateQuartzTask(scheduler, taskEntity);
+        }else{
+            this.createQuartzTask(scheduler,taskEntity);
+        }
+
         return ResponseDTO.succ();
     }
 
@@ -165,7 +170,7 @@ public class QuartzTaskService {
         }
         quartzTaskEntity.setTaskStatus(TaskStatusEnum.PAUSE.getStatus());
         quartzTaskDao.updateById(quartzTaskEntity);
-        this.pauseQuartzTask(scheduler, taskId);
+        this.pauseQuartzTask(scheduler, quartzTaskEntity);
         return ResponseDTO.succ();
     }
 
@@ -184,7 +189,7 @@ public class QuartzTaskService {
         }
         quartzTaskEntity.setTaskStatus(TaskStatusEnum.NORMAL.getStatus());
         quartzTaskDao.updateById(quartzTaskEntity);
-        this.resumeQuartzTask(scheduler, taskId);
+        this.resumeQuartzTask(scheduler, quartzTaskEntity);
         return ResponseDTO.succ();
     }
 
@@ -233,6 +238,10 @@ public class QuartzTaskService {
 
         jobDetail.getJobDataMap().put(QuartzConst.QUARTZ_PARAMS_KEY, taskEntity.getTaskParams());
         scheduler.scheduleJob(jobDetail, trigger);
+        //如果任务是暂停状态，则暂停任务
+        if (TaskStatusEnum.PAUSE.getStatus().equals(taskEntity.getTaskStatus())) {
+            this.pauseQuartzTask(scheduler, taskEntity);
+        }
     }
 
     /**
@@ -256,7 +265,7 @@ public class QuartzTaskService {
         scheduler.rescheduleJob(triggerKey, trigger);
         //如果更新之前任务是暂停状态，此时再次暂停任务
         if (TaskStatusEnum.PAUSE.getStatus().equals(taskEntity.getTaskStatus())) {
-            this.pauseQuartzTask(scheduler, Long.valueOf(taskEntity.getId()));
+            this.pauseQuartzTask(scheduler, taskEntity);
         }
     }
 
@@ -276,6 +285,11 @@ public class QuartzTaskService {
         JobDataMap dataMap = new JobDataMap();
         dataMap.put(QuartzConst.QUARTZ_PARAMS_KEY, taskEntity.getTaskParams());
         JobKey jobKey = SmartQuartzUtil.getJobKey(taskEntity.getId());
+        if(!scheduler.checkExists(jobKey)){
+            this.createQuartzTask(scheduler,taskEntity);
+            scheduler.triggerJob(jobKey, dataMap);
+            return;
+        }
         scheduler.triggerJob(jobKey, dataMap);
     }
 
@@ -283,11 +297,16 @@ public class QuartzTaskService {
      * 暂停任务
      *
      * @param scheduler
-     * @param taskId
+     * @param quartzTaskEntity
      * @throws Exception
      */
-    private void pauseQuartzTask(Scheduler scheduler, Long taskId) throws Exception {
-        JobKey jobKey = SmartQuartzUtil.getJobKey(taskId);
+    private void pauseQuartzTask(Scheduler scheduler, QuartzTaskEntity quartzTaskEntity) throws Exception {
+        JobKey jobKey = SmartQuartzUtil.getJobKey(quartzTaskEntity.getId());
+        if(!scheduler.checkExists(jobKey)){
+            this.createQuartzTask(scheduler,quartzTaskEntity);
+            scheduler.pauseJob(jobKey);
+            return;
+        }
         scheduler.pauseJob(jobKey);
     }
 
@@ -295,11 +314,15 @@ public class QuartzTaskService {
      * 恢复任务
      *
      * @param scheduler
-     * @param taskId
+     * @param quartzTaskEntity
      * @throws Exception
      */
-    private void resumeQuartzTask(Scheduler scheduler, Long taskId) throws Exception {
-        JobKey jobKey = SmartQuartzUtil.getJobKey(taskId);
+    private void resumeQuartzTask(Scheduler scheduler, QuartzTaskEntity quartzTaskEntity) throws Exception {
+        JobKey jobKey = SmartQuartzUtil.getJobKey(quartzTaskEntity.getId());
+        if(!scheduler.checkExists(jobKey)){
+            this.createQuartzTask(scheduler,quartzTaskEntity);
+            return;
+        }
         scheduler.resumeJob(jobKey);
     }
 
@@ -312,6 +335,15 @@ public class QuartzTaskService {
      */
     private void deleteQuartzTask(Scheduler scheduler, Long taskId) throws Exception {
         JobKey jobKey = SmartQuartzUtil.getJobKey(taskId);
+        if(!scheduler.checkExists(jobKey)){
+            return;
+        }
         scheduler.deleteJob(jobKey);
+    }
+
+
+    private Boolean checkExist(Long taskId) throws Exception{
+        JobKey jobKey = SmartQuartzUtil.getJobKey(taskId);
+        return scheduler.checkExists(jobKey);
     }
 }
