@@ -42,7 +42,6 @@ public class LoginController {
         return loginService.login(loginForm, request);
     }
 
-
     @GetMapping("/session/get")
     @ApiOperation(value = "获取session", notes = "获取session")
     @NoValidPrivilege

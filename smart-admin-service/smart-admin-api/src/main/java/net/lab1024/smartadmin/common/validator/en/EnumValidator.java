@@ -1,15 +1,10 @@
 package net.lab1024.smartadmin.common.validator.en;
 
-import com.google.common.collect.Lists;
 import net.lab1024.smartadmin.common.domain.BaseEnum;
-import net.lab1024.smartadmin.module.support.file.constant.FileServiceTypeEnum;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,9 +17,9 @@ import java.util.stream.Stream;
 public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
 
     /**
-     * 枚举类的类对象
+     * 枚举类实例集合
      */
-    private Class<? extends BaseEnum> enumClass;
+    private List<Object> enumValList;
 
     /**
      * 是否必须
@@ -34,8 +29,9 @@ public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
     @Override
     public void initialize(CheckEnum constraintAnnotation) {
         // 获取注解传入的枚举类对象
-        enumClass = constraintAnnotation.enumClazz();
         required = constraintAnnotation.required();
+        Class<? extends BaseEnum> enumClass = constraintAnnotation.enumClazz();
+        enumValList = Stream.of(enumClass.getEnumConstants()).map(BaseEnum::getValue).collect(Collectors.toList());
     }
 
     @Override
@@ -51,7 +47,7 @@ public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
         }
 
         // 校验是否为合法的枚举值
-        return this.hasEnum(value);
+        return enumValList.contains(value);
     }
 
     /**
@@ -70,23 +66,6 @@ public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
         if (count != list.size()) {
             return false;
         }
-        List<Object> enumValList = Stream.of(enumClass.getEnumConstants()).map(BaseEnum::getValue).collect(Collectors.toList());
-        for (Object obj : list) {
-            if (!enumValList.contains(obj)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean hasEnum(Object value) {
-        // 校验是否为合法的枚举值
-        BaseEnum[] enums = enumClass.getEnumConstants();
-        for (BaseEnum baseEnum : enums) {
-            if (baseEnum.getValue().equals(value)) {
-                return true;
-            }
-        }
-        return false;
+        return enumValList.containsAll(list);
     }
 }

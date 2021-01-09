@@ -85,6 +85,10 @@ public class ResponseDTO<T> {
         return new ResponseDTO<T>(codeConst, msg);
     }
 
+    public static <T> ResponseDTO<T> wrapMsg(ResponseCodeConst codeConst, String msg) {
+        return new ResponseDTO<T>(codeConst, msg);
+    }
+
     public String getMsg() {
         return msg;
     }

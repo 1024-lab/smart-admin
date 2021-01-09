@@ -36,7 +36,7 @@ import java.util.List;
 @Component
 public class SmartAuthenticationInterceptor extends HandlerInterceptorAdapter {
 
-    private static final String TOKEN_NAME = "x-access-token";
+    public static final String TOKEN_NAME = "x-access-token";
 
     @Value("${access-control-allow-origin}")
     private String accessControlAllowOrigin;

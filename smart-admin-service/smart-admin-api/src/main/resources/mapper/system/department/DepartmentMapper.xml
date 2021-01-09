@@ -18,15 +18,6 @@
         d.create_time
     </sql>
 
-    <select id="countSubDepartment" resultType="integer">
-        SELECT
-        count(1)
-        FROM
-        t_department
-        WHERE
-        parent_id = #{departmentId}
-    </select>
-
     <select id="listAll" resultMap="DepartmentVO">
         SELECT
         <include refid="baseSql"></include>,
@@ -49,6 +40,15 @@
         order by sort desc
     </select>
 
+
+    <select id="countSubDepartment" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        t_department
+        WHERE
+        parent_id = #{deptId}
+    </select>
 
 
 </mapper>
