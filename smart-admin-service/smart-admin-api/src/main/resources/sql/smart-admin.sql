@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `t_department` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='部门表';
 
 -- 正在导出表  smart-admin-dev.t_department 的数据：~4 rows (大约)
 DELETE FROM `t_department`;
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `t_employee` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `is_delete` int NOT NULL DEFAULT '0' COMMENT '是否删除0否 1是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工表';
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='员工表';
 
 -- 正在导出表  smart-admin-dev.t_employee 的数据：~28 rows (大约)
 DELETE FROM `t_employee`;
@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `t_file` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `module_id_module_type` (`module_id`,`module_type`) USING BTREE,
   KEY `module_type` (`module_type`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- 正在导出表  smart-admin-dev.t_file 的数据：~23 rows (大约)
 DELETE FROM `t_file`;
@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `t_heart_beat_record` (
   `process_start_time` datetime DEFAULT NULL COMMENT '进程开启时间',
   `heart_beat_time` datetime DEFAULT NULL COMMENT '心跳时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- 正在导出表  smart-admin-dev.t_heart_beat_record 的数据：~2 rows (大约)
 DELETE FROM `t_heart_beat_record`;
@@ -274,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `t_id_generator` (
   `update_time` datetime DEFAULT NULL,
   `create_time` datetime NOT NULL,
   UNIQUE KEY `key_name` (`key_name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='id生成器定义表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='id生成器定义表';
 
 -- 正在导出表  smart-admin-dev.t_id_generator 的数据：~2 rows (大约)
 DELETE FROM `t_id_generator`;
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `t_id_generator_record` (
   `day` int NOT NULL,
   `last_number` int NOT NULL,
   PRIMARY KEY (`generator_id`,`year`,`month`,`day`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='id_generator记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='id_generator记录表';
 
 -- 正在导出表  smart-admin-dev.t_id_generator_record 的数据：~5 rows (大约)
 DELETE FROM `t_id_generator_record`;
@@ -400,7 +400,7 @@ CREATE TABLE IF NOT EXISTS `t_order_operate_log` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `order_id_order_type` (`order_id`,`order_type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='各种单据操作记录\r\n';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='各种单据操作记录\r\n';
 
 -- 正在导出表  smart-admin-dev.t_order_operate_log 的数据：~0 rows (大约)
 DELETE FROM `t_order_operate_log`;
@@ -720,7 +720,7 @@ CREATE TABLE IF NOT EXISTS `t_reload_item` (
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 正在导出表  smart-admin-dev.t_reload_item 的数据：~0 rows (大约)
 DELETE FROM `t_reload_item`;
@@ -738,7 +738,7 @@ CREATE TABLE IF NOT EXISTS `t_reload_result` (
   `result` tinyint unsigned NOT NULL COMMENT '是否成功 ',
   `exception` text,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 正在导出表  smart-admin-dev.t_reload_result 的数据：~127 rows (大约)
 DELETE FROM `t_reload_result`;
@@ -938,7 +938,7 @@ CREATE TABLE IF NOT EXISTS `t_role_employee` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色员工功能表';
+) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色员工功能表';
 
 -- 正在导出表  smart-admin-dev.t_role_employee 的数据：~25 rows (大约)
 DELETE FROM `t_role_employee`;
@@ -980,7 +980,7 @@ CREATE TABLE IF NOT EXISTS `t_role_privilege` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10835 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色权限功能表';
+) ENGINE=InnoDB AUTO_INCREMENT=10835 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色权限功能表';
 
 -- 正在导出表  smart-admin-dev.t_role_privilege 的数据：~322 rows (大约)
 DELETE FROM `t_role_privilege`;
@@ -1322,7 +1322,7 @@ CREATE TABLE IF NOT EXISTS `t_system_config` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '上次修改时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- 正在导出表  smart-admin-dev.t_system_config 的数据：~8 rows (大约)
 DELETE FROM `t_system_config`;
@@ -1354,7 +1354,7 @@ CREATE TABLE IF NOT EXISTS `t_user_login_log` (
   PRIMARY KEY (`id`),
   KEY `customer_id` (`user_id`) USING BTREE,
   KEY `auditor_id` (`remote_browser`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1743 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1743 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户登录日志';
 
 -- 正在导出表  smart-admin-dev.t_user_login_log 的数据：~122 rows (大约)
 DELETE FROM `t_user_login_log`;
