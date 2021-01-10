@@ -1,7 +1,7 @@
 <!-- home -->
 <template>
   <div>
-    <router-nav-bar path="/mine" title="修改密码" left-text="返回" left-arrow />
+    <router-nav-bar path="/dashboard/user" title="修改密码" left-text="返回" left-arrow />
 
     <van-form @submit="onSubmit">
       <van-field
@@ -22,6 +22,7 @@
         <van-field
           style="width: 60%;float:left"
           v-model="formData.code"
+          type="password"
           name="新密码"
           label="新密码"
           placeholder="新密码"
@@ -37,8 +38,6 @@
 </template>
 
 <script>
-import { loginApi } from '@/api/login';
-import cookie from '@/lib/cookie';
 import RouterNavBar from 'components/van-bar/RouterNavBar';
 
 export default {
@@ -57,36 +56,17 @@ export default {
     };
   },
   mounted() {
-    this.getVerificationCode();
   },
   methods: {
-    // 获取验证码
-    async getVerificationCode() {
-      try {
-        const res = await loginApi.getVerificationCode();
-        const data = res.data;
-        this.formData.codeUuid = data.uuid;
-        this.codeUrl = data.code;
-        this.formData.code = '';
-        console.log(this.codeUrl);
-      } catch (e) {
-        this.$smartSentry.captureException(e);
-      }
-    },
     // 提交表单
-    async onSubmit() {
+    onSubmit() {
       this.$smart.loading();
       try {
-        const res = await loginApi.login(this.formData);
-        const loginInfo = res.data;
-        this.$store.commit('user/updateSession', loginInfo);
-        cookie.setToken(loginInfo.xaccessToken);
-        this.$toast.success('登录成功');
-        this.$router.replace('/home');
+        this.$toast.success('暂未实现');
+        this.$router.replace('/dashboard/user');
       } catch (e) {
         console.log(e);
         this.$smartSentry.captureException(e);
-        await this.getVerificationCode();
       } finally {
         this.$smart.loadingClear();
       }

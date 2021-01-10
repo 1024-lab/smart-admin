@@ -1,6 +1,9 @@
 /*
  * @Description:
- * @Author: zhuoda
+ * @Author: hanyu
+ * @Date: 2020-05-28 12:46:06
+ * @LastEditTime: 2020-07-08 09:16:15
+ * @LastEditors: hy
  */
 // smart sentry
 import * as Sentry from '@sentry/browser';

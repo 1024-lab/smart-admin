@@ -11,3 +11,5 @@ sa/123456
 LoginService.getSession
 
 5 test类中去掉代码生成run
+
+6 前端百度统计

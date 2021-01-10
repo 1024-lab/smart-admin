@@ -1,5 +1,7 @@
-import file from './file';
+import school from '@/constants/school';
+import erp from './erp';
 
 export default {
-  ...file,
+  ...school,
+  ...erp
 };

@@ -51,10 +51,18 @@ module.exports = {
     // }
   },
   css: {
-    // 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)。
+    // 是否使用css分离插件 ExtractTextPlugin 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)。
     extract: isProductionEnv,
+    // 开启 CSS source maps
     sourceMap: false,
-    modules: false
+    // 使用vw布局去掉这个
+    requireModuleExtension: true,
+    loaderOptions: {
+      // 引入全局变量
+      scss: {
+        additionalData: `@import "@/assets/css/index";` // 全局引入
+      }
+    }
   },
   configureWebpack: config => {
     config.name = projectConfig.title;

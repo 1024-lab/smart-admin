@@ -12,12 +12,14 @@ module.exports = {
    */
   baseUrl: {
     apiUrl: process.env.VUE_APP_URL,
+    erpApiUrl: process.env.VUE_APP_ERP_URL,
+    webSocketUrl: process.env.VUE_APP_SOCKET_URL
   },
   /**
    * 打包后静态资源地址;如果是走cdn的话，可以配置如下：
    * publicPath: isProd ? 'https://cdn.1024lab.net/static/smart-h5/' : '/'
    */
-  publicPath: isProductionEnv ? '/smart-admin-h5/' : '/',
+  publicPath: isProductionEnv ? '/manage-h5/' : '/',
 
   // ==================== cdn 相关 begin ====================
   cdn: {

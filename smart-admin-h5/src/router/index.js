@@ -10,6 +10,10 @@ const projectConfig = require('@/config/index.js');
 
 Vue.use(Router);
 
+/**
+ * 导入所有的router
+ * @type {VueRouter}
+ */
 const router = new Router({
   routes: routers
 });
@@ -26,6 +30,8 @@ Router.prototype.push = function(location) {
 };
 
 const LOGIN_PAGE_NAME = 'Login';
+
+// --------------------- router 守卫 begin ---------------------
 
 router.beforeEach((to, from, next) => {
   // 加载进度条
@@ -76,6 +82,19 @@ router.afterEach(to => {
     document.title = to.meta.title + ' ' + projectConfig.title;
   }
 });
+
+// --------------------- router 守卫 end ---------------------
+
+/**
+ * router 检测
+ *
+ * 如果存在相同的 path 或者 name 是一件非常恐怖的事情，所以在develop环境将所有router进行一次遍历<br>
+ * 检测内容如下：<br>
+ * 1、相同的router name
+ * 2、相同的router name
+ * 3、path没有以 / 开头
+ *
+ */
 
 const tempCheckObj = {
   checkRouterNameMap: new Map(),

@@ -8,7 +8,7 @@ export default {
   name: 'App'
 };
 </script>
-<style lang="less">
+<style lang="scss">
 #nprogress .bar {
   background: #1989fa !important;
 }

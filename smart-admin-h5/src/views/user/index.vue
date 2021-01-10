@@ -8,10 +8,9 @@
     </van-grid>
 
     <van-cell-group>
-      <!--      <van-cell icon="user-o" title="订单" is-link />-->
-      <!--      <van-cell icon="location-o" title="设置" is-link />-->
-      <!--      <van-cell icon="location-o" to="/user/change-password" title="修改密码" is-link />-->
-      <van-cell icon="bulb-o" title="更新权限" @click="updatePrivilege" is-link/>
+      <van-cell icon="location-o" to="/user/change-password" title="修改密码" is-link />
+      <van-cell icon="bulb-o" title="更新权限" @click="forceUpdatePrivilege" is-link/>
+      <van-cell icon="delete" title="清空缓存" @click="clearCache" is-link/>
       <van-cell icon="apps-o" title="开发专用" is-link to="/develop/config"/>
     </van-cell-group>
 
@@ -30,6 +29,7 @@ import cookie from '@/lib/cookie';
 import { userApi } from 'api/user';
 
 export default {
+  name: 'Mine',
   data() {
     return {
       actualName: null
@@ -43,7 +43,12 @@ export default {
   },
 
   methods: {
-    async updatePrivilege() {
+    // 清空缓存
+    clearCache() {
+      this.$toast('清空了!!');
+    },
+    // 更新权限
+    async forceUpdatePrivilege() {
       this.$smart.loading();
       try {
         const res = await userApi.getSession();
@@ -56,6 +61,7 @@ export default {
         this.$smart.loadingClear();
       }
     },
+    // 退出
     async logout() {
       this.$smart.loading();
       try {

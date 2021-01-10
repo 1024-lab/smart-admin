@@ -38,26 +38,12 @@ export default {
         loginName: '',
         loginPwd: ''
       },
-      codeUrl: ''
     };
   },
   mounted() {
   },
   methods: {
-    // 获取验证码
-    async getVerificationCode() {
-      try {
-        const res = await loginApi.getVerificationCode();
-        const data = res.data;
-        this.formData.codeUuid = data.uuid;
-        this.codeUrl = data.code;
-        this.formData.code = '';
-        console.log(this.codeUrl);
-      } catch (e) {
-        this.$smartSentry.captureException(e);
-      }
-    },
-    // 提交表单
+    // 提交登录表单
     async onSubmit() {
       this.$smart.loading();
       try {
@@ -66,9 +52,9 @@ export default {
         this.$store.commit('user/updateSession', loginInfo);
         cookie.setToken(loginInfo.xaccessToken);
         this.$toast.success('登录成功');
-        this.$router.replace('/bpm');
+        this.$router.replace('/dashboard/user');
+        // this.$router.replace('/contact-company');
       } catch (e) {
-        console.log(e);
         this.$smartSentry.captureException(e);
         await this.getVerificationCode();
       } finally {
@@ -78,3 +64,5 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+</style>

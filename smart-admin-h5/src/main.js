@@ -12,7 +12,7 @@ import 'vant/lib/index.css';
 // 引入首个组件
 import App from './App.vue';
 // 引入自定义主题样式
-import './themes/index.less';
+import './themes/index.scss';
 // 引入过滤器
 import './filters';
 // 引入配置信息

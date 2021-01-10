@@ -1,7 +1,7 @@
 // 错误页
 import { ROUTER_PERMISSION_TYPE } from '@/router/router-const';
 
-export const error = [
+export const errorRouter = [
   {
     path: '/404',
     name: 'Error404',
@@ -10,7 +10,7 @@ export const error = [
       access: true,
       permissionType: ROUTER_PERMISSION_TYPE.NO_VALID.value
     },
-    component: () => import('@/views/error/404.vue')
+    component: () => import('views/error/404.vue')
   },
   {
     path: '/500',
@@ -21,17 +21,6 @@ export const error = [
       noValidatePrivilege: true,
       permissionType: ROUTER_PERMISSION_TYPE.NO_VALID.value
     },
-    component: () => import('@/views/error/404.vue')
-  },
-  {
-    path: '*',
-    name: 'http://localhost:8080/#employee/role-employee-manage',
-    meta: {
-      hideInMenu: true,
-      access: true,
-      noValidatePrivilege: true,
-      permissionType: ROUTER_PERMISSION_TYPE.NO_VALID.value
-    },
-    component: () => import('@/views/error/404.vue')
+    component: () => import('views/error/404.vue')
   }
 ];

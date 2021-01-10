@@ -1,13 +1,10 @@
 import { getAxios, postAxios } from '@/lib/http';
 
 export const loginApi = {
-  getVerificationCode: () => {
-    return getAxios('/verificationCode');
-  },
   login: (data) => {
-    return postAxios('/login', data);
+    return postAxios('/session/login', data);
   },
   logout: (token) => {
-    return getAxios(`/logout?x-access-token=${token}`);
+    return getAxios(`/session/logOut?x-access-token=${token}`);
   }
 };
