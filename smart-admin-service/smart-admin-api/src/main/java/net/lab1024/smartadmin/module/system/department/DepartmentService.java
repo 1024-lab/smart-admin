@@ -64,7 +64,7 @@ public class DepartmentService {
             departmentVOList = filterDepartment(departmentVOList, departmentName);
         }
 
-        Map<Long, DepartmentVO> departmentMap = departmentVOList.stream().collect(Collectors.toMap(DepartmentVO :: getId, Function.identity()));
+        Map<Long, DepartmentVO> departmentMap = departmentVOList.stream().collect(Collectors.toMap(DepartmentVO::getId, Function.identity()));
         // 获取全部员工列表
         List<EmployeeDTO> employeeList = employeeDao.listAll();
         employeeList.forEach(employeeDTO -> {
@@ -103,7 +103,7 @@ public class DepartmentService {
                 List<DepartmentVO> filterResult = new ArrayList<>();
                 getParentDepartment(departmentVOList, parentId, filterResult);
                 for (DepartmentVO dto : filterResult) {
-                    if (! departmentMap.containsKey(dto.getId())) {
+                    if (!departmentMap.containsKey(dto.getId())) {
                         departmentMap.put(dto.getId(), dto);
                     }
                 }
@@ -165,23 +165,27 @@ public class DepartmentService {
      * 1、需要判断当前部门是否有子部门,有子部门则不允许删除
      * 2、需要判断当前部门是否有员工，有员工则不能删除
      *
-     * @param departmentId
-     * @return AjaxResult<String>
+     * @param deptId
+     * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<String> delDepartment(Long departmentId) {
+    public ResponseDTO<String> delDepartment(Long deptId) {
+        DepartmentEntity departmentEntity = departmentDao.selectById(deptId);
+        if (null == departmentEntity) {
+            return ResponseDTO.wrap(DepartmentResponseCodeConst.DEPT_NOT_EXISTS);
+        }
         // 是否有子级部门
-        int subDepartmentNum = departmentDao.countSubDepartment(departmentId);
+        int subDepartmentNum = departmentDao.countSubDepartment(deptId);
         if (subDepartmentNum > 0) {
             return ResponseDTO.wrap(DepartmentResponseCodeConst.CANNOT_DEL_DEPARTMENT_WITH_CHILD);
         }
 
-        // 是否有员工
-        int employeeNum = employeeDao.countByDepartmentId(departmentId);
+        // 是否有未删除员工
+        int employeeNum = employeeDao.countByDepartmentId(deptId, false);
         if (employeeNum > 0) {
             return ResponseDTO.wrap(DepartmentResponseCodeConst.CANNOT_DEL_DEPARTMENT_WITH_EMPLOYEE);
         }
-        departmentDao.deleteById(departmentId);
+        departmentDao.deleteById(deptId);
         return ResponseDTO.succ();
     }
 
@@ -278,5 +282,4 @@ public class DepartmentService {
         departmentDao.updateById(departmentEntity);
         return ResponseDTO.succ();
     }
-
 }

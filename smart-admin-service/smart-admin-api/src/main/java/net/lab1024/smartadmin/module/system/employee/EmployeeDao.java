@@ -34,6 +34,7 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
 
     /**
      * 不带分页查询员工列表
+     *
      * @param queryDTO
      * @return
      */
@@ -84,10 +85,11 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
     /**
      * 获取某个部门员工数
      *
-     * @param departmentId
+     * @param depId
+     * @param deleteFlag 可以null
      * @return
      */
-    Integer countByDepartmentId(@Param("departmentId") Long departmentId);
+    Integer countByDepartmentId(@Param("depId") Long depId, @Param("deleteFlag") Boolean deleteFlag);
 
     /**
      * 获取一批员工
@@ -99,6 +101,7 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
 
 
     EmployeeDTO getEmployeeById(@Param("id") Long employeeId);
+
     /**
      * 获取某个部门的员工
      *
@@ -128,6 +131,7 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
 
     /**
      * 查询所有员工
+     *
      * @return
      */
     List<EmployeeVO> selectAll();

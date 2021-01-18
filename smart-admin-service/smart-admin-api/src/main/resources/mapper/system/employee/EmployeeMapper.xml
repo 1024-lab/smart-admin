@@ -124,7 +124,10 @@
         FROM
         t_employee e
         WHERE
-        e.department_id = #{departmentId}
+        e.department_id = #{depId}
+        <if test="deleteFlag != null">
+            AND e.is_delete = #{deleteFlag}
+        </if>
     </select>
 
 
