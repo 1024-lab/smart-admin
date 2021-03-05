@@ -109,7 +109,7 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
 公众号
 <table>
 <tr>
-  <td><img src="![输入图片说明](http://img.zhuoluodada.cn/gzh.jpg "在这里输入图片标题")"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2021/0305/210257_cd96d824_5469596.jpeg"/></td>
 </tr>
 </table>
 
