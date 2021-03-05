@@ -106,6 +106,12 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
 #### 联系我们
 
 [1024创新实验室](https://www.1024lab.net/)
+公众号
+<table>
+<tr>
+  <td><img src="http://img.zhuoluodada.cn/gzh.jpg"/></td>
+</tr>
+</table>
 
 SmartAdmin微信群（**加我微信拉你入群！**）
 
@@ -114,6 +120,9 @@ SmartAdmin微信群（**加我微信拉你入群！**）
   <td><img src="https://images.gitee.com/uploads/images/2020/1208/181125_2ab89aa9_5469596.jpeg"/></td>
 </tr>
 </table>
+
+
+
 
 
 #### 捐赠
