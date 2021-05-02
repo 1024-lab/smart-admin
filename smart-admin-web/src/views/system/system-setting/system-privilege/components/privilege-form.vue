@@ -17,7 +17,7 @@
       <Form-item label="功能Key：" prop="functionKey" required>
         <Input disabled placeholder="请输入功能Key" v-model="privilege.functionKey"></Input>
       </Form-item>
-      <Form-item label="Url：" required>
+      <Form-item label="Url：">
         <Select filterable multiple v-model="urlArray">
           <OptionGroup :key="i" :label="items.label" v-for="(items, i) in urlList">
             <Option :key="j" :label="item.url" :value="item.name" v-for="(item, j) in items.data">

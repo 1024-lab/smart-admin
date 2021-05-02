@@ -22,7 +22,7 @@ public class SmartPageUtil {
         PageResultDTO<T> result = new PageResultDTO<>();
         result.setPageNum(page.getCurrent());
         result.setPageSize(page.getSize());
-        result.setTotal(Long.valueOf(page.getTotal()));
+        result.setTotal(page.getTotal());
         result.setPages(page.getPages());
         result.setList(page.getRecords());
         return result;
@@ -33,7 +33,7 @@ public class SmartPageUtil {
 
         List<OrderItemDTO> orders = baseDTO.getOrders();
         if (orders != null && !orders.isEmpty()) {
-            List<com.baomidou.mybatisplus.core.metadata.OrderItem> orderItemList = orders.stream().map(e -> convertOrderItem(e)).collect(Collectors.toList());
+            List<com.baomidou.mybatisplus.core.metadata.OrderItem> orderItemList = orders.stream().map(SmartPageUtil::convertOrderItem).collect(Collectors.toList());
             page.setOrders(orderItemList);
         }
         page.setCurrent(baseDTO.getPageNum());
@@ -90,7 +90,7 @@ public class SmartPageUtil {
         PageResultDTO pageResultDTO = new PageResultDTO();
         pageResultDTO.setPageNum(page.getCurrent());
         pageResultDTO.setPageSize(page.getSize());
-        pageResultDTO.setTotal(Long.valueOf(page.getTotal()));
+        pageResultDTO.setTotal(page.getTotal());
         pageResultDTO.setPages(page.getPages());
         return pageResultDTO;
     }

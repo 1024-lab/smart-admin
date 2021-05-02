@@ -42,7 +42,6 @@ public class PrivilegeController {
     @PostMapping("/privilege/menu/batchSaveMenu")
     public ResponseDTO<String> menuBatchSave(@Valid @RequestBody ValidateList<PrivilegeMenuDTO> menuList) {
         return privilegeService.menuBatchSave(menuList);
-//        return ResponseDTO.succ();
     }
 
 
@@ -57,14 +56,12 @@ public class PrivilegeController {
     @PostMapping("/privilege/function/saveOrUpdate")
     public ResponseDTO<String> functionSaveOrUpdate(@Valid @RequestBody PrivilegeFunctionDTO privilegeFunctionDTO) {
         return privilegeService.functionSaveOrUpdate(privilegeFunctionDTO);
-//        return ResponseDTO.succ();
     }
 
     @ApiOperation(value = "批量保存功能点")
     @PostMapping("/privilege/function/batchSave")
     public ResponseDTO<String>  batchSaveFunctionList(@Valid @RequestBody ValidateList<PrivilegeFunctionDTO> functionList) {
         return privilegeService.batchSaveFunctionList(functionList);
-//        return ResponseDTO.succ();
     }
 
 

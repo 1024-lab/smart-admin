@@ -1,3 +1,4 @@
+### SmartAdmin 2.0 (即 vue3 的 js版本和ts版本 )正在火热开发中，欢迎持续关注 ！
 #### 简介
 SmartAdmin由河南·洛阳 [1024创新实验室](https://www.1024lab.net/)团队研发的一套互联网企业级的通用型中后台解决方案！使用最前沿的前后台技术栈SpringBoot和Vue，前后端分离，<font color="#DC143C">**我们开源一套漂亮的代码和一套整洁的代码规范**</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，热爱生活。SmartAdmin 让你从认识到忘不了，绝对是你最想要的！
 
@@ -25,32 +26,32 @@ gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-
 #### 演示图
 <table>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/11.png"/></td>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/12.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180453_252f5e9f_5469596.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180630_ee5b4f46_5469596.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/21.png"/></td>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/22.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180737_9363e283_5469596.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180802_aefb78f4_5469596.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/31.png"/></td>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/32.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180821_30fc7aaf_5469596.png")"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180844_01ebd7d2_5469596.png")"/></td>
 </tr>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/41.png"/></td>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/42.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180902_02c8d838_5469596.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180918_ff1f7ff5_5469596.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/51.png"/></td>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/52.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180938_86b39645_5469596.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/180956_69e25a9c_5469596.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/61.png"/></td>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/62.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/181013_791d92f0_5469596.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/181032_9f0dbbee_5469596.png"/></td>
 </tr>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/71.png"/></td>
-  <td><img src="http://img.zhuoluodada.cn/cut/1.1.0/72.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/181049_099d0169_5469596.png"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/181104_914c457a_5469596.png"/></td>
 </tr>
 </table>
 
@@ -106,14 +107,23 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
 #### 联系我们
 
 [1024创新实验室](https://www.1024lab.net/)
+公众号
+<table>
+<tr>
+  <td><img src="https://images.gitee.com/uploads/images/2021/0305/210257_cd96d824_5469596.jpeg"/></td>
+</tr>
+</table>
 
 SmartAdmin微信群（**加我微信拉你入群！**）
 
 <table>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/wechat/zhuoda-wechat.jpg"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/181125_2ab89aa9_5469596.jpeg"/></td>
 </tr>
 </table>
+
+
+
 
 
 #### 捐赠
@@ -121,7 +131,7 @@ SmartAdmin微信群（**加我微信拉你入群！**）
 >*佛祖保佑捐赠这些人写程序永无bug，工资翻倍，迎娶白富美，走上人生巅峰！*
 <table>
 <tr>
-  <td><img src="http://img.zhuoluodada.cn/wechat/zhuoda-wechat-money-v1.jpg"/></td>
+  <td><img src="https://images.gitee.com/uploads/images/2020/1208/181143_b6804a87_5469596.jpeg"/></td>
 </tr>
 </table>
 

@@ -4,7 +4,7 @@ import net.lab1024.smartadmin.module.system.department.DepartmentResponseCodeCon
 import net.lab1024.smartadmin.module.system.employee.constant.EmployeeResponseCodeConst;
 import net.lab1024.smartadmin.module.support.file.constant.FileResponseCodeConst;
 import net.lab1024.smartadmin.module.business.log.orderoperatelog.constant.OrderOperateLogOperateTypeConst;
-import net.lab1024.smartadmin.module.business.login.LoginResponseCodeConst;
+import net.lab1024.smartadmin.module.system.login.LoginResponseCodeConst;
 import net.lab1024.smartadmin.module.system.position.PositionResponseCodeConst;
 import net.lab1024.smartadmin.module.system.privilege.constant.PrivilegeResponseCodeConst;
 import net.lab1024.smartadmin.module.system.role.basic.RoleResponseCodeConst;

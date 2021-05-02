@@ -1,4 +1,4 @@
-package net.lab1024.smartadmin.module.business.login;
+package net.lab1024.smartadmin.module.system.login;
 
 import net.lab1024.smartadmin.common.constant.JudgeEnum;
 import net.lab1024.smartadmin.common.domain.ResponseDTO;
@@ -12,10 +12,10 @@ import net.lab1024.smartadmin.module.system.employee.domain.dto.EmployeeDTO;
 import net.lab1024.smartadmin.module.system.employee.domain.dto.EmployeeLoginFormDTO;
 import net.lab1024.smartadmin.module.business.log.LogService;
 import net.lab1024.smartadmin.module.business.log.userloginlog.domain.UserLoginLogEntity;
-import net.lab1024.smartadmin.module.business.login.domain.KaptchaVO;
-import net.lab1024.smartadmin.module.business.login.domain.LoginDetailVO;
-import net.lab1024.smartadmin.module.business.login.domain.LoginPrivilegeDTO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.KaptchaVO;
+import net.lab1024.smartadmin.module.system.login.domain.LoginDetailVO;
+import net.lab1024.smartadmin.module.system.login.domain.LoginPrivilegeDTO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.module.system.privilege.domain.entity.PrivilegeEntity;
 import net.lab1024.smartadmin.module.system.privilege.service.PrivilegeEmployeeService;
 import net.lab1024.smartadmin.util.SmartBeanUtil;
@@ -83,15 +83,15 @@ public class LoginService {
      * @return 登录用户基本信息
      */
     public ResponseDTO<LoginDetailVO> login(@Valid EmployeeLoginFormDTO loginForm, HttpServletRequest request) {
-        String redisVerificationCode = redisValueOperations.get(loginForm.getCodeUuid());
-        //增加删除已使用的验证码方式 频繁登录
-        redisValueOperations.getOperations().delete(loginForm.getCodeUuid());
-        if (StringUtils.isEmpty(redisVerificationCode)) {
-            return ResponseDTO.wrap(EmployeeResponseCodeConst.VERIFICATION_CODE_INVALID);
-        }
-        if (!redisVerificationCode.equalsIgnoreCase(loginForm.getCode())) {
-            return ResponseDTO.wrap(EmployeeResponseCodeConst.VERIFICATION_CODE_INVALID);
-        }
+//        String redisVerificationCode = redisValueOperations.get(loginForm.getCodeUuid());
+//        //增加删除已使用的验证码方式 频繁登录
+//        redisValueOperations.getOperations().delete(loginForm.getCodeUuid());
+//        if (StringUtils.isEmpty(redisVerificationCode)) {
+//            return ResponseDTO.wrap(EmployeeResponseCodeConst.VERIFICATION_CODE_INVALID);
+//        }
+//        if (!redisVerificationCode.equalsIgnoreCase(loginForm.getCode())) {
+//            return ResponseDTO.wrap(EmployeeResponseCodeConst.VERIFICATION_CODE_INVALID);
+//        }
         String loginPwd = SmartDigestUtil.encryptPassword(CommonConst.Password.SALT_FORMAT, loginForm.getLoginPwd());
         EmployeeDTO employeeDTO = employeeDao.login(loginForm.getLoginName(), loginPwd);
         if (null == employeeDTO) {

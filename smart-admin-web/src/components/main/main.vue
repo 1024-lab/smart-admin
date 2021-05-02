@@ -3,7 +3,7 @@
     <Sider
       :collapsed-width="60"
       :style="{overflow: 'hidden'}"
-      :width="256"
+      :width="185"
       class="left-sider"
       collapsible
       hide-trigger

@@ -1,6 +1,6 @@
 package net.lab1024.smartadmin.config;
 
-import net.lab1024.smartadmin.constant.SwaggerTagConst;
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -8,6 +8,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import net.lab1024.smartadmin.constant.SwaggerTagConst;
+import net.lab1024.smartadmin.interceptor.SmartAuthenticationInterceptor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -18,11 +20,14 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -48,6 +53,7 @@ import java.util.Map;
  */
 @Slf4j
 @EnableSwagger2
+@EnableKnife4j
 @Configuration
 @Profile({"dev", "sit", "pre", "prod"})
 public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDefinitionRegistryPostProcessor {
@@ -86,9 +92,9 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
 
     private String groupName = "default";
 
-    private List<String> groupList = Lists.newArrayList();
+    private final List<String> groupList = Lists.newArrayList();
 
-    private Map<String, List<String>> groupMap = Maps.newHashMap();
+    private final Map<String, List<String>> groupMap = Maps.newHashMap();
 
     @Override
     public void setEnvironment(Environment environment) {
@@ -105,7 +111,7 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
         this.groupBuild();
         for (Map.Entry<String, List<String>> entry : groupMap.entrySet()) {
             String group = entry.getKey();
-            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(Docket.class, this :: baseDocket);
+            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(Docket.class, this::baseDocket);
             BeanDefinition beanDefinition = builder.getRawBeanDefinition();
             registry.registerBeanDefinition(group + "Api", beanDefinition);
         }
@@ -134,6 +140,16 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
     }
 
     private Docket baseDocket() {
+        // 配置全局参数 token
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        Parameter parameter = tokenPar.name(SmartAuthenticationInterceptor.TOKEN_NAME)
+                .description("token")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .defaultValue("")
+                .required(false)
+                .build();
+
         // 请求类型过滤规则
         Predicate<RequestHandler> controllerPredicate = getControllerPredicate();
         // controller 包路径
@@ -148,17 +164,18 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
                 .build()
                 .apiInfo(this.serviceApiInfo())
                 .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts());
+                .securityContexts(securityContexts())
+                .globalOperationParameters(Lists.newArrayList(parameter));
     }
 
     private List<ApiKey> securitySchemes() {
-        List<ApiKey> apiKeyList= new ArrayList<>();
+        List<ApiKey> apiKeyList = new ArrayList<>();
         apiKeyList.add(new ApiKey("x-access-token", "x-access-token", "header"));
         return apiKeyList;
     }
 
     private List<SecurityContext> securityContexts() {
-        List<SecurityContext> securityContexts=new ArrayList<>();
+        List<SecurityContext> securityContexts = new ArrayList<>();
         securityContexts.add(
                 SecurityContext.builder()
                         .securityReferences(defaultAuth())
@@ -171,7 +188,7 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        List<SecurityReference> securityReferences=new ArrayList<>();
+        List<SecurityReference> securityReferences = new ArrayList<>();
         securityReferences.add(new SecurityReference("x-access-token", authorizationScopes));
         return securityReferences;
     }
@@ -192,7 +209,11 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
             return false;
         };
         groupIndex++;
-        return Predicates.and(RequestHandlerSelectors.withClassAnnotation(RestController.class), methodPredicate);
+        return Predicates.or(
+                Predicates.and(RequestHandlerSelectors.withClassAnnotation(RestController.class), methodPredicate),
+                Predicates.and(
+                        RequestHandlerSelectors.withMethodAnnotation(ResponseBody.class), methodPredicate)
+        );
     }
 
     private ApiInfo serviceApiInfo() {
@@ -210,8 +231,6 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
 
     }
-
-
 
 
 }

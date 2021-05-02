@@ -20,24 +20,26 @@ export const threeRouter = [
         children: [
           {
             path: '/three-router/level-two/level-three1',
-            name: 'RoleOneTwo',
+            name: 'ThreeLevelRouterView',
             meta: {
-              title: '三级A',
+              title: '三级菜单子颗粒',
               privilege: [
-                { title: '添加', name: 'roleOneTwo-add' },
-                { title: '删除', name: 'roleOneTwo-delete' }
+                { title: '添加', name: 'three-level-router-view-add' },
+                { title: '查询', name: 'three-level-router-view-query' },
               ]
             },
-            component: () => import('@/views/system/system-setting/system-config/system-config.vue')
+            component: () => import('@/views/business/three-level-router/three-level-router-view.vue')
           },
           {
             path: '/three-router/level-two/level-three2',
             name: 'RoleTwoTwo',
             meta: {
-              title: '三级B',
+              title: '三级菜单子哈',
               privilege: [
                 { title: '添加', name: 'roleTwoTwo-add' },
-                { title: '删除', name: 'roleTwoTwo-delete' }
+                { title: '删除', name: 'roleTwoTwo-delete' },
+                { title: '删除', name: 'roleTwoTwo-delete1' },
+                { title: '删除', name: 'roleTwoTwo-delete2' },
               ]
             },
             component: () => import('@/views/support/monitor/sql.vue')

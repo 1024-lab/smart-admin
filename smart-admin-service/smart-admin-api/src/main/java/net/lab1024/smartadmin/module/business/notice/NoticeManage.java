@@ -1,7 +1,7 @@
 package net.lab1024.smartadmin.module.business.notice;
 
 import net.lab1024.smartadmin.common.constant.JudgeEnum;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.module.business.notice.dao.NoticeDao;
 import net.lab1024.smartadmin.module.business.notice.dao.NoticeReceiveRecordDao;
 import net.lab1024.smartadmin.module.business.notice.domain.dto.NoticeUpdateDTO;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**

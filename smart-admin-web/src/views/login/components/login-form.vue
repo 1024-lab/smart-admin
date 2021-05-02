@@ -7,10 +7,10 @@
       <FormItem prop="loginPwd">
         <Input placeholder="请输入密码" type="password" v-model="formData.loginPwd"></Input>
       </FormItem>
-      <FormItem prop="code">
+      <!-- <FormItem prop="code">
         <Input class="code-input" placeholder="请输入验证码" v-model="formData.code"></Input>
         <img :src="codeUrl" @click="verificationCode" class="codeUrl" v-if="codeUrl" />
-      </FormItem>
+      </FormItem> -->
       <FormItem class="remember">
         <Checkbox>记住密码</Checkbox>
       </FormItem>
@@ -18,7 +18,7 @@
         <Button :loading="btnLoading" @click="login" long type="primary">登录</Button>
       </FormItem>
       <div class="other-way">
-        <p class="inline" style="float:left">其他方式登陆(账号：demo/123456   demo1/123456)</p>
+        <p class="inline" style="float:left">其他方式登陆(账号：demo/123456)</p>
         <div class="inline align" style="float:right">
           <img alt class="marginLeft" src="../../../assets/images/login-taobao.png" />
           <img alt class="marginLeft" src="../../../assets/images/login-alipay.png" />
@@ -47,14 +47,15 @@ export default {
       default: () => {
         return [{ required: true, message: '密码不能为空', trigger: 'blur' }];
       }
-    },
-    // 验证码规则
-    codedRules: {
-      type: Array,
-      default: () => {
-        return [{ required: true, message: '验证码不能为空', trigger: 'blur' }];
-      }
     }
+    // ,
+    // // 验证码规则
+    // codedRules: {
+    //   type: Array,
+    //   default: () => {
+    //     return [{ required: true, message: '验证码不能为空', trigger: 'blur' }];
+    //   }
+    // }
   },
   data() {
     return {
@@ -63,7 +64,7 @@ export default {
       formData: {
         code: '',
         codeUuid: '',
-        loginName: 'demo',
+        loginName: 'sa',
         loginPwd: '123456'
       },
       codeUrl: ''
@@ -79,7 +80,7 @@ export default {
     }
   },
   mounted() {
-    this.verificationCode();
+    // this.verificationCode();
   },
   methods: {
     // 获取验证码
@@ -125,7 +126,7 @@ export default {
         //TODO zhuoda sentry
         console.error(e);
         this.btnLoading = false;
-        this.verificationCode();
+        //this.verificationCode();
       }
     }
   }

@@ -2,8 +2,10 @@ package net.lab1024.smartadmin.module.business.notice.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import net.lab1024.smartadmin.common.anno.DataScope;
 import net.lab1024.smartadmin.module.business.notice.domain.dto.*;
 import net.lab1024.smartadmin.module.business.notice.domain.entity.NoticeEntity;
+import net.lab1024.smartadmin.module.system.datascope.constant.DataScopeWhereInTypeEnum;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -29,6 +31,7 @@ public interface NoticeDao extends BaseMapper<NoticeEntity> {
      * @param queryDTO
      * @return NoticeEntity
     */
+    @DataScope(joinSql = "n.create_user in (#employeeIds)", whereInType = DataScopeWhereInTypeEnum.EMPLOYEE)
     List<NoticeVO> queryByPage(Page page, @Param("queryDTO") NoticeQueryDTO queryDTO);
 
 
@@ -38,6 +41,7 @@ public interface NoticeDao extends BaseMapper<NoticeEntity> {
      * @param employeeId
      * @return
      */
+    @DataScope(joinSql = "e.department_id in (#departmentIds)", whereInType = DataScopeWhereInTypeEnum.DEPARTMENT)
     List<NoticeVO> queryUnreadByPage(Page page, @Param("employeeId") Long employeeId, @Param("sendStatus") Integer sendStatus);
 
 

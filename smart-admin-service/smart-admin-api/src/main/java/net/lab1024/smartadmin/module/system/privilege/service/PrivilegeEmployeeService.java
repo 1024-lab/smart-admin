@@ -3,7 +3,7 @@ package net.lab1024.smartadmin.module.system.privilege.service;
 import net.lab1024.smartadmin.common.constant.JudgeEnum;
 import net.lab1024.smartadmin.common.exception.SmartBusinessException;
 import net.lab1024.smartadmin.module.system.employee.domain.dto.EmployeeDTO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.module.system.privilege.constant.PrivilegeTypeEnum;
 import net.lab1024.smartadmin.module.system.privilege.dao.PrivilegeDao;
 import net.lab1024.smartadmin.module.system.privilege.domain.entity.PrivilegeEntity;

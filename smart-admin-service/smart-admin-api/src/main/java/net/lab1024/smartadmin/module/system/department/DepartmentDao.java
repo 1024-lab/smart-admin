@@ -19,14 +19,13 @@ import java.util.List;
 @Mapper
 public interface DepartmentDao extends BaseMapper<DepartmentEntity> {
 
-
     /**
-     * 根据部门id，查询此部门子部门的数量
+     * 根据部门id，查询此部门直接子部门的数量
      *
-     * @param departmentId
+     * @param deptId
      * @return int 子部门的数量
      */
-    Integer countSubDepartment(@Param("departmentId") Long departmentId);
+    Integer countSubDepartment(@Param("deptId") Long deptId);
 
     /**
      * 获取全部部门列表

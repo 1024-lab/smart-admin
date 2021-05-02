@@ -55,6 +55,13 @@ public interface PrivilegeDao extends BaseMapper<PrivilegeEntity> {
     List<PrivilegeEntity> selectByParentKey(@Param("parentKey") String parentKey);
 
     /**
+     * 根据父节点key查询
+     * @param keyList
+     * @return
+     */
+    List<PrivilegeEntity> selectByKeyList(@Param("keyList") List<String> keyList);
+
+    /**
      * 根据权限key查询
      * @param key
      * @return

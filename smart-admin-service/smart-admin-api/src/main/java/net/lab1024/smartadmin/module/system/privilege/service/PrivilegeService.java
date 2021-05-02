@@ -216,10 +216,18 @@ public class PrivilegeService {
             return ResponseDTO.wrap(PrivilegeResponseCodeConst.MENU_NOT_EXIST);
         }
 
-        //数据库中存在的数据
-        List<PrivilegeEntity> existFunctionList = privilegeDao.selectByParentKey(menuKey);
-        Map<String, PrivilegeEntity> privilegeEntityMap = existFunctionList.stream().collect(Collectors.toMap(PrivilegeEntity::getKey, e -> e));
+        List<String> functionKeyList = functionList.stream().map(PrivilegeFunctionDTO::getFunctionKey).collect(Collectors.toList());
 
+        //数据库中存在的数据
+        List<PrivilegeEntity> existFunctionList = privilegeDao.selectByKeyList(functionKeyList);
+        //校验是否parent key重复
+        boolean parentKeyExist = existFunctionList.stream().anyMatch(e -> !menuKey.equals(e.getParentKey()));
+        if(parentKeyExist){
+            return ResponseDTO.wrap(PrivilegeResponseCodeConst.ROUTER_KEY_NO_REPEAT);
+        }
+
+        existFunctionList = privilegeDao.selectByParentKey(menuKey);
+        Map<String, PrivilegeEntity> privilegeEntityMap = existFunctionList.stream().collect(Collectors.toMap(PrivilegeEntity::getKey, e -> e));
         //如果没有，则保存全部
         if (existFunctionList.isEmpty()) {
             List<PrivilegeEntity> privilegeEntityList = functionList.stream().map(e -> function2Privilege(e)).collect(Collectors.toList());

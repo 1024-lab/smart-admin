@@ -1,11 +1,11 @@
-package net.lab1024.smartadmin.module.business.login;
+package net.lab1024.smartadmin.module.system.login;
 
 import net.lab1024.smartadmin.common.constant.JudgeEnum;
 import net.lab1024.smartadmin.module.system.employee.EmployeeService;
 import net.lab1024.smartadmin.module.system.employee.constant.EmployeeStatusEnum;
 import net.lab1024.smartadmin.module.system.employee.domain.bo.EmployeeBO;
 import net.lab1024.smartadmin.module.system.employee.domain.dto.EmployeeDTO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

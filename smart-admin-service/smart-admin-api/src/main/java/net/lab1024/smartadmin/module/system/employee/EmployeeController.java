@@ -7,7 +7,7 @@ import net.lab1024.smartadmin.common.domain.ResponseDTO;
 import net.lab1024.smartadmin.constant.SwaggerTagConst;
 import net.lab1024.smartadmin.module.system.employee.domain.dto.*;
 import net.lab1024.smartadmin.module.system.employee.domain.vo.EmployeeVO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.util.SmartRequestTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -86,7 +86,6 @@ public class EmployeeController {
     public ResponseDTO<String> updatePwd(@Valid @RequestBody EmployeeUpdatePwdDTO updatePwdDTO) {
         RequestTokenBO requestToken = SmartRequestTokenUtil.getRequestUser();
         return employeeService.updatePwd(updatePwdDTO, requestToken);
-//        return ResponseDTO.succ();
     }
 
     @ApiOperation(value = "通过部门id获取当前部门的人员&没有部门的人", notes = "@author yandanyang")

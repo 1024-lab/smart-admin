@@ -1,4 +1,4 @@
-package net.lab1024.smartadmin.module.business.login.domain;
+package net.lab1024.smartadmin.module.system.login.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;

@@ -22,7 +22,7 @@ public class PageParamDTO {
 
     @NotNull(message = "每页数量不能为空")
     @ApiModelProperty(value = "每页数量(不能为空)", example = "10")
-    @Max(value = 200, message = "每页最大为200")
+    @Max(value = 500, message = "每页最大为500")
     protected Integer pageSize;
 
     @ApiModelProperty("是否查询总条数")

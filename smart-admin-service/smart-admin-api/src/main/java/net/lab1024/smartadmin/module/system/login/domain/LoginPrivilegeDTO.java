@@ -1,4 +1,4 @@
-package net.lab1024.smartadmin.module.business.login.domain;
+package net.lab1024.smartadmin.module.system.login.domain;
 
 import net.lab1024.smartadmin.common.anno.ApiModelPropertyEnum;
 import net.lab1024.smartadmin.module.system.privilege.constant.PrivilegeTypeEnum;

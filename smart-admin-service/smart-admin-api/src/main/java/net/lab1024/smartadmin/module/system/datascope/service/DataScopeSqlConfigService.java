@@ -1,9 +1,14 @@
 package net.lab1024.smartadmin.module.system.datascope.service;
 
+import lombok.extern.slf4j.Slf4j;
 import net.lab1024.smartadmin.common.anno.DataScope;
+import net.lab1024.smartadmin.module.system.datascope.constant.DataScopeTypeEnum;
+import net.lab1024.smartadmin.module.system.datascope.constant.DataScopeViewTypeEnum;
 import net.lab1024.smartadmin.module.system.datascope.constant.DataScopeWhereInTypeEnum;
 import net.lab1024.smartadmin.module.system.datascope.domain.dto.DataScopeSqlConfigDTO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.datascope.strategy.DataScopePowerStrategy;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.third.SmartApplicationContext;
 import net.lab1024.smartadmin.util.SmartRequestTokenUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2019/4/29 0029 上午 10:12
  * @since JDK1.8
  */
+@Slf4j
 @Service
 public class DataScopeSqlConfigService {
 
@@ -67,9 +73,10 @@ public class DataScopeSqlConfigService {
             DataScope dataScopeAnnotation = method.getAnnotation(DataScope.class);
             if (dataScopeAnnotation != null) {
                 DataScopeSqlConfigDTO configDTO = new DataScopeSqlConfigDTO();
-                configDTO.setDataScopeType(dataScopeAnnotation.dataScopeType().getType());
+                configDTO.setDataScopeType(dataScopeAnnotation.dataScopeType());
                 configDTO.setJoinSql(dataScopeAnnotation.joinSql());
                 configDTO.setWhereIndex(dataScopeAnnotation.whereIndex());
+                configDTO.setDataScopeWhereInType(dataScopeAnnotation.whereInType());
                 dataScopeMethodMap.put(method.getDeclaringClass().getSimpleName() + "." + method.getName(), configDTO);
             }
         }
@@ -94,12 +101,26 @@ public class DataScopeSqlConfigService {
      * @return
      */
     public String getJoinSql(DataScopeSqlConfigDTO sqlConfigDTO) {
-        Integer dataScopeType = sqlConfigDTO.getDataScopeType();
+        DataScopeTypeEnum dataScopeTypeEnum = sqlConfigDTO.getDataScopeType();
         String joinSql = sqlConfigDTO.getJoinSql();
         RequestTokenBO requestToken = SmartRequestTokenUtil.getThreadLocalUser();
         Long employeeId = requestToken.getRequestUserId();
-        if (DataScopeWhereInTypeEnum.EMPLOYEE.getType().equals(sqlConfigDTO.getDataScopeWhereInType())) {
-            List<Long> canViewEmployeeIds = dataScopeViewService.getCanViewEmployeeId(dataScopeType, employeeId);
+        if (DataScopeWhereInTypeEnum.CUSTOM_STRATEGY == sqlConfigDTO.getDataScopeWhereInType()) {
+            Class strategyClass = sqlConfigDTO.getJoinSqlImplClazz();
+            if(strategyClass == null){
+                log.warn("data scope custom strategy class is null");
+                return "";
+            }
+            DataScopePowerStrategy powerStrategy = (DataScopePowerStrategy)SmartApplicationContext.getBean(sqlConfigDTO.getJoinSqlImplClazz());
+            if (powerStrategy == null) {
+                log.warn("data scope custom strategy class：{} ,bean is null",sqlConfigDTO.getJoinSqlImplClazz());
+                return "";
+            }
+            DataScopeViewTypeEnum viewTypeEnum = dataScopeViewService.getEmployeeDataScopeViewType(dataScopeTypeEnum, employeeId);
+            return powerStrategy.getCondition(viewTypeEnum,sqlConfigDTO);
+        }
+        if (DataScopeWhereInTypeEnum.EMPLOYEE == sqlConfigDTO.getDataScopeWhereInType()) {
+            List<Long> canViewEmployeeIds = dataScopeViewService.getCanViewEmployeeId(dataScopeTypeEnum, employeeId);
             if (CollectionUtils.isEmpty(canViewEmployeeIds)) {
                 return "";
             }
@@ -107,8 +128,8 @@ public class DataScopeSqlConfigService {
             String sql = joinSql.replaceAll(EMPLOYEE_PARAM, employeeIds);
             return sql;
         }
-        if (DataScopeWhereInTypeEnum.DEPARTMENT.getType().equals(sqlConfigDTO.getDataScopeWhereInType())) {
-            List<Long> canViewDepartmentIds = dataScopeViewService.getCanViewDepartmentId(dataScopeType, employeeId);
+        if (DataScopeWhereInTypeEnum.DEPARTMENT == sqlConfigDTO.getDataScopeWhereInType()) {
+            List<Long> canViewDepartmentIds = dataScopeViewService.getCanViewDepartmentId(dataScopeTypeEnum, employeeId);
             if (CollectionUtils.isEmpty(canViewDepartmentIds)) {
                 return "";
             }

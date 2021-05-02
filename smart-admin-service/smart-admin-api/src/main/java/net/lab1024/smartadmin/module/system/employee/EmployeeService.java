@@ -1,6 +1,7 @@
 package net.lab1024.smartadmin.module.system.employee;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import net.lab1024.smartadmin.common.constant.JudgeEnum;
 import net.lab1024.smartadmin.common.domain.PageResultDTO;
 import net.lab1024.smartadmin.common.domain.ResponseDTO;
@@ -13,7 +14,7 @@ import net.lab1024.smartadmin.module.system.employee.domain.bo.EmployeeBO;
 import net.lab1024.smartadmin.module.system.employee.domain.dto.*;
 import net.lab1024.smartadmin.module.system.employee.domain.entity.EmployeeEntity;
 import net.lab1024.smartadmin.module.system.employee.domain.vo.EmployeeVO;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.module.system.position.PositionDao;
 import net.lab1024.smartadmin.module.system.position.PositionService;
 import net.lab1024.smartadmin.module.system.position.domain.dto.PositionRelationAddDTO;
@@ -25,7 +26,6 @@ import net.lab1024.smartadmin.util.SmartBeanUtil;
 import net.lab1024.smartadmin.util.SmartDigestUtil;
 import net.lab1024.smartadmin.util.SmartPageUtil;
 import net.lab1024.smartadmin.util.SmartVerificationUtil;
-import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
@@ -74,7 +74,7 @@ public class EmployeeService {
      */
     private static final ConcurrentHashMap<Long, EmployeeBO> employeeCache = new ConcurrentHashMap<>();
 
-    public List<EmployeeVO> getAllEmployee(){
+    public List<EmployeeVO> getAllEmployee() {
         return employeeDao.selectAll();
     }
 
@@ -119,7 +119,7 @@ public class EmployeeService {
 
             for (EmployeeDTO employeeDTO : employeeList) {
                 List<PositionRelationResultDTO> relationResultDTOList = employeePositionMap.get(employeeDTO.getId());
-                if(relationResultDTOList != null){
+                if (relationResultDTOList != null) {
                     employeeDTO.setPositionRelationList(relationResultDTOList);
                     employeeDTO.setPositionName(relationResultDTOList.stream().map(PositionRelationResultDTO::getPositionName).collect(Collectors.joining(",")));
                 }
@@ -155,7 +155,7 @@ public class EmployeeService {
             return ResponseDTO.wrap(EmployeeResponseCodeConst.LOGIN_NAME_EXISTS);
         }
         //同电话员工
-        EmployeeDTO samePhoneEmployee = employeeDao.getByPhone(entity.getLoginName(), EmployeeStatusEnum.NORMAL.getValue());
+        EmployeeDTO samePhoneEmployee = employeeDao.getByPhone(entity.getPhone(), EmployeeStatusEnum.NORMAL.getValue());
         if (null != samePhoneEmployee) {
             return ResponseDTO.wrap(EmployeeResponseCodeConst.PHONE_EXISTS);
         }

@@ -106,7 +106,7 @@
         FROM
         t_employee e
         WHERE
-        e.login_name = #{phone} and e.is_disabled = #{isDisabled}
+        e.phone = #{phone} and e.is_disabled = #{isDisabled}
     </select>
 
 
@@ -124,7 +124,10 @@
         FROM
         t_employee e
         WHERE
-        e.department_id = #{departmentId}
+        e.department_id = #{depId}
+        <if test="deleteFlag != null">
+            AND e.is_delete = #{deleteFlag}
+        </if>
     </select>
 
 
@@ -146,7 +149,7 @@
         t_employee e
         WHERE
         e.department_id IN
-        <foreach collection="departmentIds" item="item" separator=",">
+        <foreach collection="departmentIds" item="item" open="("  close=")" separator=",">
             #{item}
         </foreach>
         order by e.create_time desc
@@ -158,7 +161,7 @@
         FROM
         t_employee e
         where e.id IN
-        <foreach collection="ids" item="item" separator=",">
+        <foreach collection="ids" item="item" open="("  close=")"  separator=",">
             #{item}
         </foreach>
         order by e.create_time desc

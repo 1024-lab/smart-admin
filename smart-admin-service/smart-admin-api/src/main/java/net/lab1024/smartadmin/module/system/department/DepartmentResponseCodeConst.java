@@ -14,7 +14,7 @@ public class DepartmentResponseCodeConst extends ResponseCodeConst {
     /**
      * 部门不存在 1001
      */
-    public static final DepartmentResponseCodeConst DEPT_NOT_EXISTS = new DepartmentResponseCodeConst(2001, "部门不存在！");
+    public static final DepartmentResponseCodeConst DEPT_NOT_EXISTS = new DepartmentResponseCodeConst(2001, "部门不存在");
 
     /**
      * 当前部门有子级部门 不能删除 10003

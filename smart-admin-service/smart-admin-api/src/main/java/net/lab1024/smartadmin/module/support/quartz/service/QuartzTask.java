@@ -1,14 +1,14 @@
 package net.lab1024.smartadmin.module.support.quartz.service;
 
+import lombok.extern.slf4j.Slf4j;
+import net.lab1024.smartadmin.common.domain.ITask;
 import net.lab1024.smartadmin.module.support.quartz.constant.QuartzConst;
 import net.lab1024.smartadmin.module.support.quartz.constant.TaskResultEnum;
 import net.lab1024.smartadmin.module.support.quartz.domain.entity.QuartzTaskEntity;
 import net.lab1024.smartadmin.module.support.quartz.domain.entity.QuartzTaskLogEntity;
-import net.lab1024.smartadmin.common.domain.ITask;
 import net.lab1024.smartadmin.third.SmartApplicationContext;
 import net.lab1024.smartadmin.util.SmartIPUtil;
 import net.lab1024.smartadmin.util.SmartQuartzUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -35,7 +35,7 @@ public class QuartzTask extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         JobDetail jobDetail = context.getJobDetail();
-        Object params = jobDetail.getJobDataMap().get(QuartzConst.QUARTZ_PARAMS_KEY);
+        Object params = context.getMergedJobDataMap().get(QuartzConst.QUARTZ_PARAMS_KEY);
         JobKey jobKey = jobDetail.getKey();
 
         Long taskId = SmartQuartzUtil.getTaskIdByJobKey(jobKey);
@@ -47,7 +47,11 @@ public class QuartzTask extends QuartzJobBean {
         QuartzTaskLogEntity taskLogEntity = new QuartzTaskLogEntity();
         taskLogEntity.setTaskId(taskId);
         taskLogEntity.setIpAddress(SmartIPUtil.getLocalHostIP());
-        taskLogEntity.setTaskName(quartzTaskEntity.getTaskName());
+        try {
+            taskLogEntity.setTaskName(quartzTaskEntity.getTaskName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String paramsStr = null;
         if (params != null) {
             paramsStr = params.toString();

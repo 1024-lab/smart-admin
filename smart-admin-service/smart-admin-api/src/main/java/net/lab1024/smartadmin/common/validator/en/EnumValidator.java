@@ -5,6 +5,8 @@ import net.lab1024.smartadmin.common.domain.BaseEnum;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 枚举类校验器
@@ -15,9 +17,9 @@ import java.util.List;
 public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
 
     /**
-     * 枚举类的类对象
+     * 枚举类实例集合
      */
-    private Class<? extends BaseEnum> enumClass;
+    private List<Object> enumValList;
 
     /**
      * 是否必须
@@ -27,8 +29,9 @@ public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
     @Override
     public void initialize(CheckEnum constraintAnnotation) {
         // 获取注解传入的枚举类对象
-        enumClass = constraintAnnotation.enumClazz();
         required = constraintAnnotation.required();
+        Class<? extends BaseEnum> enumClass = constraintAnnotation.enumClazz();
+        enumValList = Stream.of(enumClass.getEnumConstants()).map(BaseEnum::getValue).collect(Collectors.toList());
     }
 
     @Override
@@ -44,7 +47,7 @@ public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
         }
 
         // 校验是否为合法的枚举值
-        return this.hasEnum(value);
+        return enumValList.contains(value);
     }
 
     /**
@@ -58,23 +61,11 @@ public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
             // 必须的情况下 list 不能为空
             return false;
         }
-        for (Object obj : list) {
-            boolean hasEnum = this.hasEnum(obj);
-            if (!hasEnum) {
-                return false;
-            }
+        // 校验是否重复
+        long count = list.stream().distinct().count();
+        if (count != list.size()) {
+            return false;
         }
-        return true;
-    }
-
-    private boolean hasEnum(Object value) {
-        // 校验是否为合法的枚举值
-        BaseEnum[] enums = enumClass.getEnumConstants();
-        for (BaseEnum baseEnum : enums) {
-            if (baseEnum.getValue().equals(value)) {
-                return true;
-            }
-        }
-        return false;
+        return enumValList.containsAll(list);
     }
 }

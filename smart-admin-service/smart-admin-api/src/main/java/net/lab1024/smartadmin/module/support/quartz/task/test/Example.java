@@ -1,5 +1,6 @@
 package net.lab1024.smartadmin.module.support.quartz.task.test;
 
+import lombok.extern.slf4j.Slf4j;
 import net.lab1024.smartadmin.common.domain.ITask;
 import net.lab1024.smartadmin.util.SmartDateUtil;
 import org.springframework.stereotype.Component;
@@ -16,11 +17,12 @@ import java.util.Date;
  * @date 2019/4/13 0013 下午 14:26
  * @since JDK1.8
  */
+@Slf4j
 @Component("exampleTask")
 public class Example implements ITask {
 
     @Override
     public void execute(String paramJson) throws Exception {
-        System.out.println(SmartDateUtil.formatYMDHMS(new Date()) + ",今天搬了" + System.currentTimeMillis() + "块砖,paramJson:" + paramJson);
+        log.warn("{}-今天搬了{}块砖,paramJson:{}",SmartDateUtil.formatYMDHMS(new Date()),System.currentTimeMillis(),paramJson );
     }
 }

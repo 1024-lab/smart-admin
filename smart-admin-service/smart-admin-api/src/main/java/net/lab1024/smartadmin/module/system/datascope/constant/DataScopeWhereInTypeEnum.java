@@ -1,5 +1,7 @@
 package net.lab1024.smartadmin.module.system.datascope.constant;
 
+import net.lab1024.smartadmin.common.domain.BaseEnum;
+
 /**
  * [  ]
  *
@@ -10,25 +12,28 @@ package net.lab1024.smartadmin.module.system.datascope.constant;
  * @date 2019/5/8 0008 下午 16:00
  * @since JDK1.8
  */
-public enum DataScopeWhereInTypeEnum {
+public enum DataScopeWhereInTypeEnum implements BaseEnum {
 
     EMPLOYEE(0,"以员工IN"),
 
-    DEPARTMENT(1,"以部门IN");
+    DEPARTMENT(1,"以部门IN"),
 
-    private Integer type;
+    CUSTOM_STRATEGY(2,"自定义策略");
+
+    private Integer value;
     private String desc;
 
-    DataScopeWhereInTypeEnum(Integer type, String desc) {
-        this.type = type;
+    DataScopeWhereInTypeEnum(Integer value, String desc) {
+        this.value = value;
         this.desc = desc;
     }
 
-    public Integer getType() {
-        return type;
+    @Override
+    public Integer getValue() {
+        return value;
     }
 
-
+    @Override
     public String getDesc() {
         return desc;
     }

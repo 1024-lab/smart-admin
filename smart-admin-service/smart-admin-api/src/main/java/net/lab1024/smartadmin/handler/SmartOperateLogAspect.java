@@ -5,7 +5,7 @@ import net.lab1024.smartadmin.common.anno.OperateLog;
 import net.lab1024.smartadmin.common.constant.JudgeEnum;
 import net.lab1024.smartadmin.module.business.log.LogService;
 import net.lab1024.smartadmin.module.business.log.useroperatelog.domain.UserOperateLogEntity;
-import net.lab1024.smartadmin.module.business.login.domain.RequestTokenBO;
+import net.lab1024.smartadmin.module.system.login.domain.RequestTokenBO;
 import net.lab1024.smartadmin.util.SmartRequestTokenUtil;
 import net.lab1024.smartadmin.util.SmartStringUtil;
 import io.swagger.annotations.Api;
