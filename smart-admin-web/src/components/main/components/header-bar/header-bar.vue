@@ -36,10 +36,6 @@
       <slot></slot>
     </div>
 
-    <e-guide-layer
-      :current-index.sync="guideActiveIndex"
-      :guide-list="guideList"
-    />
   </div>
 </template>
 <script>
