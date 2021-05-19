@@ -1,4 +1,4 @@
-#### Restful接口规范
+### Restful接口规范
 1、不推荐使用 rest 命名 url， 只能使用 get/post 方法。url 命名上规范如下：虽然 Rest 大法好，但是有时并不能一眼根据 url看出来是什么操作。
 url 格式为： 
 
@@ -12,7 +12,7 @@ POST /department/add           添加部门
 POST /department/update        更新部门
 GET  /department/delete/{id}   删除部门
 ```
-#### controller 里接口 swagger 规范
+### controller 里接口 swagger 规范
 1、controller每个方法必须添加 swagger 文档注解 @ApiOperation ，并填写接口描述信息，描述最后必须加上作者信息 @author 哪吒 
 比如：
 ```java
@@ -23,7 +23,7 @@ GET  /department/delete/{id}   删除部门
     }
 ```
 
-#### controller 里 传入和返回 JavaBean 规范
+### controller 里 传入和返回 JavaBean 规范
 1、类中的每个字段添加注释
 2、对于枚举值的类型，要清楚标注清楚可能的值，以及每个值表示什么含义
 比如：
