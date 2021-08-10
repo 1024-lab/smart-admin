@@ -23,6 +23,7 @@
     "cropperjs": "^1.2.2",
     "dayjs": "^1.7.7",
     "decimal.js": "^10.1.1",
+    "core-js":"^2.0.0",
     "e-guide-layer": "^0.1.1",
     "echarts": "^4.0.4",
     "gq-plus": "^2.1.5",
