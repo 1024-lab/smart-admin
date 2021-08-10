@@ -1,0 +1,7 @@
+[defaults]
+url = https://sentry.1024lab.net/
+org = 1024lab-sentry
+project = smart-admin-h5
+
+[auth]
+token = 8dflijsldjkasdo3u49230948pkjdasoia8023jl3k4jr29o81029i40534p545ke

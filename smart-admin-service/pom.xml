@@ -22,13 +22,15 @@
         <velocity.version>1.7</velocity.version>
         <velocity-engine-core.version>2.0</velocity-engine-core.version>
         <swagger.version>2.7.0</swagger.version>
+        <knife4j.version>2.0.4</knife4j.version>
         <mybatis-plus-boot.version>3.3.1</mybatis-plus-boot.version>
-        <fastjson.version>1.2.66</fastjson.version>
+        <fastjson.version>1.2.73</fastjson.version>
         <guava.version>28.2-jre</guava.version>
         <aliyun-oss.version>2.7.0</aliyun-oss.version>
         <qiniu-oss.version>[7.2.0, 7.2.99]</qiniu-oss.version>
         <jjwt.version>0.9.1</jjwt.version>
         <druid.version>1.1.21</druid.version>
+        <p6spy.version>3.9.1</p6spy.version>
         <concurrentlinkedhashmap.version>1.4.2</concurrentlinkedhashmap.version>
         <easypoi.version>4.1.2</easypoi.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
@@ -124,6 +126,13 @@
                 <version>${druid.version}</version>
             </dependency>
 
+            <!--p6spy-->
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
+            </dependency>
+
             <!-- swagger begin -->
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -136,6 +145,14 @@
                 <version>${swagger.version}</version>
             </dependency>
             <!-- swagger end -->
+
+            <!-- knife4j start -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- knife4j end -->
 
             <!-- guava -->
             <dependency>
