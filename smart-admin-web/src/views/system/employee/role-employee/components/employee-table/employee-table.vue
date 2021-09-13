@@ -1,5 +1,5 @@
 <template>
-  <div>
+
     <Col :lg="19" :md="16">
       <Card class="warp-card" dis-hover>
         <!--Row 顶部操作区 start-->
@@ -73,8 +73,8 @@
         </Row>
         <!--Row 底部操作区 end-->
       </Card>
-    </Col>
-    <!--EmployeeTableAdd 添加成员弹窗 start-->
+
+  <!--EmployeeTableAdd 添加成员弹窗 start-->
     <EmployeeTableAdd
       :selectDepartment="selectDepartment"
       @addSuccess="getEmployeeList"
@@ -101,7 +101,10 @@
     <!--EmployeeTableDetail 角色详情 start-->
     <EmployeeTableDetail ref="employeeTableDetail"></EmployeeTableDetail>
     <!--EmployeeTableDetail 角色详情 end-->
-  </div>
+
+    </Col>
+  
+
 </template>
 <script>
 import { departmentApi } from '@/api/department';
