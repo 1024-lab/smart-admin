@@ -24,7 +24,7 @@
         <swagger.version>2.7.0</swagger.version>
         <knife4j.version>2.0.4</knife4j.version>
         <mybatis-plus-boot.version>3.3.1</mybatis-plus-boot.version>
-        <fastjson.version>1.2.73</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <guava.version>28.2-jre</guava.version>
         <aliyun-oss.version>2.7.0</aliyun-oss.version>
         <qiniu-oss.version>[7.2.0, 7.2.99]</qiniu-oss.version>
