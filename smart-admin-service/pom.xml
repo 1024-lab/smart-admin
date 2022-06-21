@@ -39,7 +39,7 @@
         <commons-pool2.version>2.8.0</commons-pool2.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <okhttp.version>4.2.2</okhttp.version>
-        <mysql.version>8.0.19</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <user-agent-util.version>1.21</user-agent-util.version>
         <lombok.version>1.18.8</lombok.version>
     </properties>
