@@ -24,7 +24,7 @@ public class BaseController {
      */
     public void downloadExcel(String fileName, Workbook workbook, HttpServletResponse response) {
         try {
-            fileName = URLEncoder.encode(fileName, "UTF-8");
+            fileName  = URLEncoder.encode(fileName, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             log.error("", e);
         }
