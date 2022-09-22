@@ -24,9 +24,8 @@ public class BaseController {
      */
     public void downloadExcel(String fileName, Workbook workbook, HttpServletResponse response) {
         try {
-            fileName  = URLEncoder.encode(fileName, "UTF-8");
+            fileName = URLEncoder.encode(fileName, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            log.error("", e);
         }
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-Type", "application/vnd.ms-excel");
@@ -35,7 +34,6 @@ public class BaseController {
             workbook.write(response.getOutputStream());
             workbook.close();
         } catch (IOException e) {
-            log.error("", e);
         }
     }
 
