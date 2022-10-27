@@ -1,0 +1,18 @@
+server:
+  servlet:
+    context-path: '/'
+  port: 1024
+spring:
+  profiles:
+    active: '@profiles.active@'
+  datasource:
+    url: jdbc:p6spy:mysql://127.0.0.1:3306/smart_admin_v2_test?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: Lab1024
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+project:
+  name: sa-admin
+  module: net.lab1024.sa.admin.module
+swagger:
+  host: localhost:${server.port}
+  tag-class: net.lab1024.sa.admin.constant.AdminSwaggerTagConst

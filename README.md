@@ -1,13 +1,12 @@
-### SmartAdmin 2.0 (即 vue3 的 js版本和ts版本 )正在火热开发中，欢迎持续关注 ！
+### SmartAdmin 2.0 (即 vue3 的 js版本和ts版本 )已经更新了最新代码，请看smart_admin_v2目录，当前正在完善文档，欢迎持续关注 ！
 #### 简介
 SmartAdmin由河南·洛阳 [1024创新实验室](https://www.1024lab.net/)团队研发的一套互联网企业级的通用型中后台解决方案！使用最前沿的前后台技术栈SpringBoot和Vue，前后端分离，<font color="#DC143C">**我们开源一套漂亮的代码和一套整洁的代码规范**</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，热爱生活。SmartAdmin 让你从认识到忘不了，绝对是你最想要的！
 
-#### 开源地址   (*欢迎 Star ~ ~  ╰(￣▽￣)╭*)
-github: [https://github.com/1024-lab/smart-admin](https://github.com/1024-lab/smart-admin)  
-gitee:  [https://gitee.com/lab1024/smart-admin](https://gitee.com/lab1024/smart-admin)  
+#### 开源地址   (*欢迎 Star！*)
+
 在线预览： [http://preview.smartadmin.1024lab.net](http://preview.smartadmin.1024lab.net)  
-部署文档：[http://smartadmin.1024lab.net/doc/2/168](http://smartadmin.1024lab.net/doc/2/168)  
-平滑升级：[http://smartadmin.1024lab.net/doc/2/173](http://smartadmin.1024lab.net/doc/2/173)
+部署文档：[http://smartadmin.1024lab.net](http://smartadmin.1024lab.net)  
+
 
 #### 疑惑
 有人问：又是个“轮子”？ 轮子靠谱吗？为什么要选择你这个轮子？

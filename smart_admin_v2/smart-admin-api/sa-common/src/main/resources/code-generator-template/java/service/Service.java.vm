@@ -1,0 +1,108 @@
+package ${packageName};
+
+#foreach ($importClass in $importPackageList)
+$importClass
+#end
+import net.lab1024.sa.common.common.util.SmartBeanUtil;
+import net.lab1024.sa.common.common.util.SmartPageUtil;
+import net.lab1024.sa.common.common.domain.ResponseDTO;
+import net.lab1024.sa.common.common.domain.PageResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * ${basic.description} Service
+ *
+ * @Author ${basic.backendAuthor}
+ * @Date ${basic.backendDate}
+ * @Copyright ${basic.copyright}
+ */
+
+@Service
+public class ${name.upperCamel}Service {
+
+    @Autowired
+    private ${name.upperCamel}Dao ${name.lowerCamel}Dao;
+
+    /**
+     * 分页查询
+     *
+     * @param queryForm
+     * @return
+     */
+    public PageResult<${name.upperCamel}VO> queryPage(${name.upperCamel}QueryForm queryForm) {
+        Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
+        List<${name.upperCamel}VO> list = ${name.lowerCamel}Dao.queryPage(page, queryForm);
+        PageResult<${name.upperCamel}VO> pageResult = SmartPageUtil.convert2PageResult(page, list);
+        return pageResult;
+    }
+
+#if($insertAndUpdate.isSupportInsertAndUpdate)
+    /**
+     * 添加
+     */
+    public ResponseDTO<String> add(${name.upperCamel}AddForm addForm) {
+        ${name.upperCamel}Entity ${name.lowerCamel}Entity = SmartBeanUtil.copy(addForm, ${name.upperCamel}Entity.class);
+        ${name.lowerCamel}Dao.insert(${name.lowerCamel}Entity);
+        return ResponseDTO.ok();
+    }
+
+    /**
+     * 更新
+     *
+     * @param updateForm
+     * @return
+     */
+    public ResponseDTO<String> update(${name.upperCamel}UpdateForm updateForm) {
+        ${name.upperCamel}Entity ${name.lowerCamel}Entity = SmartBeanUtil.copy(updateForm, ${name.upperCamel}Entity.class);
+        ${name.lowerCamel}Dao.updateById(${name.lowerCamel}Entity);
+        return ResponseDTO.ok();
+    }
+#end
+
+#if($deleteInfo.isSupportDelete)
+    #if($deleteInfo.deleteEnum == "BATCH" || $deleteInfo.deleteEnum == "SingleAndBatch")
+    /**
+     * 批量删除
+     *
+     * @param idList
+     * @return
+     */
+    public ResponseDTO<String> batchDelete(List<${primaryKeyJavaType}> idList) {
+        if (CollectionUtils.isEmpty(idList)){
+            return ResponseDTO.ok();
+        }
+
+### 真删除 or 假删除
+#if(!${deleteInfo.isPhysicallyDeleted})
+        ${name.lowerCamel}Dao.batchUpdateDeleted(idList, true);
+#else
+        ${name.lowerCamel}Dao.deleteBatchIds(idList);
+#end
+        return ResponseDTO.ok();
+    }
+    #end
+
+    #if($deleteInfo.deleteEnum == "Single" || $deleteInfo.deleteEnum == "SingleAndBatch")
+    /**
+     * 单个删除
+     */
+    public ResponseDTO<String> delete(${primaryKeyJavaType} ${primaryKeyFieldName}) {
+        if (null == ${primaryKeyFieldName}){
+            return ResponseDTO.ok();
+        }
+
+### 真删除 or 假删除
+#if(!${deleteInfo.isPhysicallyDeleted})
+        ${name.lowerCamel}Dao.updateDeleted(${primaryKeyFieldName},true);
+#end
+#if(${deleteInfo.isPhysicallyDeleted})
+        ${name.lowerCamel}Dao.deleteById(${primaryKeyFieldName});
+#end
+        return ResponseDTO.ok();
+    }
+    #end
+#end
+}
