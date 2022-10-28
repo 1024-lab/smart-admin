@@ -8,11 +8,11 @@ import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.constant.SwaggerTagConst;
 import net.lab1024.sa.common.module.support.dict.domain.form.*;
 import net.lab1024.sa.common.module.support.dict.domain.vo.DictKeyVO;
+import net.lab1024.sa.common.module.support.dict.domain.vo.DictValueVO;
+import net.lab1024.sa.common.module.support.dict.service.DictCacheService;
 import net.lab1024.sa.common.module.support.dict.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -55,25 +55,29 @@ public class AdminDictController extends SupportBaseController {
     @ApiOperation("数据字典KEY-更新- @author 罗伊")
     @PostMapping("/dict/key/edit")
     public ResponseDTO<String> keyEdit(@Valid @RequestBody DictKeyUpdateForm keyUpdateForm) {
-        return dictService.keyEdit(keyUpdateForm);
+//        return dictService.keyEdit(keyUpdateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("数据字典Value-更新- @author 罗伊")
     @PostMapping("/dict/value/edit")
     public ResponseDTO<String> valueEdit(@Valid @RequestBody DictValueUpdateForm valueUpdateForm) {
-        return dictService.valueEdit(valueUpdateForm);
+//        return dictService.valueEdit(valueUpdateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("数据字典KEY-删除- @author 罗伊")
     @PostMapping("/dict/key/delete")
     public ResponseDTO<String> keyDelete(@RequestBody List<Long> keyIdList) {
-        return dictService.keyDelete(keyIdList);
+//        return dictService.keyDelete(keyIdList);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("数据字典Value-删除- @author 罗伊")
     @PostMapping("/dict/value/delete")
     public ResponseDTO<String> valueDelete(@RequestBody List<Long> valueIdList) {
-        return dictService.valueDelete(valueIdList);
+//        return dictService.valueDelete(valueIdList);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
 }

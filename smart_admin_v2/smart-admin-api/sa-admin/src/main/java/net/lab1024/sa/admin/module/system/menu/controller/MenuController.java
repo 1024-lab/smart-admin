@@ -42,7 +42,8 @@ public class MenuController extends AdminBaseController {
     @PreAuthorize("@saAuth.checkPermission('system:menu:add')")
     public ResponseDTO<String> addMenu(@RequestBody @Valid MenuAddForm menuAddForm) {
         menuAddForm.setCreateUserId(SmartRequestUtil.getRequestUserId());
-        return menuService.addMenu(menuAddForm);
+//        return menuService.addMenu(menuAddForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "更新菜单 @author 卓大")
@@ -50,14 +51,16 @@ public class MenuController extends AdminBaseController {
     @PreAuthorize("@saAuth.checkPermission('system:menu:update')")
     public ResponseDTO<String> updateMenu(@RequestBody @Valid MenuUpdateForm menuUpdateForm) {
         menuUpdateForm.setUpdateUserId(SmartRequestUtil.getRequestUserId());
-        return menuService.updateMenu(menuUpdateForm);
+//        return menuService.updateMenu(menuUpdateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "批量删除菜单 @author 卓大")
     @GetMapping("/menu/batchDelete")
     @PreAuthorize("@saAuth.checkPermission('system:menu:delete,system:menu:batch:delete')")
     public ResponseDTO<String> batchDeleteMenu(@RequestParam("menuIdList") List<Long> menuIdList) {
-        return menuService.batchDeleteMenu(menuIdList, SmartRequestUtil.getRequestUserId());
+//        return menuService.batchDeleteMenu(menuIdList, SmartRequestUtil.getRequestUserId());
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "查询菜单列表 @author 卓大")

@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: '/'
+    context-path: '/smart-admin-api'
   port: 1024
 spring:
   profiles:

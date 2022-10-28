@@ -52,21 +52,24 @@ public class EmployeeController extends AdminBaseController {
     @PostMapping("/employee/update")
     @PreAuthorize("@saAuth.checkPermission('system:employee:update')")
     public ResponseDTO<String> updateEmployee(@Valid @RequestBody EmployeeUpdateForm employeeUpdateForm) {
-        return employeeService.updateEmployee(employeeUpdateForm);
+//        return employeeService.updateEmployee(employeeUpdateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "更新员工禁用/启用状态 @author 卓大")
     @GetMapping("/employee/update/disabled/{employeeId}")
     @PreAuthorize("@saAuth.checkPermission('system:employee:disabled')")
     public ResponseDTO<String> updateDisableFlag(@PathVariable Long employeeId) {
-        return employeeService.updateDisableFlag(employeeId);
+//        return employeeService.updateDisableFlag(employeeId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "批量删除员工 @author 卓大")
     @PostMapping("/employee/update/batch/delete")
     @PreAuthorize("@saAuth.checkPermission('system:employee:delete')")
     public ResponseDTO<String> batchUpdateDeleteFlag(@RequestBody List<Long> employeeIdList) {
-        return employeeService.batchUpdateDeleteFlag(employeeIdList);
+//        return employeeService.batchUpdateDeleteFlag(employeeIdList);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "批量调整员工部门 @author 卓大")

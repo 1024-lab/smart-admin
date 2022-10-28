@@ -129,15 +129,15 @@ public class LoginService {
         Boolean superPasswordFlag = superPassword.equals(requestPassword);
         String token = tokenService.generateToken(employeeEntity.getEmployeeId(), employeeEntity.getActualName(), UserTypeEnum.ADMIN_EMPLOYEE, loginDeviceEnum, superPasswordFlag);
 
-        //保存登录记录
-        saveLoginLog(employeeEntity, ip, userAgent, superPasswordFlag ? "万能密码登录" : loginDeviceEnum.getDesc(), LoginLogResultEnum.LOGIN_SUCCESS);
-
         //获取员工登录信息
         LoginEmployeeDetail loginEmployeeDetail = loadLoginInfo(employeeEntity);
         loginEmployeeDetail.setToken(token);
 
         // 放入缓存
         loginUserDetailCache.put(employeeEntity.getEmployeeId(), loginEmployeeDetail);
+
+        //保存登录记录
+        saveLoginLog(employeeEntity, ip, userAgent, superPasswordFlag ? "万能密码登录" : loginDeviceEnum.getDesc(), LoginLogResultEnum.LOGIN_SUCCESS);
 
         return ResponseDTO.ok(loginEmployeeDetail);
     }

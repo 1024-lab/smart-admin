@@ -54,19 +54,22 @@ public class NoticeController {
     @ApiOperation("通知公告类型-添加 @author 卓大")
     @GetMapping("/oa/noticeType/add/{name}")
     public ResponseDTO<String> add(@PathVariable String name) {
-        return noticeTypeService.add(name);
+//        return noticeTypeService.add(name);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("通知公告类型-修改 @author 卓大")
     @GetMapping("/oa/noticeType/update/{noticeTypeId}/{name}")
     public ResponseDTO<String> update(@PathVariable Long noticeTypeId, @PathVariable String name) {
-        return noticeTypeService.update(noticeTypeId, name);
+//        return noticeTypeService.update(noticeTypeId, name);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("通知公告类型-删除 @author 卓大")
     @GetMapping("/oa/noticeType/delete/{noticeTypeId}")
     public ResponseDTO<String> deleteNoticeType(@PathVariable Long noticeTypeId) {
-        return noticeTypeService.delete(noticeTypeId);
+//        return noticeTypeService.delete(noticeTypeId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     // --------------------- 【管理】通知公告-------------------------
@@ -84,7 +87,8 @@ public class NoticeController {
     @SaAuth
     public ResponseDTO<String> add(@RequestBody @Valid NoticeAddForm addForm) {
         addForm.setCreateUserId(SmartRequestUtil.getRequestUserId());
-        return noticeService.add(addForm);
+//        return noticeService.add(addForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("【管理】通知公告-更新 @author 卓大")
@@ -92,7 +96,8 @@ public class NoticeController {
     @RepeatSubmit
     @SaAuth
     public ResponseDTO<String> update(@RequestBody @Valid NoticeUpdateForm updateForm) {
-        return noticeService.update(updateForm);
+//        return noticeService.update(updateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("【管理】通知公告-更新详情 @author 卓大")
@@ -106,7 +111,8 @@ public class NoticeController {
     @GetMapping("/oa/notice/delete/{noticeId}")
     @SaAuth
     public ResponseDTO<String> delete(@PathVariable Long noticeId) {
-        return noticeService.delete(noticeId);
+//        return noticeService.delete(noticeId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     // --------------------- 【员工】查看 通知公告 -------------------------

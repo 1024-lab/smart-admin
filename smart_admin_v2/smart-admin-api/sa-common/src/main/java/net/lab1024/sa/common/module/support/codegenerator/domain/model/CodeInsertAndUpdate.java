@@ -22,17 +22,17 @@ import java.util.List;
 @Data
 public class CodeInsertAndUpdate {
 
-    @NotNull(message = "是否支持增加、修改 不能为空")
+    @NotNull(message = "3.增加、修改 是否支持增加、修改 不能为空")
     private Boolean isSupportInsertAndUpdate;
 
     @ApiModelPropertyEnum(CodeGeneratorPageTypeEnum.class)
-    @CheckEnum(value = CodeGeneratorPageTypeEnum.class, message = "增加、修改 页面类型 枚举值错误")
+    @CheckEnum(value = CodeGeneratorPageTypeEnum.class, message = "3.增加、修改 增加、修改 页面类型 枚举值错误")
     private String pageType;
 
     @ApiModelProperty("宽度")
     private String width;
 
-    @NotNull(message = "每行字段数量 不能为空")
+    @NotNull(message = "3.增加、修改 每行字段数量 不能为空")
     @ApiModelProperty("每行字段数量")
     private Integer countPerLine;
 

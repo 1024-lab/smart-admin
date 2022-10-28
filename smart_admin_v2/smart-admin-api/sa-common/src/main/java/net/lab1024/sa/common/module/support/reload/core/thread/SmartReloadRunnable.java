@@ -77,6 +77,12 @@ public class SmartReloadRunnable implements Runnable {
         SmartReloadResult result = new SmartReloadResult();
         SmartReloadObject smartReloadObject = this.abstractSmartReloadCommand.reloadObject(smartReloadItem.getTag());
         try {
+            if (smartReloadObject == null) {
+                result.setResult(false);
+                result.setException("不能从系统中找到对应的tag：" + smartReloadItem.getTag());
+                return result;
+            }
+
             Method method = smartReloadObject.getMethod();
             if (method == null) {
                 result.setResult(false);

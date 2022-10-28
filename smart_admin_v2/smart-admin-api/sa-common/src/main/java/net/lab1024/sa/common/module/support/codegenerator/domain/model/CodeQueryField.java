@@ -23,23 +23,23 @@ import java.util.List;
 @Data
 public class CodeQueryField {
 
-    @NotBlank(message = "查询条件 不能为空")
-    @ApiModelProperty("查询条件")
+    @NotBlank(message = "5、查询条件 条件名称 不能为空")
+    @ApiModelProperty("条件名称")
     private String label;
 
-    @NotBlank(message = "字段名 不能为空")
+    @NotBlank(message = "5、查询条件 字段名 不能为空")
     @ApiModelProperty("字段名")
     private String fieldName;
 
     @ApiModelPropertyEnum(CodeQueryFieldQueryTypeEnum.class)
-    @CheckEnum(value = CodeQueryFieldQueryTypeEnum.class, message = "查询条件 查询类型 枚举值错误")
+    @CheckEnum(value = CodeQueryFieldQueryTypeEnum.class, message = "5、查询条件 查询条件 查询类型 枚举值错误")
     private String queryTypeEnum;
 
-    @NotEmpty(message = "查询条件 不能为空")
-    @ApiModelProperty("查询条件")
+    @NotEmpty(message = "5、查询条件 列 不能为空")
+    @ApiModelProperty("列")
     private List<String> columnNameList;
 
-    @NotBlank(message = "宽度 不能为空")
+    @NotBlank(message = "5、查询条件 宽度 不能为空")
     @ApiModelProperty("宽度")
     private String width;
 

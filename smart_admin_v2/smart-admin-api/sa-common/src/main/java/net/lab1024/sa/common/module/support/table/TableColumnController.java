@@ -33,7 +33,8 @@ public class TableColumnController extends SupportBaseController {
     @PostMapping("/tableColumn/update")
     @RepeatSubmit
     public ResponseDTO<String> updateTableColumn(@RequestBody @Valid TableColumnUpdateForm updateForm) {
-        return tableColumnService.updateTableColumns(SmartRequestUtil.getRequestUser(), updateForm);
+//        return tableColumnService.updateTableColumns(SmartRequestUtil.getRequestUser(), updateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("恢复默认（删除） @author 卓大")

@@ -33,27 +33,31 @@ public class AdminChangeLogController {
     @PostMapping("/changeLog/add")
     @PreAuthorize("@saAuth.checkPermission('changeLog:add')")
     public ResponseDTO<String> add(@RequestBody @Valid ChangeLogAddForm addForm) {
-        return changeLogService.add(addForm);
+//        return changeLogService.add(addForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("更新 @author 卓大")
     @PreAuthorize("@saAuth.checkPermission('changeLog:update')")
     @PostMapping("/changeLog/update")
     public ResponseDTO<String> update(@RequestBody @Valid ChangeLogUpdateForm updateForm) {
-        return changeLogService.update(updateForm);
+//        return changeLogService.update(updateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("批量删除 @author 卓大")
     @PreAuthorize("@saAuth.checkPermission('changeLog:batchDelete')")
     @PostMapping("/changeLog/batchDelete")
     public ResponseDTO<String> batchDelete(@RequestBody ValidateList<Long> idList) {
-        return changeLogService.batchDelete(idList);
+//        return changeLogService.batchDelete(idList);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("单个删除 @author 卓大")
     @PreAuthorize("@saAuth.checkPermission('changeLog:delete')")
     @GetMapping("/changeLog/delete/{changeLogId}")
     public ResponseDTO<String> batchDelete(@PathVariable Long changeLogId) {
-        return changeLogService.delete(changeLogId);
+//        return changeLogService.delete(changeLogId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 }

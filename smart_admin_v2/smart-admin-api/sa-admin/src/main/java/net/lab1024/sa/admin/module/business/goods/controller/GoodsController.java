@@ -48,27 +48,31 @@ public class GoodsController extends AdminBaseController {
     @PreAuthorize("@saAuth.checkPermission('goods:add')")
     public ResponseDTO<String> add(@RequestBody @Valid GoodsAddForm addForm) {
         return goodsService.add(addForm);
+//        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("更新商品 @author 胡克")
     @PostMapping("/goods/update")
     @PreAuthorize("@saAuth.checkPermission('goods:update')")
     public ResponseDTO<String> update(@RequestBody @Valid GoodsUpdateForm updateForm) {
-        return goodsService.update(updateForm);
+//        return goodsService.update(updateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("删除 @author 卓大")
     @GetMapping("/goods/delete/{goodsId}")
     @PreAuthorize("@saAuth.checkPermission('goods:delete')")
     public ResponseDTO<String> delete(@PathVariable Long goodsId) {
-        return goodsService.delete(goodsId);
+//        return goodsService.delete(goodsId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("批量 @author 卓大")
     @PostMapping("/goods/batchDelete")
     @PreAuthorize("@saAuth.checkPermission('goods:batchDelete')")
     public ResponseDTO<String> batchDelete(@RequestBody @Valid ValidateList<Long> idList) {
-        return goodsService.batchDelete(idList);
+//        return goodsService.batchDelete(idList);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
 

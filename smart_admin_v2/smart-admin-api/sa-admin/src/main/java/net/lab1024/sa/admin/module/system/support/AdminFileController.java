@@ -1,20 +1,28 @@
 package net.lab1024.sa.admin.module.system.support;
 
+import cn.hutool.extra.servlet.ServletUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.lab1024.sa.common.common.constant.RequestHeaderConst;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
 import net.lab1024.sa.common.common.domain.PageResult;
+import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
+import net.lab1024.sa.common.common.util.SmartRequestUtil;
 import net.lab1024.sa.common.constant.SwaggerTagConst;
+import net.lab1024.sa.common.module.support.file.constant.FileFolderTypeEnum;
 import net.lab1024.sa.common.module.support.file.domain.form.FileQueryForm;
+import net.lab1024.sa.common.module.support.file.domain.form.FileUrlUploadForm;
+import net.lab1024.sa.common.module.support.file.domain.vo.FileUploadVO;
 import net.lab1024.sa.common.module.support.file.domain.vo.FileVO;
 import net.lab1024.sa.common.module.support.file.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**

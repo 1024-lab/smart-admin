@@ -56,24 +56,27 @@ public class EnterpriseController {
     @PostMapping("/oa/enterprise/create")
     @SaAuth
     public ResponseDTO<String> createEnterprise(@RequestBody @Valid EnterpriseCreateForm createVO) {
-        RequestUser requestUser = SmartRequestUtil.getRequestUser();
-        createVO.setCreateUserId(requestUser.getUserId());
-        createVO.setCreateUserName(requestUser.getUserName());
-        return enterpriseService.createEnterprise(createVO);
+//        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+//        createVO.setCreateUserId(requestUser.getUserId());
+//        createVO.setCreateUserName(requestUser.getUserName());
+//        return enterpriseService.createEnterprise(createVO);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "编辑企业 @author 开云")
     @PostMapping("/oa/enterprise/update")
     @SaAuth
     public ResponseDTO<String> updateEnterprise(@RequestBody @Valid EnterpriseUpdateForm updateVO) {
-        return enterpriseService.updateEnterprise(updateVO);
+//        return enterpriseService.updateEnterprise(updateVO);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "删除企业 @author 开云")
     @GetMapping("/oa/enterprise/delete/{enterpriseId}")
     @SaAuth
     public ResponseDTO<String> deleteEnterprise(@PathVariable Long enterpriseId) {
-        return enterpriseService.deleteEnterprise(enterpriseId);
+//        return enterpriseService.deleteEnterprise(enterpriseId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "企业列表查询 @author 开云")

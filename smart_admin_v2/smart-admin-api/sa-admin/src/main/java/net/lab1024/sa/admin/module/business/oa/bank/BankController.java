@@ -69,6 +69,7 @@ public class BankController {
     @ApiOperation(value = "删除银行信息 @author 善逸")
     @GetMapping("/oa/bank/delete/{bankId}")
     public ResponseDTO<String> deleteBank(@PathVariable Long bankId) {
-        return bankService.deleteBank(bankId);
+//        return bankService.deleteBank(bankId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 }

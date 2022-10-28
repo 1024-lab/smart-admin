@@ -23,15 +23,15 @@ import javax.validation.constraints.NotNull;
 public class CodeDelete {
 
     @ApiModelProperty("是否支持删除 ")
-    @NotNull(message = "是否支持删除 不能为空")
+    @NotNull(message = "4.删除 是否支持删除 不能为空")
     private Boolean isSupportDelete;
 
     @ApiModelProperty("是否为物理删除")
-    @NotNull(message = "是否为物理删除 不能为空")
+    @NotNull(message = "4.删除 是否为物理删除 不能为空")
     private Boolean isPhysicallyDeleted;
 
     @ApiModelProperty("删除类型")
-    @NotBlank(message = "删除类型 不能为空")
+    @NotBlank(message = "4.删除 删除类型 不能为空")
     @ApiModelPropertyEnum(CodeDeleteEnum.class)
     @CheckEnum(value = CodeDeleteEnum.class, message = "删除 删除类型 枚举值错误")
     private String deleteEnum;

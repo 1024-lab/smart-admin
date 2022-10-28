@@ -21,35 +21,35 @@ import java.time.LocalDateTime;
 public class CodeBasic {
 
     @ApiModelProperty("业务名称")
-    @NotBlank(message = "业务名称 不能为空")
+    @NotBlank(message = "1.基础命名 基础命名 不能为空")
     private String moduleName;
 
     @ApiModelProperty("java包名")
-    @NotBlank(message = "java包名 不能为空")
+    @NotBlank(message = "1.基础命名 java包名 不能为空")
     private String javaPackageName;
 
     @ApiModelProperty("注释")
-    @NotBlank(message = "注释 不能为空")
+    @NotBlank(message = "1.基础命名 注释 不能为空")
     private String description;
 
     @ApiModelProperty("前端作者")
-    @NotBlank(message = "前端作者 不能为空")
+    @NotBlank(message = "1.基础命名 前端作者 不能为空")
     private String frontAuthor;
 
     @ApiModelProperty("前端时间")
-    @NotNull(message = "前端时间 不能为空")
+    @NotNull(message = "1.基础命名 前端时间 不能为空")
     private LocalDateTime frontDate;
 
     @ApiModelProperty("后端作者")
-    @NotBlank(message = "后端作者 不能为空")
+    @NotBlank(message = "1.基础命名 后端作者 不能为空")
     private String backendAuthor;
 
     @ApiModelProperty("后端时间")
-    @NotNull(message = "后端时间 不能为空")
+    @NotNull(message = "1.基础命名 后端时间 不能为空")
     private LocalDateTime backendDate;
 
     @ApiModelProperty("版权信息")
-    @NotNull(message = "版权信息 不能为空")
+    @NotNull(message = "1.基础命名 版权信息 不能为空")
     private String copyright;
 
 }

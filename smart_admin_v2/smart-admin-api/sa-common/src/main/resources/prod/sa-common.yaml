@@ -16,7 +16,7 @@ spring:
       username: druid
       password: 1024
       login:
-        enabled: true
+        enabled: false
       method:
         pointcut: net.lab1024.sa..*Service.*
 
@@ -89,11 +89,11 @@ file:
     local:
       path: ${localPath:/home}/smart_admin_v2/upload/
     cloud:
-      region: oss-cn-qingdao
-      endpoint: oss-cn-qingdao.aliyuncs.com
-      bucket-name: common-sit
-      access-key:
-      secret-key:
+      region: oss-cn-hangzhou
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      bucket-name: 1024lab-smart-admin
+      access-key: LTAI5t83Zxi5GDUjf2mYNiRG
+      secret-key: K656OL1J7uD1QIAVbq3vXTDcxJbmMS
       url:
         expire: 7200000
         public: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/

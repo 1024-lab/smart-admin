@@ -53,7 +53,8 @@ public class AdminConfigController extends SupportBaseController {
     @PreAuthorize("@saAuth.checkPermission('support:config:update')")
     @PostMapping("/config/update")
     public ResponseDTO<String> updateSystemConfig(@RequestBody @Valid ConfigUpdateForm updateForm) {
-        return configService.updateSystemConfig(updateForm);
+//        return configService.updateSystemConfig(updateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
 }

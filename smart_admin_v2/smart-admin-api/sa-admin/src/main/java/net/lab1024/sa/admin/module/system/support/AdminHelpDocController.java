@@ -45,20 +45,23 @@ public class AdminHelpDocController extends SupportBaseController {
     @PreAuthorize("@saAuth.checkPermission('helpDocCatalog:addCategory')")
     @PostMapping("/helpDoc/helpDocCatalog/add")
     public ResponseDTO<String> addHelpDocCatalog(@RequestBody @Valid HelpDocCatalogAddForm helpDocCatalogAddForm) {
-        return helpDocCatalogService.add(helpDocCatalogAddForm);
+//        return helpDocCatalogService.add(helpDocCatalogAddForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("帮助文档目录-更新 @author 卓大")
     @PreAuthorize("@saAuth.checkPermission('helpDocCatalog:edit')")
     @PostMapping("/helpDoc/helpDocCatalog/update")
     public ResponseDTO<String> updateHelpDocCatalog(@RequestBody @Valid HelpDocCatalogUpdateForm helpDocCatalogUpdateForm) {
-        return helpDocCatalogService.update(helpDocCatalogUpdateForm);
+//        return helpDocCatalogService.update(helpDocCatalogUpdateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("帮助文档目录-删除 @author 卓大")
     @GetMapping("/helpDoc/helpDocCatalog/delete/{helpDocCatalogId}")
     public ResponseDTO<String> deleteHelpDocCatalog(@PathVariable Long helpDocCatalogId) {
-        return helpDocCatalogService.delete(helpDocCatalogId);
+//        return helpDocCatalogService.delete(helpDocCatalogId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     // --------------------- 帮助文档 【管理:增、删、查、改】-------------------------
@@ -81,7 +84,8 @@ public class AdminHelpDocController extends SupportBaseController {
     @PostMapping("/helpDoc/add")
     @RepeatSubmit
     public ResponseDTO<String> add(@RequestBody @Valid HelpDocAddForm addForm) {
-        return helpDocService.add(addForm);
+//        return helpDocService.add(addForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("【管理】帮助文档-更新 @author 卓大")
@@ -89,14 +93,16 @@ public class AdminHelpDocController extends SupportBaseController {
     @PostMapping("/helpDoc/update")
     @RepeatSubmit
     public ResponseDTO<String> update(@RequestBody @Valid HelpDocUpdateForm updateForm) {
-        return helpDocService.update(updateForm);
+//        return helpDocService.update(updateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("【管理】帮助文档-删除 @author 卓大")
     @PreAuthorize("@saAuth.checkPermission('helpDoc:delete')")
     @GetMapping("/helpDoc/delete/{helpDocId}")
     public ResponseDTO<String> delete(@PathVariable Long helpDocId) {
-        return helpDocService.delete(helpDocId);
+//        return helpDocService.delete(helpDocId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("【管理】帮助文档-根据关联id查询 @author 卓大")

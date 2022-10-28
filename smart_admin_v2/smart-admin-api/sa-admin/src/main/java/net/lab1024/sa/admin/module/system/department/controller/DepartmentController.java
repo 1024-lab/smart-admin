@@ -45,21 +45,24 @@ public class DepartmentController extends AdminBaseController {
     @PostMapping("/department/add")
     @PreAuthorize("@saAuth.checkPermission('system:department:add')")
     public ResponseDTO<String> addDepartment(@Valid @RequestBody DepartmentAddForm createDTO) {
-        return departmentService.addDepartment(createDTO);
+//        return departmentService.addDepartment(createDTO);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "更新部门 @author 卓大")
     @PostMapping("/department/update")
     @PreAuthorize("@saAuth.checkPermission('system:department:update')")
     public ResponseDTO<String> updateDepartment(@Valid @RequestBody DepartmentUpdateForm updateDTO) {
-        return departmentService.updateDepartment(updateDTO);
+//        return departmentService.updateDepartment(updateDTO);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "删除部门 @author 卓大")
     @GetMapping("/department/delete/{departmentId}")
     @PreAuthorize("@saAuth.checkPermission('system:department:delete')")
     public ResponseDTO<String> deleteDepartment(@PathVariable Long departmentId) {
-        return departmentService.deleteDepartment(departmentId);
+//        return departmentService.deleteDepartment(departmentId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation(value = "查询部门列表 @author 卓大")

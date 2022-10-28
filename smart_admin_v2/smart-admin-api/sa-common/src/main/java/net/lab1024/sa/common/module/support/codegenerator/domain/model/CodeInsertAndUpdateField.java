@@ -23,24 +23,24 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CodeInsertAndUpdateField {
 
-    @NotBlank(message = "列名 不能为空")
+    @NotBlank(message = "3.增加、修改 列名 不能为空")
     @ApiModelProperty("列名")
     private String columnName;
 
-    @NotNull(message = "必须 不能为空")
+    @NotNull(message = "3.增加、修改  必须 不能为空")
     @ApiModelProperty("必须")
     private Boolean requiredFlag;
 
-    @NotNull(message = "插入标识 不能为空")
+    @NotNull(message = "3.增加、修改  插入标识 不能为空")
     @ApiModelProperty("插入标识")
     private Boolean insertFlag;
 
-    @NotNull(message = "更新标识 不能为空")
+    @NotNull(message = "3.增加、修改  更新标识 不能为空")
     @ApiModelProperty("更新标识")
     private Boolean updateFlag;
 
     @ApiModelPropertyEnum(value = CodeGeneratorPageTypeEnum.class)
-    @CheckEnum(value = CodeFrontComponentEnum.class, message = "增加、修改 组件类型 枚举值错误", required = true)
+    @CheckEnum(value = CodeFrontComponentEnum.class, message = "3.增加、修改  增加、修改 组件类型 枚举值错误", required = true)
     private String frontComponent;
 
 }

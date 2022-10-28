@@ -45,14 +45,16 @@ public class RoleController extends AdminBaseController {
     @GetMapping("/role/delete/{roleId}")
     @PreAuthorize("@saAuth.checkPermission('system:role:delete')")
     public ResponseDTO<String> deleteRole(@PathVariable Long roleId) {
-        return roleService.deleteRole(roleId);
+//        return roleService.deleteRole(roleId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("更新角色 @author 卓大")
     @PostMapping("/role/update")
     @PreAuthorize("@saAuth.checkPermission('system:role:update')")
     public ResponseDTO<String> updateRole(@Valid @RequestBody RoleUpdateForm roleUpdateDTO) {
-        return roleService.updateRole(roleUpdateDTO);
+//        return roleService.updateRole(roleUpdateDTO);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("获取角色数据 @author 卓大")

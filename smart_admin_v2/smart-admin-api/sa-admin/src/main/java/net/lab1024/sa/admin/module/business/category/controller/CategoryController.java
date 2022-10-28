@@ -4,15 +4,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
+import net.lab1024.sa.admin.module.business.category.service.CategoryService;
 import net.lab1024.sa.admin.module.business.category.domain.form.CategoryAddForm;
 import net.lab1024.sa.admin.module.business.category.domain.form.CategoryTreeQueryForm;
 import net.lab1024.sa.admin.module.business.category.domain.form.CategoryUpdateForm;
 import net.lab1024.sa.admin.module.business.category.domain.vo.CategoryTreeVO;
 import net.lab1024.sa.admin.module.business.category.domain.vo.CategoryVO;
-import net.lab1024.sa.admin.module.business.category.service.CategoryService;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.module.support.operatelog.annoation.OperateLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -38,13 +39,15 @@ public class CategoryController extends AdminBaseController {
     @ApiOperation("添加类目 @author 胡克")
     @PostMapping("/category/add")
     public ResponseDTO<String> add(@RequestBody @Valid CategoryAddForm addForm) {
-        return categoryService.add(addForm);
+//        return categoryService.add(addForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("更新类目 @author 胡克")
     @PostMapping("/category/update")
     public ResponseDTO<String> update(@RequestBody @Valid CategoryUpdateForm updateForm) {
-        return categoryService.update(updateForm);
+//        return categoryService.update(updateForm);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 
     @ApiOperation("查询类目详情 @author 胡克")
@@ -62,6 +65,7 @@ public class CategoryController extends AdminBaseController {
     @ApiOperation("删除类目 @author 胡克")
     @GetMapping("/category/delete/{categoryId}")
     public ResponseDTO<String> delete(@PathVariable Long categoryId) {
-        return categoryService.delete(categoryId);
+//        return categoryService.delete(categoryId);
+        return ResponseDTO.okMsg("亲，因是演示环境，所以请求没有进行处理！如若想深入体验，请下载代码！");
     }
 }

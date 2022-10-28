@@ -30,15 +30,15 @@
       </template>
 
       <template v-if="column.dataIndex === 'label'">
-        <a-input v-model:value="record.label"  placeholder="关键字查询"/>
+        <a-input v-model:value="record.label" placeholder="关键字查询" />
       </template>
 
       <template v-if="column.dataIndex === 'fieldName'">
-        <a-input v-model:value="record.fieldName" placeholder="keywords"/>
+        <a-input v-model:value="record.fieldName" placeholder="keywords" />
       </template>
 
       <template v-if="column.dataIndex === 'width'">
-        <a-input v-model:value="record.width" placeholder="150px"/>
+        <a-input v-model:value="record.width" placeholder="150px" />
       </template>
 
       <template v-if="column.dataIndex === 'queryTypeEnum'">
@@ -128,13 +128,12 @@
   const tableData = ref([]);
 
   const tableColumns = ref([]);
-  
+
   //初始化设置数据
   function setData(tableColumnInfos, config) {
     rowKeyCounter = 1;
     let data = config && config.queryFields ? config.queryFields : [];
     for (let index = 0; index < data.length; index++) {
-
       data[index].rowKey = 'rowKey' + (index + 1);
       rowKeyCounter++;
     }
@@ -193,12 +192,8 @@
     let column = getConfigField(tableColumns.value, columnName);
 
     //表单
-    if (!record.fieldName) {
-      record.fieldName = column && column.columnName ? convertLowerCamel(column.columnName) : '';
-    }
-    if (!record.label) {
-      record.label = column && column.columnComment ? convertLowerCamel(column.columnComment) : '';
-    }
+    record.fieldName = column && column.columnName ? convertLowerCamel(column.columnName) : '';
+    record.label = column && column.columnComment ? convertLowerCamel(column.columnComment) : '';
   }
 
   // 获取配置过的字段信息

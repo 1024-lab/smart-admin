@@ -19,26 +19,26 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CodeTableField {
 
-    @NotBlank(message = "列 不能为空")
-    @ApiModelProperty("列")
+    @NotBlank(message = "6、列表 列名 不能为空")
+    @ApiModelProperty("列名")
     private String columnName;
 
-    @NotBlank(message = "表格列名 不能为空")
-    @ApiModelProperty("表格列名")
+    @NotBlank(message = "6、列表 字段名词 不能为空")
+    @ApiModelProperty("字段名词")
     private String label;
 
-    @NotBlank(message = "字段名 不能为空")
-    @ApiModelProperty("字段名")
+    @NotBlank(message = "6、列表  字段命名 不能为空")
+    @ApiModelProperty("字段命名")
     private String fieldName;
 
-    @NotNull(message = "列表显示 不能为空")
+    @NotNull(message = "6、列表 列表显示 不能为空")
     @ApiModelProperty("列表显示")
     private Boolean showFlag;
 
     @ApiModelProperty("宽度")
     private Integer width;
 
-    @NotNull(message = "自动省略标识 不能为空")
+    @NotNull(message = "6、列表 自动省略标识 不能为空")
     @ApiModelProperty("自动省略标识")
     private Boolean ellipsisFlag;
 

@@ -20,26 +20,26 @@ import javax.validation.constraints.NotNull;
 public class CodeField {
 
     @ApiModelProperty("列")
-    @NotBlank(message = "列名 不能为空")
+    @NotBlank(message = " 2.字段列表 列名 不能为空")
     private String columnName;
 
     @ApiModelProperty("列备注")
     private String columnComment;
 
-    @ApiModelProperty("业务名称")
-    @NotBlank(message = "业务名称 不能为空")
+    @ApiModelProperty("字段名词")
+    @NotBlank(message = "2.字段列表 字段名词 不能为空")
     private String label;
 
-    @ApiModelProperty("字段")
-    @NotBlank(message = "字段 不能为空")
+    @ApiModelProperty("字段命名")
+    @NotBlank(message = "2.字段列表 字段命名 不能为空")
     private String fieldName;
 
     @ApiModelProperty("java类型")
-    @NotBlank(message = "java类型 不能为空")
+    @NotBlank(message = "2.字段列表 java类型 不能为空")
     private String javaType;
 
     @ApiModelProperty("js类型")
-    @NotBlank(message = "js类型 不能为空")
+    @NotBlank(message = "2.字段列表 js类型 不能为空")
     private String jsType;
 
     @ApiModelProperty("字典key")
@@ -49,11 +49,11 @@ public class CodeField {
     private String enumName;
 
     @ApiModelProperty("主键")
-    @NotNull(message = "主键 不能为空")
+    @NotNull(message = "2.字段列表 主键 不能为空")
     private Boolean primaryKeyFlag;
 
     @ApiModelProperty("自增")
-    @NotNull(message = "自增 不能为空")
+    @NotNull(message = "2.字段列表 自增 不能为空")
     private Boolean autoIncreaseFlag;
 
 }
