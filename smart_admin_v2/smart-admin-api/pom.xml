@@ -29,7 +29,7 @@
         <user-agent-utils.version>1.21</user-agent-utils.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <reflections.version>0.9.11</reflections.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.13</commons-codec.version>
