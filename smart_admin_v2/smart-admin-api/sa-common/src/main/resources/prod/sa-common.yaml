@@ -92,8 +92,8 @@ file:
       region: oss-cn-hangzhou
       endpoint: oss-cn-hangzhou.aliyuncs.com
       bucket-name: 1024lab-smart-admin
-      access-key: LTAI5t83Zxi5GDUjf2mYNiRG
-      secret-key: K656OL1J7uD1QIAVbq3vXTDcxJbmMS
+      access-key: 
+      secret-key: 
       url:
         expire: 7200000
         public: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/
