@@ -30,7 +30,7 @@
     "html2canvas": "^1.0.0-alpha.12",
     "jquery": "^2.2.3",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mavon-editor": "^2.7.5",
     "moment": "^2.24.0",
     "simplemde": "^1.11.2",
