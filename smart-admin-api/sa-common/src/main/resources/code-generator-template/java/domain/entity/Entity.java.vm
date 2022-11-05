@@ -1,0 +1,32 @@
+package ${basic.javaPackageName}.domain.entity;
+
+#foreach ($importClass in $importPackageList)
+$importClass
+#end
+
+/**
+ * ${basic.description} 实体类
+ *
+ * @Author ${basic.backendAuthor}
+ * @Date ${basic.backendDate}
+ * @Copyright ${basic.copyright}
+ */
+
+@Data
+@TableName("${tableName}")
+public class ${name.upperCamel}Entity {
+#foreach ($field in $fields)
+
+    /**
+     * $field.label
+     */
+#if($field.primaryKeyFlag && $field.autoIncreaseFlag)
+    @TableId(type = IdType.AUTO)
+#end
+#if($field.primaryKeyFlag && !$field.autoIncreaseFlag)
+    @TableId
+#end
+    private $field.javaType $field.fieldName;
+#end
+
+}

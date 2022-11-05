@@ -1,0 +1,73 @@
+{
+  "name":"SmartAdmin",
+  "version": "2.0.0",
+  "author": {
+    "name": "1024创新实验室（1024lab）",
+    "email": "lab1024@163.com",
+    "url": "https://www.1024lab.net"
+  },
+  "license": "MIT",
+  "homepage": "https://smartadmin.1024lab.net",
+  "scripts": {
+    "localhost": "vite --mode localhost",
+    "dev": "vite",
+    "build:test": "vite build  --mode test",
+    "build:pre": "vite build  --mode pre",
+    "build:prod": "vite build  --mode production"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "@wangeditor/editor": "^5.0.1",
+    "@wangeditor/editor-for-vue": "^5.1.11",
+    "ant-design-vue": "3.2.5",
+    "axios": "~0.27.2",
+    "clipboard": "~2.0.11",
+    "crypto-js": "~4.1.1",
+    "decimal.js": "^10.3.1",
+    "diff": "^5.1.0",
+    "diff2html": "^3.4.18",
+    "echarts": "^5.1.2",
+    "highlight.js": "^11.6.0",
+    "js-cookie": "^2.2.1",
+    "lodash": "^4.17.21",
+    "lunar-javascript": "^1.2.32",
+    "mitt": "^3.0.0",
+    "nprogress": "^0.2.0",
+    "pinia": "~2.0.14",
+    "sortablejs": "^1.15.0",
+    "ua-parser-js": "^1.0.2",
+    "v-viewer": "~1.6.4",
+    "vue": "~3.2.26",
+    "vue-i18n": "^9.1.10",
+    "vue-router": "~4.0.15",
+    "vue3-json-viewer": "^2.2.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "~2.3.3",
+    "@vue/compiler-sfc": "~3.2.26",
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "~8.5.0",
+    "eslint-plugin-prettier": "~4.0.0",
+    "eslint-plugin-vue": "~9.1.0",
+    "less": "~4.1.1",
+    "less-loader": "~10.0.1",
+    "prettier": "~2.6.2",
+    "rimraf": "^3.0.2",
+    "stylelint": "~14.8.5",
+    "stylelint-config-prettier": "~9.0.3",
+    "stylelint-config-standard": "~25.0.0",
+    "stylelint-order": "~5.0.0",
+    "vite": "~2.9.9",
+    "vite-plugin-mock": "~2.9.6",
+    "vite-plugin-optimize-persist": "^0.1.2",
+    "vite-plugin-package-config": "^0.1.1",
+    "vue-eslint-parser": "~9.0.2"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1024-lab/smart-admin.git"
+  }
+}

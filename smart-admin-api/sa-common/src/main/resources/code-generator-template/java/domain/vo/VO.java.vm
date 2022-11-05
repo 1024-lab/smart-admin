@@ -1,0 +1,32 @@
+package ${packageName};
+
+#foreach ($importClass in $importPackageList)
+$importClass
+#end
+
+/**
+ * ${basic.description} 列表VO
+ *
+ * @Author ${basic.backendAuthor}
+ * @Date ${basic.backendDate}
+ * @Copyright ${basic.copyright}
+ */
+
+@Data
+public class ${name.upperCamel}VO {
+
+    private $!{primaryKeyJavaType} $!{primaryKeyFieldName};
+
+#foreach ($field in $fields)
+
+#if($field.isEnum)
+    ${field.apiModelProperty}
+    private $field.javaType $field.fieldName;
+#end
+#if(!$field.isEnum)
+    ${field.apiModelProperty}$!{field.dict}$!{field.file}
+    private $field.javaType $field.fieldName;
+#end
+#end
+
+}

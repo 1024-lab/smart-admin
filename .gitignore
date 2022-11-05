@@ -19,13 +19,8 @@ target/
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
+### front ###
+**/dist
+**/node_modules
+**/.vscode
 
-### VS Code ###
-.vscode/
