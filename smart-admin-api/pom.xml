@@ -34,7 +34,7 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.13</commons-codec.version>
         <easypoi.version>4.2.0</easypoi.version>
-        <xerces.version>2.12.0</xerces.version>
+        <xerces.version>2.12.2</xerces.version>
         <poi-scratchpad.version>4.1.1</poi-scratchpad.version>
         <poi-ooxml-schemas.version>1.3</poi-ooxml-schemas.version>
         <aws-java-sdk.version>1.11.842</aws-java-sdk.version>
