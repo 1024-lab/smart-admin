@@ -15,7 +15,7 @@
       </a-form-item>
 
       <a-form-item label="创建时间" class="smart-query-form-item">
-        <a-range-picker v-model:value="createDate" @change="createDateChange" style="width: 220px" />
+        <a-range-picker :ranges="defaultTimeRanges" v-model:value="createDate" @change="createDateChange" style="width: 220px" />
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
@@ -105,6 +105,7 @@
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
+  import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
 
   const props = defineProps({

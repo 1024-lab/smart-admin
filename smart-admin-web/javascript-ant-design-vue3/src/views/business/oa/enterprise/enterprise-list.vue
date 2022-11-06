@@ -16,7 +16,7 @@
 
       <a-form-item label="创建时间" class="smart-query-form-item">
         <a-space direction="vertical" :size="12">
-          <a-range-picker v-model:value="searchDate" @change="dateChange" />
+          <a-range-picker v-model:value="searchDate" :ranges="defaultTimeRanges" @change="dateChange" />
         </a-space>
       </a-form-item>
 
@@ -108,6 +108,7 @@
   import { useRouter } from 'vue-router';
   import EnterpriseOperate from './components/enterprise-operate-modal.vue';
   import { smartSentry } from '/@/lib/smart-sentry';
+  import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
 

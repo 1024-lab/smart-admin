@@ -36,11 +36,11 @@
       </a-form-item>
 
       <a-form-item label="发布时间" class="smart-query-form-item">
-        <a-range-picker v-model:value="publishDate" @change="publishDateChange" style="width: 220px" />
+        <a-range-picker v-model:value="publishDate" :ranges="defaultTimeRanges" @change="publishDateChange" style="width: 220px" />
       </a-form-item>
 
       <a-form-item label="创建时间" class="smart-query-form-item">
-        <a-range-picker v-model:value="createDate" @change="createDateChange" style="width: 220px" />
+        <a-range-picker v-model:value="createDate" :ranges="defaultTimeRanges" @change="createDateChange" style="width: 220px" />
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
@@ -73,8 +73,8 @@
         </a-button>
       </div>
       <div class="smart-table-setting-block">
-            <TableOperator v-model="tableColumns" :tableId="TABLE_ID_CONST.BUSINESS.OA.NOTICE" :refresh="queryNoticeList" />
-        </div>
+        <TableOperator v-model="tableColumns" :tableId="TABLE_ID_CONST.BUSINESS.OA.NOTICE" :refresh="queryNoticeList" />
+      </div>
     </a-row>
 
     <a-table
@@ -136,10 +136,10 @@
   import SmartBooleanSelect from '/@/components/framework/boolean-select/index.vue';
   import { noticeApi } from '/@/api/business/oa/notice-api';
   import NoticeFormDrawer from './components/notice-form-drawer.vue';
+  import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
-  
 
   const queryFormState = {
     noticeTypeId: undefined, //分类
