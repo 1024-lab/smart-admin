@@ -265,7 +265,7 @@
           resolve(true);
         })
         .catch((error) => {
-          message.error('基础命名表单 参数验证错误!');
+          message.error(' 请检查【3.增加、修改】表单，有参数验证错误');
           reject(error);
         });
     });

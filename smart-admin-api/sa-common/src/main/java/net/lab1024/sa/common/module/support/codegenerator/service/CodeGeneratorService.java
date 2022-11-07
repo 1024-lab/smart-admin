@@ -149,6 +149,11 @@ public class CodeGeneratorService {
             }
         }
 
+        // 校验表必须有主键
+        if(!tableColumns.stream().filter( e -> "PRI".equalsIgnoreCase(e.getColumnKey())).findAny().isPresent()){
+            return ResponseDTO.userErrorParam("表必须有主键，请联系后端查看下数据库表结构");
+        }
+
         codeGeneratorConfigEntity.setTableName(form.getTableName());
         codeGeneratorConfigEntity.setBasic(JSON.toJSONString(form.getBasic()));
         codeGeneratorConfigEntity.setFields(JSONArray.toJSONString(form.getFields()));

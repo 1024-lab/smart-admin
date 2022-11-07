@@ -101,7 +101,7 @@
           resolve(true);
         })
         .catch((error) => {
-          message.error('删除表单 参数验证错误!');
+          message.error(' 请检查【4.删除】表单，有参数验证错误');
           reject(error);
         });
     });
