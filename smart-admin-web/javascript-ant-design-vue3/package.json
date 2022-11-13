@@ -43,7 +43,7 @@
     "vue3-json-viewer": "^2.2.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "~2.3.3",
+    "@vitejs/plugin-vue": "^3.2.0",
     "@vue/compiler-sfc": "~3.2.26",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "~8.5.0",
@@ -57,10 +57,7 @@
     "stylelint-config-prettier": "~9.0.3",
     "stylelint-config-standard": "~25.0.0",
     "stylelint-order": "~5.0.0",
-    "vite": "~2.9.9",
-    "vite-plugin-mock": "~2.9.6",
-    "vite-plugin-optimize-persist": "^0.1.2",
-    "vite-plugin-package-config": "^0.1.1",
+    "vite": "^3.2.3",
     "vue-eslint-parser": "~9.0.2"
   },
   "engines": {

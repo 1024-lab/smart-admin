@@ -9,9 +9,6 @@
  */
 import { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
-//提速第一次vite启动速度
-import OptimizationPersist from 'vite-plugin-optimize-persist';
-import PkgConfig from 'vite-plugin-package-config';
 
 const pathResolve = (dir) => {
   return resolve(__dirname, '.', dir);
@@ -42,7 +39,7 @@ export default {
     host: '0.0.0.0',
     port: 8081,
   },
-  plugins: [vue(), PkgConfig(), OptimizationPersist()],
+  plugins: [vue()],
   optimizeDeps: {
     include: ['ant-design-vue/es/locale/zh_CN', 'dayjs/locale/zh-cn', 'ant-design-vue/es/locale/en_US'],
     exclude: ['vue-demi'],

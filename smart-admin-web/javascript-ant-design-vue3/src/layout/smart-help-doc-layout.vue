@@ -226,7 +226,7 @@
   }
 
   .layout-header {
-    background: @primary-7;
+    background: @primary-color;
     padding: 0;
     z-index: 999;
     color: white;

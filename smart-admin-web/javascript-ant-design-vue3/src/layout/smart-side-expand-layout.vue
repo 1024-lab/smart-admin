@@ -56,13 +56,15 @@
           :url="item.meta.frameUrl"
         />
         <!--非iframe使用router-view-->
-        <router-view v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)" v-slot="{ Component }">
-          <keep-alive :include="keepAliveIncludes">
-            <div :key="route.name" style="height:100%">
-              <component :is="Component" />
-            </div>
-          </keep-alive>
-        </router-view>
+        <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)">
+          <router-view v-slot="{ Component }">
+            <keep-alive :include="keepAliveIncludes">
+              <div :key="route.name" style="height: 100%">
+                <component :is="Component" />
+              </div>
+            </keep-alive>
+          </router-view>
+        </div>
       </a-layout-content>
       <!-- footer 版权公司信息 -->
       <a-layout-footer class="smart-layout-footer" v-show="footerFlag"> <SmartFooter /></a-layout-footer>

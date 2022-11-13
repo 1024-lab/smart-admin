@@ -59,8 +59,8 @@
   const openKeys = ref([]);
 
   // 页面跳转
-  function turnToPage(route) {
-    router.push({ name: route.menuId.toString() });
+  function turnToPage(menu) {
+    router.push({ path: menu.path });
   }
 
   /**

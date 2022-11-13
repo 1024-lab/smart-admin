@@ -39,7 +39,7 @@
   });
 
   const emits = defineEmits(['turnToPage']);
-  const turnToPage = (route) => {
-    emits('turnToPage', route);
+  const turnToPage = (menu) => {
+    emits('turnToPage', menu);
   };
 </script>
