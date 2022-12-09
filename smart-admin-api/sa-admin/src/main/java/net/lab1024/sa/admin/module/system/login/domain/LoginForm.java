@@ -31,7 +31,7 @@ public class LoginForm extends CaptchaForm {
 
     @ApiModelProperty("密码")
     @NotBlank(message = "密码不能为空")
-    @Pattern(regexp = SmartVerificationUtil.PWD_REGEXP, message = "请输入8-15位密码(数字|大小写字母|小数点)")
+    @Pattern(regexp = SmartVerificationUtil.PWD_REGEXP, message = "请输入6-15位密码(数字|大小写字母|小数点)")
     private String password;
 
     @ApiModelProperty(value = "登录终端")

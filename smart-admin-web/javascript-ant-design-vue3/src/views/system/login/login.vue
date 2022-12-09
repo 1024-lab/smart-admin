@@ -18,7 +18,7 @@
           <a target="_blank" href="https://www.1024lab.net" style="color: white; weight: bolder; font-size: 15px; text-decoration: underline"
             >1024创新实验室（1024Lab）</a
           >
-          使用SpringBoot2.x 和 Vue3.2 Setup模式、 Composition Api (同时支持JavaScript和TypeScript双版本) ，开发出的一套简洁、易用的中后台解决方案！
+          使用SpringBoot2.x 和 Vue3.2 Setup语法糖、 Composition Api (同时支持JavaScript和TypeScript双版本) ，开发出的一套简洁、易用的中后台解决方案！
           <br />
           <br />
           <span class="setence">
@@ -68,7 +68,7 @@
         </a-form-item>
         <a-form-item>
           <a-checkbox v-model:checked="rememberPwd">记住密码</a-checkbox>
-          <span> ( 账号：admin   密码：123456 )</span>
+          <span> ( 账号：admin, 密码：123456)</span>
         </a-form-item>
         <a-form-item>
           <div class="btn" @click="onLogin">登录</div>
@@ -116,7 +116,7 @@
   //--------------------- 登录表单 ---------------------------------
 
   const loginForm = reactive({
-    loginName: '',
+    loginName: 'admin',
     password: '',
     captchaCode: '',
     captchaUuid: '',
