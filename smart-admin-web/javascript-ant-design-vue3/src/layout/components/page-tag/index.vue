@@ -75,6 +75,9 @@
 
   //选择某个标签页
   function selectTab(name) {
+    if (selectedKey.value === name) {
+      return;
+    }
     // 寻找tag
     let tag = tagNav.value.find((e) => e.menuName == name);
     if (!tag) {
