@@ -7,7 +7,7 @@ SmartAdmin 由河南·洛阳 [1024 创新实验室](https://www.1024lab.net/)使
 ### 地址
 
 在线预览： [http://preview.smartadmin.1024lab.net](http://preview.smartadmin.1024lab.net)  
-部署文档：[http://smartadmin.1024lab.net](http://smartadmin.1024lab.net)  （文档在努力更新中）  
+部署文档：[https://smartadmin.1024lab.net](https://smartadmin.1024lab.net)  （文档在努力更新中）  
 vue2版本：请查看 feature/1.x 分支
 
 ### 理念与思想
