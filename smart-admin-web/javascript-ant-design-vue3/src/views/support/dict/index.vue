@@ -169,6 +169,10 @@
     Object.assign(queryForm, queryFormState);
     ajaxQuery();
   }
+  function onSearch(){
+    queryForm.pageNum = 1;
+    ajaxQuery();
+  },
   async function ajaxQuery() {
     try {
       tableLoading.value = true;
