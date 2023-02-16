@@ -27,12 +27,6 @@ import { useUserStore } from '/@/store/modules/system/user';
 import '/@/theme/index.less';
 import { getTokenFromCookie } from '/@/utils/cookie-util';
 
-let url = location.href;
-if(url.indexOf('1024lab.net') > -1){
-    location.href = "https://preview.smartadmin.vip";
-}
-
-
 /*
  * -------------------- ※ 着重 解释说明下main.js的初始化逻辑 begin ※ --------------------
  *
