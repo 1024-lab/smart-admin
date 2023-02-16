@@ -9,14 +9,17 @@
   *
 -->
 <template>
-  <a-modal title="文件预览" v-model:visible="visibleFlag" :width="768" @cancel="onClose">
     <div class="container">
-      <img class="img-prev" :src="previewUrl" />
+      <a-image
+        class="img-prev"
+        :style="{ display: 'none' }"
+        :preview="{
+          visible,
+          onVisibleChange: setVisible,
+        }"
+        :src="previewUrl"
+      />
     </div>
-    <template #footer>
-      <a-button @click="onClose">关闭</a-button>
-    </template>
-  </a-modal>
 </template>
 
 <script setup>
@@ -26,7 +29,6 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
 
-  const visibleFlag = ref(false);
   const imgFileType = ['jpg', 'jpeg', 'png', 'gif'];
   const previewUrl = ref();
 
@@ -49,10 +51,15 @@
     }
   }
 
+  const visible = ref(false);
+  const setVisible = (value) => {
+    visible.value = value;
+  };
+
   function showFile(fileItem) {
     if (isImg(fileItem.fileType)) {
       previewUrl.value = fileItem.fileUrl;
-      visibleFlag.value = true;
+      setVisible(true);
       return;
     }
     download(fileItem.fileName, fileItem.fileUrl);
@@ -61,10 +68,6 @@
   // 判断图片类型
   function isImg(fileType) {
     return imgFileType.includes(fileType);
-  }
-
-  function onClose() {
-    visibleFlag.value = false;
   }
 
   defineExpose({
@@ -77,11 +80,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    .img-prev {
-      display: block;
-      width: 100%;
-      height: 600px;
-      object-fit: contain;
-    }
   }
 </style>

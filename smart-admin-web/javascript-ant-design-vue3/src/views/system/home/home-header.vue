@@ -1,11 +1,11 @@
 <!--
   * 首页 用户头部信息
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-12 22:34:00 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-12 22:34:00
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
   *
 -->
 <template>
@@ -32,7 +32,7 @@
             height="60"
             frameborder="0"
             allowtransparency="true"
-            src="//i.tianqi.com/index.php?c=code&id=12&icon=1&num=5&site=12"
+            src="//i.tianqi.com/index.php?c=code&id=12&icon=1&num=3&site=12"
           ></iframe>
         </div>
       </a-row>
@@ -136,7 +136,7 @@
     margin-bottom: 10px;
 
     .heart-sentence {
-      width: calc(100% - 500px);
+      width: calc(100% - 420px);
       h3 {
         color: rgba(0, 0, 0, 0.75);
       }
@@ -146,7 +146,7 @@
       display: flex;
       justify-content: space-between;
       .weather {
-        width: 440px;
+        width: 400px;
       }
     }
 

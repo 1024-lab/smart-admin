@@ -14,7 +14,7 @@
       <a-col flex="200px">
         <RoleList ref="roleList" />
       </a-col>
-      <a-col flex="1">
+      <a-col flex="1" class="role-setting">
         <RoleSetting />
       </a-col>
     </a-row>
@@ -41,5 +41,8 @@
 <style scoped lang="less">
   .height100 {
     height: 100%;
+  }
+  .role-setting{
+    width:calc(100% - 250px)
   }
 </style>

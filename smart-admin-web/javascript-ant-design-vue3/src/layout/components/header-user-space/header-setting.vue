@@ -16,33 +16,33 @@
           <a-select-option v-for="item in i18nList" :key="item.value" :value="item.value">{{ item.text }}</a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="菜单布局">
+      <a-form-item :label="$t('setting.menu.layout')">
         <a-radio-group @change="changeLayout" button-style="solid" v-model:value="formState.layout">
           <a-radio-button v-for="item in $smartEnumPlugin.getValueDescList('LAYOUT_ENUM')" :key="item.value" :value="item.value">
             {{ item.desc }}
           </a-radio-button>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="菜单宽度" v-if="formState.layout === LAYOUT_ENUM.SIDE.value">
+      <a-form-item :label="$t('setting.menu.width')" v-if="formState.layout === LAYOUT_ENUM.SIDE.value">
         <a-input-number @change="changeSideMenuWidth" v-model:value="formState.sideMenuWidth" :min="1" />
         像素（px）
       </a-form-item>
-      <a-form-item label="菜单主题">
+      <a-form-item :label="$t('setting.menu.theme')">
         <a-radio-group v-model:value="formState.sideMenuTheme" button-style="solid" @change="changeMenuTheme">
           <a-radio-button value="dark">Dark</a-radio-button>
           <a-radio-button value="light">Light</a-radio-button>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="面包屑">
+      <a-form-item :label="$t('setting.bread')">
         <a-switch @change="changeBreadCrumbFlag" v-model:checked="formState.breadCrumbFlag" checked-children="显示" un-checked-children="隐藏" />
       </a-form-item>
-      <a-form-item label="标签页">
+      <a-form-item :label="$t('setting.pagetag')">
         <a-switch @change="changePageTagFlag" v-model:checked="formState.pageTagFlag" checked-children="显示" un-checked-children="隐藏" />
       </a-form-item>
-      <a-form-item label="页脚">
+      <a-form-item :label="$t('setting.footer')">
         <a-switch @change="changeFooterFlag" v-model:checked="formState.footerFlag" checked-children="显示" un-checked-children="隐藏" />
       </a-form-item>
-      <a-form-item label="帮助文档">
+      <a-form-item :label="$t('setting.helpdoc')">
         <a-switch @change="changeHelpDocFlag" v-model:checked="formState.helpDocFlag" checked-children="显示" un-checked-children="隐藏" />
       </a-form-item>
     </a-form>

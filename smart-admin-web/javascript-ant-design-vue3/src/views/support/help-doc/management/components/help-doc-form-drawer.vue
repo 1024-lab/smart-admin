@@ -9,7 +9,7 @@
 -->
 <template>
   <a-drawer
-    :title="formData.helpDocId ? '编辑' : '新建'"
+    :title="formData.helpDocId ? '编辑系统手册' : '新建系统手册'"
     :visible="visibleFlag"
     :width="1000"
     :footerStyle="{ textAlign: 'right' }"
@@ -29,7 +29,13 @@
       <a-form-item label="排序" name="sort">
         <a-input-number v-model:value="formData.sort" placeholder="值越小越靠前" />（值越小越靠前）
       </a-form-item>
-      <a-form-item label="关联菜单">
+      <a-form-item label="是否首页显示">
+        <a-radio-group v-model:value="relateHomeFlag" button-style="solid">
+          <a-radio-button :value="true">首页显示</a-radio-button>
+          <a-radio-button :value="false">首页不用显示</a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="关联菜单" v-if="!relateHomeFlag">
         <MenuTreeSelect v-model:value="formData.relationIdList" ref="menuTreeSelect" />
       </a-form-item>
       <a-form-item label="公告内容" name="contentHtml">
@@ -69,7 +75,7 @@
   import HelpDocCatalogTreeSelect from './help-doc-catalog-tree-select.vue';
   import MenuTreeSelect from '/@/components/system/menu-tree-select/index.vue';
   import _ from 'lodash';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
   const emits = defineEmits(['reloadList']);
 
@@ -99,6 +105,7 @@ import { smartSentry } from '/@/lib/smart-sentry';
   const formRef = ref();
   const contentRef = ref();
   const noticeFormVisibleModal = ref();
+  const relateHomeFlag = ref(false);
 
   const defaultFormData = {
     helpDocId: undefined,
@@ -135,6 +142,11 @@ import { smartSentry } from '/@/lib/smart-sentry';
       }
       Object.assign(formData, result.data);
       formData.relationIdList = result.data.relationList ? result.data.relationList.map((e) => e.relationId) : [];
+      if (formData.relationIdList.length === 1 && formData.relationIdList[0].relationId === 0) {
+        relateHomeFlag.value = true;
+      } else {
+        relateHomeFlag.value = false;
+      }
     } catch (err) {
       smartSentry.captureError(err);
     } finally {
@@ -161,8 +173,18 @@ import { smartSentry } from '/@/lib/smart-sentry';
     try {
       SmartLoading.show();
       let param = _.cloneDeep(formData);
-      let relationList = menuTreeSelect.value.getMenuListByIdList(formData.relationIdList);
-      param.relationList = relationList.map((e) => Object.assign({}, { relationId: e.menuId, relationName: e.menuName }));
+      // 首页显示的话，为0
+      if (relateHomeFlag.value) {
+        param.relationList = [
+          {
+            relationName: '首页',
+            relationId: 0,
+          },
+        ];
+      } else {
+        let relationList = menuTreeSelect.value.getMenuListByIdList(formData.relationIdList);
+        param.relationList = relationList.map((e) => Object.assign({}, { relationId: e.menuId, relationName: e.menuName }));
+      }
 
       if (param.helpDocId) {
         await helpDocApi.update(param);

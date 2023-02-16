@@ -42,7 +42,7 @@
     <!-----文档列表---->
     <div class="help-doc-list">
       <div class="help-doc-item-all">
-        <router-link tag="a" target="_blank" :to="{ path: '/help-doc/detail' }">查看全部文档 >></router-link>
+        <router-link tag="a" target="_blank" :to="{ path: '/help-doc/detail' }">系统手册文档 >></router-link>
       </div>
       <div class="help-doc-item" v-for="item in helpDocList" :key="item.helpDocId">
         <router-link tag="a" target="_blank" :to="{ path: '/help-doc/detail', query: { helpDocId: item.helpDocId } }">{{ item.title }}</router-link>
@@ -64,7 +64,8 @@
   import FeedbackModal from './components/feedback-modal.vue';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { feedbackApi } from '/@/api/support/feedback/feedback-api';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
   function hideHelpDoc() {
     useAppConfigStore().hideHelpDoc();
@@ -142,11 +143,15 @@ import { smartSentry } from '/@/lib/smart-sentry';
       //SmartAdmin中 router的name 就是 后端存储menu的id
       let menuId = -1;
       try {
-        menuId = _.toNumber(currentRoute.name);
+        if(currentRoute.name === HOME_PAGE_NAME){
+          menuId = 0;
+        }else{
+          menuId = _.toNumber(currentRoute.name);
+        }
       } catch (e) {
         smartSentry.captureError(e);
       }
-      if (menuId > 0) {
+      if (menuId > -1) {
         queryHelpDocList(menuId);
       }
     },

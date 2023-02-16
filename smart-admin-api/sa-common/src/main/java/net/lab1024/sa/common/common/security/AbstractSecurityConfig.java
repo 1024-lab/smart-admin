@@ -84,6 +84,8 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
         // token filter 进行校验
         httpSecurity.addFilterBefore(new SecurityTokenFilter(this.userFunction()), UsernamePasswordAuthenticationFilter.class);
         httpSecurity.addFilterBefore(corsFilter, SecurityTokenFilter.class);
+        // 禁用spring security 使用 X-Frame-Options防止网页被Frame
+        httpSecurity.headers().frameOptions().disable();
 
     }
 

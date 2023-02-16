@@ -12,7 +12,7 @@
 
 SmartAdmin v2.X ，作者：1024创新实验室 @copyright：【 1024lab 】
 
-SmartAdmin 文档地址：https://smartadmin.1024lab.net
+SmartAdmin 文档地址：https://smartadmin.vip
 
 1024创新实验室：https://www.1024lab.net
 
