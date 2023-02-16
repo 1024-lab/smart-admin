@@ -1,12 +1,11 @@
-**SmartAdmin** 由**河南·洛阳 [1024 创新实验室](https://www.1024lab.net/)**使用SpringBoot2 和 Vue3 Setup语法糖、 Composition Api (同时支持JavaScript和TypeScript双版本) ，开发出的一套简洁、易用的低代码中后台解决方案！  
+### SmartAdmin
+**SmartAdmin** 由 **河南·洛阳** [1024 创新实验室](https://www.1024lab.net/) 使用SpringBoot2 和 Vue3 Setup语法糖、 Composition Api (同时支持JavaScript和TypeScript双版本) ，开发出的一套简洁、易用的低代码中后台解决方案！  
 
-**我们开源一套漂亮的代码和一套整洁的代码规范**，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，保持谦逊，保持学习，热爱代码，更热爱生活！
+**我们开源一套漂亮的代码和一套整洁的代码规范**，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，保持谦逊，保持学习，**热爱代码，更热爱生活！**
 
-### 地址
 
-在线预览： [https://preview.smartadmin.vip](https://preview.smartadmin.vip)  
+在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)  
 部署文档：[https://smartadmin.vip](https://smartadmin.vip)  
-vue2版本：请查看 feature/1.x 分支
 
 ### 理念与思想
 
@@ -64,7 +63,7 @@ vue2版本：请查看 feature/1.x 分支
 - 独有的本地、开发、测试、预发布、生产 5个env环境配置文件
 - 业内代码最清晰的layout布局写法
 - 业内可能只有我们把main.js中的router加载方式写对了
-- [以上只是一些举例，更多灿若繁星的惊喜和细节，等待着你的发现！](https://smartadmin.vip/views/v2/base/CodeFeature.html)
+- 以上只是一些举例，更多灿若繁星的惊喜和细节，等待着你的发现！[去查看](https://smartadmin.vip/views/v2/base/CodeFeature.html)
 
 
 ### 后端特点
@@ -78,10 +77,7 @@ vue2版本：请查看 feature/1.x 分支
 - 支持接口加密解密注解、接口重复提交
 - maven多环境：开发、测试、预发布、生产 环境配置
 - smart-reload，为系统预留钩子，动态加载，在不重启程序前提下执行一些代码
-- [以上举例，只是沧海一粟，更多的细节等待你的发现！](https://smartadmin.vip/views/v2/base/CodeFeature.html)
-
-
-ps：以上规范基础都是以团队出发，让团队开心快乐的写代码，而不是为了代码规范而规范，不喜勿喷！谢谢。
+- 以上只是沧海一粟，更多的细节等待你的发现！[去查看](https://smartadmin.vip/views/v2/base/CodeFeature.html)
 
 ### 联系我们
 
@@ -92,8 +88,8 @@ ps：以上规范基础都是以团队出发，让团队开心快乐的写代码
   <td><img src="https://gitee.com/lab1024/smart-admin/raw/master/%E6%88%AA%E5%9B%BE/zhuoda-wechat-money-v1.jpg"/></td>
 </tr>
 <tr>
-  <td style="text-align:center">加我微信，拉你入群</td>
-  <td style="text-align:center">关注“小镇程序员”，了解我们</td>
+  <td style="text-align:center">骚扰“卓大”，拉你入群</td>
+  <td style="text-align:center">关注“小镇程序员”，代码与生活、技术与钱途</td>
   <td style="text-align:center">请我们喝杯咖啡</td>
 </tr>
 </table>
