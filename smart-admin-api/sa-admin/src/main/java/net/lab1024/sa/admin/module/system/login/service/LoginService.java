@@ -261,6 +261,7 @@ public class LoginService {
     private void saveLogoutLog(RequestUser requestUser, String ip, String userAgent) {
         LoginLogEntity loginEntity = LoginLogEntity.builder()
                 .userId(requestUser.getUserId())
+                .userType(requestUser.getUserType().getValue())
                 .userName(requestUser.getUserName())
                 .userAgent(userAgent)
                 .loginIp(ip)

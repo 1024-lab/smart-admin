@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-form class="smart-query-form" v-privilege="'loginLog:query'">
+  <a-form class="smart-query-form" v-privilege="'loginLog:query'" ref="queryFormRef">
     <a-row class="smart-query-form-row">
       <a-form-item label="用户名称" class="smart-query-form-item">
         <a-input style="width: 300px" v-model:value="queryForm.userName" placeholder="用户名称" />
@@ -40,10 +40,19 @@
   </a-form>
 
   <a-card size="small" :bordered="false" :hoverable="true">
-    <a-row justify="end">
+    <a-row justify="end" ref="tableOperatorRef">
       <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.LOGIN_LOG" :refresh="ajaxQuery" />
     </a-row>
-    <a-table size="small" :dataSource="tableData" :columns="columns" bordered rowKey="loginLogId" :pagination="false" :loading="tableLoading">
+    <a-table
+      size="small"
+      :dataSource="tableData"
+      :columns="columns"
+      bordered
+      rowKey="loginLogId"
+      :pagination="false"
+      :loading="tableLoading"
+      :scroll="{ y: scrollY }"
+    >
       <template #bodyCell="{ text, record, column }">
         <template v-if="column.dataIndex === 'loginResult'">
           <template v-if="text === LOGIN_RESULT_ENUM.LOGIN_SUCCESS.value">
@@ -85,7 +94,7 @@
   </a-card>
 </template>
 <script setup>
-  import { onMounted, reactive, ref } from 'vue';
+  import { onMounted, onUnmounted, reactive, ref } from 'vue';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   import uaparser from 'ua-parser-js';
@@ -94,6 +103,7 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
+  import { calcTableHeight } from '/@/lib/table-auto-height';
 
   const columns = ref([
     {
@@ -190,5 +200,23 @@
     }
   }
 
-  onMounted(ajaxQuery);
+  // ----------------- 表格自适应高度 --------------------
+  const scrollY = ref(100);
+  const tableOperatorRef = ref();
+  const queryFormRef = ref();
+
+  function autoCalcTableHeight() {
+    calcTableHeight(scrollY, [tableOperatorRef, queryFormRef], 10);
+  }
+
+  window.addEventListener('resize', autoCalcTableHeight);
+
+  onMounted(() => {
+    ajaxQuery();
+    autoCalcTableHeight();
+  });
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', autoCalcTableHeight);
+  });
 </script>

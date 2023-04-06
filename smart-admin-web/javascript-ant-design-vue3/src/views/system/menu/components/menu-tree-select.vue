@@ -1,11 +1,11 @@
 <!--
   * 菜单 表单 树形下拉框
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-06-12 20:11:39 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-06-12 20:11:39
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-tree-select
@@ -18,6 +18,7 @@
     placeholder="请选择菜单"
     allow-clear
     tree-default-expand-all
+    treeNodeFilterProp="menuName"
     @change="treeSelectChange"
   />
 </template>

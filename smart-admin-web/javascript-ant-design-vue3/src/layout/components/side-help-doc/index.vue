@@ -77,34 +77,34 @@
   // ------------------ 意见反馈 --------------------------
   let feedbackMessageList = ref([]);
   onMounted(() => {
-    // 默认先查询一次
+    // 首先查询多一些意见反馈
     queryFeedbackList();
-    scroll();
+    // 更换显示
+    scheduleShowFeedback();
   });
 
-  let scrollInterval = null;
-  let swiper = 1;
+  let scheduleShowInterval = null;
+  let scheduleShowIndex = 0;
 
-  function scroll() {
-    if (scrollInterval != null) {
+  function scheduleShowFeedback() {
+    if (scheduleShowInterval != null) {
       return;
     }
 
-    scrollInterval = setInterval(() => {
-      if (currentPage >= pages) {
-        currentPage = 1;
-      }
-      if (pages == 0 || feedbackList.length == 0) {
+    scheduleShowInterval = setInterval(() => {
+      if (feedbackList.length == 0) {
         return;
       }
-      let initValue = (currentPage - 1) * 2;
-      feedbackMessageList.value[0] = feedbackList[initValue];
-      if (feedbackList[initValue + 1]) {
-        feedbackMessageList.value[1] = feedbackList[initValue + 1];
+
+      // 显示两条意见反馈
+      for (let i = 0; i < 2; i++) {
+        if (scheduleShowIndex >= feedbackList.length) {
+          scheduleShowIndex = 0;
+        }
+        feedbackMessageList.value[i] = feedbackList[scheduleShowIndex];
+        scheduleShowIndex++;
       }
-      swiper = currentPage - 1;
-      currentPage++;
-    }, 2000);
+    }, 3000);
   }
 
   // 总页数
@@ -121,7 +121,7 @@
       };
       let result = await feedbackApi.queryFeedback(param);
       feedbackList = result.data.list;
-      pages = Math.ceil(result.data.total / 2);
+      pages = Math.ceil(feedbackList.length / 2);
     } catch (e) {
       smartSentry.captureError(e);
     }
@@ -143,9 +143,9 @@
       //SmartAdmin中 router的name 就是 后端存储menu的id
       let menuId = -1;
       try {
-        if(currentRoute.name === HOME_PAGE_NAME){
+        if (currentRoute.name === HOME_PAGE_NAME) {
           menuId = 0;
-        }else{
+        } else {
           menuId = _.toNumber(currentRoute.name);
         }
       } catch (e) {
@@ -163,7 +163,7 @@
 
 <style scoped lang="less">
   .help-doc-wrapper {
-    border-left:1px solid #ededed;
+    border-left: 1px solid #ededed;
     height: 100vh;
     padding: 0 10px;
 

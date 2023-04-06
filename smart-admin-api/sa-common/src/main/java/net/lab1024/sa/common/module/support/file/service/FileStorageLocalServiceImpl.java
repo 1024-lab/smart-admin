@@ -5,6 +5,7 @@ import net.lab1024.sa.common.common.code.SystemErrorCode;
 import net.lab1024.sa.common.common.code.UserErrorCode;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.module.support.file.domain.vo.FileDownloadVO;
+import net.lab1024.sa.common.module.support.file.domain.vo.FileMetadataVO;
 import net.lab1024.sa.common.module.support.file.domain.vo.FileUploadVO;
 import net.lab1024.sa.common.module.support.config.ConfigKeyEnum;
 import net.lab1024.sa.common.module.support.config.ConfigService;
@@ -119,6 +120,13 @@ public class FileStorageLocalServiceImpl implements IFileStorageService {
             byte[] buffer = FileCopyUtils.copyToByteArray(in);
             FileDownloadVO fileDownloadVO = new FileDownloadVO();
             fileDownloadVO.setData(buffer);
+
+            FileMetadataVO fileMetadataDTO = new FileMetadataVO();
+            fileMetadataDTO.setFileName(localFile.getName());
+            fileMetadataDTO.setFileSize(localFile.length());
+            fileMetadataDTO.setFileFormat(FilenameUtils.getExtension(localFile.getName()));
+            fileDownloadVO.setMetadata(fileMetadataDTO);
+
             return ResponseDTO.ok(fileDownloadVO);
         } catch (IOException e) {
             log.error("文件下载-发生异常：", e);

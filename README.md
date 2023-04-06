@@ -5,7 +5,7 @@
 
 
 在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)  
-部署文档：[https://smartadmin.vip](https://smartadmin.vip)  
+官方文档：[https://smartadmin.vip](https://smartadmin.vip)  
 
 ### 理念与思想
 

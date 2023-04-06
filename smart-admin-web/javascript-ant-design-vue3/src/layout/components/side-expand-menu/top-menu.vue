@@ -22,7 +22,7 @@
             <template #icon>
               <component :is="$antIcons[item.icon]" />
             </template>
-            {{ item.menuName }}
+            {{ menuNameAdapter(item.menuName) }}
           </a-menu-item>
         </template>
       </template>
@@ -63,6 +63,11 @@
     }
     return parentMenuList.value.map((e) => e.name);
   });
+
+  // 展开菜单的顶级目录名字适配，只展示两个字为好
+  function menuNameAdapter(name){
+    return name.substr(0,2);
+  }
 
   //监听路由的变化，进行更新菜单展开项目
   watch(

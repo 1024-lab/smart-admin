@@ -203,11 +203,11 @@
             </dependency>
 
             <!-- sax 读取时候用到的 -->
-            <dependency>
-                <groupId>xerces</groupId>
-                <artifactId>xercesImpl</artifactId>
-                <version>${xerces.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>xerces</groupId>-->
+<!--                <artifactId>xercesImpl</artifactId>-->
+<!--                <version>${xerces.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-scratchpad</artifactId>

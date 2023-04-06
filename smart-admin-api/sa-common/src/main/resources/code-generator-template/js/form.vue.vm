@@ -10,19 +10,14 @@
       :title="form.$!{primaryKeyFieldName} ? '编辑' : '添加'"
       width="$!{insertAndUpdate.width}"
       :visible="visibleFlag"
-      @close="onClose"
+      @cancel="onClose"
       :maskClosable="false"
       :destroyOnClose="true"
     >
         <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" >
-#if($insertAndUpdate.countPerLine > 1)
-          <a-row>
-#end
-#foreach ($field in $formFields)
-#if($insertAndUpdate.countPerLine > 1)
-#set($span=24 / $!insertAndUpdate.countPerLine )
-            <a-col :span="$!{span}">
-#end
+        #if($insertAndUpdate.countPerLine == 1)
+            <a-row>
+            #foreach ($field in $formFields)
                 #if($field.frontComponent == "Input")
                     <a-form-item label="$!{field.label}"  name="${field.fieldName}">
                         <a-input style="width: 100%" v-model:value="form.${field.fieldName}" placeholder="$!{field.label}" />
@@ -66,19 +61,78 @@
                 #if($field.frontComponent == "Upload")
                     <a-form-item label="$!{field.label}"  name="${field.fieldName}">
                         <FileUpload
-                            :defaultFileList="form.$!{field.fieldName}"
-                            :folder="FILE_FOLDER_TYPE_ENUM.COMMON.value"
-                            buttonText="上传 $!{field.label}"
-                            listType="text"
-                            @change="e => form.$!{field.fieldName} = e"
+                                :defaultFileList="form.$!{field.fieldName}"
+                                :folder="FILE_FOLDER_TYPE_ENUM.COMMON.value"
+                                buttonText="上传 $!{field.label}"
+                                listType="text"
+                                @change="e => form.$!{field.fieldName} = e"
                         />
                     </a-form-item>
                 #end
-#end
-#if($insertAndUpdate.countPerLine > 1)
-          </a-col>
-        <a-row>
-#end
+            #end
+            </a-row>
+        #end
+
+        #if($insertAndUpdate.countPerLine > 1)
+            <a-row>
+            #set($span=24 / $!insertAndUpdate.countPerLine )
+            #foreach ($field in $formFields)
+                    <a-col :span="$!{span}">
+                        #if($field.frontComponent == "Input")
+                            <a-form-item label="$!{field.label}"  name="${field.fieldName}">
+                                <a-input style="width: 100%" v-model:value="form.${field.fieldName}" placeholder="$!{field.label}" />
+                            </a-form-item>
+                        #end
+                        #if($field.frontComponent == "InputNumber")
+                            <a-form-item label="$!{field.label}"  name="${field.fieldName}">
+                                <a-input-number style="width: 100%" v-model:value="form.${field.fieldName}" placeholder="$!{field.label}" />
+                            </a-form-item>
+                        #end
+                        #if($field.frontComponent == "Textarea")
+                            <a-form-item label="$!{field.label}"  name="${field.fieldName}">
+                                <a-textarea style="width: 100%" v-model:value="form.${field.fieldName}" placeholder="$!{field.label}" />
+                            </a-form-item>
+                        #end
+                        #if($field.frontComponent == "BooleanSelect")
+                            <a-form-item label="$!{field.label}"  name="${field.fieldName}">
+                                <BooleanSelect v-model:value="form.${field.fieldName}" style="width: 100%" />
+                            </a-form-item>
+                        #end
+                        #if($field.frontComponent == "SmartEnumSelect")
+                            <a-form-item label="$codeGeneratorTool.removeEnumDesc($!{field.label})"  name="${field.fieldName}">
+                                <SmartEnumSelect width="100%" v-model:value="form.${field.fieldName}" enumName="$!{field.upperUnderscoreEnum}" placeholder="$codeGeneratorTool.removeEnumDesc($!{field.label})"/>
+                            </a-form-item>
+                        #end
+                        #if($field.frontComponent == "DictSelect")
+                            <a-form-item label="$codeGeneratorTool.removeEnumDesc($!{field.label})"  name="${field.fieldName}">
+                                <DictSelect width="100%" v-model:value="form.${field.fieldName}" keyCode="$!{field.dict}" placeholder="$!{field.label}"/>
+                            </a-form-item>
+                        #end
+                        #if($field.frontComponent == "Date")
+                            <a-form-item label="$!{field.label}"  name="${field.fieldName}">
+                                <a-date-picker valueFormat="YYYY-MM-DD" v-model:value="form.$!{field.fieldName}" style="width: 100%" placeholder="$!{field.label}"/>
+                            </a-form-item>
+                        #end
+                        #if($field.frontComponent == "DateTime")
+                            <a-form-item label="$!{field.label}"  name="${field.fieldName}">
+                                <a-date-picker show-time valueFormat="YYYY-MM-DD HH:mm:ss" v-model:value="form.$!{field.fieldName}" style="width: 100%" placeholder="$!{field.label}" />
+                            </a-form-item>
+                        #end
+                        #if($field.frontComponent == "Upload")
+                            <a-form-item label="$!{field.label}"  name="${field.fieldName}">
+                                <FileUpload
+                                    :defaultFileList="form.$!{field.fieldName}"
+                                    :folder="FILE_FOLDER_TYPE_ENUM.COMMON.value"
+                                    buttonText="上传 $!{field.label}"
+                                    listType="text"
+                                    @change="e => form.$!{field.fieldName} = e"
+                                />
+                            </a-form-item>
+                        #end
+                     </a-col>
+            #end
+            </a-row>
+        #end
         </a-form>
 
         <template #footer>

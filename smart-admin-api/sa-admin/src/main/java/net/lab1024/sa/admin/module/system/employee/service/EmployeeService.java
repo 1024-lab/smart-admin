@@ -111,17 +111,17 @@ public class EmployeeService {
      */
     public synchronized ResponseDTO<String> addEmployee(EmployeeAddForm employeeAddForm) {
         // 校验名称是否重复
-        EmployeeEntity employeeEntity = employeeDao.getByLoginName(employeeAddForm.getLoginName(), false);
+        EmployeeEntity employeeEntity = employeeDao.getByLoginName(employeeAddForm.getLoginName(), null);
         if (null != employeeEntity) {
             return ResponseDTO.userErrorParam("登录名重复");
         }
         // 校验姓名是否重复
-        employeeEntity = employeeDao.getByActualName(employeeAddForm.getActualName(), false);
+        employeeEntity = employeeDao.getByActualName(employeeAddForm.getActualName(), null);
         if (null != employeeEntity) {
             return ResponseDTO.userErrorParam("姓名重复");
         }
         // 校验电话是否存在
-        employeeEntity = employeeDao.getByPhone(employeeAddForm.getPhone(), false);
+        employeeEntity = employeeDao.getByPhone(employeeAddForm.getPhone(), null);
         if (null != employeeEntity) {
             return ResponseDTO.userErrorParam("手机号已存在");
         }
@@ -166,17 +166,17 @@ public class EmployeeService {
         }
 
 
-        EmployeeEntity existEntity = employeeDao.getByLoginName(employeeUpdateForm.getLoginName(), false);
+        EmployeeEntity existEntity = employeeDao.getByLoginName(employeeUpdateForm.getLoginName(), null);
         if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
             return ResponseDTO.userErrorParam("登录名重复");
         }
 
-        existEntity = employeeDao.getByPhone(employeeUpdateForm.getPhone(), false);
+        existEntity = employeeDao.getByPhone(employeeUpdateForm.getPhone(), null);
         if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
             return ResponseDTO.userErrorParam("手机号已存在");
         }
 
-        existEntity = employeeDao.getByActualName(employeeUpdateForm.getActualName(), false);
+        existEntity = employeeDao.getByActualName(employeeUpdateForm.getActualName(), null);
         if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
             return ResponseDTO.userErrorParam("姓名重复");
         }

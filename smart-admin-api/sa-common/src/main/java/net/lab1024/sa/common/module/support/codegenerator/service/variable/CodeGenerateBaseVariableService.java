@@ -149,7 +149,7 @@ public abstract class CodeGenerateBaseVariableService {
      */
     protected String getJavaPackageName(String javaType) {
         if ("BigDecimal".equals(javaType)) {
-            return "import java.math.BigDecimal";
+            return "import java.math.BigDecimal;";
         } else if ("LocalDate".equals(javaType)) {
             return "import java.time.LocalDate;";
         } else if ("LocalDateTime".equals(javaType)) {

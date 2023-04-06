@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:p6spy:mysql://127.0.0.1:3306/smart_admin_v2?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
-    password: Zhuoda123456
+    password: Xxxx1024
     initial-size: 2
     min-idle: 2
     max-active: 10
@@ -16,7 +16,7 @@ spring:
       username: druid
       password: 1024
       login:
-        enabled: true
+        enabled: false
       method:
         pointcut: net.lab1024.sa..*Service.*
 
@@ -89,9 +89,9 @@ file:
     local:
       path: ${localPath:/home}/smart_admin_v2/upload/
     cloud:
-      region: oss-cn-qingdao
-      endpoint: oss-cn-qingdao.aliyuncs.com
-      bucket-name: common-sit
+      region: oss-cn-hangzhou
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      bucket-name: 1024lab-smart-admin
       access-key:
       secret-key:
       url:
@@ -127,8 +127,8 @@ access-control-allow-origin: '*'
 
 # 心跳配置
 heart-beat:
-  interval-seconds: 60
+  interval-seconds: 300
 
 # 热加载配置
 reload:
-  interval-seconds: 60
+  interval-seconds: 300

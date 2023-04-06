@@ -46,14 +46,15 @@
 
   //监听退出登录方法
   async function onLogout() {
-    localClear();
-    clearAllCoolies();
-    useUserStore().logout();
     try {
       await loginApi.logout();
     } catch (e) {
       smartSentry.captureError(e);
     } finally {
+
+      localClear();
+      clearAllCoolies();
+      useUserStore().logout();
       location.reload();
     }
   }

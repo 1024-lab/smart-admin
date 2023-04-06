@@ -60,16 +60,24 @@ public class RepeatSubmitAspect {
         if (timeStamp != null) {
             Method method = ((MethodSignature) point.getSignature()).getMethod();
             RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
+
+            // 说明注解去掉了
+            if (annotation != null) {
+                return point.proceed();
+            }
+
             int interval = Math.min(annotation.value(), RepeatSubmit.MAX_INTERVAL);
             if (System.currentTimeMillis() < timeStamp + interval) {
                 // 提交频繁
                 return ResponseDTO.error(UserErrorCode.REPEAT_SUBMIT);
             }
+
         }
         Object obj = null;
         try {
-            obj = point.proceed();
+            // 先给 ticket 设置在执行中
             this.repeatSubmitTicket.putTicket(ticket);
+            obj = point.proceed();
         } catch (Throwable throwable) {
             log.error("", throwable);
             throw throwable;

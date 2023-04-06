@@ -112,7 +112,6 @@ public class NoticeController {
     // --------------------- 【员工】查看 通知公告 -------------------------
     @ApiOperation("【员工】通知公告-查看详情 @author 卓大")
     @GetMapping("/oa/notice/employee/view/{noticeId}")
-    @RepeatSubmit
     public ResponseDTO<NoticeDetailVO> view(@PathVariable Long noticeId, HttpServletRequest request) {
         return noticeEmployeeService.view(
                 SmartRequestUtil.getRequestUserId(),
@@ -124,14 +123,12 @@ public class NoticeController {
 
     @ApiOperation("【员工】通知公告-查询全部 @author 卓大")
     @PostMapping("/oa/notice/employee/query")
-    @RepeatSubmit
     public ResponseDTO<PageResult<NoticeEmployeeVO>> queryEmployeeNotice(@RequestBody @Valid NoticeEmployeeQueryForm noticeEmployeeQueryForm) {
         return noticeEmployeeService.queryList(SmartRequestUtil.getRequestUserId(), noticeEmployeeQueryForm);
     }
 
     @ApiOperation("【员工】通知公告-查询 查看记录 @author 卓大")
     @PostMapping("/oa/notice/employee/queryViewRecord")
-    @RepeatSubmit
     public ResponseDTO<PageResult<NoticeViewRecordVO>> queryViewRecord(@RequestBody @Valid NoticeViewRecordQueryForm noticeViewRecordQueryForm) {
         return ResponseDTO.ok(noticeEmployeeService.queryViewRecord(noticeViewRecordQueryForm));
     }

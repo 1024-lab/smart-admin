@@ -103,6 +103,17 @@
   const helpDocFlag = computed(() => useAppConfigStore().$state.helpDocFlag);
   // 是否显示页脚
   const footerFlag = computed(() => useAppConfigStore().$state.footerFlag);
+  // 多余高度
+  const dueHeight = computed(() => {
+    let due = 40;
+    if (useAppConfigStore().$state.pageTagFlag) {
+      due = due + 40;
+    }
+    if (useAppConfigStore().$state.footerFlag) {
+      due = due + 40;
+    }
+    return due;
+  });
   //是否隐藏菜单
   const collapsed = ref(false);
 
@@ -222,10 +233,11 @@
     }
 
     .admin-layout-content {
+      background-color: inherit;
       min-height: auto;
       position: relative;
       padding: 10px 10px 0px 10px;
-      height: v-bind('pageTagFlag ? "calc(100% - 80px)": "calc(100% - 40px)"');
+      height: calc(100% - v-bind(dueHeight)px);
       overflow-x: hidden;
     }
   }

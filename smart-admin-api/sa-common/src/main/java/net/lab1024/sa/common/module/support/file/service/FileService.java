@@ -139,9 +139,9 @@ public class FileService {
         fileEntity.setFileSize(file.getSize());
         fileEntity.setFileKey(uploadVO.getFileKey());
         fileEntity.setFileType(uploadVO.getFileType());
-        fileEntity.setCreatorId(requestUser == null ? null:requestUser.getUserId());
-        fileEntity.setCreatorName(requestUser == null ? null:requestUser.getUserName());
-        fileEntity.setCreatorUserType(requestUser == null ? null:requestUser.getUserType().getValue());
+        fileEntity.setCreatorId(requestUser == null ? null : requestUser.getUserId());
+        fileEntity.setCreatorName(requestUser == null ? null : requestUser.getUserName());
+        fileEntity.setCreatorUserType(requestUser == null ? null : requestUser.getUserType().getValue());
         fileDao.insert(fileEntity);
         uploadVO.setFileId(fileEntity.getFileId());
         // 添加缓存
@@ -230,6 +230,13 @@ public class FileService {
      * @throws IOException
      */
     public ResponseEntity<Object> downloadByFileKey(String fileKey, String userAgent) {
+        FileVO fileVO = fileDao.getByFileKey(fileKey);
+        if (fileVO == null) {
+            HttpHeaders heads = new HttpHeaders();
+            heads.add(HttpHeaders.CONTENT_TYPE, "text/html;charset=UTF-8");
+            return new ResponseEntity<>("文件不存在：" + fileKey, heads, HttpStatus.OK);
+        }
+
         // 根据文件服务类 获取对应文件服务 查询 url
         ResponseDTO<FileDownloadVO> responseDTO = fileStorageService.fileDownload(fileKey);
         if (!responseDTO.getOk()) {
@@ -237,15 +244,17 @@ public class FileService {
             heads.add(HttpHeaders.CONTENT_TYPE, "text/html;charset=UTF-8");
             return new ResponseEntity<>(responseDTO.getMsg() + "：" + fileKey, heads, HttpStatus.OK);
         }
-        // 设置下载头
-        HttpHeaders heads = new HttpHeaders();
-        heads.add(HttpHeaders.CONTENT_TYPE, "application/octet-stream; charset=utf-8");
-        // 设置对应浏览器的文件名称编码
+
         FileDownloadVO fileDownloadVO = responseDTO.getData();
         FileMetadataVO metadata = fileDownloadVO.getMetadata();
-        String fileName = null != metadata ? metadata.getFileName() : fileKey.substring(fileKey.lastIndexOf("/"));
-        fileName = fileStorageService.getDownloadFileNameByUA(fileName, userAgent);
-        heads.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName);
+
+        // 设置下载头
+        HttpHeaders heads = new HttpHeaders();
+        heads.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(metadata.getFileSize()));
+        heads.add(HttpHeaders.CONTENT_TYPE, "application/octet-stream; charset=utf-8");
+        heads.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileStorageService.getDownloadFileNameByUA(fileVO.getFileName(), userAgent));
+
+        // 返回给前端
         ResponseEntity<Object> responseEntity = new ResponseEntity<>(fileDownloadVO.getData(), heads, HttpStatus.OK);
         return responseEntity;
     }
