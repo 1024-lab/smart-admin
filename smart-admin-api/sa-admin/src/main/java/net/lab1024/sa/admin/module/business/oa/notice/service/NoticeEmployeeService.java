@@ -102,7 +102,7 @@ public class NoticeEmployeeService {
         }
 
         EmployeeEntity employeeEntity = employeeService.getById(requestEmployeeId);
-        if (!updateFormVO.getAllVisibleFlag() && checkVisibleRange(updateFormVO.getVisibleRangeList(), requestEmployeeId, employeeEntity.getDepartmentId())) {
+        if (!updateFormVO.getAllVisibleFlag() && !checkVisibleRange(updateFormVO.getVisibleRangeList(), requestEmployeeId, employeeEntity.getDepartmentId())) {
             return ResponseDTO.userErrorParam("对不起，您没有权限查看内容");
         }
 

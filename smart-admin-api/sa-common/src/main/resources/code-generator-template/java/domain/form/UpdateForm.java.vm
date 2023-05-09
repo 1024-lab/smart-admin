@@ -13,7 +13,7 @@ $importClass
  */
 
 @Data
-public class ${name.upperCamel}UpdateForm {
+public class ${name.upperCamel}UpdateForm extends ${name.upperCamel}AddForm{
 #foreach ($field in $fields)
 
 #if($field.isEnum)

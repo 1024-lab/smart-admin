@@ -2,14 +2,24 @@ server:
   servlet:
     context-path: '/'
   port: 1024
+  # tomcat 配置，主要用于 配置 访问日志（便于将来排查错误）
+  tomcat:
+    basedir: ${localPath:/home}/logs/smart_admin_v2/pre/tomcat-logs
+    accesslog:
+      enabled: true
+      pattern: '%t %{X-Forwarded-For}i %a "%r" %s %D (%D ms)'
+
 spring:
   profiles:
     active: '@profiles.active@'
+
 # 项目配置
 project:
   name: sa-admin
   module: net.lab1024.sa.admin.module
+
 # swagger文档
 swagger:
   host: localhost:${server.port}
   tag-class: net.lab1024.sa.admin.constant.AdminSwaggerTagConst
+

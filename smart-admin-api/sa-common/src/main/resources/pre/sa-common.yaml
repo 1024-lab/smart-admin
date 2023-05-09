@@ -1,7 +1,7 @@
 spring:
   # 数据库连接信息
   datasource:
-    url: jdbc:p6spy:mysql://127.0.0.1:3306/smart_admin_v2_pre?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/smart_admin_v2_pre?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: Zhuoda123456
     initial-size: 5
@@ -60,14 +60,6 @@ spring:
   # 缓存实现类型
   cache:
     type: caffeine
-
-# tomcat 配置，主要用于 配置 访问日志（便于将来排查错误）
-server:
-  tomcat:
-    basedir: ${localPath:/home}/logs/smart_admin_v2/tomcat-logs
-    accesslog:
-      enabled: true
-      pattern: '%t %{X-Forwarded-For}i %a "%r" %s %D (%D ms)'
 
 #swagger: 提高swagger 方法名称有重复的日志提示
 logging:
