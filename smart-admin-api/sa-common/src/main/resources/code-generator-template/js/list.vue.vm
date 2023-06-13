@@ -64,7 +64,7 @@
         <a-row class="smart-table-btn-block">
             <div class="smart-table-operate-block">
 #if($insertAndUpdate.isSupportInsertAndUpdate)
-                <a-button @click="showForm" type="primary" size="small">
+                <a-button @click="showForm()" type="primary" size="small">
                     <template #icon>
                         <PlusOutlined />
                     </template>
@@ -245,7 +245,7 @@
     function onDelete(data){
         Modal.confirm({
             title: '提示',
-            content: '确定要删除选吗?',
+            content: '确定要删除吗?',
             okText: '删除',
             okType: 'danger',
             onOk() {
@@ -260,9 +260,6 @@
     async function requestDelete(data){
         SmartLoading.show();
         try {
-            let deleteForm = {
-                goodsIdList: selectedRowKeyList.value,
-            };
             await $!{name.lowerCamel}Api.delete(data.$!{primaryKeyFieldName});
             message.success('删除成功');
             queryData();

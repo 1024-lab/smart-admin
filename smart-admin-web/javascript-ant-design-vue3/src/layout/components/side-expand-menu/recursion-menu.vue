@@ -11,11 +11,11 @@
   <div class="resursion-container">
     <!-- 顶部顶级菜单名称 -->
     <div class="top-menu">
-      <span class="ant-menu">{{ props.selectedMenu?.menuName }}</span>
+      <span class="ant-menu">{{ props.selectedMenu.menuName }}</span>
     </div>
     <!-- 次级菜单展示 -->
     <a-menu :selectedKeys="selectedKeys" :openKeys="openKeys" mode="inline">
-      <template v-for="item in props.selectedMenu?.children" :key="item.menuId">
+      <template v-for="item in props.selectedMenu.children" :key="item.menuId">
         <template v-if="item.visibleFlag">
           <template v-if="$lodash.isEmpty(item.children)">
             <a-menu-item :key="item.menuId.toString()" @click="turnToPage(item)">
@@ -60,14 +60,14 @@
       return [];
     }
     let menuParentIdListMap = useUserStore().getMenuParentIdListMap;
-    return menuParentIdListMap?.get(currentName) || [];
+    return menuParentIdListMap.get(currentName) || [];
   });
 
   const openKeys = computed(() => {
     // // 仅展开当前页面
     // return parentMenuList.value.map((e) => e.name);
     // 展开所有
-    let children = props.selectedMenu?.children;
+    let children = props.selectedMenu.children;
     if (!children || _.isEmpty(children)) {
       return [];
     }

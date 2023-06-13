@@ -1,26 +1,26 @@
 <!--
-  * 图标 选择 
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-01 23:14:49 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  * 图标 选择
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-01 23:14:49
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <div>
     <a-popover v-model:visible="visible" placement="bottomLeft" trigger="click">
       <template #title>
-        <a-form-item-rest>
+        <a-form-item>
           <a-radio-group @change="updateSelectIconArray" v-model:value="iconStyle" style="margin: 8px">
             <a-radio-button value="outlined">线框风格</a-radio-button>
             <a-radio-button value="filled">实底风格</a-radio-button>
             <a-radio-button value="twoTone">双色风格</a-radio-button>
           </a-radio-group>
-        </a-form-item-rest>
-        <a-form-item-rest>
+        </a-form-item>
+        <a-form-item>
           <a-input-search v-model:value="searchValue" placeholder="输入英文关键词进行搜索" @change="updateSelectIconArray" />
-        </a-form-item-rest>
+        </a-form-item>
       </template>
 
       <template #content>

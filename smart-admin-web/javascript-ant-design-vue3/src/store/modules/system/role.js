@@ -82,7 +82,7 @@ export const useRoleStore = defineStore({
         return;
       }
       // 选中父级
-      let parentIndex = this.checkedData.findIndex((e) => parentModule?.menuId === e);
+      let parentIndex = this.checkedData.findIndex((e) => parentModule.menuId === e);
       if (parentModule.menuId && parentIndex == -1) {
         this.addCheckedData(parentModule.menuId);
       }

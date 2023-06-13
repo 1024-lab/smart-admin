@@ -38,7 +38,7 @@ public class GoodsController extends AdminBaseController {
 
     @ApiOperation("分页查询 @author 胡克")
     @PostMapping("/goods/query")
-    @PreAuthorize("@saAuth.checkPermission('goods:query ')")
+    @PreAuthorize("@saAuth.checkPermission('goods:query')")
     public ResponseDTO<PageResult<GoodsVO>> query(@RequestBody @Valid GoodsQueryForm queryForm) {
         return goodsService.query(queryForm);
     }

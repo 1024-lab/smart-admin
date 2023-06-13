@@ -8,12 +8,12 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-sub-menu :key="props.menuInfo?.menuId.toString()">
+  <a-sub-menu :key="props.menuInfo.menuId.toString()">
     <template #icon>
-      <component :is="$antIcons[props.menuInfo?.icon]" />
+      <component :is="$antIcons[props.menuInfo.icon]" />
     </template>
-    <template #title>{{ props.menuInfo?.menuName }}</template>
-    <template v-for="item in props.menuInfo?.children" :key="item.menuId">
+    <template #title>{{ props.menuInfo.menuName }}</template>
+    <template v-for="item in props.menuInfo.children" :key="item.menuId">
       <template v-if="item.visibleFlag">
         <template v-if="!item.children">
           <a-menu-item :key="item.menuId.toString()" @click="turnToPage(item)">

@@ -240,7 +240,7 @@ export const useUserStore = defineStore({
     },
     // 清空缓存
     clearKeepAliveIncludes(val) {
-      if (!val || !this.keepAliveIncludes?.includes(val)) {
+      if (!val || !this.keepAliveIncludes.includes(val)) {
         this.keepAliveIncludes = [];
         return;
       }

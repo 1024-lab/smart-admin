@@ -22,7 +22,7 @@
           <a-row class="detail-info">
             <a-col :span="12"> 用户id：{{ detail.operateUserId }}</a-col>
             <a-col :span="12"> 用户名称： {{ detail.operateUserName }}</a-col>
-            <a-col :span="12"> 请求内容： {{ detail.module }} - {{ detail.content }}</a-col>
+            <a-col :span="24"> 请求内容： {{ detail.module }} - {{ detail.content }}</a-col>
           </a-row>
         </a-col>
         <a-col :span="8">

@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-result status="404" title="对不起，您没有权限访问此内容">
+  <a-result status="403" title="对不起，您没有权限访问此内容">
     <template #extra>
       <a-button type="primary" @click="goHome">返回首页</a-button>
     </template>

@@ -205,7 +205,10 @@ public class EmployeeService {
         if (null == employeeEntity) {
             return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
         }
-        employeeDao.updateDisableFlag(employeeId, !employeeEntity.getDisabledFlag());
+
+        boolean disableFlag=!employeeEntity.getDisabledFlag();
+        employeeEntity.setDisabledFlag(disableFlag);
+        employeeDao.updateDisableFlag(employeeId, disableFlag);
 
         if (employeeEntity.getDisabledFlag()) {
             tokenService.batchRemoveRedisToken(employeeId, UserTypeEnum.ADMIN_EMPLOYEE);
