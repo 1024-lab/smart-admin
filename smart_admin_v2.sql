@@ -803,8 +803,8 @@ INSERT INTO `t_oa_enterprise` VALUES (2, '1024创新实验室', 'public/common/f
 DROP TABLE IF EXISTS `t_oa_enterprise_employee`;
 CREATE TABLE `t_oa_enterprise_employee`  (
   `enterprise_employee_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `enterprise_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单ID',
-  `employee_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货物名称',
+  `enterprise_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '企业ID',
+  `employee_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '员工ID',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`enterprise_employee_id`) USING BTREE,
