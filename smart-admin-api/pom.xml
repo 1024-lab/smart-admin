@@ -13,6 +13,7 @@
 	<modules>
         <module>sa-common</module>
 		<module>sa-admin</module>
+        <module>sa-event</module>
     </modules>
 
     <properties>
