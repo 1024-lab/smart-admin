@@ -1,6 +1,8 @@
 package com.my.util;
 
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.IvParameterSpec;
@@ -13,7 +15,13 @@ import java.util.Base64;
 public class WechatUtils {
     public static final String AES = "AES";
     public static final String AES_CBC_PADDING = "AES/CBC/PKCS7Padding";
-
+    private static BouncyCastleProvider bouncyCastleProvider = null;
+    public static synchronized BouncyCastleProvider getBouncyCastleInstance() {
+        if (bouncyCastleProvider == null) {
+            bouncyCastleProvider = new BouncyCastleProvider();
+        }
+        return bouncyCastleProvider;
+    }
     /**
      *    * 微信 数据解密<br/>
      *    * 对称解密使用的算法为 AES-128-CBC，数据采用PKCS#7填充<br/>
@@ -45,7 +53,7 @@ public class WechatUtils {
      *
      */
     public static void init() throws Exception {
-        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+        Security.addProvider(new BouncyCastleProvider());
         KeyGenerator.getInstance(AES).init(128);
     }
 
