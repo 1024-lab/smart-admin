@@ -22,13 +22,13 @@
       @remove="handleRemove"
     >
       <div v-if="fileList.length < props.maxUploadSize">
-        <template v-if="listType == 'picture-card'">
+        <template v-if="listType === 'picture-card'">
           <PlusOutlined />
           <div class="ant-upload-text">
             {{ buttonText }}
           </div>
         </template>
-        <template v-if="listType == 'text'">
+        <template v-if="listType === 'text'">
           <a-button>
             <upload-outlined />
             {{ buttonText }}
@@ -36,7 +36,7 @@
         </template>
       </div>
     </a-upload>
-    <a-modal :footer="null" :visible="previewVisible" @cancel="handleCancel">
+    <a-modal :footer="null" :open="previewVisible" @cancel="handleCancel">
       <img :src="previewUrl" alt="example" style="width: 100%" />
     </a-modal>
   </div>
@@ -44,11 +44,11 @@
 <script setup>
   import { computed, ref, watch } from 'vue';
   import { message } from 'ant-design-vue';
-  import { fileApi } from '/@/api/support/file/file-api';
+  import { fileApi } from '/src/api/support/file-api';
   import { useUserStore } from '/@/store/modules/system/user';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
-  import { download } from '/@/lib/axios';
+  import { getDownload } from '/@/lib/axios';
   import { smartSentry } from '/@/lib/smart-sentry';
   const props = defineProps({
     value: String,
@@ -149,9 +149,9 @@
   function handleChange(info) {
     let fileStatus = info.file.status;
     let file = info.file;
-    if (fileStatus == 'removed') {
-      let index = fileList.value.findIndex((e) => e.fileId == file.fileId);
-      if (index != -1) {
+    if (fileStatus === 'removed') {
+      let index = fileList.value.findIndex((e) => e.fileId === file.fileId);
+      if (index !== -1) {
         fileList.value.splice(index, 1);
         emit('change', fileList.value);
       }
@@ -179,7 +179,7 @@
       previewUrl.value = file.url || file.preview;
       previewVisible.value = true;
     } else {
-      download(file.fileName, file.fileUrl);
+      getDownload(file.fileName, file.fileUrl);
     }
   };
 

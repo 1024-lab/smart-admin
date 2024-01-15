@@ -35,42 +35,26 @@
   </a-form>
 
   <a-card size="small" :bordered="false">
-    <a-table size="small" :dataSource="tableData" :columns="columns" rowKey="dataTracerId" :pagination="false" bordered>
-      <template #bodyCell="{ record, index, column }">
-        <template v-if="column.dataIndex === 'dataTracerId'">
-          <div>{{ index + 1 }}</div>
-        </template>
-        <template v-if="column.dataIndex === 'userName'">
-          <div>{{record.userName}} ({{ $smartEnumPlugin.getDescByValue('USER_TYPE_ENUM', record.userType) }})</div>
-        </template>
-        <template v-if="column.dataIndex === 'userAgent'">
-          <div>{{ record.browser }} / {{ record.os }} / {{ record.device }}</div>
-        </template>
-        <template v-if="column.dataIndex === 'content'">
-          <div class="operate-content" v-html="record.content"></div>
-        </template>
-        <template v-else-if="column.dataIndex === 'action'">
-          <a-button v-if="record.diffOld || record.diffNew" @click="showDetail(record)" type="link">详情 </a-button>
-        </template>
-      </template>
-    </a-table>
+    <!---以表格形式 显示-->
+    <!-- <DataTracerTable :tableData="tableData" @showDetail="showDetail" /> -->
 
-    <div class="smart-query-table-page">
-      <a-pagination
-        showSizeChanger
-        showQuickJumper
-        show-less-items
-        :pageSizeOptions="PAGE_SIZE_OPTIONS"
-        :defaultPageSize="queryForm.pageSize"
-        v-model:current="queryForm.pageNum"
-        v-model:pageSize="queryForm.pageSize"
-        :total="total"
-        @change="onSearch"
-        @showSizeChange="onSearch"
-        :show-total="(total) => `共${total}条`"
-      />
-    </div>
-    <a-modal v-model:visible="visibleDiff" width="90%" title="数据比对" :footer="null">
+    <!---以 timeline 时间轴形式 显示-->
+    <DataTracerTimeline :tableData="tableData" @showDetail="showDetail" />
+
+    <a-pagination
+      showSizeChanger
+      showQuickJumper
+      show-less-items
+      :pageSizeOptions="PAGE_SIZE_OPTIONS"
+      :defaultPageSize="queryForm.pageSize"
+      v-model:current="queryForm.pageNum"
+      v-model:pageSize="queryForm.pageSize"
+      :total="total"
+      @change="ajaxQuery"
+      @showSizeChange="ajaxQuery"
+      :show-total="(total) => `共${total}条`"
+    />
+    <a-modal v-model:open="visibleDiff" width="90%" title="数据比对" :footer="null">
       <div v-html="prettyHtml"></div>
     </a-modal>
   </a-card>
@@ -80,10 +64,11 @@
   import * as Diff2Html from 'diff2html';
   import 'diff2html/bundles/css/diff2html.min.css';
   import uaparser from 'ua-parser-js';
-  import { nextTick,  reactive, ref, watch } from 'vue';
-  import { dataTracerApi } from '/@/api/support/data-tracer/data-tracer-api';
+  import { nextTick, reactive, ref, watch } from 'vue';
+  import { dataTracerApi } from '/src/api/support/data-tracer-api';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
+  import DataTracerTimeline from './data-tracer-timeline.vue';
 
   let props = defineProps({
     // 数据id
@@ -95,47 +80,6 @@
       type: Number,
     },
   });
-
-  const columns = reactive([
-    {
-      title: '序号',
-      dataIndex: 'dataTracerId',
-      width: 50,
-    },
-    {
-      title: '操作时间',
-      dataIndex: 'createTime',
-      width: 150,
-    },
-    {
-      title: '操作人',
-      dataIndex: 'userName',
-      width: 100,
-      ellipsis: true,
-    },
-    {
-      title: 'IP',
-      dataIndex: 'ip',
-      ellipsis: true,
-      width: 100,
-    },
-    {
-      title: '客户端',
-      dataIndex: 'userAgent',
-      ellipsis: true,
-      width: 150,
-    },
-    {
-      title: '操作内容',
-      dataIndex: 'content',
-    },
-    {
-      title: '操作',
-      dataIndex: 'action',
-      fixed: 'right',
-      width: 80,
-    },
-  ]);
 
   // --------------- 查询表单、查询方法 ---------------
 
@@ -155,7 +99,12 @@
     onSearch();
   }
 
-  async function onSearch() {
+  function onSearch() {
+    queryForm.pageNum = 1;
+    ajaxQuery();
+  }
+
+  async function ajaxQuery() {
     try {
       tableLoading.value = true;
       let responseModel = await dataTracerApi.queryList(Object.assign({}, queryForm, { dataId: props.dataId, type: props.type }));
@@ -163,6 +112,7 @@
         if (!e.userAgent) {
           continue;
         }
+        // e.content = e.content.replaceAll('<br/>','；');
         let ua = uaparser(e.userAgent);
         e.browser = ua.browser.name;
         e.os = ua.os.name;
@@ -190,17 +140,14 @@
     { immediate: true }
   );
 
-
   // --------------- diff 特效 ---------------
   // diff
   const visibleDiff = ref(false);
   let prettyHtml = ref('');
   function showDetail(record) {
     visibleDiff.value = true;
-    let diffOld = record.diffOld.replaceAll('<br/>','\r\n');
-    let diffNew = record.diffNew.replaceAll('<br/>','\r\n');
-    console.log(diffOld)
-    console.log(diffNew)
+    let diffOld = record.diffOld.replaceAll('<br/>', '\r\n');
+    let diffNew = record.diffNew.replaceAll('<br/>', '\r\n');
     const args = ['', diffOld, diffNew, '变更前', '变更后'];
 
     let diffPatch = Diff.createPatch(...args);
@@ -218,12 +165,12 @@
         let left = diffDiv[0],
           right = diffDiv[1];
         left.addEventListener('scroll', function (e) {
-          if (left.scrollLeft != right.scrollLeft) {
+          if (left.scrollLeft !== right.scrollLeft) {
             right.scrollLeft = left.scrollLeft;
           }
         });
         right.addEventListener('scroll', function (e) {
-          if (left.scrollLeft != right.scrollLeft) {
+          if (left.scrollLeft !== right.scrollLeft) {
             left.scrollLeft = right.scrollLeft;
           }
         });
@@ -231,9 +178,3 @@
     });
   }
 </script>
-<style scoped lang="less">
-  .operate-content {
-    line-height: 20px;
-    margin: 5px 0px;
-  }
-</style>

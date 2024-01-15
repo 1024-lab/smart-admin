@@ -11,32 +11,36 @@
 <template>
   <default-home-card extra="更多" icon="SoundTwoTone" title="通知公告" @extraClick="onMore">
     <a-spin :spinning="loading">
-    <div class="content-wrapper">
-      <a-empty v-if="$lodash.isEmpty(data)" />
-      <ul v-else>
-        <li v-for="(item, index) in data" :key="index" :class="[item.viewFlag ? 'read' : 'un-read']">
-          <a-tooltip placement="top">
-            <template #title>
-              <span>{{ item.title }}</span>
-            </template>
-            <a class="content" @click="toDetail(item.noticeId)">
-              <a-badge :status="item.viewFlag ? 'default' : 'error'" />
-              {{ item.title }}
-            </a>
-          </a-tooltip>
-          <span class="time"> {{ item.publishDate }}</span>
-        </li>
-      </ul>
-    </div>
+      <div class="content-wrapper">
+        <a-empty v-if="$lodash.isEmpty(data)" />
+        <ul v-else>
+          <li v-for="(item, index) in data" :key="index" :class="[item.viewFlag ? 'read' : 'un-read']">
+            <a-tooltip placement="top">
+              <template #title>
+                <span>{{ item.title }}</span>
+              </template>
+              <a class="content" @click="toDetail(item.noticeId)">
+                <a-badge :status="item.viewFlag ? 'default' : 'error'" />
+                {{ item.title }}
+              </a>
+            </a-tooltip>
+            <span class="time"> {{ item.publishDate }}</span>
+          </li>
+        </ul>
+      </div>
     </a-spin>
   </default-home-card>
 </template>
 <script setup>
   import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { noticeApi } from '/@/api/business/oa/notice-api';
-import { smartSentry } from '/@/lib/smart-sentry';
-import DefaultHomeCard from '/@/views/system/home/components/default-home-card.vue';
+  import { useRouter } from 'vue-router';
+  import { noticeApi } from '/@/api/business/oa/notice-api';
+  import { smartSentry } from '/@/lib/smart-sentry';
+  import DefaultHomeCard from '/@/views/system/home/components/default-home-card.vue';
+  import { theme } from 'ant-design-vue';
+  const { useToken } = theme;
+  const { token } = useToken();
+  const colorPrimary = token.value.colorPrimary;
 
   const props = defineProps({
     noticeTypeId: {
@@ -90,7 +94,7 @@ import DefaultHomeCard from '/@/views/system/home/components/default-home-card.v
 </script>
 <style lang="less" scoped>
   @read-color: #666;
-  .content-wrapper{
+  .content-wrapper {
     height: 150px;
     overflow-y: hidden;
     overflow-x: hidden;
@@ -106,6 +110,7 @@ import DefaultHomeCard from '/@/views/system/home/components/default-home-card.v
       overflow: hidden;
       word-break: break-all;
       margin-right: 5px;
+      color: v-bind(colorPrimary);
     }
 
     .time {
@@ -115,15 +120,7 @@ import DefaultHomeCard from '/@/views/system/home/components/default-home-card.v
     }
   }
 
-  ul li :hover {
-    color: @primary-color;
-  }
-
-  .un-read a {
-    color: @text-color;
-  }
-
   .read a {
-    color: @read-color;
+    color: @read-color !important;
   }
 </style>

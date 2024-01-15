@@ -27,8 +27,4 @@ export const categoryApi = {
   updateCategory: (param) => {
     return postRequest('/category/update', param);
   },
-  // 查询类目详情 @author 卓大
-  getCategory: (categoryId) => {
-    return getRequest(`/category/${categoryId}`);
-  },
 };

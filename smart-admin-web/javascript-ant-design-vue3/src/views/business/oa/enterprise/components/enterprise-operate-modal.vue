@@ -1,5 +1,5 @@
 <template>
-  <a-modal :visible="visible" title="添加" :width="700" forceRender ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
+  <a-modal :open="visible" title="添加" :width="700" forceRender ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 6 }">
       <a-form-item label="企业名称" name="enterpriseName">
         <a-input v-model:value="form.enterpriseName" placeholder="请输入企业名称" />
@@ -72,7 +72,7 @@
   defineExpose({
     showModal,
   });
-  const emit = defineEmits('refresh');
+  const emit = defineEmits(['refresh']);
 
   // --------------------- modal 显示与隐藏 ---------------------
   // 是否展示
@@ -134,7 +134,7 @@
     unifiedSocialCreditCode: undefined,
     businessLicense: undefined,
     contact: undefined,
-    enterpriseLogo:undefined,
+    enterpriseLogo: undefined,
     contactPhone: undefined,
     email: undefined,
     province: undefined,

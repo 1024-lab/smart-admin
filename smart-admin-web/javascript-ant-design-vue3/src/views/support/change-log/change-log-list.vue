@@ -7,7 +7,7 @@
 -->
 <template>
   <!---------- 查询表单form begin ----------->
-  <a-form class="smart-query-form" v-privilege="'changeLog:query'">
+  <a-form class="smart-query-form" v-privilege="'support:changeLog:query'">
     <a-row class="smart-query-form-row">
       <a-form-item label="更新类型" class="smart-query-form-item">
         <SmartEnumSelect width="200px" v-model:value="queryForm.type" enumName="CHANGE_LOG_TYPE_ENUM" placeholder="更新类型" />
@@ -16,13 +16,13 @@
         <a-input style="width: 200px" v-model:value="queryForm.keyword" placeholder="关键字" />
       </a-form-item>
       <a-form-item label="发布日期" class="smart-query-form-item">
-        <a-range-picker v-model:value="queryForm.publicDate" :ranges="defaultTimeRanges" style="width: 240px" @change="onChangePublicDate" />
+        <a-range-picker v-model:value="queryForm.publicDate" :presets="defaultTimeRanges" style="width: 240px" @change="onChangePublicDate" />
       </a-form-item>
       <a-form-item label="创建时间" class="smart-query-form-item">
         <a-date-picker valueFormat="YYYY-MM-DD" v-model:value="queryForm.createTime" style="width: 150px" />
       </a-form-item>
       <a-form-item class="smart-query-form-item">
-        <a-button type="primary" @click="queryData">
+        <a-button type="primary" @click="onSearch">
           <template #icon>
             <ReloadOutlined />
           </template>
@@ -43,13 +43,19 @@
     <!---------- 表格操作行 begin ----------->
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button @click="showForm" type="primary" size="small" v-privilege="'changeLog:add'">
+        <a-button @click="showForm" type="primary" size="small" v-privilege="'support:changeLog:add'">
           <template #icon>
             <PlusOutlined />
           </template>
           新建
         </a-button>
-        <a-button @click="confirmBatchDelete" type="danger" size="small" :disabled="selectedRowKeyList.length == 0" v-privilege="'changeLog:batchDelete'">
+        <a-button
+          @click="confirmBatchDelete"
+          danger
+          size="small"
+          :disabled="selectedRowKeyList.length === 0"
+          v-privilege="'support:changeLog:batchDelete'"
+        >
           <template #icon>
             <DeleteOutlined />
           </template>
@@ -74,7 +80,7 @@
     >
       <template #bodyCell="{ text, record, column }">
         <template v-if="column.dataIndex === 'version'">
-          <a-button @click="showModal(record)" type="link">{{text}}</a-button>
+          <a-button @click="showModal(record)" type="link">{{ text }}</a-button>
         </template>
         <template v-if="column.dataIndex === 'type'">
           <a-tag color="success">
@@ -86,8 +92,8 @@
         </template>
         <template v-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="showForm(record)" type="link" v-privilege="'changeLog:update'">编辑</a-button>
-            <a-button @click="onDelete(record)" danger type="link" v-privilege="'changeLog:delete'">删除</a-button>
+            <a-button @click="showForm(record)" type="link" v-privilege="'support:changeLog:update'">编辑</a-button>
+            <a-button @click="onDelete(record)" danger type="link" v-privilege="'support:changeLog:delete'">删除</a-button>
           </div>
         </template>
       </template>
@@ -119,7 +125,7 @@
   import { reactive, ref, onMounted } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-  import { changeLogApi } from '/@/api/support/change-log/change-log-api';
+  import { changeLogApi } from '/@/api/support/change-log-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
@@ -209,6 +215,12 @@
     queryData();
   }
 
+  // 搜索
+  function onSearch() {
+    queryForm.pageNum = 1;
+    queryData();
+  }
+
   // 查询数据
   async function queryData() {
     tableLoading.value = true;
@@ -264,9 +276,6 @@
   async function requestDelete(data) {
     SmartLoading.show();
     try {
-      let deleteForm = {
-        goodsIdList: selectedRowKeyList.value,
-      };
       await changeLogApi.delete(data.changeLogId);
       message.success('删除成功');
       queryData();

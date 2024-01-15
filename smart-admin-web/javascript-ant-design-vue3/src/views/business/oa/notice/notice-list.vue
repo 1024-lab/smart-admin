@@ -9,7 +9,7 @@
 -->
 
 <template>
-  <a-form class="smart-query-form" v-privilege="'notice:query'">
+  <a-form class="smart-query-form" v-privilege="'oa:notice:query'">
     <a-row class="smart-query-form-row">
       <a-form-item label="分类" class="smart-query-form-item">
         <a-select v-model:value="queryForm.noticeTypeId" style="width: 100px" :showSearch="true" :allowClear="true" placeholder="分类">
@@ -36,16 +36,16 @@
       </a-form-item>
 
       <a-form-item label="发布时间" class="smart-query-form-item">
-        <a-range-picker v-model:value="publishDate" :ranges="defaultTimeRanges" @change="publishDateChange" style="width: 220px" />
+        <a-range-picker v-model:value="publishDate" :presets="defaultTimeRanges" @change="publishDateChange" style="width: 220px" />
       </a-form-item>
 
       <a-form-item label="创建时间" class="smart-query-form-item">
-        <a-range-picker v-model:value="createDate" :ranges="defaultTimeRanges" @change="createDateChange" style="width: 220px" />
+        <a-range-picker v-model:value="createDate" :presets="defaultTimeRanges" @change="createDateChange" style="width: 220px" />
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
         <a-button-group>
-          <a-button type="primary" @click="onSearch">
+          <a-button type="primary" @click="onSearch" class="smart-margin-right10">
             <template #icon>
               <SearchOutlined />
             </template>
@@ -65,7 +65,7 @@
   <a-card size="small" :bordered="false">
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button type="primary" size="small" @click="addOrUpdate()" v-privilege="'notice:add'">
+        <a-button type="primary" size="small" @click="addOrUpdate()" v-privilege="'oa:notice:add'">
           <template #icon>
             <PlusOutlined />
           </template>
@@ -101,8 +101,8 @@
         </template>
         <template v-else-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button type="link" @click="addOrUpdate(record.noticeId)" v-privilege="'notice:edit'">编辑</a-button>
-            <a-button type="link" @click="onDelete(record.noticeId)" v-privilege="'notice:delete'" danger>删除</a-button>
+            <a-button type="link" @click="addOrUpdate(record.noticeId)" v-privilege="'oa:notice:update'">编辑</a-button>
+            <a-button type="link" @click="onDelete(record.noticeId)" v-privilege="'oa:notice:delete'" danger>删除</a-button>
           </div>
         </template>
       </template>

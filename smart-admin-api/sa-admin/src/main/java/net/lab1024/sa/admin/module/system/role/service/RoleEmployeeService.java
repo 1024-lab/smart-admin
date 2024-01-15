@@ -1,28 +1,28 @@
 package net.lab1024.sa.admin.module.system.role.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import net.lab1024.sa.admin.module.system.department.dao.DepartmentDao;
+import net.lab1024.sa.admin.module.system.department.domain.entity.DepartmentEntity;
+import net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO;
 import net.lab1024.sa.admin.module.system.role.dao.RoleDao;
 import net.lab1024.sa.admin.module.system.role.dao.RoleEmployeeDao;
+import net.lab1024.sa.admin.module.system.role.domain.entity.RoleEmployeeEntity;
 import net.lab1024.sa.admin.module.system.role.domain.entity.RoleEntity;
 import net.lab1024.sa.admin.module.system.role.domain.form.RoleEmployeeQueryForm;
 import net.lab1024.sa.admin.module.system.role.domain.form.RoleEmployeeUpdateForm;
 import net.lab1024.sa.admin.module.system.role.domain.vo.RoleSelectedVO;
-import net.lab1024.sa.common.common.code.UserErrorCode;
-import net.lab1024.sa.common.common.constant.StringConst;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
-import net.lab1024.sa.common.common.util.SmartPageUtil;
-import net.lab1024.sa.admin.module.system.department.dao.DepartmentDao;
-import net.lab1024.sa.admin.module.system.department.domain.entity.DepartmentEntity;
-import net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO;
-import net.lab1024.sa.admin.module.system.role.domain.entity.RoleEmployeeEntity;
+import net.lab1024.sa.admin.module.system.role.domain.vo.RoleVO;
 import net.lab1024.sa.admin.module.system.role.manager.RoleEmployeeManager;
+import net.lab1024.sa.base.common.constant.StringConst;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.util.SmartPageUtil;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -35,42 +35,49 @@ import java.util.stream.Collectors;
  * @Date 2021-10-22 23:17:47
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class RoleEmployeeService {
 
-    @Autowired
+    @Resource
     private RoleEmployeeDao roleEmployeeDao;
-    @Autowired
+    @Resource
     private RoleDao roleDao;
-    @Autowired
+    @Resource
     private DepartmentDao departmentDao;
-    @Autowired
+    @Resource
     private RoleEmployeeManager roleEmployeeManager;
+
+
+    /**
+     * 批量插入
+     *
+     */
+    public void batchInsert(List<RoleEmployeeEntity> roleEmployeeList) {
+        roleEmployeeManager.saveBatch(roleEmployeeList);
+    }
 
     /**
      * 通过角色id，分页获取成员员工列表
      *
-     * @param roleEmployeeQueryForm
-     * @return
      */
     public ResponseDTO<PageResult<EmployeeVO>> queryEmployee(RoleEmployeeQueryForm roleEmployeeQueryForm) {
         Page page = SmartPageUtil.convert2PageQuery(roleEmployeeQueryForm);
-        List<EmployeeVO> employeeDTOS = roleEmployeeDao.selectRoleEmployeeByName(page, roleEmployeeQueryForm)
+        List<EmployeeVO> employeeList = roleEmployeeDao.selectRoleEmployeeByName(page, roleEmployeeQueryForm)
                 .stream()
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-        List<Long> departmentIdList = employeeDTOS.stream().filter(e -> e != null && e.getDepartmentId() != null).map(EmployeeVO::getDepartmentId).collect(Collectors.toList());
+        List<Long> departmentIdList = employeeList.stream().filter(e -> e != null && e.getDepartmentId() != null).map(EmployeeVO::getDepartmentId).collect(Collectors.toList());
         if (CollectionUtils.isNotEmpty(departmentIdList)) {
             List<DepartmentEntity> departmentEntities = departmentDao.selectBatchIds(departmentIdList);
             Map<Long, String> departmentIdNameMap = departmentEntities.stream().collect(Collectors.toMap(DepartmentEntity::getDepartmentId, DepartmentEntity::getName));
-            employeeDTOS.forEach(e -> {
+            employeeList.forEach(e -> {
                 e.setDepartmentName(departmentIdNameMap.getOrDefault(e.getDepartmentId(), StringConst.EMPTY));
             });
         }
-        PageResult<EmployeeVO> PageResult = SmartPageUtil.convert2PageResult(page, employeeDTOS, EmployeeVO.class);
-        return ResponseDTO.ok(PageResult);
+        PageResult<EmployeeVO> pageResult = SmartPageUtil.convert2PageResult(page, employeeList, EmployeeVO.class);
+        return ResponseDTO.ok(pageResult);
     }
 
     public List<EmployeeVO> getAllEmployeeByRoleId(Long roleId) {
@@ -80,9 +87,6 @@ public class RoleEmployeeService {
     /**
      * 移除员工角色
      *
-     * @param employeeId
-     * @param roleId
-     * @return ResponseDTO<String>
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> removeRoleEmployee(Long employeeId, Long roleId) {
@@ -96,8 +100,6 @@ public class RoleEmployeeService {
     /**
      * 批量删除角色的成员员工
      *
-     * @param roleEmployeeUpdateForm
-     * @return ResponseDTO<String>
      */
     public ResponseDTO<String> batchRemoveRoleEmployee(RoleEmployeeUpdateForm roleEmployeeUpdateForm) {
         roleEmployeeDao.batchDeleteEmployeeRole(roleEmployeeUpdateForm.getRoleId(), roleEmployeeUpdateForm.getEmployeeIdList());
@@ -107,8 +109,6 @@ public class RoleEmployeeService {
     /**
      * 批量添加角色的成员员工
      *
-     * @param roleEmployeeUpdateForm
-     * @return
      */
     public ResponseDTO<String> batchAddRoleEmployee(RoleEmployeeUpdateForm roleEmployeeUpdateForm) {
         Long roleId = roleEmployeeUpdateForm.getRoleId();
@@ -128,8 +128,6 @@ public class RoleEmployeeService {
     /**
      * 通过员工id获取员工角色
      *
-     * @param employeeId
-     * @return
      */
     public List<RoleSelectedVO> getRoleInfoListByEmployeeId(Long employeeId) {
         List<Long> roleIds = roleEmployeeDao.selectRoleIdByEmployeeId(employeeId);
@@ -142,11 +140,9 @@ public class RoleEmployeeService {
     /**
      * 根据员工id 查询角色id集合
      *
-     * @param employeeId
-     * @return
      */
-    public List<Long> getRoleIdList(Long employeeId) {
-        return roleEmployeeDao.selectRoleIdByEmployeeId(employeeId);
+    public List<RoleVO> getRoleIdList(Long employeeId) {
+        return roleEmployeeDao.selectRoleByEmployeeId(employeeId);
     }
 
 

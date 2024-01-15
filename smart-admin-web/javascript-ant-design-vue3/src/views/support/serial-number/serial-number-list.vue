@@ -25,7 +25,12 @@
     </a-alert>
 
     <a-row justify="end">
-      <TableOperator class="smart-margin-bottom5 smart-margin-top5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.SERIAL_NUMBER" :refresh="ajaxQuery" />
+      <TableOperator
+        class="smart-margin-bottom5 smart-margin-top5"
+        v-model="columns"
+        :tableId="TABLE_ID_CONST.SUPPORT.SERIAL_NUMBER"
+        :refresh="ajaxQuery"
+      />
     </a-row>
 
     <a-table
@@ -41,8 +46,8 @@
       <template #bodyCell="{ record, column }">
         <template v-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="generate(record)" v-privilege="'support:serial:number:generate'" type="link">生成</a-button>
-            <a-button @click="showRecord(record.serialNumberId)" v-privilege="'support:serial:number:record'" type="link">查看记录</a-button>
+            <a-button @click="generate(record)" v-privilege="'support:serialNumber:generate'" type="link">生成</a-button>
+            <a-button @click="showRecord(record.serialNumberId)" v-privilege="'support:serialNumber:record'" type="link">查看记录</a-button>
           </div>
         </template>
       </template>
@@ -55,14 +60,13 @@
   <SerialNumberRecordList ref="recordList" />
 </template>
 <script setup>
-  import { onMounted, reactive, ref } from 'vue';
-import SerialNumberGenerateFormModal from './serial-number-generate-form-modal.vue';
-import SerialNumberRecordList from './serial-number-record-list.vue';
-import { serialNumberApi } from '/@/api/support/serial-number/serial-number-api';
-import TableOperator from '/@/components/support/table-operator/index.vue';
-import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
-import { smartSentry } from '/@/lib/smart-sentry';
-
+  import { onMounted, ref } from 'vue';
+  import SerialNumberGenerateFormModal from './serial-number-generate-form-modal.vue';
+  import SerialNumberRecordList from './serial-number-record-list.vue';
+  import { serialNumberApi } from '/@/api/support/serial-number-api';
+  import TableOperator from '/@/components/support/table-operator/index.vue';
+  import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
   //------------------------ 表格渲染 ---------------------
 

@@ -19,11 +19,16 @@
         </a-form-item>
         <a-form-item label="页面方式" name="pageType" v-if="formData.isSupportInsertAndUpdate">
           <a-radio-group v-model:value="formData.pageType" button-style="solid">
-            <a-radio-button :value="CODE_INSERT_AND_UPDATE_PAGE_ENUM.MODAL.value">{{CODE_INSERT_AND_UPDATE_PAGE_ENUM.MODAL.desc}}</a-radio-button>
-            <a-radio-button :value="CODE_INSERT_AND_UPDATE_PAGE_ENUM.DRAWER.value">{{CODE_INSERT_AND_UPDATE_PAGE_ENUM.DRAWER.desc}}</a-radio-button>
+            <a-radio-button :value="CODE_INSERT_AND_UPDATE_PAGE_ENUM.MODAL.value">{{ CODE_INSERT_AND_UPDATE_PAGE_ENUM.MODAL.desc }}</a-radio-button>
+            <a-radio-button :value="CODE_INSERT_AND_UPDATE_PAGE_ENUM.DRAWER.value">{{ CODE_INSERT_AND_UPDATE_PAGE_ENUM.DRAWER.desc }}</a-radio-button>
           </a-radio-group>
         </a-form-item>
-        <a-form-item label="页面宽度" v-show="formData.pageType !== CODE_INSERT_AND_UPDATE_PAGE_ENUM.PAGE.value" name="width" v-if="formData.isSupportInsertAndUpdate">
+        <a-form-item
+          label="页面宽度"
+          v-show="formData.pageType !== CODE_INSERT_AND_UPDATE_PAGE_ENUM.PAGE.value"
+          name="width"
+          v-if="formData.isSupportInsertAndUpdate"
+        >
           <a-input v-model:value="formData.width" placeholder="Modal或者Drawer的width属性 " />
         </a-form-item>
         <a-form-item label="每行数量" name="countPerLine" v-if="formData.isSupportInsertAndUpdate">
@@ -52,7 +57,16 @@
     </a-col>
   </a-row>
 
-  <a-table size="small" bordered class="smart-margin-top10" :dataSource="tableData" :columns="columns" rowKey="columnName" :pagination="false" v-if="formData.isSupportInsertAndUpdate">
+  <a-table
+    size="small"
+    bordered
+    class="smart-margin-top10"
+    :dataSource="tableData"
+    :columns="columns"
+    rowKey="columnName"
+    :pagination="false"
+    v-if="formData.isSupportInsertAndUpdate"
+  >
     <template #bodyCell="{ text, record, index, column }">
       <template v-if="column.dataIndex === 'no'">
         {{ index + 1 }}
@@ -95,13 +109,11 @@
 </template>
 
 <script setup>
-  import { inject, ref, reactive, computed } from 'vue';
+  import { computed, inject, reactive, ref } from 'vue';
   import { checkExistEnum, getFrontComponent } from '../../code-generator-util';
-  import SmartEnumRadio from '/@/components/framework/smart-enum-radio/index.vue';
-  import { CODE_INSERT_AND_UPDATE_PAGE_ENUM } from '/@/constants/support/code-generator-const';
+  import { CODE_FRONT_COMPONENT_ENUM, CODE_INSERT_AND_UPDATE_PAGE_ENUM } from '/@/constants/support/code-generator-const';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import { message } from 'ant-design-vue';
-  import { CODE_FRONT_COMPONENT_ENUM } from '/@/constants/support/code-generator-const';
 
   //------------------------ 全局数据 ---------------------
   const tableInfo = inject('tableInfo');
@@ -203,9 +215,9 @@
         columnName: column.columnName,
         columnComment: column.columnComment,
         dataType: column.dataType,
-        nullableFlag: column.isNullable === 'NO' ? true : false,
-        primaryKeyFlag: column.columnKey === 'PRI' ? true : false,
-        autoIncreaseFlag: column.extra === 'auto_increment' ? true : false,
+        nullableFlag: column.isNullable === 'NO',
+        primaryKeyFlag: column.columnKey === 'PRI',
+        autoIncreaseFlag: column.extra === 'auto_increment',
       };
 
       //表单

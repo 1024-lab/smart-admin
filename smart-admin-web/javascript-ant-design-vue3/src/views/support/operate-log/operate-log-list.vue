@@ -8,18 +8,18 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-form class="smart-query-form" v-privilege="'operateLog:query'">
+  <a-form class="smart-query-form" v-privilege="'support:operateLog:query'">
     <a-row class="smart-query-form-row">
       <a-form-item label="用户名称" class="smart-query-form-item">
         <a-input style="width: 300px" v-model:value="queryForm.userName" placeholder="用户名称" />
       </a-form-item>
 
       <a-form-item label="请求时间" class="smart-query-form-item">
-        <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :ranges="defaultChooseTimeRange" style="width: 240px" />
+        <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :presets="defaultChooseTimeRange" style="width: 240px" />
       </a-form-item>
 
       <a-form-item label="快速筛选" class="smart-query-form-item">
-        <a-radio-group v-model:value="queryForm.successFlag" @change="ajaxQuery">
+        <a-radio-group v-model:value="queryForm.successFlag" @change="onSearch">
           <a-radio-button :value="undefined">全部</a-radio-button>
           <a-radio-button :value="true">成功</a-radio-button>
           <a-radio-button :value="false">失败</a-radio-button>
@@ -27,7 +27,7 @@
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
-        <a-button type="primary" @click="ajaxQuery">
+        <a-button type="primary" @click="ajaxQuery" class="smart-margin-right10">
           <template #icon>
             <ReloadOutlined />
           </template>
@@ -43,11 +43,11 @@
     </a-row>
   </a-form>
 
-  <a-card size="small" :bordered="false" :hoverable="true" style="height:100%">
+  <a-card size="small" :bordered="false" :hoverable="true" style="height: 100%">
     <a-row justify="end">
       <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.CONFIG" :refresh="ajaxQuery" />
     </a-row>
-    <a-table size="small" :loading="tableLoading" :dataSource="tableData" :columns="columns" bordered rowKey="operateLogId" :pagination="false" >
+    <a-table size="small" :loading="tableLoading" :dataSource="tableData" :columns="columns" bordered rowKey="operateLogId" :pagination="false">
       <template #bodyCell="{ text, record, column }">
         <template v-if="column.dataIndex === 'successFlag'">
           <a-tag :color="text ? 'success' : 'error'">{{ text ? '成功' : '失败' }}</a-tag>
@@ -63,7 +63,7 @@
 
         <template v-else-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="showDetail(record.operateLogId)" type="link" v-privilege="'operateLog:detail'">详情</a-button>
+            <a-button @click="showDetail(record.operateLogId)" type="link" v-privilege="'support:operateLog:detail'">详情</a-button>
           </div>
         </template>
       </template>
@@ -91,7 +91,7 @@
 <script setup>
   import { onMounted, reactive, ref } from 'vue';
   import OperateLogDetailModal from './operate-log-detail-modal.vue';
-  import { operateLogApi } from '/@/api/support/operate-log/operate-log-api';
+  import { operateLogApi } from '/@/api/support/operate-log-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   import uaparser from 'ua-parser-js';
@@ -129,6 +129,11 @@
     {
       title: 'IP',
       dataIndex: 'ip',
+      ellipsis: true,
+    },
+    {
+      title: 'IP地区',
+      dataIndex: 'ipRegion',
       ellipsis: true,
     },
     {
@@ -185,6 +190,12 @@
     createDateRange.value = [];
     ajaxQuery();
   }
+
+  function onSearch() {
+    queryForm.pageNum = 1;
+    ajaxQuery();
+  }
+
   async function ajaxQuery() {
     try {
       tableLoading.value = true;

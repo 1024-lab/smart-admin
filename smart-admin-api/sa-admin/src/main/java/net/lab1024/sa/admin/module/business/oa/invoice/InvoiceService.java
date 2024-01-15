@@ -5,17 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.module.business.oa.enterprise.EnterpriseService;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseVO;
 import net.lab1024.sa.admin.module.business.oa.invoice.domain.*;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
-import net.lab1024.sa.common.common.util.SmartPageUtil;
-import net.lab1024.sa.common.module.support.datatracer.constant.DataTracerConst;
-import net.lab1024.sa.common.module.support.datatracer.constant.DataTracerTypeEnum;
-import net.lab1024.sa.common.module.support.datatracer.service.DataTracerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.util.SmartPageUtil;
+import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerConst;
+import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerTypeEnum;
+import net.lab1024.sa.base.module.support.datatracer.service.DataTracerService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,32 +26,29 @@ import java.util.Objects;
  * @Date 2022-06-23 19:32:59
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 @Slf4j
 public class InvoiceService {
 
-    @Autowired
+    @Resource
     private InvoiceDao invoiceDao;
 
-    @Autowired
+    @Resource
     private EnterpriseService enterpriseService;
 
-    @Autowired
+    @Resource
     private DataTracerService dataTracerService;
 
     /**
      * 分页查询发票信息
-     *
-     * @param queryDTO
-     * @return
      */
-    public ResponseDTO<PageResult<InvoiceVO>> queryByPage(InvoiceQueryForm queryDTO) {
-        queryDTO.setDeletedFlag(Boolean.FALSE);
-        Page<?> page = SmartPageUtil.convert2PageQuery(queryDTO);
-        List<InvoiceVO> invoiceVOS = invoiceDao.queryPage(page, queryDTO);
-        PageResult<InvoiceVO> pageResult = SmartPageUtil.convert2PageResult(page, invoiceVOS);
+    public ResponseDTO<PageResult<InvoiceVO>> queryByPage(InvoiceQueryForm queryForm) {
+        queryForm.setDeletedFlag(Boolean.FALSE);
+        Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
+        List<InvoiceVO> invoiceList = invoiceDao.queryPage(page, queryForm);
+        PageResult<InvoiceVO> pageResult = SmartPageUtil.convert2PageResult(page, invoiceList);
         return ResponseDTO.ok(pageResult);
     }
 
@@ -66,9 +63,6 @@ public class InvoiceService {
 
     /**
      * 查询发票信息详情
-     *
-     * @param invoiceId
-     * @return
      */
     public ResponseDTO<InvoiceVO> getDetail(Long invoiceId) {
         // 校验发票信息是否存在
@@ -81,9 +75,6 @@ public class InvoiceService {
 
     /**
      * 新建发票信息
-     *
-     * @param createVO
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> createInvoice(InvoiceAddForm createVO) {
@@ -107,9 +98,6 @@ public class InvoiceService {
 
     /**
      * 编辑发票信息
-     *
-     * @param updateVO
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> updateInvoice(InvoiceUpdateForm updateVO) {
@@ -140,9 +128,6 @@ public class InvoiceService {
 
     /**
      * 删除发票信息
-
-     * @param invoiceId
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> deleteInvoice(Long invoiceId) {

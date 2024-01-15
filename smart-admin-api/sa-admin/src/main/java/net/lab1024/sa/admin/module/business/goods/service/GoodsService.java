@@ -1,6 +1,9 @@
 package net.lab1024.sa.admin.module.business.goods.service;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.module.business.category.constant.CategoryTypeEnum;
 import net.lab1024.sa.admin.module.business.category.domain.entity.CategoryEntity;
 import net.lab1024.sa.admin.module.business.category.service.CategoryQueryService;
@@ -8,26 +11,30 @@ import net.lab1024.sa.admin.module.business.goods.constant.GoodsStatusEnum;
 import net.lab1024.sa.admin.module.business.goods.dao.GoodsDao;
 import net.lab1024.sa.admin.module.business.goods.domain.entity.GoodsEntity;
 import net.lab1024.sa.admin.module.business.goods.domain.form.GoodsAddForm;
+import net.lab1024.sa.admin.module.business.goods.domain.form.GoodsImportForm;
 import net.lab1024.sa.admin.module.business.goods.domain.form.GoodsQueryForm;
 import net.lab1024.sa.admin.module.business.goods.domain.form.GoodsUpdateForm;
+import net.lab1024.sa.admin.module.business.goods.domain.vo.GoodsExcelVO;
 import net.lab1024.sa.admin.module.business.goods.domain.vo.GoodsVO;
-import net.lab1024.sa.admin.module.business.goods.manager.GoodsManager;
-import net.lab1024.sa.common.common.code.UserErrorCode;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
-import net.lab1024.sa.common.common.util.SmartPageUtil;
-import net.lab1024.sa.common.module.support.datatracer.constant.DataTracerTypeEnum;
-import net.lab1024.sa.common.module.support.datatracer.service.DataTracerService;
+import net.lab1024.sa.base.common.code.UserErrorCode;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.exception.BusinessException;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.util.SmartEnumUtil;
+import net.lab1024.sa.base.common.util.SmartPageUtil;
+import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerTypeEnum;
+import net.lab1024.sa.base.module.support.datatracer.service.DataTracerService;
+import net.lab1024.sa.base.module.support.dict.service.DictCacheService;
+import net.lab1024.sa.base.module.support.dict.service.DictService;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -37,29 +44,31 @@ import java.util.stream.Collectors;
  * @Date 2021-10-25 20:26:54
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
+@Slf4j
 public class GoodsService {
-    @Autowired
+
+    @Resource
     private GoodsDao goodsDao;
 
-    @Autowired
+    @Resource
     private CategoryQueryService categoryQueryService;
 
-    @Autowired
+    @Resource
     private DataTracerService dataTracerService;
+
+    @Resource
+    private DictCacheService dictCacheService;
 
     /**
      * 添加商品
-     *
-     * @param addForm
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> add(GoodsAddForm addForm) {
         // 商品校验
-        ResponseDTO<String> res = this.checkGoods(addForm, null);
+        ResponseDTO<String> res = this.checkGoods(addForm);
         if (!res.getOk()) {
             return res;
         }
@@ -72,14 +81,11 @@ public class GoodsService {
 
     /**
      * 更新商品
-     *
-     * @param updateForm
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> update(GoodsUpdateForm updateForm) {
         // 商品校验
-        ResponseDTO<String> res = this.checkGoods(updateForm, updateForm.getGoodsId());
+        ResponseDTO<String> res = this.checkGoods(updateForm);
         if (!res.getOk()) {
             return res;
         }
@@ -92,12 +98,8 @@ public class GoodsService {
 
     /**
      * 添加/更新 商品校验
-     *
-     * @param addForm
-     * @param goodsId 不为空 代表更新商品
-     * @return
      */
-    private ResponseDTO<String> checkGoods(GoodsAddForm addForm, Long goodsId) {
+    private ResponseDTO<String> checkGoods(GoodsAddForm addForm) {
         // 校验类目id
         Long categoryId = addForm.getCategoryId();
         Optional<CategoryEntity> optional = categoryQueryService.queryCategory(categoryId);
@@ -122,8 +124,8 @@ public class GoodsService {
             return ResponseDTO.userErrorParam("只有售罄的商品才可以删除");
         }
 
-        batchDelete(Arrays.asList(goodsId));
-        dataTracerService.batchDelete(Arrays.asList(goodsId), DataTracerTypeEnum.GOODS);
+        batchDelete(Collections.singletonList(goodsId));
+        dataTracerService.batchDelete(Collections.singletonList(goodsId), DataTracerTypeEnum.GOODS);
         return ResponseDTO.ok();
     }
 
@@ -142,9 +144,6 @@ public class GoodsService {
 
     /**
      * 分页查询
-     *
-     * @param queryForm
-     * @return
      */
     public ResponseDTO<PageResult<GoodsVO>> query(GoodsQueryForm queryForm) {
         queryForm.setDeletedFlag(false);
@@ -164,5 +163,49 @@ public class GoodsService {
             }
         });
         return ResponseDTO.ok(pageResult);
+    }
+
+    /**
+     * 商品导入
+     *
+     * @param file 上传文件
+     * @return 结果
+     */
+    public ResponseDTO<String> importGoods(MultipartFile file) {
+        List<GoodsImportForm> dataList;
+        try {
+            dataList = EasyExcel.read(file.getInputStream()).head(GoodsImportForm.class)
+                    .sheet()
+                    .doReadSync();
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            throw new BusinessException("数据格式存在问题，无法读取");
+        }
+
+        if (CollectionUtils.isEmpty(dataList)) {
+            return ResponseDTO.userErrorParam("数据为空");
+        }
+
+        return ResponseDTO.okMsg("成功导入" + dataList.size() + "条，具体数据为：" + JSON.toJSONString(dataList));
+    }
+
+    /**
+     * 商品导出
+     */
+    public List<GoodsExcelVO> getAllGoods() {
+        List<GoodsEntity> goodsEntityList = goodsDao.selectList(null);
+        return goodsEntityList.stream()
+                .map(e ->
+                        GoodsExcelVO.builder()
+                                .goodsStatus(SmartEnumUtil.getEnumDescByValue(e.getGoodsStatus(), GoodsStatusEnum.class))
+                                .categoryName(categoryQueryService.queryCategoryName(e.getCategoryId()))
+                                .place(dictCacheService.selectValueNameByValueCode(e.getPlace()))
+                                .price(e.getPrice())
+                                .goodsName(e.getGoodsName())
+                                .remark(e.getRemark())
+                                .build()
+                )
+                .collect(Collectors.toList());
+
     }
 }

@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.system.menu.domain.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import net.lab1024.sa.admin.module.system.menu.domain.form.MenuBaseForm;
 
@@ -13,23 +13,23 @@ import java.time.LocalDateTime;
  * @Date 2022-03-06 22:04:37
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class MenuVO extends MenuBaseForm {
 
-    @ApiModelProperty("菜单ID")
+    @Schema(description = "菜单ID")
     private Long menuId;
 
-    @ApiModelProperty("创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
-    @ApiModelProperty("创建人")
+    @Schema(description = "创建人")
     private Long createUserId;
 
-    @ApiModelProperty("更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updateTime;
 
-    @ApiModelProperty("更新人")
+    @Schema(description = "更新人")
     private Long updateUserId;
 }

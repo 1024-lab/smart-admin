@@ -1,17 +1,15 @@
 package net.lab1024.sa.admin.module.system.datascope;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import net.lab1024.sa.admin.common.AdminBaseController;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
 import net.lab1024.sa.admin.module.system.datascope.domain.DataScopeAndViewTypeVO;
 import net.lab1024.sa.admin.module.system.datascope.service.DataScopeService;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.module.support.operatelog.annoation.OperateLog;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,17 +19,16 @@ import java.util.List;
  * @Date 2022-03-18 20:59:17
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
-@OperateLog
 @RestController
-@Api(tags = {AdminSwaggerTagConst.System.SYSTEM_DATA_SCOPE})
-public class DataScopeController extends AdminBaseController {
+@Tag(name = AdminSwaggerTagConst.System.SYSTEM_DATA_SCOPE)
+public class DataScopeController {
 
-    @Autowired
+    @Resource
     private DataScopeService dataScopeService;
 
-    @ApiOperation(value = "获取当前系统所配置的所有数据范围 @author 罗伊")
+    @Operation(summary = "获取当前系统所配置的所有数据范围 @author 罗伊")
     @GetMapping("/dataScope/list")
     public ResponseDTO<List<DataScopeAndViewTypeVO>> dataScopeList() {
         return dataScopeService.dataScopeList();

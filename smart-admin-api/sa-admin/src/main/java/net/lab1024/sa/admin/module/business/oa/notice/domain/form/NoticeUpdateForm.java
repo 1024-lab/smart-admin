@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.business.oa.notice.domain.form;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -12,12 +12,12 @@ import javax.validation.constraints.NotNull;
  * @Date 2022-08-12 21:40:39
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class NoticeUpdateForm extends NoticeAddForm {
 
-    @ApiModelProperty("id")
+    @Schema(description = "id")
     @NotNull(message = "通知id不能为空")
     private Long noticeId;
 

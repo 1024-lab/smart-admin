@@ -13,7 +13,7 @@ import net.lab1024.sa.admin.module.system.role.domain.entity.RoleEntity;
  * @Date 2022-02-26 21:34:01
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Mapper
 @Component
@@ -21,9 +21,11 @@ public interface RoleDao extends BaseMapper<RoleEntity> {
 
     /**
      * 根据角色名称查询
-     * @param roleName
-     * @return
      */
     RoleEntity getByRoleName(@Param("roleName") String roleName);
 
+    /**
+     * 根据角色编码
+     */
+    RoleEntity getByRoleCode(@Param("roleCode") String roleCode);
 }

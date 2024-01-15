@@ -37,7 +37,7 @@
       default: 0,
     },
   });
-  defineEmits('update:value');
+  defineEmits(['update:value']);
   let roleStore = useRoleStore();
   function selectCheckbox(module) {
     if (!module.menuId) {

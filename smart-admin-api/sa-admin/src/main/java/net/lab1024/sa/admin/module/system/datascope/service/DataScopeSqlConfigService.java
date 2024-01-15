@@ -1,25 +1,25 @@
 package net.lab1024.sa.admin.module.system.datascope.service;
 
 import lombok.extern.slf4j.Slf4j;
+import net.lab1024.sa.admin.AdminApplication;
+import net.lab1024.sa.admin.module.system.datascope.DataScope;
 import net.lab1024.sa.admin.module.system.datascope.constant.DataScopeTypeEnum;
 import net.lab1024.sa.admin.module.system.datascope.constant.DataScopeViewTypeEnum;
 import net.lab1024.sa.admin.module.system.datascope.constant.DataScopeWhereInTypeEnum;
 import net.lab1024.sa.admin.module.system.datascope.domain.DataScopeSqlConfig;
-import net.lab1024.sa.admin.module.system.datascope.DataScope;
-import net.lab1024.sa.admin.module.system.datascope.strategy.DataScopePowerStrategy;
-import net.lab1024.sa.common.common.util.SmartRequestUtil;
+import net.lab1024.sa.admin.module.system.datascope.strategy.AbstractDataScopeStrategy;
+import net.lab1024.sa.base.common.util.SmartRequestUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date 2020/11/28  20:59:17
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Slf4j
 @Service
@@ -46,16 +46,12 @@ public class DataScopeSqlConfigService {
 
     private static final String DEPARTMENT_PARAM = "#departmentIds";
 
-    private ConcurrentHashMap<String, DataScopeSqlConfig> dataScopeMethodMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, DataScopeSqlConfig> dataScopeMethodMap = new ConcurrentHashMap<>();
 
-    @Autowired
+    @Resource
     private DataScopeViewService dataScopeViewService;
 
-    @Value("${swagger.package}")
-    private String scanPackage;
-
-
-    @Autowired
+    @Resource
     private ApplicationContext applicationContext;
 
 
@@ -66,11 +62,9 @@ public class DataScopeSqlConfigService {
 
     /**
      * 刷新 所有添加数据范围注解的接口方法配置<class.method,DataScopeSqlConfigDTO></>
-     *
-     * @return
      */
     private Map<String, DataScopeSqlConfig> refreshDataScopeMethodMap() {
-        Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(ClasspathHelper.forPackage(scanPackage)).setScanners(new MethodAnnotationsScanner()));
+        Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(ClasspathHelper.forPackage(AdminApplication.COMPONENT_SCAN)).setScanners(new MethodAnnotationsScanner()));
         Set<Method> methods = reflections.getMethodsAnnotatedWith(DataScope.class);
         for (Method method : methods) {
             DataScope dataScopeAnnotation = method.getAnnotation(DataScope.class);
@@ -91,19 +85,13 @@ public class DataScopeSqlConfigService {
     /**
      * 根据调用的方法获取，此方法的配置信息
      *
-     * @param method
-     * @return
      */
     public DataScopeSqlConfig getSqlConfig(String method) {
-        DataScopeSqlConfig sqlConfigDTO = this.dataScopeMethodMap.get(method);
-        return sqlConfigDTO;
+        return this.dataScopeMethodMap.get(method);
     }
 
     /**
      * 组装需要拼接的sql
-     * @param paramMap
-     * @param sqlConfigDTO
-     * @return
      */
     public String getJoinSql(Map<String, Object> paramMap, DataScopeSqlConfig sqlConfigDTO) {
         DataScopeTypeEnum dataScopeTypeEnum = sqlConfigDTO.getDataScopeType();
@@ -118,7 +106,7 @@ public class DataScopeSqlConfigService {
                 log.warn("data scope custom strategy class is null");
                 return "";
             }
-            DataScopePowerStrategy powerStrategy = (DataScopePowerStrategy) applicationContext.getBean(sqlConfigDTO.getJoinSqlImplClazz());
+            AbstractDataScopeStrategy powerStrategy = (AbstractDataScopeStrategy) applicationContext.getBean(sqlConfigDTO.getJoinSqlImplClazz());
             if (powerStrategy == null) {
                 log.warn("data scope custom strategy class：{} ,bean is null", sqlConfigDTO.getJoinSqlImplClazz());
                 return "";

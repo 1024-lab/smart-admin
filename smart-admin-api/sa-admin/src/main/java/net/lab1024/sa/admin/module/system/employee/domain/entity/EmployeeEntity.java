@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * @Date 2021-12-09 22:57:49
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 @TableName("t_employee")

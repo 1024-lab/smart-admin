@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.employee.service;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import net.lab1024.sa.admin.module.system.department.dao.DepartmentDao;
@@ -13,19 +14,19 @@ import net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO;
 import net.lab1024.sa.admin.module.system.employee.manager.EmployeeManager;
 import net.lab1024.sa.admin.module.system.role.dao.RoleEmployeeDao;
 import net.lab1024.sa.admin.module.system.role.domain.vo.RoleEmployeeVO;
-import net.lab1024.sa.common.common.code.UserErrorCode;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.enumeration.UserTypeEnum;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
-import net.lab1024.sa.common.common.util.SmartPageUtil;
-import net.lab1024.sa.common.module.support.token.TokenService;
+import net.lab1024.sa.base.common.code.UserErrorCode;
+import net.lab1024.sa.base.common.constant.StringConst;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.enumeration.UserTypeEnum;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.util.SmartPageUtil;
+import net.lab1024.sa.base.module.support.securityprotect.service.ProtectPasswordService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,31 +37,30 @@ import java.util.stream.Collectors;
  * @Date 2021-12-29 21:52:46
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class EmployeeService {
 
     private static final String PASSWORD_SALT_FORMAT = "smart_%s_admin_$^&*";
 
-    @Autowired
+    @Resource
     private EmployeeDao employeeDao;
 
-    @Autowired
+    @Resource
     private DepartmentDao departmentDao;
 
-    @Autowired
+    @Resource
     private EmployeeManager employeeManager;
 
-    @Autowired
+    @Resource
     private RoleEmployeeDao roleEmployeeDao;
 
-    @Autowired
+    @Resource
     private DepartmentService departmentService;
 
-    @Autowired
-    private TokenService tokenService;
-
+    @Resource
+    private ProtectPasswordService protectPasswordService;
 
     public EmployeeEntity getById(Long employeeId) {
         return employeeDao.selectById(employeeId);
@@ -70,8 +70,6 @@ public class EmployeeService {
     /**
      * 查询员工列表
      *
-     * @param employeeQueryForm
-     * @return
      */
     public ResponseDTO<PageResult<EmployeeVO>> queryEmployee(EmployeeQueryForm employeeQueryForm) {
         employeeQueryForm.setDeletedFlag(false);
@@ -84,8 +82,8 @@ public class EmployeeService {
 
         List<EmployeeVO> employeeList = employeeDao.queryEmployee(pageParam, employeeQueryForm, departmentIdList);
         if (CollectionUtils.isEmpty(employeeList)) {
-            PageResult<EmployeeVO> PageResult = SmartPageUtil.convert2PageResult(pageParam, employeeList);
-            return ResponseDTO.ok(PageResult);
+            PageResult<EmployeeVO> pageResult = SmartPageUtil.convert2PageResult(pageParam, employeeList);
+            return ResponseDTO.ok(pageResult);
         }
 
         List<Long> employeeIdList = employeeList.stream().map(EmployeeVO::getEmployeeId).collect(Collectors.toList());
@@ -99,15 +97,13 @@ public class EmployeeService {
             e.setRoleNameList(employeeRoleNameListMap.getOrDefault(e.getEmployeeId(), Lists.newArrayList()));
             e.setDepartmentName(departmentService.getDepartmentPath(e.getDepartmentId()));
         });
-        PageResult<EmployeeVO> PageResult = SmartPageUtil.convert2PageResult(pageParam, employeeList);
-        return ResponseDTO.ok(PageResult);
+        PageResult<EmployeeVO> pageResult = SmartPageUtil.convert2PageResult(pageParam, employeeList);
+        return ResponseDTO.ok(pageResult);
     }
 
     /**
      * 新增员工
      *
-     * @param employeeAddForm
-     * @return
      */
     public synchronized ResponseDTO<String> addEmployee(EmployeeAddForm employeeAddForm) {
         // 校验名称是否重复
@@ -133,8 +129,9 @@ public class EmployeeService {
         }
 
         EmployeeEntity entity = SmartBeanUtil.copy(employeeAddForm, EmployeeEntity.class);
+
         // 设置密码 默认密码
-        String password = randomPassword();
+        String password = protectPasswordService.randomPassword();
         entity.setLoginPwd(getEncryptPwd(password));
 
         // 保存数据
@@ -147,8 +144,6 @@ public class EmployeeService {
     /**
      * 更新员工
      *
-     * @param employeeUpdateForm
-     * @return
      */
     public synchronized ResponseDTO<String> updateEmployee(EmployeeUpdateForm employeeUpdateForm) {
 
@@ -194,8 +189,6 @@ public class EmployeeService {
     /**
      * 更新禁用/启用状态
      *
-     * @param employeeId
-     * @return
      */
     public ResponseDTO<String> updateDisableFlag(Long employeeId) {
         if (null == employeeId) {
@@ -205,13 +198,11 @@ public class EmployeeService {
         if (null == employeeEntity) {
             return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
         }
-
-        boolean disableFlag=!employeeEntity.getDisabledFlag();
-        employeeEntity.setDisabledFlag(disableFlag);
-        employeeDao.updateDisableFlag(employeeId, disableFlag);
+        employeeDao.updateDisableFlag(employeeId, !employeeEntity.getDisabledFlag());
 
         if (employeeEntity.getDisabledFlag()) {
-            tokenService.batchRemoveRedisToken(employeeId, UserTypeEnum.ADMIN_EMPLOYEE);
+            // 强制退出登录
+            StpUtil.logout(UserTypeEnum.ADMIN_EMPLOYEE.getValue() + StringConst.COLON + employeeId);
         }
 
         return ResponseDTO.ok();
@@ -220,8 +211,6 @@ public class EmployeeService {
     /**
      * 批量删除员工
      *
-     * @param employeeIdList 员工ID列表
-     * @return
      */
     public ResponseDTO<String> batchUpdateDeleteFlag(List<Long> employeeIdList) {
         if (CollectionUtils.isEmpty(employeeIdList)) {
@@ -241,7 +230,8 @@ public class EmployeeService {
         employeeManager.updateBatchById(deleteList);
 
         for (Long employeeId : employeeIdList) {
-            tokenService.batchRemoveRedisToken(employeeId, UserTypeEnum.ADMIN_EMPLOYEE);
+            // 强制退出登录
+            StpUtil.logout(UserTypeEnum.ADMIN_EMPLOYEE.getValue() + StringConst.COLON + employeeId);
         }
         return ResponseDTO.ok();
     }
@@ -250,8 +240,6 @@ public class EmployeeService {
     /**
      * 批量更新部门
      *
-     * @param batchUpdateDepartmentForm
-     * @return
      */
     public ResponseDTO<String> batchUpdateDepartment(EmployeeBatchUpdateDepartmentForm batchUpdateDepartmentForm) {
         List<Long> employeeIdList = batchUpdateDepartmentForm.getEmployeeIdList();
@@ -275,8 +263,6 @@ public class EmployeeService {
     /**
      * 更新密码
      *
-     * @param updatePasswordForm
-     * @return
      */
     public ResponseDTO<String> updatePassword(EmployeeUpdatePasswordForm updatePasswordForm) {
         Long employeeId = updatePasswordForm.getEmployeeId();
@@ -293,7 +279,13 @@ public class EmployeeService {
         // 新旧密码相同
         String newPassword = updatePasswordForm.getNewPassword();
         if (Objects.equals(updatePasswordForm.getOldPassword(), newPassword)) {
-            return ResponseDTO.ok();
+            return ResponseDTO.userErrorParam("新密码与原始密码相同，请重新输入");
+        }
+
+        // 校验密码复杂度
+        ResponseDTO<String> validatePassComplexity = protectPasswordService.validatePassComplexity(newPassword);
+        if (!validatePassComplexity.getOk()) {
+            return validatePassComplexity;
         }
 
         // 更新密码
@@ -308,8 +300,6 @@ public class EmployeeService {
     /**
      * 获取某个部门的员工信息
      *
-     * @param departmentId
-     * @return
      */
     public ResponseDTO<List<EmployeeVO>> getAllEmployeeByDepartmentId(Long departmentId, Boolean disabledFlag) {
         List<EmployeeEntity> employeeEntityList = employeeDao.selectByDepartmentId(departmentId, disabledFlag);
@@ -337,24 +327,16 @@ public class EmployeeService {
     /**
      * 重置密码
      *
-     * @param employeeId
-     * @return
      */
     public ResponseDTO<String> resetPassword(Integer employeeId) {
-        String password = randomPassword();
+        String password = protectPasswordService.randomPassword();
         employeeDao.updatePassword(employeeId, getEncryptPwd(password));
         return ResponseDTO.ok(password);
-    }
-
-    private String randomPassword() {
-        return RandomStringUtils.randomNumeric(6) + RandomStringUtils.randomAlphabetic(2).toLowerCase();
     }
 
     /**
      * 获取 加密后 的密码
      *
-     * @param password
-     * @return
      */
     public static String getEncryptPwd(String password) {
         return DigestUtils.md5Hex(String.format(PASSWORD_SALT_FORMAT, password));
@@ -364,7 +346,6 @@ public class EmployeeService {
     /**
      * 查询全部员工
      *
-     * @return
      */
     public ResponseDTO<List<EmployeeVO>> queryAllEmployee(Boolean disabledFlag) {
         List<EmployeeVO> employeeList = employeeDao.selectEmployeeByDisabledAndDeleted(disabledFlag, Boolean.FALSE);
@@ -374,14 +355,9 @@ public class EmployeeService {
     /**
      * 根据登录名获取员工
      *
-     * @param loginName
-     * @return
      */
     public EmployeeEntity getByLoginName(String loginName) {
         return employeeDao.getByLoginName(loginName, null);
     }
 
-    public static void main(String[] args) {
-        System.out.println(getEncryptPwd("123456"));
-    }
 }

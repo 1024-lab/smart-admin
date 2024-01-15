@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.business.oa.invoice.domain;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,47 +12,47 @@ import java.time.LocalDateTime;
  * @Date 2022-06-23 19:32:59
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class InvoiceVO {
 
-    @ApiModelProperty("发票信息ID")
+    @Schema(description = "发票信息ID")
     private Long invoiceId;
 
-    @ApiModelProperty("开票抬头")
+    @Schema(description = "开票抬头")
     private String invoiceHeads;
 
-    @ApiModelProperty("纳税人识别号")
+    @Schema(description = "纳税人识别号")
     private String taxpayerIdentificationNumber;
 
-    @ApiModelProperty("银行账户")
+    @Schema(description = "银行账户")
     private String accountNumber;
 
-    @ApiModelProperty("开户行")
+    @Schema(description = "开户行")
     private String bankName;
 
-    @ApiModelProperty("备注")
+    @Schema(description = "备注")
     private String remark;
 
-    @ApiModelProperty("企业")
+    @Schema(description = "企业")
     private Long enterpriseId;
 
-    @ApiModelProperty("企业名称")
+    @Schema(description = "企业名称")
     private String enterpriseName;
 
-    @ApiModelProperty("禁用状态")
+    @Schema(description = "禁用状态")
     private Boolean disabledFlag;
 
-    @ApiModelProperty("创建人ID")
+    @Schema(description = "创建人ID")
     private Long createUserId;
 
-    @ApiModelProperty("创建人名称")
+    @Schema(description = "创建人名称")
     private String createUserName;
 
-    @ApiModelProperty("创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updateTime;
 }

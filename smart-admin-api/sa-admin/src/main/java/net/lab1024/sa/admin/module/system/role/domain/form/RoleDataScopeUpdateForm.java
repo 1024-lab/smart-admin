@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.system.role.domain.form;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -14,16 +14,16 @@ import java.util.List;
  * @Date 2022-04-08 21:53:04
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class RoleDataScopeUpdateForm {
 
-    @ApiModelProperty("角色id")
+    @Schema(description = "角色id")
     @NotNull(message = "角色id不能为空")
     private Long roleId;
 
-    @ApiModelProperty("设置信息")
+    @Schema(description = "设置信息")
     @Valid
     private List<RoleUpdateDataScopeListFormItem> dataScopeItemList;
 
@@ -31,11 +31,11 @@ public class RoleDataScopeUpdateForm {
     @Data
     public static class RoleUpdateDataScopeListFormItem {
 
-        @ApiModelProperty("数据范围类型")
+        @Schema(description = "数据范围类型")
         @NotNull(message = "数据范围类型不能为空")
         private Integer dataScopeType;
 
-        @ApiModelProperty("可见范围")
+        @Schema(description = "可见范围")
         @NotNull(message = "可见范围不能为空")
         private Integer viewType;
     }

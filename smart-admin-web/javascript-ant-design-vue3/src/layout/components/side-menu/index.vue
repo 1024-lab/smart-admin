@@ -13,19 +13,19 @@
   <!-- 1、顶部logo区域 -->
   <div class="logo" @click="onGoHome" :style="sideMenuWidth" v-if="!collapsed">
     <img class="logo-img" :src="logoImg" />
-    <div class="title title-light" v-if="sideMenuTheme === 'light'">{{websiteName}}</div>
-    <div class="title title-dark" v-if="sideMenuTheme === 'dark'">{{websiteName}}</div>
+    <div class="title title-light" v-if="sideMenuTheme === 'light'">{{ websiteName }}</div>
+    <div class="title title-dark" v-if="sideMenuTheme === 'dark'">{{ websiteName }}</div>
   </div>
   <div class="min-logo" @click="onGoHome" v-if="collapsed">
     <img class="logo-img" :src="logoImg" />
   </div>
 
   <!-- 2、下方菜单区域： 这里使用一个递归菜单解决 -->
-  <RecursionMenu :collapsed="collapsed" ref="menu" />
+  <RecursionMenu :collapsed="collapsed" ref="menuRef" />
 </template>
 
 <script setup>
-  import { computed, ref, watch } from 'vue';
+  import { computed, nextTick, ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import RecursionMenu from './recursion-menu.vue';
   import logoImg from '/@/assets/images/logo/smart-admin-logo.png';
@@ -44,14 +44,14 @@
     },
   });
 
-  const menu = ref();
+  const menuRef = ref();
 
   watch(
     () => props.collapsed,
     (newValue, oldValue) => {
       // 如果是展开菜单的话，重新获取更新菜单的展开项: openkeys和selectKeys
       if (!newValue) {
-        menu.value.updateOpenKeysAndSelectKeys();
+        nextTick(() => menuRef.value.updateOpenKeysAndSelectKeys());
       }
     }
   );
@@ -76,7 +76,7 @@
       line-height: @header-user-height;
       padding: 0px 15px 0px 15px;
       width: 100%;
-      z-index: 9999;
+      z-index: 21;
       display: flex;
       justify-content: center;
       .logo-img {
@@ -89,10 +89,10 @@
       height: @header-user-height;
       line-height: @header-user-height;
       padding: 0px 15px 0px 15px;
-      z-index: 9999;
+      z-index: 21;
       display: flex;
       cursor: pointer;
-      justify-content:space-around;
+      justify-content: center;
 
       .logo-img {
         width: 40px;
@@ -102,13 +102,13 @@
       .title {
         font-size: 16px;
         font-weight: 600;
-        margin-left:8px;
+        margin-left: 8px;
       }
       .title-light {
-        color:#001529;
+        color: #001529;
       }
       .title-dark {
-        color:#ffffff;
+        color: #ffffff;
       }
     }
   }

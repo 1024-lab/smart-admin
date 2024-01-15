@@ -12,14 +12,14 @@
     <div class="header">
       <div>
         关键字：
-        <a-input style="width: 250px" v-model:value="queryForm.keywords" placeholder="姓名/手机号/登录账号" />
-        <a-button class="button-style" type="primary" @click="queryEmployee">搜索</a-button>
+        <a-input style="width: 250px" v-model:value="queryForm.keyword" placeholder="姓名/手机号/登录账号" />
+        <a-button class="button-style" type="primary" @click="onSearch">搜索</a-button>
         <a-button class="button-style" type="default" @click="resetQueryEmployee">重置</a-button>
       </div>
 
       <div>
-        <a-button class="button-style" type="primary" @click="addEmployee" v-privilege="'enterprise:addEmployee'"> 添加员工 </a-button>
-        <a-button class="button-style" type="primary" danger @click="batchDelete" v-privilege="'enterprise:deleteEmployee'"> 批量移除 </a-button>
+        <a-button class="button-style" type="primary" @click="addEmployee" v-privilege="'oa:enterprise:addEmployee'"> 添加员工 </a-button>
+        <a-button class="button-style" type="primary" danger @click="batchDelete" v-privilege="'oa:enterprise:deleteEmployee'"> 批量移除 </a-button>
       </div>
     </div>
     <a-table
@@ -40,7 +40,7 @@
           <span>{{ $smartEnumPlugin.getDescByValue('GENDER_ENUM', text) }}</span>
         </template>
         <template v-if="column.dataIndex === 'operate'">
-          <a @click="deleteEmployee(record.employeeId)" v-privilege="'enterprise:deleteEmployee'">移除</a>
+          <a @click="deleteEmployee(record.employeeId)" v-privilege="'oa:enterprise:deleteEmployee'">移除</a>
         </template>
       </template>
     </a-table>
@@ -122,7 +122,7 @@
     pageNum: 1,
     pageSize: PAGE_SIZE,
     enterpriseId: undefined,
-    keywords: undefined,
+    keyword: undefined,
   };
   // 查询表单
   const queryForm = reactive({ ...defaultQueryForm });
@@ -131,7 +131,12 @@
   const tableLoading = ref(false);
 
   function resetQueryEmployee() {
-    queryForm.keywords = '';
+    queryForm.keyword = '';
+    queryEmployee();
+  }
+
+  function onSearch() {
+    queryForm.pageNum = 1;
     queryEmployee();
   }
 

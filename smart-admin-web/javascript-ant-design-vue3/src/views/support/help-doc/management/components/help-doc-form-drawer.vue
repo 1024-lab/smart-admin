@@ -10,7 +10,7 @@
 <template>
   <a-drawer
     :title="formData.helpDocId ? '编辑系统手册' : '新建系统手册'"
-    :visible="visibleFlag"
+    :open="visibleFlag"
     :width="1000"
     :footerStyle="{ textAlign: 'right' }"
     @close="onClose"
@@ -64,17 +64,16 @@
 </template>
 
 <script setup>
-  import { reactive, ref, nextTick } from 'vue';
-  import { message, Modal } from 'ant-design-vue';
-  import lodash from 'lodash';
+  import { nextTick, reactive, ref } from 'vue';
+  import { message } from 'ant-design-vue';
+  import _ from 'lodash';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
-  import { helpDocApi } from '/@/api/support/help-doc/help-doc-api';
+  import { helpDocApi } from '/@/api/support/help-doc-api';
   import Wangeditor from '/@/components/framework/wangeditor/index.vue';
   import Upload from '/@/components/support/file-upload/index.vue';
   import HelpDocCatalogTreeSelect from './help-doc-catalog-tree-select.vue';
   import MenuTreeSelect from '/@/components/system/menu-tree-select/index.vue';
-  import _ from 'lodash';
   import { smartSentry } from '/@/lib/smart-sentry';
 
   const emits = defineEmits(['reloadList']);
@@ -104,7 +103,6 @@
 
   const formRef = ref();
   const contentRef = ref();
-  const noticeFormVisibleModal = ref();
   const relateHomeFlag = ref(false);
 
   const defaultFormData = {
@@ -135,7 +133,7 @@
       SmartLoading.show();
       const result = await helpDocApi.getDetail(helpDocId);
       const attachment = result.data.attachment;
-      if (!lodash.isEmpty(attachment)) {
+      if (!_.isEmpty(attachment)) {
         defaultFileList.value = attachment;
       } else {
         defaultFileList.value = [];
@@ -160,7 +158,7 @@
       formData.contentHtml = contentRef.value.getHtml();
       formData.contentText = contentRef.value.getText();
       await formRef.value.validateFields();
-      save();
+      await save();
     } catch (err) {
       message.error('参数验证错误，请仔细填写表单数据!');
     }
@@ -206,7 +204,7 @@
   const defaultFileList = ref([]);
   function changeAttachment(fileList) {
     defaultFileList.value = fileList;
-    formData.attachment = lodash.isEmpty(fileList) ? [] : fileList;
+    formData.attachment = _.isEmpty(fileList) ? [] : fileList;
   }
 
   // ----------------------- 以下是暴露的方法内容 ------------------------

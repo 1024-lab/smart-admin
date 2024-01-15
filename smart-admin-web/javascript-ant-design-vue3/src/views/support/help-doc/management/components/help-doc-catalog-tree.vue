@@ -18,7 +18,7 @@
         <template v-if="showSortFlag"> （越小越靠前） </template>
         ：<a-switch v-model:checked="showSortFlag" />
       </span>
-      <a-button type="primary" @click="addTop" size="small" v-privilege="'helpDocCatalog:addCategory'">新建</a-button>
+      <a-button type="primary" @click="addTop" size="small" v-privilege="'support:helpDocCatalog:addCategory'">新建</a-button>
     </a-row>
     <a-tree
       v-if="!_.isEmpty(helpDocCatalogTreeData)"
@@ -40,13 +40,13 @@
         <a-popover placement="right" v-if="props.showMenu">
           <template #content>
             <div style="display: flex; flex-direction: column">
-              <a-button type="text" @click="addHelpDocCatalog(item.dataRef)" v-privilege="'helpDocCatalog:addCategory'">添加下级</a-button>
-              <a-button type="text" @click="updateHelpDocCatalog(item.dataRef)" v-privilege="'helpDocCatalog:edit'">修改</a-button>
+              <a-button type="text" @click="addHelpDocCatalog(item.dataRef)" v-privilege="'support:helpDocCatalog:addCategory'">添加下级</a-button>
+              <a-button type="text" @click="updateHelpDocCatalog(item.dataRef)" v-privilege="'support:helpDocCatalog:edit'">修改</a-button>
               <a-button
                 type="text"
-                v-if="item.helpDocCatalogId != topHelpDocCatalogId"
+                v-if="item.helpDocCatalogId !== topHelpDocCatalogId"
                 @click="deleteHelpDocCatalog(item.helpDocCatalogId)"
-                v-privilege="'helpDocCatalog:delete'"
+                v-privilege="'support:helpDocCatalog:delete'"
                 >删除</a-button
               >
             </div>
@@ -65,7 +65,7 @@
     <HelpDocCatalogFormModal ref="helpDocCatalogFormModal" @refresh="refresh" />
   </a-card>
 </template>
-<script setup lang="ts">
+<script setup>
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { ref } from 'vue';
   import { onUnmounted, watch } from 'vue';
@@ -73,10 +73,10 @@
   import _ from 'lodash';
   import { createVNode, onMounted } from 'vue';
   import HelpDocCatalogFormModal from './help-doc-catalog-form-modal.vue';
-  import { helpDocCatalogApi } from '/@/api/support/help-doc/help-doc-catalog-api';
+  import { helpDocCatalogApi } from '/@/api/support/help-doc-catalog-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import helpDocCatalogEmitter from '../help-doc-mitt';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
   const HELP_DOC_CATALOG_PARENT_ID = 0;
 
@@ -194,7 +194,7 @@ import { smartSentry } from '/@/lib/smart-sentry';
       return;
     }
     let id = idList[0];
-    selectedHelpDocCatalogChildren.value = helpDocCatalogList.value.filter((e) => e.parentId == id);
+    selectedHelpDocCatalogChildren.value = helpDocCatalogList.value.filter((e) => e.parentId === id);
     let filterHelpDocCatalogList = [];
     recursionFilterHelpDocCatalog(filterHelpDocCatalogList, id, true);
     breadcrumb.value = filterHelpDocCatalogList.map((e) => e.name);
@@ -233,7 +233,7 @@ import { smartSentry } from '/@/lib/smart-sentry';
   // 根据ID递归筛选目录
   function recursionFilterHelpDocCatalog(resList, id, unshift) {
     let info = idInfoMap.value.get(id);
-    if (!info || resList.some((e) => e.helpDocCatalogId == id)) {
+    if (!info || resList.some((e) => e.helpDocCatalogId === id)) {
       return;
     }
     if (unshift) {
@@ -241,7 +241,7 @@ import { smartSentry } from '/@/lib/smart-sentry';
     } else {
       resList.push(info);
     }
-    if (info.parentId && info.parentId != 0) {
+    if (info.parentId && info.parentId !== 0) {
       recursionFilterHelpDocCatalog(resList, info.parentId, unshift);
     }
   }
@@ -289,8 +289,8 @@ import { smartSentry } from '/@/lib/smart-sentry';
           let selectedKey = null;
           if (!_.isEmpty(selectedKeys.value)) {
             selectedKey = selectedKeys.value[0];
-            if (selectedKey == id) {
-              let selectInfo = helpDocCatalogList.value.find((e) => e.helpDocCatalogId == id);
+            if (selectedKey === id) {
+              let selectInfo = helpDocCatalogList.value.find((e) => e.helpDocCatalogId === id);
               if (selectInfo && selectInfo.parentId) {
                 selectedKey = selectInfo.parentId;
               }
@@ -345,7 +345,6 @@ import { smartSentry } from '/@/lib/smart-sentry';
 
     .sort-span {
       margin-left: 5px;
-      color: @success-color;
     }
     .no-data {
       margin: 10px;

@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -12,9 +12,9 @@ import lombok.Data;
 @Data
 public class EnterpriseListVO {
 
-    @ApiModelProperty("企业ID")
+    @Schema(description = "企业ID")
     private Long enterpriseId;
 
-    @ApiModelProperty("企业名称")
+    @Schema(description = "企业名称")
     private String enterpriseName;
 }

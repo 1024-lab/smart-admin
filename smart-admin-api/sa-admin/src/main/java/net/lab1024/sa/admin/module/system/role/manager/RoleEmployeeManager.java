@@ -16,7 +16,7 @@ import java.util.List;
  * @Date 2022-04-08 21:53:04
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class RoleEmployeeManager extends ServiceImpl<RoleEmployeeDao, RoleEmployeeEntity> {
@@ -24,8 +24,6 @@ public class RoleEmployeeManager extends ServiceImpl<RoleEmployeeDao, RoleEmploy
     /**
      * 保存 角色员工
      *
-     * @param roleId
-     * @param roleEmployeeList
      */
     @Transactional(rollbackFor = Throwable.class)
     public void saveRoleEmployee(Long roleId, List<RoleEmployeeEntity> roleEmployeeList) {

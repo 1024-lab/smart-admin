@@ -1,25 +1,51 @@
-server:
-  servlet:
-    context-path: '/'
-  port: 1024
-  # tomcat 配置，主要用于 配置 访问日志（便于将来排查错误）
-  tomcat:
-    basedir: ${localPath:/home}/logs/smart_admin_v2/pre/tomcat-logs
-    accesslog:
-      enabled: true
-      pattern: '%t %{X-Forwarded-For}i %a "%r" %s %D (%D ms)'
+#############################################################################################################
+#                                                                                                           #
+# 为了减少重复配置，本配置文件为此sa-admin的独有配置，更多配置请查看 sa-base 项目中的 sa-base.yaml 通用配置文件。      #
+# 其中此文件中配置可以覆盖 sa-base.yaml 中的通用配置，具体实现类请看类：YamlProcessor.java                          #
+#                                                                                                           #
+#############################################################################################################
 
+# 项目配置: 名称、日志目录
+project:
+  name: sa-admin
+  log-directory: /home/logs/smart_admin_v3/${project.name}/${spring.profiles.active}
+
+# 项目端口和url根路径
+server:
+  port: 1024
+  servlet:
+    context-path: /
+
+# 环境
 spring:
   profiles:
     active: '@profiles.active@'
-
-# 项目配置
-project:
-  name: sa-admin
-  module: net.lab1024.sa.admin.module
 
 # swagger文档
 swagger:
   host: localhost:${server.port}
   tag-class: net.lab1024.sa.admin.constant.AdminSwaggerTagConst
 
+
+####################################### 安全等级保护 相关配置 ##################################################
+#                                                                                                            #
+# 建议开启 "三级等保" 所要求的配置，具体如下：                                                                     #
+#   1）连续登录失败 5 次锁定账户 30 分钟，                                                                       #
+#   2）登录超时时长建议为 30分钟，超过此时间没有访问系统会重新要求登录                                               #
+#   3）密码复杂度至少三种字符，最小 8 位                                                                         #
+#                                                                                                           #
+#############################################################################################################
+
+classified-protect:
+  # 连续登录失败次数则锁定，-1表示不受限制，可以一直尝试登录
+  login-max-fail-times: 5
+  # 连续登录失败锁定时间（单位：秒），-1表示不锁定，建议锁定30分钟
+  login-fail-locked-seconds: 1800
+  # 密码复杂度开启（默认复杂度为：至少三种字符，最小 8 位）, true 开启，false 不开启，建议开启
+  password-complexity-enabled: true
+
+sa-token:
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: 1800
+  # token 有效期（单位：秒） 1天（86400秒），-1 代表永久有效
+  timeout: 86400

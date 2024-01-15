@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" title="生成单号" ok-text="生成" cancel-text="关闭" @ok="onSubmit" @cancel="onClose">
+  <a-modal :open="visible" title="生成单号" ok-text="生成" cancel-text="关闭" @ok="onSubmit" @cancel="onClose">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }">
       <a-form-item label="业务">
         <a-input v-model:value="form.businessName" :disabled="true" />
@@ -34,7 +34,7 @@
 <script setup>
   import { message } from 'ant-design-vue';
   import { reactive, ref } from 'vue';
-  import { serialNumberApi } from '/@/api/support/serial-number/serial-number-api';
+  import { serialNumberApi } from '/@/api/support/serial-number-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import _ from 'lodash';
   import { smartSentry } from '/@/lib/smart-sentry';

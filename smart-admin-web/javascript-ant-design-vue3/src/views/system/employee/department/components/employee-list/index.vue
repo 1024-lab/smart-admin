@@ -105,7 +105,7 @@
   import { message, Modal } from 'ant-design-vue';
   import _ from 'lodash';
   import { computed, createVNode, reactive, ref, watch } from 'vue';
-  import { employeeApi } from '/@/api/system/employee/employee-api';
+  import { employeeApi } from '/@/api/system/employee-api';
   import { PAGE_SIZE } from '/@/constants/common-const';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import EmployeeFormModal from '../employee-form-modal/index.vue';
@@ -202,7 +202,7 @@
       params.departmentId = props.departmentId;
       let res = await employeeApi.queryEmployee(params);
       for (const item of res.data.list) {
-        item.roleNameList = _.join(item.roleNameList,',');
+        item.roleNameList = _.join(item.roleNameList, ',');
       }
       tableData.value = res.data.list;
       total.value = res.data.total;

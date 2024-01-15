@@ -18,7 +18,8 @@
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 
+  const router = useRouter();
   function goHome() {
-    useRouter().push({ name: HOME_PAGE_NAME });
+    router.push({ name: HOME_PAGE_NAME });
   }
 </script>

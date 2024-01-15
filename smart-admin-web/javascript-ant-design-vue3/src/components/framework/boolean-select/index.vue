@@ -73,7 +73,7 @@
     console.log('boolean enum select', value);
     let booleanResult = null;
     if (!_.isUndefined(value)) {
-      booleanResult = value === 1 ? true : false;
+      booleanResult = value === 1;
     }
     emit('update:value', booleanResult);
     emit('change', booleanResult);

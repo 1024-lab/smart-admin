@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.base.module.support.dict.dao.DictKeyDao">
+
+    <update id="updateDeletedFlagByIdList">
+        update t_dict_key set deleted_flag = #{deletedFlag} where dict_key_id in
+        <foreach collection="dictKeyIdList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="query" resultType="net.lab1024.sa.base.module.support.dict.domain.vo.DictKeyVO">
+        SELECT * FROM t_dict_key
+        <where>
+            <if test="query.searchWord != null and query.searchWord !=''">
+                AND (INSTR(key_code,#{query.searchWord}) or INSTR(key_name,#{query.searchWord}))
+            </if>
+            <if test="query.deletedFlag != null">
+                AND deleted_flag = #{query.deletedFlag}
+            </if>
+        </where>
+        <if test="query.sortItemList == null or query.sortItemList.size == 0">
+            ORDER BY dict_key_id DESC
+        </if>
+    </select>
+
+    <select id="selectByCode"
+            resultType="net.lab1024.sa.base.module.support.dict.domain.entity.DictKeyEntity">
+        select * from t_dict_key where key_code = #{keyCode} and deleted_flag = #{deletedFlag}
+    </select>
+
+    <select id="selectByDeletedFlag"
+            resultType="net.lab1024.sa.base.module.support.dict.domain.entity.DictKeyEntity">
+        select * from t_dict_key where deleted_flag = #{deletedFlag}
+    </select>
+
+</mapper>

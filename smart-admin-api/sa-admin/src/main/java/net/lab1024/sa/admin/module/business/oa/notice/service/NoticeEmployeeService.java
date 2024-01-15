@@ -10,13 +10,13 @@ import net.lab1024.sa.admin.module.business.oa.notice.domain.vo.*;
 import net.lab1024.sa.admin.module.system.department.service.DepartmentService;
 import net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity;
 import net.lab1024.sa.admin.module.system.employee.service.EmployeeService;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
-import net.lab1024.sa.common.common.util.SmartPageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.util.SmartPageUtil;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,27 +29,25 @@ import java.util.stream.Collectors;
  * @Date 2022-08-12 21:40:39
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class NoticeEmployeeService {
 
-    @Autowired
+    @Resource
     private NoticeDao noticeDao;
 
-    @Autowired
+    @Resource
     private NoticeService noticeService;
 
-    @Autowired
+    @Resource
     private DepartmentService departmentService;
 
-    @Autowired
+    @Resource
     private EmployeeService employeeService;
 
     /**
      * 查询我的 通知、公告清单
-     *
-     * @return
      */
     public ResponseDTO<PageResult<NoticeEmployeeVO>> queryList(Long requestEmployeeId, NoticeEmployeeQueryForm noticeEmployeeQueryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(noticeEmployeeQueryForm);
@@ -92,8 +90,6 @@ public class NoticeEmployeeService {
 
     /**
      * 查询我的 待查看的 通知、公告清单
-     *
-     * @return
      */
     public ResponseDTO<NoticeDetailVO> view(Long requestEmployeeId, Long noticeId, String ip, String userAgent) {
         NoticeUpdateFormVO updateFormVO = noticeService.getUpdateFormVO(noticeId);
@@ -120,10 +116,6 @@ public class NoticeEmployeeService {
     /**
      * 校验是否有查看权限的范围
      *
-     * @param visibleRangeList
-     * @param employeeId
-     * @param departmentId
-     * @return
      */
     public boolean checkVisibleRange(List<NoticeVisibleRangeVO> visibleRangeList, Long employeeId, Long departmentId) {
         // 员工范围
@@ -147,13 +139,10 @@ public class NoticeEmployeeService {
 
     /**
      * 分页查询  查看记录
-     *
-     * @param noticeViewRecordQueryForm
-     * @return
      */
     public PageResult<NoticeViewRecordVO> queryViewRecord(NoticeViewRecordQueryForm noticeViewRecordQueryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(noticeViewRecordQueryForm);
-        List<NoticeViewRecordVO> noticeViewRecordVOS = noticeDao.queryNoticeViewRecordList(page, noticeViewRecordQueryForm);
-        return SmartPageUtil.convert2PageResult(page, noticeViewRecordVOS);
+        List<NoticeViewRecordVO> noticeViewRecordList = noticeDao.queryNoticeViewRecordList(page, noticeViewRecordQueryForm);
+        return SmartPageUtil.convert2PageResult(page, noticeViewRecordList);
     }
 }

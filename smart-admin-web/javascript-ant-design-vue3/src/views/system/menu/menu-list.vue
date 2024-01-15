@@ -31,7 +31,7 @@
             查询
           </a-button>
 
-          <a-button @click="resetQuery">
+          <a-button @click="resetQuery" class="smart-margin-left10">
             <template #icon>
               <SearchOutlined />
             </template>
@@ -71,7 +71,7 @@
             添加菜单
           </a-button>
 
-          <a-button v-privilege="'system:menu:batch:delete'" type="primary" danger size="small" @click="batchDelete" :disabled="!hasSelected">
+          <a-button v-privilege="'system:menu:batchDelete'" type="primary" danger size="small" @click="batchDelete" :disabled="!hasSelected">
             <template #icon>
               <DeleteOutlined />
             </template>
@@ -79,7 +79,7 @@
           </a-button>
         </div>
         <div class="smart-table-setting-block">
-            <TableOperator v-model="columns" :tableId="TABLE_ID_CONST.SYSTEM.MENU" :refresh="query" />
+          <TableOperator v-model="columns" :tableId="TABLE_ID_CONST.SYSTEM.MENU" :refresh="query" />
         </div>
       </a-row>
 
@@ -130,7 +130,7 @@
           <template v-if="column.dataIndex === 'operate'">
             <div class="smart-table-operate">
               <a-button v-privilege="'system:menu:update'" type="link" size="small" @click="showDrawer(record)">编辑</a-button>
-              <a-button v-privilege="'system:menu:delete'" danger type="link" @click="singleDelete(record)">删除</a-button>
+              <a-button v-privilege="'system:menu:batchDelete'" danger type="link" @click="singleDelete(record)">删除</a-button>
             </div>
           </template>
         </template>
@@ -148,7 +148,7 @@
   import MenuOperateModal from './components/menu-operate-modal.vue';
   import { buildMenuTableTree, filterMenuByQueryForm } from './menu-data-handler';
   import { columns } from './menu-list-table-columns';
-  import { menuApi } from '/@/api/system/menu/menu-api';
+  import { menuApi } from '/@/api/system/menu-api';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { smartSentry } from '/@/lib/smart-sentry';

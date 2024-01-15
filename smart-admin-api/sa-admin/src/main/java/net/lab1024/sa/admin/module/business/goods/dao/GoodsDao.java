@@ -18,7 +18,7 @@ import java.util.List;
  * @Date 2021-10-25 20:26:54
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Mapper
 @Component
@@ -27,9 +27,6 @@ public interface GoodsDao extends BaseMapper<GoodsEntity> {
     /**
      * 分页 查询商品
      *
-     * @param page
-     * @param query
-     * @return
      */
     List<GoodsVO> query(Page page, @Param("query") GoodsQueryForm query);
 

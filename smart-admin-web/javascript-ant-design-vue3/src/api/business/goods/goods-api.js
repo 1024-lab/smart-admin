@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-06-23
  * @LastEditors: zhuoda
  */
-import { postRequest, getRequest } from '/@/lib/axios';
+import {postRequest, getRequest, getDownload} from '/@/lib/axios';
 
 export const goodsApi = {
   // 添加商品 @author zhuoda
@@ -28,4 +28,14 @@ export const goodsApi = {
   updateGoods: (param) => {
     return postRequest('/goods/update', param);
   },
+
+  // 导入 @author 卓大
+  importGoods : (file) =>{
+    return postRequest('/goods/importGoods',file);
+  },
+
+  // 导出 @author 卓大
+  exportGoods : () =>{
+    return getDownload('/goods/exportGoods');
+  }
 };

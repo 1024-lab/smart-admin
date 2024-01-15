@@ -28,6 +28,6 @@
       default: 0,
     },
   });
-  let emits = defineEmits('selectCheckbox');
+  let emits = defineEmits(['selectCheckbox']);
 </script>
 <style scoped lang="less"></style>

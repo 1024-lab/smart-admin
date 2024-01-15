@@ -25,7 +25,7 @@
 <script setup>
   import { onMounted, ref } from 'vue';
   import _ from 'lodash';
-  import { menuApi } from '/@/api/system/menu/menu-api';
+  import { menuApi } from '/src/api/system/menu-api';
   import { buildMenuTableTree } from '/@/views/system/menu/menu-data-handler';
   import { MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
 

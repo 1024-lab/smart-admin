@@ -44,11 +44,11 @@
       rowKey="tag"
       :pagination="false"
     >
-      <template #bodyCell="{ text, record, index, column }">
+      <template #bodyCell="{ record, column }">
         <template v-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="doReload(record.tag)" v-privilege="'reload:execute'" type="link">执行</a-button>
-            <a-button @click="showResultList(record.tag)" v-privilege="'reload:result'" type="link">查看结果</a-button>
+            <a-button @click="doReload(record.tag)" v-privilege="'support:reload:execute'" type="link">执行</a-button>
+            <a-button @click="showResultList(record.tag)" v-privilege="'support:reload:result'" type="link">查看结果</a-button>
           </div>
         </template>
       </template>
@@ -59,10 +59,10 @@
   </a-card>
 </template>
 <script setup>
-  import { onMounted, reactive, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import DoReloadForm from './do-reload-form-modal.vue';
   import ReloadResultList from './reload-result-list.vue';
-  import { reloadApi } from '/@/api/support/reload/reload-api';
+  import { reloadApi } from '/@/api/support/reload-api';
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';

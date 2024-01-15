@@ -18,9 +18,6 @@
     </div>
     <template #overlay>
       <a-menu :class="['avatar-menu']">
-        <a-menu-item @click="onRefresh">
-          <span>刷新权限</span>
-        </a-menu-item>
         <a-menu-item @click="showUpdatePwdModal">
           <span>修改密码</span>
         </a-menu-item>
@@ -34,7 +31,7 @@
 </template>
 <script setup>
   import { computed, ref, onMounted } from 'vue';
-  import { loginApi } from '/@/api/system/login/login-api';
+  import { loginApi } from '/src/api/system/login-api';
   import { useUserStore } from '/@/store/modules/system/user';
   import { clearAllCoolies } from '/@/utils/cookie-util';
   import { localClear } from '/@/utils/local-util';
@@ -57,12 +54,6 @@
       useUserStore().logout();
       location.reload();
     }
-  }
-
-  // 刷新用户信息（包含用户基础信息、权限信息等等）
-  async function onRefresh() {
-    await loginApi.refresh();
-    location.reload();
   }
 
   // ------------------------ 修改密码 ------------------------

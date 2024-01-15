@@ -4,10 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import net.lab1024.sa.admin.module.business.category.dao.CategoryDao;
-import net.lab1024.sa.common.module.support.datatracer.annoation.DataTracerFieldBigDecimal;
-import net.lab1024.sa.common.module.support.datatracer.annoation.DataTracerFieldLabel;
-import net.lab1024.sa.common.module.support.datatracer.annoation.DataTracerFieldSql;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,7 +15,7 @@ import java.time.LocalDateTime;
  * @Date 2021-10-25 20:26:54
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 @TableName("t_goods")

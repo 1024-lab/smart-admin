@@ -42,7 +42,7 @@
     <!-----文档列表---->
     <div class="help-doc-list">
       <div class="help-doc-item-all">
-        <router-link tag="a" target="_blank" :to="{ path: '/help-doc/detail' }">系统手册文档 >></router-link>
+        <router-link tag="a" target="_blank" :to="{ path: '/help-doc/detail' }">系统帮助文档 >></router-link>
       </div>
       <div class="help-doc-item" v-for="item in helpDocList" :key="item.helpDocId">
         <router-link tag="a" target="_blank" :to="{ path: '/help-doc/detail', query: { helpDocId: item.helpDocId } }">{{ item.title }}</router-link>
@@ -59,11 +59,11 @@
   import { onMounted, ref, watch, reactive } from 'vue';
   import { useRoute } from 'vue-router';
   import _ from 'lodash';
-  import { helpDocApi } from '/@/api/support/help-doc/help-doc-api';
+  import { helpDocApi } from '/src/api/support/help-doc-api';
   import ContactModal from './components/contact-modal.vue';
   import FeedbackModal from './components/feedback-modal.vue';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
-  import { feedbackApi } from '/@/api/support/feedback/feedback-api';
+  import { feedbackApi } from '/src/api/support/feedback-api';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { smartSentry } from '/@/lib/smart-sentry';
 
@@ -92,7 +92,7 @@
     }
 
     scheduleShowInterval = setInterval(() => {
-      if (feedbackList.length == 0) {
+      if (feedbackList.length === 0) {
         return;
       }
 
@@ -187,6 +187,7 @@
       justify-content: space-between;
       .help-doc-contact-left {
         width: 30px;
+        margin-top: 10px;
       }
       .help-doc-contact-right {
         margin-top: 10px;
@@ -194,19 +195,20 @@
         .help-doc-contac-time {
           color: #888;
           font-size: 12px;
+          margin-top: 10px;
         }
       }
     }
 
     .feedback {
       .feedback-message-list {
-        margin: 6px 0px;
-        height: 40px;
+        margin: 12px 0px;
+        height: 70px;
         position: relative;
         overflow: hidden;
         .feedback-message {
-          margin: 2px 2px;
-          color: #888;
+          margin: 10px 2px;
+          color: #a9a9a9;
           font-size: 12px;
         }
       }

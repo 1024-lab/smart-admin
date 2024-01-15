@@ -12,4 +12,10 @@
         WHERE role_name = #{roleName}
     </select>
 
+
+    <select id="getByRoleCode" resultMap="RoleEntity">
+        SELECT *
+        FROM t_role
+        WHERE role_code = #{roleCode}
+    </select>
 </mapper>

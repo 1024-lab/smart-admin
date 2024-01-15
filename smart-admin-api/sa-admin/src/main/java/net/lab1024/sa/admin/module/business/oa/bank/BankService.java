@@ -5,17 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.module.business.oa.bank.domain.*;
 import net.lab1024.sa.admin.module.business.oa.enterprise.dao.EnterpriseDao;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.entity.EnterpriseEntity;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
-import net.lab1024.sa.common.common.util.SmartPageUtil;
-import net.lab1024.sa.common.module.support.datatracer.constant.DataTracerConst;
-import net.lab1024.sa.common.module.support.datatracer.constant.DataTracerTypeEnum;
-import net.lab1024.sa.common.module.support.datatracer.service.DataTracerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.util.SmartPageUtil;
+import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerConst;
+import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerTypeEnum;
+import net.lab1024.sa.base.module.support.datatracer.service.DataTracerService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,53 +26,45 @@ import java.util.Objects;
  * @Date 2022/6/23 21:59:22
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 @Slf4j
 public class BankService {
 
-    @Autowired
+    @Resource
     private BankDao bankDao;
-    @Autowired
+
+    @Resource
     private EnterpriseDao enterpriseDao;
 
-    @Autowired
+    @Resource
     private DataTracerService dataTracerService;
 
     /**
      * 分页查询银行信息
-     *
-     * @param queryDTO
-     * @return
      */
-    public ResponseDTO<PageResult<BankVO>> queryByPage(BankQueryForm queryDTO) {
-        queryDTO.setDeletedFlag(Boolean.FALSE);
-        Page<?> page = SmartPageUtil.convert2PageQuery(queryDTO);
-        List<BankVO> bankVOS = bankDao.queryPage(page, queryDTO);
-        PageResult<BankVO> pageResult = SmartPageUtil.convert2PageResult(page, bankVOS);
+    public ResponseDTO<PageResult<BankVO>> queryByPage(BankQueryForm queryForm) {
+        queryForm.setDeletedFlag(Boolean.FALSE);
+        Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
+        List<BankVO> bankList = bankDao.queryPage(page, queryForm);
+        PageResult<BankVO> pageResult = SmartPageUtil.convert2PageResult(page, bankList);
         return ResponseDTO.ok(pageResult);
     }
 
     /**
      * 根据企业ID查询不分页的银行列表
-     *
-     * @param enterpriseId
-     * @return
      */
     public ResponseDTO<List<BankVO>> queryList(Long enterpriseId) {
-        BankQueryForm queryDTO = new BankQueryForm();
-        queryDTO.setEnterpriseId(enterpriseId);
-        queryDTO.setDeletedFlag(Boolean.FALSE);
-        List<BankVO> bankVOS = bankDao.queryPage(null, queryDTO);
-        return ResponseDTO.ok(bankVOS);
+        BankQueryForm queryForm = new BankQueryForm();
+        queryForm.setEnterpriseId(enterpriseId);
+        queryForm.setDeletedFlag(Boolean.FALSE);
+        List<BankVO> bankList = bankDao.queryPage(null, queryForm);
+        return ResponseDTO.ok(bankList);
     }
 
     /**
      * 查询银行信息详情
-     *
-     * @param bankId
-     * @return
      */
     public ResponseDTO<BankVO> getDetail(Long bankId) {
         // 校验银行信息是否存在
@@ -85,9 +77,6 @@ public class BankService {
 
     /**
      * 新建银行信息
-     *
-     * @param createVO
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> createBank(BankCreateForm createVO) {
@@ -111,9 +100,6 @@ public class BankService {
 
     /**
      * 编辑银行信息
-     *
-     * @param updateVO
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> updateBank(BankUpdateForm updateVO) {
@@ -144,9 +130,6 @@ public class BankService {
 
     /**
      * 删除银行信息
-     *
-     * @param bankId
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> deleteBank(Long bankId) {

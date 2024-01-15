@@ -9,7 +9,7 @@
 -->
 <template>
   <div>
-    <CategoryTreeTable :category-type="CATEGORY_TYPE_ENUM.DEMO.value" :privilegePrefix="'custom'"/>
+    <CategoryTreeTable :category-type="CATEGORY_TYPE_ENUM.DEMO.value" :privilegePrefix="'custom:'"/>
   </div>
 </template>
 <script setup>

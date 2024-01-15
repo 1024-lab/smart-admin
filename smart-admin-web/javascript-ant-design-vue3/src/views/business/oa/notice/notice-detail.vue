@@ -23,9 +23,9 @@
       <a-descriptions-item label="发布时间">{{ noticeDetail.publishTime }}</a-descriptions-item>
       <a-descriptions-item label="定时发布">{{ noticeDetail.publishFlag ? '已发布' : '待发布' }}</a-descriptions-item>
       <a-descriptions-item label="删除状态">{{ noticeDetail.deletedFlag ? '已删除' : '未删除' }}</a-descriptions-item>
-      <a-descriptions-item v-if="!$lodash.isEmpty(noticeDetail.attachmentFile)" label="附件">
+      <a-descriptions-item v-if="!$lodash.isEmpty(noticeDetail.attachment)" label="附件">
         <div class="file-list">
-          <a class="file-item" v-for="item in noticeDetail.attachmentFile" :key="item.fileId" @click="onPrevFile(item)">{{ item.fileName }}</a>
+          <a class="file-item" v-for="item in noticeDetail.attachment" :key="item.fileId" @click="onPrevFile(item)">{{ item.fileName }}</a>
         </div>
       </a-descriptions-item>
       <a-descriptions-item label="可见范围" :span="2">

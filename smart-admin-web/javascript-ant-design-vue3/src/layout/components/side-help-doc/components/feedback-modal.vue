@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" title="意见反馈" :closable="false" :maskClosable="true" >
+  <a-modal :open="visible" title="意见反馈" :closable="false" :maskClosable="true" >
     <a-form :labelCol="{ span: 6 }">
       <a-form-item label="我要吐槽/建议：">
         <a-textarea v-model:value="form.feedbackContent" placeholder="请输入让您不满意的点，我们争取做到更好～" :rows="3"/>
@@ -34,7 +34,7 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import { SmartLoading } from '/@/components/framework/smart-loading';
-import { feedbackApi } from '/@/api/support/feedback/feedback-api';
+import { feedbackApi } from '/src/api/support/feedback-api';
 import { message } from 'ant-design-vue';
 import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
 import Upload from '/@/components/support/file-upload/index.vue';

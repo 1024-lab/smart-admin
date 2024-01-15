@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-form class="smart-query-form" v-privilege="'loginLog:query'" ref="queryFormRef">
+  <a-form class="smart-query-form" v-privilege="'support:loginLog:query'" ref="queryFormRef">
     <a-row class="smart-query-form-row">
       <a-form-item label="用户名称" class="smart-query-form-item">
         <a-input style="width: 300px" v-model:value="queryForm.userName" placeholder="用户名称" />
@@ -19,17 +19,17 @@
       </a-form-item>
 
       <a-form-item label="时间" class="smart-query-form-item">
-        <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :ranges="defaultChooseTimeRange" style="width: 240px" />
+        <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :presets="defaultChooseTimeRange" style="width: 240px" />
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
-        <a-button type="primary" @click="ajaxQuery">
+        <a-button type="primary" @click="onSearch">
           <template #icon>
             <ReloadOutlined />
           </template>
           查询
         </a-button>
-        <a-button @click="resetQuery">
+        <a-button @click="resetQuery" class="smart-margin-left10">
           <template #icon>
             <SearchOutlined />
           </template>
@@ -99,7 +99,7 @@
   import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   import uaparser from 'ua-parser-js';
   import { LOGIN_RESULT_ENUM } from '/@/constants/support/login-log-const';
-  import { loginLogApi } from '/@/api/support/login-log/login-log-api';
+  import { loginLogApi } from '/@/api/support/login-log-api';
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
@@ -125,6 +125,11 @@
     {
       title: 'IP',
       dataIndex: 'loginIp',
+      ellipsis: true,
+    },
+    {
+      title: 'IP地区',
+      dataIndex: 'loginIpRegion',
       ellipsis: true,
     },
     {
@@ -175,6 +180,12 @@
     createDateRange.value = [];
     ajaxQuery();
   }
+
+  function onSearch() {
+    queryForm.pageNum = 1;
+    ajaxQuery();
+  }
+
   async function ajaxQuery() {
     try {
       tableLoading.value = true;

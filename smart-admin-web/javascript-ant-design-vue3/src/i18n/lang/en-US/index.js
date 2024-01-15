@@ -7,7 +7,7 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import antd from 'ant-design-vue/es/locale-provider/en_US';
+import antd from 'ant-design-vue/es/locale/en_US';
 import dayjs from 'dayjs/locale/eu';
 
 export default {
@@ -17,8 +17,10 @@ export default {
   'setting.menu.layout': 'Menu Layout',
   'setting.menu.width': 'Menu Width',
   'setting.menu.theme': 'Menu Theme',
+  'setting.page.width': 'Page Width',
   'setting.bread': 'Show Bread',
   'setting.pagetag': 'Show PageTag',
   'setting.footer': 'Show Footer',
   'setting.helpdoc': 'Show Helpdoc',
+  'setting.watermark': 'Show Watermark',
 };

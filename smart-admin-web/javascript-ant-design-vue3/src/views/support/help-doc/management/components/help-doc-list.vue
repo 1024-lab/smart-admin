@@ -8,14 +8,14 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
-  <a-form class="smart-query-form" v-privilege="'helpDoc:query'">
+  <a-form class="smart-query-form" v-privilege="'support:helpDoc:query'">
     <a-row class="smart-query-form-row">
       <a-form-item label="关键字" class="smart-query-form-item">
         <a-input style="width: 300px" v-model:value="queryForm.keywords" placeholder="标题、作者" />
       </a-form-item>
 
       <a-form-item label="创建时间" class="smart-query-form-item">
-        <a-range-picker :ranges="defaultTimeRanges" v-model:value="createDate" @change="createDateChange" style="width: 220px" />
+        <a-range-picker :presets="defaultTimeRanges" v-model:value="createDate" @change="createDateChange" style="width: 220px" />
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
@@ -40,7 +40,7 @@
   <a-card size="small" :bordered="false">
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button type="primary" size="small" @click="addOrUpdate()" v-privilege="'helpDoc:add'">
+        <a-button type="primary" size="small" @click="addOrUpdate()" v-privilege="'support:helpDoc:add'">
           <template #icon>
             <PlusOutlined />
           </template>
@@ -70,8 +70,8 @@
         </template>
         <template v-else-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button type="link" @click="addOrUpdate(record.helpDocId)" v-privilege="'helpDoc:update'">编辑</a-button>
-            <a-button type="link" danger @click="onDelete(record.helpDocId)" v-privilege="'helpDoc:delete'">删除</a-button>
+            <a-button type="link" @click="addOrUpdate(record.helpDocId)" v-privilege="'support:helpDoc:update'">编辑</a-button>
+            <a-button type="link" danger @click="onDelete(record.helpDocId)" v-privilege="'support:helpDoc:delete'">删除</a-button>
           </div>
         </template>
       </template>
@@ -101,7 +101,7 @@
   import { message, Modal } from 'ant-design-vue';
   import { onMounted, reactive, ref, watch } from 'vue';
   import HelpDocFormDrawer from './help-doc-form-drawer.vue';
-  import { helpDocApi } from '/@/api/support/help-doc/help-doc-api';
+  import { helpDocApi } from '/@/api/support/help-doc-api';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';

@@ -1,8 +1,8 @@
 package net.lab1024.sa.admin.module.business.oa.notice.domain.form;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import net.lab1024.sa.common.common.domain.PageParam;
+import net.lab1024.sa.base.common.domain.PageParam;
 
 import javax.validation.constraints.NotNull;
 
@@ -13,19 +13,19 @@ import javax.validation.constraints.NotNull;
  * @Date 2022-08-12 21:40:39
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class NoticeViewRecordQueryForm extends PageParam {
 
-    @ApiModelProperty("通知公告id")
+    @Schema(description = "通知公告id")
     @NotNull(message = "通知公告id不能为空")
     private Long noticeId;
 
-    @ApiModelProperty("部门id")
+    @Schema(description = "部门id")
     private Long departmentId;
 
-    @ApiModelProperty("关键字")
+    @Schema(description = "关键字")
     private String keywords;
 
 

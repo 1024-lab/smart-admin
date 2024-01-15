@@ -26,7 +26,7 @@
 
 <script setup>
   import { onMounted, ref, watch } from 'vue';
-  import { employeeApi } from '/@/api/system/employee/employee-api';
+  import { employeeApi } from '/src/api/system/employee-api';
   import { smartSentry } from '/@/lib/smart-sentry';
 
   // =========== 属性定义 和 事件方法暴露 =============

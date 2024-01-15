@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" :title="form.invoiceId ? '编辑' : '添加'" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
+  <a-modal :open="visible" :title="form.invoiceId ? '编辑' : '添加'" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
       <a-form-item label="开票抬头" name="invoiceHeads">
         <a-input v-model:value="form.invoiceHeads" placeholder="请输入开票抬头" />
@@ -36,7 +36,7 @@
   import { message } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { invoiceApi } from '/@/api/business/oa/invoice-api';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
   const props = defineProps({
     enterpriseId: {

@@ -11,8 +11,17 @@
   <a-alert :closable="true" message="请务必将每一个字段的 “ 字段名词 ” 填写完整！！！" type="success" show-icon>
     <template #icon><smile-outlined /></template>
   </a-alert>
-  <a-table size="small" bordered  :scroll="{ x: 1000 }" class="smart-margin-top10" :dataSource="tableData" :columns="columns" rowKey="columnName" :pagination="false">
-    <template #bodyCell="{ text, record, index, column }">
+  <a-table
+    size="small"
+    bordered
+    :scroll="{ x: 1000 }"
+    class="smart-margin-top10"
+    :dataSource="tableData"
+    :columns="columns"
+    rowKey="columnName"
+    :pagination="false"
+  >
+    <template #bodyCell="{ record, index, column }">
       <template v-if="column.dataIndex === 'no'">
         {{ index + 1 }}
       </template>

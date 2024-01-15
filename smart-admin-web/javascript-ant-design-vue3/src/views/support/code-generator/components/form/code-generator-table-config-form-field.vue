@@ -79,7 +79,7 @@
   import { checkExistEnum, convertJavaEnumName, getJavaType, getJsType, JavaTypeList, JsTypeList } from '../../code-generator-util';
   import DictKeySelect from '/@/components/support/dict-key-select/index.vue';
   import { convertUpperCamel, convertLowerCamel } from '/@/utils/str-util';
-  import lodash from 'lodash';
+  import _ from 'lodash';
 
   //------------------------ 全局数据 ---------------------
   const tableInfo = inject('tableInfo');
@@ -154,8 +154,8 @@
 
     //命名
     let removePrefixTableName = tableInfo.tableName;
-    if (lodash.startsWith(tableInfo.tableName, 't_')) {
-      removePrefixTableName = lodash.trim(removePrefixTableName, '_t');
+    if (_.startsWith(tableInfo.tableName, 't_')) {
+      removePrefixTableName = _.trim(removePrefixTableName, '_t');
     }
     let moduleName = basic && basic.moduleName ? basic.moduleName : removePrefixTableName;
     moduleName = convertUpperCamel(moduleName);
@@ -167,9 +167,9 @@
         columnName: column.columnName,
         columnComment: column.columnComment,
         dataType: column.dataType,
-        nullableFlag: column.isNullable === 'NO' ? true : false,
-        primaryKeyFlag: column.columnKey === 'PRI' ? true : false,
-        autoIncreaseFlag: column.extra === 'auto_increment' ? true : false,
+        nullableFlag: column.isNullable === 'NO',
+        primaryKeyFlag: column.columnKey === 'PRI',
+        autoIncreaseFlag: column.extra === 'auto_increment',
         //表单
         fieldName: configField ? configField.fieldName : convertLowerCamel(column.columnName),
         label: configField ? configField.label : column.columnComment,
@@ -203,7 +203,7 @@
     return tableData.value.map((e) => {
       return {
         columnName: e.columnName,
-        columnComment:e.columnComment,
+        columnComment: e.columnComment,
         label: e.label,
         fieldName: e.fieldName,
         javaType: e.javaType,

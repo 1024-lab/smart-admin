@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 import net.lab1024.sa.admin.module.system.datascope.domain.DataScopeSqlConfig;
 import net.lab1024.sa.admin.module.system.datascope.service.DataScopeSqlConfigService;
-import net.lab1024.sa.common.common.domain.DataScopePlugin;
+import net.lab1024.sa.base.common.domain.DataScopePlugin;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.plugin.Intercepts;
@@ -13,10 +13,10 @@ import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -28,13 +28,13 @@ import java.util.Properties;
  * @Date 2022-03-18 20:59:17
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Intercepts({@Signature(type = org.apache.ibatis.executor.Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 @Component
 public class MyBatisPlugin extends DataScopePlugin {
 
-    @Autowired
+    @Resource
     private ApplicationContext applicationContext;
 
     @Override

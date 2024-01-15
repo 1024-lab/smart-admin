@@ -33,7 +33,7 @@
       </a-form-item>
 
       <a-form-item label="快速筛选" class="smart-query-form-item">
-        <a-radio-group v-model:value="queryForm.shelvesFlag" @change="queryData">
+        <a-radio-group v-model:value="queryForm.shelvesFlag" @change="onSearch">
           <a-radio-button :value="undefined">全部</a-radio-button>
           <a-radio-button :value="true">上架</a-radio-button>
           <a-radio-button :value="false">下架</a-radio-button>
@@ -41,7 +41,7 @@
       </a-form-item>
 
       <a-form-item class="smart-query-form-item">
-        <a-button type="primary" @click="queryData" v-privilege="'goods:query'">
+        <a-button type="primary" @click="onSearch" v-privilege="'goods:query'">
           <template #icon>
             <ReloadOutlined />
           </template>
@@ -69,11 +69,25 @@
           新建
         </a-button>
 
-        <a-button @click="confirmBatchDelete" type="danger" size="small" :disabled="selectedRowKeyList.length == 0" v-privilege="'goods:batchDelete'">
+        <a-button @click="confirmBatchDelete" danger size="small" :disabled="selectedRowKeyList.length === 0" v-privilege="'goods:batchDelete'">
           <template #icon>
             <DeleteOutlined />
           </template>
           批量删除
+        </a-button>
+
+        <a-button @click="showImportModal" type="primary" size="small" v-privilege="'goods:importGoods'">
+          <template #icon>
+            <ImportOutlined />
+          </template>
+          导入
+        </a-button>
+
+        <a-button @click="onExportGoods" type="primary" size="small" v-privilege="'goods:exportGoods'">
+          <template #icon>
+            <ExportOutlined />
+          </template>
+          导出
         </a-button>
       </div>
       <div class="smart-table-setting-block">
@@ -127,6 +141,34 @@
     </div>
 
     <GoodsFormModal ref="formModal" @reloadList="queryData" />
+
+    <a-modal v-model:open="importModalShowFlag" title="导入" @onCancel="hideImportModal" @ok="hideImportModal">
+      <div style="text-align: center; width: 400px; margin: 0 auto">
+        <a-button @click="downloadExcel"> <download-outlined />第一步：下载模板</a-button>
+        <br />
+        <br />
+        <a-upload
+          v-model:fileList="fileList"
+          name="file"
+          :multiple="false"
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          accept=".xls,.xlsx"
+          :before-upload="beforeUpload"
+          @remove="handleRemove"
+        >
+          <a-button>
+            <upload-outlined />
+            第二步：选择文件
+          </a-button>
+        </a-upload>
+
+        <br />
+        <a-button @click="onImportGoods">
+          <ImportOutlined />
+          第三步：开始导入
+        </a-button>
+      </div>
+    </a-modal>
   </a-card>
 </template>
 <script setup>
@@ -144,6 +186,8 @@
   import { GOODS_STATUS_ENUM } from '/@/constants/business/erp/goods-const';
   import DictSelect from '/@/components/support/dict-select/index.vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
+  import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const.js';
+  import FileUpload from '/@/components/support/file-upload/index.vue';
 
   // ---------------------------- 表格列 ----------------------------
 
@@ -215,6 +259,12 @@
     let pageSize = queryForm.pageSize;
     Object.assign(queryForm, queryFormState);
     queryForm.pageSize = pageSize;
+    queryData();
+  }
+
+  // 搜索
+  function onSearch() {
+    queryForm.pageNum = 1;
     queryData();
   }
 
@@ -305,5 +355,61 @@
     } finally {
       SmartLoading.hide();
     }
+  }
+
+  // ------------------------------- 导出和导入 ---------------------------------
+  // 导入弹窗
+  const importModalShowFlag = ref(false);
+
+  const fileList = ref([]);
+  // 显示导入
+  function showImportModal() {
+    fileList.value = [];
+    importModalShowFlag.value = true;
+  }
+
+  // 关闭 导入
+  function hideImportModal() {
+    importModalShowFlag.value = false;
+  }
+
+  function handleChange() {}
+
+  function handleDrop() {}
+
+  function handleRemove(file) {
+    const index = fileList.value.indexOf(file);
+    const newFileList = fileList.value.slice();
+    newFileList.splice(index, 1);
+    fileList.value = newFileList;
+  }
+  function beforeUpload(file) {
+    fileList.value = [...(fileList.value || []), file];
+    return false;
+  }
+
+  function downloadExcel() {
+    window.open('https://smartadmin.vip/cdn/%E5%95%86%E5%93%81%E6%A8%A1%E6%9D%BF.xls');
+  }
+
+  async function onImportGoods() {
+    const formData = new FormData();
+    fileList.value.forEach((file) => {
+      formData.append('file', file.originFileObj);
+    });
+
+    SmartLoading.show();
+    try {
+      let res = await goodsApi.importGoods(formData);
+      message.success(res.msg);
+    } catch (e) {
+      smartSentry.captureError(e);
+    } finally {
+      SmartLoading.hide();
+    }
+  }
+
+  async function onExportGoods() {
+    await goodsApi.exportGoods();
   }
 </script>

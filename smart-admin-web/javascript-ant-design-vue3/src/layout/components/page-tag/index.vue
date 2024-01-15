@@ -12,7 +12,7 @@
   <a-row style="border-bottom: 1px solid #eeeeee; position: relative" v-show="pageTagFlag">
     <a-dropdown :trigger="['contextmenu']">
       <div class="smart-page-tag">
-        <a-tabs :tab-position="mode" v-model:activeKey="selectedKey" size="small" @tabClick="selectTab">
+        <a-tabs style="width: 100%" :tab-position="mode" v-model:activeKey="selectedKey" size="small" @tabClick="selectTab" >
           <a-tab-pane v-for="item in tagNav" :key="item.menuName">
             <template #tab>
               <span>
@@ -23,7 +23,7 @@
           </a-tab-pane>
         </a-tabs>
       </div>
-      <template #overlay>
+      <template #rightExtra>
         <a-menu>
           <a-menu-item @click="closeByMenu(false)">关闭其他</a-menu-item>
           <a-menu-item @click="closeByMenu(true)">关闭所有</a-menu-item>
@@ -56,6 +56,12 @@
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useUserStore } from '/@/store/modules/system/user';
 
+  // //样式
+  // const tagOperateWidth = ref(40);
+  // const tabBarStyle = {
+  //   width: 'calc(100% - 80px)'
+  // }
+
   //标签页 是否显示
   const pageTagFlag = computed(() => useAppConfigStore().$state.pageTagFlag);
 
@@ -84,7 +90,8 @@
       router.push({ name: HOME_PAGE_NAME });
       return;
     }
-    router.push({ name, query: tag.menuQuery, params: { keepAlive: 1 } });
+    // router.push({ name, query: Object.assign({ _keepAlive: 1 }, tag.menuQuery) });
+    router.push({ name, query: tag.menuQuery });
   }
 
   //通过菜单关闭
@@ -116,7 +123,8 @@
           goQuery = leftTagNav.menuQuery;
         }
       }
-      router.push({ name: goName, query: goQuery, params: { keepAlive: 1 } });
+      // router.push({ name: goName, query: Object.assign({ _keepAlive: 1 }, goQuery) });
+      router.push({ name: goName, query: goQuery });
     } else if (!item && closeAll) {
       // 关闭所有tag
       router.push({ name: HOME_PAGE_NAME });
@@ -172,13 +180,6 @@
     user-select: none;
     background: #fff;
     width: calc(100% - @smart-page-tag-operate-width);
-
-    .smart-page-tag-tabs {
-      width: calc(100% - 100px);
-      height: 26px;
-      background-color: red;
-      margin: 2px;
-    }
 
     .smart-page-tag-close {
       margin-left: 5px;

@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.system.datascope.constant;
 
-import net.lab1024.sa.common.common.enumeration.BaseEnum;
+import net.lab1024.sa.base.common.enumeration.BaseEnum;
 
 /**
  * 数据范围 类型
@@ -9,7 +9,7 @@ import net.lab1024.sa.common.common.enumeration.BaseEnum;
  * @Date 2020/11/28  20:59:17
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 public enum DataScopeTypeEnum implements BaseEnum {
 
@@ -19,13 +19,13 @@ public enum DataScopeTypeEnum implements BaseEnum {
     NOTICE(1, 20, "系统通知", "系统通知数据范围"),
     ;
 
-    private Integer value;
+    private final Integer value;
 
-    private Integer sort;
+    private final Integer sort;
 
-    private String name;
+    private final String name;
 
-    private String desc;
+    private final String desc;
 
     DataScopeTypeEnum(Integer value, Integer sort, String name, String desc) {
         this.value = value;

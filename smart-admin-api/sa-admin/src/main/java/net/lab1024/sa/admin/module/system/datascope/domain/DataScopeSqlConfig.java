@@ -11,7 +11,7 @@ import net.lab1024.sa.admin.module.system.datascope.constant.DataScopeWhereInTyp
  * @Date 2020/11/28  20:59:17
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class DataScopeSqlConfig {

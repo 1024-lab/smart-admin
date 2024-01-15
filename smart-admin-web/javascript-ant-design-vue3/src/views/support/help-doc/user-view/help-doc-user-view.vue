@@ -42,7 +42,7 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import HelpDocViewRecordList from './components/help-doc-view-record-list.vue';
-import { helpDocApi } from '/@/api/support/help-doc/help-doc-api';
+import { helpDocApi } from '/@/api/support/help-doc-api';
 import { SmartLoading } from '/@/components/framework/smart-loading';
 import FilePreview from '/@/components/support/file-preview/index.vue';
 import { smartSentry } from '/@/lib/smart-sentry';

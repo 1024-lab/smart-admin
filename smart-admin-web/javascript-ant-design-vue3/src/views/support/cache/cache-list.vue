@@ -40,7 +40,7 @@ Caffeine ：
 <script setup>
   import { message } from 'ant-design-vue';
   import { onMounted, reactive, ref, h } from 'vue';
-  import { cacheApi } from '/@/api/support/cache/cache-api';
+  import { cacheApi } from '/@/api/support/cache-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { Modal } from 'ant-design-vue';
   import _ from 'lodash';

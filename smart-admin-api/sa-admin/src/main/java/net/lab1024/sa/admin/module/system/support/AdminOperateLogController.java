@@ -1,17 +1,18 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import net.lab1024.sa.common.common.controller.SupportBaseController;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.constant.SwaggerTagConst;
-import net.lab1024.sa.common.module.support.operatelog.OperateLogService;
-import net.lab1024.sa.common.module.support.operatelog.domain.OperateLogQueryForm;
-import net.lab1024.sa.common.module.support.operatelog.domain.OperateLogVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import net.lab1024.sa.base.common.controller.SupportBaseController;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.constant.SwaggerTagConst;
+import net.lab1024.sa.base.module.support.operatelog.OperateLogService;
+import net.lab1024.sa.base.module.support.operatelog.domain.OperateLogQueryForm;
+import net.lab1024.sa.base.module.support.operatelog.domain.OperateLogVO;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  *  操作日志
@@ -20,25 +21,25 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2021-12-08 20:48:52
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @RestController
-@Api(tags = {SwaggerTagConst.Support.OPERATE_LOG})
+@Tag(name = SwaggerTagConst.Support.OPERATE_LOG)
 public class AdminOperateLogController extends SupportBaseController {
 
-    @Autowired
+    @Resource
     private OperateLogService operateLogService;
 
-    @ApiOperation(value = "分页查询 @author 罗伊")
-    @PreAuthorize("@saAuth.checkPermission('operateLog:query')")
+    @Operation(summary = "分页查询 @author 罗伊")
     @PostMapping("/operateLog/page/query")
+    @SaCheckPermission("support:operateLog:query")
     public ResponseDTO<PageResult<OperateLogVO>> queryByPage(@RequestBody OperateLogQueryForm queryForm) {
         return operateLogService.queryByPage(queryForm);
     }
 
-    @ApiOperation(value = "详情 @author 罗伊")
-    @PreAuthorize("@saAuth.checkPermission('operateLog:detail')")
+    @Operation(summary = "详情 @author 罗伊")
     @GetMapping("/operateLog/detail/{operateLogId}")
+    @SaCheckPermission("support:operateLog:detail")
     public ResponseDTO<OperateLogVO> detail(@PathVariable Long operateLogId) {
         return operateLogService.detail(operateLogId);
     }

@@ -1,7 +1,7 @@
 package net.lab1024.sa.admin.module.system.menu.constant;
 
 
-import net.lab1024.sa.common.common.enumeration.BaseEnum;
+import net.lab1024.sa.base.common.enumeration.BaseEnum;
 
 /**
  * 权限类型
@@ -10,23 +10,19 @@ import net.lab1024.sa.common.common.enumeration.BaseEnum;
  * @Date 2022-03-06 22:04:37
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 public enum MenuPermsTypeEnum implements BaseEnum {
     /**
-     * SpringSecurity模式
+     * sa-token
      */
-    SPRING_SECURITY(1, "SpringSecurity模式"),
-    /**
-     * URL模式
-     */
-    URL(2, "URL模式"),
+    SA_TOKEN(1, "Sa-Token模式"),
 
     ;
 
-    private Integer value;
+    private final Integer value;
 
-    private String desc;
+    private final String desc;
 
 
     MenuPermsTypeEnum(Integer value, String desc) {

@@ -8,37 +8,42 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" title="请求详情" width="60%" :footer="null" @cancel="close">
+  <a-modal :open="visible" title="请求详情" width="60%" :footer="null" @cancel="close">
     <div class="info-box">
       <a-row class="smart-margin-top10">
         <a-col :span="16">
           <a-row class="detail-info">
-            <a-col :span="12"> 请求地址： {{ detail.url }}</a-col>
+            <a-col :span="12"> 请求url： {{ detail.url }}</a-col>
             <a-col :span="12"> 请求日期： {{ detail.createTime }}</a-col>
           </a-row>
           <a-row class="detail-info">
-            <a-col> 请求方法： {{ detail.method }}</a-col>
+            <a-col :span="12"> 请求IP： {{ detail.ip }}</a-col>
+            <a-col :span="12"> IP地区： {{ detail.ipRegion }}</a-col>
           </a-row>
           <a-row class="detail-info">
             <a-col :span="12"> 用户id：{{ detail.operateUserId }}</a-col>
             <a-col :span="12"> 用户名称： {{ detail.operateUserName }}</a-col>
-            <a-col :span="24"> 请求内容： {{ detail.module }} - {{ detail.content }}</a-col>
           </a-row>
         </a-col>
         <a-col :span="8">
           <p class="detail-right-title">请求状态</p>
-          <p :class="['detail-right', detail.successFlag ? 'success' : 'error']">
+          <a-typography-text class="detail-right" :type="detail.successFlag ? 'success' : 'danger'">
             {{ detail.successFlag ? '成功' : '失败' }}
-          </p>
+          </a-typography-text>
         </a-col>
       </a-row>
+    </div>
+    <div class="info-box">
+      <h4>请求明细：</h4>
+      <a-col :span="24"> 方法： {{ detail.method }}</a-col>
+      <a-col :span="24"> 说明： {{ detail.module }} - {{ detail.content }}</a-col>
     </div>
     <div class="info-box">
       <h4>请求参数：</h4>
       <JsonViewer :value="detail.param ? JSON.parse(detail.param) : ''" theme="jv-dark" copyable boxed sort />
     </div>
-    <div class="info-box">
-      <h4>请求参数：</h4>
+    <div class="info-box" v-if="detail.failReason">
+      <h4>请求失败原因：</h4>
       <div>
         {{ detail.failReason }}
       </div>
@@ -49,8 +54,8 @@
 <script setup>
   import { reactive, ref } from 'vue';
   import { JsonViewer } from 'vue3-json-viewer';
-  import { operateLogApi } from '/@/api/support/operate-log/operate-log-api';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { operateLogApi } from '/@/api/support/operate-log-api';
+  import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
 
   defineExpose({
@@ -127,13 +132,6 @@ import { smartSentry } from '/@/lib/smart-sentry';
     font-size: 20px;
     font-weight: bold;
     text-align: right;
-  }
-
-  .success {
-    color: @success-color;
-  }
-
-  .error {
-    color: @error-color;
+    float: right;
   }
 </style>

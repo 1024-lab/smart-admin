@@ -35,7 +35,7 @@
 
 <script setup>
   import { message } from 'ant-design-vue';
-  import lodash from 'lodash';
+  import _ from 'lodash';
   import { inject, reactive, ref } from 'vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import { CODE_DELETE_ENUM } from '/@/constants/support/code-generator-const';
@@ -73,7 +73,7 @@
     let deleteInfo = config.delete;
 
     formData.isSupportDelete = deleteInfo && deleteInfo.isSupportDelete ? deleteInfo.isSupportDelete : true;
-    formData.isPhysicallyDeleted = deleteInfo && deleteInfo.isPhysicallyDeleted ? deleteInfo.isPhysicallyDeleted : deletedFlagColumn ? false : true;
+    formData.isPhysicallyDeleted = deleteInfo && deleteInfo.isPhysicallyDeleted ? deleteInfo.isPhysicallyDeleted : !deletedFlagColumn;
     formData.deleteEnum = deleteInfo && deleteInfo.deleteEnum ? deleteInfo.deleteEnum : CODE_DELETE_ENUM.SINGLE_AND_BATCH.value;
   }
 
@@ -83,7 +83,7 @@
       return null;
     }
 
-    let result = configFields.filter((e) => lodash.startsWith(e.columnName, 'deleted_flag' || lodash.startsWith(e.columnName, 'delete_flag')));
+    let result = configFields.filter((e) => _.startsWith(e.columnName, 'deleted_flag' || _.startsWith(e.columnName, 'delete_flag')));
     return result && result.length > 0 ? result[0] : null;
   }
 

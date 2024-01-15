@@ -16,7 +16,7 @@ import java.util.List;
  * @Date 2021/08/05 21:26:58
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Component
 @Mapper
@@ -25,9 +25,9 @@ public interface CategoryDao extends BaseMapper<CategoryEntity> {
     /**
      * 根据父级id 类型 查询子类
      *
-     * @param parentIdList
-     * @param deletedFlag
-     * @return
+     * @param parentIdList 父级id集合
+     * @param deletedFlag 删除标识
+     * @return 列表
      */
     List<CategoryEntity> queryByParentId(@Param("parentIdList") List<Long> parentIdList,
                                          @Param("deletedFlag") Boolean deletedFlag);
@@ -35,10 +35,10 @@ public interface CategoryDao extends BaseMapper<CategoryEntity> {
     /**
      * 根据父级id 类型 查询子类
      *
-     * @param parentIdList
+     * @param parentIdList 父级id集合
      * @param categoryType {@link CategoryTypeEnum}
-     * @param deletedFlag
-     * @return
+     * @param deletedFlag 删除标识
+     * @return 列表
      */
     List<CategoryEntity> queryByParentIdAndType(@Param("parentIdList") List<Long> parentIdList,
                                          @Param("categoryType") Integer categoryType,
@@ -46,26 +46,17 @@ public interface CategoryDao extends BaseMapper<CategoryEntity> {
 
     /**
      * 某个类型的所有
-     * @param categoryType
-     * @param deletedFlag
-     * @return
      */
     List<CategoryEntity> queryByType(@Param("categoryType") Integer categoryType,
                                                 @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 根据类型和id查询
-     * @param categoryType
-     * @param categoryId
-     * @return
      */
     CategoryEntity selectByTypeAndId(@Param("categoryType") Integer categoryType, @Param("categoryId") Long categoryId);
 
     /**
      * 查看类目 具体条件 看sql
-     *
-     * @param entity
-     * @return
      */
     CategoryEntity selectOne(CategoryEntity entity);
 

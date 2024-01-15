@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" :title="form.dictKeyId ? '编辑' : '添加'" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
+  <a-modal :open="visible" :title="form.dictKeyId ? '编辑' : '添加'" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
       <a-form-item label="编码" name="keyCode">
         <a-input v-model:value="form.keyCode" placeholder="请输入编码" />
@@ -27,7 +27,7 @@
   import { ref, reactive } from 'vue';
   import { message } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-  import { dictApi } from '/@/api/support/dict/dict-api';
+  import { dictApi } from '/@/api/support/dict-api';
   import { smartSentry } from '/@/lib/smart-sentry';
 
   // emit

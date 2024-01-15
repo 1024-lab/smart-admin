@@ -10,7 +10,7 @@
     :title="form.changeLogId ? '编辑' : '添加'"
     width="600px"
     :closable="true"
-    :visible="visibleFlag"
+    :open="visibleFlag"
     @close="onClose"
     :onCancel="onClose"
     :maskClosable="false"
@@ -50,7 +50,7 @@
   import _ from 'lodash';
   import { message } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-  import { changeLogApi } from '/@/api/support/change-log/change-log-api';
+  import { changeLogApi } from '/@/api/support/change-log-api';
   import { smartSentry } from '/@/lib/smart-sentry';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
 

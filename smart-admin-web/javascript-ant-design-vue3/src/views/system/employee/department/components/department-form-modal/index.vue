@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal v-model:visible="visible" :title="formState.departmentId ? '编辑部门' : '添加部门'" @ok="handleOk" destroyOnClose>
+  <a-modal v-model:open="visible" :title="formState.departmentId ? '编辑部门' : '添加部门'" @ok="handleOk" destroyOnClose>
     <a-form ref="formRef" :model="formState" :rules="rules" layout="vertical">
       <a-form-item label="上级部门" name="parentId" v-if="formState.parentId != 0">
         <DepartmentTreeSelect ref="departmentTreeSelect" v-model:value="formState.parentId" :defaultValueFlag="false" width="100%" />
@@ -28,7 +28,7 @@
 <script setup lang="ts">
   import message from 'ant-design-vue/lib/message';
   import { reactive, ref } from 'vue';
-  import { departmentApi } from '/@/api/system/department/department-api';
+  import { departmentApi } from '/@/api/system/department-api';
   import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
   import EmployeeSelect from '/@/components/system/employee-select/index.vue';
   import { smartSentry } from '/@/lib/smart-sentry';

@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-drawer :width="800" :visible="visible" :body-style="{ paddingBottom: '80px' }" title="字典值" @close="onClose">
+  <a-drawer :width="800" :open="visible" :body-style="{ paddingBottom: '80px' }" title="字典值" @close="onClose">
     <a-form class="smart-query-form">
       <a-row class="smart-query-form-row">
         <a-form-item label="关键字" class="smart-query-form-item">
@@ -42,7 +42,7 @@
             新建
           </a-button>
 
-          <a-button @click="confirmBatchDelete" type="danger" size="small" :disabled="selectedRowKeyList.length == 0">
+          <a-button @click="confirmBatchDelete" type="text" danger size="small" :disabled="selectedRowKeyList.length == 0">
             <template #icon>
               <DeleteOutlined />
             </template>
@@ -91,7 +91,7 @@
   import { reactive, ref } from 'vue';
   import DictValueOperateModal from './dict-value-operate-modal.vue';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
-  import { dictApi } from '/@/api/support/dict/dict-api';
+  import { dictApi } from '/@/api/support/dict-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { Modal } from 'ant-design-vue';
   import { message } from 'ant-design-vue';

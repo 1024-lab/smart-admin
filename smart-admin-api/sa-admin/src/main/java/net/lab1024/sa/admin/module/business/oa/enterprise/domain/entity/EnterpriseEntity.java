@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import net.lab1024.sa.admin.module.business.oa.enterprise.constant.EnterpriseTypeEnum;
-import net.lab1024.sa.common.module.support.datatracer.annoation.DataTracerFieldEnum;
-import net.lab1024.sa.common.module.support.datatracer.annoation.DataTracerFieldLabel;
+import net.lab1024.sa.base.module.support.datatracer.annoation.DataTracerFieldEnum;
+import net.lab1024.sa.base.module.support.datatracer.annoation.DataTracerFieldLabel;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * @Date 2022/7/28 20:37:15
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 @TableName("t_oa_enterprise")

@@ -10,7 +10,7 @@
 <template>
   <a-drawer
     :title="formData.noticeId ? '编辑' : '新建'"
-    :visible="visibleFlag"
+    :open="visibleFlag"
     :width="1000"
     :footerStyle="{ textAlign: 'right' }"
     @close="onClose"
@@ -103,7 +103,7 @@
 <script setup>
   import { reactive, ref, onMounted, watch, computed, nextTick } from 'vue';
   import { message, Modal } from 'ant-design-vue';
-  import lodash from 'lodash';
+  import _ from 'lodash';
   import dayjs, { Dayjs } from 'dayjs';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
@@ -178,7 +178,7 @@
       SmartLoading.show();
       const result = await noticeApi.getUpdateNoticeInfo(noticeId);
       const attachment = result.data.attachment;
-      if (!lodash.isEmpty(attachment)) {
+      if (!_.isEmpty(attachment)) {
         defaultFileList.value = attachment;
       } else {
         defaultFileList.value = [];
@@ -287,7 +287,7 @@
   const defaultFileList = ref([]);
   function changeAttachment(fileList) {
     defaultFileList.value = fileList;
-    formData.attachment = lodash.isEmpty(fileList) ? [] : fileList;
+    formData.attachment = _.isEmpty(fileList) ? [] : fileList;
   }
 
   // ----------------------- 以下是暴露的方法内容 ------------------------

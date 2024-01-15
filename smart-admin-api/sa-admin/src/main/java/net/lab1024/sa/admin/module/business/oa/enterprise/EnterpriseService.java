@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.business.oa.enterprise;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -10,22 +9,23 @@ import net.lab1024.sa.admin.module.business.oa.enterprise.domain.entity.Enterpri
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.entity.EnterpriseEntity;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.form.*;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseEmployeeVO;
+import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseExcelVO;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseListVO;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseVO;
 import net.lab1024.sa.admin.module.system.department.service.DepartmentService;
-import net.lab1024.sa.common.common.code.UserErrorCode;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
-import net.lab1024.sa.common.common.util.SmartPageUtil;
-import net.lab1024.sa.common.module.support.datatracer.constant.DataTracerTypeEnum;
-import net.lab1024.sa.common.module.support.datatracer.domain.form.DataTracerForm;
-import net.lab1024.sa.common.module.support.datatracer.service.DataTracerService;
+import net.lab1024.sa.base.common.code.UserErrorCode;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.util.SmartPageUtil;
+import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerTypeEnum;
+import net.lab1024.sa.base.module.support.datatracer.domain.form.DataTracerForm;
+import net.lab1024.sa.base.module.support.datatracer.service.DataTracerService;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -37,57 +37,58 @@ import java.util.stream.Collectors;
  * @Date 2022/7/28 20:37:15
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 @Slf4j
 public class EnterpriseService {
 
-    @Autowired
+    @Resource
     private EnterpriseDao enterpriseDao;
 
-    @Autowired
+    @Resource
     private EnterpriseEmployeeDao enterpriseEmployeeDao;
 
-    @Autowired
+    @Resource
     private EnterpriseEmployeeManager enterpriseEmployeeManager;
 
-    @Autowired
+    @Resource
     private DataTracerService dataTracerService;
 
-    @Autowired
+    @Resource
     private DepartmentService departmentService;
 
     /**
      * 分页查询企业模块
      *
-     * @param queryDTO
-     * @return
      */
-    public ResponseDTO<PageResult<EnterpriseVO>> queryByPage(EnterpriseQueryForm queryDTO) {
-        queryDTO.setDeletedFlag(Boolean.FALSE);
-        Page<?> page = SmartPageUtil.convert2PageQuery(queryDTO);
-        List<EnterpriseVO> enterpriseVOS = enterpriseDao.queryPage(page, queryDTO);
-        PageResult<EnterpriseVO> pageResult = SmartPageUtil.convert2PageResult(page, enterpriseVOS);
+    public ResponseDTO<PageResult<EnterpriseVO>> queryByPage(EnterpriseQueryForm queryForm) {
+        queryForm.setDeletedFlag(Boolean.FALSE);
+        Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
+        List<EnterpriseVO> enterpriseList = enterpriseDao.queryPage(page, queryForm);
+        PageResult<EnterpriseVO> pageResult = SmartPageUtil.convert2PageResult(page, enterpriseList);
         return ResponseDTO.ok(pageResult);
+    }
+
+    /**
+     * 获取导出数据
+     */
+    public List<EnterpriseExcelVO> getExcelExportData(EnterpriseQueryForm queryForm) {
+        queryForm.setDeletedFlag(false);
+        return enterpriseDao.selectExcelExportData(queryForm);
     }
 
     /**
      * 查询企业详情
      *
-     * @param enterpriseId
-     * @return
      */
     public EnterpriseVO getDetail(Long enterpriseId) {
-        EnterpriseVO enterpriseDetail = enterpriseDao.getDetail(enterpriseId, Boolean.FALSE);
-        return enterpriseDetail;
+        return enterpriseDao.getDetail(enterpriseId, Boolean.FALSE);
     }
 
     /**
      * 新建企业
      *
-     * @param createVO
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> createEnterprise(EnterpriseCreateForm createVO) {
@@ -106,8 +107,6 @@ public class EnterpriseService {
     /**
      * 编辑企业
      *
-     * @param updateVO
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> updateEnterprise(EnterpriseUpdateForm updateVO) {
@@ -144,8 +143,6 @@ public class EnterpriseService {
     /**
      * 删除企业
      *
-     * @param enterpriseId
-     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> deleteEnterprise(Long enterpriseId) {
@@ -161,12 +158,10 @@ public class EnterpriseService {
 
     /**
      * 企业列表查询
-     *
-     * @return
      */
     public ResponseDTO<List<EnterpriseListVO>> queryList(Integer type) {
-        List<EnterpriseListVO> enterpriseListVOS = enterpriseDao.queryList(type, Boolean.FALSE, Boolean.FALSE);
-        return ResponseDTO.ok(enterpriseListVOS);
+        List<EnterpriseListVO> enterpriseList = enterpriseDao.queryList(type, Boolean.FALSE, Boolean.FALSE);
+        return ResponseDTO.ok(enterpriseList);
     }
 
     //----------------------------------------- 以下为员工相关--------------------------------------------
@@ -174,8 +169,6 @@ public class EnterpriseService {
     /**
      * 企业添加员工
      *
-     * @param enterpriseEmployeeForm
-     * @return
      */
     public synchronized ResponseDTO<String> addEmployee(EnterpriseEmployeeForm enterpriseEmployeeForm) {
         Long enterpriseId = enterpriseEmployeeForm.getEnterpriseId();
@@ -207,8 +200,6 @@ public class EnterpriseService {
     /**
      * 企业删除员工
      *
-     * @param enterpriseEmployeeForm
-     * @return
      */
     public synchronized ResponseDTO<String> deleteEmployee(EnterpriseEmployeeForm enterpriseEmployeeForm) {
         Long enterpriseId = enterpriseEmployeeForm.getEnterpriseId();
@@ -224,22 +215,17 @@ public class EnterpriseService {
     /**
      * 企业下员工列表
      *
-     * @param enterpriseIdList
-     * @return
      */
     public List<EnterpriseEmployeeVO> employeeList(List<Long> enterpriseIdList) {
         if (CollectionUtils.isEmpty(enterpriseIdList)) {
             return Lists.newArrayList();
         }
-        List<EnterpriseEmployeeVO> enterpriseEmployeeVOList = enterpriseEmployeeDao.selectByEnterpriseIdList(enterpriseIdList);
-        return enterpriseEmployeeVOList;
+        return enterpriseEmployeeDao.selectByEnterpriseIdList(enterpriseIdList);
     }
 
     /**
      * 分页查询企业员工
      *
-     * @param queryForm
-     * @return
      */
     public PageResult<EnterpriseEmployeeVO> queryPageEmployeeList(EnterpriseEmployeeQueryForm queryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);

@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal v-model:visible="visible" :zIndex="9999" :width="500" title="提示" :closable="false" :maskClosable="false">
+  <a-modal v-model:open="visible" :zIndex="9999" :width="500" title="提示" :closable="false" :maskClosable="false">
     <!--  -->
     <ul>
       <li>登录名: {{ showLoginName }}</li>

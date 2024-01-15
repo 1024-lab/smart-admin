@@ -9,7 +9,7 @@
 -->
 <template>
   <div>
-    <a-popover v-model:visible="visible" placement="bottomLeft" trigger="click">
+    <a-popover v-model:open="visible" placement="bottomLeft" trigger="click">
       <template #title>
         <a-form-item>
           <a-radio-group @change="updateSelectIconArray" v-model:value="iconStyle" style="margin: 8px">

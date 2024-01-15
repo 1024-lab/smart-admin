@@ -1,17 +1,17 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import net.lab1024.sa.common.common.controller.SupportBaseController;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.constant.SwaggerTagConst;
-import net.lab1024.sa.common.module.support.cache.CacheService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import net.lab1024.sa.base.common.controller.SupportBaseController;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.constant.SwaggerTagConst;
+import net.lab1024.sa.base.module.support.cache.CacheService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,34 +21,33 @@ import java.util.List;
  * @Date 2021/10/11 20:07
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @RestController
-@Api(tags = {SwaggerTagConst.Support.CACHE})
+@Tag(name = SwaggerTagConst.Support.CACHE)
 public class AdminCacheController extends SupportBaseController {
 
-    @Autowired
+    @Resource
     private CacheService cacheService;
 
-    @ApiOperation(value = "获取所有缓存 @author 罗伊")
+    @Operation(summary = "获取所有缓存 @author 罗伊")
     @GetMapping("/cache/names")
+    @SaCheckPermission("support:cache:keys")
     public ResponseDTO<List<String>> cacheNames() {
         return ResponseDTO.ok(cacheService.cacheNames());
     }
 
-
-    @ApiOperation(value = "移除某个缓存 @author 罗伊")
-    @PreAuthorize("@saAuth.checkPermission('support:cache:delete')")
+    @Operation(summary = "移除某个缓存 @author 罗伊")
     @GetMapping("/cache/remove/{cacheName}")
+    @SaCheckPermission("support:cache:delete")
     public ResponseDTO<String> removeCache(@PathVariable String cacheName) {
         cacheService.removeCache(cacheName);
         return ResponseDTO.ok();
     }
 
-
-    @ApiOperation(value = "获取某个缓存的所有key @author 罗伊")
-    @PreAuthorize("@saAuth.checkPermission('support:cache:keys')")
+    @Operation(summary = "获取某个缓存的所有key @author 罗伊")
     @GetMapping("/cache/keys/{cacheName}")
+    @SaCheckPermission("support:cache:keys")
     public ResponseDTO<List<String>> cacheKeys(@PathVariable String cacheName) {
         return ResponseDTO.ok(cacheService.cacheKey(cacheName));
     }

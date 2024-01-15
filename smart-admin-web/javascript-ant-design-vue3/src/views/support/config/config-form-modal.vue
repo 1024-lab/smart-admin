@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" :title="form.configId ? '编辑' : '添加'" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
+  <a-modal :open="visible" :title="form.configId ? '编辑' : '添加'" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }">
       <a-form-item label="参数Key" name="configKey">
         <a-input v-model:value="form.configKey" placeholder="请输入参数Key" />
@@ -28,12 +28,12 @@
 <script setup>
   import { message } from 'ant-design-vue';
   import { reactive, ref } from 'vue';
-  import { configApi } from '/@/api/support/config/config-api';
+  import { configApi } from '/@/api/support/config-api';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
 
   // emit
-  const emit = defineEmits('reloadList');
+  const emit = defineEmits(['reloadList']);
 
   //  组件
   const formRef = ref();

@@ -11,7 +11,7 @@
   <a-card size="small" :bordered="false" :hoverable="true">
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button @click="addCategory()" type="primary" size="small" v-privilege="`${privilegePrefix}Category:add`">
+        <a-button @click="addCategory()" type="primary" size="small" v-privilege="`${privilegePrefix}category:add`">
           <template #icon>
             <PlusOutlined />
           </template>
@@ -35,9 +35,11 @@
       <template #bodyCell="{ record, column }">
         <template v-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="addCategory(record.categoryId)" type="link" v-privilege="`${privilegePrefix}Category:addChild`">增加子分类</a-button>
-            <a-button @click="addCategory(undefined, record)" type="link" v-privilege="`${privilegePrefix}Category:edit`">编辑</a-button>
-            <a-button @click="confirmDeleteCategory(record.categoryId)" danger type="link" v-privilege="`${privilegePrefix}Category:delete`">删除</a-button>
+            <a-button @click="addCategory(record.categoryId)" type="link" v-privilege="`${privilegePrefix}category:addChild`">增加子分类</a-button>
+            <a-button @click="addCategory(undefined, record)" type="link" v-privilege="`${privilegePrefix}category:update`">编辑</a-button>
+            <a-button @click="confirmDeleteCategory(record.categoryId)" danger type="link" v-privilege="`${privilegePrefix}category:delete`"
+              >删除</a-button
+            >
           </div>
         </template>
       </template>
@@ -46,8 +48,8 @@
   </a-card>
 </template>
 <script setup>
-  import { reactive, ref, onMounted, computed } from 'vue';
-  import { Modal, message } from 'ant-design-vue';
+  import { computed, onMounted, reactive, ref } from 'vue';
+  import { message, Modal } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import CategoryFormModal from './category-form-modal.vue';
   import { categoryApi } from '/@/api/business/category/category-api';
@@ -65,7 +67,7 @@
     },
   ];
   const columName = computed(() => {
-    let find = columnNameList.find((e) => e.categoryType == props.categoryType);
+    let find = columnNameList.find((e) => e.categoryType === props.categoryType);
     return find ? find.columnName : '';
   });
 
@@ -74,8 +76,8 @@
     categoryType: Number,
     privilegePrefix: {
       type: String,
-      default: 'goods'
-    }
+      default: '',
+    },
   });
 
   // ------------------------------ 查询 ------------------------------
@@ -100,8 +102,7 @@
         categoryType: props.categoryType,
       };
       let responseModel = await categoryApi.queryCategoryTree(queryForm);
-      const list = responseModel.data;
-      tableData.value = list;
+      tableData.value = responseModel.data;
     } catch (e) {
       smartSentry.captureError(e);
     } finally {
@@ -152,7 +153,7 @@
     try {
       SmartLoading.show();
       await categoryApi.deleteCategoryById(categoryId);
-      message.success('撤销成功');
+      message.success('删除成功');
       queryList();
     } catch (e) {
       smartSentry.captureError(e);

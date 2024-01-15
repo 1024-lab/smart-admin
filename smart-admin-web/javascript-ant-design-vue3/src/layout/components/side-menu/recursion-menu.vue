@@ -14,7 +14,7 @@
     class="smart-menu"
     mode="inline"
     :theme="theme"
-    :inlineCollapsed="inlineCollapsed"
+    :inlineCollapsed="collapsed"
   >
     <template v-for="item in menuTree" :key="item.menuId">
       <template v-if="item.visibleFlag && !item.disabledFlag">
@@ -45,7 +45,7 @@
   const theme = computed(() => useAppConfigStore().$state.sideMenuTheme);
 
   const props = defineProps({
-    inlineCollapsed: {
+    collapsed: {
       type: Boolean,
       default: false,
     },
@@ -60,6 +60,7 @@
 
   // 页面跳转
   function turnToPage(menu) {
+    useUserStore().deleteKeepAliveIncludes(menu.menuId.toString());
     router.push({ path: menu.path });
   }
 
@@ -77,9 +78,13 @@
     //获取需要展开的menu key集合
     let menuParentIdListMap = useUserStore().getMenuParentIdListMap;
     let parentList = menuParentIdListMap.get(currentRoute.name) || [];
-    let needOpenKeys = _.map(parentList, 'name').map(Number);
-    // 使用lodash的union函数，进行 去重合并两个数组
-    openKeys.value = _.union(openKeys.value, needOpenKeys);
+
+    // 如果是折叠菜单的话，则不需要设置openkey
+    if(!props.collapsed){
+      // 使用lodash的union函数，进行 去重合并两个数组
+      let needOpenKeys = _.map(parentList, 'name').map(Number);
+      openKeys.value = _.union(openKeys.value, needOpenKeys);
+    }
   }
 
   watch(

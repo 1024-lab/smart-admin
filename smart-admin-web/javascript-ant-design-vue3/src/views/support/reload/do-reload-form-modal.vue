@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" title="执行Reload" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
+  <a-modal :open="visible" title="执行Reload" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }">
       <a-form-item label="标签">
         <a-input v-model:value="form.tag" :disabled="true" />
@@ -25,7 +25,7 @@
 <script setup>
   import { message } from 'ant-design-vue';
   import { reactive, ref } from 'vue';
-  import { reloadApi } from '/@/api/support/reload/reload-api';
+  import { reloadApi } from '/@/api/support/reload-api';
 import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
 

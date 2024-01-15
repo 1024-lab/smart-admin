@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.constant;
 
-import net.lab1024.sa.common.constant.SwaggerTagConst;
+import net.lab1024.sa.base.constant.SwaggerTagConst;
 
 /**
  * swagger
@@ -9,7 +9,7 @@ import net.lab1024.sa.common.constant.SwaggerTagConst;
  * @Date 2022-01-07 18:59:22
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 public class AdminSwaggerTagConst extends SwaggerTagConst {
 
@@ -48,7 +48,6 @@ public class AdminSwaggerTagConst extends SwaggerTagConst {
 
         public static final String SYSTEM_ROLE_MENU = "系统-角色-菜单";
 
-        public static final String SYSTEM_DATA_TRACER = "系统-";
     }
 
 

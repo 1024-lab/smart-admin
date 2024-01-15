@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" title="reload结果列表" width="60%" :footer="null" @cancel="onClose">
+  <a-modal :open="visible" title="reload结果列表" width="60%" :footer="null" @cancel="onClose">
     <a-button type="primary" @click="ajaxQuery" size="small">
       <template #icon>
         <ReloadOutlined />
@@ -31,7 +31,7 @@
 </template>
 <script setup>
   import { reactive, ref } from 'vue';
-  import { reloadApi } from '/@/api/support/reload/reload-api';
+  import { reloadApi } from '/@/api/support/reload-api';
 import { smartSentry } from '/@/lib/smart-sentry';
   defineExpose({
     showModal,

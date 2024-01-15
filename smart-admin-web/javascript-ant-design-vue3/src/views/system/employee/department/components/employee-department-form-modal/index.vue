@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal v-model:visible="visible" title="调整部门" :footer="null" destroyOnClose>
+  <a-modal v-model:open="visible" title="调整部门" :footer="null" destroyOnClose>
     <DepartmentTree ref="departmentTree" :height="400" :showMenu="false" />
     <div class="footer">
       <a-button style="margin-right: 8px" @click="closeModal">取消</a-button>
@@ -18,12 +18,12 @@
 </template>
 <script setup lang="ts">
   import { message } from 'ant-design-vue';
-import _ from 'lodash';
-import { ref } from 'vue';
-import DepartmentTree from '../department-tree/index.vue';
-import { employeeApi } from '/@/api/system/employee/employee-api';
-import { smartSentry } from '/@/lib/smart-sentry';
-import { SmartLoading } from '/@/components/framework/smart-loading';
+  import _ from 'lodash';
+  import { ref } from 'vue';
+  import DepartmentTree from '../department-tree/index.vue';
+  import { employeeApi } from '/@/api/system/employee-api';
+  import { smartSentry } from '/@/lib/smart-sentry';
+  import { SmartLoading } from '/@/components/framework/smart-loading';
 
   // ----------------------- 以下是字段定义 emits props ---------------------
 

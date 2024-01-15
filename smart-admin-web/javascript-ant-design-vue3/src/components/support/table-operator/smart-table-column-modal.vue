@@ -9,7 +9,7 @@
   *
 -->
 <template>
-  <a-modal :width="700" :visible="visible" title="设置列" :destroyOnClose="true" :closable="false">
+  <a-modal :width="700" :open="visible" title="设置列" :destroyOnClose="true" :closable="false">
     <a-alert type="info" show-icon class="smart-margin-bottom10">
       <template #icon><smile-outlined /></template>
       <template #message> 可以通过拖拽行直接修改顺序哦；（ <pushpin-outlined />为固定列，不可拖拽 ）</template>
@@ -54,8 +54,8 @@
 </template>
 <script setup>
   import { SmartLoading } from '/@/components/framework/smart-loading';
-  import { tableColumnApi } from '/@/api/support/table/table-column-api';
-  import { ref, reactive, nextTick, computed } from 'vue';
+  import { tableColumnApi } from '/src/api/support/table-column-api';
+  import { nextTick, ref } from 'vue';
   import _ from 'lodash';
   import Sortable from 'sortablejs';
   import { message, Modal } from 'ant-design-vue';
@@ -107,7 +107,6 @@
     for (const item of tableData.value) {
       if (item.showFlag) {
         selectedRowKeyList.value.push(item.columnKey);
-        continue;
       }
     }
 
@@ -148,7 +147,7 @@
       chosenClass: 'smart-ghost-class', //设置选中样式类名
       handle: '.handle',
       onEnd({ newIndex, oldIndex }) {
-        if (newIndex == oldIndex) {
+        if (newIndex === oldIndex) {
           return;
         }
         moveTableData(oldIndex, newIndex);
@@ -240,7 +239,7 @@
         if (item.width) {
           column.width = item.width;
         }
-        column.showFlag = selectedRowKeyList.value.indexOf(item.columnKey) > -1 ? true : false;
+        column.showFlag = selectedRowKeyList.value.indexOf(item.columnKey) > -1;
         columnList.push(column);
       }
 

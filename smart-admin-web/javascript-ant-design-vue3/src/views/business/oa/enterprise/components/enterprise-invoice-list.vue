@@ -21,7 +21,7 @@
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
-        <a-button type="primary" @click="ajaxQuery">
+        <a-button type="primary" @click="onSearch">
           <template #icon>
             <SearchOutlined />
           </template>
@@ -180,6 +180,11 @@
   function resetQuery() {
     searchDate.value = [];
     Object.assign(queryForm, queryFormState);
+    ajaxQuery();
+  }
+
+  function onSearch() {
+    queryForm.pageNum = 1;
     ajaxQuery();
   }
 

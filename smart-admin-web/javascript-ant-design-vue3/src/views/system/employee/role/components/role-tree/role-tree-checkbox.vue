@@ -9,7 +9,7 @@
   *
 -->
 <template>
-  <div style="height: 542px; overflow: auto">
+  <div style="overflow: auto">
     <a-checkbox-group v-model:value="checkedData">
       <div class="checked-box">
         <ul>
@@ -32,7 +32,7 @@
       default: [],
     },
   });
-  defineEmits('update:value');
+  defineEmits(['update:value']);
 
   let roleStore = useRoleStore();
   let checkedData = ref();

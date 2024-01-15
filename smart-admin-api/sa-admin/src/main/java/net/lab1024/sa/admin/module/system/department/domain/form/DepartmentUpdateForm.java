@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.system.department.domain.form;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -12,12 +12,12 @@ import javax.validation.constraints.NotNull;
  * @Date 2022-01-12 20:37:48
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class DepartmentUpdateForm extends DepartmentAddForm {
 
-    @ApiModelProperty("部门id")
+    @Schema(description = "部门id")
     @NotNull(message = "部门id不能为空")
     private Long departmentId;
 

@@ -14,11 +14,11 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import { routerArray } from './routers';
 import { PAGE_PATH_404, PAGE_PATH_LOGIN } from '/@/constants/common-const';
 import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
-import SmartLayout from '/@/layout/smart-layout.vue';
+import SmartLayout from '../layout/index.vue';
 import { useUserStore } from '/@/store/modules/system/user';
 import { clearAllCoolies, getTokenFromCookie } from '/@/utils/cookie-util';
 import { localClear } from '/@/utils/local-util';
-import lodash from 'lodash';
+import _ from 'lodash';
 
 export const router = createRouter({
   history: createWebHashHistory(),
@@ -48,14 +48,14 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 首页（ 需要登录 ，但不需要验证权限）
-  if (to.path == HOME_PAGE_NAME) {
+  if (to.path === HOME_PAGE_NAME) {
     next();
     return;
   }
 
   // 下载路由对应的 页面组件，并修改组件的Name，如果修改过，则不需要修改
   let toRouterInfo = routerMap.get(to.name);
-  if (toRouterInfo && lodash.isFunction(toRouterInfo.component) && toRouterInfo.meta.renameComponentFlag === false) {
+  if (toRouterInfo && _.isFunction(toRouterInfo.component) && toRouterInfo.meta.renameComponentFlag === false) {
     // 因为组件component 为 lazy load是个方法，所以可以直接执行 component()方法
     toRouterInfo.component().then((val) => {
       // 修改组件的name
@@ -65,22 +65,16 @@ router.beforeEach(async (to, from, next) => {
     });
   }
 
-  // 是否刷新缓存
-  // 当前路由是否在tag中 存在tag中且没有传递keepAlive则刷新缓存
-  let findTag = (useUserStore().tagNav || []).find((e) => e.menuName == to.name);
-  let reloadKeepAlive = findTag && !to.params.keepAlive;
-
   // 设置tagNav
   useUserStore().setTagNav(to, from);
-  // 设置keepAlive 或 删除KeepAlive
+
+  // 设置keepAlive
   if (to.meta.keepAlive) {
-    if (reloadKeepAlive) {
-      useUserStore().deleteKeepAliveIncludes(to.meta.componentName);
-    }
     nextTick(() => {
       useUserStore().pushKeepAliveIncludes(to.meta.componentName);
     });
   }
+
   next();
 });
 
@@ -114,23 +108,15 @@ export function buildRoutes(menuRouterList) {
     if (e.deletedFlag && e.deletedFlag === true) {
       continue;
     }
-    let componentName = e.menuId.toString();
-    if (e.component) {
-      let lastIndex = e.component.lastIndexOf('/');
-      let fileName = lodash.camelCase(e.component.substring(lastIndex + 1, e.component.length));
-      componentName = lodash.camelCase(fileName) + componentName;
-      componentName = lodash.upperFirst(componentName);
-    }
-
     let route = {
       path: e.path.startsWith('/') ? e.path : `/${e.path}`,
-      // 使用【组件文件名+menuId】作为name唯一标识
+      // 使用【menuId】作为name唯一标识
       name: e.menuId.toString(),
       meta: {
         // 数据库菜单(页面)id
         id: e.menuId.toString(),
         // 组件名称
-        componentName: componentName,
+        componentName: e.menuId.toString(),
         // 菜单展示
         title: e.menuName,
         // 菜单图标展示
@@ -150,7 +136,6 @@ export function buildRoutes(menuRouterList) {
 
     if (e.frameFlag) {
       route.component = () => import('../components/framework/iframe/iframe-index.vue');
-      
     } else {
       let componentPath = e.component && e.component.startsWith('/') ? e.component : '/' + e.component;
       let relativePath = `../views${componentPath}`;

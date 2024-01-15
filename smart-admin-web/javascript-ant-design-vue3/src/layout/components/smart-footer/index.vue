@@ -8,10 +8,8 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <div class="version" >
-    <a target="_blank" href="https://www.1024lab.net">
-      SmartAdmin V2.x @copyright 河南·洛阳【1024创新实验室】 Since 2012-{{ currentYear }}
-    </a>
+  <div class="version">
+    <a target="_blank" href="javascript:void(0)"> SmartAdmin V3.x @copyright 河南·洛阳【1024创新实验室】 Since 2012-{{ currentYear }} </a>
   </div>
 </template>
 <script setup>

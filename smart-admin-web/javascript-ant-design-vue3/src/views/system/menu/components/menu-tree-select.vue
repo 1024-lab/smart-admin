@@ -23,9 +23,8 @@
   />
 </template>
 <script setup>
-  import { onMounted, ref, watch } from 'vue';
-  import { menuApi } from '/@/api/system/menu/menu-api';
-  import _ from 'lodash';
+  import { onMounted, ref } from 'vue';
+  import { menuApi } from '/@/api/system/menu-api';
 
   const props = defineProps({
     value: Number,

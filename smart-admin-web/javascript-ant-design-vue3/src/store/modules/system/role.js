@@ -24,15 +24,15 @@ export const useRoleStore = defineStore({
     },
     // 选中
     addCheckedData(data) {
-      if (this.checkedData.some((e) => e == data)) {
+      if (this.checkedData.some((e) => e === data)) {
         return;
       }
       this.checkedData.push(data);
     },
     // 选中本级以及子级
     addCheckedDataAndChildren(data) {
-      let findIndex = this.checkedData.findIndex((val) => val == data.menuId);
-      if (data.menuId && findIndex == -1) {
+      let findIndex = this.checkedData.findIndex((val) => val === data.menuId);
+      if (data.menuId && findIndex === -1) {
         this.addCheckedData(data.menuId);
       }
       if (data.children) {
@@ -47,8 +47,8 @@ export const useRoleStore = defineStore({
     },
     // 取消选中本级以及子级
     deleteCheckedDataAndChildren(data) {
-      let findIndex = this.checkedData.findIndex((val) => val == data.menuId);
-      if (findIndex != -1) {
+      let findIndex = this.checkedData.findIndex((val) => val === data.menuId);
+      if (findIndex !== -1) {
         this.deleteCheckedData(findIndex);
       }
       if (data.children) {
@@ -83,7 +83,7 @@ export const useRoleStore = defineStore({
       }
       // 选中父级
       let parentIndex = this.checkedData.findIndex((e) => parentModule.menuId === e);
-      if (parentModule.menuId && parentIndex == -1) {
+      if (parentModule.menuId && parentIndex === -1) {
         this.addCheckedData(parentModule.menuId);
       }
       // 如果上级还有上级 则进行递归

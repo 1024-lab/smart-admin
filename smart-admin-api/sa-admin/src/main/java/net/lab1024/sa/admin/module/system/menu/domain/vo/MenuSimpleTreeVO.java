@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.system.menu.domain.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -12,26 +12,26 @@ import java.util.List;
  * @Date 2022-03-06 22:04:37
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class MenuSimpleTreeVO {
 
-    @ApiModelProperty("菜单ID")
+    @Schema(description = "菜单ID")
     private Long menuId;
 
-    @ApiModelProperty("菜单名称")
+    @Schema(description = "菜单名称")
     private String menuName;
 
-    @ApiModelProperty("功能点关联菜单ID")
+    @Schema(description = "功能点关联菜单ID")
     private Long contextMenuId;
 
-    @ApiModelProperty("父级菜单ID")
+    @Schema(description = "父级菜单ID")
     private Long parentId;
 
-    @ApiModelProperty("菜单类型")
+    @Schema(description = "菜单类型")
     private Integer menuType;
 
-    @ApiModelProperty("子菜单")
+    @Schema(description = "子菜单")
     private List<MenuSimpleTreeVO> children;
 }

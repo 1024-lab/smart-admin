@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @Date 2022/7/28 20:37:15
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class EnterpriseEmployeeManager extends ServiceImpl<EnterpriseEmployeeDao, EnterpriseEmployeeEntity> {

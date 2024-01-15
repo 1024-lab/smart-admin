@@ -9,40 +9,64 @@
 -->
 <template>
   <div class="menu-container">
-    <!-- logo 第一列：一级导航 -->
-    <TopMenu ref="topMenu" class="topMenu" :menuTree="menuTree" />
-    <!-- 第二列：导航 -->
-    <RecursionMenu v-if="showRecursionMenu" class="recursion-menu" :selectedMenu="selectedMenu" />
+    <!-- 第一列：一级导航 -->
+    <TopMenu ref="topMenuRef" class="top-menu" />
+    <!-- 第二列：二级导航 -->
+    <RecursionMenu ref="recursionMenuRef" class="recursion-menu" />
   </div>
 </template>
 <script setup>
-  import { computed, ref } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
+  import { useRoute } from 'vue-router';
   import RecursionMenu from './recursion-menu.vue';
   import TopMenu from './top-menu.vue';
   import { useUserStore } from '/@/store/modules/system/user';
 
-  defineEmits(['update:value']);
-  const menuTree = computed(() => useUserStore().getMenuTree || []);
-
-  const topMenu = ref();
-  const selectedMenu = computed(() => {
-    if (topMenu.value) {
-      return topMenu.value.selectedMenu;
-    }
-    return {};
+  const props = defineProps({
+    placeholder: {
+      type: String,
+      default: '请选择',
+    },
   });
-  const showRecursionMenu = computed(() => {
-    return selectedMenu.value && selectedMenu.value.children && selectedMenu.value.children.some((e) => e.visibleFlag);
+
+  // 选中的顶级菜单
+  const topMenuRef = ref();
+  // 二级菜单引用
+  const recursionMenuRef = ref();
+
+  let currentRoute = useRoute();
+
+  // 根据路由更新菜单展开和选中状态
+  function updateSelectKeyAndOpenKey() {
+    // 第一步，根据路由 更新选中 顶级菜单
+    let parentList = useUserStore().menuParentIdListMap.get(currentRoute.name) || [];
+    if (parentList.length === 0) {
+      topMenuRef.value.updateSelectKey(currentRoute.name);
+      return;
+    }
+    topMenuRef.value.updateSelectKey(parentList[0].name);
+
+    //第二步，根据路由 更新 二级菜单的selectKey和openKey
+    recursionMenuRef.value.updateSelectKeyAndOpenKey(parentList, currentRoute.name);
+  }
+
+  onMounted(updateSelectKeyAndOpenKey);
+
+  //监听路由的变化，进行更新菜单展开项目
+  watch(currentRoute, () => {
+    updateSelectKeyAndOpenKey();
   });
 </script>
 <style scoped lang="less">
   .menu-container {
     display: flex;
     height: 100%;
-    .topMenu {
+
+    .top-menu {
       width: 114px;
       flex-shrink: 0;
     }
+
     .recursion-menu {
       min-width: 126px;
       flex: 1;

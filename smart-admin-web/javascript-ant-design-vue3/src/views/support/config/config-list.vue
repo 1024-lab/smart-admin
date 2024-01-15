@@ -16,13 +16,13 @@
         </a-form-item>
 
         <a-form-item class="smart-query-form-item smart-margin-left10">
-          <a-button type="primary" @click="ajaxQuery" v-privilege="'support:config:query'">
+          <a-button type="primary" @click="onSearch" v-privilege="'support:config:query'">
             <template #icon>
               <ReloadOutlined />
             </template>
             查询
           </a-button>
-          <a-button @click="resetQuery" v-privilege="'support:config:query'">
+          <a-button @click="resetQuery" v-privilege="'support:config:query'" class="smart-margin-left10">
             <template #icon>
               <SearchOutlined />
             </template>
@@ -40,8 +40,8 @@
     </a-form>
 
     <a-card size="small" :bordered="false" :hoverable="true">
-      <a-row justify="end" >
-          <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.CONFIG" :refresh="ajaxQuery" />
+      <a-row justify="end">
+        <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.CONFIG" :refresh="ajaxQuery" />
       </a-row>
 
       <a-table size="small" :loading="tableLoading" bordered :dataSource="tableData" :columns="columns" rowKey="configId" :pagination="false">
@@ -75,7 +75,7 @@
 </template>
 <script setup>
   import { onMounted, reactive, ref } from 'vue';
-  import { configApi } from '/@/api/support/config/config-api';
+  import { configApi } from '/@/api/support/config-api';
   import ConfigFormModal from './config-form-modal.vue';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
@@ -145,6 +145,12 @@
     Object.assign(queryForm, queryFormState);
     ajaxQuery();
   }
+
+  function onSearch() {
+    queryForm.pageNum = 1;
+    ajaxQuery();
+  }
+
   async function ajaxQuery() {
     try {
       tableLoading.value = true;

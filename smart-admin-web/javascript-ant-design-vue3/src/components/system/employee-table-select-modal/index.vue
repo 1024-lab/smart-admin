@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal v-model:visible="visible" :width="900" title="选择人员" @cancel="closeModal" @ok="onSelectEmployee">
+  <a-modal v-model:open="visible" :width="900" title="选择人员" @cancel="closeModal" @ok="onSelectEmployee">
     <a-form class="smart-query-form">
       <a-row class="smart-query-form-row">
         <a-form-item label="关键字" class="smart-query-form-item">
@@ -24,7 +24,7 @@
           </a-select>
         </a-form-item>
         <a-form-item class="smart-query-form-item smart-margin-left10">
-          <a-button type="primary" @click="queryEmployee">
+          <a-button type="primary" @click="onSearch">
             <template #icon>
               <SearchOutlined />
             </template>
@@ -80,13 +80,13 @@
 <script setup>
   import { message } from 'ant-design-vue';
   import { computed, reactive, ref } from 'vue';
-  import { employeeApi } from '/@/api/system/employee/employee-api';
+  import { employeeApi } from '/src/api/system/employee-api';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
   import { smartSentry } from '/@/lib/smart-sentry';
 
   // ----------------------- 以下是字段定义 emits props ---------------------
-  const emits = defineEmits('selectData');
+  const emits = defineEmits(['selectData']);
   defineExpose({
     showModal,
   });
@@ -97,7 +97,7 @@
   async function showModal(selectEmployeeId) {
     selectedRowKeyList.value = selectEmployeeId || [];
     visible.value = true;
-    queryEmployee();
+    onSearch();
   }
   function closeModal() {
     Object.assign(params, defaultParams);
@@ -124,6 +124,12 @@
     Object.assign(params, defaultParams);
     queryEmployee();
   }
+
+  function onSearch() {
+    params.pageNum = 1;
+    queryEmployee();
+  }
+
   async function queryEmployee() {
     tableLoading.value = true;
     try {

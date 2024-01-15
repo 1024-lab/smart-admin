@@ -3,13 +3,13 @@ package net.lab1024.sa.admin.module.business.oa.notice.manager;
 import net.lab1024.sa.admin.module.business.oa.notice.dao.NoticeDao;
 import net.lab1024.sa.admin.module.business.oa.notice.domain.entity.NoticeEntity;
 import net.lab1024.sa.admin.module.business.oa.notice.domain.form.NoticeVisibleRangeForm;
-import net.lab1024.sa.common.module.support.datatracer.constant.DataTracerTypeEnum;
-import net.lab1024.sa.common.module.support.datatracer.service.DataTracerService;
+import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerTypeEnum;
+import net.lab1024.sa.base.module.support.datatracer.service.DataTracerService;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,22 +19,19 @@ import java.util.List;
  * @Date 2022-08-12 21:40:39
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class NoticeManager {
 
-    @Autowired
+    @Resource
     private NoticeDao noticeDao;
 
-    @Autowired
+    @Resource
     private DataTracerService dataTracerService;
 
     /**
      * 保存
-     *
-     * @param noticeEntity
-     * @param visibleRangeFormList
      */
     @Transactional(rollbackFor = Throwable.class)
     public void save(NoticeEntity noticeEntity, List<NoticeVisibleRangeForm> visibleRangeFormList) {
@@ -50,8 +47,6 @@ public class NoticeManager {
     /**
      * 更新
      *
-     * @param noticeEntity
-     * @param visibleRangeList
      */
     @Transactional(rollbackFor = Throwable.class)
     public void update(NoticeEntity old, NoticeEntity noticeEntity, List<NoticeVisibleRangeForm> visibleRangeList) {

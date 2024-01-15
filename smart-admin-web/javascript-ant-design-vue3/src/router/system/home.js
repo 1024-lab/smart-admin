@@ -9,7 +9,7 @@
  */
 import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 import { MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
-import SmartLayout from '/@/layout/smart-layout.vue';
+import SmartLayout from '/@/layout/index.vue';
 
 export const homeRouters = [
   {

@@ -12,14 +12,14 @@ import net.lab1024.sa.admin.module.system.role.domain.entity.RoleMenuEntity;
 import net.lab1024.sa.admin.module.system.role.domain.form.RoleMenuUpdateForm;
 import net.lab1024.sa.admin.module.system.role.domain.vo.RoleMenuTreeVO;
 import net.lab1024.sa.admin.module.system.role.manager.RoleMenuManager;
-import net.lab1024.sa.common.common.code.UserErrorCode;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.code.UserErrorCode;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,25 +32,23 @@ import java.util.stream.Collectors;
  * @Date 2021-10-22 23:17:47
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class RoleMenuService {
 
-    @Autowired
+    @Resource
     private RoleDao roleDao;
-    @Autowired
+    @Resource
     private RoleMenuDao roleMenuDao;
-    @Autowired
+    @Resource
     private RoleMenuManager roleMenuManager;
-    @Autowired
+    @Resource
     private MenuDao menuDao;
 
     /**
      * 更新角色权限
      *
-     * @param roleMenuUpdateForm
-     * @return
      */
     public ResponseDTO<String> updateRoleMenu(RoleMenuUpdateForm roleMenuUpdateForm) {
         //查询角色是否存在
@@ -74,8 +72,6 @@ public class RoleMenuService {
     /**
      * 根据角色id集合，查询其所有的菜单权限
      *
-     * @param roleIdList
-     * @return
      */
     public List<MenuVO> getMenuList(List<Long> roleIdList, Boolean administratorFlag) {
         //管理员返回所有菜单
@@ -95,8 +91,6 @@ public class RoleMenuService {
     /**
      * 获取角色关联菜单权限
      *
-     * @param roleId
-     * @return
      */
     public ResponseDTO<RoleMenuTreeVO> getRoleSelectedMenu(Long roleId) {
         RoleMenuTreeVO res = new RoleMenuTreeVO();
@@ -115,7 +109,6 @@ public class RoleMenuService {
     /**
      * 构建菜单树
      *
-     * @return
      */
     private List<MenuSimpleTreeVO> buildMenuTree(Map<Long, List<MenuVO>> parentMap, Long parentId) {
         // 获取本级菜单树List

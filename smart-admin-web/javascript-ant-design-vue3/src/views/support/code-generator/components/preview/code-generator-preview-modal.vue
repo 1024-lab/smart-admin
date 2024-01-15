@@ -10,7 +10,7 @@
 <template>
   <a-drawer
     title="代码预览"
-    :visible="visibleFlag"
+    :open="visibleFlag"
     :width="1200"
     :footerStyle="{ textAlign: 'right' }"
     :bodyStyle="{ padding: '8px 24px' }"
@@ -38,7 +38,7 @@
 
 <script setup>
   import { computed, nextTick, ref, watch } from 'vue';
-  import { codeGeneratorApi } from '/@/api/support/code-generator/code-generator-api';
+  import { codeGeneratorApi } from '/@/api/support/code-generator-api';
   import { JAVA_FILE_LIST, LANGUAGE_LIST, JS_FILE_LIST,TS_FILE_LIST, JAVA_DOMAIN_FILE_LIST } from '../../code-generator-util';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { lineNumbersBlock } from '/@/lib/highlight-line-number';

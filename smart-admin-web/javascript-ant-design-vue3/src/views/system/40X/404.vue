@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-result status="404 title="对不起，您访问的内容不存在！">
+  <a-result status="404" title="对不起，您访问的内容不存在！">
     <template #extra>
       <a-button type="primary" @click="goHome">返回首页</a-button>
     </template>
@@ -18,7 +18,8 @@
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 
+  const router = useRouter();
   function goHome() {
-    useRouter().push({ name: HOME_PAGE_NAME });
+    router.push({ name: HOME_PAGE_NAME });
   }
 </script>

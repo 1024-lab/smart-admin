@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-breadcrumb separator=">" style="display: inline" v-if="breadCrumbFlag">
+  <a-breadcrumb separator=">" v-if="breadCrumbFlag" class="breadcrumb">
     <a-breadcrumb-item v-for="(item, index) in parentMenuList" :key="index">{{ item.title }}</a-breadcrumb-item>
     <a-breadcrumb-item>{{ currentRoute.meta.title }}</a-breadcrumb-item>
   </a-breadcrumb>
@@ -33,3 +33,8 @@
     return menuParentIdListMap.get(currentName) || [];
   });
 </script>
+<style scoped lang="less">
+.breadcrumb{
+  line-height: @page-tag-height;
+}
+</style>

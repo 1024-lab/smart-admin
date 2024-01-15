@@ -16,7 +16,7 @@ import java.util.List;
  * @Date 2022-03-06 22:04:37
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Mapper
 @Component
@@ -28,7 +28,6 @@ public interface MenuDao extends BaseMapper<MenuEntity> {
      * @param menuName    菜单名
      * @param parentId    父级id
      * @param deletedFlag 是否删除
-     * @return
      */
     MenuEntity getByMenuName(@Param("menuName") String menuName, @Param("parentId") Long parentId, @Param("deletedFlag") Boolean deletedFlag);
 
@@ -37,7 +36,6 @@ public interface MenuDao extends BaseMapper<MenuEntity> {
      *
      * @param webPerms    前端权限字符串
      * @param deletedFlag 是否删除
-     * @return
      */
     MenuEntity getByWebPerms(@Param("webPerms") String webPerms, @Param("deletedFlag") Boolean deletedFlag);
 
@@ -56,7 +54,6 @@ public interface MenuDao extends BaseMapper<MenuEntity> {
      * @param deletedFlag  是否删除
      * @param disabledFlag 是否禁用
      * @param menuTypeList 菜单类型集合
-     * @return
      */
     List<MenuVO> queryMenuList(@Param("deletedFlag") Boolean deletedFlag, @Param("disabledFlag") Boolean disabledFlag, @Param("menuTypeList") List<Integer> menuTypeList);
 
@@ -67,7 +64,6 @@ public interface MenuDao extends BaseMapper<MenuEntity> {
      * @param menuId      菜单id
      * @param menuType    菜单类型
      * @param deletedFlag 删除标记
-     * @return
      */
     List<MenuEntity> getPointListByMenuId(@Param("menuId") Long menuId, @Param("menuType") Integer menuType, @Param("deletedFlag") Boolean deletedFlag);
 
@@ -77,7 +73,6 @@ public interface MenuDao extends BaseMapper<MenuEntity> {
      * @param deletedFlag  是否删除
      * @param disabledFlag 禁用标识
      * @param employeeId   员工id
-     * @return
      */
     List<MenuVO> queryMenuByEmployeeId(@Param("deletedFlag") Boolean deletedFlag,
                                        @Param("disabledFlag") Boolean disabledFlag,
@@ -89,7 +84,6 @@ public interface MenuDao extends BaseMapper<MenuEntity> {
      * @param menuType     菜单类型
      * @param deletedFlag  删除
      * @param disabledFlag 禁用
-     * @return
      */
     List<MenuEntity> queryMenuByType(@Param("menuType") Integer menuType,
                                      @Param("deletedFlag") Boolean deletedFlag,
@@ -98,8 +92,6 @@ public interface MenuDao extends BaseMapper<MenuEntity> {
     /**
      * 查询孩子id
      *
-     * @param menuIdList
-     * @return
      */
     List<Long> selectMenuIdByParentIdList(@Param("menuIdList") List<Long> menuIdList);
 }

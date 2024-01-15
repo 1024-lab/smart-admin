@@ -6,7 +6,7 @@
   * @Copyright  1024创新实验室
 -->
 <template>
-  <a-modal title="更新日志" width="700px" :visible="visibleFlag" @close="onClose" >
+  <a-modal title="更新日志" width="700px" :open="visibleFlag" @close="onClose" >
 
     <div>
       <pre>{{ content }}</pre>

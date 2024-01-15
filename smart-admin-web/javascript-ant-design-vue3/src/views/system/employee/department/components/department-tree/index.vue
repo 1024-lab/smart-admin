@@ -69,9 +69,9 @@
   import _ from 'lodash';
   import { createVNode, onMounted } from 'vue';
   import DepartmentFormModal from '../department-form-modal/index.vue';
-  import { departmentApi } from '/@/api/system/department/department-api';
+  import { departmentApi } from '/@/api/system/department-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-  import departmentEmitter from '/@/views/system/employee/department/department-mitt';
+  import departmentEmitter from '../../department-mitt';
   import { smartSentry } from '/@/lib/smart-sentry';
 
   const DEPARTMENT_PARENT_ID = 0;
@@ -330,7 +330,6 @@
 
     .sort-span {
       margin-left: 5px;
-      color: @success-color;
     }
     .no-data {
       margin: 10px;

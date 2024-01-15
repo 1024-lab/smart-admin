@@ -15,13 +15,13 @@
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
-        <a-button type="primary" @click="ajaxQuery">
+        <a-button type="primary" @click="onSearch">
           <template #icon>
             <ReloadOutlined />
           </template>
           查询
         </a-button>
-        <a-button @click="resetQuery">
+        <a-button @click="resetQuery" class="smart-margin-left10">
           <template #icon>
             <SearchOutlined />
           </template>
@@ -41,7 +41,14 @@
           新建
         </a-button>
 
-        <a-button @click="confirmBatchDelete" v-privilege="'support:dict:batch:delete'" type="danger" size="small" :disabled="selectedRowKeyList.length == 0">
+        <a-button
+          @click="confirmBatchDelete"
+          v-privilege="'support:dict:batchDelete'"
+          type="text"
+          danger
+          size="small"
+          :disabled="selectedRowKeyList.length === 0"
+        >
           <template #icon>
             <DeleteOutlined />
           </template>
@@ -76,7 +83,7 @@
         </template>
         <template v-else-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="addOrUpdateKey(record)" v-privilege="'support:dict:update'" type="link">编辑</a-button>
+            <a-button @click="addOrUpdateKey(record)" v-privilege="'support:dict:edit'" type="link">编辑</a-button>
           </div>
         </template>
       </template>
@@ -109,7 +116,7 @@
   import { reactive, ref, onMounted } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-  import { dictApi } from '/@/api/support/dict/dict-api';
+  import { dictApi } from '/@/api/support/dict-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
@@ -169,7 +176,7 @@
     Object.assign(queryForm, queryFormState);
     ajaxQuery();
   }
-  function onSearch(){
+  function onSearch() {
     queryForm.pageNum = 1;
     ajaxQuery();
   }

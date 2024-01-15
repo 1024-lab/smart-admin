@@ -36,11 +36,6 @@ export const columns = ref([
     ellipsis: true,
   },
   {
-    title: '权限模式',
-    dataIndex: 'permsType',
-    width: 100,
-  },
-  {
     title: '后端权限',
     dataIndex: 'apiPerms',
     ellipsis: true,
@@ -49,26 +44,6 @@ export const columns = ref([
     title: '前端权限',
     dataIndex: 'webPerms',
     ellipsis: true,
-  },
-  {
-    title: '外链',
-    dataIndex: 'frameFlag',
-    width: 45,
-  },
-  {
-    title: '缓存',
-    dataIndex: 'cacheFlag',
-    width: 45,
-  },
-  {
-    title: '显示',
-    dataIndex: 'visibleFlag',
-    width: 45,
-  },
-  {
-    title: '禁用',
-    dataIndex: 'disabledFlag',
-    width: 45,
   },
   {
     title: '顺序',

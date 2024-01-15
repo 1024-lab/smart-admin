@@ -8,7 +8,12 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-alert :closable="true" message="默认数据库表名前缀为：t_， 如果想修改默认前缀，请修改前端 code-generator-table-config-form-basic.vue 文件的 tablePrefix 变量" type="success" show-icon>
+  <a-alert
+    :closable="true"
+    message="默认数据库表名前缀为：t_， 如果想修改默认前缀，请修改前端 code-generator-table-config-form-basic.vue 文件的 tablePrefix 变量"
+    type="success"
+    show-icon
+  >
     <template #icon><smile-outlined /></template>
   </a-alert>
   <a-row type="flex" class="smart-margin-top10">
@@ -133,7 +138,7 @@
 <script setup>
   import { message } from 'ant-design-vue';
   import dayjs from 'dayjs';
-  import lodash from 'lodash';
+  import _ from 'lodash';
   import { computed, inject, reactive, ref } from 'vue';
   import { convertLowerHyphen, convertUpperCamel } from '/@/utils/str-util';
 
@@ -176,8 +181,8 @@
 
     //命名
     let removePrefixTableName = tableInfo.tableName;
-    if (lodash.startsWith(tableInfo.tableName, tablePrefix.value)) {
-      removePrefixTableName = lodash.trim(removePrefixTableName, tablePrefix.value);
+    if (_.startsWith(tableInfo.tableName, tablePrefix.value)) {
+      removePrefixTableName = _.trim(removePrefixTableName, tablePrefix.value);
     }
     formData.moduleName = basic && basic.moduleName ? basic.moduleName : removePrefixTableName;
     formData.moduleName = convertUpperCamel(formData.moduleName);
@@ -197,10 +202,10 @@
     formData.copyright = basic && basic.copyright ? basic.copyright : null;
   }
 
-  function onChangeTablePrefix(e){
+  function onChangeTablePrefix(e) {
     let removePrefixTableName = tableInfo.tableName;
-    if (lodash.startsWith(tableInfo.tableName, tablePrefix.value)) {
-      removePrefixTableName = lodash.trim(removePrefixTableName, tablePrefix.value);
+    if (_.startsWith(tableInfo.tableName, tablePrefix.value)) {
+      removePrefixTableName = _.trim(removePrefixTableName, tablePrefix.value);
     }
     formData.moduleName = convertUpperCamel(removePrefixTableName);
   }

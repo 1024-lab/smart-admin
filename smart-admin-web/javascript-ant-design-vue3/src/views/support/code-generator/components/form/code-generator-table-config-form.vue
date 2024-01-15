@@ -11,7 +11,7 @@
   <a-drawer
     title="代码配置"
     style=""
-    :visible="visibleFlag"
+    :open="visibleFlag"
     :width="1000"
     :footerStyle="{ textAlign: 'right' }"
     @close="onClose"
@@ -89,7 +89,7 @@
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { smartSentry } from '/@/lib/smart-sentry';
   import CodeGeneratorTableConfigFormBasic from './code-generator-table-config-form-basic.vue';
-  import { codeGeneratorApi } from '/@/api/support/code-generator/code-generator-api';
+  import { codeGeneratorApi } from '/@/api/support/code-generator-api';
   import CodeGeneratorTableConfigFormField from './code-generator-table-config-form-field.vue';
   import CodeGeneratorTableConfigFormInsertAndUpdate from './code-generator-table-config-form-insert-and-update.vue';
   import CodeGeneratorTableConfigFormDelete from './code-generator-table-config-form-delete.vue';

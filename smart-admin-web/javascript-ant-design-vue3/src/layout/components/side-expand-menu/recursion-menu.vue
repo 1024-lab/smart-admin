@@ -8,14 +8,14 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <div class="resursion-container">
+  <div class="recursion-container" v-show="topMenu.children && topMenu.children.length > 0">
     <!-- 顶部顶级菜单名称 -->
     <div class="top-menu">
-      <span class="ant-menu">{{ props.selectedMenu.menuName }}</span>
+      <span class="ant-menu">{{ topMenu.menuName }}</span>
     </div>
     <!-- 次级菜单展示 -->
     <a-menu :selectedKeys="selectedKeys" :openKeys="openKeys" mode="inline">
-      <template v-for="item in props.selectedMenu.children" :key="item.menuId">
+      <template v-for="item in topMenu.children" :key="item.menuId">
         <template v-if="item.visibleFlag">
           <template v-if="$lodash.isEmpty(item.children)">
             <a-menu-item :key="item.menuId.toString()" @click="turnToPage(item)">
@@ -34,59 +34,60 @@
   </div>
 </template>
 <script setup>
-  import { computed } from 'vue';
-  import { useRoute } from 'vue-router';
-  import { router } from '/@/router';
-  import SubMenu from './sub-menu.vue';
+  import { ref } from 'vue';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
-  import { useUserStore } from '/@/store/modules/system/user';
+  import SubMenu from './sub-menu.vue';
+  import { router } from '/@/router';
   import _ from 'lodash';
+  import menuEmitter from './side-expand-menu-mitt';
+  import { useUserStore } from '/@/store/modules/system/user';
 
-  let props = defineProps({
-    selectedMenu: Object,
-  });
+  // 选中的顶级菜单
+  let topMenu = ref({});
+  menuEmitter.on('selectTopMenu', onSelectTopMenu);
 
-  defineEmits('update:value');
+  // 监听选中顶级菜单事件
+  function onSelectTopMenu(selectedTopMenu) {
+    topMenu.value = selectedTopMenu;
+    if (selectedTopMenu.children && selectedTopMenu.children.length > 0) {
+      openKeys.value = _.map(selectedTopMenu.children, 'menuId').map((e) => e.toString());
+    } else {
+      openKeys.value = [];
+    }
+    selectedKeys.value = [];
+  }
 
   //展开的菜单
-  let currentRoute = useRoute();
-  const selectedKeys = computed(() => {
-    return [currentRoute.name];
-  });
+  const selectedKeys = ref([]);
+  const openKeys = ref([]);
 
-  const parentMenuList = computed(() => {
-    let currentName = currentRoute.name;
-    if (!currentName || typeof currentName !== 'string') {
-      return [];
+  function updateSelectKeyAndOpenKey(parentList, currentSelectKey) {
+    if (!parentList) {
+      return;
     }
-    let menuParentIdListMap = useUserStore().getMenuParentIdListMap;
-    return menuParentIdListMap.get(currentName) || [];
-  });
+    //获取需要展开的menu key集合
+    openKeys.value = _.map(parentList, 'name');
+    selectedKeys.value = [currentSelectKey];
+  }
 
-  const openKeys = computed(() => {
-    // // 仅展开当前页面
-    // return parentMenuList.value.map((e) => e.name);
-    // 展开所有
-    let children = props.selectedMenu.children;
-    if (!children || _.isEmpty(children)) {
-      return [];
-    }
-    return children.map((e) => e.menuId.toString());
-  });
   // 页面跳转
   function turnToPage(route) {
+    useUserStore().deleteKeepAliveIncludes(route.menuId.toString());
     router.push({ name: route.menuId.toString() });
   }
 
   function goHome() {
     router.push({ name: HOME_PAGE_NAME });
   }
+
+  defineExpose({ updateSelectKeyAndOpenKey });
 </script>
 <style scoped lang="less">
-  .resursion-container {
+  .recursion-container {
     height: 100%;
     background: #ffffff;
   }
+
   .top-menu {
     overflow: hidden;
     display: flex;

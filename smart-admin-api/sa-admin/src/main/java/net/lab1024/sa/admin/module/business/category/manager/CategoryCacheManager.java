@@ -6,14 +6,14 @@ import net.lab1024.sa.admin.constant.AdminCacheConst;
 import net.lab1024.sa.admin.module.business.category.dao.CategoryDao;
 import net.lab1024.sa.admin.module.business.category.domain.entity.CategoryEntity;
 import net.lab1024.sa.admin.module.business.category.domain.vo.CategoryTreeVO;
-import net.lab1024.sa.common.common.constant.StringConst;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.constant.StringConst;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,21 +25,21 @@ import java.util.stream.Collectors;
  * @Date 2021/08/05 21:26:58
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 @Slf4j
 public class CategoryCacheManager {
 
 
-    @Autowired
+    @Resource
     private CategoryDao categoryDao;
 
 
     /**
      * 根据类目id 移除缓存
      */
-    @CacheEvict(value = {AdminCacheConst.CATEGORY.CATEGORY_ENTITY, AdminCacheConst.CATEGORY.CATEGORY_SUB, AdminCacheConst.CATEGORY.CATEGORY_TREE}, allEntries = true)
+    @CacheEvict(value = {AdminCacheConst.Category.CATEGORY_ENTITY, AdminCacheConst.Category.CATEGORY_SUB, AdminCacheConst.Category.CATEGORY_TREE}, allEntries = true)
     public void removeCache() {
         log.info("clear CATEGORY ,CATEGORY_SUB ,CATEGORY_TREE");
     }
@@ -47,10 +47,8 @@ public class CategoryCacheManager {
     /**
      * 查詢类目
      *
-     * @param categoryId
-     * @return
      */
-    @Cacheable(AdminCacheConst.CATEGORY.CATEGORY_ENTITY)
+    @Cacheable(AdminCacheConst.Category.CATEGORY_ENTITY)
     public CategoryEntity queryCategory(Long categoryId) {
         return categoryDao.selectById(categoryId);
     }
@@ -58,10 +56,8 @@ public class CategoryCacheManager {
     /**
      * 查询类目 子级
      *
-     * @param categoryId
-     * @return
      */
-    @Cacheable(AdminCacheConst.CATEGORY.CATEGORY_SUB)
+    @Cacheable(AdminCacheConst.Category.CATEGORY_SUB)
     public List<CategoryEntity> querySubCategory(Long categoryId) {
         return categoryDao.queryByParentId(Lists.newArrayList(categoryId), false);
     }
@@ -70,10 +66,8 @@ public class CategoryCacheManager {
     /**
      * 查询类目 层级树
      * 优先查询缓存
-     *
-     * @return
      */
-    @Cacheable(AdminCacheConst.CATEGORY.CATEGORY_TREE)
+    @Cacheable(AdminCacheConst.Category.CATEGORY_TREE)
     public List<CategoryTreeVO> queryCategoryTree(Long parentId, Integer categoryType) {
         List<CategoryEntity> allCategoryEntityList = categoryDao.queryByType(categoryType, false);
 
@@ -93,7 +87,6 @@ public class CategoryCacheManager {
      * 递归查询设置类目子类
      * 从缓存查询子类
      *
-     * @param treeList
      */
     private void queryAndSetSubCategory(List<CategoryTreeVO> treeList, List<CategoryEntity> allCategoryEntityList) {
         if (CollectionUtils.isEmpty(treeList)) {

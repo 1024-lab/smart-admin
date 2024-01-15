@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.constant;
 
-import net.lab1024.sa.common.constant.CacheKeyConst;
+import net.lab1024.sa.base.constant.CacheKeyConst;
 
 /**
  * 缓存 key
@@ -9,7 +9,7 @@ import net.lab1024.sa.common.constant.CacheKeyConst;
  * @Date 2022-01-07 18:59:22
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 public class AdminCacheConst extends CacheKeyConst {
 
@@ -45,7 +45,7 @@ public class AdminCacheConst extends CacheKeyConst {
     /**
      * 分类相关缓存
      */
-    public static class CATEGORY {
+    public static class Category {
 
         public static final String CATEGORY_ENTITY = "category_cache";
 

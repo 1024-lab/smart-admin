@@ -9,14 +9,14 @@ import net.lab1024.sa.admin.module.business.category.domain.form.CategoryUpdateF
 import net.lab1024.sa.admin.module.business.category.domain.vo.CategoryTreeVO;
 import net.lab1024.sa.admin.module.business.category.domain.vo.CategoryVO;
 import net.lab1024.sa.admin.module.business.category.manager.CategoryCacheManager;
-import net.lab1024.sa.common.common.code.UserErrorCode;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.code.UserErrorCode;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,25 +28,22 @@ import java.util.Optional;
  * @Date 2021/08/05 21:26:58
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class CategoryService {
 
-    @Autowired
+    @Resource
     private CategoryDao categoryDao;
 
-    @Autowired
+    @Resource
     private CategoryQueryService categoryQueryService;
 
-    @Autowired
+    @Resource
     private CategoryCacheManager categoryCacheManager;
 
     /**
      * 添加类目
-     *
-     * @author 胡克
-     * @date 2021/1/20 17:17
      */
     public ResponseDTO<String> add(CategoryAddForm addForm) {
         // 校验类目
@@ -73,8 +70,6 @@ public class CategoryService {
      * 更新类目
      * 不能更新父级类目
      *
-     * @author 胡克
-     * @date 2021/1/20 17:17
      */
     public ResponseDTO<String> update(CategoryUpdateForm updateForm) {
         // 校验类目
@@ -85,9 +80,9 @@ public class CategoryService {
         }
         CategoryEntity categoryEntity = SmartBeanUtil.copy(updateForm, CategoryEntity.class);
 
-        /**
-         * 不更新类目类型
-         * 不更新父类id
+        /*
+          不更新类目类型
+          不更新父类id
          */
         Integer categoryType = optional.get().getCategoryType();
         categoryEntity.setCategoryType(categoryType);
@@ -107,9 +102,6 @@ public class CategoryService {
     /**
      * 新增/更新 类目时的 校验
      *
-     * @param categoryEntity
-     * @param isUpdate
-     * @return
      */
     private ResponseDTO<String> checkCategory(CategoryEntity categoryEntity, boolean isUpdate) {
         // 校验父级是否存在
@@ -158,8 +150,6 @@ public class CategoryService {
     /**
      * 查询 类目详情
      *
-     * @param categoryId
-     * @return
      */
     public ResponseDTO<CategoryVO> queryDetail(Long categoryId) {
         Optional<CategoryEntity> optional = categoryQueryService.queryCategory(categoryId);
@@ -174,8 +164,6 @@ public class CategoryService {
      * 根据父级id 查询所有子类 返回层级树
      * 如果父类id 为空 返回所有类目层级
      *
-     * @param queryForm
-     * @return
      */
     public ResponseDTO<List<CategoryTreeVO>> queryTree(CategoryTreeQueryForm queryForm) {
         if (null == queryForm.getParentId()) {
@@ -192,8 +180,6 @@ public class CategoryService {
      * 删除类目
      * 如果有未删除的子类 则无法删除
      *
-     * @param categoryId
-     * @return
      */
     public ResponseDTO<String> delete(Long categoryId) {
         Optional<CategoryEntity> optional = categoryQueryService.queryCategory(categoryId);

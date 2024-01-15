@@ -9,7 +9,7 @@
  */
 
 import { useUserStore } from '/@/store/modules/system/user';
-import lodash from 'lodash';
+import _ from 'lodash';
 
 export function privilegeDirective(el, binding) {
   // 超级管理员
@@ -22,7 +22,7 @@ export function privilegeDirective(el, binding) {
     return false;
   }
   // 如果有权限，删除节点
-  if (!lodash.some(userPointsList,['webPerms',binding.value])) {
+  if (!_.some(userPointsList, ['webPerms', binding.value])) {
     el.parentNode.removeChild(el);
   }
   return true;

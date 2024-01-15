@@ -9,10 +9,13 @@
   *
 -->
 <template>
-  <a-modal :title="form.roleId ? '编辑角色' : '添加角色'" :width="600" :visible="modalVisible" @cancel="onClose" :footer="null">
+  <a-modal :title="form.roleId ? '编辑角色' : '添加角色'" :width="600" :open="modalVisible" @cancel="onClose" :footer="null">
     <a-form ref="formRef" :model="form" :rules="rules" :labelCol="{ span: 4 }">
       <a-form-item label="角色名称" name="roleName">
         <a-input style="width: 100%" placeholder="请输入角色名称" v-model:value="form.roleName" />
+      </a-form-item>
+      <a-form-item label="角色编码" name="roleCode">
+        <a-input style="width: 100%" placeholder="请输入角色编码" v-model:value="form.roleCode" />
       </a-form-item>
       <a-form-item label="角色备注">
         <a-input style="width: 100%" placeholder="请输入角色备注" v-model:value="form.remark" />
@@ -29,8 +32,8 @@
 <script setup>
   import { message } from 'ant-design-vue';
   import { reactive, ref } from 'vue';
-  import { roleApi } from '/@/api/system/role/role-api';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { roleApi } from '/@/api/system/role-api';
+  import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   // ----------------------- 以下是字段定义 emits props ---------------------
   let emits = defineEmits(['refresh']);
@@ -62,6 +65,7 @@ import { smartSentry } from '/@/lib/smart-sentry';
   const formDefault = {
     id: undefined,
     remark: undefined,
+    roleCode: undefined,
     roleName: undefined,
   };
 
@@ -70,6 +74,7 @@ import { smartSentry } from '/@/lib/smart-sentry';
   // 表单规则
   const rules = {
     roleName: [{ required: true, message: '请输入角色名称' }],
+    roleCode: [{ required: true, message: '请输入角色编码' }],
   };
 
   // 提交表单

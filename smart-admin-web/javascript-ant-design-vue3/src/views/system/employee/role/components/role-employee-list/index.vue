@@ -14,7 +14,7 @@
       <div>
         关键字：
         <a-input style="width: 250px" v-model:value="queryForm.keywords" placeholder="姓名/手机号/登录账号" />
-        <a-button class="button-style" v-if="selectRoleId" type="primary" @click="queryRoleEmployee">搜索</a-button>
+        <a-button class="button-style" v-if="selectRoleId" type="primary" @click="onSearch">搜索</a-button>
         <a-button class="button-style" v-if="selectRoleId" type="default" @click="resetQueryRoleEmployee">重置</a-button>
       </div>
 
@@ -73,7 +73,7 @@
   import { message, Modal } from 'ant-design-vue';
   import _ from 'lodash';
   import { computed, inject, onMounted, reactive, ref, watch } from 'vue';
-  import { roleApi } from '/@/api/system/role/role-api';
+  import { roleApi } from '/@/api/system/role-api';
   import { PAGE_SIZE, showTableTotal, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import EmployeeTableSelectModal from '/@/components/system/employee-table-select-modal/index.vue';
@@ -107,6 +107,11 @@
 
   function resetQueryRoleEmployee() {
     queryForm.keywords = '';
+    queryRoleEmployee();
+  }
+
+  function onSearch(){
+    queryForm.pageNum = 1;
     queryRoleEmployee();
   }
 

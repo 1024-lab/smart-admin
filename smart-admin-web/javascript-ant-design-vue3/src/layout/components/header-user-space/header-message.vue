@@ -9,7 +9,7 @@
 -->
 
 <template>
-  <a-dropdown trigger="click" v-model:visible="show">
+  <a-dropdown trigger="click" v-model:open="show">
     <div @click="fetchMessage">
       <a-badge count="12">
         <div style="width: 26px; height: 26px">
@@ -110,7 +110,6 @@
 
   .dropdown-tabs {
     background-color: @base-bg-color;
-    box-shadow: 0 2px 8px @shadow-color;
     border-radius: 4px;
   }
 </style>

@@ -8,12 +8,16 @@
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
 export const LAYOUT_ENUM = {
-  SIDE_EXPAND: {
-    value: 'side-expand',
-    desc: '展开菜单',
-  },
   SIDE: {
     value: 'side',
-    desc: '传统菜单',
+    desc: '传统',
+  },
+  SIDE_EXPAND: {
+    value: 'side-expand',
+    desc: '展开',
+  },
+  TOP: {
+    value: 'top',
+    desc: '顶部',
   },
 };

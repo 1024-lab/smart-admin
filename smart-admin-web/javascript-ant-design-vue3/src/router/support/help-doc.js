@@ -7,13 +7,13 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import SmartHelpDocLayout from '/@/layout/smart-help-doc-layout.vue';
+import HelpDocLayout from '/@/layout/help-doc-layout.vue';
 
 export const helpDocRouters = [
   {
     path: '/help-doc',
     name: 'HelpDoc',
-    component: SmartHelpDocLayout,
+    component: HelpDocLayout,
     meta: {
       title: '帮助文档',
       hideInMenu: true,

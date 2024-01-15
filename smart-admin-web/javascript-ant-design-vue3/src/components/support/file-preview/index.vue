@@ -9,11 +9,11 @@
   *
 -->
 <template>
-  <div >
-    <template v-if="type == 'text'">
+  <div>
+    <template v-if="type === 'text'">
       <a v-for="(item, index) in fileList" :key="index" @click="preview(item, index)">
         {{ item.fileName }}
-        <span v-if="index != fileList.length - 1" v-html="separator"></span>
+        <span v-if="index !== fileList.length - 1" v-html="separator"></span>
       </a>
     </template>
     <a-space>
@@ -22,7 +22,7 @@
           v-for="(item, index) in fileList"
           :key="index"
           :src="item.fileUrl"
-          :style="{ display: type == 'text' ? 'none' : '' }"
+          :style="{ display: type === 'text' ? 'none' : '' }"
           :width="width"
         />
       </a-image-preview-group>
@@ -31,7 +31,7 @@
 </template>
 <script setup>
   import { ref } from 'vue';
-  import { download } from '/@/lib/axios';
+  import { getDownload } from '/@/lib/axios';
 
   let props = defineProps({
     fileList: {
@@ -64,7 +64,7 @@
       previewCurrent.value = index;
       visible.value = true;
     } else {
-      download(file.fileName, file.fileUrl);
+      window.open(file.fileUrl);
     }
   }
 

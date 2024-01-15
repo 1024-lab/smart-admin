@@ -1,22 +1,22 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import net.lab1024.sa.common.common.controller.SupportBaseController;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.constant.SwaggerTagConst;
-import net.lab1024.sa.common.module.support.config.ConfigService;
-import net.lab1024.sa.common.module.support.config.domain.ConfigAddForm;
-import net.lab1024.sa.common.module.support.config.domain.ConfigQueryForm;
-import net.lab1024.sa.common.module.support.config.domain.ConfigUpdateForm;
-import net.lab1024.sa.common.module.support.config.domain.ConfigVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import net.lab1024.sa.base.common.controller.SupportBaseController;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.constant.SwaggerTagConst;
+import net.lab1024.sa.base.module.support.config.ConfigService;
+import net.lab1024.sa.base.module.support.config.domain.ConfigAddForm;
+import net.lab1024.sa.base.module.support.config.domain.ConfigQueryForm;
+import net.lab1024.sa.base.module.support.config.domain.ConfigUpdateForm;
+import net.lab1024.sa.base.module.support.config.domain.ConfigVO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
@@ -26,34 +26,34 @@ import javax.validation.Valid;
  * @Date 2022-03-14 20:46:27
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
-@Api(tags = {SwaggerTagConst.Support.CONFIG})
+@Tag(name = SwaggerTagConst.Support.CONFIG)
 @RestController
 public class AdminConfigController extends SupportBaseController {
 
-    @Autowired
+    @Resource
     private ConfigService configService;
 
-    @ApiOperation("分页查询系统配置 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('support:config:query')")
+    @Operation(summary = "分页查询系统配置 @author 卓大")
     @PostMapping("/config/query")
-    public ResponseDTO<PageResult<ConfigVO>> querySystemConfigPage(@RequestBody @Valid ConfigQueryForm queryForm) {
+    @SaCheckPermission("support:config:query")
+    public ResponseDTO<PageResult<ConfigVO>> queryConfigPage(@RequestBody @Valid ConfigQueryForm queryForm) {
         return configService.queryConfigPage(queryForm);
     }
 
-    @ApiOperation("添加配置参数 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('support:config:add')")
+    @Operation(summary = "添加配置参数 @author 卓大")
     @PostMapping("/config/add")
-    public ResponseDTO<String> addSystemConfig(@RequestBody @Valid ConfigAddForm configAddForm) {
+    @SaCheckPermission("support:config:add")
+    public ResponseDTO<String> addConfig(@RequestBody @Valid ConfigAddForm configAddForm) {
         return configService.add(configAddForm);
     }
 
-    @ApiOperation("修改配置参数 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('support:config:update')")
+    @Operation(summary = "修改配置参数 @author 卓大")
     @PostMapping("/config/update")
-    public ResponseDTO<String> updateSystemConfig(@RequestBody @Valid ConfigUpdateForm updateForm) {
-        return configService.updateSystemConfig(updateForm);
+    @SaCheckPermission("support:config:update")
+    public ResponseDTO<String> updateConfig(@RequestBody @Valid ConfigUpdateForm updateForm) {
+        return configService.updateConfig(updateForm);
     }
 
 }

@@ -11,7 +11,7 @@
   <a-drawer
     :title="form.employeeId ? '编辑' : '添加'"
     :width="600"
-    :visible="visible"
+    :open="visible"
     :body-style="{ paddingBottom: '80px' }"
     @close="onClose"
     destroyOnClose
@@ -56,8 +56,8 @@
   import { message } from 'ant-design-vue';
   import _ from 'lodash';
   import { nextTick, reactive, ref } from 'vue';
-  import { employeeApi } from '/@/api/system/employee/employee-api';
-  import { roleApi } from '/@/api/system/role/role-api';
+  import { employeeApi } from '/@/api/system/employee-api';
+  import { roleApi } from '/@/api/system/role-api';
   import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import { GENDER_ENUM } from '/@/constants/common-const';

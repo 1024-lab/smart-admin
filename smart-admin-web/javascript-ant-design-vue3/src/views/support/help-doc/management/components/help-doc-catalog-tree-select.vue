@@ -25,7 +25,7 @@
 <script setup>
   import { onMounted, ref } from 'vue';
   import _ from 'lodash';
-  import { helpDocCatalogApi } from '/@/api/support/help-doc/help-doc-catalog-api';
+  import { helpDocCatalogApi } from '/@/api/support/help-doc-catalog-api';
 
   const props = defineProps({
     // 绑定值

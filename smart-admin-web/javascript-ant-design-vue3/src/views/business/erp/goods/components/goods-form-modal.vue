@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
-  <a-drawer :title="form.goodsId ? '编辑' : '添加'" :width="500" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose">
+  <a-drawer :title="form.goodsId ? '编辑' : '添加'" :width="500" :open="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }">
       <a-form-item label="商品分类" name="categoryId">
         <CategoryTree v-model:value="form.categoryId" placeholder="请选择商品分类" :categoryType="CATEGORY_TYPE_ENUM.GOODS.value" />
@@ -67,7 +67,7 @@
   import DictSelect from '/@/components/support/dict-select/index.vue';
 
   // emit
-  const emit = defineEmits('reloadList');
+  const emit = defineEmits(['reloadList']);
 
   // 组件ref
   const formRef = ref();

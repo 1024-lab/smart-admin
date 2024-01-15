@@ -57,7 +57,7 @@
 </template>
 <script setup>
   import { reactive, ref } from 'vue';
-  import { helpDocApi } from '/@/api/support/help-doc/help-doc-api';
+  import { helpDocApi } from '/@/api/support/help-doc-api';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import uaparser from 'ua-parser-js';
   import { smartSentry } from '/@/lib/smart-sentry';

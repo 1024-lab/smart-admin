@@ -1,12 +1,12 @@
 package net.lab1024.sa.admin.module.business.oa.notice.domain.form;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.lab1024.sa.admin.module.business.oa.notice.constant.NoticeVisibleRangeDataTypeEnum;
-import net.lab1024.sa.common.common.swagger.ApiModelPropertyEnum;
-import net.lab1024.sa.common.common.validator.enumeration.CheckEnum;
+import net.lab1024.sa.base.common.swagger.SchemaEnum;
+import net.lab1024.sa.base.common.validator.enumeration.CheckEnum;
 
 import javax.validation.constraints.NotNull;
 
@@ -17,18 +17,18 @@ import javax.validation.constraints.NotNull;
  * @Date 2022-08-12 21:40:39
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class NoticeVisibleRangeForm {
 
-    @ApiModelPropertyEnum(NoticeVisibleRangeDataTypeEnum.class)
+    @SchemaEnum(NoticeVisibleRangeDataTypeEnum.class)
     @CheckEnum(value = NoticeVisibleRangeDataTypeEnum.class, required = true, message = "数据类型错误")
     private Integer dataType;
 
-    @ApiModelProperty("员工/部门id")
+    @Schema(description = "员工/部门id")
     @NotNull(message = "员工/部门id不能为空")
     private Long dataId;
 }

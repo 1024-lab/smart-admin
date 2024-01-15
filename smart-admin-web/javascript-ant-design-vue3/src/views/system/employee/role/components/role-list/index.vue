@@ -33,7 +33,7 @@
   import { message, Modal } from 'ant-design-vue';
   import _ from 'lodash';
   import { computed, onMounted, ref } from 'vue';
-  import { roleApi } from '/@/api/system/role/role-api';
+  import { roleApi } from '/@/api/system/role-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import RoleFormModal from '../role-form-modal/index.vue';
   import { smartSentry } from '/@/lib/smart-sentry';

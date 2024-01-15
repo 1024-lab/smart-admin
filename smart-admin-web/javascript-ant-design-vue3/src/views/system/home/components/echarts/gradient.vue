@@ -1,5 +1,5 @@
 <template>
-  <default-home-card icon="FundTwoTone" title="【1024创新实验室】代码提交量">
+  <default-home-card icon="FundTwoTone" title="代码提交量">
     <div class="echarts-box">
       <div class="gradient-main" id="gradient-main"></div>
     </div>

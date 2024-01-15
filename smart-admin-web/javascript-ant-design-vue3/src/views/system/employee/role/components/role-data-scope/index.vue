@@ -12,7 +12,7 @@
   <div>
     <div class="btn-group">
       <a-button class="button-style" type="primary" @click="updateDataScope" v-privilege="'system:role:dataScope:update'"> 保存 </a-button>
-      <a-button class="button-style" @click="getDataScope" v-privilege="'role:query'"> 刷新 </a-button>
+      <a-button class="button-style" @click="getDataScope" > 刷新 </a-button>
     </div>
     <a-row class="header">
       <a-col class="tab-margin" :span="4">业务单据</a-col>
@@ -46,7 +46,7 @@
   import { message } from 'ant-design-vue';
   import _ from 'lodash';
   import { inject, onMounted, ref, watch } from 'vue';
-  import { roleApi } from '/@/api/system/role/role-api';
+  import { roleApi } from '/@/api/system/role-api';
   import { smartSentry } from '/@/lib/smart-sentry';
 
   const props = defineProps({

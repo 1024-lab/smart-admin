@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import net.lab1024.sa.admin.module.system.menu.constant.MenuPermsTypeEnum;
 import net.lab1024.sa.admin.module.system.menu.constant.MenuTypeEnum;
-import net.lab1024.sa.common.common.swagger.ApiModelPropertyEnum;
-import net.lab1024.sa.common.common.validator.enumeration.CheckEnum;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +15,7 @@ import java.time.LocalDateTime;
  * @Date 2022-03-06 22:04:37
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 @TableName(value = "t_menu")

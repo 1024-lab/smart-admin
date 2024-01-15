@@ -51,18 +51,18 @@
 
 <script setup>
   import _ from 'lodash';
-import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import BankList from './components/enterprise-bank-list.vue';
-import EmployeeList from './components/enterprise-employee-list.vue';
-import InvoiceList from './components/enterprise-invoice-list.vue';
-import EnterpriseOperate from './components/enterprise-operate-modal.vue';
-import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
-import { SmartLoading } from '/@/components/framework/smart-loading';
-import DataTracer from '/@/components/support/data-tracer/index.vue';
-import FilePreview from '/@/components/support/file-preview/index.vue';
-import { DATA_TRACER_TYPE_ENUM } from '/@/constants/support/data-tracer-const';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { computed, onMounted, ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import BankList from './components/enterprise-bank-list.vue';
+  import EmployeeList from './components/enterprise-employee-list.vue';
+  import InvoiceList from './components/enterprise-invoice-list.vue';
+  import EnterpriseOperate from './components/enterprise-operate-modal.vue';
+  import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
+  import { SmartLoading } from '/@/components/framework/smart-loading';
+  import DataTracer from '/@/components/support/data-tracer/index.vue';
+  import FilePreview from '/@/components/support/file-preview/index.vue';
+  import { DATA_TRACER_TYPE_ENUM } from '/@/constants/support/data-tracer-const';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
   const route = useRoute();
   let enterpriseId = ref();
@@ -75,7 +75,7 @@ import { smartSentry } from '/@/lib/smart-sentry';
 
   //编辑
   const operateRef = ref();
-  function showUpdate(){
+  function showUpdate() {
     operateRef.value.showModal(enterpriseId.value);
   }
 

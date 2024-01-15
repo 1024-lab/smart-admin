@@ -6,8 +6,8 @@ import net.lab1024.sa.admin.module.system.datascope.constant.DataScopeViewTypeEn
 import net.lab1024.sa.admin.module.system.datascope.domain.DataScopeAndViewTypeVO;
 import net.lab1024.sa.admin.module.system.datascope.domain.DataScopeDTO;
 import net.lab1024.sa.admin.module.system.datascope.domain.DataScopeViewTypeVO;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -20,15 +20,13 @@ import java.util.List;
  * @Date 2020/11/28  20:59:17
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class DataScopeService {
 
     /**
      * 获取所有可以进行数据范围配置的信息
-     *
-     * @return
      */
     public ResponseDTO<List<DataScopeAndViewTypeVO>> dataScopeList() {
         List<DataScopeDTO> dataScopeList = this.getDataScopeType();
@@ -42,8 +40,6 @@ public class DataScopeService {
 
     /**
      * 获取当前系统存在的数据可见范围
-     *
-     * @return
      */
     public List<DataScopeViewTypeVO> getViewType() {
         List<DataScopeViewTypeVO> viewTypeList = Lists.newArrayList();

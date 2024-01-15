@@ -37,7 +37,7 @@
 
 <script setup>
   import _ from 'lodash';
-  import { tableColumnApi } from '/@/api/support/table/table-column-api';
+  import { tableColumnApi } from '/src/api/support/table-column-api';
   import { onMounted, reactive, ref, watch } from 'vue';
   import SmartTableColumnModal from './smart-table-column-modal.vue';
   import { message } from 'ant-design-vue';

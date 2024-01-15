@@ -1,5 +1,5 @@
 <template>
-  <default-home-card icon="PieChartTwoTone" title="【1024创新实验室】上班摸鱼次数">
+  <default-home-card icon="PieChartTwoTone" title="加班统计">
     <div class="echarts-box">
       <div class="pie-main" id="pie-main"></div>
     </div>
@@ -25,7 +25,7 @@ function init(){
     },
     series: [
       {
-        name: '摸鱼次数',
+        name: '加班次数',
         type: 'pie',
         radius: ['40%', '70%'],
         avoidLabelOverlap: false,

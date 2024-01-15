@@ -34,11 +34,11 @@
         </a-form-item>
 
         <a-form-item label="心跳时间" class="smart-query-form-item">
-          <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :ranges="defaultChooseTimeRange" style="width: 240px" />
+          <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :presets="defaultChooseTimeRange" style="width: 240px" />
         </a-form-item>
 
         <a-form-item class="smart-query-form-item smart-margin-left10">
-          <a-button type="primary" @click="ajaxQuery">
+          <a-button type="primary" @click="onSearch" class="smart-margin-right10">
             <template #icon>
               <ReloadOutlined />
             </template>
@@ -53,39 +53,39 @@
         </a-form-item>
       </a-row>
     </a-form>
-      <a-row justify="end">
-        <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.HEART_BEAT" :refresh="ajaxQuery" />
-      </a-row>
-      <a-table
-        size="small"
-        bordered
-        :loading="tableLoading"
-        class="smart-margin-top10"
-        :dataSource="tableData"
-        :columns="columns"
-        rowKey="goodsId"
-        :pagination="false"
+    <a-row justify="end">
+      <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.HEART_BEAT" :refresh="ajaxQuery" />
+    </a-row>
+    <a-table
+      size="small"
+      bordered
+      :loading="tableLoading"
+      class="smart-margin-top10"
+      :dataSource="tableData"
+      :columns="columns"
+      rowKey="goodsId"
+      :pagination="false"
+    />
+    <div class="smart-query-table-page">
+      <a-pagination
+        showSizeChanger
+        showQuickJumper
+        show-less-items
+        :pageSizeOptions="PAGE_SIZE_OPTIONS"
+        :defaultPageSize="queryForm.pageSize"
+        v-model:current="queryForm.pageNum"
+        v-model:pageSize="queryForm.pageSize"
+        :total="total"
+        @change="ajaxQuery"
+        @showSizeChange="ajaxQuery"
+        :show-total="(total) => `共${total}条`"
       />
-      <div class="smart-query-table-page">
-        <a-pagination
-          showSizeChanger
-          showQuickJumper
-          show-less-items
-          :pageSizeOptions="PAGE_SIZE_OPTIONS"
-          :defaultPageSize="queryForm.pageSize"
-          v-model:current="queryForm.pageNum"
-          v-model:pageSize="queryForm.pageSize"
-          :total="total"
-          @change="ajaxQuery"
-          @showSizeChange="ajaxQuery"
-          :show-total="(total) => `共${total}条`"
-        />
-      </div>
+    </div>
   </a-card>
 </template>
 <script setup>
   import { onMounted, reactive, ref } from 'vue';
-  import { heartBeatApi } from '/@/api/support/heart-beat/heart-beat-api';
+  import { heartBeatApi } from '/@/api/support/heart-beat-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   import { smartSentry } from '/@/lib/smart-sentry';
@@ -117,17 +117,17 @@
     {
       title: '进程号',
       dataIndex: 'processNo',
-      width:100
+      width: 100,
     },
     {
       title: '进程开启时间',
       dataIndex: 'processStartTime',
-      width:150
+      width: 150,
     },
     {
       title: '心跳当前时间',
       dataIndex: 'heartBeatTime',
-      width:150
+      width: 150,
     },
   ]);
 
@@ -148,6 +148,12 @@
     createDateRange.value = [];
     ajaxQuery();
   }
+
+  function onSearch() {
+    queryForm.pageNum = 1;
+    ajaxQuery();
+  }
+
   async function ajaxQuery() {
     try {
       tableLoading.value = true;

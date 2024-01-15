@@ -17,5 +17,5 @@ export const loginRouters = [
       title: '登录',
       hideInMenu: true,
     },
-  },
+  }
 ];

@@ -9,6 +9,7 @@
  */
 import { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
+import customVariables from '/@/theme/custom-variables.js';
 
 const pathResolve = (dir) => {
   return resolve(__dirname, '.', dir);
@@ -77,9 +78,7 @@ export default {
   css: {
     preprocessorOptions: {
       less: {
-        modifyVars: {
-          hack: `true; @import (reference) "${resolve('src/theme/index.less')}";`,
-        },
+        modifyVars: customVariables,
         javascriptEnabled: true,
       },
     },

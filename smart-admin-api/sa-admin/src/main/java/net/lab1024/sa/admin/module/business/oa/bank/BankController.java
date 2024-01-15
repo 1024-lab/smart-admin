@@ -1,19 +1,19 @@
 package net.lab1024.sa.admin.module.business.oa.bank;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
 import net.lab1024.sa.admin.module.business.oa.bank.domain.BankCreateForm;
 import net.lab1024.sa.admin.module.business.oa.bank.domain.BankQueryForm;
 import net.lab1024.sa.admin.module.business.oa.bank.domain.BankUpdateForm;
 import net.lab1024.sa.admin.module.business.oa.bank.domain.BankVO;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.RequestUser;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartRequestUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.RequestUser;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartRequestUtil;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,34 +24,34 @@ import java.util.List;
  * @Date 2022/6/23 21:59:22
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @RestController
-@Api(tags = {AdminSwaggerTagConst.Business.OA_BANK})
+@Tag(name = AdminSwaggerTagConst.Business.OA_BANK)
 public class BankController {
 
-    @Autowired
+    @Resource
     private BankService bankService;
 
-    @ApiOperation(value = "分页查询银行信息 @author 善逸")
+    @Operation(summary = "分页查询银行信息 @author 善逸")
     @PostMapping("/oa/bank/page/query")
-    public ResponseDTO<PageResult<BankVO>> queryByPage(@RequestBody @Valid BankQueryForm queryDTO) {
-        return bankService.queryByPage(queryDTO);
+    public ResponseDTO<PageResult<BankVO>> queryByPage(@RequestBody @Valid BankQueryForm queryForm) {
+        return bankService.queryByPage(queryForm);
     }
 
-    @ApiOperation(value = "根据企业ID查询银行信息列表 @author 善逸")
+    @Operation(summary = "根据企业ID查询银行信息列表 @author 善逸")
     @GetMapping("/oa/bank/query/list/{enterpriseId}")
     public ResponseDTO<List<BankVO>> queryList(@PathVariable Long enterpriseId) {
         return bankService.queryList(enterpriseId);
     }
 
-    @ApiOperation(value = "查询银行信息详情 @author 善逸")
+    @Operation(summary = "查询银行信息详情 @author 善逸")
     @GetMapping("/oa/bank/get/{bankId}")
     public ResponseDTO<BankVO> getDetail(@PathVariable Long bankId) {
         return bankService.getDetail(bankId);
     }
 
-    @ApiOperation(value = "新建银行信息 @author 善逸")
+    @Operation(summary = "新建银行信息 @author 善逸")
     @PostMapping("/oa/bank/create")
     public ResponseDTO<String> createBank(@RequestBody @Valid BankCreateForm createVO) {
         RequestUser requestUser = SmartRequestUtil.getRequestUser();
@@ -60,13 +60,13 @@ public class BankController {
         return bankService.createBank(createVO);
     }
 
-    @ApiOperation(value = "编辑银行信息 @author 善逸")
+    @Operation(summary = "编辑银行信息 @author 善逸")
     @PostMapping("/oa/bank/update")
     public ResponseDTO<String> updateBank(@RequestBody @Valid BankUpdateForm updateVO) {
         return bankService.updateBank(updateVO);
     }
 
-    @ApiOperation(value = "删除银行信息 @author 善逸")
+    @Operation(summary = "删除银行信息 @author 善逸")
     @GetMapping("/oa/bank/delete/{bankId}")
     public ResponseDTO<String> deleteBank(@PathVariable Long bankId) {
         return bankService.deleteBank(bankId);

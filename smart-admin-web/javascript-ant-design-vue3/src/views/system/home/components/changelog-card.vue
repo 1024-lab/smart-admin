@@ -30,7 +30,7 @@
   import { onMounted, ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { smartSentry } from '/@/lib/smart-sentry';
-  import { changeLogApi } from '/@/api/support/change-log/change-log-api';
+  import { changeLogApi } from '/@/api/support/change-log-api';
   import DefaultHomeCard from '/@/views/system/home/components/default-home-card.vue';
   import ChangeLogForm from '/@/views/support/change-log/change-log-modal.vue';
 
@@ -88,20 +88,7 @@
 
     .time {
       flex-shrink: 0;
-      color: @text-color-secondary;
       min-width: 75px;
     }
-  }
-
-  ul li :hover {
-    color: @primary-color;
-  }
-
-  .un-read a {
-    color: @text-color;
-  }
-
-  .read a {
-    color: @text-color-secondary;
   }
 </style>

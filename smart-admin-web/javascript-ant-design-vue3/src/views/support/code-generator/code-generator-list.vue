@@ -16,13 +16,13 @@
         </a-form-item>
 
         <a-form-item class="smart-query-form-item smart-margin-left10">
-          <a-button type="primary" @click="ajaxQuery">
+          <a-button type="primary" @click="onSearch">
             <template #icon>
               <ReloadOutlined />
             </template>
             查询
           </a-button>
-          <a-button @click="resetQuery">
+          <a-button @click="resetQuery" class="smart-margin-left10">
             <template #icon>
               <SearchOutlined />
             </template>
@@ -69,13 +69,13 @@
       </div>
     </a-card>
 
-    <CodeGeneratorTableConfigForm ref="codeGeneratorTableConfigFormRef" @reloadList="ajaxQuery"/>
+    <CodeGeneratorTableConfigForm ref="codeGeneratorTableConfigFormRef" @reloadList="ajaxQuery" />
     <CodeGeneratorPreviewModal ref="codeGeneratorPreviewModalRef" />
   </div>
 </template>
 <script setup>
-  import { onMounted, reactive, ref, nextTick } from 'vue';
-  import { codeGeneratorApi } from '/@/api/support/code-generator/code-generator-api';
+  import { onMounted, reactive, ref } from 'vue';
+  import { codeGeneratorApi } from '/@/api/support/code-generator-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
   import CodeGeneratorTableConfigForm from './components/form/code-generator-table-config-form.vue';
@@ -140,6 +140,12 @@
     Object.assign(queryForm, queryFormState);
     ajaxQuery();
   }
+
+  function onSearch() {
+    queryForm.pageNum = 1;
+    ajaxQuery();
+  }
+
   async function ajaxQuery() {
     try {
       tableLoading.value = true;
@@ -169,7 +175,7 @@
   }
 
   // ------------------------- 下载 ------------------------------
-  
+
   function download(rowData) {
     codeGeneratorApi.downloadCode(rowData.tableName);
   }

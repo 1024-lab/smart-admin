@@ -35,6 +35,8 @@ export const useUserStore = defineStore({
     administratorFlag: true,
     //上次登录ip
     lastLoginIp: '',
+    //上次登录ip地区
+    lastLoginIpRegion: '',
     //上次登录 设备
     lastLoginUserAgent: '',
     //上次登录时间
@@ -120,6 +122,7 @@ export const useUserStore = defineStore({
       this.departmentName = data.departmentName;
       this.administratorFlag = data.administratorFlag;
       this.lastLoginIp = data.lastLoginIp;
+      this.lastLoginIpRegion = data.lastLoginIpRegion;
       this.lastLoginUserAgent = data.lastLoginUserAgent;
       this.lastLoginTime = data.lastLoginTime;
 
@@ -143,10 +146,10 @@ export const useUserStore = defineStore({
       if (_.isEmpty(this.getTagNav)) this.tagNav = [];
       // name唯一标识
       let name = route.name;
-      if (!name || name == HOME_PAGE_NAME) {
+      if (!name || name === HOME_PAGE_NAME) {
         return;
       }
-      let findTag = (this.tagNav || []).find((e) => e.menuName == name);
+      let findTag = (this.tagNav || []).find((e) => e.menuName === name);
       if (findTag) {
         // @ts-ignore
         findTag.fromMenuName = from.name;
@@ -173,9 +176,9 @@ export const useUserStore = defineStore({
         this.tagNav = [];
         this.clearKeepAliveIncludes();
       } else {
-        let findIndex = (this.tagNav || []).findIndex((e) => e.menuName == menuName);
+        let findIndex = (this.tagNav || []).findIndex((e) => e.menuName === menuName);
         if (closeAll) {
-          if (findIndex == -1) {
+          if (findIndex === -1) {
             this.tagNav = [];
             this.clearKeepAliveIncludes();
           } else {
@@ -197,12 +200,12 @@ export const useUserStore = defineStore({
         router.push({ path });
       } else {
         // 寻找tagNav
-        let index = this.getTagNav.findIndex((e) => e.menuName == route.name);
-        if (index == -1) {
+        let index = this.getTagNav.findIndex((e) => e.menuName === route.name);
+        if (index === -1) {
           router.push({ name: HOME_PAGE_NAME });
         } else {
           let tagNav = this.getTagNav[index];
-          if (tagNav.fromMenuName && this.getTagNav.some((e) => e.menuName == tagNav.fromMenuName)) {
+          if (tagNav.fromMenuName && this.getTagNav.some((e) => e.menuName === tagNav.fromMenuName)) {
             router.push({ name: tagNav.fromMenuName, query: tagNav.fromMenuQuery });
           } else {
             // 查询左侧tag
@@ -261,7 +264,7 @@ function buildMenuParentIdListMap(menuTree) {
 function recursiveBuildMenuParentIdListMap(menuList, parentMenuList, menuParentIdListMap) {
   for (const e of menuList) {
     // 顶级parentMenuList清空
-    if (e.parentId == 0) {
+    if (e.parentId === 0) {
       parentMenuList = [];
     }
     let menuIdStr = e.menuId.toString();

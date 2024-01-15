@@ -26,14 +26,10 @@ export const MENU_TYPE_ENUM = {
  * 权限类型
  */
 export const MENU_PERMS_TYPE_ENUM = {
-  SPRING_SECURITY: {
+  SA_TOKEN: {
     value: 1,
-    desc: 'Security模式',
-  },
-  URL: {
-    value: 2,
-    desc: 'URL模式',
-  },
+    desc: 'Sa-Token模式',
+  }
 };
 
 /**

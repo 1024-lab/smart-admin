@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,19 +17,17 @@ import java.util.List;
  * @Date 2022-04-09 19:05:49
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class RoleMenuManager extends ServiceImpl<RoleMenuDao, RoleMenuEntity> {
 
-    @Autowired
+    @Resource
     private RoleMenuDao roleMenuDao;
 
     /**
      * 更新角色权限
      *
-     * @param roleId
-     * @param roleMenuEntityList
      */
     @Transactional(rollbackFor = Exception.class)
     public void updateRoleMenu(Long roleId, List<RoleMenuEntity> roleMenuEntityList) {

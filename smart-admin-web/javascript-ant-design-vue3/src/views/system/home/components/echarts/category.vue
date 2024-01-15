@@ -1,5 +1,5 @@
 <template>
-  <default-home-card icon="ProfileTwoTone" title="【1024创新实验室】人员饭量">
+  <default-home-card icon="ProfileTwoTone" title="销量统计">
     <div class="echarts-box">
       <div class="category-main" id="category-main"></div>
     </div>

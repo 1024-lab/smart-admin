@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" title="修改密码" ok-text="确认" cancel-text="取消" @ok="updatePwd" @cancel="cancelModal">
+  <a-modal :open="visible" title="修改密码" ok-text="确认" cancel-text="取消" @ok="updatePwd" @cancel="cancelModal">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }">
       <a-form-item label="原密码" name="oldPassword">
         <a-input v-model:value.trim="form.oldPassword" type="password" placeholder="请输入原密码" />
@@ -25,19 +25,19 @@
 <script setup>
   import { ref, reactive } from 'vue';
   import { message } from 'ant-design-vue';
-  import { employeeApi } from '/@/api/system/employee/employee-api';
+  import { employeeApi } from '/src/api/system/employee-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { smartSentry } from '/@/lib/smart-sentry';
 
   const visible = ref(false);
   const formRef = ref();
-  const tips = '字母（不限大小写）+数字组合，6-15位'; //校验规则
-  const reg = /(^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,15}$)/; //校验正则
+  const tips = '密码长度8-20位且包含大写字母、小写字母、数字三种'; //校验规则
+  const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
 
   const rules = {
     oldPassword: [{ required: true, message: '请输入原密码' }],
-    newPassword: [{ type: 'string',  pattern: reg, message: '密码格式错误' }],
-    confirmPwd: [{ type: 'string',  pattern: reg, message: '请输入确认密码' }],
+    newPassword: [{ type: 'string', pattern: reg, message: '密码格式错误' }],
+    confirmPwd: [{ type: 'string', pattern: reg, message: '请输入确认密码' }],
   };
 
   const formDefault = {
@@ -75,6 +75,9 @@
 
   function showModal() {
     visible.value = true;
+    form.oldPassword = '';
+    form.newPassword = '';
+    form.confirmPwd = '';
   }
 
   function cancelModal() {

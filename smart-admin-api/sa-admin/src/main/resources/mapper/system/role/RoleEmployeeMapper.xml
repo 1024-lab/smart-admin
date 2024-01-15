@@ -7,6 +7,13 @@
                type="net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO"></resultMap>
 
 
+    <select id="selectRoleByEmployeeId" resultType="net.lab1024.sa.admin.module.system.role.domain.vo.RoleVO">
+        SELECT t_role.*
+        FROM t_role_employee
+        left join t_role on t_role_employee.role_id = t_role.role_id
+        WHERE t_role_employee.employee_id = #{employeeId}
+    </select>
+
     <select id="selectRoleIdByEmployeeId" resultType="java.lang.Long">
         SELECT er.role_id
         FROM t_role_employee er
@@ -33,9 +40,9 @@
         <where>
             <if test="queryForm.keywords != null and queryForm.keywords!= ''">
                 AND (
-                INSTR(t_employeeactual_name,#{queryForm.keywords})
-                OR INSTR(t_employeephone,#{queryForm.keywords})
-                OR INSTR(t_employeelogin_name,#{queryForm.keywords})
+                INSTR(t_employee.actual_name,#{queryForm.keywords})
+                OR INSTR(t_employee.phone,#{queryForm.keywords})
+                OR INSTR(t_employee.login_name,#{queryForm.keywords})
                 )
             </if>
             <if test="queryForm.roleId != null">

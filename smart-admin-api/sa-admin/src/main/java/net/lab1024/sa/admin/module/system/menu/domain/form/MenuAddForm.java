@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.system.menu.domain.form;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -10,11 +10,11 @@ import lombok.Data;
  * @Date 2022-03-06 22:04:37
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class MenuAddForm extends MenuBaseForm {
 
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Long createUserId;
 }

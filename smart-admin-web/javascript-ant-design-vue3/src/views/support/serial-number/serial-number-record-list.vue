@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :visible="visible" title="每日生成结果记录" width="60%" :footer="null" @cancel="onClose">
+  <a-modal :open="visible" title="每日生成结果记录" width="60%" :footer="null" @cancel="onClose">
     <a-table size="small" :dataSource="tableData" :columns="columns" bordered :pagination="false">
       <template #bodyCell="{ text, record, column }">
         <template v-if="column.dataIndex === 'successFlag'">
@@ -40,7 +40,7 @@
 </template>
 <script setup>
   import { reactive, ref } from 'vue';
-  import { serialNumberApi } from '/@/api/support/serial-number/serial-number-api';
+  import { serialNumberApi } from '/@/api/support/serial-number-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
 import { smartSentry } from '/@/lib/smart-sentry';
 

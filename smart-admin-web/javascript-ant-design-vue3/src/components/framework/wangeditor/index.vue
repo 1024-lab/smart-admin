@@ -24,7 +24,7 @@
 <script setup>
   import { shallowRef, onBeforeUnmount, watch, ref } from 'vue';
   import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
-  import { fileApi } from '/@/api/support/file/file-api';
+  import { fileApi } from '/src/api/support/file-api';
   import '@wangeditor/editor/dist/css/style.css';
   import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
   import { smartSentry } from '/@/lib/smart-sentry';

@@ -9,7 +9,7 @@
   *
 -->
 <template>
-  <default-home-card icon="SmileTwoTone" title="添加微信，关注【小镇程序员】、【1024创新实验室】">
+  <default-home-card icon="SmileTwoTone" title="联系我们">
     <div class="app-qr-box">
       <div class="app-qr">
         <img :src="zhuoda" />
@@ -18,22 +18,16 @@
       </div>
       <div class="app-qr">
         <img :src="xiaozhen" />
-        <span class="qr-desc strong"> 小镇程序员 </span>
-        <span class="qr-desc"> 代码与生活，还有钱途 </span>
-      </div>
-      <div class="app-qr">
-        <img :src="lab1024" />
-        <span class="qr-desc strong"> 1024创新实验室 </span>
-        <span class="qr-desc"> 官方账号 </span>
+        <span class="qr-desc strong"> 六边形工程师 </span>
+        <span class="qr-desc"> 赚钱、代码、生活 </span>
       </div>
     </div>
   </default-home-card>
 </template>
 <script setup>
   import DefaultHomeCard from '/@/views/system/home/components/default-home-card.vue';
-  import lab1024 from '/@/assets/images/1024lab/1024lab-gzh.jpg';
   import zhuoda from '/@/assets/images/1024lab/zhuoda-wechat.jpg';
-  import xiaozhen from '/@/assets/images/1024lab/xiaozhen-gzh.jpg';
+  import xiaozhen from '/@/assets/images/1024lab/gzh.jpg';
 </script>
 <style lang="less" scoped>
   .app-qr-box {

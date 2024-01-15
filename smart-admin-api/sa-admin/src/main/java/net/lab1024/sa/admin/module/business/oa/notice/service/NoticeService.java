@@ -1,6 +1,7 @@
 package net.lab1024.sa.admin.module.business.oa.notice.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Maps;
 import net.lab1024.sa.admin.module.business.oa.notice.constant.NoticeVisibleRangeDataTypeEnum;
 import net.lab1024.sa.admin.module.business.oa.notice.dao.NoticeDao;
 import net.lab1024.sa.admin.module.business.oa.notice.domain.entity.NoticeEntity;
@@ -19,20 +20,19 @@ import net.lab1024.sa.admin.module.system.department.domain.vo.DepartmentVO;
 import net.lab1024.sa.admin.module.system.department.service.DepartmentService;
 import net.lab1024.sa.admin.module.system.employee.dao.EmployeeDao;
 import net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity;
-import net.lab1024.sa.common.common.constant.StringConst;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
-import net.lab1024.sa.common.common.util.SmartPageUtil;
-import net.lab1024.sa.common.module.support.datatracer.constant.DataTracerTypeEnum;
-import net.lab1024.sa.common.module.support.datatracer.service.DataTracerService;
+import net.lab1024.sa.base.common.constant.StringConst;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.util.SmartPageUtil;
+import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerTypeEnum;
+import net.lab1024.sa.base.module.support.datatracer.service.DataTracerService;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -45,37 +45,35 @@ import java.util.stream.Collectors;
  * @Date 2022-08-12 21:40:39
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class NoticeService {
 
-    @Autowired
+    @Resource
     private NoticeDao noticeDao;
 
-    @Autowired
+    @Resource
     private NoticeManager noticeManager;
 
-    @Autowired
+    @Resource
     private EmployeeDao employeeDao;
 
-    @Autowired
+    @Resource
     private DepartmentDao departmentDao;
 
-    @Autowired
+    @Resource
     private DepartmentService departmentService;
 
-    @Autowired
+    @Resource
     private NoticeTypeService noticeTypeService;
 
-    @Autowired
+    @Resource
     private DataTracerService dataTracerService;
 
     /**
      * 查询 通知、公告
      *
-     * @param queryForm
-     * @return
      */
     public PageResult<NoticeVO> query(NoticeQueryForm queryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
@@ -87,9 +85,6 @@ public class NoticeService {
 
     /**
      * 添加
-     *
-     * @param addForm
-     * @return
      */
     public ResponseDTO<String> add(NoticeAddForm addForm) {
         // 校验并获取可见范围
@@ -112,8 +107,6 @@ public class NoticeService {
     /**
      * 校验并返回可见范围
      *
-     * @param form
-     * @return
      */
     private ResponseDTO<String> checkAndBuildVisibleRange(NoticeAddForm form) {
         // 校验资讯分类
@@ -126,7 +119,7 @@ public class NoticeService {
             return ResponseDTO.ok();
         }
 
-        /**
+        /*
          * 校验可见范围
          * 非全部可见时 校验选择的员工|部门
          */
@@ -144,7 +137,7 @@ public class NoticeService {
             employeeIdList = employeeIdList.stream().distinct().collect(Collectors.toList());
             List<Long> dbEmployeeIdList = employeeDao.selectBatchIds(employeeIdList).stream().map(EmployeeEntity::getEmployeeId).collect(Collectors.toList());
             Collection<Long> subtract = CollectionUtils.subtract(employeeIdList, dbEmployeeIdList);
-            if (subtract.size() > 0) {
+            if (!subtract.isEmpty()) {
                 return ResponseDTO.userErrorParam("员工id不存在：" + subtract);
             }
         }
@@ -158,7 +151,7 @@ public class NoticeService {
             deptIdList = deptIdList.stream().distinct().collect(Collectors.toList());
             List<Long> dbDeptIdList = departmentDao.selectBatchIds(deptIdList).stream().map(DepartmentEntity::getDepartmentId).collect(Collectors.toList());
             Collection<Long> subtract = CollectionUtils.subtract(deptIdList, dbDeptIdList);
-            if (subtract.size() > 0) {
+            if (!subtract.isEmpty()) {
                 return ResponseDTO.userErrorParam("部门id不存在：" + subtract);
             }
         }
@@ -169,8 +162,6 @@ public class NoticeService {
     /**
      * 更新
      *
-     * @param updateForm
-     * @return
      */
     public ResponseDTO<String> update(NoticeUpdateForm updateForm) {
 
@@ -195,8 +186,6 @@ public class NoticeService {
     /**
      * 删除
      *
-     * @param noticeId
-     * @return
      */
     public ResponseDTO<String> delete(Long noticeId) {
         NoticeEntity noticeEntity = noticeDao.selectById(noticeId);
@@ -211,9 +200,6 @@ public class NoticeService {
 
     /**
      * 获取更新表单用的详情
-     *
-     * @param noticeId
-     * @return
      */
     public NoticeUpdateFormVO getUpdateFormVO(Long noticeId) {
         NoticeEntity noticeEntity = noticeDao.selectById(noticeId);
@@ -232,7 +218,7 @@ public class NoticeService {
             if (CollectionUtils.isNotEmpty(employeeIdList)) {
                 employeeMap = employeeDao.selectBatchIds(employeeIdList).stream().collect(Collectors.toMap(EmployeeEntity::getEmployeeId, Function.identity()));
             } else {
-                employeeMap = new HashMap<>();
+                employeeMap = Maps.newHashMap();
             }
             for (NoticeVisibleRangeVO noticeVisibleRange : noticeVisibleRangeList) {
                 if (noticeVisibleRange.getDataType().equals(NoticeVisibleRangeDataTypeEnum.EMPLOYEE.getValue())) {

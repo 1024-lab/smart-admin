@@ -1,19 +1,20 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import net.lab1024.sa.common.common.controller.SupportBaseController;
-import net.lab1024.sa.common.common.domain.PageResult;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.constant.SwaggerTagConst;
-import net.lab1024.sa.common.module.support.loginlog.LoginLogService;
-import net.lab1024.sa.common.module.support.loginlog.domain.LoginLogQueryForm;
-import net.lab1024.sa.common.module.support.loginlog.domain.LoginLogVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import net.lab1024.sa.base.common.controller.SupportBaseController;
+import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.constant.SwaggerTagConst;
+import net.lab1024.sa.base.module.support.loginlog.LoginLogService;
+import net.lab1024.sa.base.module.support.loginlog.domain.LoginLogQueryForm;
+import net.lab1024.sa.base.module.support.loginlog.domain.LoginLogVO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * 登录日志
@@ -22,18 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date 2022/07/22 19:46:23
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @RestController
-@Api(tags = {SwaggerTagConst.Support.LOGIN_LOG})
+@Tag(name = SwaggerTagConst.Support.LOGIN_LOG)
 public class AdminLoginLogController extends SupportBaseController {
 
-    @Autowired
+    @Resource
     private LoginLogService loginLogService;
 
-    @ApiOperation(value = "分页查询 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('loginLog:query')")
+    @Operation(summary = "分页查询 @author 卓大")
     @PostMapping("/loginLog/page/query")
+    @SaCheckPermission("support:loginLog:query")
     public ResponseDTO<PageResult<LoginLogVO>> queryByPage(@RequestBody LoginLogQueryForm queryForm) {
         return loginLogService.queryByPage(queryForm);
     }

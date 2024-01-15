@@ -9,7 +9,7 @@
 -->
 
 <template>
-  <a-drawer :title="$t('setting.title')" placement="right" :visible="visible" @close="close">
+  <a-drawer :title="$t('setting.title')" placement="right" :open="visible" @close="close">
     <a-form layout="horizontal" :label-col="{ span: 8 }">
       <a-form-item label="语言/Language">
         <a-select v-model:value="formState.language" @change="changeLanguage" style="width: 120px">
@@ -26,6 +26,10 @@
       <a-form-item :label="$t('setting.menu.width')" v-if="formState.layout === LAYOUT_ENUM.SIDE.value">
         <a-input-number @change="changeSideMenuWidth" v-model:value="formState.sideMenuWidth" :min="1" />
         像素（px）
+      </a-form-item>
+      <a-form-item :label="$t('setting.page.width')" v-if="formState.layout === LAYOUT_ENUM.TOP.value">
+        <a-input @change="changePageWidth" v-model:value="formState.pageWidth" />
+        像素（px）或者 百分比
       </a-form-item>
       <a-form-item :label="$t('setting.menu.theme')">
         <a-radio-group v-model:value="formState.sideMenuTheme" button-style="solid" @change="changeMenuTheme">
@@ -44,6 +48,9 @@
       </a-form-item>
       <a-form-item :label="$t('setting.helpdoc')">
         <a-switch @change="changeHelpDocFlag" v-model:checked="formState.helpDocFlag" checked-children="显示" un-checked-children="隐藏" />
+      </a-form-item>
+      <a-form-item :label="$t('setting.watermark')">
+        <a-switch @change="changeWatermarkFlag" v-model:checked="formState.watermarkFlag" checked-children="显示" un-checked-children="隐藏" />
       </a-form-item>
     </a-form>
     <div class="footer">
@@ -121,6 +128,8 @@
     language: appConfigStore.language,
     // 布局: side 或者 side-expand
     layout: appConfigStore.layout,
+    // 页面宽度
+    pageWidth: appConfigStore.pageWidth,
     // 侧边菜单宽度
     sideMenuWidth: appConfigStore.sideMenuWidth,
     // 菜单主题
@@ -133,6 +142,8 @@
     footerFlag: appConfigStore.footerFlag,
     // 帮助文档
     helpDocFlag: appConfigStore.helpDocFlag,
+    // 水印
+    watermarkFlag: appConfigStore.watermarkFlag,
   };
 
   let formState = reactive({ ...formValue });
@@ -156,6 +167,13 @@
       sideMenuWidth: value,
     });
   }
+
+  function changePageWidth(e) {
+    appConfigStore.$patch({
+      pageWidth: e.target.value,
+    });
+  }
+
   function changeMenuTheme(e) {
     appConfigStore.$patch({
       sideMenuTheme: e.target.value,
@@ -183,6 +201,12 @@
   function changeHelpDocFlag(e) {
     appConfigStore.$patch({
       helpDocFlag: e,
+    });
+  }
+
+  function changeWatermarkFlag(e) {
+    appConfigStore.$patch({
+      watermarkFlag: e,
     });
   }
 </script>

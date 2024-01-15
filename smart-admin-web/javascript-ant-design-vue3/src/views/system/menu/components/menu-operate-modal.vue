@@ -12,8 +12,8 @@
     :body-style="{ paddingBottom: '80px' }"
     :maskClosable="true"
     :title="form.menuId ? '编辑' : '添加'"
-    :visible="visible"
-    :width="550"
+    :open="visible"
+    :width="600"
     @close="onClose"
   >
     <a-form ref="formRef" :labelCol="{ span: labelColSpan }" :labelWrap="true" :model="form" :rules="rules">
@@ -28,7 +28,7 @@
         <MenuTreeSelect ref="parentMenuTreeSelect" v-model:value="form.parentId" />
       </a-form-item>
       <!--      目录 菜单 start   -->
-      <template v-if="form.menuType == MENU_TYPE_ENUM.CATALOG.value || form.menuType == MENU_TYPE_ENUM.MENU.value">
+      <template v-if="form.menuType === MENU_TYPE_ENUM.CATALOG.value || form.menuType === MENU_TYPE_ENUM.MENU.value">
         <a-form-item label="菜单名称" name="menuName">
           <a-input v-model:value="form.menuName" placeholder="请输入菜单名称" />
         </a-form-item>
@@ -40,14 +40,10 @@
             </template>
           </IconSelect>
         </a-form-item>
-        <a-form-item v-if="form.menuType == MENU_TYPE_ENUM.MENU.value" label="路由地址" name="path">
+        <a-form-item v-if="form.menuType === MENU_TYPE_ENUM.MENU.value" label="路由地址" name="path">
           <a-input v-model:value="form.path" placeholder="请输入路由地址" />
         </a-form-item>
-        <a-form-item label="排序" name="sort">
-          <a-input-number v-model:value="form.sort" :min="0" placeholder="请输入排序" style="width: 100%" />
-          <h6 style="color: #ababab">值越小越靠前</h6>
-        </a-form-item>
-        <template v-if="form.menuType == MENU_TYPE_ENUM.MENU.value">
+        <template v-if="form.menuType === MENU_TYPE_ENUM.MENU.value">
           <a-form-item v-if="form.frameFlag" label="外链地址" name="frameUrl">
             <a-input v-model:value="form.frameUrl" placeholder="请输入外链地址" />
           </a-form-item>
@@ -55,11 +51,10 @@
             <a-input v-model:value="form.component" placeholder="请输入组件地址 默认带有开头/@/views" />
           </a-form-item>
         </template>
-
-        <a-form-item v-if="form.menuType == MENU_TYPE_ENUM.MENU.value" label="是否缓存" name="cacheFlag">
+        <a-form-item v-if="form.menuType === MENU_TYPE_ENUM.MENU.value" label="是否缓存" name="cacheFlag">
           <a-switch v-model:checked="form.cacheFlag" checked-children="开启缓存" un-checked-children="不缓存" />
         </a-form-item>
-        <a-form-item v-if="form.menuType == MENU_TYPE_ENUM.MENU.value" label="是否外链" name="frameFlag">
+        <a-form-item v-if="form.menuType === MENU_TYPE_ENUM.MENU.value" label="是否外链" name="frameFlag">
           <a-switch v-model:checked="form.frameFlag" checked-children="是外链" un-checked-children="不是外链" />
         </a-form-item>
         <a-form-item label="显示状态" name="frameFlag">
@@ -71,7 +66,7 @@
       </template>
       <!--      目录 菜单 end   -->
       <!--      按钮 start   -->
-      <template v-if="form.menuType == MENU_TYPE_ENUM.POINTS.value">
+      <template v-if="form.menuType === MENU_TYPE_ENUM.POINTS.value">
         <a-form-item label="功能点名称" name="menuName">
           <a-input v-model:value="form.menuName" placeholder="请输入功能点名称" />
         </a-form-item>
@@ -82,22 +77,24 @@
           <a-switch v-model:checked="form.disabledFlag" checked-children="启用" un-checked-children="禁用" />
         </a-form-item>
         <a-form-item label="权限类型" name="permsType">
-          <a-radio-group v-model:value="form.permsType" >
+          <a-radio-group v-model:value="form.permsType">
             <a-radio v-for="item in MENU_PERMS_TYPE_ENUM" :key="item.value" :value="item.value">
               {{ item.desc }}
             </a-radio>
           </a-radio-group>
         </a-form-item>
-        <a-form-item :label="form.permsType === MENU_PERMS_TYPE_ENUM.SPRING_SECURITY.value ? '权限字符' : '前端权限字符'" name="webPerms">
-          <a-input v-model:value="form.webPerms" placeholder="请输入权限字符" />
+        <a-form-item label="前端权限" name="webPerms" help="用于前端按钮等功能的展示和隐藏，搭配v-privilege使用">
+          <a-input v-model:value="form.webPerms" placeholder="请输入前端权限" />
         </a-form-item>
-        <a-form-item label="权限URL" name="apiPermsList" v-if="form.permsType === MENU_PERMS_TYPE_ENUM.URL.value">
-          <a-select v-model:value="form.apiPermsList" mode="multiple" placeholder="请选择接口权限" style="width: 100%">
-            <a-select-option v-for="item in allUrlData" :key="item.name">{{ item.url }} </a-select-option>
-          </a-select>
+        <a-form-item label="后端权限" name="apiPerms" help="后端@SaCheckPermission中的权限字符串，多个以英文逗号,分割">
+          <a-input v-model:value="form.apiPerms" placeholder="请输入后端权限" />
         </a-form-item>
       </template>
       <!--      按钮 end   -->
+      <a-form-item label="排序" name="sort">
+        <a-input-number v-model:value="form.sort" :min="0" placeholder="请输入排序" style="width: 100px" />
+        <h6 style="color: #ababab">值越小越靠前</h6>
+      </a-form-item>
     </a-form>
     <div class="footer">
       <a-button style="margin-right: 8px" @click="onClose">取消</a-button>
@@ -109,11 +106,11 @@
 <script setup>
   import { message } from 'ant-design-vue';
   import _ from 'lodash';
-  import { computed, nextTick, reactive, ref, watch } from 'vue';
+  import { computed, nextTick, reactive, ref } from 'vue';
   import MenuTreeSelect from './menu-tree-select.vue';
-  import { menuApi } from '/@/api/system/menu/menu-api';
+  import { menuApi } from '/@/api/system/menu-api';
   import IconSelect from '/@/components/framework/icon-select/index.vue';
-  import { MENU_DEFAULT_PARENT_ID, MENU_TYPE_ENUM, MENU_PERMS_TYPE_ENUM } from '/@/constants/system/menu-const';
+  import { MENU_DEFAULT_PARENT_ID, MENU_PERMS_TYPE_ENUM, MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
 
@@ -127,16 +124,10 @@
   const visible = ref(false);
 
   const labelColSpan = computed(() => {
-    if (form.menuType == MENU_TYPE_ENUM.POINTS.value) {
+    if (form.menuType === MENU_TYPE_ENUM.POINTS.value) {
       return 6;
     }
     return 4;
-  });
-
-  watch(visible, (e) => {
-    if (e) {
-      getAuthUrl();
-    }
   });
 
   const contextMenuTreeSelect = ref();
@@ -173,16 +164,6 @@
     visible.value = false;
   }
 
-  // ----------------------- 预加载数据 ------------------------
-
-  let allUrlData = ref([]);
-
-  // url数据
-  async function getAuthUrl() {
-    let res = await menuApi.getAuthUrl();
-    allUrlData.value = res.data;
-  }
-
   // ----------------------- form表单相关操作 ------------------------
 
   const formRef = ref();
@@ -193,12 +174,12 @@
     icon: undefined,
     parentId: undefined,
     path: undefined,
-    permsType: MENU_PERMS_TYPE_ENUM.SPRING_SECURITY.value,
+    permsType: MENU_PERMS_TYPE_ENUM.SA_TOKEN.value,
     webPerms: undefined,
-    apiPermsList: undefined,
+    apiPerms: undefined,
     sort: undefined,
     visibleFlag: true,
-    cacheFlag: false,
+    cacheFlag: true,
     component: undefined,
     contextMenuId: undefined,
     disabledFlag: false,
@@ -237,7 +218,6 @@
       { required: true, message: '路由地址不能为空' },
       { max: 100, message: '路由地址不能大于100个字符', trigger: 'blur' },
     ],
-    webPerms: [{ required: true, message: '前端权限字符不能为空' }],
   };
 
   function validateForm(formRef) {

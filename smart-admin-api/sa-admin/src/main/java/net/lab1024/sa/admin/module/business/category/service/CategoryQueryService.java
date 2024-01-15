@@ -4,15 +4,14 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.admin.module.business.category.dao.CategoryDao;
-import net.lab1024.sa.admin.module.business.category.domain.entity.CategoryEntity;
 import net.lab1024.sa.admin.module.business.category.domain.dto.CategorySimpleDTO;
+import net.lab1024.sa.admin.module.business.category.domain.entity.CategoryEntity;
 import net.lab1024.sa.admin.module.business.category.manager.CategoryCacheManager;
-import net.lab1024.sa.common.common.constant.StringConst;
+import net.lab1024.sa.base.common.constant.StringConst;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
  * @Date 2021/08/05 21:26:58
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 @Slf4j
@@ -32,10 +31,7 @@ public class CategoryQueryService {
 
     private static final Long DEFAULT_CATEGORY_PARENT_ID = 0L;
 
-    @Autowired
-    private CategoryDao categoryDao;
-
-    @Autowired
+    @Resource
     private CategoryCacheManager categoryCacheManager;
 
     /**
@@ -58,9 +54,6 @@ public class CategoryQueryService {
 
     /**
      * 根据 类目id集合 查询未删除的类目集合
-     *
-     * @param categoryIdList
-     * @return
      */
     public Map<Long, CategoryEntity> queryCategoryList(List<Long> categoryIdList) {
         if (CollectionUtils.isEmpty(categoryIdList)) {
@@ -70,7 +63,7 @@ public class CategoryQueryService {
         Map<Long, CategoryEntity> categoryEntityMap = Maps.newHashMap();
         for (Long categoryId : categoryIdList) {
             CategoryEntity categoryEntity = categoryCacheManager.queryCategory(categoryId);
-            if(categoryEntity != null){
+            if (categoryEntity != null) {
                 categoryEntityMap.put(categoryId, categoryEntity);
             }
         }
@@ -82,8 +75,6 @@ public class CategoryQueryService {
      * 根据类目id 递归查询该id的所有子类id 递归查询
      * 同时存入缓存
      * 注意：查询出来的集合 不包含传递的父类参数
-     *
-     * @param categoryIdList
      */
     public List<Long> queryCategorySubId(List<Long> categoryIdList) {
         if (CollectionUtils.isEmpty(categoryIdList)) {
@@ -107,8 +98,6 @@ public class CategoryQueryService {
 
     /**
      * 处理类目名称
-     *
-     * @param categoryIdList
      */
     public List<String> queryCategoryName(List<Long> categoryIdList) {
         if (CollectionUtils.isEmpty(categoryIdList)) {
@@ -127,9 +116,6 @@ public class CategoryQueryService {
 
     /**
      * 根据类目id 查询类目名称
-     *
-     * @param categoryId
-     * @return
      */
     public String queryCategoryName(Long categoryId) {
         CategoryEntity categoryEntity = categoryCacheManager.queryCategory(categoryId);
@@ -141,9 +127,6 @@ public class CategoryQueryService {
 
     /**
      * 根据类目id 查询类目详情 包含类目全称 如：医考/医师资格/临床执业
-     *
-     * @param categoryId
-     * @return
      */
     public CategorySimpleDTO queryCategoryInfo(Long categoryId) {
         CategoryEntity categoryEntity = categoryCacheManager.queryCategory(categoryId);
@@ -163,9 +146,6 @@ public class CategoryQueryService {
     /**
      * 递归查询分类和所有父级类目
      * ps:特别注意返回的集合中 包含自己
-     *
-     * @param categoryId
-     * @return
      */
     public List<CategoryEntity> queryCategoryAndParent(Long categoryId) {
         List<CategoryEntity> parentCategoryList = Lists.newArrayList();
@@ -186,9 +166,6 @@ public class CategoryQueryService {
 
     /**
      * 查询 分类全称 如：医考/医师资格/临床执业
-     *
-     * @param categoryId
-     * @return
      */
     public String queryFullName(Long categoryId) {
         List<CategoryEntity> parentCategoryList = this.queryCategoryAndParent(categoryId);
@@ -199,13 +176,10 @@ public class CategoryQueryService {
 
     /**
      * 查询 分类全称 如：医考/医师资格/临床执业
-     *
-     * @param categoryIdList
-     * @return
      */
     public Map<Long, String> queryFullName(List<Long> categoryIdList) {
         if (CollectionUtils.isEmpty(categoryIdList)) {
-            return Collections.EMPTY_MAP;
+            return Maps.newHashMap();
         }
         // 循环内查询的缓存 还ok
         return categoryIdList.stream().collect(Collectors.toMap(Function.identity(), this::queryFullName));

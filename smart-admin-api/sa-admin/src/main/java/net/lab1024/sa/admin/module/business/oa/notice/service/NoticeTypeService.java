@@ -4,12 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import net.lab1024.sa.admin.module.business.oa.notice.dao.NoticeTypeDao;
 import net.lab1024.sa.admin.module.business.oa.notice.domain.entity.NoticeTypeEntity;
 import net.lab1024.sa.admin.module.business.oa.notice.domain.vo.NoticeTypeVO;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.util.SmartBeanUtil;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
  * @Date 2022-08-12 21:40:39
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class NoticeTypeService {
 
-    @Autowired
+    @Resource
     private NoticeTypeDao noticeTypeDao;
 
     /**

@@ -27,7 +27,7 @@
   defineProps({
     value: Object,
   });
-  defineEmits('update:value');
+  defineEmits(['update:value']);
 
   let roleList = ref();
   const selectRoleId = computed(() => {
@@ -42,7 +42,7 @@
   .height100 {
     height: 100%;
   }
-  .role-setting{
-    width:calc(100% - 250px)
+  .role-setting {
+    width: calc(100% - 250px);
   }
 </style>

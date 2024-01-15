@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-form class="smart-query-form" v-privilege="'enterprise:query'">
+  <a-form class="smart-query-form" v-privilege="'oa:enterprise:query'">
     <a-row class="smart-query-form-row">
       <a-form-item label="关键字" class="smart-query-form-item">
         <a-input style="width: 300px" v-model:value="queryForm.keywords" placeholder="企业名称/联系人/联系电话" />
@@ -16,18 +16,18 @@
 
       <a-form-item label="创建时间" class="smart-query-form-item">
         <a-space direction="vertical" :size="12">
-          <a-range-picker v-model:value="searchDate" :ranges="defaultTimeRanges" @change="dateChange" />
+          <a-range-picker v-model:value="searchDate" :presets="defaultTimeRanges" @change="dateChange" />
         </a-space>
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
-        <a-button type="primary" @click="ajaxQuery">
+        <a-button type="primary" @click="onSearch">
           <template #icon>
             <SearchOutlined />
           </template>
           查询
         </a-button>
-        <a-button @click="resetQuery">
+        <a-button @click="resetQuery" class="smart-margin-left10">
           <template #icon>
             <ReloadOutlined />
           </template>
@@ -40,11 +40,17 @@
   <a-card size="small" :bordered="false" :hoverable="true">
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button @click="add()" v-privilege="'enterprise:add'" type="primary" size="small">
+        <a-button @click="add()" v-privilege="'oa:enterprise:add'" type="primary" size="small">
           <template #icon>
             <PlusOutlined />
           </template>
           新建企业
+        </a-button>
+        <a-button @click="exportExcel()" v-privilege="'oa:enterprise:exportExcel'" type="primary" size="small">
+          <template #icon>
+            <FileExcelOutlined />
+          </template>
+          导出数据
         </a-button>
       </div>
       <div class="smart-table-setting-block">
@@ -74,8 +80,8 @@
         </template>
         <template v-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="update(record.enterpriseId)" v-privilege="'enterprise:edit'" type="link">编辑</a-button>
-            <a-button @click="confirmDelete(record.enterpriseId)" danger v-privilege="'enterprise:delete'" type="link">删除</a-button>
+            <a-button @click="update(record.enterpriseId)" size="small" v-privilege="'oa:enterprise:update'" type="link">编辑</a-button>
+            <a-button @click="confirmDelete(record.enterpriseId)" size="small" danger v-privilege="'oa:enterprise:delete'" type="link">删除</a-button>
           </div>
         </template>
       </template>
@@ -168,7 +174,7 @@
     {
       title: '操作',
       dataIndex: 'action',
-      fixed: 'right',
+      // fixed: 'right',
       width: 100,
     },
   ]);
@@ -196,6 +202,11 @@
     queryForm.endTime = dateStrings[1];
   }
 
+  function onSearch() {
+    queryForm.pageNum = 1;
+    ajaxQuery();
+  }
+
   function resetQuery() {
     searchDate.value = [];
     Object.assign(queryForm, queryFormState);
@@ -214,6 +225,11 @@
     } finally {
       tableLoading.value = false;
     }
+  }
+
+  // --------------------------- 导出 ---------------------------
+  async function exportExcel() {
+    await enterpriseApi.exportExcel(queryForm);
   }
 
   // --------------------------- 删除 ---------------------------

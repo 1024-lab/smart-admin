@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @Date 2022-04-08 21:53:04
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class RoleDataScopeManager extends ServiceImpl<RoleDataScopeDao, RoleDataScopeEntity> {

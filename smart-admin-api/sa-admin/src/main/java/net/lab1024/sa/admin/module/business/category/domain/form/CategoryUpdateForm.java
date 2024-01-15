@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.business.category.domain.form;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import net.lab1024.sa.admin.module.business.category.domain.dto.CategoryBaseDTO;
 
@@ -13,12 +13,12 @@ import javax.validation.constraints.NotNull;
  * @Date 2021/08/05 21:26:58
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class CategoryUpdateForm extends CategoryAddForm {
 
-    @ApiModelProperty("类目id")
+    @Schema(description = "类目id")
     @NotNull(message = "类目id不能为空")
     private Long categoryId;
 }

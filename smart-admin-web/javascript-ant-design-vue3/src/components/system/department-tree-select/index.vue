@@ -26,7 +26,7 @@
 <script setup>
   import { onMounted, ref } from 'vue';
   import _ from 'lodash';
-  import { departmentApi } from '/@/api/system/department/department-api';
+  import { departmentApi } from '/src/api/system/department-api';
 
   const props = defineProps({
     // 绑定值

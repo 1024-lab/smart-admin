@@ -1,17 +1,18 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.domain.ValidateList;
-import net.lab1024.sa.common.constant.SwaggerTagConst;
-import net.lab1024.sa.common.module.support.changelog.domain.form.ChangeLogAddForm;
-import net.lab1024.sa.common.module.support.changelog.domain.form.ChangeLogUpdateForm;
-import net.lab1024.sa.common.module.support.changelog.service.ChangeLogService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import net.lab1024.sa.base.common.controller.SupportBaseController;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.domain.ValidateList;
+import net.lab1024.sa.base.constant.SwaggerTagConst;
+import net.lab1024.sa.base.module.support.changelog.domain.form.ChangeLogAddForm;
+import net.lab1024.sa.base.module.support.changelog.domain.form.ChangeLogUpdateForm;
+import net.lab1024.sa.base.module.support.changelog.service.ChangeLogService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
@@ -23,36 +24,36 @@ import javax.validation.Valid;
  */
 
 @RestController
-@Api(tags = SwaggerTagConst.Support.CHANGE_LOG)
-public class AdminChangeLogController {
+@Tag(name = SwaggerTagConst.Support.CHANGE_LOG)
+public class AdminChangeLogController extends SupportBaseController {
 
-    @Autowired
+    @Resource
     private ChangeLogService changeLogService;
 
-    @ApiOperation("添加 @author 卓大")
+    @Operation(summary = "添加 @author 卓大")
     @PostMapping("/changeLog/add")
-    @PreAuthorize("@saAuth.checkPermission('changeLog:add')")
+    @SaCheckPermission("support:changeLog:add")
     public ResponseDTO<String> add(@RequestBody @Valid ChangeLogAddForm addForm) {
         return changeLogService.add(addForm);
     }
 
-    @ApiOperation("更新 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('changeLog:update')")
+    @Operation(summary = "更新 @author 卓大")
     @PostMapping("/changeLog/update")
+    @SaCheckPermission("support:changeLog:update")
     public ResponseDTO<String> update(@RequestBody @Valid ChangeLogUpdateForm updateForm) {
         return changeLogService.update(updateForm);
     }
 
-    @ApiOperation("批量删除 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('changeLog:batchDelete')")
+    @Operation(summary = "批量删除 @author 卓大")
     @PostMapping("/changeLog/batchDelete")
+    @SaCheckPermission("support:changeLog:batchDelete")
     public ResponseDTO<String> batchDelete(@RequestBody ValidateList<Long> idList) {
         return changeLogService.batchDelete(idList);
     }
 
-    @ApiOperation("单个删除 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('changeLog:delete')")
+    @Operation(summary = "单个删除 @author 卓大")
     @GetMapping("/changeLog/delete/{changeLogId}")
+    @SaCheckPermission("support:changeLog:delete")
     public ResponseDTO<String> batchDelete(@PathVariable Long changeLogId) {
         return changeLogService.delete(changeLogId);
     }

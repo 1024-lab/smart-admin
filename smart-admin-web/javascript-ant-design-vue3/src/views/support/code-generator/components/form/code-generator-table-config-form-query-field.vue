@@ -22,7 +22,7 @@
     rowKey="rowKey"
     :pagination="false"
   >
-    <template #bodyCell="{ text, record, index, column }">
+    <template #bodyCell="{ record, index, column }">
       <template v-if="column.dataIndex === 'drag'">
         <a-button type="text" class="handle" size="small" style="width: 100%; text-align: left">
           <template #icon> <drag-outlined /> </template>
@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-  import lodash from 'lodash';
+  import _ from 'lodash';
   import Sortable from 'sortablejs';
   import { inject, nextTick, ref } from 'vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
@@ -103,7 +103,7 @@
       title: '查询列',
       dataIndex: 'columnNameList',
     },
-   
+
     {
       title: '条件名称',
       dataIndex: 'label',
@@ -161,7 +161,7 @@
   }
 
   function onDelete(index) {
-    lodash.pullAt(tableData.value, index);
+    _.pullAt(tableData.value, index);
   }
 
   //初始化拖拽

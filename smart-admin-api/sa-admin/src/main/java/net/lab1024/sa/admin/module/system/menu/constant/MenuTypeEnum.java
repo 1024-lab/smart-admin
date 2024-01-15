@@ -1,7 +1,7 @@
 package net.lab1024.sa.admin.module.system.menu.constant;
 
 
-import net.lab1024.sa.common.common.enumeration.BaseEnum;
+import net.lab1024.sa.base.common.enumeration.BaseEnum;
 
 /**
  * 菜单类型枚举
@@ -10,7 +10,7 @@ import net.lab1024.sa.common.common.enumeration.BaseEnum;
  * @Date 2022-03-06 22:04:37
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 public enum MenuTypeEnum implements BaseEnum {
     /**
@@ -26,9 +26,9 @@ public enum MenuTypeEnum implements BaseEnum {
      */
     POINTS(3, "功能点");
 
-    private Integer value;
+    private final Integer value;
 
-    private String desc;
+    private final String desc;
 
 
     MenuTypeEnum(Integer value, String desc) {

@@ -28,7 +28,7 @@
   </a-card>
 </template>
 <script setup>
-  import emitter from '/@/views/system/employee/department/department-mitt';
+  import emitter from '../../department-mitt';
 
   const props = defineProps({
     breadcrumb: Array,

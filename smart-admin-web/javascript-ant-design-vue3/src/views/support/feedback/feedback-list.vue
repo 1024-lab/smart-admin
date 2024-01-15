@@ -17,7 +17,7 @@
         <a-range-picker
           v-model:value="chooseTimeRange"
           @change="changeCreateDate"
-          :ranges="defaultTimeRanges"
+          :presets="defaultTimeRanges"
           format="YYYY-MM-DD"
           style="width: 240px"
         />
@@ -43,7 +43,7 @@
 
   <a-card size="small">
     <a-table rowKey="feedbackId" :dataSource="tableData" :columns="tableColumns" :pagination="false" :loading="tableLoading" size="small" bordered>
-      <template #bodyCell="{ text, record, column }">
+      <template #bodyCell="{ text, column }">
         <template v-if="column.dataIndex === 'feedbackAttachment'">
           <FilePreview :fileList="text" />
         </template>
@@ -75,7 +75,7 @@
   import { onMounted, reactive, ref } from 'vue';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { defaultTimeRanges } from '/@/lib/default-time-ranges';
-  import { feedbackApi } from '/@/api/support/feedback/feedback-api';
+  import { feedbackApi } from '/@/api/support/feedback-api';
   import FilePreview from '/@/components/support/file-preview/index.vue';
   import { smartSentry } from '/@/lib/smart-sentry';
 

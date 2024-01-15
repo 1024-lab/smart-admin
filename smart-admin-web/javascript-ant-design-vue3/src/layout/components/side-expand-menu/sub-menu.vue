@@ -32,7 +32,7 @@
 </template>
 <script setup>
   let props = defineProps({
-    menuInfo: Array,
+    menuInfo: Object,
   });
   const emits = defineEmits(['turnToPage']);
   const turnToPage = (route) => {

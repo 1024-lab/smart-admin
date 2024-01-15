@@ -1,6 +1,6 @@
 package net.lab1024.sa.admin.module.business.goods.domain.form;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -12,12 +12,12 @@ import javax.validation.constraints.NotNull;
  * @Date 2021-10-25 20:26:54
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class GoodsUpdateForm extends GoodsAddForm {
 
-    @ApiModelProperty("商品id")
+    @Schema(description = "商品id")
     @NotNull(message = "商品id不能为空")
     private Long goodsId;
 }

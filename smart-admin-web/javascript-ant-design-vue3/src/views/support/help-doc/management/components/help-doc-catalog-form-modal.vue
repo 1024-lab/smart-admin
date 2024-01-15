@@ -8,9 +8,9 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal v-model:visible="visible" :title="formState.helpDocCatalogId ? '编辑目录' : '添加目录'" @ok="handleOk" destroyOnClose>
+  <a-modal v-model:open="visible" :title="formState.helpDocCatalogId ? '编辑目录' : '添加目录'" @ok="handleOk" destroyOnClose>
     <a-form ref="formRef" :model="formState" :rules="rules" layout="vertical">
-      <a-form-item label="上级目录" name="parentId" v-if="formState.parentId != 0">
+      <a-form-item label="上级目录" name="parentId" v-if="formState.parentId !== 0">
         <HelpDocCatalogTreeSelect ref="helpDocCatalogTreeSelect" v-model:value="formState.parentId" :defaultValueFlag="false" width="100%" />
       </a-form-item>
       <a-form-item label="目录名称" name="name">
@@ -22,13 +22,13 @@
     </a-form>
   </a-modal>
 </template>
-<script setup lang="ts">
+<script setup>
   import message from 'ant-design-vue/lib/message';
   import { reactive, ref } from 'vue';
-  import { helpDocCatalogApi } from '/@/api/support/help-doc/help-doc-catalog-api';
+  import { helpDocCatalogApi } from '/@/api/support/help-doc-catalog-api';
   import HelpDocCatalogTreeSelect from './help-doc-catalog-tree-select.vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
   // ----------------------- 对外暴漏 ---------------------
 
@@ -116,7 +116,7 @@ import { smartSentry } from '/@/lib/smart-sentry';
   async function updateHelpDocCatalog() {
     SmartLoading.show();
     try {
-      if (formState.parentId == formState.helpDocCatalogId) {
+      if (formState.parentId === formState.helpDocCatalogId) {
         message.warning('上级菜单不能为自己');
         return;
       }

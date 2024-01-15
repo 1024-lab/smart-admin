@@ -11,7 +11,7 @@
 <template>
   <a-config-provider :locale="antdLocale">
     <!---全局loading--->
-    <a-spin :spinning="spinning"  tip="稍等片刻，我在拼命加载中..." size="large">
+    <a-spin :spinning="spinning" tip="稍等片刻，我在拼命加载中..." size="large">
       <!--- 路由 -->
       <RouterView />
     </a-spin>
@@ -21,7 +21,7 @@
 <script setup>
   import dayjs from 'dayjs';
   import { computed } from 'vue';
-  import { messages } from '/@/i18n/index';
+  import { messages } from '/@/i18n';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useSpinStore } from './store/modules/system/spin';
 
