@@ -37,7 +37,7 @@
 #end
 #if($field.queryTypeEnum == "DateRange")
             <a-form-item label="${field.label}" class="smart-query-form-item">
-                <a-range-picker v-model:value="queryForm.$!{field.fieldName}" :ranges="defaultTimeRanges" style="width: ${field.width}" @change="onChange$codeGeneratorTool.lowerCamel2UpperCamel(${field.fieldName})" />
+                <a-range-picker v-model:value="queryForm.$!{field.fieldName}" :presets="defaultTimeRanges" style="width: ${field.width}" @change="onChange$codeGeneratorTool.lowerCamel2UpperCamel(${field.fieldName})" />
             </a-form-item>
 #end
 #end

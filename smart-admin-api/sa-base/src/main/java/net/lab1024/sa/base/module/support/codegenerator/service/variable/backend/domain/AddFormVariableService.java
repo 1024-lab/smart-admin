@@ -73,21 +73,21 @@ public class AddFormVariableService extends CodeGenerateBaseVariableService {
 
             // 枚举
             if (SmartStringUtil.isNotEmpty(codeField.getEnumName())) {
-                packageList.add("import net.lab1024.sa.common.common.swagger.ApiModelPropertyEnum;");
-                packageList.add("import net.lab1024.sa.common.common.validator.enumeration.CheckEnum;");
+                packageList.add("import net.lab1024.sa.base.common.swagger.SchemaEnum;");
+                packageList.add("import net.lab1024.sa.base.common.validator.enumeration.CheckEnum;");
                 packageList.add("import " + form.getBasic().getJavaPackageName() + ".constant." + codeField.getEnumName() + ";");
 
                 //enum check
                 String checkEnumPrefix = "@CheckEnum(value = " + codeField.getEnumName() + ".class, message = \"" + codeField.getLabel() + " 错误\"";
                 String checkEnum = checkEnumPrefix + (field.getRequiredFlag() ? ", required = true)" : ")");
 
-                finalFieldMap.put("apiModelProperty", "@ApiModelPropertyEnum(value = " + codeField.getEnumName() + ".class, desc = \"" + codeField.getLabel() + "\")");
+                finalFieldMap.put("apiModelProperty", "@SchemaEnum(value = " + codeField.getEnumName() + ".class, desc = \"" + codeField.getLabel() + "\")");
                 finalFieldMap.put("checkEnum", checkEnum);
                 finalFieldMap.put("isEnum", true);
 
             } else {
-                String prefix = "@ApiModelProperty(value = \"" + codeField.getLabel() + "\"";
-                String apiModelProperty = prefix + (field.getRequiredFlag() ? ", required = true)" : ")");
+                String prefix = "@Schema(description = \"" + codeField.getLabel() + "\"";
+                String apiModelProperty = prefix + (field.getRequiredFlag() ? ", requiredMode = Schema.RequiredMode.REQUIRED)" : ")");
                 finalFieldMap.put("apiModelProperty", apiModelProperty);
 
                 packageList.add("import io.swagger.v3.oas.annotations.media.Schema;");
@@ -105,14 +105,14 @@ public class AddFormVariableService extends CodeGenerateBaseVariableService {
             if (SmartStringUtil.isNotEmpty(codeField.getDict())) {
                 finalFieldMap.put("dict", "\n    @JsonDeserialize(using = DictValueVoDeserializer.class)");
                 packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
-                packageList.add("import net.lab1024.sa.common.common.json.deserializer.DictValueVoDeserializer;");
+                packageList.add("import net.lab1024.sa.base.common.json.deserializer.DictValueVoDeserializer;");
             }
 
             //文件上传
             if (SmartStringUtil.contains(field.getFrontComponent(), "Upload")) {
                 finalFieldMap.put("file", "\n    @JsonDeserialize(using = FileKeyVoDeserializer.class)");
                 packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
-                packageList.add("import net.lab1024.sa.common.common.json.deserializer.FileKeyVoDeserializer;");
+                packageList.add("import net.lab1024.sa.base.common.json.deserializer.FileKeyVoDeserializer;");
             }
 
             packageList.add(getJavaPackageName(codeField.getJavaType()));

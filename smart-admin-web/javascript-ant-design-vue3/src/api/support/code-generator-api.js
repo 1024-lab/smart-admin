@@ -7,7 +7,7 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import { getRequest, postRequest,getDownload } from '/src/lib/axios';
+import { getRequest, postRequest, getDownload } from '/src/lib/axios';
 
 export const codeGeneratorApi = {
   // 查询数据库的表 @author 卓大
@@ -41,6 +41,6 @@ export const codeGeneratorApi = {
 
   // 下载代码 @author 卓大
   downloadCode: (tableName) => {
-    return getDownload(`${tableName}.zip`,`/support/codeGenerator/code/download/${tableName}`);
+    return getDownload(`/support/codeGenerator/code/download/${tableName}`);
   },
 };

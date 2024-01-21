@@ -114,7 +114,6 @@ export const TS_FILE_LIST = [
   'ts/const.js', //
 ];
 
-
 // -------------------------------- 后端文件 --------------------------------
 
 export const JAVA_DOMAIN_FILE_LIST = [

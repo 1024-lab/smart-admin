@@ -9,7 +9,7 @@
     <a-$!{insertAndUpdate.pageType}
       :title="form.$!{primaryKeyFieldName} ? '编辑' : '添加'"
       width="$!{insertAndUpdate.width}"
-      :visible="visibleFlag"
+      :open="visibleFlag"
       @cancel="onClose"
       :maskClosable="false"
       :destroyOnClose="true"

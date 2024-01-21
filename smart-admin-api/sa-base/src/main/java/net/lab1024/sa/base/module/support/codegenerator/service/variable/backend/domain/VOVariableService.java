@@ -71,14 +71,14 @@ public class VOVariableService extends CodeGenerateBaseVariableService {
 
             // 枚举
             if (SmartStringUtil.isNotEmpty(codeField.getEnumName())) {
-                packageList.add("import net.lab1024.sa.common.common.swagger.ApiModelPropertyEnum;");
+                packageList.add("import net.lab1024.sa.base.common.swagger.SchemaEnum;");
                 packageList.add("import " + form.getBasic().getJavaPackageName() + ".constant." + codeField.getEnumName() + ";");
 
-                finalFieldMap.put("apiModelProperty", "@ApiModelPropertyEnum(value = " + codeField.getEnumName() + ".class, desc = \"" + codeField.getLabel() + "\")");
+                finalFieldMap.put("apiModelProperty", "@SchemaEnum(value = " + codeField.getEnumName() + ".class, desc = \"" + codeField.getLabel() + "\")");
                 finalFieldMap.put("isEnum", true);
 
             } else {
-                String apiModelProperty = "@ApiModelProperty(value = \"" + codeField.getLabel() + "\")";
+                String apiModelProperty = "@Schema(description = \"" + codeField.getLabel() + "\")";
                 finalFieldMap.put("apiModelProperty", apiModelProperty);
 
                 packageList.add("import io.swagger.v3.oas.annotations.media.Schema;");
@@ -89,14 +89,14 @@ public class VOVariableService extends CodeGenerateBaseVariableService {
             if (isDict(field.getColumnName(), form)) {
                 finalFieldMap.put("dict", "\n    @JsonDeserialize(using = DictValueVoDeserializer.class)");
                 packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
-                packageList.add("import net.lab1024.sa.common.common.json.deserializer.DictValueVoDeserializer;");
+                packageList.add("import net.lab1024.sa.base.common.json.deserializer.DictValueVoDeserializer;");
             }
 
             //文件上传
             if (isFile(field.getColumnName(), form)) {
                 finalFieldMap.put("file", "\n    @JsonDeserialize(using = FileKeyVoDeserializer.class)");
                 packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
-                packageList.add("import net.lab1024.sa.common.common.json.deserializer.FileKeyVoDeserializer;");
+                packageList.add("import net.lab1024.sa.base.common.json.deserializer.FileKeyVoDeserializer;");
             }
 
             packageList.add(getJavaPackageName(codeField.getJavaType()));

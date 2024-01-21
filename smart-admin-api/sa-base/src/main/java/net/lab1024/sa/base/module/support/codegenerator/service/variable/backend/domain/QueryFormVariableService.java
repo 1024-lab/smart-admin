@@ -68,7 +68,7 @@ public class QueryFormVariableService extends CodeGenerateBaseVariableService {
                 continue;
             }
 
-            String apiModelProperty = "@ApiModelProperty(value = \"" + field.getLabel() + "\")";
+            String apiModelProperty = "@Schema(description = \"" + field.getLabel() + "\")";
             finalFieldMap.put("apiModelProperty", apiModelProperty);
             packageList.add("import io.swagger.v3.oas.annotations.media.Schema;");
 
@@ -97,13 +97,13 @@ public class QueryFormVariableService extends CodeGenerateBaseVariableService {
                         continue;
                     }
 
-                    packageList.add("import net.lab1024.sa.common.common.swagger.ApiModelPropertyEnum;");
-                    packageList.add("import net.lab1024.sa.common.common.validator.enumeration.CheckEnum;");
+                    packageList.add("import net.lab1024.sa.base.common.swagger.SchemaEnum;");
+                    packageList.add("import net.lab1024.sa.base.common.validator.enumeration.CheckEnum;");
                     packageList.add("import " + form.getBasic().getJavaPackageName() + ".constant." + codeField.getEnumName() + ";");
 
                     //enum check
                     String checkEnum = "@CheckEnum(value = " + codeField.getEnumName() + ".class, message = \"" + codeField.getLabel() + " 错误\")";
-                    finalFieldMap.put("apiModelProperty", "@ApiModelPropertyEnum(value = " + codeField.getEnumName() + ".class, desc = \"" + codeField.getLabel() + "\")");
+                    finalFieldMap.put("apiModelProperty", "@SchemaEnum(value = " + codeField.getEnumName() + ".class, desc = \"" + codeField.getLabel() + "\")");
                     finalFieldMap.put("checkEnum", checkEnum);
                     finalFieldMap.put("isEnum", true);
 

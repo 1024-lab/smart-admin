@@ -15,8 +15,6 @@ $importClass
 @Data
 public class ${name.upperCamel}VO {
 
-    private $!{primaryKeyJavaType} $!{primaryKeyFieldName};
-
 #foreach ($field in $fields)
 
 #if($field.isEnum)
