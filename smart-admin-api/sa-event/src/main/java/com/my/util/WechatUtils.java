@@ -53,7 +53,7 @@ public class WechatUtils {
      *
      */
     public static void init() throws Exception {
-        Security.addProvider(new BouncyCastleProvider());
+        Security.addProvider(getBouncyCastleInstance());
         KeyGenerator.getInstance(AES).init(128);
     }
 
