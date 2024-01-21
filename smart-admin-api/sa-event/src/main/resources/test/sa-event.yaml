@@ -24,5 +24,6 @@ wechat:
   appid: wx8fee1c4811653fb8
   appsecret: 2316c425a4a156e567cecf202bd9dddf
   url:
-    login: https://api.weixin.qq.com/sns/jscode2session
+    code2Session: https://api.weixin.qq.com/sns/jscode2session
+    getPhoneNumber: https://api.weixin.qq.com/wxa/business/getuserphonenumber
 

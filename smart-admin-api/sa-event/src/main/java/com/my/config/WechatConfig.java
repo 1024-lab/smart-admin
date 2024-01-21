@@ -9,12 +9,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WechatConfig {
 
-    @Value("${wechat.url.login}")
-    private String loginUrl;
+
     @Value("${wechat.appid}")
     private String appId;
     @Value("${wechat.appsecret}")
     private String appSecret;
+    @Value("${wechat.url.code2Session}")
+    private String code2SessionUrl;
+    @Value("${wechat.url.getPhoneNumber}")
+    private String getPhoneNumber;
+
     @Bean
     public WechatConfig wechatConfig(){
         return new WechatConfig();

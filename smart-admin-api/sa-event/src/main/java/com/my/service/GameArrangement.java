@@ -1,4 +1,4 @@
-package com.my.business;
+package com.my.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.Duration;
 
-import com.my.module.Gymnasium;
-import com.my.module.Person;
+import com.my.domain.Gymnasium;
+import com.my.domain.Person;
 
 public class GameArrangement {
     // 运动员列表

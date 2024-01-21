@@ -1,4 +1,4 @@
-package com.my.module;
+package com.my.domain;
 
 public class Person {
 
