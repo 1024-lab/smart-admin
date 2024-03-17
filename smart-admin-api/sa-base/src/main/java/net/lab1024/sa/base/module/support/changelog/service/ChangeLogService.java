@@ -33,7 +33,6 @@ public class ChangeLogService {
 
     /**
      * 分页查询
-     *
      */
     public PageResult<ChangeLogVO> queryPage(ChangeLogQueryForm queryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
@@ -57,7 +56,6 @@ public class ChangeLogService {
 
     /**
      * 更新
-     *
      */
     public synchronized ResponseDTO<String> update(ChangeLogUpdateForm updateForm) {
         ChangeLogEntity existVersion = changeLogDao.selectByVersion(updateForm.getVersion());
@@ -71,7 +69,6 @@ public class ChangeLogService {
 
     /**
      * 批量删除
-     *
      */
     public synchronized ResponseDTO<String> batchDelete(List<Long> idList) {
         if (CollectionUtils.isEmpty(idList)) {
@@ -92,5 +89,9 @@ public class ChangeLogService {
 
         changeLogDao.deleteById(changeLogId);
         return ResponseDTO.ok();
+    }
+
+    public ChangeLogVO getById(Long changeLogId) {
+        return SmartBeanUtil.copy(changeLogDao.selectById(changeLogId), ChangeLogVO.class);
     }
 }

@@ -124,7 +124,7 @@
             <if test="query.keywords != null and query.keywords !=''">
                 AND ( INSTR(t_notice.title,#{query.keywords})
                 OR INSTR(t_notice.author,#{query.keywords})
-                OR INSTR(t_notice.documentNumber,#{query.keywords})
+                OR INSTR(t_notice.document_number,#{query.keywords})
                 OR INSTR(t_notice.source,#{query.keywords})
                 )
             </if>

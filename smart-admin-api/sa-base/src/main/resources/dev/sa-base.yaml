@@ -66,22 +66,6 @@ server:
 
 
 # 文件上传 配置
-#file:
-#  storage:
-#    mode: local
-#    local:
-#      upload-path: /home/smart_admin_v3/upload/   #文件上传目录
-#      url-prefix:
-#    cloud:
-#      region: oss-cn-qingdao
-#      endpoint: oss-cn-qingdao.aliyuncs.com
-#      bucket-name: common
-#      access-key:
-#      secret-key:
-#      url-prefix: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/
-#      private-url-expire-seconds: 3600
-
-# 文件上传 配置
 file:
   storage:
     mode: local
@@ -96,6 +80,7 @@ file:
       secret-key:
       url-prefix: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/
       private-url-expire-seconds: 3600
+
 
 # open api配置
 springdoc:

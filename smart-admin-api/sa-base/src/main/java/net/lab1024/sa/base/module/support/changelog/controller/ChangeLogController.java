@@ -9,9 +9,7 @@ import net.lab1024.sa.base.constant.SwaggerTagConst;
 import net.lab1024.sa.base.module.support.changelog.domain.form.ChangeLogQueryForm;
 import net.lab1024.sa.base.module.support.changelog.domain.vo.ChangeLogVO;
 import net.lab1024.sa.base.module.support.changelog.service.ChangeLogService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -35,5 +33,12 @@ public class ChangeLogController extends SupportBaseController {
     @PostMapping("/changeLog/queryPage")
     public ResponseDTO<PageResult<ChangeLogVO>> queryPage(@RequestBody @Valid ChangeLogQueryForm queryForm) {
         return ResponseDTO.ok(changeLogService.queryPage(queryForm));
+    }
+
+
+    @Operation(summary = "变更内容详情 @author 卓大")
+    @GetMapping("/changeLog/getDetail/{changeLogId}")
+    public ResponseDTO<ChangeLogVO> getDetail(@PathVariable Long changeLogId) {
+        return ResponseDTO.ok(changeLogService.getById(changeLogId));
     }
 }

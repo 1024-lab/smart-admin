@@ -1,0 +1,69 @@
+<template>
+  <view class="uni-data-pickerview">
+    <view v-if="error!=null" class="error">
+      <text class="error-text">{{error!.errMsg}}</text>
+    </view>
+    <scroll-view v-if="!isCloudDataList" :scroll-x="true">
+      <view class="selected-node-list">
+        <template v-for="(item, index) in selectedNodes">
+          <text class="selected-node-item" :class="{'selected-node-item-active':index==selectedIndex}"
+            @click="onTabSelect(index)">
+            {{item[mappingTextName]}}
+          </text>
+        </template>
+      </view>
+    </scroll-view>
+    <list-view class="list-view" :scroll-y="true">
+      <list-item class="list-item" v-for="(item, _) in currentDataList" @click="onNodeClick(item)">
+        <text class="item-text" :class="{'item-text-disabled': item['disable']}">{{item[mappingTextName]}}</text>
+        <text class="check" v-if="item[mappingValueName] == selectedNodes[selectedIndex][mappingValueName]"></text>
+      </list-item>
+    </list-view>
+    <view class="loading-cover" v-if="loading">
+      <slot name="pickerview-loading" :loading="loading"></slot>
+    </view>
+  </view>
+</template>
+
+<script>
+  import { dataPicker } from "./uni-data-picker.uts"
+
+  /**
+   * DataPickerview
+   * @description uni-data-pickerview
+   * @tutorial https://ext.dcloud.net.cn/plugin?id=3796
+   * @property {Array} localdata 本地数据，参考
+   * @property {Boolean} step-searh = [true|false] 是否分布查询
+   * @value true 启用分布查询，仅查询当前选中节点
+   * @value false 关闭分布查询，一次查询出所有数据
+   * @property {String|DBFieldString} self-field 分布查询当前字段名称
+   * @property {String|DBFieldString} parent-field 分布查询父字段名称
+   * @property {String|DBCollectionString} collection 表名
+   * @property {String|DBFieldString} field 查询字段，多个字段用 `,` 分割
+   * @property {String} orderby 排序字段及正序倒叙设置
+   * @property {String|JQLString} where 查询条件
+   */
+  export default {
+    name: 'UniDataPickerView',
+    emits: ['nodeclick', 'change', 'update:modelValue'],
+    mixins: [dataPicker],
+    props: {
+      ellipsis: {
+        type: Boolean,
+        default: true
+      }
+    },
+    created() {
+      this.loadData()
+    },
+    methods: {
+      onFinish() {
+        this.$emit('change', this.getChangeNodes())
+      }
+    }
+  }
+</script>
+
+<style>
+  @import url("uni-data-pickerview.css");
+</style>

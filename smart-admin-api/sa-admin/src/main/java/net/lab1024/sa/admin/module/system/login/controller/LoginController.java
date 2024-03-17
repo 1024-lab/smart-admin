@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.login.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,7 +48,10 @@ public class LoginController {
     @GetMapping("/login/getLoginInfo")
     @Operation(summary = "获取登录结果信息  @author 卓大")
     public ResponseDTO<LoginResultVO> getLoginInfo() {
-        return ResponseDTO.ok(loginService.getLoginResult(AdminRequestUtil.getRequestUser()));
+        LoginResultVO loginResult = loginService.getLoginResult(AdminRequestUtil.getRequestUser());
+        String tokenValue = StpUtil.getTokenValue();
+        loginResult.setToken(tokenValue);
+        return ResponseDTO.ok(loginResult);
     }
 
     @Operation(summary = "退出登陆  @author 卓大")

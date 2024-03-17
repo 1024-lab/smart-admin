@@ -44,11 +44,9 @@ public class NoticeVO {
     private LocalDateTime publishTime;
 
     @Schema(description = "作者")
-    @NotBlank(message = "作者不能为空")
     private String author;
 
     @Schema(description = "来源")
-    @NotBlank(message = "标题不能为空")
     private String source;
 
     @Schema(description = "文号")

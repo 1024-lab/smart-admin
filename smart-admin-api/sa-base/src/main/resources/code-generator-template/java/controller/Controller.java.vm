@@ -60,9 +60,9 @@ public class ${name.upperCamel}Controller {
 
     #if($deleteInfo.deleteEnum == "Single" || $deleteInfo.deleteEnum == "SingleAndBatch")
     @Operation(summary = "单个删除 @author ${basic.backendAuthor}")
-    @GetMapping("/${name.lowerCamel}/delete/{${name.lowerCamel}Id}")
+    @GetMapping("/${name.lowerCamel}/delete/{${primaryKeyFieldName}}")
     public ResponseDTO<String> batchDelete(@PathVariable ${primaryKeyJavaType} ${primaryKeyFieldName}) {
-        return ${name.lowerCamel}Service.delete(${name.lowerCamel}Id);
+        return ${name.lowerCamel}Service.delete(${primaryKeyFieldName});
     }
     #end
 #end
