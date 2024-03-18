@@ -109,6 +109,11 @@ public class AdminInterceptor implements HandlerInterceptor {
                 return true;
             }
 
+            // 如果是超级管理员的话，不需要校验权限
+            if(requestEmployee.getAdministratorFlag()){
+               return true;
+            }
+
             SaStrategy.instance.checkMethodAnnotation.accept(method);
 
         } catch (SaTokenException e) {

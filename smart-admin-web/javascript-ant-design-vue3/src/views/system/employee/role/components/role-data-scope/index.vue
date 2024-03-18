@@ -12,7 +12,7 @@
   <div>
     <div class="btn-group">
       <a-button class="button-style" type="primary" @click="updateDataScope" v-privilege="'system:role:dataScope:update'"> 保存 </a-button>
-      <a-button class="button-style" @click="getDataScope" > 刷新 </a-button>
+      <a-button class="button-style" @click="getDataScope"> 刷新 </a-button>
     </div>
     <a-row class="header">
       <a-col class="tab-margin" :span="4">业务单据</a-col>
@@ -107,7 +107,7 @@
         roleId: selectRoleId.value,
         dataScopeItemList: selectedDataScopeList.value.filter((e) => !_.isUndefined(e.viewType)),
       };
-      await roleApi.updateRoleDataScopeList(data);
+      await roleApi.updateDataScope(data);
       message.success('保存成功');
       getDataScope();
     } catch (e) {

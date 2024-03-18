@@ -24,7 +24,7 @@ public class ResponseDTO<T> {
 
     public static final int OK_CODE = 0;
 
-    public static final String OK_MSG = "success";
+    public static final String OK_MSG = "操作成功";
 
     @Schema(description = "返回码")
     private Integer code;

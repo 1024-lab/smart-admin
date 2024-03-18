@@ -62,6 +62,7 @@ server:
     basedir: ${project.log-directory}/tomcat-logs
     accesslog:
       enabled: true
+      max-days: 7
       pattern: "%t %{X-Forwarded-For}i %a %r %s (%D ms) %I (%B byte)"
 
 

@@ -74,6 +74,9 @@
     :deep(.uni-card__header) {
       border: none;
     }
+    :deep(.uni-card .uni-card__header .uni-card__header-content .uni-card__header-content-title) {
+      font-size: 32rpx;
+    }
     :deep(.uni-list-item__container) {
       padding: 16rpx 20rpx;
     }
@@ -81,10 +84,13 @@
       background: linear-gradient(180deg, #e8f4ff, #f8fcff);
     }
     :deep(.uni-card__header-extra) {
-      font-size: 24rpx;
+      font-size: 30rpx;
       font-weight: 400;
       text-align: center;
       color: #1a9aff;
+    }
+    :deep(.uni-list-item__content-title) {
+      font-size: 30rpx;
     }
   }
 </style>

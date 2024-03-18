@@ -16,6 +16,8 @@
     @close="onClose"
     destroyOnClose
   >
+    <a-alert message="超管需要直接在数据库表 t_employee修改哦" type="error" closable />
+    <br />
     <a-form ref="formRef" :model="form" :rules="rules" layout="vertical">
       <a-form-item label="姓名" name="actualName">
         <a-input v-model:value.trim="form.actualName" placeholder="请输入姓名" />
@@ -63,7 +65,7 @@
   import { GENDER_ENUM } from '/@/constants/common-const';
   import { regular } from '/@/constants/regular-const';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '/@/lib/smart-sentry';
   // ----------------------- 以下是字段定义 emits props ---------------------
   const departmentTreeSelect = ref();
   // emit

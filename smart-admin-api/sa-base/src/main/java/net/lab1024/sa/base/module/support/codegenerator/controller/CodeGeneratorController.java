@@ -87,7 +87,7 @@ public class CodeGeneratorController extends SupportBaseController {
         ResponseDTO<byte[]> download = codeGeneratorService.download(tableName);
 
         if (download.getOk()) {
-            SmartResponseUtil.setDownloadFileHeader(response, tableName + "-code.zip", (long) download.getData().length);
+            SmartResponseUtil.setDownloadFileHeader(response, tableName + "_code.zip", (long) download.getData().length);
             response.getOutputStream().write(download.getData());
         } else {
             SmartResponseUtil.write(response, download);

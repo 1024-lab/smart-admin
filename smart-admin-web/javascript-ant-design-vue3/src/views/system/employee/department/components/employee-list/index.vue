@@ -57,6 +57,9 @@
       bordered
     >
       <template #bodyCell="{ text, record, index, column }">
+        <template v-if="column.dataIndex === 'administratorFlag'">
+          <a-tag color="error" v-if="text">超管</a-tag>
+        </template>
         <template v-if="column.dataIndex === 'disabledFlag'">
           <a-tag :color="text ? 'error' : 'processing'">{{ text ? '禁用' : '启用' }}</a-tag>
         </template>
@@ -151,6 +154,11 @@
       title: '登录账号',
       dataIndex: 'loginName',
       width: 100,
+    },
+    {
+      title: '超管',
+      dataIndex: 'administratorFlag',
+      width: 60,
     },
     {
       title: '状态',

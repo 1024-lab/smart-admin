@@ -93,10 +93,15 @@
     overflow: hidden;
     box-shadow: 0 3px 4px 0 rgba(24, 144, 255, 0.06);
     padding: 0 10rpx;
-
+    :deep(.uni-list-item__content-title) {
+      font-size: 30rpx;
+    }
+    :deep(.uni-list-item__extra-text) {
+      font-size: 28rpx;
+    }
     .icon {
-      width: 42rpx;
-      height: 42rpx;
+      width: 56rpx;
+      height: 56rpx;
       margin-right: 20rpx;
     }
   }

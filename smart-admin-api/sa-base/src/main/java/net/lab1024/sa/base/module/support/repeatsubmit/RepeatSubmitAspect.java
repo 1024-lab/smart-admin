@@ -55,22 +55,15 @@ public class RepeatSubmitAspect {
         if (StringUtils.isEmpty(ticket)) {
             return point.proceed();
         }
-        Long timeStamp = this.repeatSubmitTicket.getTicketTimestamp(ticket);
-        if (timeStamp != null) {
+        Long lastRequestTime = this.repeatSubmitTicket.getTicketTimestamp(ticket);
+        if (lastRequestTime != null) {
             Method method = ((MethodSignature) point.getSignature()).getMethod();
             RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
-
-            // 说明注解去掉了
-            if (annotation != null) {
-                return point.proceed();
-            }
-
             int interval = Math.min(annotation.value(), RepeatSubmit.MAX_INTERVAL);
-            if (System.currentTimeMillis() < timeStamp + interval) {
+            if (System.currentTimeMillis() < lastRequestTime + interval) {
                 // 提交频繁
                 return ResponseDTO.error(UserErrorCode.REPEAT_SUBMIT);
             }
-
         }
         Object obj = null;
         try {
@@ -80,8 +73,6 @@ public class RepeatSubmitAspect {
         } catch (Throwable throwable) {
             log.error("", throwable);
             throw throwable;
-        } finally {
-            this.repeatSubmitTicket.removeTicket(ticket);
         }
         return obj;
     }

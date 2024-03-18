@@ -62,8 +62,8 @@ server:
     basedir: ${project.log-directory}/tomcat-logs
     accesslog:
       enabled: true
+      max-days: 7
       pattern: "%t %{X-Forwarded-For}i %a %r %s (%D ms) %I (%B byte)"
-
 
 # 文件上传 配置
 file:
@@ -81,7 +81,6 @@ file:
       url-prefix: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/
       private-url-expire-seconds: 3600
 
-
 # open api配置
 springdoc:
   swagger-ui:
@@ -93,7 +92,7 @@ springdoc:
 knife4j:
   enable: true
   basic:
-    enable: true
+    enable: false
     username: api # Basic认证用户名
     password: 1024 # Basic认证密码
 

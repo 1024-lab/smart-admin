@@ -9,6 +9,7 @@ import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.domain.PageResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
