@@ -10,17 +10,20 @@
     width: 444px;
     height: 570px;
     &.desc {
-      background: #003b94;
+      background: #ffffff;
       border-radius: 12px 0px 0px 12px;
       box-shadow: 0px 16px 73px 8px rgba(203, 203, 203, 0.2);
       padding: 23px 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
     &.login {
       background: #ffffff;
       border-radius: 0px 12px 12px 0px;
       padding: 34px 42px;
       position: relative;
-      border: solid 1px #efefef;
     }
     .login-qr {
       position: absolute;
@@ -29,38 +32,32 @@
       width: 66px;
       height: 66px;
     }
-    .logo {
-      width: 180px;
-      height: 42px;
-      align-self: start;
-    }
     .welcome {
-      margin-top: 12px;
-      font-size: 26px;
-      font-weight: bold;
-      color: #ffffff;
-      p {
-        margin-bottom: 0;
+      padding-top: 35px;
+      p{
+        color: #333333;
+        line-height: 25px;
+        letter-spacing: 0.26px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 26px;
       }
-      .desc {
-        font-size: 15px;
-        font-weight: 500;
-        margin: 40px 0 60px 0;
-        line-height: 21px;
-
-        .setence {
-          font-size: 13px;
-          // text-decoration: underline;
-          font-style: italic;
-        }
-        .author {
-          float: right;
-          font-size: 13px;
-          margin-top: 10px;
-          text-decoration: underline;
-          font-style: italic;
-        }
+      .sub-welcome{
+        padding: 10px;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+        color: #ffffff;
+        line-height: 25px;
+        letter-spacing: 0.26px;
+        opacity: 0.96;
+        background: #1748fd;
+        border-radius: 22px 22px 2px 22px;
       }
+    }
+    .welcome-img{
+      width: 350px;
+      height: 350px;
     }
     .app-qr-box {
       display: flex;
@@ -119,15 +116,14 @@
               display: inline-block;
               width: 100%;
               white-space: nowrap;
-               animation: marquee 5s linear infinite;
+              animation: marquee 5s linear infinite;
             }
           }
         }
       }
     }
     .login-title {
-      font-size: 30px;
-      font-weight: 700;
+      font-size: 20px;
       text-align: center;
       color: #1e1e1e;
       margin-bottom: 35px;

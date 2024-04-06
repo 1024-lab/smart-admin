@@ -34,9 +34,9 @@
       <HeaderAvatar />
     </div>
     <!---帮助文档--->
-    <div class="user-space-item" @click="showHelpDoc">
-      <question-circle-two-tone style="font-size: 18px; margin-right: 5px; margin-top: 5px" />
+    <div class="user-space-item" @click="showHelpDoc" v-if="!showHelpDocFlag">
       <span>帮助文档</span>
+      <DoubleLeftOutlined v-if="!showHelpDocFlag" />
     </div>
 
     <HeaderSetting ref="headerSetting" />
@@ -48,7 +48,8 @@
   import HeaderSetting from './header-setting.vue';
   import HeaderMessage from './header-message.vue';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
+  import { theme } from 'ant-design-vue';
 
   // 设置
   const headerSetting = ref();
@@ -67,10 +68,17 @@
     useAppConfigStore().showHelpDoc();
   }
 
+  const showHelpDocFlag = computed(() => {
+    return useAppConfigStore().helpDocFlag;
+  });
+
   //搜索
-  function search(){
-    window.open("https://1024lab.net");
+  function search() {
+    window.open('https://1024lab.net');
   }
+
+  const { useToken } = theme;
+  const { token } = useToken();
 </script>
 
 <style lang="less" scoped>
@@ -91,7 +99,7 @@
   }
 
   .user-space-item:hover {
-    color: @primary-color;
+    color: v-bind('token.colorPrimary');
     background: @hover-bg-color;
   }
 

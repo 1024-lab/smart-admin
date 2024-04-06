@@ -9,8 +9,8 @@
   *
 -->
 <template>
-  <default-home-card icon="StarTwoTone" title="已办待办">
-    <div style="height: 280px;">
+  <default-home-card icon="Star" title="已办待办">
+    <div style="height: 280px">
       <div class="center column">
         <a-space direction="vertical" style="width: 100%">
           <div v-for="(item, index) in toDoList" :key="index" :class="['to-do', { done: item.doneFlag }]">

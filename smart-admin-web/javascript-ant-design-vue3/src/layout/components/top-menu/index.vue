@@ -86,10 +86,10 @@
 
   const color = computed(() => {
     let isLight = useAppConfigStore().$state.sideMenuTheme === 'light';
-      return {
-          color: isLight ? '#001529' : '#FFFFFF',
-          background:isLight ? '#FFFFFF' : '#001529',
-      }
+    return {
+      color: isLight ? '#001529' : '#FFFFFF',
+      background: isLight ? '#FFFFFF' : '#001529',
+    };
   });
 
   const router = useRouter();
@@ -118,7 +118,7 @@
 
       .logo-img {
         display: inline-block;
-        height: 45px;
+        height: 30px;
         vertical-align: middle;
       }
       .title {
@@ -161,13 +161,13 @@
         color: v-bind('color.color');
       }
 
-      .user-space-item{
+      .user-space-item {
         margin-left: 10px;
       }
     }
   }
 
-  :deep(.ant-menu-horizontal){
-    border-bottom:0;
+  :deep(.ant-menu-horizontal) {
+    border-bottom: 0;
   }
 </style>

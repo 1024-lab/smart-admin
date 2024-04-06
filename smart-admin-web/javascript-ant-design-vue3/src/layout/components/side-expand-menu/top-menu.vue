@@ -90,17 +90,20 @@
     z-index: 100;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     cursor: pointer;
 
     .logo-img {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
     }
 
     .title {
       font-size: 16px;
       font-weight: 600;
       overflow: hidden;
+      word-wrap: break-word;
+      white-space: nowrap;
       color: v-bind('theme === "light" ? "#001529": "#ffffff"');
     }
   }

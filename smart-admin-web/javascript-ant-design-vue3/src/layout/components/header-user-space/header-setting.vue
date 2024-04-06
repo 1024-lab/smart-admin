@@ -11,16 +11,47 @@
 <template>
   <a-drawer :title="$t('setting.title')" placement="right" :open="visible" @close="close">
     <a-form layout="horizontal" :label-col="{ span: 8 }">
-      <a-form-item label="语言/Language">
-        <a-select v-model:value="formState.language" @change="changeLanguage" style="width: 120px">
-          <a-select-option v-for="item in i18nList" :key="item.value" :value="item.value">{{ item.text }}</a-select-option>
-        </a-select>
+      <a-form-item :label="$t('setting.color')">
+        <div style="display: flex; align-items: center">
+          <template v-for="(item, index) in themeColors">
+            <div v-if="index === formState.colorIndex" class="color">
+              <CheckSquareFilled :style="{ color: item.primaryColor, fontSize: '22px' }" />
+            </div>
+            <div v-else @click="changeColor(index)" class="color">
+              <svg
+                class="icon"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                :fill="item.primaryColor"
+                xmlns="http://www.w3.org/2000/svg"
+                width="26"
+                height="26"
+              >
+                <path
+                  d="M128 160.01219c0-17.67619 14.336-32.01219 32.01219-32.01219h704c17.65181 0 31.98781 14.336 31.98781 32.01219v704c0 17.65181-14.336 31.98781-32.01219 31.98781H160.036571a31.98781 31.98781 0 0 1-32.01219-32.01219V160.036571z"
+                ></path>
+              </svg>
+            </div>
+          </template>
+        </div>
+      </a-form-item>
+      <a-form-item :label="$t('setting.compact')">
+        <a-radio-group v-model:value="formState.compactFlag" button-style="solid" @change="changeCompactFlag">
+          <a-radio-button :value="false">默认</a-radio-button>
+          <a-radio-button :value="true">紧凑</a-radio-button>
+        </a-radio-group>
       </a-form-item>
       <a-form-item :label="$t('setting.menu.layout')">
         <a-radio-group @change="changeLayout" button-style="solid" v-model:value="formState.layout">
           <a-radio-button v-for="item in $smartEnumPlugin.getValueDescList('LAYOUT_ENUM')" :key="item.value" :value="item.value">
             {{ item.desc }}
           </a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item :label="$t('setting.menu.theme')">
+        <a-radio-group v-model:value="formState.sideMenuTheme" button-style="solid" @change="changeMenuTheme">
+          <a-radio-button value="dark">Dark</a-radio-button>
+          <a-radio-button value="light">Light</a-radio-button>
         </a-radio-group>
       </a-form-item>
       <a-form-item :label="$t('setting.menu.width')" v-if="formState.layout === LAYOUT_ENUM.SIDE.value">
@@ -31,11 +62,10 @@
         <a-input @change="changePageWidth" v-model:value="formState.pageWidth" />
         像素（px）或者 百分比
       </a-form-item>
-      <a-form-item :label="$t('setting.menu.theme')">
-        <a-radio-group v-model:value="formState.sideMenuTheme" button-style="solid" @change="changeMenuTheme">
-          <a-radio-button value="dark">Dark</a-radio-button>
-          <a-radio-button value="light">Light</a-radio-button>
-        </a-radio-group>
+      <a-form-item label="语言/Language">
+        <a-select v-model:value="formState.language" @change="changeLanguage" style="width: 120px">
+          <a-select-option v-for="item in i18nList" :key="item.value" :value="item.value">{{ item.text }}</a-select-option>
+        </a-select>
       </a-form-item>
       <a-form-item :label="$t('setting.bread')">
         <a-switch @change="changeBreadCrumbFlag" v-model:checked="formState.breadCrumbFlag" checked-children="显示" un-checked-children="隐藏" />
@@ -69,6 +99,7 @@
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { Modal } from 'ant-design-vue';
   import { appDefaultConfig } from '/@/config/app-config';
+  import { themeColors } from '/@/theme/color.js';
 
   // ----------------- modal 显示与隐藏 -----------------
 
@@ -130,10 +161,14 @@
     layout: appConfigStore.layout,
     // 页面宽度
     pageWidth: appConfigStore.pageWidth,
+    // 颜色
+    colorIndex: appConfigStore.colorIndex,
     // 侧边菜单宽度
     sideMenuWidth: appConfigStore.sideMenuWidth,
     // 菜单主题
     sideMenuTheme: appConfigStore.sideMenuTheme,
+    // 页面紧凑
+    compactFlag: appConfigStore.compactFlag,
     // 标签页
     pageTagFlag: appConfigStore.pageTagFlag,
     // 面包屑
@@ -162,6 +197,13 @@
     });
   }
 
+  function changeColor(index) {
+    formState.colorIndex = index;
+    appConfigStore.$patch({
+      colorIndex: index,
+    });
+  }
+
   function changeSideMenuWidth(value) {
     appConfigStore.$patch({
       sideMenuWidth: value,
@@ -177,6 +219,12 @@
   function changeMenuTheme(e) {
     appConfigStore.$patch({
       sideMenuTheme: e.target.value,
+    });
+  }
+
+  function changeCompactFlag(e) {
+    appConfigStore.$patch({
+      compactFlag: e.target.value,
     });
   }
 
@@ -221,5 +269,15 @@
     background: #fff;
     text-align: left;
     z-index: 1;
+  }
+
+  .color {
+    margin-left: 8px;
+    display: inline;
+    height: 26px;
+    width: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>

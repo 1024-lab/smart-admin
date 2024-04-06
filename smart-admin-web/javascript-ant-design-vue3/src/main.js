@@ -25,8 +25,10 @@ import smartEnumPlugin from '/@/plugins/smart-enums-plugin';
 import { buildRoutes, router } from '/@/router';
 import { store } from '/@/store';
 import { useUserStore } from '/@/store/modules/system/user';
+import 'ant-design-vue/dist/reset.css';
 import '/@/theme/index.less';
-import { getTokenFromCookie } from '/@/utils/cookie-util';
+import { localRead } from '/@/utils/local-util.js';
+import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
 
 /*
  * -------------------- ※ 着重 解释说明下main.js的初始化逻辑 begin ※ --------------------
@@ -82,7 +84,7 @@ function initVue() {
 }
 
 //不需要获取用户信息、用户菜单、用户菜单动态路由，直接初始化vue即可
-let token = getTokenFromCookie();
+let token = localRead(LocalStorageKeyConst.USER_TOKEN);
 if (!token) {
   initVue();
 } else {

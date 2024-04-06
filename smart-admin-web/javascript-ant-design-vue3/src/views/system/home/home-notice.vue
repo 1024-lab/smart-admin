@@ -9,7 +9,7 @@
   *
 -->
 <template>
-  <default-home-card extra="更多" icon="SoundTwoTone" title="通知公告" @extraClick="onMore">
+  <default-home-card extra="更多" icon="SoundOutlined" title="通知公告" @extraClick="onMore">
     <a-spin :spinning="loading">
       <div class="content-wrapper">
         <a-empty v-if="$lodash.isEmpty(data)" />
@@ -37,10 +37,6 @@
   import { noticeApi } from '/@/api/business/oa/notice-api';
   import { smartSentry } from '/@/lib/smart-sentry';
   import DefaultHomeCard from '/@/views/system/home/components/default-home-card.vue';
-  import { theme } from 'ant-design-vue';
-  const { useToken } = theme;
-  const { token } = useToken();
-  const colorPrimary = token.value.colorPrimary;
 
   const props = defineProps({
     noticeTypeId: {
@@ -110,7 +106,6 @@
       overflow: hidden;
       word-break: break-all;
       margin-right: 5px;
-      color: v-bind(colorPrimary);
     }
 
     .time {

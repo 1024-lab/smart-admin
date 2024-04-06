@@ -13,43 +13,7 @@
     <div class="box-item desc">
       <div class="welcome">
         <p>欢迎登录 SmartAdmin V3</p>
-        <p class="desc">
-          SmartAdmin 是由 河南·洛阳
-          <a target="_blank" href="https://www.1024lab.net" style="color: white; weight: bolder; font-size: 15px; text-decoration: underline"
-            >1024创新实验室（1024Lab）</a
-          >
-          基于SpringBoot + Sa-Token + Mybatis-Plus 和 Vue3 + Vite5 + Ant Design Vue 4 (同时支持JavaScript和TypeScript双版本)
-          以「高质量代码」为核心，「简洁、高效、安全」的快速开发平台。
-          <br />
-          <br />
-          <span class="setence">
-            致伟大的开发者 ：
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;我们希望用一套漂亮优雅的代码和一套整洁高效的代码规范，让大家在这浮躁的世界里感受到一股把代码写好的清流 !
-            <br />
-            保持谦逊，保持学习，热爱代码，更热爱生活 !<br />
-            永远年轻，永远前行 !<br />
-            <span class="author">
-              <a target="_blank" href="https://zhuoda.vip" style="color: white; font-size: 13px; text-decoration: underline">
-                1024创新实验室-主任：卓大
-              </a>
-            </span>
-          </span>
-        </p>
-      </div>
-      <div class="app-qr-box">
-        <div class="app-qr">
-          <img :src="zhuoda" />
-          <span class="qr-desc"> 加微信，骚扰卓大 :) </span>
-        </div>
-        <div class="app-qr">
-          <img :src="gzh" />
-          <div class="qr-desc-marquee">
-            <div class="marquee">
-              <span>关注：六边形工程师，分享：赚钱、代码、生活</span>
-            </div>
-          </div>
-        </div>
+        <p class="sub-welcome">高质量代码的快速开发平台</p>
       </div>
     </div>
     <div class="box-item login">
@@ -99,22 +63,18 @@
   </div>
 </template>
 <script setup>
-  import { message, notification, Button } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { onMounted, onUnmounted, reactive, ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { loginApi } from '/@/api/system/login-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { LOGIN_DEVICE_ENUM } from '/@/constants/system/login-device-const';
   import { useUserStore } from '/@/store/modules/system/user';
-  import gongzhonghao from '/@/assets/images/1024lab/1024lab-gzh.jpg';
-  import zhuoda from '/@/assets/images/1024lab/zhuoda-wechat.jpg';
   import loginQR from '/@/assets/images/login/login-qr.png';
-  import gzh from '/@/assets/images/1024lab/gzh.jpg';
 
   import { buildRoutes } from '/@/router/index';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { encryptData } from '/@/lib/encrypt';
-  import { h } from 'vue';
   import { localSave } from '/@/utils/local-util.js';
   import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
 
@@ -144,25 +104,6 @@
         onLogin();
       }
     };
-
-    notification['success']({
-      message: '温馨提示',
-      description: 'SmartAdmin 提供 9种 登录背景风格哦！',
-      duration: null,
-      onClick: () => {},
-      btn: () =>
-        h(
-          Button,
-          {
-            type: 'primary',
-            target: '_blank',
-            size: 'small',
-            href: 'https://smartadmin.vip/views/v3/front/Login.html',
-            onClick: () => {},
-          },
-          { default: () => '去看看' }
-        ),
-    });
   });
 
   onUnmounted(() => {

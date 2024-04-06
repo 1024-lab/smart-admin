@@ -9,11 +9,11 @@
  */
 import { message, Modal } from 'ant-design-vue';
 import axios from 'axios';
-import { clearAllCoolies, getTokenFromCookie } from '/@/utils/cookie-util';
-import { localClear } from '/@/utils/local-util';
+import { localClear, localRead } from '/@/utils/local-util';
 import { decryptData, encryptData } from './encrypt';
 import { DATA_TYPE_ENUM } from '../constants/common-const';
 import _ from 'lodash';
+import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
 
 // token的消息头
 const TOKEN_HEADER = 'x-access-token';
@@ -28,7 +28,7 @@ const smartAxios = axios.create({
 smartAxios.interceptors.request.use(
   (config) => {
     // 在发送请求之前消息头加入token token
-    const token = getTokenFromCookie();
+    const token = localRead(LocalStorageKeyConst.USER_TOKEN);
     if (token) {
       config.headers[TOKEN_HEADER] = token;
     } else {
@@ -73,7 +73,6 @@ smartAxios.interceptors.response.use(
       if (res.code === 30007 || res.code === 30008) {
         message.destroy();
         message.error('您没有登录，请重新登录');
-        clearAllCoolies();
         localClear();
         setTimeout(() => {
           location.href = '/';
@@ -97,7 +96,6 @@ smartAxios.interceptors.response.use(
           content: res.msg,
           onOk() {
             return new Promise((resolve, reject) => {
-              clearAllCoolies();
               localClear();
               setTimeout(() => {
                 location.href = '/';

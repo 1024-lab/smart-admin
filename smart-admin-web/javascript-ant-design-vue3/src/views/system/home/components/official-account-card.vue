@@ -9,7 +9,7 @@
   *
 -->
 <template>
-  <default-home-card icon="SmileTwoTone" title="联系我们">
+  <default-home-card icon="SmileOutlined" title="联系我们">
     <div class="app-qr-box">
       <div class="app-qr">
         <img :src="zhuoda" />

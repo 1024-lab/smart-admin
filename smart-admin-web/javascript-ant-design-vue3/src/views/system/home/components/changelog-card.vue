@@ -9,7 +9,7 @@
   *
 -->
 <template>
-  <default-home-card extra="更多" icon="FireTwoTone" title="更新日志" @extraClick="onMore">
+  <default-home-card extra="更多" icon="FlagOutlined" title="更新日志" @extraClick="onMore">
     <a-empty v-if="$lodash.isEmpty(data)" />
     <ul v-else>
       <template v-for="(item, index) in data" :key="index">

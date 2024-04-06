@@ -1,5 +1,5 @@
 <template>
-  <default-home-card icon="ProfileTwoTone" title="销量统计">
+  <default-home-card icon="Profile" title="销量统计">
     <div class="echarts-box">
       <div class="category-main" id="category-main"></div>
     </div>

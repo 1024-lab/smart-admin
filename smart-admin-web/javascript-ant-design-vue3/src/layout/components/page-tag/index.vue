@@ -12,7 +12,7 @@
   <a-row style="border-bottom: 1px solid #eeeeee; position: relative" v-show="pageTagFlag">
     <a-dropdown :trigger="['contextmenu']">
       <div class="smart-page-tag">
-        <a-tabs style="width: 100%" :tab-position="mode" v-model:activeKey="selectedKey" size="small" @tabClick="selectTab" >
+        <a-tabs style="width: 100%" :tab-position="mode" v-model:activeKey="selectedKey" size="small" @tabClick="selectTab">
           <a-tab-pane v-for="item in tagNav" :key="item.menuName">
             <template #tab>
               <span>
@@ -55,12 +55,7 @@
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useUserStore } from '/@/store/modules/system/user';
-
-  // //样式
-  // const tagOperateWidth = ref(40);
-  // const tabBarStyle = {
-  //   width: 'calc(100% - 80px)'
-  // }
+  import { theme } from 'ant-design-vue';
 
   //标签页 是否显示
   const pageTagFlag = computed(() => useAppConfigStore().$state.pageTagFlag);
@@ -85,7 +80,7 @@
       return;
     }
     // 寻找tag
-    let tag = tagNav.value.find((e) => e.menuName == name);
+    let tag = tagNav.value.find((e) => e.menuName === name);
     if (!tag) {
       router.push({ name: HOME_PAGE_NAME });
       return;
@@ -96,7 +91,7 @@
 
   //通过菜单关闭
   function closeByMenu(closeAll) {
-    let find = tagNav.value.find((e) => e.menuName == selectedKey.value);
+    let find = tagNav.value.find((e) => e.menuName === selectedKey.value);
     if (!find || closeAll) {
       closeTag(null, true);
     } else {
@@ -110,12 +105,12 @@
     if (item && !closeAll) {
       let goName = HOME_PAGE_NAME;
       let goQuery = undefined;
-      if (item.fromMenuName && tagNav.value.some((e) => e.menuName == item.fromMenuName)) {
+      if (item.fromMenuName && tagNav.value.some((e) => e.menuName === item.fromMenuName)) {
         goName = item.fromMenuName;
         goQuery = item.fromMenuQuery;
       } else {
         // 查询左侧tag
-        let index = tagNav.value.findIndex((e) => e.menuName == item.menuName);
+        let index = tagNav.value.findIndex((e) => e.menuName === item.menuName);
         if (index > 0) {
           // 查询左侧tag
           let leftTagNav = tagNav.value[index - 1];
@@ -132,10 +127,14 @@
     // 关闭其他tag不做处理 直接调用closeTagNav
     useUserStore().closeTagNav(item ? item.menuName : null, closeAll);
   }
+
+  const { useToken } = theme;
+  const { token } = useToken();
 </script>
 
 <style scoped lang="less">
   @smart-page-tag-operate-width: 40px;
+  @color-primary: v-bind('token.colorPrimary');
 
   .smart-page-tag-operate {
     width: @smart-page-tag-operate-width;
@@ -164,7 +163,7 @@
   }
 
   .smart-page-tag-operate:hover {
-    color: @primary-color;
+    color: @color-primary;
   }
 
   .smart-page-tag {
@@ -184,7 +183,7 @@
     .smart-page-tag-close {
       margin-left: 5px;
       font-size: 10px;
-      color: #8c8c8c;
+      color: #666666;
     }
 
     /**  覆盖 ant design vue的 tabs 样式，变小一点 **/
@@ -203,15 +202,15 @@
     }
 
     :deep(.ant-tabs-tab-active) {
-      background-color: #e8f4ff;
+      background-color: #eeeeee;
       .smart-page-tag-close {
-        color: @primary-color;
+        color: @color-primary;
       }
     }
     :deep(.ant-tabs-nav .ant-tabs-tab:hover) {
-      background-color: #e8f4ff;
+      background-color: #eeeeee;
       .smart-page-tag-close {
-        color: @primary-color;
+        color: @color-primary;
       }
     }
   }

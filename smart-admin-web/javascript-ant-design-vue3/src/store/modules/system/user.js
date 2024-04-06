@@ -12,8 +12,8 @@ import { defineStore } from 'pinia';
 import localKey from '/@/constants/local-storage-key-const';
 import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 import { MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
-import { getTokenFromCookie } from '/@/utils/cookie-util';
 import { localClear, localRead, localSave } from '/@/utils/local-util';
+import LocalStorageKeyConst from '/@/constants/local-storage-key-const';
 
 export const useUserStore = defineStore({
   id: 'userStore',
@@ -61,7 +61,7 @@ export const useUserStore = defineStore({
       if (state.token) {
         return state.token;
       }
-      return getTokenFromCookie();
+      return localRead(LocalStorageKeyConst.USER_TOKEN);
     },
     //是否初始化了 路由
     getMenuRouterInitFlag(state) {

@@ -16,6 +16,8 @@ export const appDefaultConfig = {
   sideMenuWidth: 200,
   // 菜单主题
   sideMenuTheme: 'dark',
+  // 主题颜色索引
+  colorIndex: 0,
   // 顶部菜单页面宽度
   pageWidth: '99%',
   // 标签页
@@ -32,4 +34,6 @@ export const appDefaultConfig = {
   websiteName: 'SmartAdmin 3.X',
   // 主题颜色
   primaryColor: 'red',
+  // 紧凑
+  compactFlag: false,
 };

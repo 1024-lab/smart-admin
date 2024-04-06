@@ -16,9 +16,9 @@ import { PAGE_PATH_404, PAGE_PATH_LOGIN } from '/@/constants/common-const';
 import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 import SmartLayout from '../layout/index.vue';
 import { useUserStore } from '/@/store/modules/system/user';
-import { clearAllCoolies, getTokenFromCookie } from '/@/utils/cookie-util';
-import { localClear } from '/@/utils/local-util';
+import { localClear, localRead } from '/@/utils/local-util';
 import _ from 'lodash';
+import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
 
 export const router = createRouter({
   history: createWebHashHistory(),
@@ -39,9 +39,8 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 验证登录
-  const token = getTokenFromCookie();
+  const token = localRead(LocalStorageKeyConst.USER_TOKEN);
   if (!token) {
-    clearAllCoolies();
     localClear();
     next({ path: PAGE_PATH_LOGIN });
     return;
