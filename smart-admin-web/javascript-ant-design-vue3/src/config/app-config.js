@@ -33,7 +33,7 @@ export const appDefaultConfig = {
   // 网站名称
   websiteName: 'SmartAdmin 3.X',
   // 主题颜色
-  primaryColor: 'red',
+  primaryColor: '#1677ff',
   // 紧凑
   compactFlag: false,
 };

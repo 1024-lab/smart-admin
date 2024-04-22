@@ -1,7 +1,6 @@
 package net.lab1024.sa.admin.module.business.oa.enterprise;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.alibaba.excel.EasyExcel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -11,11 +10,11 @@ import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseEm
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseExcelVO;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseListVO;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseVO;
+import net.lab1024.sa.admin.util.AdminRequestUtil;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
-import net.lab1024.sa.base.common.util.SmartRequestUtil;
-import net.lab1024.sa.base.common.util.SmartResponseUtil;
+import net.lab1024.sa.base.common.util.*;
 import net.lab1024.sa.base.module.support.operatelog.annotation.OperateLog;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -60,14 +60,11 @@ public class EnterpriseController {
             return;
         }
 
-        // 设置下载消息头
-        SmartResponseUtil.setDownloadFileHeader(response, "企业基本信息.xls", null);
+        String watermark = AdminRequestUtil.getRequestUser().getActualName();
+        watermark += SmartLocalDateUtil.format(LocalDateTime.now(), SmartDateFormatterEnum.YMD_HMS);
 
-        // 下载
-        EasyExcel.write(response.getOutputStream(), EnterpriseExcelVO.class)
-                .autoCloseStream(Boolean.FALSE)
-                .sheet("企业信息")
-                .doWrite(data);
+        SmartExcelUtil.exportExcelWithWatermark(response,"企业基本信息.xlsx","企业信息",EnterpriseExcelVO.class,data,watermark);
+
     }
 
     @Operation(summary = "查询企业详情 @author 开云")

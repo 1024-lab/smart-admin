@@ -45,7 +45,7 @@
     <a-table rowKey="feedbackId" :dataSource="tableData" :columns="tableColumns" :pagination="false" :loading="tableLoading" size="small" bordered>
       <template #bodyCell="{ text, column }">
         <template v-if="column.dataIndex === 'feedbackAttachment'">
-          <FilePreview :fileList="text" />
+          <FilePreview :fileList="text" type="picture" />
         </template>
         <template v-if="column.dataIndex === 'userType'">
           <span>{{ $smartEnumPlugin.getDescByValue('USER_TYPE_ENUM', text) }}</span>

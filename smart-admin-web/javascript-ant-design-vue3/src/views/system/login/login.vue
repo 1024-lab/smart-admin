@@ -1,11 +1,11 @@
 <!--
   * 登录
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-12 22:34:00 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-12 22:34:00
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
   *
 -->
 <template>
@@ -86,13 +86,13 @@
           <p class="line"></p>
         </div>
         <div class="login-type">
-          <img src="/@/assets/images/login/wechat-icon.png" />
-          <img src="/@/assets/images/login/ali-icon.png" />
-          <img src="/@/assets/images/login/douyin-icon.png" />
-          <img src="/@/assets/images/login/qq-icon.png" />
-          <img src="/@/assets/images/login/weibo-icon.png" />
-          <img src="/@/assets/images/login/feishu-icon.png" />
-          <img src="/@/assets/images/login/google-icon.png" />
+          <img :src="wechatIcon" />
+          <img :src="aliIcon" />
+          <img :src="douyinIcon" />
+          <img :src="qqIcon" />
+          <img :src="weiboIcon" />
+          <img :src="feishuIcon" />
+          <img :src="googleIcon" />
         </div>
       </div>
     </div>
@@ -106,10 +106,16 @@
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { LOGIN_DEVICE_ENUM } from '/@/constants/system/login-device-const';
   import { useUserStore } from '/@/store/modules/system/user';
-  import gongzhonghao from '/@/assets/images/1024lab/1024lab-gzh.jpg';
   import zhuoda from '/@/assets/images/1024lab/zhuoda-wechat.jpg';
   import loginQR from '/@/assets/images/login/login-qr.png';
   import gzh from '/@/assets/images/1024lab/gzh.jpg';
+  import wechatIcon from '/@/assets/images/login/wechat-icon.png';
+  import aliIcon from '/@/assets/images/login/ali-icon.png';
+  import douyinIcon from '/@/assets/images/login/douyin-icon.png';
+  import qqIcon from '/@/assets/images/login/qq-icon.png';
+  import weiboIcon from '/@/assets/images/login/weibo-icon.png';
+  import feishuIcon from '/@/assets/images/login/feishu-icon.png';
+  import googleIcon from '/@/assets/images/login/google-icon.png';
 
   import { buildRoutes } from '/@/router/index';
   import { smartSentry } from '/@/lib/smart-sentry';
@@ -148,7 +154,7 @@
     notification['success']({
       message: '温馨提示',
       description: 'SmartAdmin 提供 9种 登录背景风格哦！',
-      duration: null,
+      duration: 8,
       onClick: () => {},
       btn: () =>
         h(

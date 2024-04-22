@@ -50,13 +50,13 @@
           <p class="line"></p>
         </div>
         <div class="login-type">
-          <img src="/@/assets/images/login/wechat-icon.png" />
-          <img src="/@/assets/images/login/ali-icon.png" />
-          <img src="/@/assets/images/login/douyin-icon.png" />
-          <img src="/@/assets/images/login/qq-icon.png" />
-          <img src="/@/assets/images/login/weibo-icon.png" />
-          <img src="/@/assets/images/login/feishu-icon.png" />
-          <img src="/@/assets/images/login/google-icon.png" />
+          <img :src="wechatIcon" />
+          <img :src="aliIcon" />
+          <img :src="douyinIcon" />
+          <img :src="qqIcon" />
+          <img :src="weiboIcon" />
+          <img :src="feishuIcon" />
+          <img :src="googleIcon" />
         </div>
       </div>
     </div>
@@ -71,6 +71,13 @@
   import { LOGIN_DEVICE_ENUM } from '/@/constants/system/login-device-const';
   import { useUserStore } from '/@/store/modules/system/user';
   import loginQR from '/@/assets/images/login/login-qr.png';
+  import wechatIcon from '/@/assets/images/login/wechat-icon.png';
+  import aliIcon from '/@/assets/images/login/ali-icon.png';
+  import douyinIcon from '/@/assets/images/login/douyin-icon.png';
+  import qqIcon from '/@/assets/images/login/qq-icon.png';
+  import weiboIcon from '/@/assets/images/login/weibo-icon.png';
+  import feishuIcon from '/@/assets/images/login/feishu-icon.png';
+  import googleIcon from '/@/assets/images/login/google-icon.png';
 
   import { buildRoutes } from '/@/router/index';
   import { smartSentry } from '/@/lib/smart-sentry';

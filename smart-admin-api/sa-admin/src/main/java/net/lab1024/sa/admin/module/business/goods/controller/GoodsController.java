@@ -1,9 +1,8 @@
 package net.lab1024.sa.admin.module.business.goods.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.alibaba.excel.EasyExcel;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
 import net.lab1024.sa.admin.module.business.goods.domain.form.GoodsAddForm;
 import net.lab1024.sa.admin.module.business.goods.domain.form.GoodsQueryForm;
@@ -14,7 +13,7 @@ import net.lab1024.sa.admin.module.business.goods.service.GoodsService;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.domain.ValidateList;
-import net.lab1024.sa.base.common.util.SmartResponseUtil;
+import net.lab1024.sa.base.common.util.SmartExcelUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -88,17 +87,8 @@ public class GoodsController {
     @GetMapping("/goods/exportGoods")
     @SaCheckPermission("goods:exportGoods")
     public void exportGoods(HttpServletResponse response) throws IOException {
-
         List<GoodsExcelVO> goodsList = goodsService.getAllGoods();
-
-        // 设置下载消息头
-        SmartResponseUtil.setDownloadFileHeader(response, "商品列表.xls", null);
-
-        // 下载
-        EasyExcel.write(response.getOutputStream(), GoodsExcelVO.class)
-                .autoCloseStream(Boolean.FALSE)
-                .sheet("商品")
-                .doWrite(goodsList);
+        SmartExcelUtil.exportExcel(response,"商品列表.xlsx","商品",GoodsExcelVO.class, goodsList);
     }
 
 }

@@ -11,6 +11,7 @@
 <template>
   <div class="clearfix">
     <a-upload
+      multiple
       :accept="props.accept"
       :before-upload="beforeUpload"
       :customRequest="customRequest"
@@ -43,12 +44,11 @@
 </template>
 <script setup>
   import { computed, ref, watch } from 'vue';
-  import { message } from 'ant-design-vue';
+  import { Modal } from 'ant-design-vue';
   import { fileApi } from '/src/api/support/file-api';
   import { useUserStore } from '/@/store/modules/system/user';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
-  import { getDownload } from '/@/lib/axios';
   import { smartSentry } from '/@/lib/smart-sentry';
   const props = defineProps({
     value: String,
@@ -162,13 +162,43 @@
     console.log(fileList.value);
   }
 
-  function beforeUpload(file) {
+  function beforeUpload(file, files) {
+    if (fileList.value.length + files.length > props.maxUploadSize) {
+      showErrorMsgOnce(`最多支持上传 ${props.maxUploadSize} 个文件哦！`);
+      return false;
+    }
+
+    if (props.accept) {
+      const suffixIndex = file.name.lastIndexOf('.');
+      const fileSuffix = file.name.substring(suffixIndex <= -1 ? 0 : suffixIndex);
+      if (props.accept.indexOf(fileSuffix) === -1) {
+        showErrorMsgOnce(`只支持上传 ${props.accept.replaceAll(',', ' ')} 格式的文件`);
+        return false;
+      }
+    }
+
     const isLimitSize = file.size / 1024 / 1024 < props.maxSize;
     if (!isLimitSize) {
-      return message.error(`上传的文件必须小于${props.maxSize}Mb`);
+      showErrorMsgOnce(`单个文件大小必须小于 ${props.maxSize} Mb`);
     }
     return isLimitSize;
   }
+
+  const showErrorModalFlag = ref(true);
+  const showErrorMsgOnce = (content) => {
+    if (showErrorModalFlag.value) {
+      Modal.error({
+        title: '提示',
+        content: content,
+        okType: 'danger',
+        centered: true,
+        onOk() {
+          showErrorModalFlag.value = true;
+        },
+      });
+      showErrorModalFlag.value = false;
+    }
+  };
 
   function handleCancel() {
     previewVisible.value = false;
@@ -179,7 +209,7 @@
       previewUrl.value = file.url || file.preview;
       previewVisible.value = true;
     } else {
-      getDownload(file.fileName, file.fileUrl);
+      fileApi.downLoadFile(file.fileKey);
     }
   };
 

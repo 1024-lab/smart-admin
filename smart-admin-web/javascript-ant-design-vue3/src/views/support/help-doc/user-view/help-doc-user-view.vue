@@ -138,13 +138,191 @@ function print() {
     }
   }
 }
-.content-html {
+/*样式深入*/
+:deep(.content-html) {
   margin-top: 30px;
   padding: 0 8px;
   line-height: 28px;
-    font-size: 14px;
+  font-size: 16px;
+  border: #1e1e1e;
+
   img {
     max-width: 100%;
+  }
+
+  body {
+    margin: 0 auto;
+    color: #ccd1d8;
+    line-height: 1.5;
+    padding: 16px;
+    background-color: #333842;
+    font-size: 16px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #0D366F;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+
+  p {
+    padding: 0;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 22px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  h5 {
+    font-size: 19px;
+  }
+
+  h6 {
+    font-size: 18px;
+  }
+
+  a {
+    color: #61afef;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  a:visited {
+    color: #ba68c8;
+  }
+
+  ul, ol {
+    padding: 0;
+    padding-left: 24px;
+  }
+
+  li {
+    line-height: 24px;
+  }
+
+  li ul, li ol {
+    margin-left: 16px;
+  }
+
+  p, ul, ol {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  mark {
+    color: #000000;
+    background-color: #c4c400;
+  }
+
+  pre {
+    display: block;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -moz-tab-size: 4;
+    tab-size: 4;
+  }
+
+  code {
+    color: #98c379;
+    word-break: break-word;
+  }
+
+  pre code {
+    display: block;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    color: #98c379;
+    background-color: #2d323b;
+    line-height: 1.5;
+    white-space: pre;
+    -moz-tab-size: 4;
+    tab-size: 4;
+  }
+
+  aside {
+    display: block;
+    float: right;
+    width: 390px;
+  }
+
+  blockquote {
+    color: #abb2bf;
+    border-left: .5em solid #abb2bf;
+    padding: 0 1em;
+    margin-left: 0;
+  }
+
+  blockquote p {
+    color: #abb2bf;
+  }
+
+  hr {
+    display: block;
+    text-align: left;
+    margin: 1em 0;
+    border: none;
+    height: 2px;
+    background-color: #4c5562;
+  }
+
+  table {
+    padding: 0;
+    margin: 1rem 0.5rem;
+    border-collapse: collapse;
+  }
+
+  table tr {
+    border-top: 1px solid #4c5562;
+    margin: 0;
+    padding: 0;
+  }
+
+  table tr:hover {
+    background-color: #DBE5F2;
+  }
+
+  table tr th {
+    font-weight: bold;
+    background-color: #90BFFF;
+    border: 1px solid #4c5562;
+    margin: 0;
+    padding: 6px 13px;
+  }
+
+  table tr td {
+    border: 1px solid #4c5562;
+    margin: 0;
+    padding: 6px 13px;
+  }
+
+  table tr th :first-child, table tr td :first-child {
+    margin-top: 0;
+  }
+
+  table tr th :last-child, table tr td :last-child {
+    margin-bottom: 0;
   }
 }
 </style>

@@ -22,8 +22,9 @@
           v-for="(item, index) in fileList"
           :key="index"
           :src="item.fileUrl"
-          :style="{ display: type === 'text' ? 'none' : '' }"
+          :style="{ display: type === 'text' ? 'none' : '', padding: '2px', height: '100px' }"
           :width="width"
+          @click="preview(item, index)"
         />
       </a-image-preview-group>
     </a-space>
@@ -31,7 +32,7 @@
 </template>
 <script setup>
   import { ref } from 'vue';
-  import { getDownload } from '/@/lib/axios';
+  import { fileApi } from '/src/api/support/file-api';
 
   let props = defineProps({
     fileList: {
@@ -45,10 +46,10 @@
       type: String,
       default: 'text',
     },
-    // image宽度
+    // image 宽度
     width: {
       type: Number,
-      default: 150,
+      default: 100,
     },
     // 分隔符 可设置html标签 例如：<br/>
     separator: {
@@ -64,7 +65,7 @@
       previewCurrent.value = index;
       visible.value = true;
     } else {
-      window.open(file.fileUrl);
+      fileApi.downLoadFile(file.fileKey);
     }
   }
 

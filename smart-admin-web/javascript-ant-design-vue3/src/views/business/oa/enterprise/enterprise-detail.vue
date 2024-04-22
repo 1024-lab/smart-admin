@@ -24,7 +24,7 @@
           <a-descriptions-item label="创建时间">{{ detail.createTime }}</a-descriptions-item>
           <a-descriptions-item label="创建人">{{ detail.createUserName }}</a-descriptions-item>
           <a-descriptions-item label="营业执照">
-            <FilePreview :default-file-list="detail.businessLicense" />
+            <FilePreview :file-list="detail.businessLicense" />
           </a-descriptions-item>
         </a-descriptions>
       </div>

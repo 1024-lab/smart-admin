@@ -24,7 +24,6 @@
 
 <script setup>
   import { ref } from 'vue';
-  import { getDownload } from '/@/lib/axios';
   import { fileApi } from '/src/api/support/file-api';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
@@ -62,7 +61,7 @@
       setVisible(true);
       return;
     }
-    window.open(fileItem.fileUrl);
+    fileApi.downLoadFile(fileItem.fileKey);
   }
 
   // 判断图片类型

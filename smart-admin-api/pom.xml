@@ -39,6 +39,7 @@
         <xerces.version>2.12.0</xerces.version>
         <easy-excel.version>3.3.2</easy-excel.version>
         <poi.version>5.2.4</poi.version>
+        <ooxml-schemas.version>1.4</ooxml-schemas.version>
         <aws-java-sdk.version>1.11.842</aws-java-sdk.version>
         <log4j-spring-boot.version>2.17.2</log4j-spring-boot.version>
         <hutool.version>5.7.22</hutool.version>
@@ -286,6 +287,12 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-scratchpad</artifactId>
                 <version>${poi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>ooxml-schemas</artifactId>
+                <version>${ooxml-schemas.version}</version>
             </dependency>
 
             <dependency>
