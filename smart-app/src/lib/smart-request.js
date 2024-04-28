@@ -7,10 +7,10 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import { USER_TOKEN } from '/@/constants/local-storage-key-const';
-import { DATA_TYPE_ENUM } from '/@/constants/common-const';
+import { USER_TOKEN } from '@/constants/local-storage-key-const';
+import { DATA_TYPE_ENUM } from '@/constants/common-const';
 import { decryptData, encryptData } from './encrypt';
-import { useUserStore } from '/@/store/modules/system/user';
+import { useUserStore } from '@/store/modules/system/user';
 
 const baseUrl = import.meta.env.VITE_APP_API_URL;
 

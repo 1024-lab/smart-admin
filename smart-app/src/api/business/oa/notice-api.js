@@ -4,7 +4,7 @@
  * @Author: zhuoda
  * @Date: 2022-08-16 20:34:36
  */
-import { postRequest, getRequest } from '/@/lib/smart-request';
+import { postRequest, getRequest } from '@/lib/smart-request';
 
 export const noticeApi = {
   // ---------------- 通知公告类型 -----------------------

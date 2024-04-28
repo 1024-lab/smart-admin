@@ -11,7 +11,7 @@
 
 <script setup>
   import { ref } from 'vue';
-  import SmartDetailTabs from '/@/components/smart-detail-tabs/index.vue';
+  import SmartDetailTabs from '@/components/smart-detail-tabs/index.vue';
   import OrderDetailBaseInfo from './components/order-detail-base-info.vue';
   import DetailModelPath from './components/detail-model-path.vue';
   import OrderDetailSettle from './components/order-detail-settle.vue';

@@ -27,6 +27,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -238,6 +239,7 @@ public abstract class OperateLogAspect {
             if (arg instanceof HttpServletRequest
                     || arg instanceof HttpServletResponse
                     || arg instanceof ModelAndView
+                    || arg instanceof MultipartFile
                     || arg instanceof BindResult) {
                 continue;
             }

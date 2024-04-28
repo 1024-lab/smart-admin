@@ -48,11 +48,11 @@
 
 <script setup>
   import { reactive, ref } from 'vue';
-  import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
-  import { regular } from '/@/constants/regular-const';
-  import SmartEnumRadio from '/@/components/smart-enum-radio/index.vue';
-  import { smartSentry } from '/@/lib/smart-sentry';
-  import { SmartLoading, SmartToast } from '/@/lib/smart-support';
+  import { enterpriseApi } from '@/api/business/oa/enterprise-api';
+  import { regular } from '@/constants/regular-const';
+  import SmartEnumRadio from '@/components/smart-enum-radio/index.vue';
+  import { smartSentry } from '@/lib/smart-sentry';
+  import { SmartLoading, SmartToast } from '@/lib/smart-support';
   import { onLoad, onReady, onShow } from '@dcloudio/uni-app';
 
   // --------------------- 表单 ---------------------

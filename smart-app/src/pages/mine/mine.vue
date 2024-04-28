@@ -18,9 +18,9 @@
   import MineUserBlue from './components/mine-user-blue.vue';
   import MineUserWhite from './components/mine-user-white.vue';
   import { ref } from 'vue';
-  import { useUserStore } from '/@/store/modules/system/user';
-  import { SmartLoading, SmartToast } from '/@/lib/smart-support';
-  import { smartSentry } from '/@/lib/smart-sentry';
+  import { useUserStore } from '@/store/modules/system/user';
+  import { SmartLoading, SmartToast } from '@/lib/smart-support';
+  import { smartSentry } from '@/lib/smart-sentry';
 
   const userStore = useUserStore();
   const blueUserFlag = ref(true);

@@ -12,9 +12,9 @@
 
 <script setup>
   import { inject, reactive } from 'vue';
-  import { changeLogApi } from '/@/api/support/change-log-api';
+  import { changeLogApi } from '@/api/support/change-log-api';
   import { onLoad } from '@dcloudio/uni-app';
-  import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '@/lib/smart-sentry';
 
   const smartEnumPlugin = inject('smartEnumPlugin');
 

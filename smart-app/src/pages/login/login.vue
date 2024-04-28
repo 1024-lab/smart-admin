@@ -3,12 +3,12 @@
     <view class="top-view">
       <view class="login"> 登录 </view>
       <view class="logo">
-        <image src="/@/static/images/login/login-logo.png" />
+        <image src="@/static/images/login/login-logo.png" />
       </view>
     </view>
     <view class="bottom-view">
       <view class="input-view smart-margin-top10">
-        <image src="/@/static/images/login/login-username.png"></image>
+        <image src="@/static/images/login/login-username.png"></image>
         <uni-easyinput
           class="input"
           placeholder="请输入用户名"
@@ -20,7 +20,7 @@
       </view>
 
       <view class="input-view smart-margin-top10">
-        <image src="/@/static/images/login/login-password.png"></image>
+        <image src="@/static/images/login/login-password.png"></image>
         <uni-easyinput
           class="input"
           placeholder="请输入密码"
@@ -33,16 +33,15 @@
       </view>
 
       <view class="input-view smart-margin-top10">
-        <image src="/@/static/images/login/login-password.png"></image>
+        <image src="@/static/images/login/login-password.png"></image>
         <uni-easyinput
-          class="input"
+          class="input captcha-input"
           placeholder="请输入验证码"
           :clearable="true"
           :password="false"
           placeholderStyle="color:#CCCCCC"
           border="none"
           v-model="loginForm.captchaCode"
-          style="width: 50%"
         />
         <img class="captcha-img" :src="captchaBase64Image" @click="getCaptcha" />
       </view>
@@ -54,7 +53,7 @@
 
       <view @click="login" class="button login-btn smart-margin-top20"> 登录 </view>
       <view @click="login" class="button register-btn smart-margin-top20"> 创建账号 </view>
-      <OtherWayBox class="other-way-box" />
+      <OtherWayBox />
       <LoginCheckBox class="login-check-box" ref="loginCheckBoxRef" />
     </view>
   </view>
@@ -64,11 +63,11 @@
   import { onShow } from '@dcloudio/uni-app';
   import OtherWayBox from './components/other-way-box.vue';
   import LoginCheckBox from './components/login-check-box.vue';
-  import { loginApi } from '/@/api/system/login-api';
-  import { LOGIN_DEVICE_ENUM } from '/@/constants/system/login-device-const';
-  import { encryptData } from '/@/lib/encrypt';
-  import { useUserStore } from '/@/store/modules/system/user';
-  import { smartSentry } from '/@/lib/smart-sentry';
+  import { loginApi } from '@/api/system/login-api';
+  import { LOGIN_DEVICE_ENUM } from '@/constants/system/login-device-const';
+  import { encryptData } from '@/lib/encrypt';
+  import { useUserStore } from '@/store/modules/system/user';
+  import { smartSentry } from '@/lib/smart-sentry';
 
   const loginForm = reactive({
     loginName: 'admin',
@@ -176,6 +175,7 @@
       .captcha-img {
         margin-left: 5px;
         height: 100rpx;
+        width: 40%;
       }
       image {
         margin-left: 30rpx;
@@ -185,6 +185,9 @@
       .input {
         margin: 0 16rpx;
         background-color: $page-bg-color;
+      }
+      .captcha-input {
+        width: 50%;
       }
     }
     .code-login-view {
@@ -273,7 +276,7 @@
       align-items: center;
       width: 100%;
       height: 720rpx;
-      background-image: url(/@/static/images/login/login-top-back.png);
+      background-image: url('~@/static/images/login/login-top-back.png');
       .login {
         font-weight: bold;
         margin-top: 70rpx;
@@ -283,11 +286,6 @@
         height: 260rpx;
       }
     }
-  }
-
-  .other-way-box {
-    flex-shrink: 0;
-    margin-top: 82rpx;
   }
 
   .login-check-box {

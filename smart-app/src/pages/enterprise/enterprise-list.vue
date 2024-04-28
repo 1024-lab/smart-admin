@@ -55,10 +55,10 @@
 
 <script setup>
   import { reactive, ref } from 'vue';
-  import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
+  import { enterpriseApi } from '@/api/business/oa/enterprise-api';
   import { onPageScroll, onReachBottom, onShow } from '@dcloudio/uni-app';
   import useMescroll from '@/uni_modules/uni-mescroll/hooks/useMescroll';
-  import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '@/lib/smart-sentry';
   import _ from 'lodash';
 
   // --------------------------- 查询 ---------------------------------

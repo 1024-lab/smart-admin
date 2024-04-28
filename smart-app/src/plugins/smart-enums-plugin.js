@@ -9,7 +9,7 @@
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
 import _ from 'lodash';
-import { FLAG_NUMBER_ENUM } from '/@/constants/common-const';
+import { FLAG_NUMBER_ENUM } from '@/constants/common-const';
 
 export default {
   install: (app, smartEnumWrapper) => {

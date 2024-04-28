@@ -7,7 +7,7 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import { postRequest, getRequest } from '/@/lib/smart-request';
+import { postRequest, getRequest } from '@/lib/smart-request';
 
 export const dictApi = {
   // 分页查询数据字典KEY - @author 卓大

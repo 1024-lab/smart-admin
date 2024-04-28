@@ -31,14 +31,14 @@
 
 <script setup>
   import { reactive, ref } from 'vue';
-  import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
-  import { smartSentry } from '/@/lib/smart-sentry';
-  import { SmartLoading, SmartToast } from '/@/lib/smart-support';
+  import { enterpriseApi } from '@/api/business/oa/enterprise-api';
+  import { smartSentry } from '@/lib/smart-sentry';
+  import { SmartLoading, SmartToast } from '@/lib/smart-support';
   import { onLoad, onReady } from '@dcloudio/uni-app';
-  import { fileApi } from '/@/api/support/file-api';
-  import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
+  import { fileApi } from '@/api/support/file-api';
+  import { FILE_FOLDER_TYPE_ENUM } from '@/constants/support/file-const';
   import _ from 'lodash';
-  import { feedbackApi } from '/@/api/support/feedback-api';
+  import { feedbackApi } from '@/api/support/feedback-api';
 
   // --------------------- 表单 ---------------------
 

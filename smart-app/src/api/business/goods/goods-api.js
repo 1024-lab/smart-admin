@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-06-23
  * @LastEditors: zhuoda
  */
-import { postRequest, getRequest } from '/@/lib/smart-request';
+import { postRequest, getRequest } from '@/lib/smart-request';
 
 export const goodsApi = {
   // 添加商品 @author zhuoda

@@ -30,8 +30,8 @@
 
 <script setup>
   import { reactive, ref, toRaw } from 'vue';
-  import DictSelect from '/@/components/dict-select/index.vue';
-  import SmartEnumSelect from '/@/components/smart-enum-select/index.vue';
+  import DictSelect from '@/components/dict-select/index.vue';
+  import SmartEnumSelect from '@/components/smart-enum-select/index.vue';
 
   const emits = defineEmits(['close']);
   defineExpose({ show });

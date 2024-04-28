@@ -1,5 +1,5 @@
 {
-    "name" : "",
+    "name" : "smart-app",
     "appid" : "",
     "description" : "",
     "versionName" : "1.0.0",
@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx2f5032ef5c4adae4",
         "setting" : {
             "urlCheck" : false
         },

@@ -37,7 +37,7 @@
 
 <script setup>
   import { onMounted, reactive, ref, toRaw } from 'vue';
-  import { noticeApi } from '/@/api/business/oa/notice-api';
+  import { noticeApi } from '@/api/business/oa/notice-api';
   import _ from 'lodash';
 
   const emits = defineEmits(['close']);

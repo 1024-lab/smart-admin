@@ -46,10 +46,10 @@
 <script setup>
   import { reactive, ref } from 'vue';
   import NoticeQueryFormPopUp from './components/notice-query-form-popup.vue';
-  import { noticeApi } from '/@/api/business/oa/notice-api';
+  import { noticeApi } from '@/api/business/oa/notice-api';
   import { onPageScroll, onReachBottom } from '@dcloudio/uni-app';
   import useMescroll from '@/uni_modules/uni-mescroll/hooks/useMescroll';
-  import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '@/lib/smart-sentry';
   import NoticeList from './components/notice-list.vue';
   import _ from 'lodash';
 

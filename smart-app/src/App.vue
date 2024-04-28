@@ -1,5 +1,5 @@
 <script>
-  import { useUserStore } from '/@/store/modules/system/user';
+  import { useUserStore } from '@/store/modules/system/user';
   export default {
     onLaunch: function () {
       useUserStore().getLoginInfo();

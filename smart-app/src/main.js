@@ -6,8 +6,8 @@ import { store } from './store/index';
 import './theme/index.scss';
 
 // 枚举管理
-import smartEnumPlugin from '/@/plugins/smart-enums-plugin';
-import constantsInfo from '/@/constants/index';
+import smartEnumPlugin from '@/plugins/smart-enums-plugin';
+import constantsInfo from '@/constants/index';
 import lodash from 'lodash';
 
 export function createApp() {

@@ -19,9 +19,9 @@
 
 <script setup>
   import { reactive } from 'vue';
-  import { noticeApi } from '/@/api/business/oa/notice-api';
+  import { noticeApi } from '@/api/business/oa/notice-api';
   import { onLoad } from '@dcloudio/uni-app';
-  import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '@/lib/smart-sentry';
 
   const noticeDetail = reactive({
     title: '',

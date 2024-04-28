@@ -11,8 +11,8 @@
 
 <script setup>
   import { ref } from 'vue';
-  import { noticeApi } from '/@/api/business/oa/notice-api';
-  import { smartSentry } from '/@/lib/smart-sentry';
+  import { noticeApi } from '@/api/business/oa/notice-api';
+  import { smartSentry } from '@/lib/smart-sentry';
   import { onShow } from '@dcloudio/uni-app';
 
   const queryForm = {

@@ -8,10 +8,10 @@
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
 import { defineStore } from 'pinia';
-import { appDefaultConfig } from '/@/config/app-config';
-import localStorageKeyConst from '/@/constants/local-storage-key-const';
-import { smartSentry } from '/@/lib/smart-sentry';
-import { localRead } from '/@/utils/local-util';
+import { appDefaultConfig } from '@/config/app-config';
+import localStorageKeyConst from '@/constants/local-storage-key-const';
+import { smartSentry } from '@/lib/smart-sentry';
+import { localRead } from '@/utils/local-util';
 
 let state = { ...appDefaultConfig };
 

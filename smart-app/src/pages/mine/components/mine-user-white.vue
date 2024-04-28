@@ -29,7 +29,7 @@
   </view>
 </template>
 <script setup>
-  import { useUserStore } from '/@/store/modules/system/user';
+  import { useUserStore } from '@/store/modules/system/user';
   import { computed } from 'vue';
 
   const actualName = computed(() => {
@@ -107,7 +107,7 @@
   }
 
   .vip-card {
-    background-image: url('/@/static/images/mine/vip-bg.png');
+    background-image: url('~@/static/images/mine/vip-bg.png');
     height: 80rpx;
     background-repeat: no-repeat;
     width: 700rpx;

@@ -6,15 +6,15 @@
     <view class="other-way">
       <!-- 手机号登录 -->
       <view v-if="phoneLoginFlag" @click="navigateTo('/pages/login/phone-login')" class="item">
-        <image src="/@/static/images/login/phone-login-icon.png" />
+        <image src="@/static/images/login/phone-login-icon.png" />
       </view>
       <!-- 微信登录 -->
       <view v-if="wxLoginFlag" @click="toWeChatLogin" class="item">
-        <image src="/@/static/images/login/wx-login-icon.png" />
+        <image src="@/static/images/login/wx-login-icon.png" />
       </view>
       <!-- 苹果账号登录 -->
       <view v-if="iosFlag" @click="toAppleLogin" class="item apple">
-        <image src="/@/static/images/login/ios-login-icon.png" />
+        <image src="@/static/images/login/ios-login-icon.png" />
       </view>
     </view>
   </view>
@@ -98,6 +98,8 @@
 </script>
 <style lang="scss" scoped>
   .other-way-box {
+    flex-shrink: 0;
+    margin-top: 82rpx;
     display: flex;
     align-items: center;
     justify-content: center;

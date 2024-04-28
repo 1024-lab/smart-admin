@@ -1,11 +1,11 @@
 <!---
   * 字段 下拉选择框
-  * 
+  *
   * @Author:    1024创新实验室：罗伊
-  * @Date:      2022-09-12 22:06:45 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  * @Date:      2022-09-12 22:06:45
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
   *
 -->
 <template>
@@ -108,7 +108,7 @@
       emit('update:value', valueList);
       emit('change', valueList);
     } else {
-      let findValue = dictValueList.value.find((e) => e.valueCode == value);
+      let findValue = dictValueList.value.find((e) => e.valueCode === value);
       emit('update:value', findValue.valueCode);
       emit('change', findValue.valueCode);
     }

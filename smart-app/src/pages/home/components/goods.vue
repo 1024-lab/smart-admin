@@ -26,9 +26,9 @@
 
 <script setup>
   import { ref } from 'vue';
-  import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '@/lib/smart-sentry';
   import { onShow } from '@dcloudio/uni-app';
-  import { goodsApi } from '/@/api/business/goods/goods-api';
+  import { goodsApi } from '@/api/business/goods/goods-api';
 
   const queryForm = {
     pageNum: 1,

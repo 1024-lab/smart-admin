@@ -66,7 +66,7 @@
   </view>
 </template>
 <script setup>
-  import { SmartToast } from '/@/lib/smart-support';
+  import { SmartToast } from '@/lib/smart-support';
 
   const emits = defineEmits(['changeStyle']);
 

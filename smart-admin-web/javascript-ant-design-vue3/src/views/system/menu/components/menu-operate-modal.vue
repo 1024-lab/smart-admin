@@ -47,7 +47,7 @@
           <a-form-item v-if="form.frameFlag" label="外链地址" name="frameUrl">
             <a-input v-model:value="form.frameUrl" placeholder="请输入外链地址" />
           </a-form-item>
-          <a-form-item v-else label="组件地址" name="component">
+          <a-form-item v-else label="组件地址" name="component" help="比如 商品列表：/business/erp/goods/goods-list.vue">
             <a-input v-model:value="form.component" placeholder="请输入组件地址 默认带有开头/@/views" />
           </a-form-item>
         </template>
@@ -91,9 +91,8 @@
         </a-form-item>
       </template>
       <!--      按钮 end   -->
-      <a-form-item label="排序" name="sort">
+      <a-form-item label="排序" name="sort" help="值越小越靠前">
         <a-input-number v-model:value="form.sort" :min="0" placeholder="请输入排序" style="width: 100px" />
-        <h6 style="color: #ababab">值越小越靠前</h6>
       </a-form-item>
     </a-form>
     <div class="footer">

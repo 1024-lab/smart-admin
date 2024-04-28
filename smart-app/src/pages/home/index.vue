@@ -4,10 +4,10 @@
       <template #right>
         <view class="right">
           <view class="">
-            <image src="/@/static/images/index/ic_scan.png" mode=""></image>
+            <image src="@/static/images/index/ic_scan.png" mode=""></image>
           </view>
           <view class="">
-            <image src="/@/static/images/index/ic_search.png" mode=""></image>
+            <image src="@/static/images/index/ic_search.png" mode=""></image>
           </view>
         </view>
       </template>

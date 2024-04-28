@@ -9,8 +9,8 @@
  */
 import _ from 'lodash';
 import { defineStore } from 'pinia';
-import { USER_TOKEN } from '/@/constants/local-storage-key-const';
-import { loginApi } from '/@/api/system/login-api';
+import { USER_TOKEN } from '@/constants/local-storage-key-const';
+import { loginApi } from '@/api/system/login-api';
 
 const defaultUserInfo = {
   //员工id

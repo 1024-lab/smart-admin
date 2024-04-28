@@ -44,10 +44,10 @@
 
 <script setup>
   import { reactive, ref } from 'vue';
-  import { changeLogApi } from '/@/api/support/change-log-api';
+  import { changeLogApi } from '@/api/support/change-log-api';
   import { onPageScroll, onReachBottom, onShow } from '@dcloudio/uni-app';
   import useMescroll from '@/uni_modules/uni-mescroll/hooks/useMescroll';
-  import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '@/lib/smart-sentry';
   import _ from 'lodash';
 
   // --------------------------- 查询 ---------------------------------

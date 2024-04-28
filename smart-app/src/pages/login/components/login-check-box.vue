@@ -12,8 +12,8 @@
   </view>
 </template>
 <script setup>
-  import checkOutImg from '/@/static/images/login/check-out.png';
-  import checkInImg from '/@/static/images/login/check-in.png';
+  import checkOutImg from '/static/images/login/check-out.png';
+  import checkInImg from '/static/images/login/check-in.png';
 
   import { ref } from 'vue';
 

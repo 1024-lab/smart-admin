@@ -16,7 +16,7 @@
 
 <script setup>
   import { onMounted, ref, watch } from 'vue';
-  import { dictApi } from '/@/api/support/dict-api';
+  import { dictApi } from '@/api/support/dict-api';
 
   const props = defineProps({
     keyCode: String,

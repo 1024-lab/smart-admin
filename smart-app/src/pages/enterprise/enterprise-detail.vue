@@ -83,12 +83,12 @@
 </template>
 
 <script setup>
-  import SmartDetailTabs from '/@/components/smart-detail-tabs/index.vue';
+  import SmartDetailTabs from '@/components/smart-detail-tabs/index.vue';
   import { ref, reactive } from 'vue';
-  import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
+  import { enterpriseApi } from '@/api/business/oa/enterprise-api';
   import { onShow, onLoad } from '@dcloudio/uni-app';
-  import { smartSentry } from '/@/lib/smart-sentry';
-  import { SmartLoading, SmartToast } from '/@/lib/smart-support';
+  import { smartSentry } from '@/lib/smart-sentry';
+  import { SmartLoading, SmartToast } from '@/lib/smart-support';
 
   // ----------------------- tab -----------------------
 

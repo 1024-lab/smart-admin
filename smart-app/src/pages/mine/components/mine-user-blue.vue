@@ -13,12 +13,12 @@
       <view class="user-phone">{{ departmentName }}</view>
     </view>
     <view class="vip-flag">
-      <image src="/@/static/images/mine/no-vip-flag.png" mode=""></image>
+      <image src="@/static/images/mine/no-vip-flag.png" mode=""></image>
     </view>
   </view>
 </template>
 <script setup>
-  import { useUserStore } from '/@/store/modules/system/user';
+  import { useUserStore } from '@/store/modules/system/user';
   import { computed } from 'vue';
 
   const actualName = computed(() => {

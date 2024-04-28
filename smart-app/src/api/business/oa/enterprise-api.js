@@ -7,7 +7,7 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import { postRequest, getRequest } from '/@/lib/smart-request';
+import { postRequest, getRequest } from '@/lib/smart-request';
 
 export const enterpriseApi = {
   // 新建企业 @author 开云

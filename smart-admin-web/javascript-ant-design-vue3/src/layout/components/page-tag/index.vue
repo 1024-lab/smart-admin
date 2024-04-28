@@ -1,11 +1,11 @@
 <!--
   * 标签页
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-06 20:29:12 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-06 20:29:12
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <!-- 标签页，共两部分：1、标签 ；2、标签操作区 -->
@@ -130,6 +130,7 @@
 
   const { useToken } = theme;
   const { token } = useToken();
+  const borderRadius = token.value.borderRadius + 'px';
 </script>
 
 <style scoped lang="less">
@@ -199,6 +200,7 @@
 
     :deep(.ant-tabs-small > .ant-tabs-nav .ant-tabs-tab) {
       padding: 5px 8px 3px 10px;
+      border-radius: v-bind(borderRadius);
     }
 
     :deep(.ant-tabs-tab-active) {
