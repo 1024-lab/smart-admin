@@ -36,6 +36,10 @@
   <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/git-diff.png"/></td>
 </tr>
 <tr>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-app/app1.png"/></td>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-app/app2.png"/></td>
+</tr>
+<tr>
   <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/front.png"/></td>
   <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/back.png"/></td>
 </tr>
