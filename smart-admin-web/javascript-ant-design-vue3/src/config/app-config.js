@@ -20,6 +20,8 @@ export const appDefaultConfig = {
   colorIndex: 0,
   // 顶部菜单页面宽度
   pageWidth: '99%',
+  // 圆角
+  borderRadius: 6,
   // 标签页
   pageTagFlag: true,
   // 面包屑

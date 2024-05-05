@@ -130,7 +130,9 @@
 
   const { useToken } = theme;
   const { token } = useToken();
-  const borderRadius = token.value.borderRadius + 'px';
+  const borderRadius = computed(() => {
+    return token.value.borderRadius + 'px';
+  });
 </script>
 
 <style scoped lang="less">

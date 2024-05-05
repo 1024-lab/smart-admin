@@ -19,6 +19,7 @@ export default {
   'setting.menu.width': 'Menu Width',
   'setting.menu.theme': 'Menu Theme',
   'setting.page.width': 'Page Width',
+  'setting.border.radius': 'Border Radius',
   'setting.compact': 'Page Compact',
   'setting.bread': 'Show Bread',
   'setting.pagetag': 'Show PageTag',

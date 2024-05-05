@@ -1,11 +1,11 @@
 <!--
   * 设置模块
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-06 20:18:20 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-06 20:18:20
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 
 <template>
@@ -34,6 +34,9 @@
             </div>
           </template>
         </div>
+      </a-form-item>
+      <a-form-item :label="$t('setting.border.radius')">
+        <a-slider v-model:value="formState.borderRadius" :min="0" :max="6" @change="changeBorderRadius" />
       </a-form-item>
       <a-form-item :label="$t('setting.compact')">
         <a-radio-group v-model:value="formState.compactFlag" button-style="solid" @change="changeCompactFlag">
@@ -169,6 +172,8 @@
     sideMenuTheme: appConfigStore.sideMenuTheme,
     // 页面紧凑
     compactFlag: appConfigStore.compactFlag,
+    // 页面圆角
+    borderRadius: appConfigStore.borderRadius,
     // 标签页
     pageTagFlag: appConfigStore.pageTagFlag,
     // 面包屑
@@ -225,6 +230,11 @@
   function changeCompactFlag(e) {
     appConfigStore.$patch({
       compactFlag: e.target.value,
+    });
+  }
+  function changeBorderRadius(e) {
+    appConfigStore.$patch({
+      borderRadius: e,
     });
   }
 

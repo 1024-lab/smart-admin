@@ -19,6 +19,7 @@ export default {
   'setting.menu.width': '菜单宽度',
   'setting.menu.theme': '菜单主题',
   'setting.compact': '页面紧凑',
+  'setting.border.radius': '页面圆角',
   'setting.page.width': '页面宽度',
   'setting.bread': '面包屑',
   'setting.pagetag': '标签页',

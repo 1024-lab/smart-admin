@@ -1,11 +1,11 @@
 <!--
   * 主应用页面
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-12 23:46:47 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-12 23:46:47
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 
 <template>
@@ -19,6 +19,7 @@
         colorLinkActive: themeColors[colorIndex].activeColor,
         colorLinkHover: themeColors[colorIndex].hoverColor,
         colorIcon: themeColors[colorIndex].primaryColor,
+        borderRadius: borderRadius,
       },
       components: {
         Button: {
@@ -61,5 +62,9 @@
   // 主题颜色
   const colorIndex = computed(() => {
     return useAppConfigStore().colorIndex;
+  });
+  // 圆角
+  const borderRadius = computed(() => {
+    return useAppConfigStore().borderRadius;
   });
 </script>
