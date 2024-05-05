@@ -12,7 +12,7 @@
   <div class="user-header">
     <a-page-header :title="welcomeSentence">
       <template #subTitle>
-        <span style="color: #666; margin-left: 20px;">所属部门：{{ departmentName }} </span>
+        <span style="color: #666; margin-left: 20px">所属部门：{{ departmentName }} </span>
       </template>
       <template #extra>
         <p style="color: #333">{{ dayInfo }}</p>
@@ -20,7 +20,7 @@
       <a-row class="content">
         <span class="left-content">
           <p class="last-login-info"><AlertOutlined />{{ lastLoginInfo }}</p>
-          <a class="sentence" href="https://sentence.1024lab.net/" target="_blank"> <smile-outlined spin /> {{ heartSentence }} </a>
+          <a class="sentence" href="https://zhuoda.vip/soup" target="_blank"> <smile-outlined spin /> {{ heartSentence }} </a>
         </span>
         <div class="weather">
           <iframe
