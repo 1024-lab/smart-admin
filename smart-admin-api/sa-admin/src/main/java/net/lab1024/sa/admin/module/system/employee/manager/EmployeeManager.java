@@ -60,7 +60,16 @@ public class EmployeeManager extends ServiceImpl<EmployeeDao, EmployeeEntity> {
         // 保存员工 获得id
         employeeDao.updateById(employee);
 
-        if (CollectionUtils.isNotEmpty(roleIdList)) {
+        /**
+         * ISSUES:I9RU4S (对员工赋角色后，不能取消员工的角色，只能修改员工角色)
+         * https://gitee.com/lab1024/smart-admin/issues/I9RU4S
+         * 问题：如果员工的角色仅剩一个，则不能删除
+         * 解决：如果roleIdList.size() == 0 即 roleIdList.isEmpty() 则删除当前员工下的所有角色
+         */
+        if (CollectionUtils.isEmpty(roleIdList)) {
+            this.updateEmployeeRole(employee.getEmployeeId(), null);
+        } else
+            if(CollectionUtils.isNotEmpty(roleIdList)) {
             List<RoleEmployeeEntity> roleEmployeeList = roleIdList.stream().map(e -> new RoleEmployeeEntity(e, employee.getEmployeeId())).collect(Collectors.toList());
             this.updateEmployeeRole(employee.getEmployeeId(), roleEmployeeList);
         }
