@@ -89,11 +89,13 @@
   <td><img src="https://img.smartadmin.1024lab.net/wechat/zhuoda-wechat.jpg" width="250" /></td>
   <td><img src="https://img.smartadmin.1024lab.net/wechat/liubianxing-gzh.jpg" width="250" /></td>
   <td><img src="https://img.smartadmin.1024lab.net/wechat/zhuoda-wechat-money-v1.jpg" width="250" /></td>
+  <td><img src="https://img.smartadmin.1024lab.net/wechat/douyin.png" width="250" /></td>
 </tr>
 <tr>
-  <td style="text-align:center">加 主任 “卓大” 微信 <br> 拉你入群，一起学习</td>
-  <td style="text-align:center">关注 “六边形工程师” <br> 分享：赚钱、代码、生活</td>
-  <td style="text-align:center">请 “1024创新实验室” 喝咖啡 <br> 支持我们的开源与分享 </td>
+  <td style="text-align:center">加微信： 卓大  <br> 拉你入群，一起学习</td>
+  <td style="text-align:center"> 公众号 ：六边形工程师 <br> 分享：赚钱、代码、生活</td>
+  <td style="text-align:center">请 “1024创新实验室” <br> “烩面里加肉”<br> “ 咖啡配胡辣汤,提神又饱腹”</td>
+    <td style="text-align:center">抖音 : 六边形工程师<br> 直播：赚钱、代码、中医</td>
 </tr>
 </table>
 
