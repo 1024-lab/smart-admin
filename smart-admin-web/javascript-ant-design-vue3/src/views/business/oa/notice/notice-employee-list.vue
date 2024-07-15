@@ -1,25 +1,17 @@
 <!--
   * 通知  详情 （员工列表）
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-08-21 19:52:43 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-08-21 19:52:43
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-form class="smart-query-form">
     <a-row class="smart-query-form-row">
-      <a-form-item label="分类" class="smart-query-form-item">
-        <a-select v-model:value="queryForm.noticeTypeId" style="width: 100px" :showSearch="true" :allowClear="true">
-          <a-select-option v-for="item in noticeTypeList" :key="item.noticeTypeId" :value="item.noticeTypeId">
-            {{ item.noticeTypeName }}
-          </a-select-option>
-        </a-select>
-      </a-form-item>
-
       <a-form-item label="关键字" class="smart-query-form-item">
-        <a-input style="width: 300px" v-model:value="queryForm.keywords" placeholder="标题、作者、来源、文号" />
+        <a-input style="width: 200px" v-model:value="queryForm.keywords" placeholder="标题、作者、来源、文号" />
       </a-form-item>
 
       <a-form-item label="发布时间" class="smart-query-form-item">
@@ -43,6 +35,7 @@
         </a-button-group>
       </a-form-item>
     </a-row>
+    <a-row class="smart-query-form-row"> </a-row>
   </a-form>
 
   <a-card size="small" :bordered="false">
@@ -51,20 +44,11 @@
       <a-tab-pane :key="1" tab="未读" />
     </a-tabs>
 
-    <a-table
-      rowKey="noticeId"
-      :columns="tableColumns"
-      :dataSource="tableData"
-      :scroll="{ x: 1500 }"
-      :pagination="false"
-      :loading="tableLoading"
-      bordered
-      size="small"
-    >
+    <a-table rowKey="noticeId" :columns="tableColumns" :dataSource="tableData" :pagination="false" :loading="tableLoading" bordered size="small">
       <template #bodyCell="{ column, record, text }">
         <template v-if="column.dataIndex === 'title'">
           <span v-show="record.viewFlag">
-            <a @click="toDetail(record.noticeId)" style="color: #666">【{{ record.noticeTypeName }}】{{ text }}（已读）</a>
+            <a @click="toDetail(record.noticeId)" style="color: #8c8c8c">【{{ record.noticeTypeName }}】{{ text }}（已读）</a>
           </span>
           <span v-show="!record.viewFlag">
             <a @click="toDetail(record.noticeId)"
@@ -96,50 +80,39 @@
 </template>
 
 <script setup>
-  import { reactive, ref, onMounted } from 'vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { onMounted, reactive, ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
-  import SmartBooleanSelect from '/@/components/framework/boolean-select/index.vue';
   import { noticeApi } from '/@/api/business/oa/notice-api';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
   const tableColumns = reactive([
     {
       title: `标题`,
       dataIndex: 'title',
-      width: 300,
       ellipsis: true,
     },
-
     {
-      title: `文号`,
-      dataIndex: 'documentNumber',
-      width: 100,
-      ellipsis: true,
-    },
-
-    {
-      title: `作者`,
-      dataIndex: 'author',
-      width: 40,
-      ellipsis: true,
+      title: '访问量',
+      dataIndex: 'pageViewCount',
+      width: 90,
     },
     {
       title: `来源`,
       dataIndex: 'source',
-      width: 90,
+      width: 150,
+      ellipsis: true,
+    },
+    {
+      title: `作者`,
+      dataIndex: 'author',
+      width: 80,
       ellipsis: true,
     },
     {
       title: '发布时间',
       dataIndex: 'publishTime',
-      width: 140,
-    },
-    {
-      title: '用户/页面浏览量',
-      dataIndex: 'pageViewCount',
-      width: 90,
+      width: 150,
     },
   ]);
 

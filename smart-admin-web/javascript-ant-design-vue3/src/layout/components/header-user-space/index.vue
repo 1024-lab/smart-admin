@@ -1,11 +1,11 @@
 <!--
   * 头部一整行
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-06 20:18:20 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-06 20:18:20
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-space :size="10">
@@ -34,9 +34,9 @@
       <HeaderAvatar />
     </div>
     <!---帮助文档--->
-    <div class="user-space-item" @click="showHelpDoc" v-if="!showHelpDocFlag">
+    <div class="user-space-item" @click="showHelpDoc" v-if="showHelpDocFlag">
       <span>帮助文档</span>
-      <DoubleLeftOutlined v-if="!showHelpDocFlag" />
+      <DoubleLeftOutlined v-if="!helpDocExpandFlag" />
     </div>
 
     <HeaderSetting ref="headerSetting" />
@@ -72,6 +72,10 @@
     return useAppConfigStore().helpDocFlag;
   });
 
+  const helpDocExpandFlag = computed(() => {
+    return useAppConfigStore().helpDocExpandFlag;
+  });
+
   //搜索
   function search() {
     window.open('https://1024lab.net');
@@ -100,7 +104,7 @@
 
   .user-space-item:hover {
     color: v-bind('token.colorPrimary');
-    background: @hover-bg-color;
+    background-color: @hover-bg-color !important;
   }
 
   .setting {

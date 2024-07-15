@@ -1,11 +1,11 @@
 <!--
   * 操作记录 列表
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-06-02 20:23:08 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-06-02 20:23:08
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-form class="smart-query-form" v-privilege="'support:operateLog:query'">
@@ -27,18 +27,20 @@
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
-        <a-button type="primary" @click="ajaxQuery" class="smart-margin-right10">
-          <template #icon>
-            <ReloadOutlined />
-          </template>
-          查询
-        </a-button>
-        <a-button @click="resetQuery">
-          <template #icon>
-            <SearchOutlined />
-          </template>
-          重置
-        </a-button>
+        <a-button-group>
+          <a-button type="primary" @click="ajaxQuery">
+            <template #icon>
+              <ReloadOutlined />
+            </template>
+            查询
+          </a-button>
+          <a-button @click="resetQuery">
+            <template #icon>
+              <SearchOutlined />
+            </template>
+            重置
+          </a-button>
+        </a-button-group>
       </a-form-item>
     </a-row>
   </a-form>

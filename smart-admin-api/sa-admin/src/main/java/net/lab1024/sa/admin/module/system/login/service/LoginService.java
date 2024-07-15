@@ -32,6 +32,7 @@ import net.lab1024.sa.base.module.support.captcha.CaptchaService;
 import net.lab1024.sa.base.module.support.captcha.domain.CaptchaVO;
 import net.lab1024.sa.base.module.support.config.ConfigKeyEnum;
 import net.lab1024.sa.base.module.support.config.ConfigService;
+import net.lab1024.sa.base.module.support.file.service.IFileStorageService;
 import net.lab1024.sa.base.module.support.loginlog.LoginLogResultEnum;
 import net.lab1024.sa.base.module.support.loginlog.LoginLogService;
 import net.lab1024.sa.base.module.support.loginlog.domain.LoginLogEntity;
@@ -39,6 +40,7 @@ import net.lab1024.sa.base.module.support.loginlog.domain.LoginLogVO;
 import net.lab1024.sa.base.module.support.securityprotect.domain.LoginFailEntity;
 import net.lab1024.sa.base.module.support.securityprotect.service.ProtectLoginService;
 import net.lab1024.sa.base.module.support.securityprotect.service.ProtectPasswordService;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -109,6 +111,9 @@ public class LoginService implements StpInterface {
 
     @Resource
     private ProtectPasswordService profectPasswordService;
+
+    @Resource
+    private IFileStorageService fileStorageService;
 
     /**
      * 获取验证码
@@ -252,6 +257,15 @@ public class LoginService implements StpInterface {
         DepartmentVO department = departmentService.getDepartmentById(employeeEntity.getDepartmentId());
         requestEmployee.setDepartmentName(null == department ? StringConst.EMPTY : department.getName());
 
+        // 头像信息
+        String avatar = employeeEntity.getAvatar();
+        if(StringUtils.isNotBlank(avatar)){
+            ResponseDTO<String> getFileUrl = fileStorageService.getFileUrl(avatar);
+            if(BooleanUtils.isTrue(getFileUrl.getOk())){
+                requestEmployee.setAvatar(getFileUrl.getData());
+            }
+        }
+
         return requestEmployee;
     }
 
@@ -339,6 +353,15 @@ public class LoginService implements StpInterface {
         loginLogService.log(loginEntity);
 
         return ResponseDTO.ok();
+    }
+
+    /**
+     * 清除员工登录缓存
+     * @param employeeId
+     */
+    public void clearLoginEmployeeCache(Long employeeId){
+        // 清空登录信息缓存
+        loginEmployeeCache.remove(employeeId);
     }
 
     /**

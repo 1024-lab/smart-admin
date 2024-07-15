@@ -1,11 +1,11 @@
 <!--
   * 登录
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-12 22:34:00 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-12 22:34:00
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
   *
 -->
 <template>
@@ -13,7 +13,7 @@
     <div class="box-item desc">
       <div class="welcome">
         <p>欢迎登录 SmartAdmin V3</p>
-        <p class="sub-welcome">高质量代码的快速开发平台</p>
+        <p class="sub-welcome">「高质量代码、简洁、安全」的开发平台</p>
       </div>
       <img class="welcome-img" :src="leftBg2" />
     </div>

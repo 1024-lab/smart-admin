@@ -1,0 +1,65 @@
+.no-footer {
+  :deep(.ant-card-body) {
+    padding-bottom: 0;
+  }
+}
+.content {
+  height: 150px;
+
+  &.large {
+    height: 360px;
+  }
+
+  &.statistice {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  &.app {
+    display: flex;
+    align-items: center;
+    padding-bottom: 24px;
+    .app-qr {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-right: 40px;
+      > img {
+        height: 120px;
+      }
+      > span {
+        font-size: 14px;
+      }
+    }
+  }
+
+  &.gauge {
+    display: flex;
+    align-items: center;
+  }
+
+  &.wait-handle {
+    padding-bottom: 24px;
+    overflow-y: auto;
+    > p {
+      font-size: 18px;
+    }
+    :deep(.ant-tag) {
+      padding: 1px 8px;
+      font-size: 15px;
+    }
+  }
+
+  .count {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+}
+.footer {
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  padding: 10px 0;
+  background: #fff;
+  z-index: 1;
+}

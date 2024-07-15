@@ -41,18 +41,20 @@
       </a-form-item>
 
       <a-form-item class="smart-query-form-item">
-        <a-button type="primary" @click="onSearch" v-privilege="'goods:query'">
-          <template #icon>
-            <ReloadOutlined />
-          </template>
-          查询
-        </a-button>
-        <a-button @click="resetQuery" class="smart-margin-left10" v-privilege="'goods:query'">
-          <template #icon>
-            <SearchOutlined />
-          </template>
-          重置
-        </a-button>
+        <a-button-group>
+          <a-button type="primary" @click="onSearch" v-privilege="'goods:query'">
+            <template #icon>
+              <ReloadOutlined />
+            </template>
+            查询
+          </a-button>
+          <a-button @click="resetQuery" v-privilege="'goods:query'">
+            <template #icon>
+              <SearchOutlined />
+            </template>
+            重置
+          </a-button>
+        </a-button-group>
       </a-form-item>
     </a-row>
   </a-form>
@@ -62,28 +64,28 @@
     <!---------- 表格操作行 begin ----------->
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button @click="addGoods" type="primary" size="small" v-privilege="'goods:add'">
+        <a-button @click="addGoods" type="primary" v-privilege="'goods:add'">
           <template #icon>
             <PlusOutlined />
           </template>
           新建
         </a-button>
 
-        <a-button @click="confirmBatchDelete" danger size="small" :disabled="selectedRowKeyList.length === 0" v-privilege="'goods:batchDelete'">
+        <a-button @click="confirmBatchDelete" danger :disabled="selectedRowKeyList.length === 0" v-privilege="'goods:batchDelete'">
           <template #icon>
             <DeleteOutlined />
           </template>
           批量删除
         </a-button>
 
-        <a-button @click="showImportModal" type="primary" size="small" v-privilege="'goods:importGoods'">
+        <a-button @click="showImportModal" type="primary" v-privilege="'goods:importGoods'">
           <template #icon>
             <ImportOutlined />
           </template>
           导入
         </a-button>
 
-        <a-button @click="onExportGoods" type="primary" size="small" v-privilege="'goods:exportGoods'">
+        <a-button @click="onExportGoods" type="primary" v-privilege="'goods:exportGoods'">
           <template #icon>
             <ExportOutlined />
           </template>

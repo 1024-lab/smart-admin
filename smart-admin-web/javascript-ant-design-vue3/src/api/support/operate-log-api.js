@@ -18,4 +18,8 @@ export const operateLogApi = {
   detail: (id) => {
     return getRequest(`/support/operateLog/detail/${id}`);
   },
+  // 分页查询当前登录人信息 @author 善逸
+  queryListLogin: (param) => {
+    return postRequest('/support/operateLog/page/query/login', param);
+  },
 };

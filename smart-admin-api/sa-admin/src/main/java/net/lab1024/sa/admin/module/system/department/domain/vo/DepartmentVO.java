@@ -3,6 +3,8 @@ package net.lab1024.sa.admin.module.system.department.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * 部门
  *
@@ -32,5 +34,11 @@ public class DepartmentVO {
 
     @Schema(description = "排序")
     private Integer sort;
+
+    @Schema(description = "更新时间")
+    private LocalDateTime updateTime;
+
+    @Schema(description = "创建时间")
+    private LocalDateTime createTime;
 
 }

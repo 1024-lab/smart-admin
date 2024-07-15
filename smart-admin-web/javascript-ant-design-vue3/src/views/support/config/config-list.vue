@@ -16,19 +16,20 @@
         </a-form-item>
 
         <a-form-item class="smart-query-form-item smart-margin-left10">
-          <a-button type="primary" @click="onSearch" v-privilege="'support:config:query'">
-            <template #icon>
-              <ReloadOutlined />
-            </template>
-            查询
-          </a-button>
-          <a-button @click="resetQuery" v-privilege="'support:config:query'" class="smart-margin-left10">
-            <template #icon>
-              <SearchOutlined />
-            </template>
-            重置
-          </a-button>
-
+          <a-button-group>
+            <a-button type="primary" @click="onSearch" v-privilege="'support:config:query'">
+              <template #icon>
+                <ReloadOutlined />
+              </template>
+              查询
+            </a-button>
+            <a-button @click="resetQuery" v-privilege="'support:config:query'">
+              <template #icon>
+                <SearchOutlined />
+              </template>
+              重置
+            </a-button>
+          </a-button-group>
           <a-button @click="toEditOrAdd()" v-privilege="'support:config:add'" type="primary" class="smart-margin-left20">
             <template #icon>
               <PlusOutlined />

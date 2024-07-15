@@ -1,24 +1,28 @@
 <!--
   * 头像
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-06 20:02:01 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-06 20:02:01
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 
 <template>
   <a-dropdown class="header-trigger">
     <div class="wrapper">
-      <a-avatar style="margin: 0 5px" :size="24" id="smartAdminAvatar">
+      <img class="avatar-image" :src="avatar" v-if="avatar" />
+      <a-avatar v-else style="margin: 0 5px" :size="20" id="smartAdminAvatar">
         {{ avatarName }}
       </a-avatar>
       <span class="name">{{ actualName }}</span>
     </div>
     <template #overlay>
       <a-menu :class="['avatar-menu']">
-        <a-menu-item @click="showUpdatePwdModal">
+        <a-menu-item @click="toAccount()">
+          <span>个人中心</span>
+        </a-menu-item>
+        <a-menu-item @click="toAccount(ACCOUNT_MENU.PASSWORD.menuId)">
           <span>修改密码</span>
         </a-menu-item>
         <a-menu-item @click="onLogout">
@@ -36,6 +40,8 @@
   import { localClear } from '/@/utils/local-util';
   import { smartSentry } from '/@/lib/smart-sentry';
   import HeaderResetPassword from './header-reset-password-modal/index.vue';
+  import { useRouter } from 'vue-router';
+  import { ACCOUNT_MENU } from '/@/views/system/account/account-menu.js';
 
   // 头像背景颜色
   const AVATAR_BACKGROUND_COLOR_ARRAY = ['#87d068', '#00B853', '#f56a00', '#1890ff'];
@@ -53,6 +59,15 @@
     }
   }
 
+  // ------------------------ 个人中心 ------------------------
+  const router = useRouter();
+  function toAccount(menuId) {
+    router.push({
+      path: '/account',
+      query: { menuId },
+    });
+  }
+
   // ------------------------ 修改密码 ------------------------
   const resetPasswordRef = ref();
 
@@ -63,7 +78,9 @@
   // ------------------------ 以下是 头像和姓名 相关 ------------------------
 
   const avatarName = ref('');
+  const avatar = computed(() => useUserStore().avatar);
   const actualName = computed(() => useUserStore().actualName);
+
   // 更新头像信息
   function updateAvatar() {
     if (useUserStore().actualName) {
@@ -98,7 +115,15 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+
+    .avatar-image {
+      width: 20px;
+      height: 20px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
   }
+
   .header-trigger {
     height: @header-user-height;
     line-height: @header-user-height;

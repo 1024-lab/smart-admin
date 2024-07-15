@@ -8,11 +8,11 @@
 # 项目配置: 名称、日志目录
 project:
   name: sa-admin
-  log-directory: /home/logs/smart_admin_v3/${project.name}/${spring.profiles.active}
+  log-directory: /home/project/smartadmin/sit/log
 
 # 项目端口和url根路径
 server:
-  port: 1024
+  port: 11024
   servlet:
     context-path: /
 
@@ -20,12 +20,6 @@ server:
 spring:
   profiles:
     active: '@profiles.active@'
-
-# swagger文档
-swagger:
-  host: localhost:${server.port}
-  tag-class: net.lab1024.sa.admin.constant.AdminSwaggerTagConst
-
 
 ####################################### 安全等级保护 相关配置 ##################################################
 #                                                                                                            #

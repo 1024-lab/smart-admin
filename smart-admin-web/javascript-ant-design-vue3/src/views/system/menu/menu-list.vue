@@ -24,19 +24,21 @@
         </a-form-item>
 
         <a-form-item class="smart-query-form-item smart-margin-left10">
-          <a-button type="primary" @click="query">
-            <template #icon>
-              <ReloadOutlined />
-            </template>
-            查询
-          </a-button>
+          <a-button-group>
+            <a-button type="primary" @click="query">
+              <template #icon>
+                <SearchOutlined />
+              </template>
+              查询
+            </a-button>
 
-          <a-button @click="resetQuery" class="smart-margin-left10">
-            <template #icon>
-              <SearchOutlined />
-            </template>
-            重置
-          </a-button>
+            <a-button @click="resetQuery">
+              <template #icon>
+                <ReloadOutlined />
+              </template>
+              重置
+            </a-button>
+          </a-button-group>
           <a-button class="smart-margin-left20" @click="moreQueryConditionFlag = !moreQueryConditionFlag">
             <template #icon>
               <MoreOutlined />
@@ -64,14 +66,14 @@
     <a-card size="small" :bordered="false" :hoverable="true">
       <a-row class="smart-table-btn-block">
         <div class="smart-table-operate-block">
-          <a-button v-privilege="'system:menu:add'" type="primary" size="small" @click="showDrawer">
+          <a-button v-privilege="'system:menu:add'" type="primary" @click="showDrawer">
             <template #icon>
               <PlusOutlined />
             </template>
             添加菜单
           </a-button>
 
-          <a-button v-privilege="'system:menu:batchDelete'" type="primary" danger size="small" @click="batchDelete" :disabled="!hasSelected">
+          <a-button v-privilege="'system:menu:batchDelete'" type="primary" danger @click="batchDelete" :disabled="!hasSelected">
             <template #icon>
               <DeleteOutlined />
             </template>

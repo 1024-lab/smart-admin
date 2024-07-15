@@ -1,11 +1,11 @@
 <!--
   * 通知  管理列表
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-08-21 19:52:43 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-08-21 19:52:43
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 
 <template>
@@ -45,7 +45,7 @@
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
         <a-button-group>
-          <a-button type="primary" @click="onSearch" class="smart-margin-right10">
+          <a-button type="primary" @click="onSearch">
             <template #icon>
               <SearchOutlined />
             </template>
@@ -65,7 +65,7 @@
   <a-card size="small" :bordered="false">
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button type="primary" size="small" @click="addOrUpdate()" v-privilege="'oa:notice:add'">
+        <a-button type="primary" @click="addOrUpdate()" v-privilege="'oa:notice:add'">
           <template #icon>
             <PlusOutlined />
           </template>

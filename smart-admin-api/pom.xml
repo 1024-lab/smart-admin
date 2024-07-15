@@ -36,6 +36,7 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.13</commons-codec.version>
+        <commons-text.version>1.9</commons-text.version>
         <xerces.version>2.12.0</xerces.version>
         <easy-excel.version>3.3.2</easy-excel.version>
         <poi.version>5.2.4</poi.version>
@@ -52,6 +53,7 @@
         <bcprov.version>1.59</bcprov.version>
         <jackson-datatype-jsr310.version>2.13.4</jackson-datatype-jsr310.version>
         <smartdb.version>1.2.0</smartdb.version>
+        <redisson.version>3.25.0</redisson.version>
     </properties>
 
     <dependencyManagement>
@@ -194,6 +196,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>${commons-text.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-spring-boot</artifactId>
                 <version>${log4j-spring-boot.version}</version>
@@ -306,6 +314,33 @@
                 <artifactId>smartdb</artifactId>
                 <version>${smartdb.version}</version>
             </dependency>
+
+            <!-- redisson 排除和依赖data-27 为了springboot2.x 和 java8 -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-actuator</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.redisson</groupId>
+                        <artifactId>redisson-spring-data-32</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>objenesis</artifactId>
+                        <groupId>org.objenesis</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-data-27</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>

@@ -40,7 +40,7 @@
   <a-card size="small" :bordered="false">
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button type="primary" size="small" @click="addOrUpdate()" v-privilege="'support:helpDoc:add'">
+        <a-button type="primary" @click="addOrUpdate()" v-privilege="'support:helpDoc:add'">
           <template #icon>
             <PlusOutlined />
           </template>

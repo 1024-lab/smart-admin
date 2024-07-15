@@ -55,4 +55,11 @@ public class EmployeeVO {
 
     @Schema(description = "角色名称列表")
     private List<String> roleNameList;
+
+    @Schema(description = "职务ID")
+    private Long positionId;
+
+    @Schema(description = "职务名称")
+    private String positionName;
+
 }

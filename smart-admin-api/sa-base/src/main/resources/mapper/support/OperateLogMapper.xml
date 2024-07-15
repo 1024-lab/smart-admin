@@ -7,6 +7,12 @@
         *
         from t_operate_log
         <where>
+            <if test="query.operateUserId != null">
+                AND operate_user_id = #{query.operateUserId}
+            </if>
+            <if test="query.operateUserType != null">
+                AND operate_user_type = #{query.operateUserType}
+            </if>
             <if test="query.startDate != null and query.startDate != ''">
                 AND DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= #{query.startDate}
             </if>

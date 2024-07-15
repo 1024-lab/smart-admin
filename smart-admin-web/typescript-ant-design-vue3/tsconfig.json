@@ -1,0 +1,42 @@
+/* 具体查看 https://aka.ms/tsconfig.json 网址配置 */
+/* 中文网址 https://www.staging-typescript.org/zh/tsconfig 网址配置 */
+
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true,
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client","node"],
+    "typeRoots": ["./node_modules/@types/", "./types"],
+    "skipLibCheck": true,
+    "paths": {
+      "/@/*": ["src/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "src/utils/path.js",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
+    "types/global.d.ts",
+    "types/shims-tsx.d.ts",
+    "types/shims-vue.d.ts",
+    "mock/asyncRoutes.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js"]
+}

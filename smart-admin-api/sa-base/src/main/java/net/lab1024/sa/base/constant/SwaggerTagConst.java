@@ -48,6 +48,10 @@ public class SwaggerTagConst {
         public static final String TABLE_COLUMN = "业务支撑-列自定义";
 
         public static final String PROTECT = "业务支撑-网络安全";
+
+        public static final String JOB = "业务支撑-定时任务";
+
+        public static final String MESSAGE = "业务支撑-消息";
     }
 
 }

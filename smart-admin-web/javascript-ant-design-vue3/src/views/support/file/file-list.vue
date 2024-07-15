@@ -3,7 +3,7 @@
   *
   * @Author:    1024创新实验室-主任-卓大
   * @Date:      2020-10-10 22:13:18
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <!---------- 查询表单form begin ----------->
@@ -28,18 +28,20 @@
         <a-range-picker v-model:value="queryForm.createTime" :presets="defaultTimeRanges" style="width: 220px" @change="onChangeCreateTime" />
       </a-form-item>
       <a-form-item class="smart-query-form-item">
-        <a-button type="primary" @click="queryData">
-          <template #icon>
-            <ReloadOutlined />
-          </template>
-          查询
-        </a-button>
-        <a-button @click="resetQuery" class="smart-margin-left10">
-          <template #icon>
-            <SearchOutlined />
-          </template>
-          重置
-        </a-button>
+        <a-button-group>
+          <a-button type="primary" @click="queryData">
+            <template #icon>
+              <ReloadOutlined />
+            </template>
+            查询
+          </a-button>
+          <a-button @click="resetQuery">
+            <template #icon>
+              <SearchOutlined />
+            </template>
+            重置
+          </a-button>
+        </a-button-group>
       </a-form-item>
     </a-row>
   </a-form>
@@ -49,7 +51,7 @@
     <!---------- 表格操作行 begin ----------->
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button type="primary" @click="showUploadModal" size="small">
+        <a-button type="primary" @click="showUploadModal">
           <template #icon>
             <cloud-upload-outlined />
           </template>
@@ -63,7 +65,16 @@
     <!---------- 表格操作行 end ----------->
 
     <!---------- 表格 begin ----------->
-    <a-table size="small" :dataSource="tableData" :columns="columns" rowKey="fileId" bordered :loading="tableLoading" :pagination="false">
+    <a-table
+      size="small"
+      :scroll="{ x: 1300 }"
+      :dataSource="tableData"
+      :columns="columns"
+      rowKey="fileId"
+      bordered
+      :loading="tableLoading"
+      :pagination="false"
+    >
       <template #bodyCell="{ text, record, column }">
         <template v-if="column.dataIndex === 'folderType'">
           <span>{{ $smartEnumPlugin.getDescByValue('FILE_FOLDER_TYPE_ENUM', text) }}</span>
@@ -149,10 +160,6 @@
       width: 100,
     },
     {
-      title: '文件key',
-      dataIndex: 'fileKey',
-    },
-    {
       title: '文件类型',
       dataIndex: 'fileType',
       ellipsis: true,
@@ -180,6 +187,7 @@
       title: '操作',
       dataIndex: 'action',
       width: 120,
+      fixed: 'right',
     },
   ]);
 

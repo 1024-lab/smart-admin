@@ -110,6 +110,7 @@ public class RoleEmployeeService {
      * 批量添加角色的成员员工
      *
      */
+    @Transactional(rollbackFor = Throwable.class)
     public ResponseDTO<String> batchAddRoleEmployee(RoleEmployeeUpdateForm roleEmployeeUpdateForm) {
         Long roleId = roleEmployeeUpdateForm.getRoleId();
         List<Long> employeeIdList = roleEmployeeUpdateForm.getEmployeeIdList();
@@ -120,8 +121,10 @@ public class RoleEmployeeService {
                     .map(employeeId -> new RoleEmployeeEntity(roleId, employeeId))
                     .collect(Collectors.toList());
         }
+        // 防重，删除此次角色员工数据
+        roleEmployeeDao.batchDeleteEmployeeRole(roleId, employeeIdList);
         // 保存数据
-        roleEmployeeManager.saveRoleEmployee(roleId, roleEmployeeList);
+        roleEmployeeManager.saveRoleEmployee(roleEmployeeList);
         return ResponseDTO.ok();
     }
 

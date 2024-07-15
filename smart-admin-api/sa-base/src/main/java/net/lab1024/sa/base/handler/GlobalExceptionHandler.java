@@ -9,7 +9,6 @@ import net.lab1024.sa.base.common.domain.SystemEnvironment;
 import net.lab1024.sa.base.common.enumeration.SystemEnvironmentEnum;
 import net.lab1024.sa.base.common.exception.BusinessException;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -59,10 +58,6 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler({TypeMismatchException.class, BindException.class})
     public ResponseDTO<?> paramExceptionHandler(Exception e) {
-        if (!systemEnvironment.isProd()) {
-            log.error("全局参数异常,URL:{}", getCurrentRequestUrl(), e);
-        }
-
         if (e instanceof BindException) {
             if (e instanceof MethodArgumentNotValidException) {
                 List<FieldError> fieldErrors = ((MethodArgumentNotValidException) e).getBindingResult().getFieldErrors();
@@ -75,7 +70,6 @@ public class GlobalExceptionHandler {
             String errorMsg = UserErrorCode.PARAM_ERROR.getMsg() + ":" + error;
             return ResponseDTO.error(UserErrorCode.PARAM_ERROR, errorMsg);
         }
-
         return ResponseDTO.error(UserErrorCode.PARAM_ERROR);
     }
 

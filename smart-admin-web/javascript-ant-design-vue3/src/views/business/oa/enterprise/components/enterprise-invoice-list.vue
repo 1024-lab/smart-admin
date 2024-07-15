@@ -1,11 +1,11 @@
 <!--
   * 企业 发票信息
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
+  *
+  * @Author:    1024创新实验室-主任：卓大
   * @Date:      2022-08-15 20:15:49
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-form class="smart-query-form">
@@ -21,18 +21,20 @@
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
-        <a-button type="primary" @click="onSearch">
-          <template #icon>
-            <SearchOutlined />
-          </template>
-          查询
-        </a-button>
-        <a-button @click="resetQuery">
-          <template #icon>
-            <ReloadOutlined />
-          </template>
-          重置
-        </a-button>
+        <a-button-group>
+          <a-button type="primary" @click="onSearch">
+            <template #icon>
+              <SearchOutlined />
+            </template>
+            查询
+          </a-button>
+          <a-button @click="resetQuery">
+            <template #icon>
+              <ReloadOutlined />
+            </template>
+            重置
+          </a-button>
+        </a-button-group>
 
         <a-button @click="addOrUpdate()" type="primary" class="smart-margin-left20">
           <template #icon>

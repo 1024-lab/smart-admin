@@ -22,18 +22,20 @@
         <a-date-picker valueFormat="YYYY-MM-DD" v-model:value="queryForm.createTime" style="width: 150px" />
       </a-form-item>
       <a-form-item class="smart-query-form-item">
-        <a-button type="primary" @click="onSearch">
-          <template #icon>
-            <ReloadOutlined />
-          </template>
-          查询
-        </a-button>
-        <a-button @click="resetQuery" class="smart-margin-left10">
-          <template #icon>
-            <SearchOutlined />
-          </template>
-          重置
-        </a-button>
+        <a-button-group>
+          <a-button type="primary" @click="onSearch">
+            <template #icon>
+              <ReloadOutlined />
+            </template>
+            查询
+          </a-button>
+          <a-button @click="resetQuery" class="smart-margin-left10">
+            <template #icon>
+              <SearchOutlined />
+            </template>
+            重置
+          </a-button>
+        </a-button-group>
       </a-form-item>
     </a-row>
   </a-form>
@@ -43,19 +45,13 @@
     <!---------- 表格操作行 begin ----------->
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button @click="showForm" type="primary" size="small" v-privilege="'support:changeLog:add'">
+        <a-button @click="showForm" type="primary" v-privilege="'support:changeLog:add'">
           <template #icon>
             <PlusOutlined />
           </template>
           新建
         </a-button>
-        <a-button
-          @click="confirmBatchDelete"
-          danger
-          size="small"
-          :disabled="selectedRowKeyList.length === 0"
-          v-privilege="'support:changeLog:batchDelete'"
-        >
+        <a-button @click="confirmBatchDelete" danger :disabled="selectedRowKeyList.length === 0" v-privilege="'support:changeLog:batchDelete'">
           <template #icon>
             <DeleteOutlined />
           </template>

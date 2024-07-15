@@ -12,6 +12,9 @@ import net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity;
 import net.lab1024.sa.admin.module.system.employee.domain.form.*;
 import net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO;
 import net.lab1024.sa.admin.module.system.employee.manager.EmployeeManager;
+import net.lab1024.sa.admin.module.system.login.service.LoginService;
+import net.lab1024.sa.admin.module.system.position.dao.PositionDao;
+import net.lab1024.sa.admin.module.system.position.domain.entity.PositionEntity;
 import net.lab1024.sa.admin.module.system.role.dao.RoleEmployeeDao;
 import net.lab1024.sa.admin.module.system.role.domain.vo.RoleEmployeeVO;
 import net.lab1024.sa.base.common.code.UserErrorCode;
@@ -24,6 +27,7 @@ import net.lab1024.sa.base.common.util.SmartPageUtil;
 import net.lab1024.sa.base.module.support.securityprotect.service.ProtectPasswordService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,7 +41,7 @@ import java.util.stream.Collectors;
  * @Date 2021-12-29 21:52:46
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class EmployeeService {
@@ -62,6 +66,13 @@ public class EmployeeService {
     @Resource
     private ProtectPasswordService protectPasswordService;
 
+    @Resource
+    @Lazy
+    private LoginService loginService;
+
+    @Resource
+    private PositionDao positionDao;
+
     public EmployeeEntity getById(Long employeeId) {
         return employeeDao.selectById(employeeId);
     }
@@ -69,7 +80,6 @@ public class EmployeeService {
 
     /**
      * 查询员工列表
-     *
      */
     public ResponseDTO<PageResult<EmployeeVO>> queryEmployee(EmployeeQueryForm employeeQueryForm) {
         employeeQueryForm.setDeletedFlag(false);
@@ -86,16 +96,22 @@ public class EmployeeService {
             return ResponseDTO.ok(pageResult);
         }
 
-        List<Long> employeeIdList = employeeList.stream().map(EmployeeVO::getEmployeeId).collect(Collectors.toList());
         // 查询员工角色
-        List<RoleEmployeeVO> roleEmployeeEntityList = roleEmployeeDao.selectRoleByEmployeeIdList(employeeIdList);
+        List<Long> employeeIdList = employeeList.stream().map(EmployeeVO::getEmployeeId).collect(Collectors.toList());
+        List<RoleEmployeeVO> roleEmployeeEntityList = employeeIdList.isEmpty() ? Collections.emptyList() : roleEmployeeDao.selectRoleByEmployeeIdList(employeeIdList);
         Map<Long, List<Long>> employeeRoleIdListMap = roleEmployeeEntityList.stream().collect(Collectors.groupingBy(RoleEmployeeVO::getEmployeeId, Collectors.mapping(RoleEmployeeVO::getRoleId, Collectors.toList())));
         Map<Long, List<String>> employeeRoleNameListMap = roleEmployeeEntityList.stream().collect(Collectors.groupingBy(RoleEmployeeVO::getEmployeeId, Collectors.mapping(RoleEmployeeVO::getRoleName, Collectors.toList())));
+
+        // 查询员工职位
+        List<Long> positionIdList = employeeList.stream().map(EmployeeVO::getPositionId).filter(Objects::nonNull).collect(Collectors.toList());
+        List<PositionEntity> positionEntityList = positionIdList.isEmpty() ? Collections.emptyList() : positionDao.selectBatchIds(positionIdList);
+        Map<Long, String> positionNameMap = positionEntityList.stream().collect(Collectors.toMap(PositionEntity::getPositionId, PositionEntity::getPositionName));
 
         employeeList.forEach(e -> {
             e.setRoleIdList(employeeRoleIdListMap.getOrDefault(e.getEmployeeId(), Lists.newArrayList()));
             e.setRoleNameList(employeeRoleNameListMap.getOrDefault(e.getEmployeeId(), Lists.newArrayList()));
             e.setDepartmentName(departmentService.getDepartmentPath(e.getDepartmentId()));
+            e.setPositionName(positionNameMap.get(e.getPositionId()));
         });
         PageResult<EmployeeVO> pageResult = SmartPageUtil.convert2PageResult(pageParam, employeeList);
         return ResponseDTO.ok(pageResult);
@@ -103,7 +119,6 @@ public class EmployeeService {
 
     /**
      * 新增员工
-     *
      */
     public synchronized ResponseDTO<String> addEmployee(EmployeeAddForm employeeAddForm) {
         // 校验名称是否重复
@@ -143,7 +158,6 @@ public class EmployeeService {
 
     /**
      * 更新员工
-     *
      */
     public synchronized ResponseDTO<String> updateEmployee(EmployeeUpdateForm employeeUpdateForm) {
 
@@ -183,12 +197,38 @@ public class EmployeeService {
         // 更新数据
         employeeManager.updateEmployee(entity, employeeUpdateForm.getRoleIdList());
 
+        // 清除员工缓存
+        loginService.clearLoginEmployeeCache(employeeId);
+
+        return ResponseDTO.ok();
+    }
+
+
+    /**
+     * 更新登录人头像
+     *
+     * @param employeeUpdateAvatarForm
+     * @return
+     */
+    public ResponseDTO<String> updateAvatar(EmployeeUpdateAvatarForm employeeUpdateAvatarForm) {
+        Long employeeId = employeeUpdateAvatarForm.getEmployeeId();
+        EmployeeEntity employeeEntity = employeeDao.selectById(employeeId);
+        if (employeeEntity == null) {
+            return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
+        }
+        // 更新头像
+        EmployeeEntity updateEntity = new EmployeeEntity();
+        updateEntity.setEmployeeId(employeeId);
+        updateEntity.setAvatar(employeeUpdateAvatarForm.getAvatar());
+        employeeDao.updateById(updateEntity);
+
+        // 清除员工缓存
+        loginService.clearLoginEmployeeCache(employeeId);
         return ResponseDTO.ok();
     }
 
     /**
      * 更新禁用/启用状态
-     *
      */
     public ResponseDTO<String> updateDisableFlag(Long employeeId) {
         if (null == employeeId) {
@@ -210,7 +250,6 @@ public class EmployeeService {
 
     /**
      * 批量删除员工
-     *
      */
     public ResponseDTO<String> batchUpdateDeleteFlag(List<Long> employeeIdList) {
         if (CollectionUtils.isEmpty(employeeIdList)) {
@@ -239,7 +278,6 @@ public class EmployeeService {
 
     /**
      * 批量更新部门
-     *
      */
     public ResponseDTO<String> batchUpdateDepartment(EmployeeBatchUpdateDepartmentForm batchUpdateDepartmentForm) {
         List<Long> employeeIdList = batchUpdateDepartmentForm.getEmployeeIdList();
@@ -262,7 +300,6 @@ public class EmployeeService {
 
     /**
      * 更新密码
-     *
      */
     public ResponseDTO<String> updatePassword(EmployeeUpdatePasswordForm updatePasswordForm) {
         Long employeeId = updatePasswordForm.getEmployeeId();
@@ -299,7 +336,6 @@ public class EmployeeService {
 
     /**
      * 获取某个部门的员工信息
-     *
      */
     public ResponseDTO<List<EmployeeVO>> getAllEmployeeByDepartmentId(Long departmentId, Boolean disabledFlag) {
         List<EmployeeEntity> employeeEntityList = employeeDao.selectByDepartmentId(departmentId, disabledFlag);
@@ -326,7 +362,6 @@ public class EmployeeService {
 
     /**
      * 重置密码
-     *
      */
     public ResponseDTO<String> resetPassword(Integer employeeId) {
         String password = protectPasswordService.randomPassword();
@@ -336,7 +371,6 @@ public class EmployeeService {
 
     /**
      * 获取 加密后 的密码
-     *
      */
     public static String getEncryptPwd(String password) {
         return DigestUtils.md5Hex(String.format(PASSWORD_SALT_FORMAT, password));
@@ -345,7 +379,6 @@ public class EmployeeService {
 
     /**
      * 查询全部员工
-     *
      */
     public ResponseDTO<List<EmployeeVO>> queryAllEmployee(Boolean disabledFlag) {
         List<EmployeeVO> employeeList = employeeDao.selectEmployeeByDisabledAndDeleted(disabledFlag, Boolean.FALSE);
@@ -354,7 +387,6 @@ public class EmployeeService {
 
     /**
      * 根据登录名获取员工
-     *
      */
     public EmployeeEntity getByLoginName(String loginName) {
         return employeeDao.getByLoginName(loginName, null);

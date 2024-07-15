@@ -23,7 +23,9 @@ export default {
   'setting.compact': 'Page Compact',
   'setting.bread': 'Show Bread',
   'setting.pagetag': 'Show PageTag',
+  'setting.pagetag.style': 'PageTag Style',
   'setting.footer': 'Show Footer',
   'setting.helpdoc': 'Show Helpdoc',
+  'setting.helpdoc.expand': 'Helpdoc Expand',
   'setting.watermark': 'Show Watermark',
 };

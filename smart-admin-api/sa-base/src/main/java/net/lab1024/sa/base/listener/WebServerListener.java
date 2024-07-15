@@ -86,14 +86,15 @@ public class WebServerListener implements ApplicationListener<WebServerInitializ
      * 初始化reload
      */
     private void initReload(WebServerApplicationContext applicationContext) {
-        //将applicationContext转换为ConfigurableApplicationContext
-        ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) applicationContext;
-
-        //获取BeanFactory
-        DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getAutowireCapableBeanFactory();
-
-        //动态注册bean
-        SmartReloadManager reloadManager = new SmartReloadManager(applicationContext.getBean(ReloadCommand.class), intervalSeconds);
-        defaultListableBeanFactory.registerSingleton("smartReloadManager", reloadManager);
+//        将applicationContext转换为ConfigurableApplicationContext
+//        ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) applicationContext;
+//
+//
+//        //获取BeanFactory
+//        DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getAutowireCapableBeanFactory();
+//
+//        //动态注册bean
+//        SmartReloadManager reloadManager = new SmartReloadManager(applicationContext.getBean(ReloadCommand.class), intervalSeconds);
+//        defaultListableBeanFactory.registerSingleton("smartReloadManager", reloadManager);
     }
 }

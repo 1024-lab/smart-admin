@@ -1,0 +1,112 @@
+/* 
+ * SmartAdmin 独有的样式
+ * 
+ * @Author:    1024创新实验室-主任：卓大 
+ * @Date:      2022-09-12 14:43:01 
+ * @Wechat:    zhuda1024 
+ * @Email:     lab1024@163.com 
+ * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+ */
+
+/**********************************  滚动条 **********************************/
+::-webkit-scrollbar {
+  width: 2px;
+  background-color: #f5f5f5;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #cdcdcd;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+  background-color: #f5f5f5;
+  border-radius: 1px;
+}
+
+/**********************************  宽度 **********************************/
+.smart-width-100 {
+  width: 100%;
+}
+
+/**********************************  左间距 **********************************/
+.smart-margin-left5 {
+  margin-left: 5px;
+}
+
+.smart-margin-left10 {
+  margin-left: 10px;
+}
+
+.smart-margin-left15 {
+  margin-left: 15px;
+}
+
+.smart-margin-left20 {
+  margin-left: 20px;
+}
+
+
+/******************************** 上间距 ********************************/
+.smart-margin-top5 {
+  margin-top: 5px;
+}
+
+.smart-margin-top10 {
+  margin-top: 10px;
+}
+
+/******************************** 下间距 ********************************/
+.smart-margin-bottom5 {
+  margin-bottom: 5px;
+}
+
+.smart-margin-bottom10 {
+  margin-bottom: 10px;
+}
+/******************************** 查询表格样式 ********************************/
+.smart-query-form {
+  background-color: #ffffff;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+.smart-table-operate {
+  .ant-btn {
+    padding: 0px 3px !important;
+  }
+}
+
+.smart-table-column-operate {
+  float: right;
+}
+
+.smart-query-form-row:not(:first-child) {
+  margin-top: 8px;
+}
+
+.smart-query-form-row .smart-query-form-item {
+  margin-right: 8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.smart-query-table-page {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.smart-table-btn-block {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .smart-table-operate-block {
+    .ant-btn {
+      margin-right: 12px;
+    }
+  }
+  .smart-table-setting-block {
+    float: right;
+  }
+}

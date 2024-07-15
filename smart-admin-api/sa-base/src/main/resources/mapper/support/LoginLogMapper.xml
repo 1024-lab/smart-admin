@@ -7,6 +7,15 @@
         *
         from t_login_log
         <where>
+            <if test="query.userId != null">
+                AND user_id = #{query.userId}
+            </if>
+            <if test="query.userType != null">
+                AND user_type = #{query.userType}
+            </if>
+            <if test="query.ip != null">
+                AND INSTR(login_ip,#{query.ip})
+            </if>
             <if test="query.startDate != null and query.startDate != ''">
                 AND DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= #{query.startDate}
             </if>

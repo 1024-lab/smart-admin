@@ -14,6 +14,8 @@ import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 import { MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
 import { localClear, localRead, localSave } from '/@/utils/local-util';
 import LocalStorageKeyConst from '/@/constants/local-storage-key-const';
+import { messageApi } from '/@/api/support/message-api.js';
+import { smartSentry } from '/@/lib/smart-sentry.js';
 
 export const useUserStore = defineStore({
   id: 'userStore',
@@ -21,6 +23,8 @@ export const useUserStore = defineStore({
     token: '',
     //员工id
     employeeId: '',
+    // 头像
+    avatar: '',
     //登录名
     loginName: '',
     //姓名
@@ -52,9 +56,11 @@ export const useUserStore = defineStore({
     // 功能点集合
     pointsList: [],
     // 标签页
-    tagNav: [],
+    tagNav: null,
     // 缓存
     keepAliveIncludes: [],
+    // 未读消息数量
+    unreadMessageCount: 0,
   }),
   getters: {
     getToken(state) {
@@ -89,7 +95,7 @@ export const useUserStore = defineStore({
     },
     //标签页
     getTagNav(state) {
-      if (_.isEmpty(state.tagNav)) {
+      if (_.isNull(state.tagNav)) {
         let localTagNav = localRead(localKey.USER_TAG_NAV) || '';
         state.tagNav = localTagNav ? JSON.parse(localTagNav) : [];
       }
@@ -108,13 +114,24 @@ export const useUserStore = defineStore({
       this.menuList = [];
       this.tagNav = [];
       this.userInfo = {};
+      this.unreadMessageCount = 0;
       localClear();
+    },
+    // 查询未读消息数量
+    async queryUnreadMessageCount() {
+      try {
+        let result = await messageApi.queryUnreadCount();
+        this.unreadMessageCount = result.data;
+      } catch (e) {
+        smartSentry.captureError(e);
+      }
     },
     //设置登录信息
     setUserLoginInfo(data) {
       // 用户基本信息
       this.token = data.token;
       this.employeeId = data.employeeId;
+      this.avatar = data.avatar;
       this.loginName = data.loginName;
       this.actualName = data.actualName;
       this.phone = data.phone;
@@ -137,16 +154,22 @@ export const useUserStore = defineStore({
 
       //功能点
       this.pointsList = data.menuList.filter((menu) => menu.menuType === MENU_TYPE_ENUM.POINTS.value && menu.visibleFlag && !menu.disabledFlag);
+
+      // 获取用户未读消息
+      this.queryUnreadMessageCount();
     },
     setToken(token) {
       this.token = token;
     },
     //设置标签页
     setTagNav(route, from) {
-      if (_.isEmpty(this.getTagNav)) this.tagNav = [];
+      if (_.isNull(this.tagNav)) {
+        let localTagNav = localRead(localKey.USER_TAG_NAV) || '';
+        this.tagNav = localTagNav ? JSON.parse(localTagNav) : [];
+      }
       // name唯一标识
       let name = route.name;
-      if (!name || name === HOME_PAGE_NAME) {
+      if (!name || name === HOME_PAGE_NAME || name === '403' || name === '404') {
         return;
       }
       let findTag = (this.tagNav || []).find((e) => e.menuName === name);

@@ -34,6 +34,15 @@ export const homeRouters = [
         },
         component: () => import('/@/views/system/home/index.vue'),
       },
+      {
+        path: '/account',
+        name: 'Account',
+        component: () => import('/@/views/system/account/index.vue'),
+        meta: {
+          title: '个人中心',
+          hideInMenu: false,
+        },
+      },
     ],
   },
 ];

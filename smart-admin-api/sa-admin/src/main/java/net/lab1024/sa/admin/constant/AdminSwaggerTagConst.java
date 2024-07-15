@@ -25,6 +25,7 @@ public class AdminSwaggerTagConst extends SwaggerTagConst {
         public static final String OA_INVOICE = "OA办公-发票信息";
 
         public static final String OA_NOTICE = "OA办公-通知公告";
+
     }
 
 
@@ -47,6 +48,8 @@ public class AdminSwaggerTagConst extends SwaggerTagConst {
         public static final String SYSTEM_ROLE_EMPLOYEE = "系统-角色-员工";
 
         public static final String SYSTEM_ROLE_MENU = "系统-角色-菜单";
+
+        public static final String SYSTEM_POSITION = "系统-职务管理";
 
     }
 

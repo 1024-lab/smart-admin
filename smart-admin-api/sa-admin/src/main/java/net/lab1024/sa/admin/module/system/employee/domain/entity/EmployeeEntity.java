@@ -39,6 +39,11 @@ public class EmployeeEntity {
     private String actualName;
 
     /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
      * 性别
      */
     private Integer gender;
@@ -52,6 +57,11 @@ public class EmployeeEntity {
      * 部门id
      */
     private Long departmentId;
+
+    /**
+     * 职务级别ID
+     */
+    private Long positionId;
 
     /**
      * 是否为超级管理员: 0 不是，1是

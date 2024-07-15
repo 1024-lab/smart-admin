@@ -24,12 +24,16 @@ export const appDefaultConfig = {
   borderRadius: 6,
   // 标签页
   pageTagFlag: true,
+  // 标签页样式: default、 antd
+  pageTagStyle: 'default',
   // 面包屑
   breadCrumbFlag: true,
   // 页脚
   footerFlag: true,
   // 帮助文档
   helpDocFlag: true,
+  // 帮助文档默认展开
+  helpDocExpandFlag: true,
   // 水印
   watermarkFlag: true,
   // 网站名称

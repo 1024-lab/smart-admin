@@ -74,9 +74,9 @@ file:
       upload-path: /home/smart_admin_v3/upload/   #文件上传目录
       url-prefix:
     cloud:
-      region: oss-cn-qingdao
-      endpoint: oss-cn-qingdao.aliyuncs.com
-      bucket-name: common
+      region: oss-cn-hangzhou
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      bucket-name: 1024lab-smart-admin
       access-key:
       secret-key:
       url-prefix: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/
@@ -89,6 +89,7 @@ springdoc:
     enabled: true # 开关
     doc-expansion: none  #关闭展开
     tags-sorter: alpha
+    server-base-url: http://smartadmin.dev.1024lab.net/api/
   api-docs:
     enabled: true # 开关
 knife4j:
@@ -142,3 +143,16 @@ sa-token:
   is-print: false
   # 是否从cookie读取token
   is-read-cookie: false
+
+# SmartJob 定时任务配置(不需要可以直接删除以下配置，详细文档请看：https://www.xxxxxx.com)
+smart:
+  job:
+    enabled: true
+    # 任务初始化延迟 默认30秒 可选
+    init-delay: 10
+    # 定时任务执行线程池数量 默认2 可选
+    core-pool-size: 2
+    # 数据库配置检测-开关 默认开启 可选（作用是固定间隔读取数据库配置更新任务，关闭后只能重启服务或通过接口修改定时任务，建议开启）
+    db-refresh-enabled: true
+    # 数据库配置检测-执行间隔 默认120秒 可选
+    db-refresh-interval: 60

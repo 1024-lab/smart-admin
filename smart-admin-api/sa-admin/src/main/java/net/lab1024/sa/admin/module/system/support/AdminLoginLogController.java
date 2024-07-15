@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import net.lab1024.sa.base.common.controller.SupportBaseController;
 import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartRequestUtil;
 import net.lab1024.sa.base.constant.SwaggerTagConst;
 import net.lab1024.sa.base.module.support.loginlog.LoginLogService;
 import net.lab1024.sa.base.module.support.loginlog.domain.LoginLogQueryForm;
@@ -36,6 +38,15 @@ public class AdminLoginLogController extends SupportBaseController {
     @PostMapping("/loginLog/page/query")
     @SaCheckPermission("support:loginLog:query")
     public ResponseDTO<PageResult<LoginLogVO>> queryByPage(@RequestBody LoginLogQueryForm queryForm) {
+        return loginLogService.queryByPage(queryForm);
+    }
+
+    @Operation(summary = "分页查询当前登录人信息 @author 善逸")
+    @PostMapping("/loginLog/page/query/login")
+    public ResponseDTO<PageResult<LoginLogVO>> queryByPageLogin(@RequestBody LoginLogQueryForm queryForm) {
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+        queryForm.setUserId(requestUser.getUserId());
+        queryForm.setUserType(requestUser.getUserType().getValue());
         return loginLogService.queryByPage(queryForm);
     }
 

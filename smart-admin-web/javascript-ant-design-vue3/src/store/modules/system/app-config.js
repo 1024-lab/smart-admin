@@ -46,10 +46,10 @@ export const useAppConfigStore = defineStore({
       }
     },
     showHelpDoc() {
-      this.helpDocFlag = true;
+      this.helpDocExpandFlag = true;
     },
     hideHelpDoc() {
-      this.helpDocFlag = false;
+      this.helpDocExpandFlag = false;
     },
   },
 });

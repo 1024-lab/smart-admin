@@ -31,6 +31,9 @@ public class RequestEmployee implements RequestUser {
     @Schema(description = "员工名称")
     private String actualName;
 
+    @Schema(description = "头像")
+    private String avatar;
+
     @SchemaEnum(GenderEnum.class)
     private Integer gender;
 
@@ -43,8 +46,14 @@ public class RequestEmployee implements RequestUser {
     @Schema(description = "部门名称")
     private String departmentName;
 
+    @Schema(description = "是否禁用")
+    private Boolean disabledFlag;
+
     @Schema(description = "是否为超管")
     private Boolean administratorFlag;
+
+    @Schema(description = "备注")
+    private String remark;
 
     @Schema(description = "请求ip")
     private String ip;

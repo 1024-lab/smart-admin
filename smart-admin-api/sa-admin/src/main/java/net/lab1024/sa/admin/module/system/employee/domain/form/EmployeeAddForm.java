@@ -53,4 +53,12 @@ public class EmployeeAddForm {
 
     @Schema(description = "角色列表")
     private List<Long> roleIdList;
+
+    @Schema(description = "备注")
+    @Length(max = 30, message = "备注最多200字符")
+    private String remark;
+
+    @Schema(description = "职务级别ID")
+    private Long positionId;
+
 }

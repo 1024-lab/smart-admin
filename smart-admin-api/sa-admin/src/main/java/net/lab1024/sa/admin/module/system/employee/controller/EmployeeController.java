@@ -52,6 +52,20 @@ public class EmployeeController {
         return employeeService.updateEmployee(employeeUpdateForm);
     }
 
+    @Operation(summary = "更新登录人信息 @author 善逸")
+    @PostMapping("/employee/update/login")
+    public ResponseDTO<String> updateByLogin(@Valid @RequestBody EmployeeUpdateForm employeeUpdateForm) {
+        employeeUpdateForm.setEmployeeId(SmartRequestUtil.getRequestUserId());
+        return employeeService.updateEmployee(employeeUpdateForm);
+    }
+
+    @Operation(summary = "更新登录人头像 @author 善逸")
+    @PostMapping("/employee/update/avatar")
+    public ResponseDTO<String> updateAvatar(@Valid @RequestBody EmployeeUpdateAvatarForm employeeUpdateAvatarForm) {
+        employeeUpdateAvatarForm.setEmployeeId(SmartRequestUtil.getRequestUserId());
+        return employeeService.updateAvatar(employeeUpdateAvatarForm);
+    }
+
     @Operation(summary = "更新员工禁用/启用状态 @author 卓大")
     @GetMapping("/employee/update/disabled/{employeeId}")
     @SaCheckPermission("system:employee:disabled")

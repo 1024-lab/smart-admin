@@ -1,11 +1,11 @@
 <!--
   *  展开菜单模式
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-06 20:40:16 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-06 20:40:16
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-layout class="admin-layout" style="min-height: 100%">
@@ -70,7 +70,15 @@
       <a-back-top :target="backTopTarget" :visibilityHeight="80" />
     </a-layout>
     <!-- 右侧帮助文档 help-doc -->
-    <a-layout-sider v-show="helpDocFlag" theme="light" :width="180" class="help-doc-sider" :trigger="null" style="min-height: 100%">
+    <a-layout-sider
+      v-if="helpDocFlag"
+      v-show="helpDocExpandFlag"
+      theme="light"
+      :width="180"
+      class="help-doc-sider"
+      :trigger="null"
+      style="min-height: 100%"
+    >
       <SideHelpDoc />
     </a-layout-sider>
   </a-layout>
@@ -99,6 +107,8 @@
   const pageTagFlag = computed(() => useAppConfigStore().$state.pageTagFlag);
   // 是否显示帮助文档
   const helpDocFlag = computed(() => useAppConfigStore().$state.helpDocFlag);
+  // 是否默认展开帮助文档
+  const helpDocExpandFlag = computed(() => useAppConfigStore().$state.helpDocExpandFlag);
   // 是否显示页脚
   const footerFlag = computed(() => useAppConfigStore().$state.footerFlag);
   // 是否显示水印

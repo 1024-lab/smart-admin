@@ -11,7 +11,7 @@
   <a-card size="small" :bordered="false" :hoverable="true">
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button @click="addCategory()" type="primary" size="small" v-privilege="`${privilegePrefix}category:add`">
+        <a-button @click="addCategory()" type="primary" v-privilege="`${privilegePrefix}category:add`">
           <template #icon>
             <PlusOutlined />
           </template>

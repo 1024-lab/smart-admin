@@ -36,6 +36,18 @@ export const employeeApi = {
     return postRequest('/employee/update', params);
   },
   /**
+   * 更新登录人信息
+   */
+  updateByLogin: (params) => {
+    return postRequest('/employee/update/login', params);
+  },
+  /**
+   * 更新登录人头像
+   */
+  updateAvatar: (params) => {
+    return postRequest('/employee/update/avatar', params);
+  },
+  /**
    * 删除员工
    */
   deleteEmployee: (employeeId) => {

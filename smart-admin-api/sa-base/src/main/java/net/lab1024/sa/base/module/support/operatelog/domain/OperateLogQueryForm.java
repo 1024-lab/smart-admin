@@ -16,6 +16,11 @@ import lombok.Data;
 @Data
 public class OperateLogQueryForm extends PageParam {
 
+    @Schema(description = "用户ID")
+    private Long operateUserId;
+
+    @Schema(description = "用户类型")
+    private Integer operateUserType;
 
     @Schema(description = "开始日期")
     private String startDate;

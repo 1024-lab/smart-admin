@@ -26,6 +26,7 @@ import { buildRoutes, router } from '/@/router';
 import { store } from '/@/store';
 import { useUserStore } from '/@/store/modules/system/user';
 import 'ant-design-vue/dist/reset.css';
+import 'vue3-tabs-chrome/dist/vue3-tabs-chrome.css';
 import '/@/theme/index.less';
 import { localRead } from '/@/utils/local-util.js';
 import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';

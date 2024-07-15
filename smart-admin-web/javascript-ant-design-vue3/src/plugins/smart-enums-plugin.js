@@ -22,6 +22,7 @@ export default {
      */
     smartEnumPlugin.getDescByValue = function (constantName, value) {
       if (!smartEnumWrapper || !Object.prototype.hasOwnProperty.call(smartEnumWrapper, constantName)) {
+        console.error('无法找到变量名称：' + constantName + '，请检查 /constants/index.js 文件中是否引入此变量！');
         return '';
       }
       // boolean类型需要做特殊处理
@@ -44,6 +45,7 @@ export default {
      */
     smartEnumPlugin.getValueDescList = function (constantName) {
       if (!Object.prototype.hasOwnProperty.call(smartEnumWrapper, constantName)) {
+        console.error('无法找到变量名称：' + constantName + '，请检查 /constants/index.js 文件中是否引入此变量！');
         return [];
       }
       const result = [];
@@ -61,6 +63,7 @@ export default {
      */
     smartEnumPlugin.getValueDesc = function (constantName) {
       if (!Object.prototype.hasOwnProperty.call(smartEnumWrapper, constantName)) {
+        console.error('无法找到变量名称：' + constantName + '，请检查 /constants/index.js 文件中是否引入此变量！');
         return {};
       }
       let smartEnum = smartEnumWrapper[constantName];

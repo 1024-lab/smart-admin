@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import net.lab1024.sa.base.common.controller.SupportBaseController;
 import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartRequestUtil;
 import net.lab1024.sa.base.constant.SwaggerTagConst;
 import net.lab1024.sa.base.module.support.operatelog.OperateLogService;
 import net.lab1024.sa.base.module.support.operatelog.domain.OperateLogQueryForm;
@@ -42,6 +44,15 @@ public class AdminOperateLogController extends SupportBaseController {
     @SaCheckPermission("support:operateLog:detail")
     public ResponseDTO<OperateLogVO> detail(@PathVariable Long operateLogId) {
         return operateLogService.detail(operateLogId);
+    }
+
+    @Operation(summary = "分页查询当前登录人信息 @author 善逸")
+    @PostMapping("/operateLog/page/query/login")
+    public ResponseDTO<PageResult<OperateLogVO>> queryByPageLogin(@RequestBody OperateLogQueryForm queryForm) {
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+        queryForm.setOperateUserId(requestUser.getUserId());
+        queryForm.setOperateUserType(requestUser.getUserType().getValue());
+        return operateLogService.queryByPage(queryForm);
     }
 
 }

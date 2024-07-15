@@ -40,7 +40,7 @@ public class DictValueVoSerializer extends JsonSerializer<String> {
         List<DictValueVO> dictValueVOList = Lists.newArrayList();
         valueCodeList.forEach(e->{
             if(StringUtils.isNotBlank(e)){
-                DictValueVO dictValueVO = dictCacheService.selectValueByValueCode(value);
+                DictValueVO dictValueVO = dictCacheService.selectValueByValueCode(e);
                 if(dictValueVO != null){
                     dictValueVOList.add(dictValueVO);
                 }

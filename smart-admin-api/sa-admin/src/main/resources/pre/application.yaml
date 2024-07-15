@@ -21,12 +21,6 @@ spring:
   profiles:
     active: '@profiles.active@'
 
-# swagger文档
-swagger:
-  host: localhost:${server.port}
-  tag-class: net.lab1024.sa.admin.constant.AdminSwaggerTagConst
-
-
 ####################################### 安全等级保护 相关配置 ##################################################
 #                                                                                                            #
 # 建议开启 "三级等保" 所要求的配置，具体如下：                                                                     #

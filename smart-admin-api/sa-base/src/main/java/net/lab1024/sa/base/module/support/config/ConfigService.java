@@ -37,7 +37,7 @@ public class ConfigService {
     /**
      * 一个简单的系统配置缓存
      */
-    private final ConcurrentHashMap<String, ConfigEntity> configCache = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, ConfigEntity> CONFIG_CACHE = new ConcurrentHashMap<>();
 
     @Resource
     private ConfigDao configDao;
@@ -52,13 +52,13 @@ public class ConfigService {
      */
     @PostConstruct
     private void loadConfigCache() {
-        configCache.clear();
+        CONFIG_CACHE.clear();
         List<ConfigEntity> entityList = configDao.selectList(null);
         if (CollectionUtils.isEmpty(entityList)) {
             return;
         }
-        entityList.forEach(entity -> this.configCache.put(entity.getConfigKey().toLowerCase(), entity));
-        log.info("################# 系统配置缓存初始化完毕:{} ###################", configCache.size());
+        entityList.forEach(entity -> this.CONFIG_CACHE.put(entity.getConfigKey().toLowerCase(), entity));
+        log.info("################# 系统配置缓存初始化完毕:{} ###################", CONFIG_CACHE.size());
     }
 
     /**
@@ -70,7 +70,7 @@ public class ConfigService {
         if (null == configEntity) {
             return;
         }
-        this.configCache.put(configEntity.getConfigKey().toLowerCase(), configEntity);
+        this.CONFIG_CACHE.put(configEntity.getConfigKey().toLowerCase(), configEntity);
     }
 
     /**
@@ -100,7 +100,7 @@ public class ConfigService {
         if (StrUtil.isBlank(configKey)) {
             return null;
         }
-        ConfigEntity entity = this.configCache.get(configKey.toLowerCase());
+        ConfigEntity entity = this.CONFIG_CACHE.get(configKey.toLowerCase());
         return SmartBeanUtil.copy(entity, ConfigVO.class);
     }
 

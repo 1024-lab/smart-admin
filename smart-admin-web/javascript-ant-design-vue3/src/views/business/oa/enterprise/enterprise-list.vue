@@ -21,18 +21,20 @@
       </a-form-item>
 
       <a-form-item class="smart-query-form-item smart-margin-left10">
-        <a-button type="primary" @click="onSearch">
-          <template #icon>
-            <SearchOutlined />
-          </template>
-          查询
-        </a-button>
-        <a-button @click="resetQuery" class="smart-margin-left10">
-          <template #icon>
-            <ReloadOutlined />
-          </template>
-          重置
-        </a-button>
+        <a-button-group>
+          <a-button type="primary" @click="onSearch">
+            <template #icon>
+              <SearchOutlined />
+            </template>
+            查询
+          </a-button>
+          <a-button @click="resetQuery">
+            <template #icon>
+              <ReloadOutlined />
+            </template>
+            重置
+          </a-button>
+        </a-button-group>
       </a-form-item>
     </a-row>
   </a-form>
@@ -40,13 +42,13 @@
   <a-card size="small" :bordered="false" :hoverable="true">
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button @click="add()" v-privilege="'oa:enterprise:add'" type="primary" size="small">
+        <a-button @click="add()" v-privilege="'oa:enterprise:add'" type="primary">
           <template #icon>
             <PlusOutlined />
           </template>
           新建企业
         </a-button>
-        <a-button @click="exportExcel()" v-privilege="'oa:enterprise:exportExcel'" type="primary" size="small">
+        <a-button @click="exportExcel()" v-privilege="'oa:enterprise:exportExcel'" type="primary">
           <template #icon>
             <FileExcelOutlined />
           </template>
