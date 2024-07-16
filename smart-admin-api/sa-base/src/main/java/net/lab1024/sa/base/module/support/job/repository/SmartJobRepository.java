@@ -25,6 +25,10 @@ public class SmartJobRepository {
         return jobDao;
     }
 
+    public SmartJobLogDao getJobLogDao() {
+        return jobLogDao;
+    }
+
     /**
      * 保存执行记录
      *
@@ -38,5 +42,4 @@ public class SmartJobRepository {
         jobEntity.setLastExecuteLogId(logEntity.getLogId());
         jobDao.updateById(jobEntity);
     }
-
 }

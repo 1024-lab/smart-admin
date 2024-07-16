@@ -1,20 +1,20 @@
 spring:
   # 数据库连接信息
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/smart_admin_v3?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    url: jdbc:p6spy:mysql://127.0.0.1:3306/smart_admin_v3?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
-    password: Zhuoda#1024lab
-    initial-size: 5
-    min-idle: 5
-    max-active: 20
+    password: Zhuoda1024lab
+    initial-size: 2
+    min-idle: 2
+    max-active: 10
     max-wait: 60000
     time-between-eviction-runs-millis: 60000
     min-evictable-idle-time-millis: 300000
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     filters: stat
     druid:
       username: druid
-      password: 1024lab
+      password: 1024
       login:
         enabled: false
       method:
@@ -29,9 +29,9 @@ spring:
     timeout: 10000ms
     lettuce:
       pool:
-        max-active: 50
-        min-idle: 5
-        max-idle: 5
+        max-active: 5
+        min-idle: 1
+        max-idle: 3
         max-wait: 30000ms
 
   # 上传文件大小配置
@@ -74,9 +74,9 @@ file:
       upload-path: /home/smart_admin_v3/upload/   #文件上传目录
       url-prefix:
     cloud:
-      region: oss-cn-qingdao
-      endpoint: oss-cn-qingdao.aliyuncs.com
-      bucket-name: common
+      region: oss-cn-hangzhou
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      bucket-name: 1024lab-smart-admin
       access-key:
       secret-key:
       url-prefix: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/

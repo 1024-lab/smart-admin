@@ -88,8 +88,11 @@ public class SmartJobExecutor implements Runnable {
      * @param executorName
      */
     public SmartJobLogEntity execute(String executorName) {
-        // 执行计时
+        // 保存执行记录
         LocalDateTime startTime = LocalDateTime.now();
+        Long logId = this.saveLogBeforeExecute(jobEntity, executorName, startTime);
+
+        // 执行计时
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
@@ -107,33 +110,49 @@ public class SmartJobExecutor implements Runnable {
             log.error("==== SmartJob ==== execute err:", t);
         }
 
-        // 保存执行记录
+        // 更新执行记录
+        SmartJobLogEntity logEntity = new SmartJobLogEntity();
+        logEntity.setLogId(logId);
+        logEntity.setSuccessFlag(successFlag);
+        long totalTimeMillis = stopWatch.getTotalTimeMillis();
+        logEntity.setExecuteTimeMillis(totalTimeMillis);
+        logEntity.setExecuteEndTime(startTime.plus(totalTimeMillis, ChronoUnit.MILLIS));
+        logEntity.setExecuteResult(executeResult);
+        jobRepository.getJobLogDao().updateById(logEntity);
+        return logEntity;
+    }
+
+    /**
+     * 执行前 保存执行记录
+     *
+     * @param jobEntity
+     * @param executorName
+     * @param executeTime
+     * @return 返回执行记录id
+     */
+    private Long saveLogBeforeExecute(SmartJobEntity jobEntity,
+                                      String executorName,
+                                      LocalDateTime executeTime) {
         Integer jobId = jobEntity.getJobId();
+        // 保存执行记录
         SmartJobLogEntity logEntity = new SmartJobLogEntity();
         logEntity.setJobId(jobId);
         logEntity.setJobName(jobEntity.getJobName());
         logEntity.setParam(jobEntity.getParam());
-        logEntity.setSuccessFlag(successFlag);
-        // 执行开始 结束时间
-        logEntity.setExecuteStartTime(startTime);
-        long totalTimeMillis = stopWatch.getTotalTimeMillis();
-        logEntity.setExecuteTimeMillis(totalTimeMillis);
-        logEntity.setExecuteEndTime(startTime.plus(totalTimeMillis, ChronoUnit.MILLIS));
-        // 执行结果
-        logEntity.setExecuteResult(executeResult);
+        logEntity.setSuccessFlag(true);
+        // 执行开始时间
+        logEntity.setExecuteStartTime(executeTime);
+        logEntity.setCreateName(executorName);
         logEntity.setIp(SmartIpUtil.getLocalFirstIp());
         logEntity.setProcessId(SmartJobUtil.getProcessId());
         logEntity.setProgramPath(SmartJobUtil.getProgramPath());
-        logEntity.setCreateName(executorName);
 
-        // 更新上次执行
+        // 更新最后执行时间
         SmartJobEntity updateJobEntity = new SmartJobEntity();
         updateJobEntity.setJobId(jobId);
-        updateJobEntity.setLastExecuteTime(startTime);
-
-        // 持久化数据
+        updateJobEntity.setLastExecuteTime(executeTime);
         jobRepository.saveLog(logEntity, updateJobEntity);
-        return logEntity;
+        return logEntity.getLogId();
     }
 
     /**

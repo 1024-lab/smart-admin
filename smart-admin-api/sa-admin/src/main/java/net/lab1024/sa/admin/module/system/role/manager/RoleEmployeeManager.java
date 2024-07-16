@@ -26,7 +26,8 @@ public class RoleEmployeeManager extends ServiceImpl<RoleEmployeeDao, RoleEmploy
      *
      */
     @Transactional(rollbackFor = Throwable.class)
-    public void saveRoleEmployee(List<RoleEmployeeEntity> roleEmployeeList) {
+    public void saveRoleEmployee(Long roleId, List<RoleEmployeeEntity> roleEmployeeList) {
+        this.getBaseMapper().deleteByRoleId(roleId);
         if (CollectionUtils.isNotEmpty(roleEmployeeList)) {
             this.saveBatch(roleEmployeeList);
         }
