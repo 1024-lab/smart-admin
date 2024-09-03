@@ -1,11 +1,11 @@
 <!--
   * 修改密码
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-06 20:02:01 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-06 20:02:01
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-modal :open="visible" title="修改密码" ok-text="确认" cancel-text="取消" @ok="updatePwd" @cancel="cancelModal">
@@ -31,7 +31,7 @@
 
   const visible = ref(false);
   const formRef = ref();
-  const tips = '密码长度8-20位且包含大写字母、小写字母、数字三种'; //校验规则
+  const tips = '密码必须为长度8-20位且包含大小写字母、数字、特殊符号三种及以上组合'; //校验规则
   const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
 
   const rules = {

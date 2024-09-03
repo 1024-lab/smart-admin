@@ -8,7 +8,6 @@ import net.lab1024.sa.base.module.support.reload.dao.ReloadItemDao;
 import net.lab1024.sa.base.module.support.reload.dao.ReloadResultDao;
 import net.lab1024.sa.base.module.support.reload.domain.ReloadItemEntity;
 import net.lab1024.sa.base.module.support.reload.domain.ReloadResultEntity;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

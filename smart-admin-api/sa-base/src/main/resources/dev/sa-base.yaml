@@ -3,14 +3,14 @@ spring:
   datasource:
     url: jdbc:p6spy:mysql://127.0.0.1:3306/smart_admin_v3?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
-    password: Zhuoda1024lab
+    password: SmartAdmin666
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     initial-size: 2
     min-idle: 2
     max-active: 10
     max-wait: 60000
     time-between-eviction-runs-millis: 60000
     min-evictable-idle-time-millis: 300000
-    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     filters: stat
     druid:
       username: druid
@@ -34,11 +34,22 @@ spring:
         max-idle: 3
         max-wait: 30000ms
 
-  # 上传文件大小配置
-  servlet:
-    multipart:
-      max-file-size: 30MB
-      max-request-size: 30MB
+  # 邮件，置以SSL的方式发送, 这个需要使用这种方式并且端口是465
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: lab1024@163.com
+    password: ROIASDFJKHQFTA
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            socketFactory:
+              class: com.sun.mail.util.MailSSLSocketFactory
+              fallback: false
+        debug: false
 
   # json序列化相关配置
   jackson:
@@ -87,6 +98,7 @@ springdoc:
     enabled: true # 开关
     doc-expansion: none  #关闭展开
     tags-sorter: alpha
+    server-base-url:
   api-docs:
     enabled: true # 开关
 knife4j:

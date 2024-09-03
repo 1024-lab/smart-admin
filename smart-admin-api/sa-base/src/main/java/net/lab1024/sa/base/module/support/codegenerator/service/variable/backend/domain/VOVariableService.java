@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @Date 2022/9/29 17:20:41
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 
 public class VOVariableService extends CodeGenerateBaseVariableService {
@@ -87,16 +87,16 @@ public class VOVariableService extends CodeGenerateBaseVariableService {
 
             //字典
             if (isDict(field.getColumnName(), form)) {
-                finalFieldMap.put("dict", "\n    @JsonDeserialize(using = DictValueVoDeserializer.class)");
-                packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
-                packageList.add("import net.lab1024.sa.base.common.json.deserializer.DictValueVoDeserializer;");
+                finalFieldMap.put("dict", "\n    @JsonSerialize(using = DictValueVoSerializer.class)");
+                packageList.add("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
+                packageList.add("import net.lab1024.sa.base.common.json.serializer.DictValueVoSerializer;");
             }
 
             //文件上传
             if (isFile(field.getColumnName(), form)) {
-                finalFieldMap.put("file", "\n    @JsonDeserialize(using = FileKeyVoDeserializer.class)");
-                packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
-                packageList.add("import net.lab1024.sa.base.common.json.deserializer.FileKeyVoDeserializer;");
+                finalFieldMap.put("file", "\n    @JsonSerialize(using = FileKeyVoSerializer.class)");
+                packageList.add("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
+                packageList.add("import net.lab1024.sa.base.common.json.serializer.FileKeyVoSerializer;");
             }
 
             packageList.add(getJavaPackageName(codeField.getJavaType()));

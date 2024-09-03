@@ -12,10 +12,10 @@ import { defineStore } from 'pinia';
 import localKey from '/@/constants/local-storage-key-const';
 import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 import { MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
-import { localClear, localRead, localSave } from '/@/utils/local-util';
-import LocalStorageKeyConst from '/@/constants/local-storage-key-const';
 import { messageApi } from '/@/api/support/message-api.js';
 import { smartSentry } from '/@/lib/smart-sentry.js';
+import { localRead, localSave, localRemove } from '/@/utils/local-util';
+
 
 export const useUserStore = defineStore({
   id: 'userStore',
@@ -35,6 +35,8 @@ export const useUserStore = defineStore({
     departmentId: '',
     //部门名词
     departmentName: '',
+    //是否需要修改密码
+    needUpdatePwdFlag: false,
     //是否为超级管理员
     administratorFlag: true,
     //上次登录ip
@@ -61,13 +63,18 @@ export const useUserStore = defineStore({
     keepAliveIncludes: [],
     // 未读消息数量
     unreadMessageCount: 0,
+    // 待办工作数
+    toBeDoneCount: 0,
   }),
   getters: {
     getToken(state) {
       if (state.token) {
         return state.token;
       }
-      return localRead(LocalStorageKeyConst.USER_TOKEN);
+      return localRead(localKey.USER_TOKEN);
+    },
+    getNeedUpdatePwdFlag(state){
+      return state.needUpdatePwdFlag;
     },
     //是否初始化了 路由
     getMenuRouterInitFlag(state) {
@@ -113,9 +120,10 @@ export const useUserStore = defineStore({
       this.token = '';
       this.menuList = [];
       this.tagNav = [];
-      this.userInfo = {};
       this.unreadMessageCount = 0;
-      localClear();
+      localRemove(localKey.USER_TOKEN);
+      localRemove(localKey.USER_POINTS);
+      localRemove(localKey.USER_TAG_NAV);
     },
     // 查询未读消息数量
     async queryUnreadMessageCount() {
@@ -124,6 +132,16 @@ export const useUserStore = defineStore({
         this.unreadMessageCount = result.data;
       } catch (e) {
         smartSentry.captureError(e);
+      }
+    },
+    async queryToBeDoneList() {
+      try {
+        let localToBeDoneList = localRead(localKey.TO_BE_DONE);
+        if (localToBeDoneList) {
+          this.toBeDoneCount = JSON.parse(localToBeDoneList).filter((e) => !e.doneFlag).length;
+        }
+      } catch (err) {
+        smartSentry.captureError(err);
       }
     },
     //设置登录信息
@@ -137,6 +155,7 @@ export const useUserStore = defineStore({
       this.phone = data.phone;
       this.departmentId = data.departmentId;
       this.departmentName = data.departmentName;
+      this.needUpdatePwdFlag = data.needUpdatePwdFlag;
       this.administratorFlag = data.administratorFlag;
       this.lastLoginIp = data.lastLoginIp;
       this.lastLoginIpRegion = data.lastLoginIpRegion;
@@ -157,6 +176,8 @@ export const useUserStore = defineStore({
 
       // 获取用户未读消息
       this.queryUnreadMessageCount();
+      // 获取待办工作数
+      this.queryToBeDoneList();
     },
     setToken(token) {
       this.token = token;

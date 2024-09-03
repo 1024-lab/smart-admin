@@ -3,19 +3,20 @@ package net.lab1024.sa.base.module.support.codegenerator.service.variable.backen
 import cn.hutool.core.bean.BeanUtil;
 import net.lab1024.sa.base.module.support.codegenerator.constant.CodeQueryFieldQueryTypeEnum;
 import net.lab1024.sa.base.module.support.codegenerator.domain.form.CodeGeneratorConfigForm;
-import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeInsertAndUpdateField;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeQueryField;
 import net.lab1024.sa.base.module.support.codegenerator.service.variable.CodeGenerateBaseVariableService;
-import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author 1024创新实验室-主任:卓大
  * @Date 2022/9/29 17:20:41
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 
 public class MapperVariableService extends CodeGenerateBaseVariableService {
@@ -39,55 +40,47 @@ public class MapperVariableService extends CodeGenerateBaseVariableService {
                 List<String> columnNameList = queryField.getColumnNameList();
                 if (columnNameList.size() == 1) {
                     // AND INSTR(t_notice.title,#{query.keywords})
-                    stringBuilder.append("        AND INSTR(" )
-                            .append(form.getTableName()).append("." ).append(queryField.getColumnNameList().get(0))
-                            .append(",#{queryForm." )
+                    stringBuilder.append("        AND INSTR(")
+                            .append(form.getTableName()).append(".").append(queryField.getColumnNameList().get(0))
+                            .append(",#{queryForm.")
                             .append(queryField.getFieldName())
-                            .append("})" );
+                            .append("})");
                 } else {
                     for (int i = 0; i < columnNameList.size(); i++) {
                         if (i == 0) {
-                            stringBuilder.append("AND ( INSTR(" )
-                                    .append(form.getTableName()).append("." ).append(queryField.getColumnNameList().get(i))
-                                    .append(",#{queryForm." )
+                            stringBuilder.append("AND ( INSTR(")
+                                    .append(form.getTableName()).append(".").append(queryField.getColumnNameList().get(i))
+                                    .append(",#{queryForm.")
                                     .append(queryField.getFieldName())
-                                    .append("})" );
+                                    .append("})");
                         } else {
                             // OR INSTR(t_notice.author,#{query.keywords})
-                            stringBuilder.append("\n                OR INSTR(" )
-                                    .append(form.getTableName()).append("." ).append(queryField.getColumnNameList().get(i))
-                                    .append(",#{queryForm." )
+                            stringBuilder.append("\n                OR INSTR(")
+                                    .append(form.getTableName()).append(".").append(queryField.getColumnNameList().get(i))
+                                    .append(",#{queryForm.")
                                     .append(queryField.getFieldName())
-                                    .append("})" );
+                                    .append("})");
                         }
                     }
-                    stringBuilder.append("\n            )" );
+                    stringBuilder.append("\n            )");
                 }
                 fieldMap.put("likeStr", stringBuilder.toString());
-            }else{
-                fieldMap.put("columnName",queryField.getColumnNameList().get(0));
+            } else if (CodeQueryFieldQueryTypeEnum.DICT.equalsValue(queryField.getQueryTypeEnum())) {
+                String stringBuilder = "AND INSTR(" +
+                        form.getTableName() + "." + queryField.getColumnNameList().get(0) +
+                        ",#{queryForm." +
+                        queryField.getFieldName() +
+                        "})";
+                fieldMap.put("likeStr", stringBuilder);
+            }
+            else {
+                fieldMap.put("columnName", queryField.getColumnNameList().get(0));
             }
         }
 
         variablesMap.put("queryFields", finalQueryFiledList);
-        variablesMap.put("daoClassName", form.getBasic().getJavaPackageName() + ".dao." + form.getBasic().getModuleName() + "Dao" );
+        variablesMap.put("daoClassName", form.getBasic().getJavaPackageName() + ".dao." + form.getBasic().getModuleName() + "Dao");
         return variablesMap;
-    }
-
-
-    public List<String> getPackageList(List<CodeInsertAndUpdateField> fields, CodeGeneratorConfigForm form) {
-        if (CollectionUtils.isEmpty(fields)) {
-            return new ArrayList<>();
-        }
-
-        HashSet<String> packageList = new HashSet<>();
-
-        //1、javabean相关的包
-        packageList.addAll(getJavaBeanImportClass(form));
-
-        //2、dao
-        packageList.add("import " + form.getBasic().getJavaPackageName() + ".dao." + form.getBasic().getModuleName() + "Dao;" );
-        return new ArrayList<>(packageList);
     }
 
 }

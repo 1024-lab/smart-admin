@@ -19,9 +19,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <springboot.version>2.7.5</springboot.version>
+        <springboot.version>2.7.18</springboot.version>
         <spring-mock.version>2.0.8</spring-mock.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
         <p6spy.version>3.9.1</p6spy.version>
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <knife4j.version>4.3.0</knife4j.version>
@@ -42,7 +43,7 @@
         <poi.version>5.2.4</poi.version>
         <ooxml-schemas.version>1.4</ooxml-schemas.version>
         <aws-java-sdk.version>1.11.842</aws-java-sdk.version>
-        <log4j-spring-boot.version>2.17.2</log4j-spring-boot.version>
+        <log4j-spring-boot.version>2.23.1</log4j-spring-boot.version>
         <hutool.version>5.7.22</hutool.version>
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
         <jjwt.version>0.9.1</jjwt.version>
@@ -52,8 +53,12 @@
         <ip2region.version>2.7.0</ip2region.version>
         <bcprov.version>1.59</bcprov.version>
         <jackson-datatype-jsr310.version>2.13.4</jackson-datatype-jsr310.version>
+        <jackson-dataformat-yaml.version>2.16.1</jackson-dataformat-yaml.version>
         <smartdb.version>1.2.0</smartdb.version>
         <redisson.version>3.25.0</redisson.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
+        <freemarker.version>2.3.33</freemarker.version>
+        <jsoup.version>1.18.1</jsoup.version>
     </properties>
 
     <dependencyManagement>
@@ -79,6 +84,12 @@
                         <groupId>commons-logging</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql-connector-j.version}</version>
             </dependency>
 
             <dependency>
@@ -202,12 +213,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-spring-boot</artifactId>
-                <version>${log4j-spring-boot.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
@@ -310,6 +315,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${jackson-dataformat-yaml.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>net.1024lab</groupId>
                 <artifactId>smartdb</artifactId>
                 <version>${smartdb.version}</version>
@@ -339,6 +350,24 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-data-27</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
             </dependency>
 
         </dependencies>

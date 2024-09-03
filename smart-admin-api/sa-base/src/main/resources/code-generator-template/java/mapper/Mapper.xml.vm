@@ -2,10 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${daoClassName}">
 
+    <!-- 查询结果列 -->
+    <sql id="base_columns">
+        #foreach ($field in $fields)
+        ${tableName}.${field.columnName}#if($foreach.hasNext),#end
+        #end
+    </sql>
+
     <!-- 分页查询 -->
     <select id="queryPage" resultType="${basic.javaPackageName}.domain.vo.${name.upperCamel}VO">
         SELECT
-        *
+        <include refid="base_columns"/>
         FROM ${tableName}
 #if($queryFields.size() > 0)
         <where>
@@ -16,22 +23,27 @@
                 ${queryField.likeStr}
             </if>
 #end
-#if(${queryField.queryTypeEnum} == "Equal" || ${queryField.queryTypeEnum} == "Enum" || ${queryField.queryTypeEnum} == "Dict")
+#if(${queryField.queryTypeEnum} == "Dict")
+            <if test="queryForm.${queryField.fieldName} != null and queryForm.${queryField.fieldName} != ''">
+                ${queryField.likeStr}
+            </if>
+#end
+#if(${queryField.queryTypeEnum} == "Equal" || ${queryField.queryTypeEnum} == "Enum")
             <if test="queryForm.${queryField.fieldName} != null">
                 AND ${tableName}.${queryField.columnName} = #{queryForm.${queryField.fieldName}}
             </if>
 #end
 #if(${queryField.queryTypeEnum} == "Date")
             <if test="queryForm.${queryField.fieldName} != null">
-                AND DATE_FORMAT(${tableName}.${queryField.columnName}, '%Y-%m-%d') = #{queryForm.${queryField.fieldName}}
+                AND ${tableName}.${queryField.columnName} = #{queryForm.${queryField.fieldName}}
             </if>
 #end
 #if(${queryField.queryTypeEnum} == "DateRange")
             <if test="queryForm.${queryField.fieldName}Begin != null">
-                AND DATE_FORMAT(${tableName}.${queryField.columnName}, '%Y-%m-%d') &gt;= #{queryForm.${queryField.fieldName}Begin}
+                AND ${tableName}.${queryField.columnName} &gt;= #{queryForm.${queryField.fieldName}Begin}
             </if>
             <if test="queryForm.${queryField.fieldName}End != null">
-                AND DATE_FORMAT(${tableName}.${queryField.columnName}, '%Y-%m-%d') &lt;= #{queryForm.${queryField.fieldName}End}
+                AND ${tableName}.${queryField.columnName} &lt;= #{queryForm.${queryField.fieldName}End}
             </if>
 #end
 #end
@@ -39,21 +51,10 @@
 #end
     </select>
 
-#if($dao.deletedFieldUpperName != $null)
-    <update id="batchUpdate${dao.deletedFieldUpperName}">
-        update ${mapper.tableName} set ${mapper.deletedColumnName} = #{deletedFlag}
-        where ${mapper.mainKeyColumnName} in
-        <foreach collection="idList" open="(" close=")" separator="," item="item">
-            #{item}
-        </foreach>
-    </update>
-#end
-
 #if($deleteInfo.isSupportDelete)
 ### 假删除
 #if(!${deleteInfo.isPhysicallyDeleted})
 #if($deleteInfo.deleteEnum == "Batch" || $deleteInfo.deleteEnum == "SingleAndBatch")
-
     <update id="batchUpdateDeleted">
         update ${tableName} set deleted_flag = #{deletedFlag}
         where ${primaryKeyColumnName} in
@@ -71,4 +72,5 @@
 #end
 #end
 #end
+
 </mapper>

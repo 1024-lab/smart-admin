@@ -10,6 +10,8 @@ import net.lab1024.sa.admin.module.system.employee.service.EmployeeService;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.util.SmartRequestUtil;
+import net.lab1024.sa.base.module.support.apiencrypt.annotation.ApiDecrypt;
+import net.lab1024.sa.base.module.support.securityprotect.service.Level3ProtectConfigService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,7 +25,7 @@ import java.util.List;
  * @Date 2021-12-09 22:57:49
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @RestController
 @Tag(name = AdminSwaggerTagConst.System.SYSTEM_EMPLOYEE)
@@ -31,6 +33,9 @@ public class EmployeeController {
 
     @Resource
     private EmployeeService employeeService;
+
+    @Resource
+    private Level3ProtectConfigService level3ProtectConfigService;
 
     @PostMapping("/employee/query")
     @Operation(summary = "员工管理查询 @author 卓大")
@@ -89,9 +94,17 @@ public class EmployeeController {
 
     @Operation(summary = "修改密码 @author 卓大")
     @PostMapping("/employee/update/password")
+    @ApiDecrypt
     public ResponseDTO<String> updatePassword(@Valid @RequestBody EmployeeUpdatePasswordForm updatePasswordForm) {
         updatePasswordForm.setEmployeeId(SmartRequestUtil.getRequestUserId());
-        return employeeService.updatePassword(updatePasswordForm);
+        return employeeService.updatePassword(SmartRequestUtil.getRequestUser(), updatePasswordForm);
+    }
+
+    @Operation(summary = "获取密码复杂度 @author 卓大")
+    @GetMapping("/employee/getPasswordComplexityEnabled")
+    @ApiDecrypt
+    public ResponseDTO<Boolean> getPasswordComplexityEnabled() {
+        return ResponseDTO.ok(level3ProtectConfigService.isPasswordComplexityEnabled());
     }
 
     @Operation(summary = "重置员工密码 @author 卓大")

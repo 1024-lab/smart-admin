@@ -19,3 +19,7 @@ export const localRead = (key) => {
 export const localClear = () => {
   localStorage.clear();
 };
+
+export const localRemove = (key) => {
+  localStorage.removeItem(key);
+};

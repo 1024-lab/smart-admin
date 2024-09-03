@@ -1,18 +1,18 @@
 <!--
   * 代码生成 配置信息
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-22 21:50:41 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-22 21:50:41
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-drawer
     title="代码配置"
     style=""
     :open="visibleFlag"
-    :width="1000"
+    :width="1200"
     :footerStyle="{ textAlign: 'right' }"
     @close="onClose"
     :maskClosable="false"
@@ -175,7 +175,7 @@
       let insertAndUpdateValidated = await insertAndUpdateRef.value.validateForm();
       let deleteValidated = await deleteRef.value.validateForm();
 
-      if (!basicValidated || !insertAndUpdateValidated || !deleteValidated ) {
+      if (!basicValidated || !insertAndUpdateValidated || !deleteValidated) {
         return;
       }
 
@@ -201,7 +201,7 @@
       onClose();
     } catch (e) {
       smartSentry.captureError(e);
-    }finally{
+    } finally {
       SmartLoading.hide();
     }
   }

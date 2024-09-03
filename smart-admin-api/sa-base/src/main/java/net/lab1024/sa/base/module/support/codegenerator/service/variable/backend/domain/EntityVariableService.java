@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * @Date 2022/9/29 17:20:41
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 
 public class EntityVariableService extends CodeGenerateBaseVariableService {
@@ -54,14 +54,21 @@ public class EntityVariableService extends CodeGenerateBaseVariableService {
         // mybatis plus
         result.add("import com.baomidou.mybatisplus.annotation.TableName;");
 
+        // 自动填充注解
+        boolean existCreateAndUpdate = fields.stream().anyMatch(e -> "create_time".equals(e.getColumnName()) || "update_time".equals(e.getColumnName()));
+        if (existCreateAndUpdate) {
+            result.add("import com.baomidou.mybatisplus.annotation.FieldFill;");
+            result.add("import com.baomidou.mybatisplus.annotation.TableField;");
+        }
+
         //主键
-        boolean isExistPrimaryKey = fields.stream().filter(e -> e.getPrimaryKeyFlag() != null && e.getPrimaryKeyFlag()).findFirst().isPresent();
+        boolean isExistPrimaryKey = fields.stream().anyMatch(e -> e.getPrimaryKeyFlag() != null && e.getPrimaryKeyFlag());
         if (isExistPrimaryKey) {
             result.add("import com.baomidou.mybatisplus.annotation.TableId;");
         }
 
         //自增
-        boolean isExistAutoIncrease = fields.stream().filter(e -> e.getAutoIncreaseFlag() != null && e.getAutoIncreaseFlag()).findFirst().isPresent();
+        boolean isExistAutoIncrease = fields.stream().anyMatch(e -> e.getAutoIncreaseFlag() != null && e.getAutoIncreaseFlag());
         if (isExistAutoIncrease) {
             result.add("import com.baomidou.mybatisplus.annotation.IdType;");
         }

@@ -37,7 +37,6 @@
   import { computed, ref, onMounted } from 'vue';
   import { loginApi } from '/src/api/system/login-api';
   import { useUserStore } from '/@/store/modules/system/user';
-  import { localClear } from '/@/utils/local-util';
   import { smartSentry } from '/@/lib/smart-sentry';
   import HeaderResetPassword from './header-reset-password-modal/index.vue';
   import { useRouter } from 'vue-router';
@@ -53,7 +52,6 @@
     } catch (e) {
       smartSentry.captureError(e);
     } finally {
-      localClear();
       useUserStore().logout();
       location.reload();
     }

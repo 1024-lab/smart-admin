@@ -26,6 +26,9 @@ public class LoginResultVO extends RequestEmployee {
     @Schema(description = "菜单列表")
     private List<MenuVO> menuList;
 
+    @Schema(description = "是否需要修改密码")
+    private Boolean needUpdatePwdFlag;
+
     @Schema(description = "上次登录ip")
     private String lastLoginIp;
 

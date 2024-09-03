@@ -32,7 +32,6 @@ public class CodeGeneratorConfigForm {
     @Schema(description = "表名")
     private String tableName;
 
-
     @Valid
     @NotNull(message = "基础信息不能为空")
     @Schema(description = "基础信息")

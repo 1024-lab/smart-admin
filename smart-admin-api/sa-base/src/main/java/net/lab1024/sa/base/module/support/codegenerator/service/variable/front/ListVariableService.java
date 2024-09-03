@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.google.common.base.CaseFormat;
 import net.lab1024.sa.base.module.support.codegenerator.constant.CodeQueryFieldQueryTypeEnum;
 import net.lab1024.sa.base.module.support.codegenerator.domain.form.CodeGeneratorConfigForm;
+import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeField;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeQueryField;
 import net.lab1024.sa.base.module.support.codegenerator.service.variable.CodeGenerateBaseVariableService;
 
@@ -35,19 +36,23 @@ public class ListVariableService extends CodeGenerateBaseVariableService {
 
         for (CodeQueryField queryField : queryFields) {
             Map<String, Object> objectMap = BeanUtil.beanToMap(queryField);
-            variableList.add(objectMap);
 
-            if("Enum".equals(queryField.getQueryTypeEnum())){
+            CodeField codeField = getCodeFieldByColumnName(queryField.getColumnNameList().get(0), form);
+            objectMap.put("frontEnumName", codeField.getEnumName());
+            objectMap.put("dict", codeField.getDict());
+
+            if(CodeQueryFieldQueryTypeEnum.ENUM.equalsValue(queryField.getQueryTypeEnum())){
                 frontImportSet.add("import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';");
             }
 
-            if("Dict".equals(queryField.getQueryTypeEnum())){
+            if(CodeQueryFieldQueryTypeEnum.DICT.equalsValue(queryField.getQueryTypeEnum())){
                 frontImportSet.add("import DictSelect from '/@/components/support/dict-select/index.vue';");
             }
 
-            if(CodeQueryFieldQueryTypeEnum.DATE_RANGE.getValue().equals(queryField.getQueryTypeEnum())){
+            if(CodeQueryFieldQueryTypeEnum.DATE_RANGE.equalsValue(queryField.getQueryTypeEnum())){
                 frontImportSet.add("import { defaultTimeRanges } from '/@/lib/default-time-ranges';");
             }
+            variableList.add(objectMap);
 
         }
         variablesMap.put("queryFields",variableList);

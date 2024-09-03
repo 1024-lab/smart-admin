@@ -34,4 +34,7 @@ public class LoginForm extends CaptchaForm {
     @SchemaEnum(desc = "登录终端", value = LoginDeviceEnum.class)
     @CheckEnum(value = LoginDeviceEnum.class, required = true, message = "此终端不允许登录")
     private Integer loginDevice;
+
+    @Schema(description = "邮箱验证码")
+    private String emailCode;
 }

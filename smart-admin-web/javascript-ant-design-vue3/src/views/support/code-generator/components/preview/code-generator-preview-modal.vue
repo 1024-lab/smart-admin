@@ -1,11 +1,11 @@
 <!--
   * 代码生成 预览代码
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-22 21:50:41 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-22 21:50:41
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-drawer
@@ -37,9 +37,9 @@
 </template>
 
 <script setup>
-  import { computed, nextTick, ref, watch } from 'vue';
+  import { computed, nextTick, ref } from 'vue';
   import { codeGeneratorApi } from '/@/api/support/code-generator-api';
-  import { JAVA_FILE_LIST, LANGUAGE_LIST, JS_FILE_LIST,TS_FILE_LIST, JAVA_DOMAIN_FILE_LIST } from '../../code-generator-util';
+  import { JAVA_FILE_LIST, LANGUAGE_LIST, JS_FILE_LIST, TS_FILE_LIST } from '../../code-generator-util';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { lineNumbersBlock } from '/@/lib/highlight-line-number';
   import hljs from 'highlight.js';
@@ -74,11 +74,11 @@
   // ------------------ 标签页 ------------------
   const languageType = ref(LANGUAGE_LIST[0]);
   const tabList = computed(() => {
-    if(languageType.value === LANGUAGE_LIST[0]){
+    if (languageType.value === LANGUAGE_LIST[0]) {
       return JS_FILE_LIST;
-    }else if(languageType.value === LANGUAGE_LIST[1]){
+    } else if (languageType.value === LANGUAGE_LIST[1]) {
       return TS_FILE_LIST;
-    }else{
+    } else {
       return JAVA_FILE_LIST;
     }
   });
@@ -86,21 +86,21 @@
   const fileKey = ref(tabList.value[0]);
 
   function getLanguage() {
-    if(languageType.value === LANGUAGE_LIST[0]){
+    if (languageType.value === LANGUAGE_LIST[0]) {
       return 'javascript';
-    }else if(languageType.value === LANGUAGE_LIST[1]){
+    } else if (languageType.value === LANGUAGE_LIST[1]) {
       return 'typescript';
-    }else{
+    } else {
       return 'java';
     }
   }
 
-  function onChangeLanguageType(e){
-    if(e.target.value === LANGUAGE_LIST[0]){
+  function onChangeLanguageType(e) {
+    if (e.target.value === LANGUAGE_LIST[0]) {
       fileKey.value = JS_FILE_LIST[0];
-    }else if(e.target.value === LANGUAGE_LIST[1]){
+    } else if (e.target.value === LANGUAGE_LIST[1]) {
       fileKey.value = TS_FILE_LIST[0];
-    }else{
+    } else {
       fileKey.value = JAVA_FILE_LIST[0];
     }
     onChangeTab(fileKey.value);

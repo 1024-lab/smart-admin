@@ -57,19 +57,20 @@ public class FormVariableService extends CodeGenerateBaseVariableService {
 
             fieldsVariableList.add(objectMap);
 
-            if (CodeFrontComponentEnum.ENUM_SELECT.getValue().equals(field.getFrontComponent())) {
+            if (CodeFrontComponentEnum.ENUM_SELECT.equalsValue(field.getFrontComponent())) {
                 frontImportSet.add("import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';");
             }
 
-            if (CodeFrontComponentEnum.BOOLEAN_SELECT.getValue().equals(field.getFrontComponent())) {
+            if (CodeFrontComponentEnum.BOOLEAN_SELECT.equalsValue(field.getFrontComponent())) {
                 frontImportSet.add("import BooleanSelect from '/@/components/framework/boolean-select/index.vue';");
             }
 
-            if (CodeFrontComponentEnum.DICT_SELECT.getValue().equals(field.getFrontComponent())) {
+            if (CodeFrontComponentEnum.DICT_SELECT.equalsValue(field.getFrontComponent())) {
                 frontImportSet.add("import DictSelect from '/@/components/support/dict-select/index.vue';");
             }
 
-            if (CodeFrontComponentEnum.FILE_UPLOAD.getValue().equals(field.getFrontComponent())) {
+            if (CodeFrontComponentEnum.FILE_UPLOAD.equalsValue(field.getFrontComponent())) {
+                frontImportSet.add("import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';");
                 frontImportSet.add("import FileUpload from '/@/components/support/file-upload/index.vue';");
             }
         }

@@ -33,7 +33,7 @@ router.beforeEach(async (to, from, next) => {
   nProgress.start();
 
   // 公共页面，任何时候都可以跳转
-  if (to.path === PAGE_PATH_404 || to.path === PAGE_PATH_LOGIN) {
+  if (to.path === PAGE_PATH_404) {
     next();
     return;
   }
@@ -41,8 +41,18 @@ router.beforeEach(async (to, from, next) => {
   // 验证登录
   const token = localRead(LocalStorageKeyConst.USER_TOKEN);
   if (!token) {
-    localClear();
-    next({ path: PAGE_PATH_LOGIN });
+    useUserStore().logout();
+    if (to.path === PAGE_PATH_LOGIN) {
+      next();
+    } else {
+      next({ path: PAGE_PATH_LOGIN });
+    }
+    return;
+  }
+
+  // 登录页，则跳转到首页
+  if (to.path === PAGE_PATH_LOGIN) {
+    next({ path: HOME_PAGE_PATH });
     return;
   }
 

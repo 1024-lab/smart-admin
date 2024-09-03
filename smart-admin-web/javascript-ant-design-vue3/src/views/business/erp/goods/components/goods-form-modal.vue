@@ -20,7 +20,7 @@
         <SmartEnumSelect enum-name="GOODS_STATUS_ENUM" v-model:value="form.goodsStatus" />
       </a-form-item>
       <a-form-item label="产地" name="place">
-        <DictSelect key-code="GODOS_PLACE" v-model:value="form.place" />
+        <DictSelect width="100%" key-code="GODOS_PLACE" v-model:value="form.place" mode="tags" />
       </a-form-item>
       <a-form-item label="上架状态" name="shelvesFlag">
         <a-radio-group v-model:value="form.shelvesFlag">
@@ -80,7 +80,7 @@
     //商品状态
     goodsStatus: GOODS_STATUS_ENUM.APPOINTMENT.value,
     //产地
-    place: undefined,
+    place: [],
     //商品价格
     price: undefined,
     //上架状态
@@ -107,9 +107,8 @@
       Object.assign(form, rowData);
     }
     if (form.place && form.place.length > 0) {
-      form.place = form.place[0].valueCode;
+      form.place = form.place.map((e) => e.valueCode);
     }
-    console.log(form);
     visible.value = true;
     nextTick(() => {
       formRef.value.clearValidate();
@@ -127,14 +126,10 @@
       .then(async () => {
         SmartLoading.show();
         try {
-          let params = _.cloneDeep(form);
-          if (params.place && Array.isArray(params.place) && params.place.length > 0) {
-            params.place = params.place[0].valueCode;
-          }
           if (form.goodsId) {
-            await goodsApi.updateGoods(params);
+            await goodsApi.updateGoods(form);
           } else {
-            await goodsApi.addGoods(params);
+            await goodsApi.addGoods(form);
           }
           message.success(`${form.goodsId ? '修改' : '添加'}成功`);
           onClose();

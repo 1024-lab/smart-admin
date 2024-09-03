@@ -242,5 +242,11 @@
         where notice_id = #{noticeId}
           and employee_id = #{employeeId}
     </update>
+    <update id="updateViewCount">
+        update t_notice
+        set page_view_count = page_view_count + #{pageViewCountIncrement},
+            user_view_count = user_view_count + #{userViewCountIncrement}
+        where notice_id = #{noticeId}
+    </update>
 
 </mapper>

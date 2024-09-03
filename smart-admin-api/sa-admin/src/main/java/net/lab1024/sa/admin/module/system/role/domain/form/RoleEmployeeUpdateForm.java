@@ -5,7 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 角色的员工更新
@@ -25,6 +25,6 @@ public class RoleEmployeeUpdateForm {
 
     @Schema(description = "员工id集合")
     @NotEmpty(message = "员工id不能为空")
-    protected List<Long> employeeIdList;
+    protected Set<Long> employeeIdList;
 
 }

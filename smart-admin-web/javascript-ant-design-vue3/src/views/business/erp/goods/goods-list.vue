@@ -109,7 +109,7 @@
     >
       <template #bodyCell="{ text, record, column }">
         <template v-if="column.dataIndex === 'place'">
-          <span>{{ text && text.length > 0 ? text[0].valueName : '' }}</span>
+          <span>{{ text && text.length > 0 ? text.map((e) => e.valueName).join(',') : '' }}</span>
         </template>
         <template v-if="column.dataIndex === 'goodsStatus'">
           <span>{{ $smartEnumPlugin.getDescByValue('GOODS_STATUS_ENUM', text) }}</span>

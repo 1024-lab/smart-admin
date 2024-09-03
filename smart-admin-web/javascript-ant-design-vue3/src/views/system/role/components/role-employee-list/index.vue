@@ -168,7 +168,7 @@
 
   async function addRoleEmployee() {
     let res = await roleApi.getRoleAllEmployee(selectRoleId.value);
-    let selectedIdList = res.data.map((e) => e.roleId) || [];
+    let selectedIdList = res.data.map((e) => e.employeeId) || [];
     selectEmployeeModal.value.showModal(selectedIdList);
   }
 

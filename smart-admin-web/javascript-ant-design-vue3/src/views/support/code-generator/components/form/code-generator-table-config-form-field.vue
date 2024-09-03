@@ -11,6 +11,10 @@
   <a-alert :closable="true" message="请务必将每一个字段的 “ 字段名词 ” 填写完整！！！" type="success" show-icon>
     <template #icon><smile-outlined /></template>
   </a-alert>
+  <!-- 为了方便再配置时中途新增字典后 可以重新刷新字典下拉 (需要先随便选择一个字典后才能看到最新的字典) -->
+  <div style="float: right; padding: 10px 0px">
+    <a-button type="primary" @click="refreshDict">刷新字典</a-button>
+  </div>
   <a-table
     :scroll="{ x: 1300 }"
     size="small"
@@ -64,7 +68,7 @@
       </template>
 
       <template v-if="column.dataIndex === 'dict'">
-        <DictKeySelect v-model:value="record.dict" />
+        <DictKeySelect ref="dictRef" v-model:value="record.dict" />
       </template>
 
       <template v-if="column.dataIndex === 'enumName'">
@@ -80,6 +84,11 @@
   import DictKeySelect from '/@/components/support/dict-key-select/index.vue';
   import { convertUpperCamel, convertLowerCamel } from '/@/utils/str-util';
   import _ from 'lodash';
+
+  const dictRef = ref();
+  function refreshDict() {
+    dictRef.value.queryDict();
+  }
 
   //------------------------ 全局数据 ---------------------
   const tableInfo = inject('tableInfo');

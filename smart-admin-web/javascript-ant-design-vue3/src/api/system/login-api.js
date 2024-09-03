@@ -37,4 +37,18 @@ export const loginApi = {
   getLoginInfo: () => {
     return getRequest('/login/getLoginInfo');
   },
+
+  /**
+   * 获取邮箱登录验证码 @author 卓大
+   */
+  sendLoginEmailCode: (loginName) => {
+    return getRequest(`/login/sendEmailCode/${loginName}`);
+  },
+
+  /**
+   * 获取双因子登录标识 @author 卓大
+   */
+  getTwoFactorLoginFlag: () => {
+    return getRequest('/login/getTwoFactorLoginFlag');
+  },
 };

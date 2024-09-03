@@ -18,7 +18,7 @@
       </a-form-item>
       <a-form-item :label="$t('setting.color')">
         <div class="color-container">
-          <template v-for="(item, index) in themeColors">
+          <template v-for="(item, index) in themeColors" :key="index">
             <div v-if="index === formState.colorIndex" class="color">
               <CheckSquareFilled :style="{ color: item.primaryColor, fontSize: '22px' }" />
             </div>
@@ -34,7 +34,7 @@
               >
                 <path
                   d="M128 160.01219c0-17.67619 14.336-32.01219 32.01219-32.01219h704c17.65181 0 31.98781 14.336 31.98781 32.01219v704c0 17.65181-14.336 31.98781-32.01219 31.98781H160.036571a31.98781 31.98781 0 0 1-32.01219-32.01219V160.036571z"
-                ></path>
+                />
               </svg>
             </div>
           </template>

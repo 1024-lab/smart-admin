@@ -138,4 +138,12 @@
             #{item}
         </foreach>
     </delete>
+
+    <select id="existsByRoleId" resultType="java.lang.Integer">
+        SELECT 1
+        FROM t_role_employee er
+        WHERE er.role_id = #{roleId}
+        LIMIT 1
+    </select>
+
 </mapper>

@@ -19,9 +19,9 @@ import net.lab1024.sa.base.module.support.file.domain.vo.FileDownloadVO;
 import net.lab1024.sa.base.module.support.file.domain.vo.FileUploadVO;
 import net.lab1024.sa.base.module.support.file.domain.vo.FileVO;
 import net.lab1024.sa.base.module.support.redis.RedisService;
+import net.lab1024.sa.base.module.support.securityprotect.service.SecurityFileService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  * @Date 2019年10月11日 15:34:47
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class FileService {
@@ -58,9 +58,8 @@ public class FileService {
     @Resource
     private RedisService redisService;
 
-    @Value("${spring.servlet.multipart.max-file-size}")
-    private String maxFileSize;
-
+    @Resource
+    private SecurityFileService securityFileService;
 
     /**
      * 文件上传服务
@@ -89,11 +88,10 @@ public class FileService {
             return ResponseDTO.userErrorParam("文件名称最大长度为：" + FILE_NAME_MAX_LENGTH);
         }
 
-        // 校验文件大小
-        String maxSizeStr = maxFileSize.toLowerCase().replace("mb", "");
-        long maxSize = Integer.parseInt(maxSizeStr) * 1024 * 1024L;
-        if (file.getSize() > maxSize) {
-            return ResponseDTO.userErrorParam("上传文件最大为:" + maxSize);
+        // 校验文件大小以及安全性
+        ResponseDTO<String> validateFile = securityFileService.checkFile(file);
+        if (!validateFile.getOk()) {
+            return ResponseDTO.error(validateFile);
         }
 
         // 进行上传
@@ -192,7 +190,7 @@ public class FileService {
 
         // 根据文件服务类 获取对应文件服务 查询 url
         ResponseDTO<FileDownloadVO> download = fileStorageService.download(fileKey);
-        if(download.getOk()){
+        if (download.getOk()) {
             download.getData().getMetadata().setFileName(fileVO.getFileName());
         }
         return download;

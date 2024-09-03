@@ -27,8 +27,12 @@
 </template>
 
 <script setup>
-  import { computed, onMounted, ref, watch } from 'vue';
+  import { computed, onMounted, ref, watch, defineExpose } from 'vue';
   import { dictApi } from '/src/api/support/dict-api';
+
+  defineExpose({
+    queryDict,
+  });
 
   const props = defineProps({
     value: [Array, String],

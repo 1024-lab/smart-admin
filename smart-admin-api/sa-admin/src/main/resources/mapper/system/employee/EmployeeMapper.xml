@@ -85,7 +85,7 @@
     <select id="countByDepartmentId" resultType="integer">
         SELECT count(1) FROM t_employee
         WHERE
-        department_id = #{departmentId}
+        department_id = #{departmentId} AND deleted_flag = #{deletedFlag}
     </select>
 
 

@@ -2,6 +2,7 @@ import { convertUpperCamel } from '/@/utils/str-util';
 
 // -------------------------------- java 类型 --------------------------------
 export const JavaTypeMap = new Map();
+JavaTypeMap.set('bit', 'Boolean');
 JavaTypeMap.set('int', 'Integer');
 JavaTypeMap.set('tinyint', 'Integer');
 JavaTypeMap.set('smallint', 'Integer');
@@ -37,6 +38,7 @@ export function getJavaType(dataType) {
 
 // -------------------------------- js 类型 --------------------------------
 export const JsTypeMap = new Map();
+JsTypeMap.set('bit', 'Boolean');
 JsTypeMap.set('int', 'Number');
 JsTypeMap.set('tinyint', 'Number');
 JsTypeMap.set('smallint', 'Number');
@@ -56,11 +58,10 @@ JsTypeMap.set('date', 'Date');
 JsTypeMap.set('datetime', 'Date');
 
 export const JsTypeList = [
+  'Boolean', //
   'Number', //
   'String', //
   'Date', //
-  'Boolean', //
-  'String', //
 ];
 
 export function getJsType(dataType) {
@@ -70,8 +71,9 @@ export function getJsType(dataType) {
 // -------------------------------- 前端组件 --------------------------------
 
 export const FrontComponentMap = new Map();
+FrontComponentMap.set('bit', 'BooleanSelect');
 FrontComponentMap.set('int', 'InputNumber');
-FrontComponentMap.set('tinyint', 'BooleanSelect');
+FrontComponentMap.set('tinyint', 'InputNumber');
 FrontComponentMap.set('smallint', 'InputNumber');
 FrontComponentMap.set('integer', 'InputNumber');
 FrontComponentMap.set('year', 'Date');
@@ -84,7 +86,7 @@ FrontComponentMap.set('varchar', 'Input');
 FrontComponentMap.set('tinytext', 'Input');
 FrontComponentMap.set('text', 'Textarea');
 FrontComponentMap.set('longtext', 'Textarea');
-FrontComponentMap.set('blob', 'Upload');
+FrontComponentMap.set('blob', 'FileUpload');
 FrontComponentMap.set('date', 'Date');
 FrontComponentMap.set('datetime', 'DateTime');
 
@@ -131,6 +133,7 @@ export const JAVA_FILE_LIST = [
   'Dao.java', //
   'Mapper.xml', //
   ...JAVA_DOMAIN_FILE_LIST,
+  'Menu.sql', //
 ];
 
 // -------------------------------- 枚举enum --------------------------------

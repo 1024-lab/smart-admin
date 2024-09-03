@@ -199,7 +199,7 @@ public class GoodsService {
                         GoodsExcelVO.builder()
                                 .goodsStatus(SmartEnumUtil.getEnumDescByValue(e.getGoodsStatus(), GoodsStatusEnum.class))
                                 .categoryName(categoryQueryService.queryCategoryName(e.getCategoryId()))
-                                .place(dictCacheService.selectValueNameByValueCode(e.getPlace()))
+                                .place(Arrays.stream(e.getPlace().split(",")).map(code -> dictCacheService.selectValueNameByValueCode(code)).collect(Collectors.joining(",")))
                                 .price(e.getPrice())
                                 .goodsName(e.getGoodsName())
                                 .remark(e.getRemark())

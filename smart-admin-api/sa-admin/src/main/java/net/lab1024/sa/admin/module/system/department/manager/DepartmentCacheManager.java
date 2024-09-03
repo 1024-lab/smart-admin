@@ -141,13 +141,15 @@ public class DepartmentCacheManager {
         return treeVOList;
     }
 
-    /**
+     /**
      * 构建所有根节点的下级树形结构
-     *
+     * 返回值为层序遍历结果 
+     * [由于departmentDao中listAll给出数据根据Sort降序 所以同一层中Sort值较大的优先遍历]
      */
-    private void recursiveBuildTree(List<DepartmentTreeVO> nodeList, List<DepartmentVO> allDepartmentList) {
+    private List<Long> recursiveBuildTree(List<DepartmentTreeVO> nodeList, List<DepartmentVO> allDepartmentList) {
         int nodeSize = nodeList.size();
-        for (int i = 0; i < nodeSize; i++) {
+        List<Long> childIdList = new ArrayList<>();
+        for(int i = 0; i < nodeSize; i++) {
             int preIndex = i - 1;
             int nextIndex = i + 1;
             DepartmentTreeVO node = nodeList.get(i);
@@ -158,16 +160,34 @@ public class DepartmentCacheManager {
                 node.setNextId(nodeList.get(nextIndex).getDepartmentId());
             }
 
-            ArrayList<Long> selfAndAllChildrenIdList = Lists.newArrayList();
-            selfAndAllChildrenIdList.add(node.getDepartmentId());
-            node.setSelfAndAllChildrenIdList(selfAndAllChildrenIdList);
-
             List<DepartmentTreeVO> children = getChildren(node.getDepartmentId(), allDepartmentList);
+            
+            List<Long> tempChildIdList = new ArrayList<>();
             if (CollectionUtils.isNotEmpty(children)) {
                 node.setChildren(children);
-                this.recursiveBuildTree(children, allDepartmentList);
+                tempChildIdList = this.recursiveBuildTree(children, allDepartmentList);
             }
+
+            if(CollectionUtils.isEmpty(node.getSelfAndAllChildrenIdList())) {
+                node.setSelfAndAllChildrenIdList(
+                        new ArrayList<>()
+                );
+            }
+            node.getSelfAndAllChildrenIdList().add(node.getDepartmentId());
+            
+            if(CollectionUtils.isNotEmpty(tempChildIdList)) {
+                node.getSelfAndAllChildrenIdList().addAll(tempChildIdList);
+                childIdList.addAll(tempChildIdList);
+            }
+            
         }
+        
+        // 保证本层遍历顺序
+        for(int i = nodeSize - 1; i >= 0; i--) {
+            childIdList.add(0, nodeList.get(i).getDepartmentId());
+        }
+        
+        return childIdList;
     }
 
 

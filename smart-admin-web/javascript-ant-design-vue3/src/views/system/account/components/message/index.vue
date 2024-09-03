@@ -6,7 +6,7 @@
       </a-form-item>
 
       <a-form-item label="类型" class="smart-query-form-item">
-        <smart-enum-select v-model:value="queryForm.messageType" placeholder="消息类型" enum-name="MESSAGE_TYPE_ENUM" />
+        <smart-enum-select style="width: 150px" v-model:value="queryForm.messageType" placeholder="消息类型" enum-name="MESSAGE_TYPE_ENUM" />
       </a-form-item>
 
       <a-form-item label="消息时间" class="smart-query-form-item">
@@ -43,7 +43,7 @@
   </a-form>
 
   <a-table size="small" :dataSource="tableData" :columns="columns" rowKey="messageId" :pagination="false" bordered>
-    <template #bodyCell="{ text, record, index, column }">
+    <template #bodyCell="{ text, record, column }">
       <template v-if="column.dataIndex === 'messageType'">
         <span>{{ $smartEnumPlugin.getDescByValue('MESSAGE_TYPE_ENUM', text) }}</span>
       </template>

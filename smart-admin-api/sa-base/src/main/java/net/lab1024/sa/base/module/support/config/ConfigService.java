@@ -109,7 +109,8 @@ public class ConfigService {
      *
      */
     public String getConfigValue(ConfigKeyEnum configKey) {
-        return this.getConfig(configKey).getConfigValue();
+        ConfigVO config = this.getConfig(configKey);
+        return config == null ? null : config.getConfigValue();
     }
 
     /**
@@ -125,12 +126,12 @@ public class ConfigService {
      * 添加系统配置
      *
      */
-    public ResponseDTO<String> add(ConfigAddForm configAddDTO) {
-        ConfigEntity entity = configDao.selectByKey(configAddDTO.getConfigKey());
+    public ResponseDTO<String> add(ConfigAddForm configAddForm) {
+        ConfigEntity entity = configDao.selectByKey(configAddForm.getConfigKey());
         if (null != entity) {
             return ResponseDTO.error(UserErrorCode.ALREADY_EXIST);
         }
-        entity = SmartBeanUtil.copy(configAddDTO, ConfigEntity.class);
+        entity = SmartBeanUtil.copy(configAddForm, ConfigEntity.class);
         configDao.insert(entity);
 
         // 刷新缓存

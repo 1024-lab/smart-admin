@@ -13,16 +13,13 @@ import net.lab1024.sa.base.common.util.SmartStringUtil;
 import net.lab1024.sa.base.module.support.codegenerator.domain.entity.CodeGeneratorConfigEntity;
 import net.lab1024.sa.base.module.support.codegenerator.domain.form.CodeGeneratorConfigForm;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.*;
-import net.lab1024.sa.base.module.support.codegenerator.service.variable.backend.ControllerVariableService;
-import net.lab1024.sa.base.module.support.codegenerator.service.variable.backend.DaoVariableService;
-import net.lab1024.sa.base.module.support.codegenerator.service.variable.backend.ManagerVariableService;
-import net.lab1024.sa.base.module.support.codegenerator.service.variable.backend.ServiceVariableService;
+import net.lab1024.sa.base.module.support.codegenerator.service.variable.CodeGenerateBaseVariableService;
+import net.lab1024.sa.base.module.support.codegenerator.service.variable.backend.*;
 import net.lab1024.sa.base.module.support.codegenerator.service.variable.backend.domain.*;
 import net.lab1024.sa.base.module.support.codegenerator.service.variable.front.ApiVariableService;
 import net.lab1024.sa.base.module.support.codegenerator.service.variable.front.ConstVariableService;
 import net.lab1024.sa.base.module.support.codegenerator.service.variable.front.FormVariableService;
 import net.lab1024.sa.base.module.support.codegenerator.service.variable.front.ListVariableService;
-import net.lab1024.sa.base.module.support.codegenerator.service.variable.CodeGenerateBaseVariableService;
 import net.lab1024.sa.base.module.support.codegenerator.util.CodeGeneratorTool;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.velocity.Template;
@@ -36,7 +33,7 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.OutputStream;
 import java.io.StringWriter;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,7 +44,7 @@ import java.util.stream.Collectors;
  * @Date 2022-06-30 22:15:38
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 
 @Service
@@ -70,6 +67,8 @@ public class CodeGeneratorTemplateService {
         map.put("java/manager/Manager.java", new ManagerVariableService());
         map.put("java/dao/Dao.java", new DaoVariableService());
         map.put("java/mapper/Mapper.xml", new MapperVariableService());
+        // 菜单 SQL
+        map.put("java/sql/Menu.sql", new MenuVariableService());
         // 前端
         map.put("js/api.js", new ApiVariableService());
         map.put("js/const.js", new ConstVariableService());
@@ -94,6 +93,7 @@ public class CodeGeneratorTemplateService {
                 String fileName = templateFile.startsWith("java") ? upperCamel + templateSplit[templateSplit.length - 1] : lowerHyphen + "-" + templateSplit[templateSplit.length - 1];
                 String fullPathFileName = templateFile.replaceAll(templateSplit[templateSplit.length - 1], fileName);
                 fullPathFileName = fullPathFileName.replaceAll("java/", "java/" + basic.getModuleName().toLowerCase() + "/");
+                fullPathFileName = fullPathFileName.replaceAll("js/", "js/" + lowerHyphen + "/");
 
                 String fileContent = generate(tableName, templateFile, codeGeneratorConfigEntity);
                 File file = new File(uuid + "/" + fullPathFileName);
@@ -129,7 +129,7 @@ public class CodeGeneratorTemplateService {
         }
 
 
-        ZipUtil.zip(outputStream, Charset.forName("utf-8"), false, null, dir);
+        ZipUtil.zip(outputStream, StandardCharsets.UTF_8, false, null, dir);
 
         FileUtil.del(dir);
 

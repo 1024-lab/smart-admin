@@ -38,14 +38,15 @@ public interface ${name.upperCamel}Dao extends BaseMapper<${name.upperCamel}Enti
      * 更新删除状态
      */
     long updateDeleted(@Param("${primaryKeyFieldName}")${primaryKeyJavaType} ${primaryKeyFieldName},@Param("${deletedFlag}")boolean deletedFlag);
+
 #end
 #if($deleteInfo.deleteEnum == "Batch" || $deleteInfo.deleteEnum == "SingleAndBatch")
     /**
      * 批量更新删除状态
      */
     void batchUpdateDeleted(@Param("idList")List<${primaryKeyJavaType}> idList,@Param("${deletedFlag}")boolean deletedFlag);
-#end
-#end
-#end
 
+#end
+#end
+#end
 }

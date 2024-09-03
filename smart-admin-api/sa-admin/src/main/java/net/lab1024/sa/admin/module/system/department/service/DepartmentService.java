@@ -92,7 +92,7 @@ public class DepartmentService {
         }
 
         // 是否有未删除员工
-        int employeeNum = employeeDao.countByDepartmentId(departmentId);
+        int employeeNum = employeeDao.countByDepartmentId(departmentId, Boolean.FALSE);
         if (employeeNum > 0) {
             return ResponseDTO.userErrorParam("请先删除部门员工");
         }

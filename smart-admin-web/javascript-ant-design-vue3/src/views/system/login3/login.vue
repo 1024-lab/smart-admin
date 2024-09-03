@@ -24,6 +24,14 @@
         <a-form-item name="loginName">
           <a-input v-model:value.trim="loginForm.loginName" placeholder="请输入用户名" />
         </a-form-item>
+        <a-form-item name="emailCode" v-if="emailCodeShowFlag">
+          <a-input-group compact>
+            <a-input style="width: calc(100% - 110px)" v-model:value="loginForm.emailCode" autocomplete="on" placeholder="请输入邮箱验证码" />
+            <a-button @click="sendSmsCode" class="code-btn" type="primary" :disabled="emailCodeButtonDisabled">
+              {{ emailCodeTips }}
+            </a-button>
+          </a-input-group>
+        </a-form-item>
         <a-form-item name="password">
           <a-input-password
             v-model:value="loginForm.password"
@@ -109,7 +117,7 @@
 
   onMounted(() => {
     document.onkeyup = (e) => {
-      if (e.keyCode == 13) {
+      if (e.keyCode === 13) {
         onLogin();
       }
     };
@@ -129,7 +137,7 @@
           password: encryptData(loginForm.password),
         });
         const res = await loginApi.login(encryptPasswordForm);
-        stopRefrestCaptchaInterval();
+        stopRefreshCaptchaInterval();
         localSave(LocalStorageKeyConst.USER_TOKEN, res.data.token ? res.data.token : '');
         message.success('登录成功');
         //更新用户信息到pinia
@@ -157,27 +165,78 @@
       let captchaResult = await loginApi.getCaptcha();
       captchaBase64Image.value = captchaResult.data.captchaBase64Image;
       loginForm.captchaUuid = captchaResult.data.captchaUuid;
-      beginRefrestCaptchaInterval(captchaResult.data.expireSeconds);
+      beginRefreshCaptchaInterval(captchaResult.data.expireSeconds);
     } catch (e) {
       console.log(e);
     }
   }
 
-  let refrestCaptchaInterval = null;
-  function beginRefrestCaptchaInterval(expireSeconds) {
-    if (refrestCaptchaInterval === null) {
-      refrestCaptchaInterval = setInterval(getCaptcha, (expireSeconds - 5) * 1000);
+  let refreshCaptchaInterval = null;
+  function beginRefreshCaptchaInterval(expireSeconds) {
+    if (refreshCaptchaInterval === null) {
+      refreshCaptchaInterval = setInterval(getCaptcha, (expireSeconds - 5) * 1000);
     }
   }
 
-  function stopRefrestCaptchaInterval() {
-    if (refrestCaptchaInterval != null) {
-      clearInterval(refrestCaptchaInterval);
-      refrestCaptchaInterval = null;
+  function stopRefreshCaptchaInterval() {
+    if (refreshCaptchaInterval != null) {
+      clearInterval(refreshCaptchaInterval);
+      refreshCaptchaInterval = null;
     }
   }
 
-  onMounted(getCaptcha);
+  onMounted(() => {
+    getCaptcha();
+    getTwoFactorLoginFlag();
+  });
+
+  //--------------------- 邮箱验证码 ---------------------------------
+
+  const emailCodeShowFlag = ref(false);
+  let emailCodeTips = ref('获取邮箱验证码');
+  let emailCodeButtonDisabled = ref(false);
+  // 定时器
+  let countDownTimer = null;
+  // 开始倒计时
+  function runCountDown() {
+    emailCodeButtonDisabled.value = true;
+    let countDown = 60;
+    emailCodeTips.value = `${countDown}秒后重新获取`;
+    countDownTimer = setInterval(() => {
+      if (countDown > 1) {
+        countDown--;
+        emailCodeTips.value = `${countDown}秒后重新获取`;
+      } else {
+        clearInterval(countDownTimer);
+        emailCodeButtonDisabled.value = false;
+        emailCodeTips.value = '获取验证码';
+      }
+    }, 1000);
+  }
+
+  // 获取双因子登录标识
+  async function getTwoFactorLoginFlag() {
+    try {
+      let result = await loginApi.getTwoFactorLoginFlag();
+      emailCodeShowFlag.value = result.data;
+    } catch (e) {
+      smartSentry.captureError(e);
+    }
+  }
+
+  // 发送邮箱验证码
+  async function sendSmsCode() {
+    try {
+      SmartLoading.show();
+      let result = await loginApi.sendLoginEmailCode(loginForm.loginName);
+      message.success('验证码发送成功!请登录邮箱查看验证码~');
+      runCountDown();
+    } catch (e) {
+      smartSentry.captureError(e);
+    } finally {
+      SmartLoading.hide();
+    }
+  }
 </script>
 <style lang="less" scoped>
   @import './login.less';

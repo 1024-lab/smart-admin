@@ -2,6 +2,7 @@ package net.lab1024.sa.base.module.support.codegenerator.service.variable.backen
 
 import cn.hutool.core.bean.BeanUtil;
 import net.lab1024.sa.base.common.util.SmartStringUtil;
+import net.lab1024.sa.base.module.support.codegenerator.constant.CodeFrontComponentEnum;
 import net.lab1024.sa.base.module.support.codegenerator.domain.form.CodeGeneratorConfigForm;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeField;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeInsertAndUpdate;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
  * @Date 2022/9/29 17:20:41
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 
 public class UpdateFormVariableService extends CodeGenerateBaseVariableService {
@@ -42,7 +43,7 @@ public class UpdateFormVariableService extends CodeGenerateBaseVariableService {
                         return false;
                     }
 
-                    if(Boolean.TRUE.equals(codeField.getPrimaryKeyFlag())){
+                    if (Boolean.TRUE.equals(codeField.getPrimaryKeyFlag())) {
                         e.setRequiredFlag(true);
                     }
 
@@ -123,7 +124,7 @@ public class UpdateFormVariableService extends CodeGenerateBaseVariableService {
             }
 
             //文件上传
-            if (SmartStringUtil.contains(field.getFrontComponent(), "Upload")) {
+            if (CodeFrontComponentEnum.FILE_UPLOAD.equalsValue(field.getFrontComponent())) {
                 finalFieldMap.put("file", "\n    @JsonDeserialize(using = FileKeyVoDeserializer.class)");
                 packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
                 packageList.add("import net.lab1024.sa.base.common.json.deserializer.FileKeyVoDeserializer;");

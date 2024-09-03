@@ -22,6 +22,12 @@
             <if test="query.userName != null and query.userName != ''">
                 AND INSTR(operate_user_name,#{query.userName})
             </if>
+            <if test="query.keywords != null and query.keywords != ''">
+                AND (INSTR(`module`,#{query.keywords}) OR INSTR(content,#{query.keywords}))
+            </if>
+            <if test="query.requestKeywords != null and query.requestKeywords != ''">
+                AND (INSTR(`url`,#{query.requestKeywords}) OR INSTR(`method`,#{query.requestKeywords}) OR INSTR(`param`,#{query.requestKeywords}))
+            </if>
             <if test="query.successFlag != null">
                 AND success_flag = #{query.successFlag}
             </if>

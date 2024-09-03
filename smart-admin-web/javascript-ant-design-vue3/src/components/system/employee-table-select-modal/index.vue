@@ -40,7 +40,7 @@
       </a-row>
     </a-form>
     <a-table
-      :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
+      :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange, getCheckboxProps: getCheckboxProps }"
       :loading="tableLoading"
       size="small"
       :columns="columns"
@@ -95,6 +95,7 @@
 
   const visible = ref(false);
   async function showModal(selectEmployeeId) {
+    originalRowKeyList.value = selectEmployeeId || [];
     selectedRowKeyList.value = selectEmployeeId || [];
     visible.value = true;
     onSearch();
@@ -144,8 +145,9 @@
   }
 
   // ----------------------- 员工表格选择 ---------------------
+  const originalRowKeyList = ref([]);
   let selectedRowKeyList = ref([]);
-  const hasSelected = computed(() => selectedRowKeyList.value.length > 0);
+  const hasSelected = computed(() => selectedRowKeyList.value.length !== originalRowKeyList.value.length);
 
   function onSelectChange(selectedRowKeys) {
     selectedRowKeyList.value = selectedRowKeys;
@@ -156,8 +158,17 @@
       message.warning('请选择角色人员');
       return;
     }
-    emits('selectData', selectedRowKeyList.value);
+    // 过滤出新选择的人员id
+    const newEmployeeIdList = selectedRowKeyList.value.filter((id) => !originalRowKeyList.value.includes(id));
+    emits('selectData', newEmployeeIdList);
     closeModal();
+  }
+
+  function getCheckboxProps(record) {
+    return {
+      // 角色员工列表的添加员工弹窗中 禁止添加选择已存在该角色的员工
+      disabled: originalRowKeyList.value.includes(record.employeeId),
+    };
   }
 
   // ----------------------- 员工表格渲染 ---------------------

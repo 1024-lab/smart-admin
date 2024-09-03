@@ -20,12 +20,18 @@ public class ${name.upperCamel}Entity {
     /**
      * $field.label
      */
-#if($field.primaryKeyFlag && $field.autoIncreaseFlag)
+    #if($field.primaryKeyFlag && $field.autoIncreaseFlag)
     @TableId(type = IdType.AUTO)
-#end
-#if($field.primaryKeyFlag && !$field.autoIncreaseFlag)
+    #end
+    #if($field.primaryKeyFlag && !$field.autoIncreaseFlag)
     @TableId
-#end
+    #end
+    #if($field.columnName == "create_time")
+    @TableField(fill = FieldFill.INSERT)
+    #end
+    #if($field.columnName == "update_time")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    #end
     private $field.javaType $field.fieldName;
 #end
 

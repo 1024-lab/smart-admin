@@ -2,6 +2,7 @@ package net.lab1024.sa.base.module.support.codegenerator.service.variable;
 
 import com.google.common.base.CaseFormat;
 import net.lab1024.sa.base.common.util.SmartStringUtil;
+import net.lab1024.sa.base.module.support.codegenerator.constant.CodeFrontComponentEnum;
 import net.lab1024.sa.base.module.support.codegenerator.domain.form.CodeGeneratorConfigForm;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeField;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeInsertAndUpdate;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  * @Date 2022/9/29 17:20:41
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 public abstract class CodeGenerateBaseVariableService {
 
@@ -43,13 +44,13 @@ public abstract class CodeGenerateBaseVariableService {
         String upperCamelName = CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_CAMEL, form.getBasic().getModuleName());
         ArrayList<String> list = new ArrayList<>();
 
-        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.entity." + upperCamelName + "Entity;" );
+        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.entity." + upperCamelName + "Entity;");
 
-        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.form." + upperCamelName + "AddForm;" );
-        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.form." + upperCamelName + "UpdateForm;" );
-        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.form." + upperCamelName + "QueryForm;" );
+        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.form." + upperCamelName + "AddForm;");
+        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.form." + upperCamelName + "UpdateForm;");
+        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.form." + upperCamelName + "QueryForm;");
 
-        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.vo." + upperCamelName + "VO;" );
+        list.add("import " + form.getBasic().getJavaPackageName() + ".domain.vo." + upperCamelName + "VO;");
         return list;
     }
 
@@ -88,43 +89,33 @@ public abstract class CodeGenerateBaseVariableService {
         }
 
         CodeInsertAndUpdateField field = first.get();
-        return SmartStringUtil.contains(field.getFrontComponent(), "Upload" );
+        return SmartStringUtil.equals(field.getFrontComponent(), CodeFrontComponentEnum.FILE_UPLOAD.getValue());
     }
 
     /**
-     * 是否为 枚举
+     * 是否为 字典
      */
     protected boolean isDict(String columnName, CodeGeneratorConfigForm form) {
-        List<CodeField> fields = form.getFields();
-        if (CollectionUtils.isEmpty(fields)) {
-            return false;
-        }
-
-        Optional<CodeField> first = fields.stream().filter(e -> columnName.equals(e.getColumnName())).findFirst();
-        if (first.isPresent()) {
-            return false;
-        }
-
-        CodeField codeField = first.get();
-        return codeField.getDict() != null;
+        CodeField codeField = getCodeField(columnName, form);
+        return codeField != null && codeField.getDict() != null;
     }
 
     /**
      * 是否为 枚举
      */
     protected boolean isEnum(String columnName, CodeGeneratorConfigForm form) {
+        CodeField codeField = getCodeField(columnName, form);
+        return codeField != null && codeField.getEnumName() != null;
+    }
+
+    private CodeField getCodeField(String columnName, CodeGeneratorConfigForm form) {
         List<CodeField> fields = form.getFields();
         if (CollectionUtils.isEmpty(fields)) {
-            return false;
+            return null;
         }
 
         Optional<CodeField> first = fields.stream().filter(e -> columnName.equals(e.getColumnName())).findFirst();
-        if (first.isPresent()) {
-            return false;
-        }
-
-        CodeField codeField = first.get();
-        return codeField.getEnumName() != null;
+        return first.orElse(null);
     }
 
     /**

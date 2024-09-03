@@ -18,7 +18,7 @@
                 INSTR(goods_name,#{query.searchWord})
             </if>
             <if test="query.place != null">
-                AND place = #{query.place}
+                AND INSTR(place,#{query.place})
             </if>
             <if test="query.goodsStatus != null">
                 AND goods_status = #{query.goodsStatus}

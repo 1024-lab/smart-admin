@@ -64,24 +64,6 @@
     dictValueList.value = res.data;
   }
 
-  const values = computed(() => {
-    if (!props.value) {
-      return [];
-    }
-    if (!Array.isArray(props.value)) {
-      console.error('valueList is not array!!!');
-      return [];
-    }
-    let res = [];
-    if (props.value && props.value.length > 0) {
-      props.value.forEach((element) => {
-        res.push(element.valueCode);
-      });
-      return res;
-    }
-    return res;
-  });
-
   onMounted(queryDict);
 
   // -------------------------- 选中 相关、事件 --------------------------
@@ -96,21 +78,16 @@
 
   const emit = defineEmits(['update:value', 'change']);
   function onChange(value) {
-    let selected = [];
     if (!value) {
-      emit('update:value', selected);
-      emit('change', selected);
-      return selected;
+      emit('update:value', []);
+      emit('change', []);
     }
-    if (Array.isArray(props.value)) {
-      let valueList = dictValueList.value.filter((e) => value.includes(e.valueCode));
-      valueList = valueList.map((e) => e.valueCode);
-      emit('update:value', valueList);
-      emit('change', valueList);
+    if (Array.isArray(value)) {
+      emit('update:value', value);
+      emit('change', value);
     } else {
-      let findValue = dictValueList.value.find((e) => e.valueCode === value);
-      emit('update:value', findValue.valueCode);
-      emit('change', findValue.valueCode);
+      emit('update:value', [value]);
+      emit('change', [value]);
     }
   }
 </script>

@@ -61,7 +61,7 @@
           <a-switch v-model:checked="form.visibleFlag" checked-children="显示" un-checked-children="不显示" />
         </a-form-item>
         <a-form-item label="禁用状态" name="frameFlag">
-          <a-switch v-model:checked="form.disabledFlag" checked-children="启用" un-checked-children="禁用" />
+          <a-switch v-model:checked="form.disabledFlag" :checkedValue="false" :unCheckedValue="true" checked-children="启用" un-checked-children="禁用" />
         </a-form-item>
       </template>
       <!--      目录 菜单 end   -->
@@ -74,7 +74,7 @@
           <MenuTreeSelect ref="contextMenuTreeSelect" v-model:value="form.contextMenuId" />
         </a-form-item>
         <a-form-item label="功能点状态" name="frameFlag">
-          <a-switch v-model:checked="form.disabledFlag" checked-children="启用" un-checked-children="禁用" />
+          <a-switch v-model:checked="form.disabledFlag" :checkedValue="false" :unCheckedValue="true" checked-children="启用" un-checked-children="禁用" />
         </a-form-item>
         <a-form-item label="权限类型" name="permsType">
           <a-radio-group v-model:value="form.permsType">

@@ -114,4 +114,14 @@ public interface NoticeDao extends BaseMapper<NoticeEntity> {
      */
     void updateViewRecord(@Param("noticeId")Long noticeId, @Param("employeeId")Long requestEmployeeId,@Param("ip") String ip, @Param("userAgent")String userAgent);
 
+    /**
+     * 更新 浏览量
+     *
+     * @param noticeId 通知 id
+     * @param pageViewCountIncrement 页面浏览量的增量
+     * @param userViewCountIncrement 用户浏览量的增量
+     */
+    void updateViewCount(@Param("noticeId")Long noticeId,@Param("pageViewCountIncrement") Integer pageViewCountIncrement, @Param("userViewCountIncrement")Integer userViewCountIncrement);
+
+
 }

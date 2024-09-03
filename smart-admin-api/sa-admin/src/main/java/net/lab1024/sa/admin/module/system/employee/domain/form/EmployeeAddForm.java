@@ -51,6 +51,9 @@ public class EmployeeAddForm {
     @Pattern(regexp = SmartVerificationUtil.PHONE_REGEXP, message = "手机号格式不正确")
     private String phone;
 
+    @Schema(description = "邮箱")
+    private String email;
+
     @Schema(description = "角色列表")
     private List<Long> roleIdList;
 

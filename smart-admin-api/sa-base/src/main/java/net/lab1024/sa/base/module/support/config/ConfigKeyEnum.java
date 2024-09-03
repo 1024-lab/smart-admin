@@ -22,6 +22,7 @@ public enum ConfigKeyEnum implements BaseEnum {
      */
     SUPER_PASSWORD("super_password", "万能密码"),
 
+    LEVEL3_PROTECT_CONFIG("level3_protect_config", "三级等保配置"),
     ;
 
     private final String value;

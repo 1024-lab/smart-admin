@@ -28,19 +28,19 @@ public class DictValueVoDeserializer extends JsonDeserializer<String> {
 
     @Override
     public String deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        List<DictValueVO> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         ObjectCodec objectCodec = jsonParser.getCodec();
         JsonNode listOrObjectNode = objectCodec.readTree(jsonParser);
         String deserialize = "";
         try {
             if (listOrObjectNode.isArray()) {
                 for (JsonNode node : listOrObjectNode) {
-                    list.add(objectCodec.treeToValue(node, DictValueVO.class));
+                    list.add(node.asText());
                 }
             } else {
-                list.add(objectCodec.treeToValue(listOrObjectNode, DictValueVO.class));
+                list.add(listOrObjectNode.asText());
             }
-            deserialize = list.stream().map(DictValueVO::getValueCode).collect(Collectors.joining(","));
+            deserialize = String.join(",", list);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             deserialize = listOrObjectNode.asText();

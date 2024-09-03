@@ -65,6 +65,11 @@ public class RoleService {
         if (null == roleEntity) {
             return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
         }
+        // 当没有员工绑定这个角色时才可以删除
+        Integer exists = roleEmployeeDao.existsByRoleId(roleId);
+        if (exists != null) {
+            return ResponseDTO.error(UserErrorCode.ALREADY_EXIST, "该角色下存在员工，无法删除");
+        }
         roleDao.deleteById(roleId);
         roleMenuDao.deleteByRoleId(roleId);
         roleEmployeeDao.deleteByRoleId(roleId);
@@ -86,7 +91,7 @@ public class RoleService {
         }
 
         existRoleEntity = roleDao.getByRoleCode(roleUpdateForm.getRoleCode());
-        if (null != existRoleEntity) {
+        if (null != existRoleEntity && !existRoleEntity.getRoleId().equals(roleUpdateForm.getRoleId())) {
             return ResponseDTO.userErrorParam("角色编码重复，重复的角色为：" + existRoleEntity.getRoleName());
         }
 

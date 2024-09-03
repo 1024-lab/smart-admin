@@ -39,8 +39,8 @@ public class CodeInsertAndUpdateField {
     @Schema(description = "更新标识")
     private Boolean updateFlag;
 
-    @SchemaEnum(value = CodeGeneratorPageTypeEnum.class)
-    @CheckEnum(value = CodeFrontComponentEnum.class, message = "3.增加、修改  增加、修改 组件类型 枚举值错误", required = true)
+    @SchemaEnum(value = CodeFrontComponentEnum.class)
+    @CheckEnum(value = CodeFrontComponentEnum.class, message = "3.增加、修改 组件类型 枚举值错误", required = true)
     private String frontComponent;
 
 }

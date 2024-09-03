@@ -3,14 +3,14 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/smart_admin_v3_dev?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
-    password: Zhuoda#1024lab
+    password: SmartAdmin666
+    driver-class-name: com.mysql.cj.jdbc.Driver
     initial-size: 10
     min-idle: 10
     max-active: 100
     max-wait: 60000
     time-between-eviction-runs-millis: 60000
     min-evictable-idle-time-millis: 300000
-    driver-class-name: com.mysql.cj.jdbc.Driver
     filters: stat
     druid:
       username: druid
@@ -33,12 +33,22 @@ spring:
         min-idle: 10
         max-idle: 50
         max-wait: 30000ms
-
-  # 上传文件大小配置
-  servlet:
-    multipart:
-      max-file-size: 30MB
-      max-request-size: 30MB
+  # 邮件，置以SSL的方式发送, 这个需要使用这种方式并且端口是465
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: lab1024@163.com
+    password: ROIASDFJKHQFTA
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            socketFactory:
+              class: com.sun.mail.util.MailSSLSocketFactory
+              fallback: false
+        debug: false
 
   # json序列化相关配置
   jackson:
@@ -74,9 +84,9 @@ file:
       upload-path: /home/smart_admin_v3/upload/   #文件上传目录
       url-prefix:
     cloud:
-      region: oss-cn-qingdao
-      endpoint: oss-cn-qingdao.aliyuncs.com
-      bucket-name: common
+      region: oss-cn-hangzhou
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      bucket-name: 1024lab-smart-admin
       access-key:
       secret-key:
       url-prefix: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/

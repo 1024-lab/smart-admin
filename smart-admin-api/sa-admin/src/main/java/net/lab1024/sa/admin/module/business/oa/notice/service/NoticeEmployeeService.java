@@ -52,10 +52,10 @@ public class NoticeEmployeeService {
     public ResponseDTO<PageResult<NoticeEmployeeVO>> queryList(Long requestEmployeeId, NoticeEmployeeQueryForm noticeEmployeeQueryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(noticeEmployeeQueryForm);
 
-        //获取请求人的 部门及其子部门
         List<Long> employeeDepartmentIdList = Lists.newArrayList();
         EmployeeEntity employeeEntity = employeeService.getById(requestEmployeeId);
-        if (employeeEntity.getDepartmentId() != null) {
+        // 如果不是管理员 则获取请求人的 部门及其子部门
+        if (!employeeEntity.getAdministratorFlag() && employeeEntity.getDepartmentId() != null) {
             employeeDepartmentIdList = departmentService.selfAndChildrenIdList(employeeEntity.getDepartmentId());
         }
 
@@ -106,8 +106,15 @@ public class NoticeEmployeeService {
         long viewCount = noticeDao.viewRecordCount(noticeId, requestEmployeeId);
         if (viewCount == 0) {
             noticeDao.insertViewRecord(noticeId, requestEmployeeId, ip, userAgent, 1);
+            // 该员工对于这个通知是第一次查看 页面浏览量+1 用户浏览量+1
+            noticeDao.updateViewCount(noticeId, 1, 1);
+            noticeDetailVO.setPageViewCount(noticeDetailVO.getPageViewCount() + 1);
+            noticeDetailVO.setUserViewCount(noticeDetailVO.getUserViewCount() + 1);
         } else {
             noticeDao.updateViewRecord(noticeId, requestEmployeeId, ip, userAgent);
+            // 该员工对于这个通知不是第一次查看 页面浏览量+1 用户浏览量+0
+            noticeDao.updateViewCount(noticeId, 1, 0);
+            noticeDetailVO.setPageViewCount(noticeDetailVO.getPageViewCount() + 1);
         }
 
         return ResponseDTO.ok(noticeDetailVO);

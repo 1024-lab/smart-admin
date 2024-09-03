@@ -10,8 +10,14 @@
 <template>
   <a-form class="smart-query-form" v-privilege="'support:operateLog:query'">
     <a-row class="smart-query-form-row">
+      <a-form-item label="操作关键字" class="smart-query-form-item">
+        <a-input style="width: 150px" v-model:value="queryForm.keywords" placeholder="模块/操作内容" />
+      </a-form-item>
+      <a-form-item label="请求关键字" class="smart-query-form-item">
+        <a-input style="width: 220px" v-model:value="queryForm.requestKeywords" placeholder="请求地址/请求方法/请求参数" />
+      </a-form-item>
       <a-form-item label="用户名称" class="smart-query-form-item">
-        <a-input style="width: 300px" v-model:value="queryForm.userName" placeholder="用户名称" />
+        <a-input style="width: 100px" v-model:value="queryForm.userName" placeholder="用户名称" />
       </a-form-item>
 
       <a-form-item label="请求时间" class="smart-query-form-item">
@@ -168,6 +174,8 @@
 
   const queryFormState = {
     userName: '',
+    requestKeywords: '',
+    keywords: '',
     successFlag: undefined,
     startDate: undefined,
     endDate: undefined,

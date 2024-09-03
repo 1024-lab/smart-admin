@@ -2,6 +2,7 @@ package net.lab1024.sa.base.module.support.codegenerator.service.variable.backen
 
 import cn.hutool.core.bean.BeanUtil;
 import net.lab1024.sa.base.common.util.SmartStringUtil;
+import net.lab1024.sa.base.module.support.codegenerator.constant.CodeFrontComponentEnum;
 import net.lab1024.sa.base.module.support.codegenerator.domain.form.CodeGeneratorConfigForm;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeField;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeInsertAndUpdate;
@@ -100,7 +101,6 @@ public class AddFormVariableService extends CodeGenerateBaseVariableService {
                 }
             }
 
-
             //字典
             if (SmartStringUtil.isNotEmpty(codeField.getDict())) {
                 finalFieldMap.put("dict", "\n    @JsonDeserialize(using = DictValueVoDeserializer.class)");
@@ -109,7 +109,7 @@ public class AddFormVariableService extends CodeGenerateBaseVariableService {
             }
 
             //文件上传
-            if (SmartStringUtil.contains(field.getFrontComponent(), "Upload")) {
+            if (CodeFrontComponentEnum.FILE_UPLOAD.equalsValue(field.getFrontComponent())) {
                 finalFieldMap.put("file", "\n    @JsonDeserialize(using = FileKeyVoDeserializer.class)");
                 packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
                 packageList.add("import net.lab1024.sa.base.common.json.deserializer.FileKeyVoDeserializer;");

@@ -50,9 +50,6 @@ public class AdminInterceptor implements HandlerInterceptor {
     @Resource
     private SystemEnvironment systemEnvironment;
 
-    @Value("${sa-token.active-timeout}")
-    private long tokenActiveTimeout;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
@@ -155,11 +152,6 @@ public class AdminInterceptor implements HandlerInterceptor {
 
         // 用户不在线，也不用检测
         if (requestEmployee == null) {
-            return;
-        }
-
-        // 小于1 ，也不需要检测
-        if (tokenActiveTimeout < 1) {
             return;
         }
 

@@ -49,7 +49,6 @@
 </script>
 <style lang="less" scoped>
   .card-container {
-    background-color: #fff;
     height: 100%;
 
     .title {

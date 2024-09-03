@@ -1,6 +1,7 @@
 package net.lab1024.sa.admin.module.system.role.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import net.lab1024.sa.admin.module.system.department.dao.DepartmentDao;
 import net.lab1024.sa.admin.module.system.department.domain.entity.DepartmentEntity;
 import net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO;
@@ -20,12 +21,12 @@ import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import net.lab1024.sa.base.common.util.SmartPageUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -88,7 +89,6 @@ public class RoleEmployeeService {
      * 移除员工角色
      *
      */
-    @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> removeRoleEmployee(Long employeeId, Long roleId) {
         if (null == employeeId || null == roleId) {
             return ResponseDTO.userErrorParam();
@@ -112,16 +112,21 @@ public class RoleEmployeeService {
      */
     public ResponseDTO<String> batchAddRoleEmployee(RoleEmployeeUpdateForm roleEmployeeUpdateForm) {
         Long roleId = roleEmployeeUpdateForm.getRoleId();
-        List<Long> employeeIdList = roleEmployeeUpdateForm.getEmployeeIdList();
-        // 保存新的角色员工
-        List<RoleEmployeeEntity> roleEmployeeList = null;
-        if (CollectionUtils.isNotEmpty(employeeIdList)) {
-            roleEmployeeList = employeeIdList.stream()
+
+        // 已选择的员工id列表
+        Set<Long> selectedEmployeeIdList = roleEmployeeUpdateForm.getEmployeeIdList();
+        // 数据库里已有的员工id列表
+        Set<Long> dbEmployeeIdList = roleEmployeeDao.selectEmployeeIdByRoleIdList(Lists.newArrayList(roleId));
+        // 从已选择的员工id列表里 过滤数据库里不存在的 即需要添加的员工 id
+        Set<Long> addEmployeeIdList = selectedEmployeeIdList.stream().filter(id -> !dbEmployeeIdList.contains(id)).collect(Collectors.toSet());
+
+        // 添加角色员工
+        if (CollectionUtils.isNotEmpty(addEmployeeIdList)) {
+            List<RoleEmployeeEntity> roleEmployeeList = addEmployeeIdList.stream()
                     .map(employeeId -> new RoleEmployeeEntity(roleId, employeeId))
                     .collect(Collectors.toList());
+            roleEmployeeManager.saveBatch(roleEmployeeList);
         }
-        // 保存数据
-        roleEmployeeManager.saveRoleEmployee(roleId, roleEmployeeList);
         return ResponseDTO.ok();
     }
 

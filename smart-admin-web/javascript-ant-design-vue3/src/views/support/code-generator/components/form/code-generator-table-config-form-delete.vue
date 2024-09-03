@@ -68,11 +68,12 @@
     if (deletedFlagColumn) {
       deleteFlagColumnName.value = deletedFlagColumn.columnName;
     }
+    console.log(deletedFlagColumn);
 
     //表单
-    let deleteInfo = config.delete;
+    let deleteInfo = config.deleteInfo;
 
-    formData.isSupportDelete = deleteInfo && deleteInfo.isSupportDelete ? deleteInfo.isSupportDelete : true;
+    formData.isSupportDelete = deleteInfo ? deleteInfo.isSupportDelete : true;
     formData.isPhysicallyDeleted = deleteInfo && deleteInfo.isPhysicallyDeleted ? deleteInfo.isPhysicallyDeleted : !deletedFlagColumn;
     formData.deleteEnum = deleteInfo && deleteInfo.deleteEnum ? deleteInfo.deleteEnum : CODE_DELETE_ENUM.SINGLE_AND_BATCH.value;
   }

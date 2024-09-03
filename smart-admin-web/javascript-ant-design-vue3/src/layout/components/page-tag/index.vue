@@ -8,8 +8,10 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
-  <DefaultTab v-if="pageTagStyle === PAGE_TAG_ENUM.DEFAULT.value" />
-  <AntdTab v-if="pageTagStyle === PAGE_TAG_ENUM.ANTD.value" />
+  <div id="smartAdminPageTag">
+    <DefaultTab v-if="pageTagStyle === PAGE_TAG_ENUM.DEFAULT.value" />
+    <AntdTab v-if="pageTagStyle === PAGE_TAG_ENUM.ANTD.value" />
+  </div>
 </template>
 
 <script setup>

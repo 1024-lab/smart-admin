@@ -12,7 +12,6 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 分页工具类
@@ -31,6 +30,10 @@ public class SmartPageUtil {
      */
     public static Page<?> convert2PageQuery(PageParam pageParam) {
         Page<?> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+
+        if (pageParam.getSearchCount() != null) {
+            page.setSearchCount(pageParam.getSearchCount());
+        }
 
         List<PageParam.SortItem> sortItemList = pageParam.getSortItemList();
         if (CollectionUtils.isEmpty(sortItemList)) {

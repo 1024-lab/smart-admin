@@ -12,6 +12,7 @@ import net.lab1024.sa.admin.module.system.role.domain.form.RoleEmployeeQueryForm
 import net.lab1024.sa.admin.module.system.role.domain.vo.RoleEmployeeVO;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -50,7 +51,7 @@ public interface RoleEmployeeDao extends BaseMapper<RoleEmployeeEntity> {
     /**
      * 查询角色下的人员id
      */
-    List<Long> selectEmployeeIdByRoleIdList(@Param("roleIdList") List<Long> roleIdList);
+    Set<Long> selectEmployeeIdByRoleIdList(@Param("roleIdList") List<Long> roleIdList);
 
     /**
      *
@@ -79,5 +80,10 @@ public interface RoleEmployeeDao extends BaseMapper<RoleEmployeeEntity> {
     /**
      * 批量删除某个角色下的某批用户的关联关系
      */
-    void batchDeleteEmployeeRole(@Param("roleId") Long roleId,@Param("employeeIds")List<Long> employeeIds);
+    void batchDeleteEmployeeRole(@Param("roleId") Long roleId, @Param("employeeIds") Set<Long> employeeIds);
+
+    /**
+     * 判断某个角色下是否存在用户
+     */
+    Integer existsByRoleId(@Param("roleId") Long roleId);
 }

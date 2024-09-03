@@ -8,7 +8,7 @@
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
 
-import { getRequest, postRequest } from '/src/lib/axios';
+import { getRequest, postEncryptRequest, postRequest } from '/src/lib/axios';
 
 export const employeeApi = {
   /**
@@ -72,11 +72,19 @@ export const employeeApi = {
     return getRequest(`/employee/update/password/reset/${employeeId}`);
   },
   /**
-   * 修改面面
+   * 修改密码
    */
   updateEmployeePassword: (param) => {
-    return postRequest('/employee/update/password', param);
+    return postEncryptRequest('/employee/update/password', param);
   },
+
+  /**
+   * 获取密码复杂度
+   */
+  getPasswordComplexityEnabled: () => {
+    return getRequest('/employee/getPasswordComplexityEnabled');
+  },
+
   /**
    * 更新员工禁用状态
    */

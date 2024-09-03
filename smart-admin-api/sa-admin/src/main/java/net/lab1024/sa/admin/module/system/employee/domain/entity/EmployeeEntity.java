@@ -54,6 +54,11 @@ public class EmployeeEntity {
     private String phone;
 
     /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
      * 部门id
      */
     private Long departmentId;

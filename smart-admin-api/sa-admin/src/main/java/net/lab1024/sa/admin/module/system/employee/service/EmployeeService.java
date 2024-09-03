@@ -20,15 +20,16 @@ import net.lab1024.sa.admin.module.system.role.domain.vo.RoleEmployeeVO;
 import net.lab1024.sa.base.common.code.UserErrorCode;
 import net.lab1024.sa.base.common.constant.StringConst;
 import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.enumeration.UserTypeEnum;
 import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import net.lab1024.sa.base.common.util.SmartPageUtil;
-import net.lab1024.sa.base.module.support.securityprotect.service.ProtectPasswordService;
-import org.apache.commons.codec.digest.DigestUtils;
+import net.lab1024.sa.base.module.support.securityprotect.service.SecurityPasswordService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -46,8 +47,6 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeService {
 
-    private static final String PASSWORD_SALT_FORMAT = "smart_%s_admin_$^&*";
-
     @Resource
     private EmployeeDao employeeDao;
 
@@ -64,7 +63,7 @@ public class EmployeeService {
     private DepartmentService departmentService;
 
     @Resource
-    private ProtectPasswordService protectPasswordService;
+    private SecurityPasswordService securityPasswordService;
 
     @Resource
     @Lazy
@@ -121,15 +120,10 @@ public class EmployeeService {
      * 新增员工
      */
     public synchronized ResponseDTO<String> addEmployee(EmployeeAddForm employeeAddForm) {
-        // 校验名称是否重复
+        // 校验登录名是否重复
         EmployeeEntity employeeEntity = employeeDao.getByLoginName(employeeAddForm.getLoginName(), null);
         if (null != employeeEntity) {
             return ResponseDTO.userErrorParam("登录名重复");
-        }
-        // 校验姓名是否重复
-        employeeEntity = employeeDao.getByActualName(employeeAddForm.getActualName(), null);
-        if (null != employeeEntity) {
-            return ResponseDTO.userErrorParam("姓名重复");
         }
         // 校验电话是否存在
         employeeEntity = employeeDao.getByPhone(employeeAddForm.getPhone(), null);
@@ -146,8 +140,8 @@ public class EmployeeService {
         EmployeeEntity entity = SmartBeanUtil.copy(employeeAddForm, EmployeeEntity.class);
 
         // 设置密码 默认密码
-        String password = protectPasswordService.randomPassword();
-        entity.setLoginPwd(getEncryptPwd(password));
+        String password = securityPasswordService.randomPassword();
+        entity.setLoginPwd(SecurityPasswordService.getEncryptPwd(password));
 
         // 保存数据
         entity.setDeletedFlag(Boolean.FALSE);
@@ -183,11 +177,6 @@ public class EmployeeService {
         existEntity = employeeDao.getByPhone(employeeUpdateForm.getPhone(), null);
         if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
             return ResponseDTO.userErrorParam("手机号已存在");
-        }
-
-        existEntity = employeeDao.getByActualName(employeeUpdateForm.getActualName(), null);
-        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
-            return ResponseDTO.userErrorParam("姓名重复");
         }
 
         // 不更新密码
@@ -301,35 +290,45 @@ public class EmployeeService {
     /**
      * 更新密码
      */
-    public ResponseDTO<String> updatePassword(EmployeeUpdatePasswordForm updatePasswordForm) {
+    @Transactional(rollbackFor = Throwable.class)
+    public ResponseDTO<String> updatePassword(RequestUser requestUser, EmployeeUpdatePasswordForm updatePasswordForm) {
         Long employeeId = updatePasswordForm.getEmployeeId();
         EmployeeEntity employeeEntity = employeeDao.selectById(employeeId);
         if (employeeEntity == null) {
             return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
         }
         // 校验原始密码
-        String encryptPwd = getEncryptPwd(updatePasswordForm.getOldPassword());
-        if (!Objects.equals(encryptPwd, employeeEntity.getLoginPwd())) {
+        String oldPassword = SecurityPasswordService.getEncryptPwd(updatePasswordForm.getOldPassword());
+        if (!Objects.equals(oldPassword, employeeEntity.getLoginPwd())) {
             return ResponseDTO.userErrorParam("原密码有误，请重新输入");
         }
 
+        // 校验密码复杂度
+        ResponseDTO<String> validatePassComplexity = securityPasswordService.validatePasswordComplexity(updatePasswordForm.getNewPassword());
+        if (!validatePassComplexity.getOk()) {
+            return validatePassComplexity;
+        }
+
         // 新旧密码相同
-        String newPassword = updatePasswordForm.getNewPassword();
-        if (Objects.equals(updatePasswordForm.getOldPassword(), newPassword)) {
+        String newPassword = SecurityPasswordService.getEncryptPwd(updatePasswordForm.getNewPassword());
+        if (Objects.equals(oldPassword, newPassword)) {
             return ResponseDTO.userErrorParam("新密码与原始密码相同，请重新输入");
         }
 
-        // 校验密码复杂度
-        ResponseDTO<String> validatePassComplexity = protectPasswordService.validatePassComplexity(newPassword);
-        if (!validatePassComplexity.getOk()) {
-            return validatePassComplexity;
+        // 根据三级等保规则，校验密码是否重复
+        ResponseDTO<String> passwordRepeatTimes = securityPasswordService.validatePasswordRepeatTimes(requestUser, updatePasswordForm.getNewPassword());
+        if (!passwordRepeatTimes.getOk()) {
+            return ResponseDTO.error(passwordRepeatTimes);
         }
 
         // 更新密码
         EmployeeEntity updateEntity = new EmployeeEntity();
         updateEntity.setEmployeeId(employeeId);
-        updateEntity.setLoginPwd(getEncryptPwd(newPassword));
+        updateEntity.setLoginPwd(newPassword);
         employeeDao.updateById(updateEntity);
+
+        // 保存修改密码密码记录
+        securityPasswordService.saveUserChangePasswordLog(requestUser, newPassword, oldPassword);
 
         return ResponseDTO.ok();
     }
@@ -364,16 +363,9 @@ public class EmployeeService {
      * 重置密码
      */
     public ResponseDTO<String> resetPassword(Integer employeeId) {
-        String password = protectPasswordService.randomPassword();
-        employeeDao.updatePassword(employeeId, getEncryptPwd(password));
+        String password = securityPasswordService.randomPassword();
+        employeeDao.updatePassword(employeeId, SecurityPasswordService.getEncryptPwd(password));
         return ResponseDTO.ok(password);
-    }
-
-    /**
-     * 获取 加密后 的密码
-     */
-    public static String getEncryptPwd(String password) {
-        return DigestUtils.md5Hex(String.format(PASSWORD_SALT_FORMAT, password));
     }
 
 

@@ -7,10 +7,12 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.base.common.domain.DataScopePlugin;
+import net.lab1024.sa.base.handler.MybatisPlusFillHandler;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -144,6 +146,8 @@ public class DataSourceConfig {
             pluginsList.add(dataScopePlugin);
         }
         factoryBean.setPlugins(pluginsList.toArray(new Interceptor[pluginsList.size()]));
+        // 添加字段自动填充处理
+        factoryBean.setGlobalConfig(new GlobalConfig().setBanner(false).setMetaObjectHandler(new MybatisPlusFillHandler()));
 
         return factoryBean.getObject();
     }

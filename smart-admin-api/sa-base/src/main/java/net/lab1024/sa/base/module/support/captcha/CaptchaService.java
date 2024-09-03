@@ -42,8 +42,10 @@ public class CaptchaService {
 
     @Resource
     private DefaultKaptcha defaultKaptcha;
-    @Autowired
+
+    @Resource
     private SystemEnvironment systemEnvironment;
+
     @Resource
     private RedisService redisService;
 

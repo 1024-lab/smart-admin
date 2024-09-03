@@ -41,7 +41,7 @@ public enum CodeFrontComponentEnum implements BaseEnum {
     }
 
     @Override
-    public Object getValue() {
+    public String getValue() {
         return value;
     }
 

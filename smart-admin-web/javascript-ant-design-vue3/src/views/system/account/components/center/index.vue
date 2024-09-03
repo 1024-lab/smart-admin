@@ -95,6 +95,8 @@
     departmentId: undefined,
     // 是否启用
     disabledFlag: undefined,
+    // 邮箱
+    email: undefined,
     // 备注
     remark: '',
   };
@@ -126,6 +128,7 @@
       form.employeeId = data.employeeId;
       form.loginName = data.loginName;
       form.actualName = data.actualName;
+      form.email = data.email;
       form.gender = data.gender;
       form.phone = data.phone;
       form.departmentId = data.departmentId;

@@ -32,6 +32,9 @@
         <a-input v-model:value.trim="form.loginName" placeholder="请输入登录名" />
         <p class="hint">初始密码默认为：随机</p>
       </a-form-item>
+      <a-form-item label="邮箱" name="email">
+        <a-input v-model:value.trim="form.email" placeholder="请输入邮箱" />
+      </a-form-item>
       <a-form-item label="性别" name="gender">
         <smart-enum-select style="width: 100%" v-model:value="form.gender" placeholder="请选择性别" enum-name="GENDER_ENUM" />
       </a-form-item>
@@ -143,6 +146,7 @@
     departmentId: [{ required: true, message: '部门不能为空' }],
     disabledFlag: [{ required: true, message: '状态不能为空' }],
     leaveFlag: [{ required: true, message: '在职状态不能为空' }],
+    email: [{ required: true, message: '请输入邮箱' }],
   };
 
   // 校验表单

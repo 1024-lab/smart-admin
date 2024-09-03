@@ -22,6 +22,12 @@ public class OperateLogQueryForm extends PageParam {
     @Schema(description = "用户类型")
     private Integer operateUserType;
 
+    @Schema(description = "关键字：模块、操作内容")
+    private String keywords;
+
+    @Schema(description = "请求关键字：请求地址、请求方法、请求参数")
+    private String requestKeywords;
+
     @Schema(description = "开始日期")
     private String startDate;
 

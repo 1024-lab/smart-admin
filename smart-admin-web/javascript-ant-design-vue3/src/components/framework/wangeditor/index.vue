@@ -61,7 +61,6 @@
   watch(
     () => props.modelValue,
     (nVal) => {
-      console.log(nVal);
       editorHtml.value = nVal;
     },
     {

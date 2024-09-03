@@ -12,7 +12,6 @@ import net.lab1024.sa.base.module.support.securityprotect.domain.LoginFailEntity
 import net.lab1024.sa.base.module.support.securityprotect.domain.LoginFailQueryForm;
 import net.lab1024.sa.base.module.support.securityprotect.domain.LoginFailVO;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,27 +25,18 @@ import java.util.List;
  * @Date 2023/10/11 19:25:59
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>，Since 2012
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>，Since 2012
  */
 
 @Service
-public class ProtectLoginService {
+public class SecurityLoginService {
 
     private static final String LOGIN_LOCK_MSG = "您已连续登录失败%s次，账号锁定%s分钟，解锁时间为：%s，请您耐心等待！";
 
     private static final String LOGIN_FAIL_MSG = "登录名或密码错误！连续登录失败%s次，账号将锁定%s分钟！您还可以再尝试%s次！";
 
-    /**
-     * 连续登录失败次数则锁定，-1表示不受限制，可以一直登录
-     */
-    @Value("${classified-protect.login-max-fail-times}")
-    private Integer loginMaxFailTimes;
-
-    /**
-     * 连续登录失败锁定时间（单位：秒），-1表示不锁定
-     */
-    @Value("${classified-protect.login-fail-locked-seconds}")
-    private Integer loginFailLockedSeconds;
+    @Resource
+    private Level3ProtectConfigService level3ProtectConfigService;
 
     @Resource
     private LoginFailDao loginFailDao;
@@ -61,8 +51,8 @@ public class ProtectLoginService {
      */
     public ResponseDTO<LoginFailEntity> checkLogin(Long userId, UserTypeEnum userType) {
 
-        // 无需校验
-        if (loginMaxFailTimes < 1) {
+        // 若登录最大失败次数小于1，无需校验
+        if (level3ProtectConfigService.getLoginFailMaxTimes() < 1) {
             return ResponseDTO.ok();
         }
 
@@ -72,19 +62,24 @@ public class ProtectLoginService {
             return ResponseDTO.ok();
         }
 
-        // 校验次数
-        if (loginFailEntity.getLoginFailCount() < loginMaxFailTimes) {
+        // 校验登录失败次数
+        if (loginFailEntity.getLoginFailCount() < level3ProtectConfigService.getLoginFailMaxTimes()) {
+            return ResponseDTO.ok(loginFailEntity);
+        }
+
+        // 校验是否锁定
+        if (loginFailEntity.getLoginLockBeginTime() == null) {
             return ResponseDTO.ok(loginFailEntity);
         }
 
         // 校验锁定时长
-        if(loginFailEntity.getLoginLockBeginTime().plusSeconds(loginFailLockedSeconds).isBefore(LocalDateTime.now())){
+        if (loginFailEntity.getLoginLockBeginTime().plusSeconds(level3ProtectConfigService.getLoginFailLockSeconds()).isBefore(LocalDateTime.now())) {
             // 过了锁定时间
             return ResponseDTO.ok(loginFailEntity);
         }
 
-        LocalDateTime unlockTime = loginFailEntity.getLoginLockBeginTime().plusSeconds(loginFailLockedSeconds);
-        return ResponseDTO.error(UserErrorCode.LOGIN_FAIL_LOCK, String.format(LOGIN_LOCK_MSG, loginFailEntity.getLoginFailCount(), loginFailLockedSeconds / 60, LocalDateTimeUtil.formatNormal(unlockTime)));
+        LocalDateTime unlockTime = loginFailEntity.getLoginLockBeginTime().plusSeconds(level3ProtectConfigService.getLoginFailLockSeconds());
+        return ResponseDTO.error(UserErrorCode.LOGIN_FAIL_LOCK, String.format(LOGIN_LOCK_MSG, loginFailEntity.getLoginFailCount(), level3ProtectConfigService.getLoginFailLockSeconds() / 60, LocalDateTimeUtil.formatNormal(unlockTime)));
     }
 
     /**
@@ -96,43 +91,40 @@ public class ProtectLoginService {
      */
     public String recordLoginFail(Long userId, UserTypeEnum userType, String loginName, LoginFailEntity loginFailEntity) {
 
-        // 无需校验
-        if (loginMaxFailTimes < 1) {
+        // 若登录最大失败次数小于1，无需记录
+        if (level3ProtectConfigService.getLoginFailMaxTimes() < 1) {
             return null;
         }
+
+        // 登录失败
+        int loginFailCount = loginFailEntity == null ? 1 : loginFailEntity.getLoginFailCount() + 1;
+        boolean lockFlag = loginFailCount >= level3ProtectConfigService.getLoginFailMaxTimes();
+        LocalDateTime lockBeginTime = lockFlag ? LocalDateTime.now() : null;
 
         if (loginFailEntity == null) {
             loginFailEntity = LoginFailEntity.builder()
                     .userId(userId)
                     .userType(userType.getValue())
                     .loginName(loginName)
-                    .loginFailCount(1)
-                    .lockFlag(false)
-                    .loginLockBeginTime(null).build();
+                    .loginFailCount(loginFailCount)
+                    .lockFlag(lockFlag)
+                    .loginLockBeginTime(lockBeginTime)
+                    .build();
             loginFailDao.insert(loginFailEntity);
         } else {
-
-            // 如果是已经锁定状态，则重新计算
-            if(loginFailEntity.getLockFlag()){
-                loginFailEntity.setLockFlag(false);
-                loginFailEntity.setLoginFailCount(1);
-                loginFailEntity.setLoginLockBeginTime(null);
-            }else{
-                loginFailEntity.setLoginLockBeginTime(LocalDateTime.now());
-                loginFailEntity.setLoginFailCount(loginFailEntity.getLoginFailCount() + 1);
-                loginFailEntity.setLockFlag(loginFailEntity.getLoginFailCount() >= loginMaxFailTimes);
-            }
-
+            loginFailEntity.setLoginLockBeginTime(lockBeginTime);
+            loginFailEntity.setLoginFailCount(loginFailCount);
+            loginFailEntity.setLockFlag(lockFlag);
             loginFailEntity.setLoginName(loginName);
             loginFailDao.updateById(loginFailEntity);
         }
 
         // 提示信息
-        if (loginFailEntity.getLoginFailCount() >= loginMaxFailTimes) {
-            LocalDateTime unlockTime = loginFailEntity.getLoginLockBeginTime().plusSeconds(loginFailLockedSeconds);
-            return String.format(LOGIN_LOCK_MSG, loginFailEntity.getLoginFailCount(), loginFailLockedSeconds / 60, LocalDateTimeUtil.formatNormal(unlockTime));
+        if (lockFlag) {
+            LocalDateTime unlockTime = loginFailEntity.getLoginLockBeginTime().plusSeconds(level3ProtectConfigService.getLoginFailLockSeconds());
+            return String.format(LOGIN_LOCK_MSG, loginFailEntity.getLoginFailCount(), level3ProtectConfigService.getLoginFailLockSeconds() / 60, LocalDateTimeUtil.formatNormal(unlockTime));
         } else {
-            return String.format(LOGIN_FAIL_MSG, loginMaxFailTimes, loginFailLockedSeconds / 60, loginMaxFailTimes - loginFailEntity.getLoginFailCount());
+            return String.format(LOGIN_FAIL_MSG, level3ProtectConfigService.getLoginFailMaxTimes(), level3ProtectConfigService.getLoginFailLockSeconds() / 60, level3ProtectConfigService.getLoginFailMaxTimes() - loginFailEntity.getLoginFailCount());
         }
     }
 
@@ -143,8 +135,9 @@ public class ProtectLoginService {
      * @param userType
      */
     public void removeLoginFail(Long userId, UserTypeEnum userType) {
-        // 无需校验
-        if (loginMaxFailTimes < 1) {
+
+        // 若登录最大失败次数小于1，无需校验
+        if (level3ProtectConfigService.getLoginFailMaxTimes() < 1) {
             return;
         }
 
@@ -160,8 +153,7 @@ public class ProtectLoginService {
     public PageResult<LoginFailVO> queryPage(LoginFailQueryForm queryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
         List<LoginFailVO> list = loginFailDao.queryPage(page, queryForm);
-        PageResult<LoginFailVO> pageResult = SmartPageUtil.convert2PageResult(page, list);
-        return pageResult;
+        return SmartPageUtil.convert2PageResult(page, list);
     }
 
     /**

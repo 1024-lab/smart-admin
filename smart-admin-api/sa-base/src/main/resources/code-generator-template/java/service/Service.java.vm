@@ -64,7 +64,7 @@ public class ${name.upperCamel}Service {
 #end
 
 #if($deleteInfo.isSupportDelete)
-    #if($deleteInfo.deleteEnum == "BATCH" || $deleteInfo.deleteEnum == "SingleAndBatch")
+    #if($deleteInfo.deleteEnum == "Batch" || $deleteInfo.deleteEnum == "SingleAndBatch")
     /**
      * 批量删除
      *
@@ -97,7 +97,7 @@ public class ${name.upperCamel}Service {
 
 ### 真删除 or 假删除
 #if(!${deleteInfo.isPhysicallyDeleted})
-        ${name.lowerCamel}Dao.updateDeleted(${primaryKeyFieldName},true);
+        ${name.lowerCamel}Dao.updateDeleted(${primaryKeyFieldName}, true);
 #end
 #if(${deleteInfo.isPhysicallyDeleted})
         ${name.lowerCamel}Dao.deleteById(${primaryKeyFieldName});

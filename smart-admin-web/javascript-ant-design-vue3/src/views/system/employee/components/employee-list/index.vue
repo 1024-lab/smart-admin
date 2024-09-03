@@ -156,6 +156,12 @@
       width: 85,
     },
     {
+      title: '邮箱',
+      dataIndex: 'email',
+      width: 100,
+      ellipsis: true,
+    },
+    {
       title: '超管',
       dataIndex: 'administratorFlag',
       width: 60,
@@ -169,6 +175,7 @@
       title: '职务',
       dataIndex: 'positionName',
       width: 100,
+      ellipsis: true,
     },
     {
       title: '角色',
@@ -178,12 +185,6 @@
     {
       title: '部门',
       dataIndex: 'departmentName',
-      ellipsis: true,
-      width: 200,
-    },
-    {
-      title: '职务',
-      dataIndex: 'employeeName',
       ellipsis: true,
       width: 200,
     },
@@ -242,6 +243,9 @@
       params.pageNum = 1;
       params.departmentId = allDepartment ? undefined : props.departmentId;
       let res = await employeeApi.queryEmployee(params);
+      for (const item of res.data.list) {
+        item.roleNameList = _.join(item.roleNameList, ',');
+      }
       tableData.value = res.data.list;
       total.value = res.data.total;
       // 清除选中

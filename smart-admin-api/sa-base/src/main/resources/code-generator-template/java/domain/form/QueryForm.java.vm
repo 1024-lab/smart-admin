@@ -14,7 +14,8 @@ $importClass
  */
 
 @Data
-public class ${name.upperCamel}QueryForm extends PageParam{
+@EqualsAndHashCode(callSuper = false)
+public class ${name.upperCamel}QueryForm extends PageParam {
 #foreach ($field in $fields)
 
 #if($field.isEnum)

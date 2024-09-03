@@ -72,7 +72,7 @@
                 </a-button>
 #end
 #if($deleteInfo.isSupportDelete && ($deleteInfo.deleteEnum == "Batch"||$deleteInfo.deleteEnum == "SingleAndBatch"))
-                <a-button @click="confirmBatchDelete" type="danger" size="small" :disabled="selectedRowKeyList.length == 0">
+                <a-button @click="confirmBatchDelete" type="primary" danger size="small" :disabled="selectedRowKeyList.length == 0">
                     <template #icon>
                         <DeleteOutlined />
                     </template>
@@ -88,18 +88,32 @@
 
         <!---------- 表格 begin ----------->
         <a-table
-                size="small"
-                :dataSource="tableData"
-                :columns="columns"
-                rowKey="$!{primaryKeyFieldName}"
-                bordered
-                :loading="tableLoading"
-                :pagination="false"
+            size="small"
+            :dataSource="tableData"
+            :columns="columns"
+            rowKey="$!{primaryKeyFieldName}"
+            bordered
+            :loading="tableLoading"
+            :pagination="false"
 #if($deleteInfo.isSupportDelete && ($deleteInfo.deleteEnum == "Batch"||$deleteInfo.deleteEnum == "SingleAndBatch"))
-                :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
+            :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
 #end
         >
             <template #bodyCell="{ text, record, column }">
+
+	    <!-- 有图片预览时 注释解开并把下面的'picture'修改成自己的图片字段名即可 -->
+              <!-- <template v-if="column.dataIndex === 'picture'">
+                  <FilePreview :fileList="text" type="picture" />
+                </template> -->
+
+	    <!-- 使用字典时 注释解开并把下面的'dict'修改成自己的字典字段名即可 有多个字典字段就复制多份同理修改 不然不显示字典 -->
+              <!-- 方便修改tag的颜色 orange green purple success processing error default warning -->
+              <!-- <template v-if="column.dataIndex === 'dict'">
+                <a-tag color="cyan">
+                  {{ text && text.length > 0 ? text.map((e) => e.valueName).join(',') : '暂无' }}
+                </a-tag>
+              </template> -->
+
                 <template v-if="column.dataIndex === 'action'">
                     <div class="smart-table-operate">
 #if($insertAndUpdate.isSupportInsertAndUpdate)
@@ -116,17 +130,17 @@
 
         <div class="smart-query-table-page">
             <a-pagination
-                    showSizeChanger
-                    showQuickJumper
-                    show-less-items
-                    :pageSizeOptions="PAGE_SIZE_OPTIONS"
-                    :defaultPageSize="queryForm.pageSize"
-                    v-model:current="queryForm.pageNum"
-                    v-model:pageSize="queryForm.pageSize"
-                    :total="total"
-                    @change="queryData"
-                    @showSizeChange="queryData"
-                    :show-total="(total) => `共${total}条`"
+                showSizeChanger
+                showQuickJumper
+                show-less-items
+                :pageSizeOptions="PAGE_SIZE_OPTIONS"
+                :defaultPageSize="queryForm.pageSize"
+                v-model:current="queryForm.pageNum"
+                v-model:pageSize="queryForm.pageSize"
+                :total="total"
+                @change="queryData"
+                @showSizeChange="queryData"
+                :show-total="(total) => `共${total}条`"
             />
         </div>
 
@@ -145,6 +159,8 @@
 #foreach ($import in $frontImportList)
     $!{import}
 #end
+    //import FilePreview from '/@/components/support/file-preview/index.vue'; // 图片预览组件
+
     // ---------------------------- 表格列 ----------------------------
 
     const columns = ref([

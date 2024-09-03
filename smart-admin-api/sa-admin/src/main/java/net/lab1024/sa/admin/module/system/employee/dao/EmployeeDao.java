@@ -69,7 +69,7 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
      * 获取某个部门员工数
      *
      */
-    Integer countByDepartmentId(@Param("departmentId") Long departmentId);
+    Integer countByDepartmentId(@Param("departmentId") Long departmentId, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 获取一批员工

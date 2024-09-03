@@ -9,7 +9,8 @@
  */
 import { message, Modal } from 'ant-design-vue';
 import axios from 'axios';
-import { localClear, localRead } from '/@/utils/local-util';
+import { localRead } from '/@/utils/local-util';
+import { useUserStore } from '/@/store/modules/system/user';
 import { decryptData, encryptData } from './encrypt';
 import { DATA_TYPE_ENUM } from '../constants/common-const';
 import _ from 'lodash';
@@ -25,7 +26,7 @@ const smartAxios = axios.create({
 
 // 退出系统
 function logout() {
-  localClear();
+  useUserStore().logout();
   location.href = '/';
 }
 

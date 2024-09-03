@@ -2,8 +2,8 @@ package net.lab1024.sa.admin.module.system.login.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
 import net.lab1024.sa.admin.module.system.login.domain.LoginForm;
 import net.lab1024.sa.admin.module.system.login.domain.LoginResultVO;
@@ -14,6 +14,7 @@ import net.lab1024.sa.base.common.constant.RequestHeaderConst;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.util.SmartRequestUtil;
 import net.lab1024.sa.base.module.support.captcha.domain.CaptchaVO;
+import net.lab1024.sa.base.module.support.securityprotect.service.Level3ProtectConfigService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,7 +28,7 @@ import javax.validation.Valid;
  * @Date 2021-12-15 21:05:46
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @RestController
 @Tag(name = AdminSwaggerTagConst.System.SYSTEM_LOGIN)
@@ -35,6 +36,9 @@ public class LoginController {
 
     @Resource
     private LoginService loginService;
+
+    @Resource
+    private Level3ProtectConfigService level3ProtectConfigService;
 
     @NoNeedLogin
     @PostMapping("/login")
@@ -48,8 +52,8 @@ public class LoginController {
     @GetMapping("/login/getLoginInfo")
     @Operation(summary = "获取登录结果信息  @author 卓大")
     public ResponseDTO<LoginResultVO> getLoginInfo() {
-        LoginResultVO loginResult = loginService.getLoginResult(AdminRequestUtil.getRequestUser());
         String tokenValue = StpUtil.getTokenValue();
+        LoginResultVO loginResult = loginService.getLoginResult(AdminRequestUtil.getRequestUser(), tokenValue);
         loginResult.setToken(tokenValue);
         return ResponseDTO.ok(loginResult);
     }
@@ -67,4 +71,20 @@ public class LoginController {
         return loginService.getCaptcha();
     }
 
+    @NoNeedLogin
+    @GetMapping("/login/sendEmailCode/{loginName}")
+    @Operation(summary = "获取邮箱登录验证码 @author 卓大")
+    public ResponseDTO<String> sendEmailCode(@PathVariable String loginName) {
+        return loginService.sendEmailCode(loginName);
+    }
+
+
+    @NoNeedLogin
+    @GetMapping("/login/getTwoFactorLoginFlag")
+    @Operation(summary = "获取双因子登录标识 @author 卓大")
+    public ResponseDTO<Boolean> getTwoFactorLoginFlag() {
+        // 双因子登录
+        boolean twoFactorLoginEnabled = level3ProtectConfigService.isTwoFactorLoginEnabled();
+        return ResponseDTO.ok(twoFactorLoginEnabled);
+    }
 }

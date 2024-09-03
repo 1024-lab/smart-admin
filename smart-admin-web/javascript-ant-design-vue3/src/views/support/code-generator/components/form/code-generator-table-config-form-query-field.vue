@@ -75,11 +75,9 @@
 </template>
 
 <script setup>
-  import _ from 'lodash';
   import Sortable from 'sortablejs';
   import { inject, nextTick, ref } from 'vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
-  import { SmartLoading } from '/@/components/framework/smart-loading';
   import { CODE_QUERY_FIELD_QUERY_TYPE_ENUM } from '/@/constants/support/code-generator-const';
   import { convertLowerCamel } from '/@/utils/str-util';
 
@@ -130,12 +128,13 @@
 
   const tableColumns = ref([]);
 
+  let rowKeyCounter = 1;
   //初始化设置数据
   function setData(tableColumnInfos, config) {
     rowKeyCounter = 1;
     let data = config && config.queryFields ? config.queryFields : [];
     for (let index = 0; index < data.length; index++) {
-      data[index].rowKey = 'rowKey' + (index + 1);
+      data[index].rowKey = 'rowKey' + rowKeyCounter;
       rowKeyCounter++;
     }
     tableData.value = data;
@@ -147,7 +146,6 @@
   }
 
   // -------------------  增加、删除 -------------------
-  let rowKeyCounter = 1;
   function addQuery() {
     tableData.value.push({
       rowKey: 'rowKey' + rowKeyCounter,
@@ -155,13 +153,19 @@
       fieldName: '',
       queryTypeEnum: '',
       columnNameList: null,
-      width: '',
+      width: '200px',
     });
     rowKeyCounter++;
   }
 
   function onDelete(index) {
-    _.pullAt(tableData.value, index);
+    // 以这种方式删除 列表才会重新渲染
+    const tempList = [...tableData.value];
+    tempList.splice(index, 1);
+    tableData.value = [];
+    nextTick(() => {
+      tableData.value = tempList;
+    });
   }
 
   //初始化拖拽
@@ -173,6 +177,10 @@
       ghostClass: 'smart-ghost-class', //设置拖拽停靠样式类名
       chosenClass: 'smart-ghost-class', //设置选中样式类名
       handle: '.handle',
+      onEnd: ({ oldIndex, newIndex }) => {
+        const oldRow = tableData.value.splice(oldIndex, 1)[0];
+        tableData.value.splice(newIndex, 0, oldRow);
+      },
     });
   }
 
@@ -211,36 +219,16 @@
 
   // 获取表单数据
   function getFieldsForm() {
-    let result = [];
-    let trList = document.querySelectorAll('#smartCodeQueryFieldsTable tbody .column-row');
-    if (trList && trList.length === 0) {
-      return result;
-    }
-
-    for (let tr of trList) {
-      let rowKey = tr.getAttribute('data-row-key');
-      if (!rowKey) {
-        continue;
-      }
-      if (rowKey && rowKey.indexOf('rowKey') === -1) {
-        continue;
-      }
-
-      let index = parseInt(rowKey.substring(6));
-      let tableItem = tableData.value[index - 1];
-      let obj = {
-        queryTypeEnum: tableItem.queryTypeEnum,
-        label: tableItem.label,
-        fieldName: tableItem.fieldName,
-        columnNameList: tableItem.columnNameList,
-        width: tableItem.width,
+    let result = tableData.value.map((item) => {
+      return {
+        label: item.label,
+        width: item.width,
+        fieldName: item.fieldName,
+        queryTypeEnum: item.queryTypeEnum,
+        // 字符串转为数组
+        columnNameList: item.columnNameList && typeof item.columnNameList === 'string' ? [item.columnNameList] : item.columnNameList,
       };
-      // 字符串转为数组
-      if (obj.columnNameList && typeof obj.columnNameList === 'string') {
-        obj.columnNameList = [obj.columnNameList];
-      }
-      result.push(obj);
-    }
+    });
     return result;
   }
 

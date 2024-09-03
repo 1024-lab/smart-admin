@@ -10,7 +10,6 @@ DROP DATABASE IF EXISTS `smart_admin_v3`;
 CREATE DATABASE IF NOT EXISTS `smart_admin_v3` ;
 USE `smart_admin_v3`;
 
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -20,18 +19,18 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `t_category`;
 CREATE TABLE `t_category`  (
   `category_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '分类id',
-  `category_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '分类名称',
+  `category_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分类名称',
   `category_type` smallint(0) NOT NULL COMMENT '分类类型',
   `parent_id` int(0) NOT NULL COMMENT '父级id',
   `sort` int(0) NOT NULL DEFAULT 0 COMMENT '排序',
   `disabled_flag` tinyint(0) NOT NULL DEFAULT 0 COMMENT '是否禁用',
   `deleted_flag` tinyint(0) NOT NULL DEFAULT 0 COMMENT '是否删除',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`category_id`) USING BTREE,
   INDEX `idx_parent_id`(`parent_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 361 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '分类表，主要用于商品分类' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 381 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '分类表，主要用于商品分类' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_category
@@ -102,12 +101,6 @@ CREATE TABLE `t_code_generator_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成器的每个表的配置' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of t_code_generator_config
--- ----------------------------
-INSERT INTO `t_code_generator_config` VALUES ('t_goods', '{\"backendAuthor\":\"1024创新实验室-主任-卓大\",\"backendDate\":1701740245000,\"copyright\":\"1024创新实验室\",\"description\":\"商品\",\"frontAuthor\":\"1024创新实验室-主任-卓大\",\"frontDate\":1701740245000,\"javaPackageName\":\"net.lab1024.sa.admin.module.business.goods\",\"moduleName\":\"Goods\"}', '[{\"autoIncreaseFlag\":true,\"columnComment\":\"\",\"columnName\":\"goods_id\",\"fieldName\":\"goodsId\",\"javaType\":\"Integer\",\"jsType\":\"Number\",\"label\":\"主键\",\"primaryKeyFlag\":true},{\"autoIncreaseFlag\":false,\"columnComment\":\"商品状态:[1:预约中,2:售卖中,3:售罄]\",\"columnName\":\"goods_status\",\"enumName\":\"GoodsGoodsStatusEnum\",\"fieldName\":\"goodsStatus\",\"javaType\":\"Integer\",\"jsType\":\"Number\",\"label\":\"商品状态:[1:预约中,2:售卖中,3:售罄]\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"商品类目\",\"columnName\":\"category_id\",\"fieldName\":\"categoryId\",\"javaType\":\"Integer\",\"jsType\":\"Number\",\"label\":\"商品类目\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"商品名称\",\"columnName\":\"goods_name\",\"fieldName\":\"goodsName\",\"javaType\":\"String\",\"jsType\":\"String\",\"label\":\"商品名称\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"产地\",\"columnName\":\"place\",\"fieldName\":\"place\",\"javaType\":\"String\",\"jsType\":\"String\",\"label\":\"产地\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"价格\",\"columnName\":\"price\",\"fieldName\":\"price\",\"javaType\":\"BigDecimal\",\"jsType\":\"Number\",\"label\":\"价格\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"上架状态\",\"columnName\":\"shelves_flag\",\"fieldName\":\"shelvesFlag\",\"javaType\":\"Integer\",\"jsType\":\"Number\",\"label\":\"上架状态\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"删除状态\",\"columnName\":\"deleted_flag\",\"fieldName\":\"deletedFlag\",\"javaType\":\"Integer\",\"jsType\":\"Number\",\"label\":\"删除状态\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"备注\",\"columnName\":\"remark\",\"fieldName\":\"remark\",\"javaType\":\"String\",\"jsType\":\"String\",\"label\":\"备注\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"\",\"columnName\":\"update_time\",\"fieldName\":\"updateTime\",\"javaType\":\"LocalDateTime\",\"jsType\":\"Date\",\"label\":\"更新时间\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"\",\"columnName\":\"create_time\",\"fieldName\":\"createTime\",\"javaType\":\"LocalDateTime\",\"jsType\":\"Date\",\"label\":\"创建时间\",\"primaryKeyFlag\":false}]', '{\"countPerLine\":1,\"fieldList\":[{\"columnName\":\"goods_id\",\"frontComponent\":\"InputNumber\",\"insertFlag\":true,\"requiredFlag\":true,\"updateFlag\":true},{\"columnName\":\"goods_status\",\"frontComponent\":\"SmartEnumSelect\",\"insertFlag\":true,\"requiredFlag\":true,\"updateFlag\":true},{\"columnName\":\"category_id\",\"frontComponent\":\"InputNumber\",\"insertFlag\":true,\"requiredFlag\":true,\"updateFlag\":true},{\"columnName\":\"goods_name\",\"frontComponent\":\"Input\",\"insertFlag\":true,\"requiredFlag\":true,\"updateFlag\":true},{\"columnName\":\"place\",\"frontComponent\":\"Input\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false},{\"columnName\":\"price\",\"frontComponent\":\"InputNumber\",\"insertFlag\":true,\"requiredFlag\":true,\"updateFlag\":true},{\"columnName\":\"shelves_flag\",\"frontComponent\":\"BooleanSelect\",\"insertFlag\":true,\"requiredFlag\":true,\"updateFlag\":true},{\"columnName\":\"deleted_flag\",\"frontComponent\":\"BooleanSelect\",\"insertFlag\":true,\"requiredFlag\":true,\"updateFlag\":false},{\"columnName\":\"remark\",\"frontComponent\":\"Input\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false},{\"columnName\":\"update_time\",\"frontComponent\":\"DateTime\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false},{\"columnName\":\"create_time\",\"frontComponent\":\"DateTime\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false}],\"isSupportInsertAndUpdate\":true,\"pageType\":\"modal\",\"width\":\"600\"}', '{\"deleteEnum\":\"SingleAndBatch\",\"isPhysicallyDeleted\":false,\"isSupportDelete\":true}', '[{\"columnNameList\":[\"goods_status\"],\"fieldName\":\"goodsStatus\",\"label\":\"商品状态:[1:预约中,2:售卖中,3:售罄]\",\"queryTypeEnum\":\"Enum\",\"width\":\"150px\"},{\"columnNameList\":[\"goods_name\"],\"fieldName\":\"goodsName\",\"label\":\"商品名称\",\"queryTypeEnum\":\"Like\",\"width\":\"150px\"}]', '[{\"columnName\":\"goods_id\",\"ellipsisFlag\":true,\"fieldName\":\"goodsId\",\"label\":\"主键\",\"showFlag\":true},{\"columnName\":\"goods_status\",\"ellipsisFlag\":true,\"fieldName\":\"goodsStatus\",\"label\":\"商品状态:[1:预约中,2:售卖中,3:售罄]\",\"showFlag\":true},{\"columnName\":\"category_id\",\"ellipsisFlag\":true,\"fieldName\":\"categoryId\",\"label\":\"商品类目\",\"showFlag\":true},{\"columnName\":\"goods_name\",\"ellipsisFlag\":true,\"fieldName\":\"goodsName\",\"label\":\"商品名称\",\"showFlag\":true},{\"columnName\":\"place\",\"ellipsisFlag\":true,\"fieldName\":\"place\",\"label\":\"产地\",\"showFlag\":true},{\"columnName\":\"price\",\"ellipsisFlag\":true,\"fieldName\":\"price\",\"label\":\"价格\",\"showFlag\":true},{\"columnName\":\"shelves_flag\",\"ellipsisFlag\":true,\"fieldName\":\"shelvesFlag\",\"label\":\"上架状态\",\"showFlag\":true},{\"columnName\":\"deleted_flag\",\"ellipsisFlag\":true,\"fieldName\":\"deletedFlag\",\"label\":\"删除状态\",\"showFlag\":true},{\"columnName\":\"remark\",\"ellipsisFlag\":true,\"fieldName\":\"remark\",\"label\":\"备注\",\"showFlag\":true},{\"columnName\":\"update_time\",\"ellipsisFlag\":true,\"fieldName\":\"updateTime\",\"label\":\"更新时间\",\"showFlag\":true},{\"columnName\":\"create_time\",\"ellipsisFlag\":true,\"fieldName\":\"createTime\",\"label\":\"创建时间\",\"showFlag\":true}]', NULL, '2024-01-21 21:17:42', '2024-01-21 21:17:42');
-INSERT INTO `t_code_generator_config` VALUES ('t_position', '{\"backendAuthor\":\"lidoudou\",\"backendDate\":1719156698000,\"copyright\":\"<a href=\\\"https://1024lab.net\\\">1024创新实验室</a>\",\"description\":\"职务表\",\"frontAuthor\":\"lidoudou\",\"frontDate\":1719156698000,\"javaPackageName\":\"net.lab1024.sa.admin.module.system.position\",\"moduleName\":\"Position\"}', '[{\"autoIncreaseFlag\":false,\"columnComment\":\"职务ID\",\"columnName\":\"position_id\",\"fieldName\":\"positionId\",\"javaType\":\"Long\",\"jsType\":\"Number\",\"label\":\"职务ID\",\"primaryKeyFlag\":true},{\"autoIncreaseFlag\":false,\"columnComment\":\"职务名称\",\"columnName\":\"position_name\",\"fieldName\":\"positionName\",\"javaType\":\"String\",\"jsType\":\"String\",\"label\":\"职务名称\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"职级\",\"columnName\":\"level\",\"fieldName\":\"level\",\"javaType\":\"String\",\"jsType\":\"String\",\"label\":\"职级\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"排序\",\"columnName\":\"sort\",\"fieldName\":\"sort\",\"javaType\":\"Integer\",\"jsType\":\"Number\",\"label\":\"排序\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"备注\",\"columnName\":\"remark\",\"fieldName\":\"remark\",\"javaType\":\"String\",\"jsType\":\"String\",\"label\":\"备注\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"\",\"columnName\":\"create_time\",\"fieldName\":\"createTime\",\"javaType\":\"LocalDateTime\",\"jsType\":\"Date\",\"label\":\"创建时间\",\"primaryKeyFlag\":false},{\"autoIncreaseFlag\":false,\"columnComment\":\"\",\"columnName\":\"update_time\",\"fieldName\":\"updateTime\",\"javaType\":\"LocalDateTime\",\"jsType\":\"Date\",\"label\":\"更新时间\",\"primaryKeyFlag\":false}]', '{\"countPerLine\":1,\"fieldList\":[{\"columnName\":\"position_id\",\"frontComponent\":\"InputNumber\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false},{\"columnName\":\"position_name\",\"frontComponent\":\"Input\",\"insertFlag\":true,\"requiredFlag\":true,\"updateFlag\":false},{\"columnName\":\"level\",\"frontComponent\":\"Input\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false},{\"columnName\":\"sort\",\"frontComponent\":\"InputNumber\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false},{\"columnName\":\"remark\",\"frontComponent\":\"Input\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false},{\"columnName\":\"create_time\",\"frontComponent\":\"DateTime\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false},{\"columnName\":\"update_time\",\"frontComponent\":\"DateTime\",\"insertFlag\":false,\"requiredFlag\":false,\"updateFlag\":false}],\"isSupportInsertAndUpdate\":true,\"pageType\":\"modal\",\"width\":\"500px\"}', '{\"deleteEnum\":\"SingleAndBatch\",\"isPhysicallyDeleted\":true,\"isSupportDelete\":true}', '[{\"columnNameList\":[\"position_name\"],\"fieldName\":\"keywords\",\"label\":\"关键字查询\",\"queryTypeEnum\":\"Like\",\"width\":\"200px\"}]', '[{\"columnName\":\"position_id\",\"ellipsisFlag\":true,\"fieldName\":\"positionId\",\"label\":\"职务ID\",\"showFlag\":true},{\"columnName\":\"position_name\",\"ellipsisFlag\":true,\"fieldName\":\"positionName\",\"label\":\"职务名称\",\"showFlag\":true},{\"columnName\":\"level\",\"ellipsisFlag\":true,\"fieldName\":\"level\",\"label\":\"职级\",\"showFlag\":true},{\"columnName\":\"sort\",\"ellipsisFlag\":true,\"fieldName\":\"sort\",\"label\":\"排序\",\"showFlag\":true},{\"columnName\":\"remark\",\"ellipsisFlag\":true,\"fieldName\":\"remark\",\"label\":\"备注\",\"showFlag\":true},{\"columnName\":\"create_time\",\"ellipsisFlag\":true,\"fieldName\":\"createTime\",\"label\":\"创建时间\",\"showFlag\":true},{\"columnName\":\"update_time\",\"ellipsisFlag\":true,\"fieldName\":\"updateTime\",\"label\":\"更新时间\",\"showFlag\":true}]', NULL, '2024-06-28 01:01:40', '2024-06-28 01:01:40');
-
--- ----------------------------
 -- Table structure for t_config
 -- ----------------------------
 DROP TABLE IF EXISTS `t_config`;
@@ -120,12 +113,13 @@ CREATE TABLE `t_config`  (
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '上次修改时间',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`config_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统配置' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统配置' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_config
 -- ----------------------------
-INSERT INTO `t_config` VALUES (1, '万能密码', 'super_password', '123123', '一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界，一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界啊', '2024-06-29 12:27:23', '2021-12-16 23:32:46');
+INSERT INTO `t_config` VALUES (1, '万能密码', 'super_password', '1024ok', '一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界，一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界啊', '2024-09-03 21:27:03', '2021-12-16 23:32:46');
+INSERT INTO `t_config` VALUES (2, '三级等保', 'level3_protect_config', '{\n	\"fileDetectFlag\":true,\n	\"loginActiveTimeoutMinutes\":30,\n	\"loginFailLockMinutes\":30,\n	\"loginFailMaxTimes\":3,\n	\"maxUploadFileSizeMb\":30,\n	\"passwordComplexityEnabled\":true,\n	\"regularChangePasswordMonths\":3,\n	\"regularChangePasswordNotAllowRepeatTimes\":3,\n	\"twoFactorLoginEnabled\":false\n}', 'SmartJob Sample2 update', '2024-09-03 21:49:23', '2024-08-13 11:44:49');
 
 -- ----------------------------
 -- Table structure for t_data_tracer
@@ -149,7 +143,7 @@ CREATE TABLE `t_data_tracer`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`data_tracer_id`) USING BTREE,
   INDEX `order_id_order_type`(`data_id`, `type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '各种单据操作记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '各种单据操作记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_data_tracer
@@ -163,6 +157,7 @@ INSERT INTO `t_data_tracer` VALUES (40, 2, 3, '修改企业信息', '营业执�
 INSERT INTO `t_data_tracer` VALUES (41, 2, 3, '更新银行:<br/>', NULL, NULL, NULL, 1, 1, '管理员', '127.0.0.1', '0|0|0|内网IP|内网IP', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36', '2023-12-01 20:09:17', '2023-12-01 20:09:17');
 INSERT INTO `t_data_tracer` VALUES (42, 2, 3, '更新发票：<br/>删除状态:由【false】变更为【】', NULL, NULL, NULL, 1, 1, '管理员', '127.0.0.1', '0|0|0|内网IP|内网IP', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36', '2023-12-01 20:09:20', '2023-12-01 20:09:20');
 INSERT INTO `t_data_tracer` VALUES (49, 1, 3, '修改企业信息', '营业执照:\"public/common/852b7e19bef94af39c1a6156edf47cfb_20221022170332_jpg\"<br/>统一社会信用代码:\"1024lab_block\"<br/>详细地址:\"区块链大楼\"<br/>区县名称:\"洛龙区\"<br/>禁用状态:false<br/>类型:有限企业<br/>城市名称:\"洛阳市\"<br/>删除状态:false<br/>联系人:\"开云\"<br/>省份名称:\"河南省\"<br/>企业logo:\"public/common/f4a76fa720814949a610f05f6f9545bf_20221022170256_jpg\"<br/>联系人电话:\"18637925892\"<br/>企业名称:\"1024创新区块链实验室\"', '营业执照:\"public/common/1d89055e5680426280446aff1e7e627c_20240306112451.jpeg\"<br/>统一社会信用代码:\"1024lab_block\"<br/>详细地址:\"区块链大楼\"<br/>区县名称:\"洛龙区\"<br/>禁用状态:false<br/>类型:有限企业<br/>城市名称:\"洛阳市\"<br/>删除状态:false<br/>联系人:\"开云\"<br/>省份名称:\"河南省\"<br/>企业logo:\"public/common/34f5ac0fc097402294aea75352c128f0_20240306112435.png\"<br/>联系人电话:\"18637925892\"<br/>企业名称:\"1024创新区块链实验室\"', NULL, 1, 1, '管理员', '127.0.0.1', '0|0|0|内网IP|内网IP', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36', '2024-03-06 11:24:55', '2024-03-06 11:24:55');
+INSERT INTO `t_data_tracer` VALUES (99, 12, 1, '', NULL, NULL, NULL, 1, 1, '管理员', '127.0.0.1', '0|0|0|内网IP|内网IP', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', '2024-09-03 21:06:32', '2024-09-03 21:06:32');
 
 -- ----------------------------
 -- Table structure for t_department
@@ -204,7 +199,7 @@ CREATE TABLE `t_dict_key`  (
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`dict_key_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字段key' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字段key' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_dict_key
@@ -234,6 +229,7 @@ CREATE TABLE `t_dict_value`  (
 INSERT INTO `t_dict_value` VALUES (1, 1, 'LUO_YANG', '洛阳', '', 1, 0, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
 INSERT INTO `t_dict_value` VALUES (2, 1, 'ZHENG_ZHOU', '郑州', '', 1, 0, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
 INSERT INTO `t_dict_value` VALUES (3, 1, 'BEI_JING', '北京', '', 3, 0, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
+INSERT INTO `t_dict_value` VALUES (5, 1, 'SHANG_HAI', '上海', '', 1, 0, '2024-09-03 21:28:43', '2024-09-03 21:28:43');
 
 -- ----------------------------
 -- Table structure for t_employee
@@ -249,6 +245,7 @@ CREATE TABLE `t_employee`  (
   `phone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号码',
   `department_id` int(0) NOT NULL COMMENT '部门id',
   `position_id` bigint(0) NULL DEFAULT NULL COMMENT '职务ID',
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
   `disabled_flag` tinyint unsigned NOT NULL COMMENT '是否被禁用 0否1是',
   `deleted_flag` tinyint unsigned NOT NULL COMMENT '是否删除0否 1是',
   `administrator_flag` tinyint(0) NOT NULL DEFAULT 0 COMMENT '是否为超级管理员: 0 不是，1是',
@@ -256,23 +253,25 @@ CREATE TABLE `t_employee`  (
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`employee_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '员工表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 75 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '员工表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_employee
 -- ----------------------------
-INSERT INTO `t_employee` VALUES (1, 'admin', '40cc20b8891cd3fd1f008ea7f4ac17c3', '管理员', 'public/common/1eea469452484ffea4a42570c4072466_20240702220447.jpg', 0, '13500000000', 1, 3, 0, 0, 1, NULL, '2024-07-02 22:04:50', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (2, 'huke', '40cc20b8891cd3fd1f008ea7f4ac17c3', '胡克1', NULL, 0, '13123123121', 1, NULL, 0, 0, 1, NULL, '2024-07-15 20:18:16', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (44, 'zhuoda', '91e48719a9c580d6cfa0a2d5a0e200b8', '卓大', NULL, 1, '18637925892', 1, NULL, 0, 0, 1, NULL, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (47, 'shanyi', 'ca405fddcb90ac2a71b33fe7126ed2a8', '善逸', 'public/common/f823b00873684f0a9d31f0d62316cc8e_20240630015141.jpg', 1, '17630506613', 2, NULL, 0, 0, 0, '这个是备注', '2024-06-30 02:04:23', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (48, 'qinjiu', 'b1cfb0ed0080306199fa76c872d6a32e', '琴酒', NULL, 2, '14112343212', 2, NULL, 0, 0, 0, NULL, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (63, 'kaiyun', '40cc20b8891cd3fd1f008ea7f4ac17c3', '开云', NULL, 0, '13112312346', 2, NULL, 0, 1, 0, NULL, '2024-07-15 20:03:18', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (64, 'qingye', '40cc20b8891cd3fd1f008ea7f4ac17c3', '清野', NULL, 1, '13123123111', 2, NULL, 0, 0, 0, NULL, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (65, 'feiye', '40cc20b8891cd3fd1f008ea7f4ac17c3', '飞叶', NULL, 1, '13123123112', 4, NULL, 0, 0, 0, NULL, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (66, 'luoyi', '40cc20b8891cd3fd1f008ea7f4ac17c3', '罗伊', NULL, 1, '13123123142', 4, NULL, 1, 0, 0, NULL, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (67, 'chuxiao', '7287168489ed5598741362cbec2b0741', '初晓', NULL, 1, '13123123123', 1, NULL, 1, 0, 0, NULL, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (68, 'xuanpeng', '40cc20b8891cd3fd1f008ea7f4ac17c3', '玄朋', NULL, 1, '13123123124', 1, NULL, 0, 0, 0, NULL, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (69, 'peixian', '40cc20b8891cd3fd1f008ea7f4ac17c3', '玄朋', NULL, 1, '18377482773', 1, NULL, 0, 0, 0, NULL, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (1, 'admin', '40cc20b8891cd3fd1f008ea7f4ac17c3', '管理员', 'public/common/1eea469452484ffea4a42570c4072466_20240702220447.jpg', 0, '13500000000', 1, 3, NULL, 0, 0, 1, NULL, '2024-09-03 21:39:17', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (2, 'huke', '40cc20b8891cd3fd1f008ea7f4ac17c3', '胡克', NULL, 0, '13123123121', 1, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:09', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (44, 'zhuoda', 'bf63cb6431d613acdee104f692845b22', '卓大', NULL, 1, '18637925892', 1, 6, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:10', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (47, 'shanyi', 'ca405fddcb90ac2a71b33fe7126ed2a8', '善逸', 'public/common/f823b00873684f0a9d31f0d62316cc8e_20240630015141.jpg', 1, '17630506613', 2, 5, NULL, 0, 0, 0, '这个是备注', '2024-09-03 21:36:11', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (48, 'qinjiu', 'b1cfb0ed0080306199fa76c872d6a32e', '琴酒', NULL, 2, '14112343212', 2, 6, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:12', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (63, 'kaiyun', '0e5ec5746bf955f253fa747ab76cfa67', '开云', NULL, 0, '13112312346', 2, 5, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:13', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (64, 'qingye', '40cc20b8891cd3fd1f008ea7f4ac17c3', '清野', NULL, 1, '13123123111', 2, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:14', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (65, 'feiye', '40cc20b8891cd3fd1f008ea7f4ac17c3', '飞叶', NULL, 1, '13123123112', 4, 3, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:14', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (66, 'luoyi', '40cc20b8891cd3fd1f008ea7f4ac17c3', '罗伊', NULL, 1, '13123123142', 4, 2, NULL, 1, 0, 0, NULL, '2024-09-03 21:36:15', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (67, 'chuxiao', '7287168489ed5598741362cbec2b0741', '初晓', NULL, 1, '13123123123', 1, 2, NULL, 1, 0, 0, NULL, '2024-09-03 21:36:18', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (68, 'xuanpeng', '40cc20b8891cd3fd1f008ea7f4ac17c3', '玄朋', NULL, 1, '13123123124', 1, 3, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:18', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (69, 'peixian', '40cc20b8891cd3fd1f008ea7f4ac17c3', '玄朋', NULL, 1, '18377482773', 1, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:19', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (73, 'limbo', '50ea4174e4ad0970bcf6423f99c0cbcd', '陈琳博', NULL, 1, '18906662339', 2, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:24', '2024-07-17 10:36:16');
+INSERT INTO `t_employee` VALUES (74, 'xzh', 'f5ca8e50d26e6070ed2198e136ee967d', 'admin1', NULL, 1, '13654567897', 5, 6, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:21', '2024-08-09 09:49:56');
 
 -- ----------------------------
 -- Table structure for t_feedback
@@ -288,7 +287,7 @@ CREATE TABLE `t_feedback`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`feedback_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '意见反馈' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '意见反馈' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_file
@@ -310,7 +309,7 @@ CREATE TABLE `t_file`  (
   UNIQUE INDEX `uk_file_key`(`file_key`) USING BTREE,
   INDEX `module_id_module_type`(`folder_type`) USING BTREE,
   INDEX `module_type`(`folder_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文件' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 108 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文件' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_goods
@@ -329,7 +328,7 @@ CREATE TABLE `t_goods`  (
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`goods_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods
@@ -339,7 +338,7 @@ INSERT INTO `t_goods` VALUES (7, 1, 352, 'iphone15 pro', 'LUO_YANG', 50000.00, 1
 INSERT INTO `t_goods` VALUES (8, 1, 352, 'iphone14', 'ZHENG_ZHOU', 150.00, 0, 0, '', '2022-10-21 19:12:49', '2022-10-21 19:00:11');
 INSERT INTO `t_goods` VALUES (10, 1, 357, '小米15', 'LUO_YANG', 7999.00, 1, 0, '', '2023-10-07 19:02:24', '2023-10-07 19:02:24');
 INSERT INTO `t_goods` VALUES (11, 1, 354, '青轴键盘', 'ZHENG_ZHOU', 199.00, 1, 0, '支持usb', '2023-12-01 19:58:09', '2023-12-01 19:55:53');
-INSERT INTO `t_goods` VALUES (12, 1, 356, '罗技双模鼠标', 'BEI_JING', 99.00, 0, 0, '支持蓝牙', '2023-12-01 19:57:25', '2023-12-01 19:57:25');
+INSERT INTO `t_goods` VALUES (12, 1, 356, '罗技双模鼠标', 'BEI_JING,ZHENG_ZHOU', 99.00, 0, 0, '支持蓝牙', '2024-09-03 21:06:32', '2023-12-01 19:57:25');
 
 -- ----------------------------
 -- Table structure for t_heart_beat_record
@@ -353,13 +352,7 @@ CREATE TABLE `t_heart_beat_record`  (
   `process_start_time` datetime(0) NOT NULL COMMENT '进程开启时间',
   `heart_beat_time` datetime(0) NOT NULL COMMENT '心跳时间',
   PRIMARY KEY (`heart_beat_record_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 107 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公用服务 - 服务心跳' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_heart_beat_record
--- ----------------------------
-INSERT INTO `t_heart_beat_record` VALUES (111, 'E:\\code_work_space\\idea\\smart-admin-developing\\smart-admin-api-developing', '127.0.0.1;192.168.137.1;192.168.2.139', 6656, '2024-07-15 23:43:26', '2024-07-15 23:54:42');
-INSERT INTO `t_heart_beat_record` VALUES (112, 'E:\\code_work_space\\idea\\smart-admin-developing\\smart-admin-api-developing', '127.0.0.1;192.168.137.1;192.168.2.139', 25348, '2024-07-15 23:57:18', '2024-07-15 23:58:34');
+) ENGINE = InnoDB AUTO_INCREMENT = 188 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公用服务 - 服务心跳' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_help_doc
@@ -368,18 +361,18 @@ DROP TABLE IF EXISTS `t_help_doc`;
 CREATE TABLE `t_help_doc`  (
   `help_doc_id` bigint(0) NOT NULL AUTO_INCREMENT,
   `help_doc_catalog_id` bigint(0) NOT NULL COMMENT '类型1公告 2动态',
-  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
-  `content_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文本内容',
-  `content_html` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'html内容',
-  `attachment` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
+  `content_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文本内容',
+  `content_html` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'html内容',
+  `attachment` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附件',
   `sort` int(0) NOT NULL DEFAULT 0 COMMENT '排序',
   `page_view_count` int(0) NOT NULL DEFAULT 0 COMMENT '页面浏览量，传说中的pv',
   `user_view_count` int(0) NOT NULL DEFAULT 0 COMMENT '用户浏览量，传说中的uv',
-  `author` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '作者',
+  `author` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '作者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`help_doc_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '帮助文档' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '帮助文档' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_help_doc
@@ -393,13 +386,13 @@ INSERT INTO `t_help_doc` VALUES (33, 6, '谁有权限查看企业信息', '需�
 DROP TABLE IF EXISTS `t_help_doc_catalog`;
 CREATE TABLE `t_help_doc_catalog`  (
   `help_doc_catalog_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '帮助文档目录',
-  `name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名称',
+  `name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
   `sort` int(0) NOT NULL DEFAULT 0 COMMENT '排序字段',
   `parent_id` bigint(0) NOT NULL COMMENT '父级id',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`help_doc_catalog_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '帮助文档-目录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '帮助文档-目录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_help_doc_catalog
@@ -415,13 +408,13 @@ INSERT INTO `t_help_doc_catalog` VALUES (11, '进销存', 0, 0, '2023-12-01 20:1
 DROP TABLE IF EXISTS `t_help_doc_relation`;
 CREATE TABLE `t_help_doc_relation`  (
   `relation_id` bigint(0) NOT NULL COMMENT '关联id',
-  `relation_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '关联名称',
+  `relation_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '关联名称',
   `help_doc_id` bigint(0) NOT NULL COMMENT '文档id',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`relation_id`, `help_doc_id`) USING BTREE,
   UNIQUE INDEX `uni_menu_help_doc`(`relation_id`, `help_doc_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '帮助文档-关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '帮助文档-关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_help_doc_relation
@@ -436,25 +429,17 @@ DROP TABLE IF EXISTS `t_help_doc_view_record`;
 CREATE TABLE `t_help_doc_view_record`  (
   `help_doc_id` bigint(0) NOT NULL COMMENT '通知公告id',
   `user_id` bigint(0) NOT NULL COMMENT '用户id',
-  `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户名称',
+  `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户名称',
   `page_view_count` int(0) NULL DEFAULT 0 COMMENT '查看次数',
-  `first_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '首次ip',
-  `first_user_agent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '首次用户设备等标识',
-  `last_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '最后一次ip',
-  `last_user_agent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '最后一次用户设备等标识',
+  `first_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '首次ip',
+  `first_user_agent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '首次用户设备等标识',
+  `last_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '最后一次ip',
+  `last_user_agent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '最后一次用户设备等标识',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`help_doc_id`, `user_id`) USING BTREE,
   UNIQUE INDEX `uk_notice_employee`(`help_doc_id`, `user_id`) USING BTREE COMMENT '资讯员工'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '帮助文档-查看记录' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_help_doc_view_record
--- ----------------------------
-INSERT INTO `t_help_doc_view_record` VALUES (31, 1, '管理员', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-10 19:32:16', '2022-11-12 23:09:04');
-INSERT INTO `t_help_doc_view_record` VALUES (32, 1, '管理员', 55, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', '2022-11-22 10:43:39', '2024-07-07 23:15:28');
-INSERT INTO `t_help_doc_view_record` VALUES (33, 1, '管理员', 13, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36', '2022-11-22 10:44:24', '2024-04-10 19:36:55');
-INSERT INTO `t_help_doc_view_record` VALUES (34, 1, '管理员', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36', '2023-02-16 19:48:06', '2023-11-21 20:38:40');
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '帮助文档-查看记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_login_fail
@@ -464,7 +449,7 @@ CREATE TABLE `t_login_fail`  (
   `login_fail_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `user_id` bigint(0) NOT NULL COMMENT '用户id',
   `user_type` int(0) NOT NULL COMMENT '用户类型',
-  `login_name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '登录名',
+  `login_name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录名',
   `login_fail_count` int(0) NULL DEFAULT NULL COMMENT '连续登录失败次数',
   `lock_flag` tinyint(0) NULL DEFAULT 0 COMMENT '锁定状态:1锁定，0未锁定',
   `login_lock_begin_time` datetime(0) NULL DEFAULT NULL COMMENT '连续登录失败锁定开始时间',
@@ -472,7 +457,7 @@ CREATE TABLE `t_login_fail`  (
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`login_fail_id`) USING BTREE,
   UNIQUE INDEX `uid_and_utype`(`user_id`, `user_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '登录失败次数记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '登录失败次数记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_login_log
@@ -492,15 +477,28 @@ CREATE TABLE `t_login_log`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`login_log_id`) USING BTREE,
   INDEX `customer_id`(`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 107 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户登录日志' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1754 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户登录日志' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of t_login_log
+-- Table structure for t_mail_template
 -- ----------------------------
-INSERT INTO `t_login_log` VALUES (112, 1, 1, '管理员', '127.0.0.1', '0|0|0|内网IP|内网IP', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', 2, NULL, '2024-07-15 23:57:54', '2024-07-15 23:57:55');
-INSERT INTO `t_login_log` VALUES (113, 1, 1, '管理员', '127.0.0.1', '0|0|0|内网IP|内网IP', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', 0, '电脑端', '2024-07-15 23:58:00', '2024-07-15 23:58:00');
-INSERT INTO `t_login_log` VALUES (114, 1, 1, '管理员', '127.0.0.1', '0|0|0|内网IP|内网IP', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', 2, NULL, '2024-07-15 23:58:54', '2024-07-15 23:58:55');
-INSERT INTO `t_login_log` VALUES (115, 1, 1, '管理员', '127.0.0.1', '0|0|0|内网IP|内网IP', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', 0, '电脑端', '2024-07-15 23:58:59', '2024-07-15 23:59:00');
+DROP TABLE IF EXISTS `t_mail_template`;
+CREATE TABLE `t_mail_template`  (
+  `template_code` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `template_subject` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模板名称',
+  `template_content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模板内容',
+  `template_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '解析类型 string，freemarker',
+  `disable_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否禁用',
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`template_code`) USING BTREE,
+  UNIQUE INDEX `template_code`(`template_code`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_mail_template
+-- ----------------------------
+INSERT INTO `t_mail_template` VALUES ('login_verification_code', '登录验证码', '<!DOCTYPE HTML>\r\n<html>\r\n<head>\r\n  <title>登录提醒</title>\r\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\r\n  <style>\r\n      * {\r\n          font-family: SimSun;\r\n          /* 4号字体 */\r\n          font-size: 18px;\r\n          /* 22磅行间距 */\r\n          line-height: 29px;\r\n      }\r\n\r\n      .main_font_size {\r\n          font-size: 12.0pt;\r\n      }\r\n\r\n      .mainContent {\r\n          line-height: 28px;\r\n      }\r\n\r\n      p {\r\n          margin: 0 auto;\r\n          text-align: justify;\r\n      }\r\n  </style>\r\n\r\n</head>\r\n<body>\r\n<div>\r\n  <div style=\"margin: 0px auto;width: 690px;\">\r\n    <div class=\"mainContent\">\r\n      <h1>验证码</h1>\r\n      <p>请在验证页面输入此验证码</p>\r\n      <p><b>${code}</b></p>\r\n      <p>验证码将于此电子邮件发出 5 分钟后过期。</p>\r\n      <p>如果你未曾提出此请求，可以忽略这封电子邮件。</p>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n</body>\r\n</html>', 'freemarker', 0, '2024-08-06 09:13:08', '2024-07-28 13:56:06');
 
 -- ----------------------------
 -- Table structure for t_menu
@@ -508,19 +506,19 @@ INSERT INTO `t_login_log` VALUES (115, 1, 1, '管理员', '127.0.0.1', '0|0|0|�
 DROP TABLE IF EXISTS `t_menu`;
 CREATE TABLE `t_menu`  (
   `menu_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
-  `menu_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单名称',
+  `menu_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '菜单名称',
   `menu_type` int(0) NOT NULL COMMENT '类型',
   `parent_id` bigint(0) NOT NULL COMMENT '父菜单ID',
   `sort` int(0) NULL DEFAULT NULL COMMENT '显示顺序',
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '路由地址',
-  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '组件路径',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由地址',
+  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件路径',
   `perms_type` int(0) NULL DEFAULT NULL COMMENT '权限类型',
-  `api_perms` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '后端权限字符串',
-  `web_perms` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '前端权限字符串',
-  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单图标',
+  `api_perms` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '后端权限字符串',
+  `web_perms` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '前端权限字符串',
+  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单图标',
   `context_menu_id` bigint(0) NULL DEFAULT NULL COMMENT '功能点关联菜单ID',
   `frame_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否为外链',
-  `frame_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '外链地址',
+  `frame_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '外链地址',
   `cache_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否缓存',
   `visible_flag` tinyint(1) NOT NULL DEFAULT 1 COMMENT '显示状态',
   `disabled_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '禁用状态',
@@ -530,7 +528,7 @@ CREATE TABLE `t_menu`  (
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 235 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 252 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_menu
@@ -545,7 +543,7 @@ INSERT INTO `t_menu` VALUES (50, '系统设置', 1, 0, 6, '/setting', NULL, NULL
 INSERT INTO `t_menu` VALUES (76, '角色管理', 2, 45, 4, '/organization/role', '/system/role/index.vue', NULL, NULL, NULL, 'SlidersOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2021-08-26 10:31:00', 1, '2024-07-02 20:15:28');
 INSERT INTO `t_menu` VALUES (78, '商品分类', 2, 48, 2, '/erp/catalog/goods', '/business/erp/catalog/goods-catalog.vue', NULL, NULL, NULL, 'ApartmentOutlined', NULL, 0, NULL, 1, 1, 0, 0, 1, '2022-05-18 23:34:14', 1, '2023-12-01 19:33:13');
 INSERT INTO `t_menu` VALUES (79, '自定义分组', 2, 48, 3, '/erp/catalog/custom', '/business/erp/catalog/custom-catalog.vue', NULL, NULL, NULL, 'AppstoreAddOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-05-18 23:37:53', 1, '2023-12-01 19:33:16');
-INSERT INTO `t_menu` VALUES (81, '请求监控', 2, 111, 3, '/support/operate-log/operate-log-list', '/support/operate-log/operate-log-list.vue', NULL, NULL, NULL, 'VideoCameraOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-05-20 12:37:24', 1, '2022-10-22 18:33:10');
+INSERT INTO `t_menu` VALUES (81, '用户操作记录', 2, 213, 6, '/support/operate-log/operate-log-list', '/support/operate-log/operate-log-list.vue', NULL, NULL, NULL, 'VideoCameraOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-05-20 12:37:24', 44, '2024-08-13 14:34:10');
 INSERT INTO `t_menu` VALUES (85, '组件演示', 2, 84, NULL, '/demonstration/index', '/support/demonstration/index.vue', NULL, NULL, NULL, 'ClearOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-05-20 23:16:46', NULL, '2022-05-20 23:16:46');
 INSERT INTO `t_menu` VALUES (86, '添加部门', 3, 46, 1, NULL, NULL, 1, 'system:department:add', 'system:department:add', NULL, NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-05-26 23:33:37', 1, '2023-10-07 18:26:35');
 INSERT INTO `t_menu` VALUES (87, '修改部门', 3, 46, 2, NULL, NULL, 1, 'system:department:update', 'system:department:update', NULL, NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-05-26 23:34:11', 1, '2023-10-07 18:26:44');
@@ -578,7 +576,7 @@ INSERT INTO `t_menu` VALUES (132, '公告管理', 2, 138, 2, '/oa/notice/notice-
 INSERT INTO `t_menu` VALUES (133, '缓存管理', 2, 50, 11, '/support/cache/cache-list', '/support/cache/cache-list.vue', NULL, NULL, NULL, 'BorderInnerOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-06-24 18:52:25', 1, '2023-12-01 19:39:13');
 INSERT INTO `t_menu` VALUES (138, '功能Demo', 1, 0, 1, NULL, NULL, NULL, NULL, NULL, 'BankOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-06-24 20:09:18', 1, '2024-07-08 13:46:54');
 INSERT INTO `t_menu` VALUES (142, '公告详情', 2, 132, NULL, '/oa/notice/notice-detail', '/business/oa/notice/notice-detail.vue', NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, 1, '2022-06-25 16:38:47', 1, '2022-09-14 19:46:17');
-INSERT INTO `t_menu` VALUES (143, '登录日志', 2, 213, 2, '/support/login-log/login-log-list', '/support/login-log/login-log-list.vue', NULL, NULL, NULL, 'LoginOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-06-28 15:01:38', 1, '2023-10-17 19:04:34');
+INSERT INTO `t_menu` VALUES (143, '登录登出记录', 2, 213, 5, '/support/login-log/login-log-list', '/support/login-log/login-log-list.vue', NULL, NULL, NULL, 'LoginOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-06-28 15:01:38', 44, '2024-08-13 14:33:49');
 INSERT INTO `t_menu` VALUES (144, '企业管理', 2, 138, 1, '/oa/enterprise/enterprise-list', '/business/oa/enterprise/enterprise-list.vue', NULL, NULL, NULL, 'ShopOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-09-14 17:00:07', 1, '2024-07-08 13:48:24');
 INSERT INTO `t_menu` VALUES (145, '企业详情', 2, 138, NULL, '/oa/enterprise/enterprise-detail', '/business/oa/enterprise/enterprise-detail.vue', NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, 0, 0, 0, 1, '2022-09-14 18:52:52', 1, '2022-11-22 10:39:07');
 INSERT INTO `t_menu` VALUES (147, '帮助文档', 2, 218, 1, '/help-doc/help-doc-manage-list', '/support/help-doc/management/help-doc-manage-list.vue', NULL, NULL, NULL, 'FolderViewOutlined', NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-09-14 19:59:01', 1, '2023-12-01 19:38:23');
@@ -640,8 +638,8 @@ INSERT INTO `t_menu` VALUES (206, '心跳监控', 2, 111, 1, '/support/heart-bea
 INSERT INTO `t_menu` VALUES (207, '更新', 3, 152, NULL, NULL, NULL, 1, 'support:changeLog:update', 'support:changeLog:update', NULL, NULL, 0, NULL, 0, 1, 0, 0, 1, '2022-10-22 11:51:32', 1, '2023-10-07 14:24:39');
 INSERT INTO `t_menu` VALUES (212, '查询', 3, 117, NULL, NULL, NULL, 1, 'support:reload:query', 'support:reload:query', NULL, NULL, 0, NULL, 1, 1, 1, 0, 1, '2023-10-07 14:31:36', NULL, '2023-10-07 14:31:36');
 INSERT INTO `t_menu` VALUES (213, '网络安全', 1, 0, 5, NULL, NULL, 1, NULL, NULL, 'SafetyCertificateOutlined', NULL, 0, NULL, 1, 1, 0, 0, 1, '2023-10-17 19:03:08', 1, '2023-12-01 19:38:00');
-INSERT INTO `t_menu` VALUES (214, '登录锁定', 2, 213, 1, '/support/login-fail', '/support/login-fail/login-fail-list.vue', 1, NULL, NULL, 'LockOutlined', NULL, 0, NULL, 1, 1, 0, 0, 1, '2023-10-17 19:04:24', NULL, '2023-10-17 19:04:24');
-INSERT INTO `t_menu` VALUES (215, '接口加解密', 2, 213, 3, '/support/api-encrypt', '/support/api-encrypt/api-encrypt-index.vue', 1, NULL, NULL, 'CodepenCircleOutlined', NULL, 0, NULL, 1, 1, 0, 0, 1, '2023-10-24 11:49:28', 1, '2023-10-25 16:28:18');
+INSERT INTO `t_menu` VALUES (214, '登录失败锁定', 2, 213, 4, '/support/login-fail', '/support/login-fail/login-fail-list.vue', 1, NULL, NULL, 'LockOutlined', NULL, 0, NULL, 1, 1, 0, 0, 1, '2023-10-17 19:04:24', 44, '2024-08-13 14:16:26');
+INSERT INTO `t_menu` VALUES (215, '接口加解密', 2, 213, 2, '/support/api-encrypt', '/support/api-encrypt/api-encrypt-index.vue', 1, NULL, NULL, 'CodepenCircleOutlined', NULL, 0, NULL, 1, 1, 0, 0, 1, '2023-10-24 11:49:28', 44, '2024-08-13 12:00:14');
 INSERT INTO `t_menu` VALUES (216, '导出', 3, 47, NULL, NULL, NULL, 1, 'goods:exportGoods', 'goods:exportGoods', NULL, NULL, 0, NULL, 1, 1, 0, 0, 1, '2023-12-01 19:34:03', NULL, '2023-12-01 19:34:03');
 INSERT INTO `t_menu` VALUES (217, '导入', 3, 47, 3, NULL, NULL, 1, 'goods:importGoods', 'goods:importGoods', NULL, NULL, 0, NULL, 1, 1, 0, 0, 1, '2023-12-01 19:34:22', NULL, '2023-12-01 19:34:22');
 INSERT INTO `t_menu` VALUES (218, '文档中心', 1, 0, 4, NULL, NULL, 1, NULL, NULL, 'FileSearchOutlined', NULL, 0, NULL, 1, 1, 0, 0, 1, '2023-12-01 19:37:28', 1, '2023-12-01 19:37:51');
@@ -654,6 +652,8 @@ INSERT INTO `t_menu` VALUES (231, '执行任务', 3, 221, NULL, NULL, NULL, 1, '
 INSERT INTO `t_menu` VALUES (232, '查询记录', 3, 221, NULL, NULL, NULL, 1, 'support:job:log:query', 'support:job:log:query', NULL, 221, 0, NULL, 1, 1, 0, 0, 2, '2024-06-29 11:16:37', NULL, '2024-06-29 11:16:37');
 INSERT INTO `t_menu` VALUES (233, 'knife4j文档', 2, 218, 4, '/knife4j', NULL, 1, NULL, NULL, 'FileWordOutlined', NULL, 1, 'http://localhost:1024/doc.html', 1, 1, 0, 0, 1, '2024-07-02 20:23:50', 1, '2024-07-08 13:49:15');
 INSERT INTO `t_menu` VALUES (234, 'swagger文档', 2, 218, 5, '/swagger', 'http://localhost:1024/swagger-ui/index.html', 1, NULL, NULL, 'ApiOutlined', NULL, 1, 'http://localhost:1024/swagger-ui/index.html', 1, 1, 0, 0, 1, '2024-07-02 20:35:43', 1, '2024-07-08 13:49:26');
+INSERT INTO `t_menu` VALUES (250, '三级等保设置', 2, 213, 1, '/support/level3protect/level3-protect-config-index', '/support/level3protect/level3-protect-config-index.vue', 1, NULL, NULL, 'SafetyOutlined', NULL, 0, NULL, 1, 1, 0, 0, 44, '2024-08-13 11:41:02', 44, '2024-08-13 11:58:12');
+INSERT INTO `t_menu` VALUES (251, '敏感数据脱敏', 2, 213, 3, '/support/level3protect/data-masking-list', '/support/level3protect/data-masking-list.vue', 1, NULL, NULL, 'FileProtectOutlined', NULL, 0, NULL, 1, 1, 0, 0, 44, '2024-08-13 11:58:00', 44, '2024-08-13 11:59:49');
 
 -- ----------------------------
 -- Table structure for t_message
@@ -664,23 +664,24 @@ CREATE TABLE `t_message`  (
   `message_type` smallint(0) NOT NULL COMMENT '消息类型',
   `receiver_user_type` int(0) NOT NULL COMMENT '接收者用户类型',
   `receiver_user_id` bigint(0) NOT NULL COMMENT '接收者用户id',
-  `data_id` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '相关数据id',
-  `title` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '内容',
+  `data_id` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '相关数据id',
+  `title` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
   `read_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否已读',
   `read_time` datetime(0) NULL DEFAULT NULL COMMENT '已读时间',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`message_id`) USING BTREE,
   INDEX `idx_msg`(`message_type`, `receiver_user_type`, `receiver_user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '通知消息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知消息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_message
 -- ----------------------------
-INSERT INTO `t_message` VALUES (1, 1, 1, 1, 'null', '张三的对公付款单 【3000元】', '尊敬的各位技术大佬：\r\n\r\n1024创新实验室技术分享即将隆重举行\r\n\r\n现将有关会议事宜通知如下：\r\n\r\n一、会议内容\r\n\r\n1、研究探讨SmartAdmin的技术体系\r\n\r\n二、会议形式\r\n\r\n大会专题小会分组讨论;\r\n\r\n三、会议时间及地点\r\n\r\n会议报到时间：xxx1年6月14日\r\n\r\n会议报到地点：洛阳市', 0, '2024-07-15 23:49:57', '2024-06-27 01:14:07', '2024-07-16 00:00:39');
-INSERT INTO `t_message` VALUES (2, 2, 1, 1, '234', '刘备的请假单【本周四】', '尊敬的各位技术大佬：\r\n\r\n1024创新实验室技术分享即将隆重举行\r\n\r\n现将有关会议事宜通知如下：\r\n\r\n一、会议内容\r\n\r\n1、研究探讨SmartAdmin的技术体系\r\n\r\n二、会议形式\r\n\r\n大会专题小会分组讨论;\r\n\r\n三、会议时间及地点\r\n\r\n会议报到时间：xxx1年6月14日\r\n\r\n会议报到地点：洛阳市', 0, '2024-07-15 23:49:56', '2024-07-04 16:09:49', '2024-07-16 00:00:40');
-INSERT INTO `t_message` VALUES (3, 1, 1, 1, '23', '武松的物资采购单【Macbook Pro】', '尊敬的各位技术大佬：\r\n\r\n1024创新实验室技术分享即将隆重举行\r\n\r\n现将有关会议事宜通知如下：\r\n\r\n一、会议内容\r\n\r\n1、研究探讨SmartAdmin的技术体系\r\n\r\n二、会议形式\r\n\r\n大会专题小会分组讨论;\r\n\r\n三、会议时间及地点\r\n\r\n会议报到时间：xxx1年6月14日\r\n\r\n会议报到地点：洛阳市', 0, '2024-07-15 23:49:53', '2024-07-07 22:03:14', '2024-07-16 00:00:42');
+INSERT INTO `t_message` VALUES (1, 1, 1, 1, 'null', '张三的对公付款单 【3000元】', '尊敬的各位技术大佬：\r\n\r\n1024创新实验室技术分享即将隆重举行\r\n\r\n现将有关会议事宜通知如下：\r\n\r\n一、会议内容\r\n\r\n1、研究探讨SmartAdmin的技术体系\r\n\r\n二、会议形式\r\n\r\n大会专题小会分组讨论;\r\n\r\n三、会议时间及地点\r\n\r\n会议报到时间：xxx1年6月14日\r\n\r\n会议报到地点：洛阳市', 0, '2024-09-02 23:00:54', '2024-06-27 01:14:07', '2024-09-03 20:44:19');
+INSERT INTO `t_message` VALUES (2, 2, 1, 1, '234', '刘备的请假单【本周四】', '尊敬的各位技术大佬：\r\n\r\n1024创新实验室技术分享即将隆重举行\r\n\r\n现将有关会议事宜通知如下：\r\n\r\n一、会议内容\r\n\r\n1、研究探讨SmartAdmin的技术体系\r\n\r\n二、会议形式\r\n\r\n大会专题小会分组讨论;\r\n\r\n三、会议时间及地点\r\n\r\n会议报到时间：xxx1年6月14日\r\n\r\n会议报到地点：洛阳市', 0, '2024-09-02 23:00:50', '2024-07-04 16:09:49', '2024-09-03 20:44:20');
+INSERT INTO `t_message` VALUES (3, 1, 1, 1, '23', '武松的物资采购单【Macbook Pro】', '尊敬的各位技术大佬：\r\n\r\n1024创新实验室技术分享即将隆重举行\r\n\r\n现将有关会议事宜通知如下：\r\n\r\n一、会议内容\r\n\r\n1、研究探讨SmartAdmin的技术体系\r\n\r\n二、会议形式\r\n\r\n大会专题小会分组讨论;\r\n\r\n三、会议时间及地点\r\n\r\n会议报到时间：xxx1年6月14日\r\n\r\n会议报到地点：洛阳市', 0, '2024-09-02 23:00:36', '2024-07-07 22:03:14', '2024-09-03 20:44:21');
+INSERT INTO `t_message` VALUES (4, 1, 1, 1, '23', '孙悟空的出差申请【出差洛阳】', '尊敬的各位技术大佬：\r\n\r\n1024创新实验室技术分享即将隆重举行\r\n\r\n现将有关会议事宜通知如下：\r\n\r\n一、会议内容\r\n\r\n1、研究探讨SmartAdmin的技术体系\r\n\r\n二、会议形式\r\n\r\n大会专题小会分组讨论;\r\n\r\n三、会议时间及地点\r\n\r\n会议报到时间：xxx1年6月14日\r\n\r\n会议报到地点：洛阳市', 0, '2024-09-02 23:02:53', '2024-07-07 22:03:14', '2024-09-03 21:43:53');
 
 -- ----------------------------
 -- Table structure for t_notice
@@ -689,24 +690,24 @@ DROP TABLE IF EXISTS `t_notice`;
 CREATE TABLE `t_notice`  (
   `notice_id` bigint(0) NOT NULL AUTO_INCREMENT,
   `notice_type_id` bigint(0) NOT NULL COMMENT '类型1公告 2动态',
-  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
   `all_visible_flag` tinyint(1) NOT NULL COMMENT '是否全部可见',
   `scheduled_publish_flag` tinyint(1) NOT NULL COMMENT '是否定时发布',
   `publish_time` datetime(0) NOT NULL COMMENT '发布时间',
-  `content_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文本内容',
-  `content_html` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'html内容',
-  `attachment` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件',
+  `content_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文本内容',
+  `content_html` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'html内容',
+  `attachment` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附件',
   `page_view_count` int(0) NOT NULL DEFAULT 0 COMMENT '页面浏览量，传说中的pv',
   `user_view_count` int(0) NOT NULL DEFAULT 0 COMMENT '用户浏览量，传说中的uv',
-  `source` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '来源',
-  `author` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '作者',
-  `document_number` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文号，如：1024创新实验室发〔2022〕字第36号',
+  `source` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '来源',
+  `author` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '作者',
+  `document_number` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文号，如：1024创新实验室发〔2022〕字第36号',
   `deleted_flag` tinyint(1) NOT NULL DEFAULT 0,
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '通知' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 65 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_notice
@@ -730,16 +731,16 @@ INSERT INTO `t_notice` VALUES (60, 2, '1024创新实验室 春节放假通知', 
 DROP TABLE IF EXISTS `t_notice_type`;
 CREATE TABLE `t_notice_type`  (
   `notice_type_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '通知类型',
-  `notice_type_name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '类型名称',
+  `notice_type_name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型名称',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`notice_type_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '通知类型' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知类型' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_notice_type
 -- ----------------------------
-INSERT INTO `t_notice_type` VALUES (1, '公告', '2022-08-16 20:29:15', '2022-08-16 20:29:15');
+INSERT INTO `t_notice_type` VALUES (1, '新闻', '2022-08-16 20:29:15', '2024-09-03 21:44:42');
 INSERT INTO `t_notice_type` VALUES (2, '通知', '2022-08-16 20:29:20', '2022-08-16 20:29:20');
 
 -- ----------------------------
@@ -750,35 +751,15 @@ CREATE TABLE `t_notice_view_record`  (
   `notice_id` bigint(0) NOT NULL COMMENT '通知公告id',
   `employee_id` bigint(0) NOT NULL COMMENT '员工id',
   `page_view_count` int(0) NULL DEFAULT 0 COMMENT '查看次数',
-  `first_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '首次ip',
-  `first_user_agent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '首次用户设备等标识',
-  `last_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '最后一次ip',
-  `last_user_agent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '最后一次用户设备等标识',
+  `first_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '首次ip',
+  `first_user_agent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '首次用户设备等标识',
+  `last_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '最后一次ip',
+  `last_user_agent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '最后一次用户设备等标识',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`notice_id`, `employee_id`) USING BTREE,
   UNIQUE INDEX `uk_notice_employee`(`notice_id`, `employee_id`) USING BTREE COMMENT '资讯员工'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '通知查看记录' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_notice_view_record
--- ----------------------------
-INSERT INTO `t_notice_view_record` VALUES (49, 1, 42, '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', '171.10.90.67', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', '2024-03-04 17:17:44', '2024-06-26 23:28:31');
-INSERT INTO `t_notice_view_record` VALUES (49, 47, 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0', '2024-06-30 23:47:34', '2024-06-30 23:49:44');
-INSERT INTO `t_notice_view_record` VALUES (50, 1, 8, '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', '2024-03-05 11:16:03', '2024-07-15 23:49:31');
-INSERT INTO `t_notice_view_record` VALUES (50, 47, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0', NULL, NULL, '2024-06-30 23:48:15', '2024-06-30 23:48:15');
-INSERT INTO `t_notice_view_record` VALUES (51, 1, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', NULL, NULL, '2024-07-07 23:13:02', '2024-07-07 23:13:02');
-INSERT INTO `t_notice_view_record` VALUES (51, 47, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0', NULL, NULL, '2024-06-30 23:49:41', '2024-06-30 23:49:41');
-INSERT INTO `t_notice_view_record` VALUES (52, 1, 2, '182.121.196.110', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', '2024-06-23 22:05:27', '2024-07-04 16:12:09');
-INSERT INTO `t_notice_view_record` VALUES (53, 1, 2, '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', '2024-03-05 11:16:09', '2024-03-05 11:51:11');
-INSERT INTO `t_notice_view_record` VALUES (54, 1, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36', NULL, NULL, '2023-09-06 19:15:39', '2023-09-06 19:15:39');
-INSERT INTO `t_notice_view_record` VALUES (54, 47, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0', NULL, NULL, '2024-06-30 23:49:48', '2024-06-30 23:49:48');
-INSERT INTO `t_notice_view_record` VALUES (55, 1, 12, '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', '171.10.90.67', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', '2024-03-04 17:34:06', '2024-06-26 23:28:23');
-INSERT INTO `t_notice_view_record` VALUES (56, 1, 10, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', '2023-09-22 08:45:55', '2024-07-15 23:49:35');
-INSERT INTO `t_notice_view_record` VALUES (57, 1, 34, '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', '223.88.179.241', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', '2024-03-04 17:34:11', '2024-06-26 22:48:07');
-INSERT INTO `t_notice_view_record` VALUES (58, 1, 5, '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', '192.168.2.73', 'Mozilla/5.0 (Linux; Android 12; JEF-AN00 Build/HUAWEIJEF-AN00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/116.0.0.0 Mobile Safari/537.36 XWEB/1160065 MMWEBSDK/20231202 MMWEBID/1268 MicroMessenger/8.0.47.2560(0x28002F3F) WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64', '2024-03-05 11:58:27', '2024-03-18 22:24:59');
-INSERT INTO `t_notice_view_record` VALUES (59, 1, 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36', '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', '2023-12-26 21:53:59', '2024-03-17 21:09:50');
-INSERT INTO `t_notice_view_record` VALUES (60, 1, 7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36', '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', '2022-10-22 18:00:25', '2024-03-05 11:35:58');
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知查看记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_notice_visible_range
@@ -790,7 +771,12 @@ CREATE TABLE `t_notice_visible_range`  (
   `data_id` bigint(0) NOT NULL COMMENT '员工or部门id',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE INDEX `uk_notice_data`(`notice_id`, `data_type`, `data_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '通知可见范围' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知可见范围' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_notice_visible_range
+-- ----------------------------
+INSERT INTO `t_notice_visible_range` VALUES (63, 1, 63, '2024-08-09 10:40:32');
 
 -- ----------------------------
 -- Table structure for t_oa_bank
@@ -798,21 +784,21 @@ CREATE TABLE `t_notice_visible_range`  (
 DROP TABLE IF EXISTS `t_oa_bank`;
 CREATE TABLE `t_oa_bank`  (
   `bank_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '银行信息ID',
-  `bank_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '开户银行',
-  `account_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '账户名称',
-  `account_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '账号',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  `bank_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '开户银行',
+  `account_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '账户名称',
+  `account_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '账号',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `business_flag` tinyint(1) NOT NULL COMMENT '是否对公',
   `enterprise_id` bigint(0) NOT NULL COMMENT '企业ID',
   `disabled_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '禁用状态',
   `deleted_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除状态',
   `create_user_id` bigint(0) NOT NULL COMMENT '创建人ID',
-  `create_user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '创建人',
+  `create_user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '创建人',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`bank_id`) USING BTREE,
   INDEX `idx_enterprise_id`(`enterprise_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'OA银行信息\n' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'OA银行信息\n' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_oa_bank
@@ -826,29 +812,29 @@ INSERT INTO `t_oa_bank` VALUES (27, '建设银行', '1024创新实验室', '1024
 DROP TABLE IF EXISTS `t_oa_enterprise`;
 CREATE TABLE `t_oa_enterprise`  (
   `enterprise_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '企业ID',
-  `enterprise_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '企业名称',
-  `enterprise_logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '企业logo',
+  `enterprise_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '企业名称',
+  `enterprise_logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '企业logo',
   `type` int(0) NOT NULL DEFAULT 1 COMMENT '类型（1:有限公司;2:合伙公司）',
-  `unified_social_credit_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '统一社会信用代码',
-  `contact` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '联系人',
-  `contact_phone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '联系人电话',
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `province` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '省份',
-  `province_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '省份名称',
-  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '市',
-  `city_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '城市名称',
-  `district` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '区县',
-  `district_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '区县名称',
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '详细地址',
-  `business_license` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '营业执照',
+  `unified_social_credit_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '统一社会信用代码',
+  `contact` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '联系人',
+  `contact_phone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '联系人电话',
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `province` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省份',
+  `province_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省份名称',
+  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '市',
+  `city_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '城市名称',
+  `district` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区县',
+  `district_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区县名称',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '详细地址',
+  `business_license` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '营业执照',
   `disabled_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '禁用状态',
   `deleted_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除状态',
   `create_user_id` bigint(0) NOT NULL COMMENT '创建人ID',
-  `create_user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '创建人',
+  `create_user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '创建人',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`enterprise_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 126 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'OA企业模块\r\n' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 127 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'OA企业模块\r\n' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_oa_enterprise
@@ -862,15 +848,15 @@ INSERT INTO `t_oa_enterprise` VALUES (2, '1024创新实验室', '', 2, '1024lab'
 DROP TABLE IF EXISTS `t_oa_enterprise_employee`;
 CREATE TABLE `t_oa_enterprise_employee`  (
   `enterprise_employee_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `enterprise_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '订单ID',
-  `employee_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '货物名称',
+  `enterprise_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单ID',
+  `employee_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货物名称',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`enterprise_employee_id`) USING BTREE,
   UNIQUE INDEX `uk_enterprise_employee`(`enterprise_id`, `employee_id`) USING BTREE,
   INDEX `idx_employee_id`(`employee_id`) USING BTREE,
   INDEX `idx_enterprise_id`(`enterprise_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 159 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '企业关联的员工' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 159 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业关联的员工' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_oa_enterprise_employee
@@ -884,21 +870,21 @@ INSERT INTO `t_oa_enterprise_employee` VALUES (155, '2', '44', '2022-10-22 17:57
 DROP TABLE IF EXISTS `t_oa_invoice`;
 CREATE TABLE `t_oa_invoice`  (
   `invoice_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '发票信息ID',
-  `invoice_heads` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '开票抬头',
-  `taxpayer_identification_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '纳税人识别号',
-  `account_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '银行账户',
-  `bank_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '开户行',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  `invoice_heads` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '开票抬头',
+  `taxpayer_identification_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '纳税人识别号',
+  `account_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '银行账户',
+  `bank_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '开户行',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `enterprise_id` bigint(0) NOT NULL COMMENT '企业ID',
   `disabled_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '禁用状态',
   `deleted_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除状态',
   `create_user_id` bigint(0) NOT NULL COMMENT '创建人ID',
-  `create_user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '创建人',
+  `create_user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '创建人',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`invoice_id`) USING BTREE,
   INDEX `idx_enterprise_id`(`enterprise_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'OA发票信息\n' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'OA发票信息\n' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_oa_invoice
@@ -927,7 +913,23 @@ CREATE TABLE `t_operate_log`  (
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`operate_log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 963 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '操作记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4470 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '操作记录' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for t_password_log
+-- ----------------------------
+DROP TABLE IF EXISTS `t_password_log`;
+CREATE TABLE `t_password_log`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` bigint(0) NOT NULL COMMENT '用户id',
+  `user_type` tinyint(0) NOT NULL COMMENT '用户类型',
+  `old_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '旧密码',
+  `new_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '新密码',
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `user_and_type_index`(`user_id`, `user_type`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '密码修改记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_position
@@ -943,7 +945,7 @@ CREATE TABLE `t_position`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`position_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '职务表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '职务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_position
@@ -969,7 +971,7 @@ CREATE TABLE `t_reload_item`  (
 -- ----------------------------
 -- Records of t_reload_item
 -- ----------------------------
-INSERT INTO `t_reload_item` VALUES ('system_config', '4', '23', '2024-07-15 19:30:07', '2019-04-18 11:48:27');
+INSERT INTO `t_reload_item` VALUES ('system_config', '4', '234', '2024-08-13 14:14:30', '2019-04-18 11:48:27');
 
 -- ----------------------------
 -- Table structure for t_reload_result
@@ -985,11 +987,6 @@ CREATE TABLE `t_reload_result`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'reload结果' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of t_reload_result
--- ----------------------------
-INSERT INTO `t_reload_result` VALUES ('system_config', '23', '4', 1, NULL, '2024-07-15 19:30:32');
-
--- ----------------------------
 -- Table structure for t_role
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role`;
@@ -1002,7 +999,7 @@ CREATE TABLE `t_role`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`role_id`) USING BTREE,
   UNIQUE INDEX `role_code_uni`(`role_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_role
@@ -1025,7 +1022,7 @@ CREATE TABLE `t_role_data_scope`  (
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色的数据范围' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 69 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色的数据范围' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_role_data_scope
@@ -1044,7 +1041,7 @@ CREATE TABLE `t_role_employee`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_role_employee`(`role_id`, `employee_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 335 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色员工功能表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 342 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色员工功能表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_role_employee
@@ -1054,6 +1051,7 @@ INSERT INTO `t_role_employee` VALUES (329, 34, 72, '2022-11-05 10:56:54', '2022-
 INSERT INTO `t_role_employee` VALUES (330, 36, 72, '2022-11-05 10:56:54', '2022-11-05 10:56:54');
 INSERT INTO `t_role_employee` VALUES (333, 1, 44, '2023-10-07 18:53:29', '2023-10-07 18:53:29');
 INSERT INTO `t_role_employee` VALUES (334, 1, 47, '2023-10-07 18:55:00', '2023-10-07 18:55:00');
+INSERT INTO `t_role_employee` VALUES (341, 1, 48, '2024-09-02 23:03:28', '2024-09-02 23:03:28');
 
 -- ----------------------------
 -- Table structure for t_role_menu
@@ -1068,7 +1066,7 @@ CREATE TABLE `t_role_menu`  (
   PRIMARY KEY (`role_menu_id`) USING BTREE,
   INDEX `idx_role_id`(`role_id`) USING BTREE,
   INDEX `idx_menu_id`(`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 332 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色-菜单\n' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 820 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色-菜单\n' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_role_menu
@@ -1237,15 +1235,15 @@ CREATE TABLE `t_smart_job`  (
 -- ----------------------------
 -- Records of t_smart_job
 -- ----------------------------
-INSERT INTO `t_smart_job` VALUES (1, '示例任务1', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample1', 'cron', '10 15 0/1 * * *', 1, '1', '2024-07-15 21:15:10', 831, 1, '测试测试', '管理员', '2024-07-15 21:15:10', '2024-06-17 20:00:46');
-INSERT INTO `t_smart_job` VALUES (2, '示例任务2', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample2', 'fixed_delay', '120', 1, '一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界，一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界啊', '2024-07-15 23:59:44', 854, 2, '一个不能停留太久的世界啊', '胡克', '2024-07-15 23:59:44', '2024-06-18 20:45:35');
+INSERT INTO `t_smart_job` VALUES (1, '示例任务1', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample1', 'cron', '10 15 0/1 * * *', 1, '1', '2024-09-03 21:15:10', 7928, 1, '测试测试', '管理员', '2024-09-03 21:15:12', '2024-06-17 20:00:46');
+INSERT INTO `t_smart_job` VALUES (2, '示例任务2', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample2', 'fixed_delay', '120', 1, '一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界，一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界啊', '2024-09-03 21:51:24', 7944, 2, '一个不能停留太久的世界啊', '胡克', '2024-09-03 21:51:26', '2024-06-18 20:45:35');
 
 -- ----------------------------
 -- Table structure for t_smart_job_log
 -- ----------------------------
 DROP TABLE IF EXISTS `t_smart_job_log`;
 CREATE TABLE `t_smart_job_log`  (
-  `log_id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `log_id` int(0) NOT NULL AUTO_INCREMENT,
   `job_id` int(0) NOT NULL COMMENT '任务id',
   `job_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务名称',
   `param` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '执行参数',
@@ -1261,12 +1259,7 @@ CREATE TABLE `t_smart_job_log`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`log_id`) USING BTREE,
   INDEX `idx_job_id`(`job_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 794 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务-执行记录 @listen' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_smart_job_log
--- ----------------------------
-INSERT INTO `t_smart_job_log` VALUES (854, 2, '示例任务2', '一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界，一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界啊', 1, '2024-07-15 23:59:44', 181, '2024-07-15 23:59:44', '执行成功,本次处理数据1条', '192.168.137.1', '25348', 'E:\\code_work_space\\idea\\smart-admin-developing\\smart-admin-api-developing', 'system', '2024-07-15 23:59:44');
+) ENGINE = InnoDB AUTO_INCREMENT = 7933 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务-执行记录 @listen' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_table_column
@@ -1277,11 +1270,11 @@ CREATE TABLE `t_table_column`  (
   `user_id` bigint(0) NOT NULL COMMENT '用户id',
   `user_type` int(0) NOT NULL COMMENT '用户类型',
   `table_id` int(0) NOT NULL COMMENT '表格id',
-  `columns` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '具体的表格列，存入的json',
+  `columns` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '具体的表格列，存入的json',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`table_column_id`) USING BTREE,
   UNIQUE INDEX `uni_employee_table`(`user_id`, `table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '表格的自定义列存储' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '表格的自定义列存储' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -17,14 +17,8 @@ public class ${name.upperCamel}VO {
 
 #foreach ($field in $fields)
 
-#if($field.isEnum)
-    ${field.apiModelProperty}
+    ${field.apiModelProperty}$!{field.notEmpty}$!{field.dict}$!{field.file}
     private $field.javaType $field.fieldName;
-#end
-#if(!$field.isEnum)
-    ${field.apiModelProperty}$!{field.dict}$!{field.file}
-    private $field.javaType $field.fieldName;
-#end
 #end
 
 }
