@@ -9,8 +9,7 @@
 -->
 <template>
   <div class="version">
-    <a target="_blank" class="smart-copyright" href="https://www.1024lab.net"> ©2012-{{ currentYear }} 河南·洛阳「1024创新实验室」 SmartAdmin </a>
-    <a target="_blank" class="smart-version" href="https://smartadmin.vip/views/other/change-log.html"> V3.4.0 </a>
+    <a target="_blank" class="smart-copyright" href="https://www.1024lab.net"> ©2012-{{ currentYear }} SmartAdmin | 1024创新实验室 </a>
   </div>
 </template>
 <script setup>

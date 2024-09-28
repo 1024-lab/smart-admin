@@ -24,7 +24,7 @@
   </a-alert>
   <br />
   <a-alert
-    message="当前加密算法为：SM2，若想改为 AES，前端请修改 'lib/encrypt.js'文件中的EncryptObject，后端请修改 ApiEncryptService 的实现类"
+    message="当前加密算法为：SM4，若想改为 AES，前端请修改 'lib/encrypt.js'文件中的EncryptObject，后端请修改 ApiEncryptService 的实现类"
     type="error"
   />
   <br />

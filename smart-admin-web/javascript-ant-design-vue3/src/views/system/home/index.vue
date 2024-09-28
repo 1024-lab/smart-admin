@@ -62,6 +62,7 @@
         </a-col>
       </a-row>
     </a-col>
+<!--    <AdModal/>-->
   </a-row>
 </template>
 <script setup>
@@ -74,6 +75,7 @@
   import Category from './components/echarts/category.vue';
   import Pie from './components/echarts/pie.vue';
   import Gradient from './components/echarts/gradient.vue';
+  // import AdModal from './ad-modal.vue';
 
   // 业绩完成百分比
   const saleTargetPercent = computed(() => {

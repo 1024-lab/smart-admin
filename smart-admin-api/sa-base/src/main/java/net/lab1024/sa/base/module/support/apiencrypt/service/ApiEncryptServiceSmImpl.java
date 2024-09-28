@@ -11,6 +11,10 @@ import java.util.Base64;
 
 /**
  * 国产 SM4 加密 和 解密
+ * 1、国密SM4 要求秘钥为 128bit，转化字节为 16个字节；
+ * 2、js前端使用 UCS-2 或者 UTF-16 编码，字母、数字、特殊符号等 占用1个字节；
+ * 3、java中 每个 字母数字 也是占用1个字节；
+ * 4、所以：前端和后端的 秘钥Key 组成为：字母、数字、特殊符号 一共16个即可
  *
  * @Author 1024创新实验室-主任:卓大
  * @Date 2023/10/21 11:41:46
@@ -24,7 +28,7 @@ import java.util.Base64;
 public class ApiEncryptServiceSmImpl implements ApiEncryptService {
 
     private static final String CHARSET = "UTF-8";
-    private static final String SM4_KEY = "1024abcd1024abcd1024abcd1024abcd";
+    private static final String SM4_KEY = "1024lab__1024lab";
 
     static {
         Security.addProvider(new BouncyCastleProvider());
@@ -36,7 +40,7 @@ public class ApiEncryptServiceSmImpl implements ApiEncryptService {
         try {
 
             // 第一步： SM4 加密
-            SM4 sm4 = new SM4(hexToBytes(SM4_KEY));
+            SM4 sm4 = new SM4(hexToBytes(stringToHex(SM4_KEY)));
             String encryptHex = sm4.encryptHex(data);
 
             // 第二步： Base64 编码
@@ -57,13 +61,23 @@ public class ApiEncryptServiceSmImpl implements ApiEncryptService {
             byte[] base64Decode = Base64.getDecoder().decode(data);
 
             // 第二步： SM4 解密
-            SM4 sm4 = new SM4(hexToBytes(SM4_KEY));
+            SM4 sm4 = new SM4(hexToBytes(stringToHex(SM4_KEY)));
             return sm4.decryptStr(new String(base64Decode));
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return StringConst.EMPTY;
         }
+    }
+
+
+    public static String stringToHex(String input) {
+        char[] chars = input.toCharArray();
+        StringBuilder hex = new StringBuilder();
+        for (char c : chars) {
+            hex.append(Integer.toHexString((int) c));
+        }
+        return hex.toString();
     }
 
 

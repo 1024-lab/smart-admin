@@ -20,7 +20,7 @@
       <a-row class="content">
         <span class="left-content">
           <p class="last-login-info"><AlertOutlined />{{ lastLoginInfo }}</p>
-          <a class="sentence" href="https://zhuoda.vip/soup" target="_blank"> <smile-outlined spin /> {{ heartSentence }} </a>
+          <a class="sentence" href="#" target="_blank"> <smile-outlined spin /> {{ heartSentence }} </a>
         </span>
         <div class="weather">
           <iframe
@@ -112,7 +112,7 @@
     let next = lunar.getNextJieQi();
     let nextJieqi = next.getName() + ' ' + next.getSolar().toYmd();
 
-    return `${day} 星期${week}，农历${lunarMonth}${lunarDay}（当前${jieqi}，${nextJieqi} ）`;
+    return `${day} 星期${week}，农历${lunarMonth}月${lunarDay}（当前${jieqi}，${nextJieqi} ）`;
   });
 
   // 毒鸡汤

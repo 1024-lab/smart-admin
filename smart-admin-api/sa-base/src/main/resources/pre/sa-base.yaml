@@ -39,7 +39,7 @@ spring:
     host: smtp.163.com
     port: 465
     username: lab1024@163.com
-    password: ROIASDFJKHQFTA
+    password: 1
     properties:
       mail:
         smtp:
@@ -104,7 +104,7 @@ springdoc:
 knife4j:
   enable: true
   basic:
-    enable: true
+    enable: false
     username: api # Basic认证用户名
     password: 1024 # Basic认证密码
 

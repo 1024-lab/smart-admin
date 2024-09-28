@@ -131,7 +131,7 @@
       height: 48px;
       line-height: 48px;
       width: 100%;
-      z-index: 100;
+      z-index: 1051;
       right: 0px;
       position: fixed;
       background-color: v-bind('color.background');
@@ -154,7 +154,7 @@
         width: v-bind(pageWidth);
         height: 40px;
         line-height: 40px;
-        z-index: 11;
+        z-index: 1051;
       }
     }
   }

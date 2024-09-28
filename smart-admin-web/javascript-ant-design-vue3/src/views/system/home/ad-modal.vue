@@ -35,7 +35,7 @@ defineExpose({
     show,
   });
 
-  const visible = ref(false);
+  const visible = ref(true);
   function show() {
     visible.value = true;
   }

@@ -1,7 +1,7 @@
 spring:
   # 数据库连接信息
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/smart_admin_v3_dev?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/smart_admin_v3?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: SmartAdmin666
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -38,7 +38,7 @@ spring:
     host: smtp.163.com
     port: 465
     username: lab1024@163.com
-    password: ROIASDFJKHQFTA
+    password: 1024lab
     properties:
       mail:
         smtp:
