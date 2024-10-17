@@ -1,6 +1,8 @@
 package net.lab1024.sa.base.module.support.apiencrypt.advice;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.enumeration.DataTypeEnum;
@@ -34,6 +36,9 @@ public class EncryptResponseAdvice implements ResponseBodyAdvice<ResponseDTO> {
     @Resource
     private ApiEncryptService apiEncryptService;
 
+    @Resource
+    private ObjectMapper objectMapper;
+
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return returnType.hasMethodAnnotation(ApiEncrypt.class) || returnType.getContainingClass().isAnnotationPresent(ApiEncrypt.class);
@@ -45,7 +50,12 @@ public class EncryptResponseAdvice implements ResponseBodyAdvice<ResponseDTO> {
             return body;
         }
 
-        String encrypt = apiEncryptService.encrypt(JSON.toJSONString(body.getData()));
+        String encrypt = null;
+        try {
+            encrypt = apiEncryptService.encrypt(objectMapper.writeValueAsString(body.getData()));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         body.setData(encrypt);
         body.setDataType(DataTypeEnum.ENCRYPT.getValue());
         return body;

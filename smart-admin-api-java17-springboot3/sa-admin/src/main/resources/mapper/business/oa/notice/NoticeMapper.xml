@@ -95,25 +95,25 @@
         left join t_notice_type on t_notice.notice_type_id = t_notice_type.notice_type_id
         <where>
             <if test="!administratorFlag">
-                (
+            (
                 t_notice.notice_id in
                 (select t_notice_visible_range.notice_id
                 from t_notice_visible_range
                 where
                 ( t_notice_visible_range.data_type = #{departmentDataType}
-                <if test="requestEmployeeDepartmentIdList != null and requestEmployeeDepartmentIdList.size > 0">
-                    and
-                    t_notice_visible_range.data_id
-                    in
-                    <foreach collection="requestEmployeeDepartmentIdList" open="(" close=")" separator="," item="item">
-                        #{item}
-                    </foreach>
-                </if>
-                )
-                or ( t_notice_visible_range.data_type = #{employeeDataType} and t_notice_visible_range.data_id = #{requestEmployeeId} )
+                    <if test="requestEmployeeDepartmentIdList != null and requestEmployeeDepartmentIdList.size > 0">
+                        and
+                        t_notice_visible_range.data_id
+                        in
+                        <foreach collection="requestEmployeeDepartmentIdList" open="(" close=")" separator="," item="item">
+                            #{item}
+                        </foreach>
+                    </if>
+                    )
+                    or ( t_notice_visible_range.data_type = #{employeeDataType} and t_notice_visible_range.data_id = #{requestEmployeeId} )
                 )
                 or t_notice.all_visible_flag = true
-                )
+            )
             </if>
 
             and t_notice.deleted_flag = #{deletedFlag}

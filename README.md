@@ -1,17 +1,17 @@
 ### **SmartAdmin**
 
-**SmartAdmin** 由 **中国·洛阳** [1024创新实验室](https://www.1024lab.net/) 基于SpringBoot+Sa-Token+Mybatis-Plus 和 Vue3+Vite5+Ant Design Vue ，坚持以 <font color="#DC143C">**「高质量代码」为核心，「简洁、高效、安全」**</font>的快速开发平台！
+**SmartAdmin** 由 **中国·洛阳** [1024创新实验室](https://www.1024lab.net/) 基于SpringBoot2/3+Sa-Token+Mybatis-Plus 和 Vue3+Ant Design Vue+Uni-App+Uni-UI，并以 <font color="#DC143C">**「高质量代码」为核心，「简洁、高效、安全」**</font>的快速开发平台。
 
-<font color="#DC143C">**国内首个满足《网络安全》、《数据安全》、三级等保**</font>， 支持登录限制、支持接口国产加解密、支持数据加解密等一系列安全措施的开源项目。
+**<font color="#DC143C">国内首个满足《网络安全-三级等保》、《数据安全》</font>** 功能要求，支持登录限制、接口国产加解密、数据脱敏等一系列安全要求。
 
-前端同时支持 **<font color="#DC143C">JavaScript和TypeScript双版本</font>**，后端同时支持 **<font color="#DC143C">Java8+SpringBoot2.X和Java17+SpringBoot3.X 双版本</font>**。
+前端提供 **<font color="#DC143C">JavaScript和TypeScript双版本</font>**，后端提供 **<font color="#DC143C">Java8+SpringBoot2.X和Java17+SpringBoot3.X 双版本</font>**。
 
-<font color="#DC143C">**SmartAdmin开源一套漂亮的代码和一套整洁的代码规范**</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，保持谦逊，保持学习，**热爱代码，更热爱生活**
+同时 **<font color="#DC143C">重磅开源</font>** 开源六年来 **<font color="#DC143C">千余家企业验证过且正在使用</font>** 的代码规范: **<font color="#DC143C">《高质量代码思想》、《Vue3规范》、《Java规范》</font>** ，让大家在这浮躁的世界里感受到一股把代码写好的清流！同时又能节省大量时间，减少加班，快乐工作，保持谦逊，保持学习，**<font color="#DC143C">热爱代码，更热爱生活</font>** ！
 ### **技术体系**
 
-- 前端：Vue3 + Vite5 + Vue-Router + Pinia + Ant Design Vue 4.X
+- 前端：JavaScript/TypeScript + Vue3 + Vite5 + Pinia + Ant Design Vue 4.X
 - 移动端：uniapp (vue3版本) + uni-ui + （同时支持APP、小程序、H5）
-- 后端：SpringBoot2/3 + Sa Token + Mybatis-plus + 多种数据库
+- 后端：Java8/17 + SpringBoot2/3 + Sa Token + Mybatis-plus + 多种数据库
 - 电脑在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)
 - 官方文档：[https://smartadmin.vip](https://smartadmin.vip)
 - 移动端在线预览：[https://app.smartadmin.vip](https://app.smartadmin.vip/#/pages/login/login)
@@ -51,7 +51,7 @@
 
 ### **功能亮点**
 
-- **<font color="#DC143C">安全体系</font>**：满足国家三级等保要求，如密码加密、密码复杂度要求、登录错误次数锁定、登录超时退出等关键功能
+- **<font color="#DC143C">安全体系</font>**：满足国家三级等保要求，如双因子登录、密码加密、密码复杂度要求、登录错误次数锁定、登录超时退出、数据脱敏等网络安全和数据安全功能
 - **<font color="#DC143C">接口加解密</font>**：支持请求参数和返回内容进行加解密操作，支持国产加密算法和其他国外加密算法
 - **表格自定义列**：支持用户自定义列，并能将用户自定义列持久化到数据库
 - **数据变更记录**：支持基于git diff插件的数据变更记录，查看数据变化更直观方便

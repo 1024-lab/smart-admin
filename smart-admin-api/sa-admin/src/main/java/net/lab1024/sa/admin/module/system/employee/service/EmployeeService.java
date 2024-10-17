@@ -362,7 +362,7 @@ public class EmployeeService {
     /**
      * 重置密码
      */
-    public ResponseDTO<String> resetPassword(Integer employeeId) {
+    public ResponseDTO<String> resetPassword(Long employeeId) {
         String password = securityPasswordService.randomPassword();
         employeeDao.updatePassword(employeeId, SecurityPasswordService.getEncryptPwd(password));
         return ResponseDTO.ok(password);

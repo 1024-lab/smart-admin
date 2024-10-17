@@ -52,14 +52,6 @@ public class ApiEncryptServiceSmImpl implements ApiEncryptService {
         }
     }
 
-    public static void main(String[] args) {
-        String content = "zkm1024";
-        String en = new ApiEncryptServiceSmImpl().encrypt(content);
-        System.out.println(en);
-        String ori = new ApiEncryptServiceSmImpl().decrypt(en);
-        System.out.println(ori);
-    }
-
 
     @Override
     public String decrypt(String data) {

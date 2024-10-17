@@ -110,7 +110,7 @@ public class EmployeeController {
     @Operation(summary = "重置员工密码 @author 卓大")
     @GetMapping("/employee/update/password/reset/{employeeId}")
     @SaCheckPermission("system:employee:password:reset")
-    public ResponseDTO<String> resetPassword(@PathVariable Integer employeeId) {
+    public ResponseDTO<String> resetPassword(@PathVariable Long employeeId) {
         return employeeService.resetPassword(employeeId);
     }
 

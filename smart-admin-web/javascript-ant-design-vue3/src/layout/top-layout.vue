@@ -1,14 +1,14 @@
 <template>
   <a-layout class="admin-layout">
     <!-- 顶部菜单  -->
-    <a-layout-header class="top-menu" :theme="theme">
+    <a-layout-header class="top-menu" :theme="theme" :id="LAYOUT_ELEMENT_IDS.menu">
       <TopMenu />
     </a-layout-header>
 
     <!--中间内容-->
-    <a-layout-content id="smartAdminLayoutContent" class="admin-layout-content">
+    <a-layout-content :id="LAYOUT_ELEMENT_IDS.content" class="admin-layout-content">
       <!---标签页-->
-      <div class="page-tag-div" v-show="pageTagFlag">
+      <div class="page-tag-div" v-show="pageTagFlag" :id="LAYOUT_ELEMENT_IDS.header">
         <PageTag />
       </div>
 
@@ -18,14 +18,14 @@
       <!--keepAlive的iframe 每个页面一个iframe组件-->
       <IframeIndex
         v-for="item in keepAliveIframePages"
-        v-show="route.name == item.name"
+        v-show="route.name === item.name"
         :key="item.name"
         :name="item.name"
         :url="item.meta.frameUrl"
       />
 
       <!--非iframe使用router-view-->
-      <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)">
+      <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name !== e.name)">
         <router-view v-slot="{ Component }">
           <keep-alive :include="keepAliveIncludes">
             <component :is="Component" :key="route.name" />
@@ -55,6 +55,7 @@
   import { useUserStore } from '/@/store/modules/system/user';
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
+  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
 
   const windowHeight = ref(window.innerHeight);
   //主题颜色
@@ -87,7 +88,7 @@
   //页面初始化的时候加载水印
   onMounted(() => {
     if (watermarkFlag.value) {
-      watermark.set('smartAdminLayoutContent', useUserStore().actualName);
+      watermark.set(LAYOUT_ELEMENT_IDS.content, useUserStore().actualName);
     } else {
       watermark.clear();
     }
@@ -97,7 +98,7 @@
     () => watermarkFlag.value,
     (newValue) => {
       if (newValue) {
-        watermark.set('smartAdminLayoutContent', useUserStore().actualName);
+        watermark.set(LAYOUT_ELEMENT_IDS.content, useUserStore().actualName);
       } else {
         watermark.clear();
       }
@@ -106,7 +107,7 @@
 
   //回到顶部
   const backTopTarget = () => {
-    return document.getElementById('smartAdminMain');
+    return document.getElementById(LAYOUT_ELEMENT_IDS.main);
   };
 
   const router = useRouter();

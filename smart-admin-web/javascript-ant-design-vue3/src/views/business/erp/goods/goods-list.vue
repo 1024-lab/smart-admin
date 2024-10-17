@@ -97,7 +97,6 @@
       </div>
     </a-row>
     <!---------- 表格操作行 end ----------->
-
     <a-table
       size="small"
       :dataSource="tableData"
@@ -105,7 +104,9 @@
       rowKey="goodsId"
       bordered
       :pagination="false"
+      :showSorterTooltip="false"
       :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
+      @change="onChange"
     >
       <template #bodyCell="{ text, record, column }">
         <template v-if="column.dataIndex === 'place'">
@@ -190,6 +191,7 @@
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const.js';
   import FileUpload from '/@/components/support/file-upload/index.vue';
+  import _ from 'lodash';
 
   // ---------------------------- 表格列 ----------------------------
 
@@ -205,6 +207,7 @@
     {
       title: '商品状态',
       dataIndex: 'goodsStatus',
+      sorter: true
     },
     {
       title: '产地',
@@ -213,10 +216,12 @@
     {
       title: '商品价格',
       dataIndex: 'price',
+      sorter: true
     },
     {
       title: '上架状态',
       dataIndex: 'shelvesFlag',
+      sorter: true
     },
     {
       title: '备注',
@@ -246,9 +251,10 @@
     goodsType: undefined,
     pageNum: 1,
     pageSize: 10,
+    sortItemList: []
   };
   // 查询表单form
-  const queryForm = reactive({ ...queryFormState });
+  const queryForm = reactive(_.cloneDeep(queryFormState));
   // 表格加载loading
   const tableLoading = ref(false);
   // 表格数据
@@ -259,7 +265,7 @@
   // 重置查询条件
   function resetQuery() {
     let pageSize = queryForm.pageSize;
-    Object.assign(queryForm, queryFormState);
+    Object.assign(queryForm, _.cloneDeep(queryFormState));
     queryForm.pageSize = pageSize;
     queryData();
   }
@@ -413,5 +419,28 @@
 
   async function onExportGoods() {
     await goodsApi.exportGoods();
+  }
+
+  function onChange(pagination, filters, sorter, { action }){
+    if (action === 'sort') {
+      const { order, field } = sorter;
+      let column = camelToUnderscore(field);
+      let findIndex = queryForm.sortItemList.findIndex(e => e.column === column);
+      if (findIndex !== -1) {
+        queryForm.sortItemList.splice(findIndex, 1);
+      }
+      if (order) {
+        let isAsc = order !== 'ascend';
+        queryForm.sortItemList.push({
+          column,
+          isAsc
+        });
+      }
+      queryData();
+    }
+  }
+
+  function camelToUnderscore(str) {
+    return str.replace(/([A-Z])/g, "_$1").toLowerCase();
   }
 </script>

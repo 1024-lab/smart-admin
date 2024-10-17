@@ -23,7 +23,7 @@
           </a-tab-pane>
         </a-tabs>
       </div>
-      <template #rightExtra>
+      <template #overlay>
         <a-menu>
           <a-menu-item @click="closeByMenu(false)">关闭其他</a-menu-item>
           <a-menu-item @click="closeByMenu(true)">关闭所有</a-menu-item>

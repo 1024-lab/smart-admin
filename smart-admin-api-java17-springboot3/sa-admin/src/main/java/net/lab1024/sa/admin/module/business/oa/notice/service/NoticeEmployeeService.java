@@ -52,7 +52,6 @@ public class NoticeEmployeeService {
     public ResponseDTO<PageResult<NoticeEmployeeVO>> queryList(Long requestEmployeeId, NoticeEmployeeQueryForm noticeEmployeeQueryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(noticeEmployeeQueryForm);
 
-        //获取请求人的 部门及其子部门
         List<Long> employeeDepartmentIdList = Lists.newArrayList();
         EmployeeEntity employeeEntity = employeeService.getById(requestEmployeeId);
         // 如果不是管理员 则获取请求人的 部门及其子部门

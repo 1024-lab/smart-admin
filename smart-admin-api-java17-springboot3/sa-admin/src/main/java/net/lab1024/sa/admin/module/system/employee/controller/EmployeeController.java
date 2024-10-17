@@ -25,7 +25,7 @@ import java.util.List;
  * @Date 2021-12-09 22:57:49
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @RestController
 @Tag(name = AdminSwaggerTagConst.System.SYSTEM_EMPLOYEE)
@@ -110,7 +110,7 @@ public class EmployeeController {
     @Operation(summary = "重置员工密码 @author 卓大")
     @GetMapping("/employee/update/password/reset/{employeeId}")
     @SaCheckPermission("system:employee:password:reset")
-    public ResponseDTO<String> resetPassword(@PathVariable Integer employeeId) {
+    public ResponseDTO<String> resetPassword(@PathVariable Long employeeId) {
         return employeeService.resetPassword(employeeId);
     }
 

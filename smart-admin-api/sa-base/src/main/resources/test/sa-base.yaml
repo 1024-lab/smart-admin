@@ -39,7 +39,7 @@ spring:
     host: smtp.163.com
     port: 465
     username: lab1024@163.com
-    password: 1
+    password: 1024lab
     properties:
       mail:
         smtp:

@@ -32,6 +32,7 @@
         },
       },
     }"
+    :getPopupContainer="getPopupContainer"
   >
     <!---全局loading--->
     <a-spin :spinning="spinning" tip="稍等片刻，我在拼命加载中..." size="large">
@@ -49,6 +50,8 @@
   import { useSpinStore } from '/@/store/modules/system/spin';
   import { theme } from 'ant-design-vue';
   import { themeColors } from '/@/theme/color.js';
+  import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
+  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
 
   const antdLocale = computed(() => messages[useAppConfigStore().language].antdLocale);
   const dayjsLocale = computed(() => messages[useAppConfigStore().language].dayjsLocale);
@@ -67,4 +70,31 @@
   const borderRadius = computed(() => {
     return useAppConfigStore().borderRadius;
   });
+
+  function getPopupContainer(node, dialogContext) {
+    let fullScreenFlag = useAppConfigStore().$state.fullScreenFlag;
+    if(fullScreenFlag){
+      return getFullScreenContainer(node, dialogContext);
+    }else{
+      return getNotFullScreenContainer(node, dialogContext);
+    }
+  }
+
+  function getFullScreenContainer(node, dialogContext) {
+    if (node === document.body) {
+      return document.getElementById(LAYOUT_ELEMENT_IDS.content);
+    }else if (node) {
+      return node.parentNode;
+    } else {
+      return document.getElementById(LAYOUT_ELEMENT_IDS.content);
+    }
+  }
+
+  function getNotFullScreenContainer(node, dialogContext) {
+    if (node) {
+      return node.parentNode;
+    } else {
+      return document.body;
+    }
+  }
 </script>

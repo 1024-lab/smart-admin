@@ -1,11 +1,11 @@
 <!--
   *  帮助文档 layout
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-06 20:40:16 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-06 20:40:16
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <!--
@@ -79,10 +79,10 @@
   const websiteName = computed(() => useAppConfigStore().websiteName);
   const windowHeight = window.innerHeight;
   onMounted(() => {
-    watermark.set('smartAdminLayoutContent', useUserStore().actualName);
+    watermark.set(LAYOUT_ELEMENT_IDS.content, useUserStore().actualName);
   });
   const backTopTarget = () => {
-    return document.getElementById('smartAdminMain');
+    return document.getElementById(LAYOUT_ELEMENT_IDS.main);
   };
   const router = useRouter();
   const route = useRoute();

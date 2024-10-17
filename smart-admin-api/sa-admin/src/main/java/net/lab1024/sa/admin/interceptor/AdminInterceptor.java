@@ -86,7 +86,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             Method method = ((HandlerMethod) handler).getMethod();
             NoNeedLogin noNeedLogin = ((HandlerMethod) handler).getMethodAnnotation(NoNeedLogin.class);
             if (noNeedLogin != null) {
-                checkActiveTimeout(requestEmployee,debugNumberTokenFlag);
+                checkActiveTimeout(requestEmployee, debugNumberTokenFlag);
                 return true;
             }
 
@@ -96,7 +96,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             }
 
             // 检测token 活跃频率
-            checkActiveTimeout(requestEmployee,debugNumberTokenFlag);
+            checkActiveTimeout(requestEmployee, debugNumberTokenFlag);
 
 
             // --------------- 第三步： 校验 权限 ---------------
@@ -107,8 +107,8 @@ public class AdminInterceptor implements HandlerInterceptor {
             }
 
             // 如果是超级管理员的话，不需要校验权限
-            if(requestEmployee.getAdministratorFlag()){
-               return true;
+            if (requestEmployee.getAdministratorFlag()) {
+                return true;
             }
 
             SaStrategy.instance.checkMethodAnnotation.accept(method);

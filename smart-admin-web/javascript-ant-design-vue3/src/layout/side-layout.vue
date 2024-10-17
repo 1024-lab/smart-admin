@@ -1,15 +1,15 @@
 <template>
   <a-layout class="admin-layout" style="min-height: 100%">
     <!-- 侧边菜单 side-menu -->
-    <a-layout-sider class="side-menu" :width="sideMenuWidth" :collapsed="collapsed" :theme="theme">
+    <a-layout-sider :id="LAYOUT_ELEMENT_IDS.menu" class="side-menu" :width="sideMenuWidth" :collapsed="collapsed" :theme="theme">
       <!-- 左侧菜单 -->
       <SideMenu :collapsed="collapsed" />
     </a-layout-sider>
 
     <!--中间内容，一共三部分：1、顶部;2、中间内容区域;3、底部（一般是公司版权信息）;-->
-    <a-layout id="smartAdminMain" :style="`height: ${windowHeight}px`" class="admin-layout-main">
+    <a-layout :id="LAYOUT_ELEMENT_IDS.main" :style="`height: ${windowHeight}px`" class="admin-layout-main">
       <!-- 顶部头部信息 -->
-      <a-layout-header class="layout-header">
+      <a-layout-header class="layout-header" :id="LAYOUT_ELEMENT_IDS.header">
         <a-row class="layout-header-user" justify="space-between">
           <a-col class="layout-header-left">
             <span class="collapsed-button">
@@ -35,13 +35,13 @@
       </a-layout-header>
 
       <!--中间内容-->
-      <a-layout-content id="smartAdminLayoutContent" class="admin-layout-content">
+      <a-layout-content :id="LAYOUT_ELEMENT_IDS.content" class="admin-layout-content">
         <!--不keepAlive的iframe使用单个iframe组件-->
         <IframeIndex v-if="iframeNotKeepAlivePageFlag" :key="route.name" :name="route.name" :url="route.meta.frameUrl" />
         <!--keepAlive的iframe 每个页面一个iframe组件-->
         <IframeIndex
           v-for="item in keepAliveIframePages"
-          v-show="route.name == item.name"
+          v-show="route.name === item.name"
           :key="item.name"
           :name="item.name"
           :url="item.meta.frameUrl"
@@ -93,6 +93,7 @@
   import SideHelpDoc from './components/side-help-doc/index.vue';
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
+  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
 
   const windowHeight = ref(window.innerHeight);
   //菜单宽度
@@ -126,7 +127,7 @@
   //页面初始化的时候加载水印
   onMounted(() => {
     if (watermarkFlag.value) {
-      watermark.set('smartAdminLayoutContent', useUserStore().actualName);
+      watermark.set(LAYOUT_ELEMENT_IDS.content, useUserStore().actualName);
     } else {
       watermark.clear();
     }
@@ -136,7 +137,7 @@
     () => watermarkFlag.value,
     (newValue) => {
       if (newValue) {
-        watermark.set('smartAdminLayoutContent', useUserStore().actualName);
+        watermark.set(LAYOUT_ELEMENT_IDS.content, useUserStore().actualName);
       } else {
         watermark.clear();
       }
@@ -145,7 +146,7 @@
 
   //回到顶部
   const backTopTarget = () => {
-    return document.getElementById('smartAdminMain');
+    return document.getElementById(LAYOUT_ELEMENT_IDS.main);
   };
 
   const router = useRouter();

@@ -13,7 +13,9 @@ import localStorageKeyConst from '/@/constants/local-storage-key-const';
 import { smartSentry } from '/@/lib/smart-sentry';
 import { localRead } from '/@/utils/local-util';
 
-let state = { ...appDefaultConfig };
+let state = {
+  ...appDefaultConfig
+};
 
 let appConfigStr = localRead(localStorageKeyConst.APP_CONFIG);
 let language = appDefaultConfig.language;
@@ -38,6 +40,8 @@ export const useAppConfigStore = defineStore({
   state: () => ({
     // 读取config下的默认配置
     ...state,
+    // 全屏
+    fullScreenFlag: false,
   }),
   actions: {
     reset() {
@@ -50,6 +54,12 @@ export const useAppConfigStore = defineStore({
     },
     hideHelpDoc() {
       this.helpDocExpandFlag = false;
+    },
+    startFullScreen() {
+      this.fullScreenFlag = true;
+    },
+    exitFullScreen() {
+      this.fullScreenFlag = false;
     },
   },
 });

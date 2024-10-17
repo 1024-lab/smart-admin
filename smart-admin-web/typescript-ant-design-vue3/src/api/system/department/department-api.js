@@ -18,16 +18,16 @@ export const departmentApi = {
   queryAllDepartment: () => {
     return getRequest('/department/listAll');
   },
-
+  
   /**
    * @description: 查询部门树形列表 @author 卓大
    * @param {*}
    * @return {*}
    */
-   queryDepartmentTree: () => {
+  queryDepartmentTree: () => {
     return getRequest('/department/treeList');
   },
-
+  
   /**
    * @description: 添加部门 @author 卓大
    * @param {*}
@@ -50,6 +50,6 @@ export const departmentApi = {
    * @return {*}
    */
   deleteDepartment: (departmentId) => {
-    return getRequest(`/department/delete/${departmentId}`);
-  },
+    return getRequest(`/department/delete/${ departmentId }`);
+  }
 };

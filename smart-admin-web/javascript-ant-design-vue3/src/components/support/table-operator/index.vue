@@ -12,12 +12,12 @@
 <template>
   <span>
     <a-tooltip title="全屏" v-if="!fullScreenFlag">
-      <a-button type="text" @click="fullScreen" size="small">
+      <a-button type="text" @click="onFullScreen" size="small">
         <template #icon><fullscreen-outlined /></template>
       </a-button>
     </a-tooltip>
     <a-tooltip title="取消全屏" v-if="fullScreenFlag">
-      <a-button type="text" @click="fullScreen" size="small">
+      <a-button type="text" @click="onFullScreen" size="small">
         <template #icon><fullscreen-exit-outlined /></template>
       </a-button>
     </a-tooltip>
@@ -43,11 +43,13 @@
   import { message } from 'ant-design-vue';
   import { mergeColumn } from './smart-table-column-merge';
   import { smartSentry } from '/@/lib/smart-sentry';
+  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
+  import { useAppConfigStore } from '/@/store/modules/system/app-config.js';
   const props = defineProps({
     // 表格列数组
     modelValue: {
       type: Array,
-      default: new Array(),
+      default: [],
     },
     // 刷新表格函数
     refresh: {
@@ -93,22 +95,39 @@
 
   // ----------------- 全屏 -------------------
   const fullScreenFlag = ref(false);
-  function fullScreen() {
+
+  function onFullScreen() {
     if (fullScreenFlag.value) {
-      //取消全屏
-      exitFullscreen(document.querySelector('#smartAdminLayoutContent'));
-      fullScreenFlag.value = false;
-      document.querySelector('#smartAdminPageTag').style.visibility = 'visible';
+      // 退出全屏
+      handleExitFullScreen();
+      exitElementFullscreen(document.getElementById(LAYOUT_ELEMENT_IDS.content));
     } else {
       //全屏
-      launchFullScreen(document.querySelector('#smartAdminLayoutContent'));
+      message.config({
+        getContainer: () => document.getElementById(LAYOUT_ELEMENT_IDS.content),
+      });
       fullScreenFlag.value = true;
-      document.querySelector('#smartAdminPageTag').style.visibility = 'hidden';
+      useAppConfigStore().startFullScreen();
+      launchElementFullScreen(document.getElementById(LAYOUT_ELEMENT_IDS.content));
     }
   }
 
+  // 处理退出全屏
+  function handleExitFullScreen(){
+    //取消全屏
+    message.config({
+      getContainer: () => document.body,
+    });
+    fullScreenFlag.value = false;
+    useAppConfigStore().exitFullScreen();
+    document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    document.removeEventListener('mozfullscreenchange', handleFullscreenChange); // Firefox
+    document.removeEventListener('webkitfullscreenchange', handleFullscreenChange); // Chrome, Safari and Opera
+    document.removeEventListener('MSFullscreenChange', handleFullscreenChange); // Internet Explorer and Edge
+  }
+
   //判断各种浏览器 -全屏
-  function launchFullScreen(element) {
+  function launchElementFullScreen(element) {
     if (element.requestFullscreen) {
       element.requestFullscreen();
     } else if (element.mozRequestFullScreen) {
@@ -120,9 +139,23 @@
     } else {
       message.error('当前浏览器不支持部分全屏！');
     }
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange); // Firefox
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange); // Chrome, Safari and Opera
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange); // Internet Explorer and Edge
   }
+
+  function handleFullscreenChange() {
+    if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+      console.log('进入全屏模式');
+    } else {
+      console.log('退出全屏模式');
+      handleExitFullScreen();
+    }
+  }
+
   //判断各种浏览器 -退出全屏
-  function exitFullscreen(element) {
+  function exitElementFullscreen(element) {
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.mozCancelFullScreen) {

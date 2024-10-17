@@ -270,7 +270,7 @@ function view(file) {
 // 下载文件
 async function download(file) {
   try {
-    await fileApi.downLoadFile(file.fileKey);
+    await fileApi.downLoadFile(file.fileName, file.fileKey);
   } catch (e) {
     smartSentry.captureError(e);
   }

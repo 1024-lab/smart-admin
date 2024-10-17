@@ -10,15 +10,15 @@
 <template>
   <a-layout class="admin-layout" style="min-height: 100%">
     <!-- 侧边菜单 side-menu -->
-    <a-layout-sider :theme="theme" class="side-menu" :collapsed="collapsed" :trigger="null">
+    <a-layout-sider :id="LAYOUT_ELEMENT_IDS.menu" :theme="theme" class="side-menu" :collapsed="collapsed" :trigger="null">
       <!-- 左侧菜单 -->
       <SideExpandMenu :collapsed="collapsed" />
     </a-layout-sider>
 
     <!--中间内容，一共三部分：1、顶部;2、中间内容区域;3、底部（一般是公司版权信息）;-->
-    <a-layout class="admin-layout-main" :style="`height: ${windowHeight}px`" id="smartAdminMain">
+    <a-layout class="admin-layout-main" :style="`height: ${windowHeight}px`" :id="LAYOUT_ELEMENT_IDS.main">
       <!-- 顶部头部信息 -->
-      <a-layout-header class="smart-layout-header">
+      <a-layout-header class="smart-layout-header" :id="LAYOUT_ELEMENT_IDS.header">
         <a-row justify="space-between" class="smart-layout-header-user">
           <a-col class="smart-layout-header-left">
             <span class="collapsed-button">
@@ -44,19 +44,19 @@
       </a-layout-header>
 
       <!--中间内容-->
-      <a-layout-content class="admin-layout-content" id="smartAdminLayoutContent">
+      <a-layout-content class="admin-layout-content" :id="LAYOUT_ELEMENT_IDS.content">
         <!--不keepAlive的iframe使用单个iframe组件-->
         <IframeIndex v-show="iframeNotKeepAlivePageFlag" :key="route.name" :name="route.name" :url="route.meta.frameUrl" />
         <!--keepAlive的iframe 每个页面一个iframe组件-->
         <IframeIndex
           v-for="item in keepAliveIframePages"
-          v-show="route.name == item.name"
+          v-show="route.name === item.name"
           :key="item.name"
           :name="item.name"
           :url="item.meta.frameUrl"
         />
         <!--非iframe使用router-view-->
-        <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)">
+        <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name !== e.name)">
           <router-view v-slot="{ Component }">
             <keep-alive :include="keepAliveIncludes">
               <component :is="Component" :key="route.name" />
@@ -98,6 +98,7 @@
   import SideHelpDoc from './components/side-help-doc/index.vue';
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
+  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
 
   const windowHeight = ref(window.innerHeight);
 
@@ -130,7 +131,7 @@
   //页面初始化的时候加载水印
   onMounted(() => {
     if (watermarkFlag.value) {
-      watermark.set('smartAdminLayoutContent', useUserStore().actualName);
+      watermark.set(LAYOUT_ELEMENT_IDS.content, useUserStore().actualName);
     } else {
       watermark.clear();
     }
@@ -140,7 +141,7 @@
     () => watermarkFlag.value,
     (newValue) => {
       if (newValue) {
-        watermark.set('smartAdminLayoutContent', useUserStore().actualName);
+        watermark.set(LAYOUT_ELEMENT_IDS.content, useUserStore().actualName);
       } else {
         watermark.clear();
       }
@@ -153,7 +154,7 @@
 
   //回到顶部
   const backTopTarget = () => {
-    return document.getElementById('smartAdminMain');
+    return document.getElementById(LAYOUT_ELEMENT_IDS.main);
   };
   // ----------------------- keep-alive相关 -----------------------
   let { route, keepAliveIncludes, iframeNotKeepAlivePageFlag, keepAliveIframePages } = smartKeepAlive();

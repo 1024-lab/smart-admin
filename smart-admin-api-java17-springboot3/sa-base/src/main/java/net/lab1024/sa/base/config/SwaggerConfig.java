@@ -31,10 +31,9 @@ import java.util.Optional;
 /**
  * springdoc-openapi 配置
  * nginx配置前缀时如果需要访问【/swagger-ui/index.html】需添加额外nginx配置
- * location /v3/api-docs/ {
- * proxy_pass  http://127.0.0.1:11024/v3/api-docs/;
+ *  location /v3/api-docs/ {
+ *          proxy_pass  http://127.0.0.1:1024/v3/api-docs/;
  * }
- *
  * @Author 1024创新实验室-主任: 卓大
  * @Date 2020-03-25 22:54:46
  * @Wechat zhuoda1024
@@ -48,7 +47,7 @@ public class SwaggerConfig {
     /**
      * 用于解决/swagger-ui/index.html页面ServersUrl 测试环境部署错误问题
      */
-    @Value("${springdoc.swagger-ui.server-base-url:''}")
+    @Value("${springdoc.swagger-ui.server-base-url}")
     private String serverBaseUrl;
 
     public static final String[] SWAGGER_WHITELIST = {
@@ -59,20 +58,20 @@ public class SwaggerConfig {
             "/v3/api-docs",
             "/v3/api-docs/**",
             "/doc.html",
-            };
+    };
 
     @Bean
     public OpenAPI api() {
         return new OpenAPI()
                 .components(components())
                 .info(new Info()
-                              .title("SmartAdmin 3.X 接口文档")
-                              .contact(new Contact().name("1024创新实验室").email("lab1024@163.com").url("https://1024lab.net"))
-                              .version("v3.X")
-                              .description("<font color=\"#DC143C\">**以「高质量代码」为核心，「简洁、高效、安全」**</font>基于 SpringBoot + Sa-Token + Mybatis-Plus 和 Vue3 + Vite5 + Ant Design (同时支持JavaScript和TypeScript双版本) 的快速开发平台。" +
-                                           "<br/><font color=\"#DC143C\">**国内首个满足《网络安全》、《数据安全》、三级等保**</font>， 支持登录限制、支持国产接口加解密等安全、支持数据加解密等一系列安全体系的开源项目。" +
-                                           "<br/><font color=\"#DC143C\">**我们开源一套漂亮的代码和一套整洁的代码规范**</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，保持谦逊，保持学习，热爱代码，更热爱生活！")
-                     )
+                        .title("SmartAdmin 3.X 接口文档")
+                        .contact(new Contact().name("1024创新实验室").email("lab1024@163.com").url("https://1024lab.net"))
+                        .version("v3.X")
+                        .description("<font color=\"#DC143C\">**以「高质量代码」为核心，「简洁、高效、安全」**</font>基于 SpringBoot + Sa-Token + Mybatis-Plus 和 Vue3 + Vite5 + Ant Design (同时支持JavaScript和TypeScript双版本) 的快速开发平台。" +
+                                "<br/><font color=\"#DC143C\">**国内首个满足《网络安全》、《数据安全》、三级等保**</font>， 支持登录限制、支持国产接口加解密等安全、支持数据加解密等一系列安全体系的开源项目。" +
+                                "<br/><font color=\"#DC143C\">**我们开源一套漂亮的代码和一套整洁的代码规范**</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，保持谦逊，保持学习，热爱代码，更热爱生活！")
+                )
                 .addSecurityItem(new SecurityRequirement().addList(RequestHeaderConst.TOKEN));
     }
 
@@ -84,27 +83,26 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi businessApi() {
         return GroupedOpenApi.builder()
-                             .group("业务接口")
-                             .pathsToMatch("/**")
-                             .pathsToExclude(SwaggerTagConst.Support.URL_PREFIX + "/**")
-                             .addOperationCustomizer(new SmartOperationCustomizer())
-                             .build();
+                .group("业务接口")
+                .pathsToMatch("/**")
+                .pathsToExclude(SwaggerTagConst.Support.URL_PREFIX + "/**")
+                .addOperationCustomizer(new SmartOperationCustomizer())
+                .build();
 
     }
 
     @Bean
     public GroupedOpenApi supportApi() {
         return GroupedOpenApi.builder()
-                             .group("支撑接口(Support)")
-                             .pathsToMatch(SwaggerTagConst.Support.URL_PREFIX + "/**")
-                             .addOperationCustomizer(new SmartOperationCustomizer())
-                             .build();
+                .group("支撑接口(Support)")
+                .pathsToMatch(SwaggerTagConst.Support.URL_PREFIX + "/**")
+                .addOperationCustomizer(new SmartOperationCustomizer())
+                .build();
     }
 
     /**
      * 以下代码可以用于设置 /swagger-ui/index.html 的serverBaseUrl
      * 如果使用knife4j则不需要
-     *
      * @param openAPI
      * @param securityParser
      * @param springDocConfigProperties
@@ -132,6 +130,6 @@ public class SwaggerConfig {
             }
         });
         return new OpenAPIService(openAPI, securityParser, springDocConfigProperties,
-                                  propertyResolverUtils, openApiBuilderCustomizers, Optional.of(list), javadocProvider);
+                propertyResolverUtils, openApiBuilderCustomizers, Optional.of(list), javadocProvider);
     }
 }

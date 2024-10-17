@@ -47,8 +47,6 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeService {
 
-    private static final String PASSWORD_SALT_FORMAT = "smart_%s_admin_$^&*";
-
     @Resource
     private EmployeeDao employeeDao;
 
@@ -364,7 +362,7 @@ public class EmployeeService {
     /**
      * 重置密码
      */
-    public ResponseDTO<String> resetPassword(Integer employeeId) {
+    public ResponseDTO<String> resetPassword(Long employeeId) {
         String password = securityPasswordService.randomPassword();
         employeeDao.updatePassword(employeeId, SecurityPasswordService.getEncryptPwd(password));
         return ResponseDTO.ok(password);

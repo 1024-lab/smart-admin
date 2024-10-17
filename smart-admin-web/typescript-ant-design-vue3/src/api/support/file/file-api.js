@@ -32,7 +32,7 @@ export const fileApi = {
   /**
    * 下载文件流（根据fileKey） @author 胡克
    */
-  downLoadFile: (fileKey) => {
-    return getDownload('/support/file/downLoad', { fileKey });
+  downLoadFile: (fileName, fileKey) => {
+    return getDownload(fileName, '/support/file/downLoad', { fileKey });
   },
 };

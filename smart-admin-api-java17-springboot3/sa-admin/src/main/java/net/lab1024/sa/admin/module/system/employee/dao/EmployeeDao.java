@@ -113,6 +113,6 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
     /**
      * 员工重置密码
      */
-    Integer updatePassword(@Param("employeeId") Integer employeeId, @Param("password") String password);
+    Integer updatePassword(@Param("employeeId") Long employeeId, @Param("password") String password);
 
 }
