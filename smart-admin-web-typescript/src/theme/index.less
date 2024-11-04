@@ -1,0 +1,112 @@
+/* 
+ * 默认样式的修改
+ * 
+ * @Author:    1024创新实验室-主任：卓大 
+ * @Date:      2022-09-12 14:41:59 
+ * @Wechat:    zhuda1024 
+ * @Email:     lab1024@163.com 
+ * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+ */
+
+@import 'ant-design-vue/dist/reset.css';
+@import './smart-admin.less';
+
+/**********************************  基础样式 **********************************/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  position: relative;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+/**********************************  ant design spin **********************************/
+.ant-spin-blur{
+  opacity: 0.2;
+}
+
+/**********************************  ant design table **********************************/
+.ant-table-tbody :deep(.smart-table-striped) {
+  background-color: #fafafa;
+}
+
+/**********************************  ant design form **********************************/
+.ant-form-inline .ant-form-item-with-help {
+  margin-bottom: 0px !important;
+}
+
+/**********************************  ant design spin **********************************/
+.ant-spin-nested-loading {
+  width: 100%;
+  height: 100%;
+}
+
+.ant-spin-container {
+  width: 100%;
+  height: 100%;
+}
+
+/**********************************  富文本HTML样式 **********************************/
+.html-content {
+  /* table 样式 */
+  table {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+  }
+  table td,
+  table th {
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 3px 5px;
+  }
+  table th {
+    border-bottom: 2px solid #ccc;
+    text-align: center;
+  }
+
+  /* blockquote 样式 */
+  blockquote {
+    display: block;
+    border-left: 8px solid #d0e5f2;
+    padding: 5px 10px;
+    margin: 10px 0;
+    line-height: 1.4;
+    font-size: 100%;
+    background-color: #f1f1f1;
+  }
+
+  /* code 样式 */
+  code {
+    display: inline-block;
+    background-color: #f1f1f1;
+    border-radius: 3px;
+    padding: 3px 5px;
+    margin: 0 3px;
+  }
+  pre code {
+    display: block;
+  }
+
+  /* ul ol 样式 */
+  ul,
+  ol {
+    margin: 10px 0 10px 20px;
+  }
+}

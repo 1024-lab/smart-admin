@@ -11,10 +11,15 @@ import _ from 'lodash';
 import { defineStore } from 'pinia';
 import { USER_TOKEN } from '@/constants/local-storage-key-const';
 import { loginApi } from '@/api/system/login-api';
+import { smartSentry } from '@/lib/smart-sentry';
+import {messageApi} from "@/api/support/message-api";
 
 const defaultUserInfo = {
+  token: '',
   //员工id
   employeeId: '',
+  // 头像
+  avatar: '',
   //登录名
   loginName: '',
   //姓名
@@ -25,6 +30,8 @@ const defaultUserInfo = {
   departmentId: '',
   //部门名词
   departmentName: '',
+  //是否需要修改密码
+  needUpdatePwdFlag: false,
   //是否为超级管理员
   administratorFlag: true,
   //上次登录ip
@@ -35,6 +42,8 @@ const defaultUserInfo = {
   lastLoginUserAgent: '',
   //上次登录时间
   lastLoginTime: '',
+  // 未读消息数量
+  unreadMessageCount: 0,
 };
 
 export const useUserStore = defineStore({
@@ -62,6 +71,15 @@ export const useUserStore = defineStore({
       let res = await loginApi.getLoginInfo();
       this.setUserLoginInfo(res.data);
     },
+    // 查询未读消息数量
+    async queryUnreadMessageCount() {
+      try {
+        let result = await messageApi.queryUnreadCount();
+        this.unreadMessageCount = result.data;
+      } catch (e) {
+        smartSentry.captureError(e);
+      }
+    },
     //设置登录信息
     setUserLoginInfo(data) {
       // 用户基本信息
@@ -79,6 +97,9 @@ export const useUserStore = defineStore({
       this.lastLoginTime = data.lastLoginTime;
 
       uni.setStorageSync(USER_TOKEN, data.token);
+
+      // 获取用户未读消息
+      this.queryUnreadMessageCount();
     },
   },
 });

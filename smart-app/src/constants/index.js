@@ -13,6 +13,7 @@ import enterpriseConst from './business/oa/enterprise-const';
 import goodsConst from './business/erp/goods-const';
 import changeLogConst from './support/change-log-const';
 import fileConst from './support/file-const';
+import messageConst from "./support/message-const";
 
 export default {
   FLAG_NUMBER_ENUM,
@@ -23,4 +24,5 @@ export default {
   ...goodsConst,
   ...changeLogConst,
   ...fileConst,
+  ...messageConst
 };

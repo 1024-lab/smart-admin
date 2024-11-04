@@ -7,7 +7,7 @@
             <image class="icon" src="/static/images/mine/mine-account.png" mode=""></image>
           </template>
         </uni-list-item>
-        <uni-list-item title="消息通知" link="switchTab" showBadge badgeText="6" badgeType="error" to="/pages/message/message">
+        <uni-list-item title="消息通知" link="switchTab" showBadge :badgeText="messageCount" badgeType="error" to="/pages/message/message">
           <template #header>
             <image class="icon" src="/static/images/mine/mine-message.png" mode=""></image>
           </template>
@@ -67,8 +67,12 @@
 </template>
 <script setup>
   import { SmartToast } from '@/lib/smart-support';
+  import { useUserStore } from '@/store/modules/system/user';
+  import { computed } from 'vue';
 
   const emits = defineEmits(['changeStyle']);
+  const userStore = useUserStore();
+  const messageCount = computed(() => userStore.$state.unreadMessageCount);
 
   function changeStyle() {
     emits('changeStyle');
