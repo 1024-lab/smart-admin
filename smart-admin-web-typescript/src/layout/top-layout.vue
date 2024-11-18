@@ -1,14 +1,14 @@
 <template>
   <a-layout class="admin-layout">
     <!-- 顶部菜单  -->
-    <a-layout-header class="top-menu" :theme="theme" :id="LAYOUT_ELEMENT_IDS.menu">
+    <a-layout-header class="top-menu" :theme="theme" :id="LAYOUT_ELEMENT_IDS.menu" v-if="!fullScreenFlag">
       <TopMenu />
     </a-layout-header>
 
     <!--中间内容-->
     <a-layout-content :id="LAYOUT_ELEMENT_IDS.content" class="admin-layout-content">
       <!---标签页-->
-      <div class="page-tag-div" v-show="pageTagFlag" :id="LAYOUT_ELEMENT_IDS.header">
+      <div class="page-tag-div" v-show="pageTagFlag && !fullScreenFlag" :id="LAYOUT_ELEMENT_IDS.header">
         <PageTag />
       </div>
 
@@ -68,6 +68,8 @@
     };
   });
 
+  //是否全屏
+  const fullScreenFlag = computed(() => useAppConfigStore().$state.fullScreenFlag);
   //是否显示标签页
   const pageTagFlag = computed(() => useAppConfigStore().$state.pageTagFlag);
   // 是否显示页脚
@@ -78,6 +80,10 @@
   const pageWidth = computed(() => useAppConfigStore().$state.pageWidth);
   // 多余高度
   const dueHeight = computed(() => {
+    if (fullScreenFlag.value) {
+      return '0';
+    }
+
     let due = '45px';
     if (useAppConfigStore().$state.pageTagFlag) {
       due = '85px';

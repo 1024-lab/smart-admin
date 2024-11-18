@@ -1,7 +1,7 @@
 <template>
   <a-layout class="admin-layout" style="min-height: 100%">
     <!-- 侧边菜单 side-menu -->
-    <a-layout-sider :id="LAYOUT_ELEMENT_IDS.menu" class="side-menu" :width="sideMenuWidth" :collapsed="collapsed" :theme="theme">
+    <a-layout-sider :id="LAYOUT_ELEMENT_IDS.menu" class="side-menu" :width="sideMenuWidth" :collapsed="collapsed" :theme="theme" v-show="!fullScreenFlag">
       <!-- 左侧菜单 -->
       <SideMenu :collapsed="collapsed" />
     </a-layout-sider>
@@ -9,7 +9,7 @@
     <!--中间内容，一共三部分：1、顶部;2、中间内容区域;3、底部（一般是公司版权信息）;-->
     <a-layout :id="LAYOUT_ELEMENT_IDS.main" :style="`height: ${windowHeight}px`" class="admin-layout-main">
       <!-- 顶部头部信息 -->
-      <a-layout-header class="layout-header" :id="LAYOUT_ELEMENT_IDS.header">
+      <a-layout-header class="layout-header" :id="LAYOUT_ELEMENT_IDS.header" v-show="!fullScreenFlag">
         <a-row class="layout-header-user" justify="space-between">
           <a-col class="layout-header-left">
             <span class="collapsed-button">
@@ -96,6 +96,8 @@
   import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
 
   const windowHeight = ref(window.innerHeight);
+  //是否全屏
+  const fullScreenFlag = computed(() => useAppConfigStore().$state.fullScreenFlag);
   //菜单宽度
   const sideMenuWidth = computed(() => useAppConfigStore().$state.sideMenuWidth);
   //主题颜色

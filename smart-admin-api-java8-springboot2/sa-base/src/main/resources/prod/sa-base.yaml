@@ -38,7 +38,7 @@ spring:
     host: smtp.163.com
     port: 465
     username: lab1024@163.com
-    password: LAB1024LAB
+    password: 1024lab
     properties:
       mail:
         smtp:
@@ -116,9 +116,6 @@ http:
     read-timeout: 50000
     write-timeout: 50000
     keep-alive: 300000
-
-# 跨域配置
-access-control-allow-origin: 'https://preview.smartadmin.vip'
 
 # 心跳配置
 heart-beat:

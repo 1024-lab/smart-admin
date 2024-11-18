@@ -38,13 +38,13 @@
 <script setup lang="ts">
   import _ from 'lodash';
   import { tableColumnApi } from '/@/api/support/table-column-api';
-  import { onMounted, reactive, ref, watch } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import SmartTableColumnModal from './smart-table-column-modal.vue';
   import { message } from 'ant-design-vue';
   import { mergeColumn } from './smart-table-column-merge';
   import { smartSentry } from '/@/lib/smart-sentry';
-  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
   import { useAppConfigStore } from '/@/store/modules/system/app-config.js';
+
   const props = defineProps({
     // 表格列数组
     modelValue: {
@@ -89,7 +89,6 @@
     } catch (e) {
       smartSentry.captureError(e);
     }
-
     updateColumn(userTableColumnArray);
   }
 
@@ -100,24 +99,16 @@
     if (fullScreenFlag.value) {
       // 退出全屏
       handleExitFullScreen();
-      exitElementFullscreen(document.getElementById(LAYOUT_ELEMENT_IDS.content));
+      exitElementFullscreen(document.body);
     } else {
-      //全屏
-      message.config({
-        getContainer: () => document.getElementById(LAYOUT_ELEMENT_IDS.content),
-      });
       fullScreenFlag.value = true;
       useAppConfigStore().startFullScreen();
-      launchElementFullScreen(document.getElementById(LAYOUT_ELEMENT_IDS.content));
+      launchElementFullScreen(document.body);
     }
   }
 
   // 处理退出全屏
-  function handleExitFullScreen(){
-    //取消全屏
-    message.config({
-      getContainer: () => document.body,
-    });
+  function handleExitFullScreen() {
     fullScreenFlag.value = false;
     useAppConfigStore().exitFullScreen();
     document.removeEventListener('fullscreenchange', handleFullscreenChange);

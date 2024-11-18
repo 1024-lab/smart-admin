@@ -96,8 +96,8 @@ public class AddFormVariableService extends CodeGenerateBaseVariableService {
                 if (Boolean.TRUE.equals(field.getRequiredFlag())) {
                     String notEmptyPrefix = "String".equals(codeField.getJavaType()) ? "@NotBlank" : "@NotNull";
                     finalFieldMap.put("notEmpty", "\n    " + notEmptyPrefix + "(message = \"" + codeField.getLabel() + " 不能为空\")");
-                    packageList.add("String".equals(codeField.getJavaType()) ? "import javax.validation.constraints.NotBlank;"
-                            : "import javax.validation.constraints.NotNull;");
+                    packageList.add("String".equals(codeField.getJavaType()) ? "import jakarta.validation.constraints.NotBlank;"
+                            : "import jakarta.validation.constraints.NotNull;");
                 }
             }
 

@@ -21,26 +21,24 @@ spring:
         pointcut: net.lab1024.sa..*Service.*
 
   # redis 连接池配置信息
-  data:
-    redis:
-      database: 1
-      host: 127.0.0.1
-      port: 6379
-      password:
-      timeout: 10000ms
-      lettuce:
-        pool:
-          max-active: 5
-          min-idle: 1
-          max-idle: 3
-          max-wait: 30000ms
-
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 100
+        min-idle: 10
+        max-idle: 50
+        max-wait: 30000ms
   # 邮件，置以SSL的方式发送, 这个需要使用这种方式并且端口是465
   mail:
     host: smtp.163.com
     port: 465
     username: lab1024@163.com
-    password: LAB1024LAB
+    password: 1024lab
     properties:
       mail:
         smtp:
@@ -118,9 +116,6 @@ http:
     read-timeout: 50000
     write-timeout: 50000
     keep-alive: 300000
-
-# 跨域配置
-access-control-allow-origin: 'https://preview.smartadmin.vip'
 
 # 心跳配置
 heart-beat:

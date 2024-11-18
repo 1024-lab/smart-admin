@@ -172,7 +172,7 @@ public class DictService {
      * @return
      */
     public List<DictKeyVO> queryAllKey() {
-        return SmartBeanUtil.copyList(dictKeyDao.selectList(null), DictKeyVO.class);
+        return SmartBeanUtil.copyList(dictKeyDao.selectByDeletedFlag(false), DictKeyVO.class);
     }
 
     /**

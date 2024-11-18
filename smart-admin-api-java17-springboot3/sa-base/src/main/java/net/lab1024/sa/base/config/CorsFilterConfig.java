@@ -2,6 +2,7 @@ package net.lab1024.sa.base.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -17,6 +18,7 @@ import org.springframework.web.filter.CorsFilter;
  * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Configuration
+@Conditional(SystemEnvironmentConfig.class)
 public class CorsFilterConfig {
 
     @Value("${access-control-allow-origin}")
