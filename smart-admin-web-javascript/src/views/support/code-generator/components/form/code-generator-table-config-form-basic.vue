@@ -1,11 +1,11 @@
 <!--
   * 代码生成 配置信息
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-22 21:50:41 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-22 21:50:41
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-alert
@@ -76,7 +76,7 @@
             <pre class="preview-block">
 &lt;!--
   * {{ formData.description }}
-  * 
+  *
   * @Author:     {{ formData.frontAuthor }}
   * @Date:       {{ formData.frontDate }}
   * @Copyright   {{ formData.copyright }}
@@ -182,7 +182,7 @@
     //命名
     let removePrefixTableName = tableInfo.tableName;
     if (_.startsWith(tableInfo.tableName, tablePrefix.value)) {
-      removePrefixTableName = _.trim(removePrefixTableName, tablePrefix.value);
+      removePrefixTableName = _.trimStart(removePrefixTableName, tablePrefix.value);
     }
     formData.moduleName = basic && basic.moduleName ? basic.moduleName : removePrefixTableName;
     formData.moduleName = convertUpperCamel(formData.moduleName);

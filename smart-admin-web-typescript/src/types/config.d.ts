@@ -43,7 +43,7 @@ export interface AppConfig {
   borderRadius: number;
   // 标签页
   pageTagFlag: boolean;
-  // 标签页样式: default、 antd
+  // 标签页样式: default、 antd、naive
   pageTagStyle: string;
   // 面包屑
   breadCrumbFlag: boolean;

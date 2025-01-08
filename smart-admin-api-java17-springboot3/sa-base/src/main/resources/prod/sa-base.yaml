@@ -21,18 +21,19 @@ spring:
         pointcut: net.lab1024.sa..*Service.*
 
   # redis 连接池配置信息
-  redis:
-    database: 1
-    host: 127.0.0.1
-    port: 6379
-    password:
-    timeout: 10000ms
-    lettuce:
-      pool:
-        max-active: 100
-        min-idle: 10
-        max-idle: 50
-        max-wait: 30000ms
+  data:
+    redis:
+      database: 1
+      host: 127.0.0.1
+      port: 6379
+      password:
+      timeout: 10000ms
+      lettuce:
+        pool:
+          max-active: 100
+          min-idle: 10
+          max-idle: 50
+          max-wait: 30000ms
   # 邮件，置以SSL的方式发送, 这个需要使用这种方式并且端口是465
   mail:
     host: smtp.163.com

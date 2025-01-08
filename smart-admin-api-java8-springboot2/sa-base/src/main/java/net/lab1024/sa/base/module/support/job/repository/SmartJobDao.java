@@ -29,4 +29,20 @@ public interface SmartJobDao extends BaseMapper<SmartJobEntity> {
      * @return
      */
     List<SmartJobVO> query(Page<?> page, @Param("query") SmartJobQueryForm queryForm);
+
+    /**
+     * 假删除
+     *
+     * @param jobId
+     * @return
+     */
+    void updateDeletedFlag(@Param("jobId") Integer jobId, @Param("deletedFlag") Boolean deletedFlag);
+
+    /**
+     * 根据 任务class 查找
+     *
+     * @param jobClass
+     * @return
+     */
+    SmartJobEntity selectByJobClass(@Param("jobClass") String jobClass);
 }

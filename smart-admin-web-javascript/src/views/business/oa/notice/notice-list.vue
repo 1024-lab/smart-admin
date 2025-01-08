@@ -100,7 +100,7 @@
           <a-tag v-show="!text" color="success">未删除</a-tag>
         </template>
         <template v-else-if="column.dataIndex === 'action'">
-          <div class="smart-table-operate">
+          <div class="smart-table-operate" v-if="!record.deletedFlag">
             <a-button type="link" @click="addOrUpdate(record.noticeId)" v-privilege="'oa:notice:update'">编辑</a-button>
             <a-button type="link" @click="onDelete(record.noticeId)" v-privilege="'oa:notice:delete'" danger>删除</a-button>
           </div>

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 /**
- * Json 序列化配置
+ * json 序列化配置
  *
  * @Author 1024创新实验室-主任: 卓大
  * @Date 2017-11-28 15:21:10

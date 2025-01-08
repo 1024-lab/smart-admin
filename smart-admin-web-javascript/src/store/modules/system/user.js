@@ -206,6 +206,7 @@ export const useUserStore = defineStore({
           // @ts-ignore
           menuTitle: route.meta.title,
           menuQuery: route.query,
+          menuIcon:route.meta?.icon, 
           // @ts-ignore
           fromMenuName: from.name,
           fromMenuQuery: from.query,

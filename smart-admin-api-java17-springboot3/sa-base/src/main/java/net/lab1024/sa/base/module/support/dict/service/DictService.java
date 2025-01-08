@@ -28,7 +28,7 @@ import java.util.List;
  * @Date 2022/5/26 19:40:55
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class DictService {
@@ -39,10 +39,6 @@ public class DictService {
     private DictValueDao dictValueDao;
     @Resource
     private DictCacheService dictCacheService;
-    /**
-     * CODE锁
-     */
-    private static final Interner<String> CODE_POOL = Interners.newWeakInterner();
 
 
     /**
@@ -51,15 +47,15 @@ public class DictService {
      * @param keyAddForm
      * @return
      */
-    public ResponseDTO<String> keyAdd(DictKeyAddForm keyAddForm) {
-        synchronized (CODE_POOL.intern(keyAddForm.getKeyCode())) {
-            DictKeyEntity dictKeyEntity = dictKeyDao.selectByCode(keyAddForm.getKeyCode(), false);
-            if (dictKeyEntity != null) {
-                return ResponseDTO.error(UserErrorCode.ALREADY_EXIST);
-            }
-            dictKeyEntity = SmartBeanUtil.copy(keyAddForm, DictKeyEntity.class);
-            dictKeyDao.insert(dictKeyEntity);
+    public synchronized ResponseDTO<String> keyAdd(DictKeyAddForm keyAddForm) {
+        DictKeyEntity dictKeyEntity = dictKeyDao.selectByCode(keyAddForm.getKeyCode(), false);
+        if (dictKeyEntity != null) {
+            return ResponseDTO.error(UserErrorCode.ALREADY_EXIST);
         }
+        dictKeyEntity = SmartBeanUtil.copy(keyAddForm, DictKeyEntity.class);
+        dictKeyDao.insert(dictKeyEntity);
+        //刷新缓存
+        dictCacheService.cacheRefresh();
         return ResponseDTO.ok();
     }
 
@@ -69,15 +65,15 @@ public class DictService {
      * @param valueAddForm
      * @return
      */
-    public ResponseDTO<String> valueAdd(DictValueAddForm valueAddForm) {
-        synchronized (CODE_POOL.intern(valueAddForm.getValueCode())) {
-            DictValueEntity dictValueEntity = dictValueDao.selectByCode(valueAddForm.getValueCode(), false);
-            if (dictValueEntity != null) {
-                return ResponseDTO.error(UserErrorCode.ALREADY_EXIST);
-            }
-            dictValueEntity = SmartBeanUtil.copy(valueAddForm, DictValueEntity.class);
-            dictValueDao.insert(dictValueEntity);
+    public synchronized ResponseDTO<String> valueAdd(DictValueAddForm valueAddForm) {
+        DictValueEntity dictValueEntity = dictValueDao.selectByCode(valueAddForm.getValueCode(), false);
+        if (dictValueEntity != null) {
+            return ResponseDTO.error(UserErrorCode.ALREADY_EXIST);
         }
+        dictValueEntity = SmartBeanUtil.copy(valueAddForm, DictValueEntity.class);
+        dictValueDao.insert(dictValueEntity);
+        //刷新缓存
+        dictCacheService.cacheRefresh();
         return ResponseDTO.ok();
     }
 
@@ -87,15 +83,15 @@ public class DictService {
      * @param keyUpdateForm
      * @return
      */
-    public ResponseDTO<String> keyEdit(DictKeyUpdateForm keyUpdateForm) {
-        synchronized (CODE_POOL.intern(keyUpdateForm.getKeyCode())) {
-            DictKeyEntity dictKeyEntity = dictKeyDao.selectByCode(keyUpdateForm.getKeyCode(), false);
-            if (dictKeyEntity != null && !dictKeyEntity.getDictKeyId().equals(keyUpdateForm.getDictKeyId())) {
-                return ResponseDTO.error(UserErrorCode.ALREADY_EXIST);
-            }
-            DictKeyEntity dictKeyUpdateEntity = SmartBeanUtil.copy(keyUpdateForm, DictKeyEntity.class);
-            dictKeyDao.updateById(dictKeyUpdateEntity);
+    public synchronized ResponseDTO<String> keyEdit(DictKeyUpdateForm keyUpdateForm) {
+        DictKeyEntity dictKeyEntity = dictKeyDao.selectByCode(keyUpdateForm.getKeyCode(), false);
+        if (dictKeyEntity != null && !dictKeyEntity.getDictKeyId().equals(keyUpdateForm.getDictKeyId())) {
+            return ResponseDTO.error(UserErrorCode.ALREADY_EXIST);
         }
+        DictKeyEntity dictKeyUpdateEntity = SmartBeanUtil.copy(keyUpdateForm, DictKeyEntity.class);
+        dictKeyDao.updateById(dictKeyUpdateEntity);
+        //刷新缓存
+        dictCacheService.cacheRefresh();
         return ResponseDTO.ok();
     }
 
@@ -105,19 +101,19 @@ public class DictService {
      * @param valueUpdateForm
      * @return
      */
-    public ResponseDTO<String> valueEdit(DictValueUpdateForm valueUpdateForm) {
+    public synchronized ResponseDTO<String> valueEdit(DictValueUpdateForm valueUpdateForm) {
         DictKeyEntity dictKeyEntity = dictKeyDao.selectById(valueUpdateForm.getDictKeyId());
         if (dictKeyEntity == null || dictKeyEntity.getDeletedFlag()) {
             return ResponseDTO.userErrorParam("key不能存在");
         }
-        synchronized (CODE_POOL.intern(valueUpdateForm.getValueCode())) {
-            DictValueEntity dictValueEntity = dictValueDao.selectByCode(valueUpdateForm.getValueCode(), false);
-            if (dictValueEntity != null && !dictValueEntity.getDictValueId().equals(valueUpdateForm.getDictValueId())) {
-                return ResponseDTO.error(UserErrorCode.ALREADY_EXIST);
-            }
-            DictValueEntity dictValueUpdateEntity = SmartBeanUtil.copy(valueUpdateForm, DictValueEntity.class);
-            dictValueDao.updateById(dictValueUpdateEntity);
+        DictValueEntity dictValueEntity = dictValueDao.selectByCode(valueUpdateForm.getValueCode(), false);
+        if (dictValueEntity != null && !dictValueEntity.getDictValueId().equals(valueUpdateForm.getDictValueId())) {
+            return ResponseDTO.error(UserErrorCode.ALREADY_EXIST);
         }
+        DictValueEntity dictValueUpdateEntity = SmartBeanUtil.copy(valueUpdateForm, DictValueEntity.class);
+        dictValueDao.updateById(dictValueUpdateEntity);
+        //刷新缓存
+        dictCacheService.cacheRefresh();
         return ResponseDTO.ok();
     }
 
@@ -127,11 +123,13 @@ public class DictService {
      * @param keyIdList
      * @return
      */
-    public ResponseDTO<String> keyDelete(List<Long> keyIdList) {
+    public synchronized ResponseDTO<String> keyDelete(List<Long> keyIdList) {
         if (CollectionUtils.isEmpty(keyIdList)) {
             return ResponseDTO.ok();
         }
         dictKeyDao.updateDeletedFlagByIdList(keyIdList, true);
+        //刷新缓存
+        dictCacheService.cacheRefresh();
         return ResponseDTO.ok();
     }
 
@@ -141,11 +139,13 @@ public class DictService {
      * @param valueIdList
      * @return
      */
-    public ResponseDTO<String> valueDelete(List<Long> valueIdList) {
+    public synchronized ResponseDTO<String> valueDelete(List<Long> valueIdList) {
         if (CollectionUtils.isEmpty(valueIdList)) {
             return ResponseDTO.ok();
         }
         dictValueDao.updateDeletedFlagByIdList(valueIdList, true);
+        //刷新缓存
+        dictCacheService.cacheRefresh();
         return ResponseDTO.ok();
     }
 

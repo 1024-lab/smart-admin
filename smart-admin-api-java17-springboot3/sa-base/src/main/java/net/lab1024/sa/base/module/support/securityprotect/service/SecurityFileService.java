@@ -5,6 +5,8 @@ import net.lab1024.sa.base.common.domain.ResponseDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+
 /**
  * 三级等保 文件上传 相关
  *

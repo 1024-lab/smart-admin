@@ -2,9 +2,11 @@ package net.lab1024.sa.base.module.support.reload.core;
 
 
 import net.lab1024.sa.base.module.support.reload.core.domain.SmartReloadItem;
+import net.lab1024.sa.base.module.support.reload.core.domain.SmartReloadObject;
 import net.lab1024.sa.base.module.support.reload.core.domain.SmartReloadResult;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -14,21 +16,29 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date 2015-03-02 19:11:52
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 public abstract class AbstractSmartReloadCommand {
 
     /**
      * 当前ReloadItem的存储器
      */
-    private static final ConcurrentHashMap<String, String> TAG_IDENTIFIER_MAP = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, String> tagIdentifierMap = new ConcurrentHashMap<>();
 
+    private SmartReloadManager smartReloadManager;
+
+    /**
+     * @return
+     */
+    public void setReloadManager(SmartReloadManager smartReloadManager) {
+        this.smartReloadManager = smartReloadManager;
+    }
 
     public void init() {
         List<SmartReloadItem> smartReloadItems = this.readReloadItem();
         if (smartReloadItems != null) {
             for (SmartReloadItem smartReloadItem : smartReloadItems) {
-                TAG_IDENTIFIER_MAP.put(smartReloadItem.getTag(), smartReloadItem.getIdentification());
+                tagIdentifierMap.put(smartReloadItem.getTag(), smartReloadItem.getIdentification());
             }
         }
     }
@@ -57,7 +67,7 @@ public abstract class AbstractSmartReloadCommand {
      * @return
      */
     public ConcurrentHashMap<String, String> getTagIdentifierMap() {
-        return TAG_IDENTIFIER_MAP;
+        return tagIdentifierMap;
     }
 
     /**
@@ -67,6 +77,20 @@ public abstract class AbstractSmartReloadCommand {
      * @param identification
      */
     public void putIdentifierMap(String tag, String identification) {
-        TAG_IDENTIFIER_MAP.put(tag, identification);
+        tagIdentifierMap.put(tag, identification);
+    }
+
+
+    /**
+     * 获取重载对象
+     *
+     * @return
+     */
+    public SmartReloadObject reloadObject(String tag) {
+        if (this.smartReloadManager == null) {
+            return null;
+        }
+        Map<String, SmartReloadObject> reloadObjectMap = smartReloadManager.reloadObjectMap();
+        return reloadObjectMap.get(tag);
     }
 }

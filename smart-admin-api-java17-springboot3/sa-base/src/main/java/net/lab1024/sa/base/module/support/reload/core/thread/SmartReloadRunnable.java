@@ -20,17 +20,17 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date 2015-03-02 19:11:52
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Slf4j
 public class SmartReloadRunnable implements Runnable {
 
-    private final AbstractSmartReloadCommand reloadCommand;
+    private AbstractSmartReloadCommand abstractSmartReloadCommand;
 
     private boolean isInit = false;
 
-    public SmartReloadRunnable(AbstractSmartReloadCommand reloadCommand) {
-        this.reloadCommand = reloadCommand;
+    public SmartReloadRunnable(AbstractSmartReloadCommand abstractSmartReloadCommand) {
+        this.abstractSmartReloadCommand = abstractSmartReloadCommand;
     }
 
     @Override
@@ -47,23 +47,23 @@ public class SmartReloadRunnable implements Runnable {
      */
     private void doTask() {
         if (!isInit) {
-            this.reloadCommand.init();
+            this.abstractSmartReloadCommand.init();
             isInit = true;
             return;
         }
 
-        List<SmartReloadItem> smartReloadItemList = this.reloadCommand.readReloadItem();
-        ConcurrentHashMap<String, String> tagIdentifierMap = this.reloadCommand.getTagIdentifierMap();
+        List<SmartReloadItem> smartReloadItemList = this.abstractSmartReloadCommand.readReloadItem();
+        ConcurrentHashMap<String, String> tagIdentifierMap = this.abstractSmartReloadCommand.getTagIdentifierMap();
         for (SmartReloadItem smartReloadItem : smartReloadItemList) {
             String tag = smartReloadItem.getTag();
             String tagIdentifier = smartReloadItem.getIdentification();
             String preTagChangeIdentifier = tagIdentifierMap.get(tag);
             // 数据不一致
             if (preTagChangeIdentifier == null || !preTagChangeIdentifier.equals(tagIdentifier)) {
-                this.reloadCommand.putIdentifierMap(tag, tagIdentifier);
+                this.abstractSmartReloadCommand.putIdentifierMap(tag, tagIdentifier);
                 // 执行重新加载此项的动作
                 SmartReloadResult smartReloadResult = this.doReload(smartReloadItem);
-                this.reloadCommand.handleReloadResult(smartReloadResult);
+                this.abstractSmartReloadCommand.handleReloadResult(smartReloadResult);
             }
         }
     }
@@ -76,7 +76,7 @@ public class SmartReloadRunnable implements Runnable {
      */
     private SmartReloadResult doReload(SmartReloadItem smartReloadItem) {
         SmartReloadResult result = new SmartReloadResult();
-        SmartReloadObject smartReloadObject = SmartReloadManager.getReloadObject(smartReloadItem.getTag());
+        SmartReloadObject smartReloadObject = this.abstractSmartReloadCommand.reloadObject(smartReloadItem.getTag());
         try {
             if (smartReloadObject == null) {
                 result.setResult(false);

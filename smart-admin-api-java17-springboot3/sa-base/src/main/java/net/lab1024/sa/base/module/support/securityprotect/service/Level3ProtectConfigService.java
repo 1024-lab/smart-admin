@@ -44,7 +44,7 @@ public class Level3ProtectConfigService {
     /**
      * 最低活跃时间（单位：秒），超过此时间没有操作系统就会被冻结，默认-1 代表不限制，永不冻结; 默认 30分钟
      */
-    private int loginActiveTimeoutSeconds = 1800;
+    private int loginActiveTimeoutSeconds = -1;
 
     /**
      * 密码复杂度 是否开启，默认：开启

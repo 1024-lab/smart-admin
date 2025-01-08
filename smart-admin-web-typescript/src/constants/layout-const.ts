@@ -34,4 +34,8 @@ export const PAGE_TAG_ENUM: SmartEnum<string> = {
     value: 'antd',
     desc: 'Ant Design',
   },
+  CHROME: {
+    value: 'chrome',
+    desc: 'Chrome',
+  },
 };

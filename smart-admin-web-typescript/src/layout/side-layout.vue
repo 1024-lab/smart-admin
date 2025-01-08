@@ -1,14 +1,7 @@
 <template>
   <a-layout class="admin-layout" style="min-height: 100%">
     <!-- 侧边菜单 side-menu -->
-    <a-layout-sider
-      :id="LAYOUT_ELEMENT_IDS.menu"
-      class="side-menu"
-      :width="sideMenuWidth"
-      :collapsed="collapsed"
-      :theme="theme"
-      v-show="!fullScreenFlag"
-    >
+    <a-layout-sider :id="LAYOUT_ELEMENT_IDS.menu" class="side-menu" :width="sideMenuWidth" :collapsed="collapsed" :theme="theme" v-show="!fullScreenFlag">
       <!-- 左侧菜单 -->
       <SideMenu :collapsed="collapsed" />
     </a-layout-sider>

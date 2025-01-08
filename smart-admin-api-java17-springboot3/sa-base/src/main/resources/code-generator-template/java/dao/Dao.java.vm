@@ -49,5 +49,4 @@ public interface ${name.upperCamel}Dao extends BaseMapper<${name.upperCamel}Enti
 #end
 #end
 #end
-
 }

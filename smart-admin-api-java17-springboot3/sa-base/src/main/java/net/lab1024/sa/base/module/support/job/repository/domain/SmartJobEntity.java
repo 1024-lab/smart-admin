@@ -76,6 +76,11 @@ public class SmartJobEntity {
      */
     private Integer sort;
 
+    /**
+     * 是否删除
+     */
+    private Boolean deletedFlag;
+
     private String updateName;
 
     private LocalDateTime updateTime;

@@ -1,5 +1,7 @@
 package net.lab1024.sa.base.module.support.job.constant;
 
+import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.module.support.job.core.SmartJob;
 import org.springframework.scheduling.support.CronExpression;
 
 import java.lang.management.ManagementFactory;
@@ -98,7 +100,7 @@ public class SmartJobUtil {
         } else if (SmartJobTriggerTypeEnum.FIXED_DELAY.equalsValue(triggerType)) {
             Integer fixedDelay = getFixedDelayVal(triggerVal);
             LocalDateTime startTime = null == lastExecuteTime || lastExecuteTime.plusSeconds(fixedDelay).isBefore(nowTime)
-                                      ? nowTime : lastExecuteTime;
+                    ? nowTime : lastExecuteTime;
             nextTimeList = SmartJobUtil.queryNextTime(fixedDelay, startTime, num);
         }
         return nextTimeList;
@@ -174,6 +176,24 @@ public class SmartJobUtil {
         return runtime.getName().split("@")[0];
     }
 
+
+    /**
+     * 根据className 判断job class
+     */
+    public static ResponseDTO<String> checkJobClass(String className) {
+        try {
+            Class<?> aClass = Class.forName(className);
+            // 判断是否实现了 SmartJob
+            if (!SmartJob.class.isAssignableFrom(aClass)) {
+                return ResponseDTO.userErrorParam(className + " 执行类没有实现 SmartJob 接口");
+            }
+        } catch (ClassNotFoundException e) {
+            return ResponseDTO.userErrorParam("没有在代码中发现执行类：" + className);
+        }
+        return ResponseDTO.ok();
+    }
+
+
     public static void main(String[] args) {
         LocalDateTime startTime = LocalDateTime.now();
         List<LocalDateTime> timeList = SmartJobUtil.queryNextTime("5 * * * * *", startTime, 3);
@@ -184,5 +204,7 @@ public class SmartJobUtil {
 
         System.out.println("project path ->" + getProgramPath());
         System.out.println("project process id ->" + getProcessId());
+        ResponseDTO<String> res = checkJobClass("net.lab1024.sa.base.module.support.job.sample.SmartJobSample1");
+        System.out.println(res.getMsg());
     }
 }

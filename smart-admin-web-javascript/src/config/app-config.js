@@ -24,7 +24,7 @@ export const appDefaultConfig = {
   borderRadius: 6,
   // 标签页
   pageTagFlag: true,
-  // 标签页样式: default、 antd
+  // 标签页样式: default、 antd、naive
   pageTagStyle: 'default',
   // 面包屑
   breadCrumbFlag: true,

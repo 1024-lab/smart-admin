@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import net.lab1024.sa.base.common.code.UserErrorCode;
 import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import net.lab1024.sa.base.common.util.SmartPageUtil;
@@ -16,7 +17,6 @@ import net.lab1024.sa.base.module.support.job.repository.SmartJobLogDao;
 import net.lab1024.sa.base.module.support.job.repository.domain.SmartJobEntity;
 import net.lab1024.sa.base.module.support.job.repository.domain.SmartJobLogEntity;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 
@@ -127,26 +127,60 @@ public class SmartJobService {
     }
 
     /**
+     * 添加定时任务
+     *
+     * @param addForm
+     * @return
+     */
+    public synchronized ResponseDTO<String> addJob(SmartJobAddForm addForm) {
+        // 校验参数
+        ResponseDTO<String> checkRes = this.checkParam(addForm);
+        if (!checkRes.getOk()) {
+            return checkRes;
+        }
+
+        // 校验重复的执行类
+        SmartJobEntity existJobClass = jobDao.selectByJobClass(addForm.getJobClass());
+        if (null != existJobClass && !existJobClass.getDeletedFlag()) {
+            return ResponseDTO.userErrorParam("已经存在相同的执行类");
+        }
+
+        // 添加数据
+        SmartJobEntity jobEntity = SmartBeanUtil.copy(addForm, SmartJobEntity.class);
+        jobDao.insert(jobEntity);
+
+        // 更新执行端
+        SmartJobMsg jobMsg = new SmartJobMsg();
+        jobMsg.setJobId(jobEntity.getJobId());
+        jobMsg.setMsgType(SmartJobMsg.MsgTypeEnum.UPDATE_JOB);
+        jobMsg.setUpdateName(addForm.getUpdateName());
+        jobClientManager.publishToClient(jobMsg);
+        return ResponseDTO.ok();
+    }
+
+    /**
      * 更新定时任务
      *
      * @param updateForm
      * @return
      */
-    public ResponseDTO<String> updateJob(SmartJobUpdateForm updateForm) {
+    public synchronized ResponseDTO<String> updateJob(SmartJobUpdateForm updateForm) {
         // 校验参数
         Integer jobId = updateForm.getJobId();
         SmartJobEntity jobEntity = jobDao.selectById(jobId);
         if (null == jobEntity) {
             return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
         }
-        // 校验触发时间配置
-        String triggerType = updateForm.getTriggerType();
-        String triggerValue = updateForm.getTriggerValue();
-        if (SmartJobTriggerTypeEnum.CRON.equalsValue(triggerType) && !SmartJobUtil.checkCron(triggerValue)) {
-            return ResponseDTO.userErrorParam("cron表达式错误");
+
+        ResponseDTO<String> checkRes = this.checkParam(updateForm);
+        if (!checkRes.getOk()) {
+            return checkRes;
         }
-        if (SmartJobTriggerTypeEnum.FIXED_DELAY.equalsValue(triggerType) && !SmartJobUtil.checkFixedDelay(triggerValue)) {
-            return ResponseDTO.userErrorParam("固定间隔错误：整数且大于0");
+
+        // 校验重复的执行类
+        SmartJobEntity existJobClass = jobDao.selectByJobClass(updateForm.getJobClass());
+        if (null != existJobClass && !existJobClass.getDeletedFlag() && !existJobClass.getJobId().equals(jobId)) {
+            return ResponseDTO.userErrorParam("已经存在相同的执行类");
         }
 
         // 更新数据
@@ -160,6 +194,27 @@ public class SmartJobService {
         jobMsg.setUpdateName(updateForm.getUpdateName());
         jobClientManager.publishToClient(jobMsg);
         return ResponseDTO.ok();
+    }
+
+    /**
+     * 校验参数
+     * 如需其他校验，请自行添加校验逻辑
+     *
+     * @param addForm
+     * @return
+     */
+    private ResponseDTO<String> checkParam(SmartJobAddForm addForm) {
+        // 校验触发时间配置
+        String triggerType = addForm.getTriggerType();
+        String triggerValue = addForm.getTriggerValue();
+        if (SmartJobTriggerTypeEnum.CRON.equalsValue(triggerType) && !SmartJobUtil.checkCron(triggerValue)) {
+            return ResponseDTO.userErrorParam("cron表达式错误");
+        }
+        if (SmartJobTriggerTypeEnum.FIXED_DELAY.equalsValue(triggerType) && !SmartJobUtil.checkFixedDelay(triggerValue)) {
+            return ResponseDTO.userErrorParam("固定间隔配置错误：必须是大于0的整数");
+        }
+        // 校验job class
+        return SmartJobUtil.checkJobClass(addForm.getJobClass());
     }
 
     /**
@@ -219,28 +274,23 @@ public class SmartJobService {
     }
 
     /**
-     * 新增定时任务
-     * ps:目前没有业务场景需要通过接口 添加任务
-     * 因为新增定时任务无论如何都需要 手动编码
-     * 需要时手动给数据库增加一条就行
+     * 移除定时任务
+     * 物理删除
      *
      * @return
      * @author huke
      */
-    public ResponseDTO<String> addJob() {
-        return ResponseDTO.userErrorParam("暂未支持");
+    public synchronized ResponseDTO<String> deleteJob(Integer jobId, RequestUser requestUser) {
+        // 删除任务
+        jobDao.updateDeletedFlag(jobId, Boolean.TRUE);
+
+        // 更新执行端
+        SmartJobMsg jobMsg = new SmartJobMsg();
+        jobMsg.setJobId(jobId);
+        jobMsg.setMsgType(SmartJobMsg.MsgTypeEnum.UPDATE_JOB);
+        jobMsg.setUpdateName(requestUser.getUserName());
+        jobClientManager.publishToClient(jobMsg);
+        return ResponseDTO.ok();
     }
 
-    /**
-     * 移除定时任务
-     * ps：目前没有业务场景需要通过接口移除，理由同 {@link SmartJobService#addJob}，
-     * 彻底移除始终都需要手动删除代码
-     * 如果只是想暂停任务执行，可以调用 {@link SmartJobService#updateJobEnabled}
-     *
-     * @return
-     * @author huke
-     */
-    public ResponseDTO<String> delJob() {
-        return ResponseDTO.userErrorParam("暂未支持");
-    }
 }

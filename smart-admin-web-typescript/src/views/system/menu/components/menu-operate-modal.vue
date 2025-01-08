@@ -57,10 +57,10 @@
         <a-form-item v-if="form.menuType === MENU_TYPE_ENUM.MENU.value" label="是否外链" name="frameFlag">
           <a-switch v-model:checked="form.frameFlag" checked-children="是外链" un-checked-children="不是外链" />
         </a-form-item>
-        <a-form-item label="显示状态" name="frameFlag">
+        <a-form-item label="显示状态" name="visibleFlag">
           <a-switch v-model:checked="form.visibleFlag" checked-children="显示" un-checked-children="不显示" />
         </a-form-item>
-        <a-form-item label="禁用状态" name="frameFlag">
+        <a-form-item label="禁用状态" name="disabledFlag">
           <a-switch v-model:checked="form.disabledFlag" :checkedValue="false" :unCheckedValue="true" checked-children="启用" un-checked-children="禁用" />
         </a-form-item>
       </template>
@@ -73,7 +73,7 @@
         <a-form-item label="功能点关联菜单">
           <MenuTreeSelect ref="contextMenuTreeSelect" v-model:value="form.contextMenuId" />
         </a-form-item>
-        <a-form-item label="功能点状态" name="frameFlag">
+        <a-form-item label="功能点状态" name="funcDisabledFlag">
           <a-switch v-model:checked="form.disabledFlag" :checkedValue="false" :unCheckedValue="true" checked-children="启用" un-checked-children="禁用" />
         </a-form-item>
         <a-form-item label="权限类型" name="permsType">

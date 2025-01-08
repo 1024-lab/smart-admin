@@ -52,6 +52,15 @@ public class AdminSmartJobController extends SupportBaseController {
         return jobService.queryJob(queryForm);
     }
 
+    @Operation(summary = "定时任务-添加任务 @huke")
+    @PostMapping("/job/add")
+    @RepeatSubmit
+    public ResponseDTO<String> addJob(@RequestBody @Valid SmartJobAddForm addForm) {
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+        addForm.setUpdateName(requestUser.getUserName());
+        return jobService.addJob(addForm);
+    }
+
     @Operation(summary = "定时任务-更新-任务信息 @huke")
     @PostMapping("/job/update")
     @RepeatSubmit
@@ -68,6 +77,13 @@ public class AdminSmartJobController extends SupportBaseController {
         RequestUser requestUser = SmartRequestUtil.getRequestUser();
         updateForm.setUpdateName(requestUser.getUserName());
         return jobService.updateJobEnabled(updateForm);
+    }
+
+    @Operation(summary = "定时任务-删除 @zhuoda")
+    @GetMapping("/job/delete")
+    @RepeatSubmit
+    public ResponseDTO<String> deleteJob(@RequestParam Integer jobId) {
+        return jobService.deleteJob(jobId, SmartRequestUtil.getRequestUser());
     }
 
     @Operation(summary = "定时任务-执行记录-分页查询 @huke")

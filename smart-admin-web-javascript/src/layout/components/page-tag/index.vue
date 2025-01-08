@@ -11,6 +11,7 @@
   <div id="smartAdminPageTag">
     <DefaultTab v-if="pageTagStyle === PAGE_TAG_ENUM.DEFAULT.value" />
     <AntdTab v-if="pageTagStyle === PAGE_TAG_ENUM.ANTD.value" />
+    <ChromeTab v-if="pageTagStyle === PAGE_TAG_ENUM.CHROME.value" />
   </div>
 </template>
 
@@ -19,6 +20,7 @@
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import DefaultTab from './components/default-tab.vue';
   import AntdTab from './components/antd-tab.vue';
+  import ChromeTab from './components/chrome-tab.vue';
   import { PAGE_TAG_ENUM } from '/@/constants/layout-const.js';
 
   const pageTagStyle = computed(() => useAppConfigStore().$state.pageTagStyle);

@@ -73,7 +73,8 @@
       <a-form-item :label="$t('setting.pagetag.style')">
         <a-radio-group v-model:value="formState.pageTagStyle" button-style="solid" @change="changePageTagStyle">
           <a-radio-button value="default">默认</a-radio-button>
-          <a-radio-button value="antd">Ant Design</a-radio-button>
+          <a-radio-button value="antd">Ant</a-radio-button>
+          <a-radio-button value="chrome">Chrome</a-radio-button>
         </a-radio-group>
       </a-form-item>
       <a-form-item :label="$t('setting.pagetag')">

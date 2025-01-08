@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * @Date 2022/9/29 17:20:41
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 
 public class EntityVariableService extends CodeGenerateBaseVariableService {

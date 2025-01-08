@@ -14,23 +14,25 @@
       <span class="ant-menu">{{ topMenu.menuName }}</span>
     </div>
     <!-- 次级菜单展示 -->
-    <a-menu :selectedKeys="selectedKeys" :openKeys="openKeys" mode="inline">
-      <template v-for="item in topMenu.children" :key="item.menuId">
-        <template v-if="item.visibleFlag">
-          <template v-if="$lodash.isEmpty(item.children)">
-            <a-menu-item :key="item.menuId.toString()" @click="turnToPage(item)">
-              <template #icon v-if="item.icon">
-                <component :is="$antIcons[item.icon]" />
-              </template>
-              {{ item.menuName }}
-            </a-menu-item>
-          </template>
-          <template v-else>
-            <SubMenu :menu-info="item" :key="item.menuId" @turnToPage="turnToPage" />
+    <div class="bottom-menu">
+      <a-menu  :selectedKeys="selectedKeys" :openKeys="openKeys" mode="inline">
+        <template v-for="item in topMenu.children" :key="item.menuId">
+          <template v-if="item.visibleFlag">
+            <template v-if="$lodash.isEmpty(item.children)">
+              <a-menu-item :key="item.menuId.toString()" @click="turnToPage(item)">
+                <template #icon v-if="item.icon">
+                  <component :is="$antIcons[item.icon]" />
+                </template>
+                {{ item.menuName }}
+              </a-menu-item>
+            </template>
+            <template v-else>
+              <SubMenu :menu-info="item" :key="item.menuId" @turnToPage="turnToPage" />
+            </template>
           </template>
         </template>
-      </template>
-    </a-menu>
+      </a-menu>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -84,10 +86,15 @@
 </script>
 <style scoped lang="less">
   .recursion-container {
-    height: 100%;
+    height: 100vh;
     background: #ffffff;
   }
-
+  .bottom-menu{
+    overflow: auto;
+    display: flex;
+    height: 90%;
+    color: #515a6e;
+  }
   .top-menu {
     overflow: hidden;
     display: flex;

@@ -75,6 +75,7 @@
   import watermark from '../lib/smart-watermark';
   import { useUserStore } from '/@/store/modules/system/user';
   import HeaderAvatar from './components/header-user-space/header-avatar.vue';
+  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const';
 
   const websiteName = computed(() => useAppConfigStore().websiteName);
   const windowHeight = window.innerHeight;

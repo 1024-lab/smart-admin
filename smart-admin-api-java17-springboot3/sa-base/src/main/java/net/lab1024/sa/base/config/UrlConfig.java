@@ -13,6 +13,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.condition.PathPatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -47,11 +48,12 @@ public class UrlConfig {
         Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : map.entrySet()) {
             RequestMappingInfo requestMappingInfo = entry.getKey();
-            if(requestMappingInfo.getPatternsCondition() == null){
+           PathPatternsRequestCondition pathPatternsCondition = requestMappingInfo.getPathPatternsCondition();
+            if(pathPatternsCondition == null){
                continue;
             }
 
-            Set<String> urls = requestMappingInfo.getPatternsCondition().getPatterns();
+            Set<String> urls = pathPatternsCondition.getPatternValues();
             if (CollectionUtils.isEmpty(urls)) {
                 continue;
             }

@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.base.common.domain.DataScopePlugin;
 import net.lab1024.sa.base.handler.MybatisPlusFillHandler;
@@ -25,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
@@ -92,10 +92,10 @@ public class DataSourceConfig {
     @Value("${spring.datasource.druid.method.pointcut}")
     String methodPointcut;
 
-    @Resource
+    @jakarta.annotation.Resource
     private MybatisPlusInterceptor paginationInterceptor;
 
-    @Resource
+    @jakarta.annotation.Resource
     private DataScopePlugin dataScopePlugin;
 
     @Bean
@@ -136,7 +136,7 @@ public class DataSourceConfig {
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(druidDataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        org.springframework.core.io.Resource[] resources = resolver.getResources("classpath*:/mapper/**/*.xml");
+        Resource[] resources = resolver.getResources("classpath*:/mapper/**/*.xml");
         factoryBean.setMapperLocations(resources);
 
         // 设置 MyBatis-Plus 分页插件 注意此处myBatisPlugin一定要放在后面

@@ -1209,12 +1209,13 @@ CREATE TABLE `t_serial_number_record`  (
   INDEX `uk_generator`(`serial_number_id`, `record_date`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'serial_number记录表' ROW_FORMAT = Dynamic;
 
+
 -- ----------------------------
 -- Table structure for t_smart_job
 -- ----------------------------
 DROP TABLE IF EXISTS `t_smart_job`;
 CREATE TABLE `t_smart_job`  (
-  `job_id` int(0) NOT NULL COMMENT '任务id',
+  `job_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '任务id',
   `job_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务名称',
   `job_class` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务执行类',
   `trigger_type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '触发类型',
@@ -1224,19 +1225,20 @@ CREATE TABLE `t_smart_job`  (
   `last_execute_time` datetime(0) NULL DEFAULT NULL COMMENT '最后一次执行时间',
   `last_execute_log_id` int(0) NULL DEFAULT NULL COMMENT '最后一次执行记录id',
   `sort` int(0) NOT NULL DEFAULT 0 COMMENT '排序',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `deleted_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除状态',
   `update_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新人',
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`job_id`) USING BTREE,
-  UNIQUE INDEX `uk_job_class`(`job_class`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务配置 @listen' ROW_FORMAT = Dynamic;
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`job_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务配置 @listen' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_smart_job
 -- ----------------------------
-INSERT INTO `t_smart_job` VALUES (1, '示例任务1', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample1', 'cron', '10 15 0/1 * * *', 1, '1', '2024-09-03 21:15:10', 7928, 1, '测试测试', '管理员', '2024-09-03 21:15:12', '2024-06-17 20:00:46');
-INSERT INTO `t_smart_job` VALUES (2, '示例任务2', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample2', 'fixed_delay', '120', 1, '一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界，一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界啊', '2024-09-03 21:51:24', 7944, 2, '一个不能停留太久的世界啊', '胡克', '2024-09-03 21:51:26', '2024-06-18 20:45:35');
+INSERT INTO `t_smart_job` VALUES (1, '示例任务1', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample1', 'cron', '10 15 0/1 * * *', 1, '1', '2025-01-05 19:15:10', 7988, 1, '测试测试', 0, '管理员', '2024-06-17 20:00:46', '2025-01-08 20:07:51');
+INSERT INTO `t_smart_job` VALUES (2, '示例任务2', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample2', 'fixed_delay', '120', 1, '一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界，一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界啊', '2025-01-08 19:56:59', 8144, 2, '一个不能停留太久的世界啊', 0, '管理员', '2024-06-18 20:45:35', '2025-01-08 19:57:00');
+
 
 -- ----------------------------
 -- Table structure for t_smart_job_log

@@ -5,122 +5,143 @@
 -->
 <template>
   <div>
-    <a-form class="smart-query-form">
-      <a-row class="smart-query-form-row">
-        <a-form-item label="关键字" class="smart-query-form-item">
-          <a-input style="width: 200px" v-model:value="queryForm.searchWord" placeholder="请输入关键字" :maxlength="30" />
-        </a-form-item>
-        <a-form-item label="触发类型" class="smart-query-form-item">
-          <a-select style="width: 155px" v-model:value="queryForm.triggerType" placeholder="请选择触发类型" allowClear>
-            <a-select-option v-for="item in $smartEnumPlugin.getValueDescList('TRIGGER_TYPE_ENUM')" :key="item.value" :value="item.value">
-              {{ item.desc }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item label="状态" class="smart-query-form-item">
-          <a-select style="width: 150px" v-model:value="queryForm.enabledFlag" placeholder="请选择状态" allowClear>
-            <a-select-option :key="1"> 开启 </a-select-option>
-            <a-select-option :key="0"> 停止 </a-select-option>
-          </a-select>
-        </a-form-item>
-
-        <a-form-item class="smart-query-form-item smart-margin-left10">
-          <a-button-group>
-            <a-button type="primary" @click="onSearch" v-privilege="'support:job:query'">
-              <template #icon>
-                <ReloadOutlined />
-              </template>
-              查询
-            </a-button>
-            <a-button @click="resetQuery" v-privilege="'support:job:query'">
-              <template #icon>
-                <SearchOutlined />
-              </template>
-              重置
-            </a-button>
-          </a-button-group>
-        </a-form-item>
-      </a-row>
-    </a-form>
-
     <a-card size="small" :bordered="false" :hoverable="true">
-      <a-row justify="end">
-        <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.JOB" :refresh="queryJobList" />
-      </a-row>
+      <a-tabs v-model:activeKey="activeKey">
+        <a-tab-pane key="1" tab="有效任务">
+          <a-form class="smart-query-form">
+            <a-row class="smart-query-form-row">
+              <a-form-item label="关键字" class="smart-query-form-item">
+                <a-input style="width: 200px" v-model:value="queryForm.searchWord" placeholder="请输入关键字" :maxlength="30" />
+              </a-form-item>
+              <a-form-item label="触发类型" class="smart-query-form-item">
+                <a-select style="width: 155px" v-model:value="queryForm.triggerType" placeholder="请选择触发类型" allowClear>
+                  <a-select-option v-for="item in $smartEnumPlugin.getValueDescList('TRIGGER_TYPE_ENUM')" :key="item.value" :value="item.value">
+                    {{ item.desc }}
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
+              <a-form-item label="状态" class="smart-query-form-item">
+                <a-select style="width: 150px" v-model:value="queryForm.enabledFlag" placeholder="请选择状态" allowClear>
+                  <a-select-option :key="1"> 开启 </a-select-option>
+                  <a-select-option :key="0"> 停止 </a-select-option>
+                </a-select>
+              </a-form-item>
 
-      <a-table
-        :scroll="{ x: 1800 }"
-        size="small"
-        :loading="tableLoading"
-        bordered
-        :dataSource="tableData"
-        :columns="columns"
-        rowKey="jobId"
-        :pagination="false"
-      >
-        <template #bodyCell="{ record, column }">
-          <template v-if="column.dataIndex === 'jobClass'">
-            <a-tooltip>
-              <template #title>{{ record.jobClass }}</template>
-              {{ handleJobClass(record.jobClass) }}
-            </a-tooltip>
-          </template>
-          <template v-if="column.dataIndex === 'triggerType'">
-            <a-tag v-if="record.triggerType === TRIGGER_TYPE_ENUM.CRON.value" color="success">{{ record.triggerTypeDesc }}</a-tag>
-            <a-tag v-else-if="record.triggerType === TRIGGER_TYPE_ENUM.FIXED_DELAY.value" color="processing">{{ record.triggerTypeDesc }}</a-tag>
-            <a-tag v-else color="pink">{{ record.triggerTypeDesc }}</a-tag>
-          </template>
-          <template v-if="column.dataIndex === 'lastJob'">
-            <div v-if="record.lastJobLog">
-              <a-tooltip>
-                <template #title>{{ handleExecuteResult(record.lastJobLog.executeResult) }}</template>
-                <CheckOutlined v-if="record.lastJobLog.successFlag" style="color: #39c710" />
-                <WarningOutlined v-else style="color: #f50" />
-                {{ record.lastJobLog.executeStartTime }}
-              </a-tooltip>
+              <a-form-item class="smart-query-form-item smart-margin-left10">
+                <a-button-group>
+                  <a-button type="primary" @click="onSearch" v-privilege="'support:job:query'">
+                    <template #icon>
+                      <ReloadOutlined />
+                    </template>
+                    查询
+                  </a-button>
+                  <a-button @click="resetQuery" v-privilege="'support:job:query'">
+                    <template #icon>
+                      <SearchOutlined />
+                    </template>
+                    重置
+                  </a-button>
+                </a-button-group>
+
+                <a-button class="smart-margin-left20" type="primary" @click="openUpdateModal()" v-privilege="'support:job:add'">
+                  <template #icon>
+                    <plus-outlined />
+                  </template>
+                  添加任务
+                </a-button>
+              </a-form-item>
+            </a-row>
+          </a-form>
+          <a-flex align="end" vertical>
+            <div class="smart-table-setting-block smart-margin-bottom10">
+              <TableOperator
+                class="smart-margin-bottom5 pull-right"
+                v-model="columns"
+                :tableId="TABLE_ID_CONST.SUPPORT.JOB"
+                :refresh="queryJobList"
+              />
             </div>
-          </template>
-          <template v-if="column.dataIndex === 'nextJob'">
-            <a-tooltip v-if="record.enabledFlag && record.nextJobExecuteTimeList">
-              <template #title>
-                <div>下次执行(预估时间)</div>
-                <div v-for="item in record.nextJobExecuteTimeList" :key="item">{{ item }}</div>
+          </a-flex>
+
+          <a-table
+            :scroll="{ x: 1800 }"
+            size="small"
+            :loading="tableLoading"
+            bordered
+            :dataSource="tableData"
+            :columns="columns"
+            rowKey="jobId"
+            :pagination="false"
+          >
+            <template #bodyCell="{ record, column }">
+              <template v-if="column.dataIndex === 'jobClass'">
+                <a-tooltip>
+                  <template #title>{{ record.jobClass }}</template>
+                  {{ handleJobClass(record.jobClass) }}
+                </a-tooltip>
               </template>
-              {{ record.nextJobExecuteTimeList[0] }}
-            </a-tooltip>
-          </template>
-          <template v-if="column.dataIndex === 'enabledFlag'">
-            <a-switch
-              v-model:checked="record.enabledFlag"
-              @change="(checked) => handleEnabledUpdate(checked, record)"
-              :loading="record.enabledLoading"
+              <template v-if="column.dataIndex === 'triggerType'">
+                <a-tag v-if="record.triggerType === TRIGGER_TYPE_ENUM.CRON.value" color="success">{{ record.triggerTypeDesc }}</a-tag>
+                <a-tag v-else-if="record.triggerType === TRIGGER_TYPE_ENUM.FIXED_DELAY.value" color="processing">{{ record.triggerTypeDesc }}</a-tag>
+                <a-tag v-else color="pink">{{ record.triggerTypeDesc }}</a-tag>
+              </template>
+              <template v-if="column.dataIndex === 'lastJob'">
+                <div v-if="record.lastJobLog">
+                  <a-tooltip>
+                    <template #title>{{ handleExecuteResult(record.lastJobLog.executeResult) }}</template>
+                    <CheckOutlined v-if="record.lastJobLog.successFlag" style="color: #39c710" />
+                    <WarningOutlined v-else style="color: #f50" />
+                    {{ record.lastJobLog.executeStartTime }}
+                  </a-tooltip>
+                </div>
+              </template>
+              <template v-if="column.dataIndex === 'nextJob'">
+                <a-tooltip v-if="record.enabledFlag && record.nextJobExecuteTimeList">
+                  <template #title>
+                    <div>下次执行(预估时间)</div>
+                    <div v-for="item in record.nextJobExecuteTimeList" :key="item">{{ item }}</div>
+                  </template>
+                  {{ record.nextJobExecuteTimeList[0] }}
+                </a-tooltip>
+              </template>
+              <template v-if="column.dataIndex === 'enabledFlag'">
+                <a-switch
+                  v-model:checked="record.enabledFlag"
+                  checked-children="已启用" un-checked-children="已禁用"
+                  @change="(checked) => handleEnabledUpdate(checked, record)"
+                  :loading="record.enabledLoading"
+                />
+              </template>
+              <template v-if="column.dataIndex === 'action'">
+                <div class="smart-table-operate">
+                  <a-button v-privilege="'support:job:update'" @click="openUpdateModal(record)" type="link">编辑</a-button>
+                  <a-button v-privilege="'support:job:execute'" type="link" @click="openExecuteModal(record)">执行</a-button>
+                  <a-button v-privilege="'support:job:log:query'" @click="openJobLogModal(record.jobId, record.jobName)" type="link">记录</a-button>
+                  <a-button danger v-privilege="'support:job:log:delete'" @click="confirmDelete(record.jobId, record.jobName)" type="link">删除</a-button>
+                </div>
+              </template>
+            </template>
+          </a-table>
+          <div class="smart-query-table-page">
+            <a-pagination
+                showSizeChanger
+                showQuickJumper
+                show-less-items
+                :pageSizeOptions="PAGE_SIZE_OPTIONS"
+                :defaultPageSize="queryForm.pageSize"
+                v-model:current="queryForm.pageNum"
+                v-model:pageSize="queryForm.pageSize"
+                :total="total"
+                @change="queryJobList"
+                @showSizeChange="queryJobList"
+                :show-total="(total) => `共${total}条`"
             />
-          </template>
-          <template v-if="column.dataIndex === 'action'">
-            <div class="smart-table-operate">
-              <a-button v-privilege="'support:job:update'" @click="openUpdateModal(record)" type="link">编辑</a-button>
-              <a-button v-privilege="'support:job:execute'" type="link" @click="openExecuteModal(record)">执行</a-button>
-              <a-button v-privilege="'support:job:log:query'" @click="openJobLogModal(record.jobId, record.jobName)" type="link">记录</a-button>
-            </div>
-          </template>
-        </template>
-      </a-table>
+          </div>
+        </a-tab-pane>
+        <a-tab-pane key="2" tab="已删除任务"><DeletedJobList /></a-tab-pane>
+      </a-tabs>
 
-      <div class="smart-query-table-page">
-        <a-pagination
-          showSizeChanger
-          showQuickJumper
-          show-less-items
-          :pageSizeOptions="PAGE_SIZE_OPTIONS"
-          :defaultPageSize="queryForm.pageSize"
-          v-model:current="queryForm.pageNum"
-          v-model:pageSize="queryForm.pageSize"
-          :total="total"
-          @change="queryJobList"
-          @showSizeChange="queryJobList"
-          :show-total="(total) => `共${total}条`"
-        />
-      </div>
+
     </a-card>
 
     <!-- 表单操作 -->
@@ -131,17 +152,18 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { message } from 'ant-design-vue';
+  import {message, Modal} from 'ant-design-vue';
   import { onMounted, reactive, ref } from 'vue';
   import { jobApi } from '/@/api/support/job-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
-  import { useRouter } from 'vue-router';
+  import DeletedJobList from './components/deleted-job-list.vue';
   import { TRIGGER_TYPE_ENUM } from '/@/constants/support/job-const.js';
   import JobFormModal from './components/job-form-modal.vue';
   import JobLogListModal from './components/job-log-list-modal.vue';
+  import {SmartLoading} from "/@/components/framework/smart-loading/index.js";
 
   const columns = ref([
     {
@@ -182,9 +204,9 @@
       dataIndex: 'nextJob',
     },
     {
-      title: '状态',
+      title: '启用状态',
       dataIndex: 'enabledFlag',
-      width: 80,
+      width: 100,
     },
     {
       title: '执行参数',
@@ -215,7 +237,7 @@
       title: '操作',
       dataIndex: 'action',
       fixed: 'right',
-      width: 130,
+      width: 170,
     },
   ]);
 
@@ -225,6 +247,7 @@
     searchWord: '',
     enabledFlag: null,
     triggerType: null,
+    deletedFlag: false,
     pageNum: 1,
     pageSize: 10,
   };
@@ -249,7 +272,7 @@
     return jobClass.split('.').pop();
   }
 
-  // 上次处理结果展示 最多展示300
+  // 上次处理结果展示
   function handleExecuteResult(result) {
     let num = 400;
     return result ? result.substring(0, num) + (result.length > num ? ' ...' : '') : '';
@@ -306,6 +329,35 @@
   const jobLogModal = ref();
   function openJobLogModal(jobId, name) {
     jobLogModal.value.show(jobId, name);
+  }
+
+  // ------------------------------------ 删除操作 -------------------------------------
+
+  function confirmDelete(jobId, jobName){
+    Modal.confirm({
+      title: '警告',
+      content: `确定要删除【${jobName}】任务吗?`,
+      okText: '删除',
+      okType: 'danger',
+      onOk() {
+        deleteJob(jobId);
+      },
+      cancelText: '取消',
+      onCancel() {},
+    });
+  }
+
+  async function deleteJob(jobId){
+    try{
+      SmartLoading.show();
+      await jobApi.deleteJob(jobId);
+      message.success('删除成功!');
+      queryJobList();
+    }catch (e){
+      smartSentry.captureError(e);
+    }finally {
+      SmartLoading.hide();
+    }
   }
 
   // ------------------------------------ 表单操作 -------------------------------------
