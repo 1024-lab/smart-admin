@@ -1,24 +1,22 @@
 package net.lab1024.sa.base.module.support.captcha;
 
-import com.google.code.kaptcha.impl.DefaultKaptcha;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.core.img.ImgUtil;
+import cn.hutool.core.util.RandomUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.base.common.constant.StringConst;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.domain.SystemEnvironment;
-import net.lab1024.sa.base.common.exception.BusinessException;
 import net.lab1024.sa.base.constant.RedisKeyConst;
 import net.lab1024.sa.base.module.support.captcha.domain.CaptchaForm;
 import net.lab1024.sa.base.module.support.captcha.domain.CaptchaVO;
 import net.lab1024.sa.base.module.support.redis.RedisService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Base64Utils;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
+import java.awt.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -29,7 +27,7 @@ import java.util.UUID;
  * @Date 2021/8/31 20:52
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Slf4j
 @Service
@@ -41,9 +39,6 @@ public class CaptchaService {
     private static final long EXPIRE_SECOND = 65L;
 
     @Resource
-    private DefaultKaptcha defaultKaptcha;
-
-    @Resource
     private SystemEnvironment systemEnvironment;
 
     @Resource
@@ -52,20 +47,23 @@ public class CaptchaService {
     /**
      * 生成图形验证码
      * 默认 1 分钟有效期
-     *
      */
     public CaptchaVO generateCaptcha() {
-        String captchaText = defaultKaptcha.createText();
-        BufferedImage image = defaultKaptcha.createImage(captchaText);
 
-        String base64Code;
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            ImageIO.write(image, "jpg", os);
-            base64Code = Base64Utils.encodeToString(os.toByteArray());
-        } catch (Exception e) {
-            log.error("generateCaptcha error:", e);
-            throw new BusinessException("生成验证码错误");
-        }
+        //生成四位验证码
+        String captchaText = RandomUtil.randomNumbers(4);
+
+        //定义图形验证码的长、宽、验证码位数、干扰线数量
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(125, 43, 4, 80);
+
+        //设置背景颜色
+        lineCaptcha.setBackground(new Color(230, 244, 255));
+
+        //生成图片
+        Image image = lineCaptcha.createImage(captchaText);
+
+        //转为base64
+        String base64Code = ImgUtil.toBase64(image, "jpg");
 
         /*
          * 返回验证码对象
@@ -88,7 +86,6 @@ public class CaptchaService {
 
     /**
      * 校验图形验证码
-     *
      */
     public ResponseDTO<String> checkCaptcha(CaptchaForm captchaForm) {
         if (StringUtils.isBlank(captchaForm.getCaptchaUuid()) || StringUtils.isBlank(captchaForm.getCaptchaCode())) {

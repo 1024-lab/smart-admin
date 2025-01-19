@@ -81,13 +81,14 @@
     if (!value) {
       emit('update:value', []);
       emit('change', []);
+      return;
     }
     if (Array.isArray(value)) {
       emit('update:value', value);
       emit('change', value);
     } else {
-      emit('update:value', [value]);
-      emit('change', [value]);
+      emit('update:value', value);
+      emit('change', value);
     }
   }
 </script>

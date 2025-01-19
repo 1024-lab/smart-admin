@@ -31,7 +31,6 @@
         <google-linkedhashmap.version>1.4.2</google-linkedhashmap.version>
         <google-guava.version>20.0</google-guava.version>
         <user-agent-utils.version>1.21</user-agent-utils.version>
-        <kaptcha.version>2.3.2</kaptcha.version>
         <reflections.version>0.9.11</reflections.version>
         <commons-io.version>2.15.0</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
@@ -150,12 +149,6 @@
                 <groupId>eu.bitwalker</groupId>
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${user-agent-utils.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.penggle</groupId>
-                <artifactId>kaptcha</artifactId>
-                <version>${kaptcha.version}</version>
             </dependency>
 
             <dependency>

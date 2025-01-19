@@ -9,7 +9,7 @@
 -->
 
 <template>
-  <a-drawer :title="$t('setting.title')" placement="right" :open="visible" @close="close">
+  <a-drawer :title="$t('setting.title')" placement="right" :width="410" :open="visible" @close="close">
     <a-form layout="horizontal" :label-col="{ span: 8 }">
       <a-form-item label="语言/Language">
         <a-select v-model:value="formState.language" @change="changeLanguage" style="width: 120px">

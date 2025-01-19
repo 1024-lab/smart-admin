@@ -108,7 +108,7 @@ public class Level3ProtectConfigService {
      * 最低活跃时间（单位：秒），超过此时间没有操作系统就会被冻结，默认-1 代表不限制，永不冻结; 默认 30分钟
      */
     public int getLoginActiveTimeoutSeconds() {
-        return loginActiveTimeoutSeconds;
+        return loginActiveTimeoutSeconds > 0 ? loginActiveTimeoutSeconds : -1;
     }
 
     /**
@@ -168,6 +168,7 @@ public class Level3ProtectConfigService {
 
         if (configForm.getLoginActiveTimeoutMinutes() != null) {
             this.loginActiveTimeoutSeconds = configForm.getLoginActiveTimeoutMinutes() * 60;
+            this.loginActiveTimeoutSeconds = loginActiveTimeoutSeconds > 0 ? loginActiveTimeoutSeconds : -1;
         }
 
         if (configForm.getPasswordComplexityEnabled() != null) {

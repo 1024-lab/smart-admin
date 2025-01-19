@@ -14,6 +14,8 @@
   <SideExpandLayout v-if="layout === LAYOUT_ENUM.SIDE_EXPAND.value" />
   <!--顶部菜单 模式-->
   <TopLayout v-if="layout === LAYOUT_ENUM.TOP.value" />
+    <!--顶部展开 模式-->
+  <TopExpandLayout v-if="layout === LAYOUT_ENUM.TOP_EXPAND.value" />
   <!--定期修改密码-->
   <RegularChangePasswordModal />
 </template>
@@ -21,6 +23,7 @@
   import { computed } from 'vue';
   import { LAYOUT_ENUM } from '/@/constants/layout-const';
   import SideExpandLayout from './side-expand-layout.vue';
+  import TopExpandLayout from './top-expand-layout.vue';
   import SideLayout from './side-layout.vue';
   import TopLayout from './top-layout.vue';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';

@@ -20,6 +20,10 @@ export const LAYOUT_ENUM = {
     value: 'top',
     desc: '顶部',
   },
+  TOP_EXPAND: {
+    value: 'top-expand',
+    desc: '分组',
+  },
 };
 
 export const PAGE_TAG_ENUM = {
