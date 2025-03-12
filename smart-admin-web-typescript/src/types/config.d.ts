@@ -22,7 +22,6 @@ export type LayoutType = 'side' | 'side-expand';
  */
 export type ThemeType = 'light' | 'dark';
 
-
 /**
  * 应用信息配置
  */
@@ -33,6 +32,10 @@ export interface AppConfig {
   layout: string;
   // 主题
   sideMenuTheme: ThemeType;
+  // 表格高度
+  tableYHeight: number;
+  //标签页位置
+  pageTagLocation: string;
   // 侧边菜单宽度 ， 默认为256px
   sideMenuWidth: number;
   // 主题颜色索引
@@ -51,6 +54,8 @@ export interface AppConfig {
   footerFlag: boolean;
   // 帮助文档
   helpDocFlag: boolean;
+  // 帮助文档默认展开
+  helpDocExpandFlag: boolean;
   // 水印
   watermarkFlag: boolean;
   // 网站名称

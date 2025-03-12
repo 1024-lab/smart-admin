@@ -11,6 +11,16 @@
             <a-form-item label="登录账号" name="loginName">
               <a-input class="form-item" v-model:value.trim="form.loginName" placeholder="请输入登录账号" disabled />
             </a-form-item>
+            <a-form-item label="部门" name="departmentId">
+              <DepartmentTreeSelect
+                class="form-item"
+                ref="departmentTreeSelect"
+                width="100%"
+                :init="false"
+                v-model:value="form.departmentId"
+                disabled
+              />
+            </a-form-item>
             <a-form-item label="员工名称" name="actualName">
               <a-input class="form-item" v-model:value.trim="form.actualName" placeholder="请输入员工名称" />
             </a-form-item>
@@ -20,8 +30,11 @@
             <a-form-item label="手机号码" name="phone">
               <a-input class="form-item" v-model:value.trim="form.phone" placeholder="请输入手机号码" />
             </a-form-item>
-            <a-form-item label="部门" name="departmentId">
-              <DepartmentTreeSelect class="form-item" ref="departmentTreeSelect" width="100%" :init="false" v-model:value="form.departmentId" />
+            <a-form-item label="邮箱" name="email">
+              <a-input v-model:value.trim="form.email" placeholder="请输入邮箱" />
+            </a-form-item>
+            <a-form-item label="职务" name="positionId">
+              <PositionSelect v-model:value="form.positionId" placeholder="请选择职务" />
             </a-form-item>
             <a-form-item label="备注" name="remark">
               <a-textarea class="form-item" v-model:value="form.remark" placeholder="请输入备注" :rows="4" />
@@ -38,7 +51,7 @@
                 list-type="picture-card"
                 class="avatar-uploader"
                 :show-upload-list="false"
-                :headers="{ 'x-access-token': useUserStore().getToken }"
+                :headers="{ Authorization: 'Bearer ' + useUserStore().getToken }"
                 :customRequest="customRequest"
                 :before-upload="beforeUpload"
               >
@@ -65,6 +78,7 @@
   import { onMounted, reactive, ref } from 'vue';
   import { regular } from '/@/constants/regular-const.js';
   import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
+  import PositionSelect from '/@/components/system/position-select/index.vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import { loginApi } from '/@/api/system/login-api.js';
   import { useUserStore } from '/@/store/modules/system/user.js';
@@ -93,10 +107,12 @@
     phone: '',
     // 部门id
     departmentId: undefined,
-    // 是否启用
-    disabledFlag: undefined,
     // 邮箱
     email: undefined,
+    // 职务级别
+    positionId: undefined,
+    // 是否禁用
+    disabledFlag: undefined,
     // 备注
     remark: '',
   };
@@ -111,7 +127,7 @@
       { pattern: regular.phone, message: '请输入正确的手机号码', trigger: 'blur' },
     ],
     gender: [{ required: true, message: '性别不能为空' }],
-    departmentId: [{ required: true, message: '部门不能为空' }],
+    email: [{ required: true, message: '请输入邮箱' }],
   };
   // 头像地址
   let avatarUrl = ref();
@@ -128,12 +144,13 @@
       form.employeeId = data.employeeId;
       form.loginName = data.loginName;
       form.actualName = data.actualName;
-      form.email = data.email;
       form.gender = data.gender;
       form.phone = data.phone;
       form.departmentId = data.departmentId;
-      form.disabledFlag = data.disabledFlag;
+      form.email = data.email;
+      form.positionId = data.positionId;
       form.remark = data.remark;
+      form.disabledFlag = data.disabledFlag;
       // 头像展示
       avatarUrl.value = data.avatar;
     } catch (e) {
@@ -187,7 +204,7 @@
   async function updateEmployee() {
     SmartLoading.show();
     try {
-      await employeeApi.updateByLogin(form);
+      await employeeApi.updateCenter(form);
       message.success('更新成功');
       // 重新获取详情，刷新整体缓存
       await getLoginInfo();

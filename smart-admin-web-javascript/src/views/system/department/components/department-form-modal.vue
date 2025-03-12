@@ -11,42 +11,59 @@
   <a-modal v-model:open="visible" :title="formState.departmentId ? '编辑部门' : '添加部门'" @ok="handleOk" destroyOnClose>
     <a-form ref="formRef" :model="formState" :rules="rules" layout="vertical">
       <a-form-item label="上级部门" name="parentId" v-if="formState.parentId != 0">
-        <DepartmentTreeSelect ref="departmentTreeSelect" v-model:value="formState.parentId" :defaultValueFlag="false" width="100%" />
+        <DepartmentTreeSelect ref="departmentTreeSelect" v-model:value="formState.parentId" :defaultValueFlag="false"
+          width="100%" />
       </a-form-item>
       <a-form-item label="部门名称" name="name">
         <a-input v-model:value.trim="formState.name" placeholder="请输入部门名称" />
       </a-form-item>
       <a-form-item label="部门负责人" name="managerId">
-        <EmployeeSelect ref="employeeSelect" placeholder="请选择部门负责人" width="100%" v-model:value="formState.managerId" :leaveFlag="false" />
+        <EmployeeSelect ref="employeeSelect" placeholder="请选择部门负责人" width="100%" v-model:value="formState.managerId"
+          :leaveFlag="false" />
       </a-form-item>
       <a-form-item label="部门排序 （值越大越靠前！）" name="sort">
-        <a-input-number style="width: 100%" v-model:value="formState.sort" :min="0" placeholder="请输入部门名称" />
+        <a-input-number style="width: 100%" v-model:value="formState.sort" :min="0" placeholder="请输入部门排序" />
       </a-form-item>
     </a-form>
   </a-modal>
 </template>
 <script setup>
   import message from 'ant-design-vue/lib/message';
-  import { reactive, ref } from 'vue';
+  import { nextTick, reactive, ref } from 'vue';
   import { departmentApi } from '/@/api/system/department-api';
   import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
   import EmployeeSelect from '/@/components/system/employee-select/index.vue';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
 
-  // ----------------------- 对外暴漏 ---------------------
+// ----------------------- 对外暴漏 ---------------------
 
-  defineExpose({
-    showModal,
-  });
+defineExpose({
+  showModal,
+});
 
-  // ----------------------- modal 的显示与隐藏 ---------------------
-  const emits = defineEmits(['refresh']);
+// ----------------------- modal 的显示与隐藏 ---------------------
+const emits = defineEmits(['refresh']);
 
   const visible = ref(false);
   function showModal(data) {
     visible.value = true;
     updateFormData(data);
+    nextTick(() => {
+      // 解决弹窗错误信息显示,没有可忽略
+      const domArr = document.getElementsByClassName('ant-modal');
+      if (domArr && domArr.length > 0) {
+        Array.from(domArr).forEach((item) => {
+          if (item.childNodes && item.childNodes.length > 0) {
+            Array.from(item.childNodes).forEach((child) => {
+              if (child.setAttribute) {
+                child.setAttribute('aria-hidden', 'false');
+              }
+            });
+          }
+        });
+      }
+    });
   }
   function closeModal() {
     visible.value = false;
@@ -65,30 +82,29 @@
   };
   const employeeSelect = ref();
 
-  let formState = reactive({
-    ...defaultDepartmentForm,
-  });
-  // 表单校验规则
-  const rules = {
-    parentId: [{ required: true, message: '上级部门不能为空' }],
-    name: [
-      { required: true, message: '部门名称不能为空' },
-      { max: 50, message: '部门名称不能大于20个字符', trigger: 'blur' },
-    ],
-    managerId: [{ required: true, message: '部门负责人不能为空' }],
-  };
-  // 更新表单数据
-  function updateFormData(data) {
-    Object.assign(formState, defaultDepartmentForm);
-    if (data) {
-      Object.assign(formState, data);
-    }
-    visible.value = true;
+let formState = reactive({
+  ...defaultDepartmentForm,
+});
+// 表单校验规则
+const rules = {
+  parentId: [{ required: true, message: '上级部门不能为空' }],
+  name: [
+    { required: true, message: '部门名称不能为空' },
+    { max: 50, message: '部门名称不能大于20个字符', trigger: 'blur' },
+  ],
+};
+// 更新表单数据
+function updateFormData(data) {
+  Object.assign(formState, defaultDepartmentForm);
+  if (data) {
+    Object.assign(formState, data);
   }
-  // 重置表单数据
-  function resetFormData() {
-    Object.assign(formState, defaultDepartmentForm);
-  }
+  visible.value = true;
+}
+// 重置表单数据
+function resetFormData() {
+  Object.assign(formState, defaultDepartmentForm);
+}
 
   async function handleOk() {
     try {

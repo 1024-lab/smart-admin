@@ -25,7 +25,7 @@
       </a-form-item>
 
       <a-form-item label="产地" name="place" class="smart-query-form-item">
-        <DictSelect key-code="GODOS_PLACE" v-model:value="queryForm.place" width="120px" />
+        <DictSelect key-code="GOODS_PLACE" v-model:value="queryForm.place" width="120px" />
       </a-form-item>
 
       <a-form-item label="商品状态" name="goodsStatus" class="smart-query-form-item">
@@ -35,8 +35,8 @@
       <a-form-item label="快速筛选" class="smart-query-form-item">
         <a-radio-group v-model:value="queryForm.shelvesFlag" @change="onSearch">
           <a-radio-button :value="undefined">全部</a-radio-button>
-          <a-radio-button :value="true">上架</a-radio-button>
-          <a-radio-button :value="false">下架</a-radio-button>
+          <a-radio-button :value="'true'">上架</a-radio-button>
+          <a-radio-button :value="'false'">下架</a-radio-button>
         </a-radio-group>
       </a-form-item>
 
@@ -102,15 +102,28 @@
       :dataSource="tableData"
       :columns="columns"
       rowKey="goodsId"
+      :scroll="{ x: 1000 }"
       bordered
       :pagination="false"
       :showSorterTooltip="false"
       :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
       @change="onChange"
+      @resizeColumn="handleResizeColumn"
     >
+      <!-- main.js中有全局表格高度配置，也可单独配置 -->
+      <!-- :scroll="{ y: 300 }" -->
+      <template #headerCell="{ column }">
+        <SmartHeaderCell v-model:value="queryForm[column.filterOptions?.key || column.dataIndex]" :column="column" @change="queryData" />
+      </template>
       <template #bodyCell="{ text, record, column }">
+        <template v-if="column.dataIndex === 'goodsName'">
+          {{ text }}
+        </template>
         <template v-if="column.dataIndex === 'place'">
-          <span>{{ text && text.length > 0 ? text.map((e) => e.valueName).join(',') : '' }}</span>
+          <DictPreview :options="descList.GOODS_PLACE" :value="text" />
+        </template>
+        <template v-if="column.dataIndex === 'remark'">
+          <span>{{ text ? text : '' }}</span>
         </template>
         <template v-if="column.dataIndex === 'goodsStatus'">
           <span>{{ $smartEnumPlugin.getDescByValue('GOODS_STATUS_ENUM', text) }}</span>
@@ -176,7 +189,7 @@
 </template>
 <script setup>
   import GoodsFormModal from './components/goods-form-modal.vue';
-  import { reactive, ref, onMounted } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { goodsApi } from '/@/api/business/goods/goods-api';
@@ -189,52 +202,88 @@
   import { GOODS_STATUS_ENUM } from '/@/constants/business/erp/goods-const';
   import DictSelect from '/@/components/support/dict-select/index.vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
-  import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const.js';
-  import FileUpload from '/@/components/support/file-upload/index.vue';
   import _ from 'lodash';
+  import SmartHeaderCell from '/@/components/smart-table-header-cell/index.vue';
+  import DictPreview from '/@/components/dict-preview/index.vue';
+  import { useDict } from '/@/utils/dict';
 
+  const descList = useDict('GOODS_PLACE');
   // ---------------------------- 表格列 ----------------------------
 
   const columns = ref([
     {
       title: '商品分类',
       dataIndex: 'categoryName',
+      resizable: true,
+      filterOptions: {
+        type: 'category-tree',
+        key: 'categoryId',
+        categoryType: CATEGORY_TYPE_ENUM.GOODS.value,
+      },
+      width: 150,
     },
     {
       title: '商品名称',
       dataIndex: 'goodsName',
+      resizable: true,
+      filterOptions: {
+        type: 'input',
+        key: 'searchWord',
+      },
+      width: 150,
     },
     {
       title: '商品状态',
       dataIndex: 'goodsStatus',
-      sorter: true
+      resizable: true,
+      sorter: true,
+      filterOptions: {
+        type: 'enum-select',
+        enumName: 'GOODS_STATUS_ENUM',
+      },
+      width: 150,
     },
     {
       title: '产地',
       dataIndex: 'place',
+      resizable: true,
+      filterOptions: {
+        type: 'dict-select',
+        keyCode: 'GOODS_PLACE',
+      },
+      width: 150,
     },
     {
-      title: '商品价格',
+      title: '价格',
       dataIndex: 'price',
-      sorter: true
+      resizable: true,
+      sorter: true,
+      width: 100,
     },
     {
-      title: '上架状态',
+      title: '状态',
       dataIndex: 'shelvesFlag',
-      sorter: true
+      resizable: true,
+      sorter: true,
+      width: 80,
     },
     {
       title: '备注',
       dataIndex: 'remark',
+      ellipsis: true,
+      resizable: true,
+      width: 150,
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
+      resizable: true,
       width: 150,
     },
     {
       title: '操作',
       dataIndex: 'action',
+      resizable: true,
       fixed: 'right',
       width: 100,
     },
@@ -251,7 +300,7 @@
     goodsType: undefined,
     pageNum: 1,
     pageSize: 10,
-    sortItemList: []
+    sortItemList: [],
   };
   // 查询表单form
   const queryForm = reactive(_.cloneDeep(queryFormState));
@@ -261,7 +310,15 @@
   const tableData = ref([]);
   // 总数
   const total = ref(0);
-
+  function handleResizeColumn(w, col) {
+    columns.value.forEach((item) => {
+      if (item.dataIndex === col.dataIndex) {
+        item.width = Math.floor(w);
+        // 拖动宽度标识
+        item.dragAndDropFlag = true;
+      }
+    });
+  }
   // 重置查询条件
   function resetQuery() {
     let pageSize = queryForm.pageSize;
@@ -421,11 +478,11 @@
     await goodsApi.exportGoods();
   }
 
-  function onChange(pagination, filters, sorter, { action }){
+  function onChange(pagination, filters, sorter, { action }) {
     if (action === 'sort') {
       const { order, field } = sorter;
       let column = camelToUnderscore(field);
-      let findIndex = queryForm.sortItemList.findIndex(e => e.column === column);
+      let findIndex = queryForm.sortItemList.findIndex((e) => e.column === column);
       if (findIndex !== -1) {
         queryForm.sortItemList.splice(findIndex, 1);
       }
@@ -433,7 +490,7 @@
         let isAsc = order !== 'ascend';
         queryForm.sortItemList.push({
           column,
-          isAsc
+          isAsc,
         });
       }
       queryData();
@@ -441,6 +498,6 @@
   }
 
   function camelToUnderscore(str) {
-    return str.replace(/([A-Z])/g, "_$1").toLowerCase();
+    return str.replace(/([A-Z])/g, '_$1').toLowerCase();
   }
 </script>

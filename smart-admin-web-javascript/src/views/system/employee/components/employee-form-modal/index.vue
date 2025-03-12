@@ -119,6 +119,7 @@
     phone: undefined,
     roleIdList: undefined,
     positionId: undefined,
+    email: undefined,
   };
 
   let form = reactive(_.cloneDeep(formDefault));

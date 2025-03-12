@@ -28,7 +28,7 @@
       </a-form-item>
 
       <a-form-item label="创建人" class="smart-query-form-item">
-        <a-input style="width: 100px" v-model:value="queryForm.createUserId" placeholder="创建人" />
+        <a-input style="width: 100px" v-model:value="queryForm.createUserName" placeholder="创建人" />
       </a-form-item>
 
       <a-form-item label="是否删除" class="smart-query-form-item">
@@ -91,6 +91,9 @@
         <template v-if="column.dataIndex === 'title'">
           <a @click="toDetail(record.noticeId)">{{ text }}</a>
         </template>
+        <template v-if="column.dataIndex === 'documentNumber'">
+          {{ text ? text : '无' }}
+        </template>
         <template v-else-if="column.dataIndex === 'allVisibleFlag'"> {{ text ? '全部可见' : '部分可见' }} </template>
         <template v-else-if="column.dataIndex === 'publishFlag'">
           {{ text ? '已发布' : '待发布' }}
@@ -145,7 +148,7 @@
     noticeTypeId: undefined, //分类
     keywords: '', //标题、作者、来源
     documentNumber: '', //文号
-    createUserId: undefined, //创建人
+    createUserName: undefined, //创建人
     deletedFlag: undefined, //删除标识
     createTimeBegin: null, //创建-开始时间
     createTimeEnd: null, //创建-截止时间
@@ -195,7 +198,7 @@
       ellipsis: true,
     },
     {
-      title: '发布',
+      title: '发布状态',
       dataIndex: 'publishFlag',
       width: 80,
     },

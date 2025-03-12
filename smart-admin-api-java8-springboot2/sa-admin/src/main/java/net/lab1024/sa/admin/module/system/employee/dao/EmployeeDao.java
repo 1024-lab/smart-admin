@@ -34,31 +34,30 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
      */
     List<EmployeeVO> selectEmployeeByDisabledAndDeleted(@Param("disabledFlag") Boolean disabledFlag, @Param("deletedFlag") Boolean deletedFlag);
 
-
     /**
      * 更新单个
      */
     void updateDisableFlag(@Param("employeeId") Long employeeId, @Param("disabledFlag") Boolean disabledFlag);
 
-
     /**
      * 通过登录名查询
      */
-    EmployeeEntity getByLoginName(@Param("loginName") String loginName,
-                                  @Param("disabledFlag") Boolean disabledFlag);
-
+    EmployeeEntity getByLoginName(@Param("loginName") String loginName, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 通过姓名查询
      */
-    EmployeeEntity getByActualName(@Param("actualName") String actualName,
-                                   @Param("disabledFlag") Boolean disabledFlag
-    );
+    EmployeeEntity getByActualName(@Param("actualName") String actualName, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 通过手机号查询
      */
-    EmployeeEntity getByPhone(@Param("phone") String phone, @Param("disabledFlag") Boolean disabledFlag);
+    EmployeeEntity getByPhone(@Param("phone") String phone, @Param("deletedFlag") Boolean deletedFlag);
+
+    /**
+     * 通过邮箱账号查询
+     */
+    EmployeeEntity getByEmail(@Param("email") String email, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 获取所有员工
@@ -67,7 +66,6 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
 
     /**
      * 获取某个部门员工数
-     *
      */
     Integer countByDepartmentId(@Param("departmentId") Long departmentId, @Param("deletedFlag") Boolean deletedFlag);
 
@@ -76,39 +74,35 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
      */
     List<EmployeeVO> getEmployeeByIds(@Param("employeeIds") Collection<Long> employeeIds);
 
-
     /**
      * 查询单个员工信息
      */
     EmployeeVO getEmployeeById(@Param("employeeId") Long employeeId);
 
-
     /**
      * 获取某个部门的员工
      */
-    List<EmployeeEntity> selectByDepartmentId(@Param("departmentId") Long departmentId, @Param("disabledFlag") Boolean disabledFlag);
-
+    List<EmployeeEntity> selectByDepartmentId(@Param("departmentId") Long departmentId, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 查询某些部门下用户名是xxx的员工
      */
-    List<EmployeeEntity> selectByActualName(@Param("departmentIdList") List<Long> departmentIdList, @Param("actualName") String actualName, @Param("disabledFlag") Boolean disabledFlag);
-
+    List<EmployeeEntity> selectByActualName(@Param("departmentIdList") List<Long> departmentIdList, @Param("actualName") String actualName, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 获取某批部门的员工Id
      */
-    List<Long> getEmployeeIdByDepartmentIdList(@Param("departmentIds") List<Long> departmentIds, @Param("disabledFlag") Boolean disabledFlag);
+    List<Long> getEmployeeIdByDepartmentIdList(@Param("departmentIds") List<Long> departmentIds, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 获取所有
      */
-    List<Long> getEmployeeId(@Param("leaveFlag") Boolean leaveFlag, @Param("disabledFlag") Boolean disabledFlag);
+    List<Long> getEmployeeId(@Param("leaveFlag") Boolean leaveFlag, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 获取某个部门的员工Id
      */
-    List<Long> getEmployeeIdByDepartmentId(@Param("departmentId") Long departmentId, @Param("disabledFlag") Boolean disabledFlag);
+    List<Long> getEmployeeIdByDepartmentId(@Param("departmentId") Long departmentId, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
      * 员工重置密码

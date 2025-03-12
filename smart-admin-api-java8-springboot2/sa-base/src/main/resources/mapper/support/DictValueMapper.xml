@@ -29,7 +29,7 @@
 
     <select id="selectByCode"
             resultType="net.lab1024.sa.base.module.support.dict.domain.entity.DictValueEntity">
-        select * from t_dict_value where value_code = #{valueCode} and deleted_flag = #{deletedFlag}
+        select * from t_dict_value where dict_Key_id = #{dictKeyId} and value_code = #{valueCode} and deleted_flag = #{deletedFlag}
     </select>
 
     <select id="selectByDeletedFlag"

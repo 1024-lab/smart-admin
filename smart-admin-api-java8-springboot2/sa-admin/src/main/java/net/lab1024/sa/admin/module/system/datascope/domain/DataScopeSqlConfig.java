@@ -25,7 +25,7 @@ public class DataScopeSqlConfig {
     /**
      * join sql 具体实现类
      */
-    private Class joinSqlImplClazz;
+    private Class<?> joinSqlImplClazz;
 
     private String joinSql;
 

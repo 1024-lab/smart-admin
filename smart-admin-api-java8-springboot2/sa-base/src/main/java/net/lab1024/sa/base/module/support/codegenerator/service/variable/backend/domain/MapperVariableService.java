@@ -40,7 +40,7 @@ public class MapperVariableService extends CodeGenerateBaseVariableService {
                 List<String> columnNameList = queryField.getColumnNameList();
                 if (columnNameList.size() == 1) {
                     // AND INSTR(t_notice.title,#{query.keywords})
-                    stringBuilder.append("        AND INSTR(")
+                    stringBuilder.append("AND INSTR(")
                             .append(form.getTableName()).append(".").append(queryField.getColumnNameList().get(0))
                             .append(",#{queryForm.")
                             .append(queryField.getFieldName())
@@ -48,21 +48,21 @@ public class MapperVariableService extends CodeGenerateBaseVariableService {
                 } else {
                     for (int i = 0; i < columnNameList.size(); i++) {
                         if (i == 0) {
-                            stringBuilder.append("AND ( INSTR(")
+                            stringBuilder.append("AND (\n                  INSTR(")
                                     .append(form.getTableName()).append(".").append(queryField.getColumnNameList().get(i))
                                     .append(",#{queryForm.")
                                     .append(queryField.getFieldName())
                                     .append("})");
                         } else {
                             // OR INSTR(t_notice.author,#{query.keywords})
-                            stringBuilder.append("\n                OR INSTR(")
+                            stringBuilder.append("\n                  OR INSTR(")
                                     .append(form.getTableName()).append(".").append(queryField.getColumnNameList().get(i))
                                     .append(",#{queryForm.")
                                     .append(queryField.getFieldName())
                                     .append("})");
                         }
                     }
-                    stringBuilder.append("\n            )");
+                    stringBuilder.append("\n                )");
                 }
                 fieldMap.put("likeStr", stringBuilder.toString());
             } else if (CodeQueryFieldQueryTypeEnum.DICT.equalsValue(queryField.getQueryTypeEnum())) {

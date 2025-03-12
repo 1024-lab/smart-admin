@@ -20,7 +20,7 @@
         <SmartEnumSelect enum-name="GOODS_STATUS_ENUM" v-model:value="form.goodsStatus" />
       </a-form-item>
       <a-form-item label="产地" name="place">
-        <DictSelect width="100%" key-code="GODOS_PLACE" v-model:value="form.place" mode="tags" />
+        <DictSelect width="100%" key-code="GOODS_PLACE" v-model:value="form.place" mode="tags" />
       </a-form-item>
       <a-form-item label="上架状态" name="shelvesFlag">
         <a-radio-group v-model:value="form.shelvesFlag">
@@ -107,7 +107,7 @@
       Object.assign(form, rowData);
     }
     if (form.place && form.place.length > 0) {
-      form.place = form.place.map((e) => e.valueCode);
+      form.place = form.place.split(',');
     }
     visible.value = true;
     nextTick(() => {

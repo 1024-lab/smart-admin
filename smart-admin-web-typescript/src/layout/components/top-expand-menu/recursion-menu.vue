@@ -39,79 +39,105 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
-import SubMenu from './sub-menu.vue';
-import { router } from '/@/router';
-import _ from 'lodash';
-import menuEmitter from './top-expand-menu-mitt';
-import { useAppConfigStore } from '/@/store/modules/system/app-config';
-import { useUserStore } from '/@/store/modules/system/user';
-import logoImg from '/@/assets/images/logo/smart-admin-logo.png';
+  import { ref, computed, watch } from 'vue';
+  import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
+  import SubMenu from './sub-menu.vue';
+  import { router } from '/@/router';
+  import { useRoute } from 'vue-router';
+  import _ from 'lodash';
+  import menuEmitter from './top-expand-menu-mitt';
+  import { useAppConfigStore } from '/@/store/modules/system/app-config';
+  import { useUserStore } from '/@/store/modules/system/user';
+  import logoImg from '/@/assets/images/logo/smart-admin-logo.png';
 
-const websiteName = computed(() => useAppConfigStore().websiteName);
-const theme = computed(() => useAppConfigStore().$state.sideMenuTheme);
+  const websiteName = computed(() => useAppConfigStore().websiteName);
+  const theme = computed(() => useAppConfigStore().$state.sideMenuTheme);
 
-const props = defineProps({
-  collapsed: {
-    type: Boolean,
-    default: false,
-  },
-});
+  const props = defineProps({
+    collapsed: {
+      type: Boolean,
+      default: false,
+    },
+  });
 
-// 选中的顶级菜单
-let topMenu = ref({});
-menuEmitter.on('selectTopMenu', onSelectTopMenu);
+  //菜单宽度
+  const sideMenuWidth = computed(() => useAppConfigStore().$state.sideMenuWidth);
 
-// 监听选中顶级菜单事件
-function onSelectTopMenu(selectedTopMenu) {
-  topMenu.value = selectedTopMenu;
-  if (selectedTopMenu.children && selectedTopMenu.children.length > 0) {
-    openKeys.value = _.map(selectedTopMenu.children, 'menuId').map((e) => e.toString());
-  } else {
-    openKeys.value = [];
+  // 选中的顶级菜单
+  let topMenu = ref({});
+  menuEmitter.on('selectTopMenu', onSelectTopMenu);
+
+  //动态通知顶部菜单栏侧边栏状态
+  watch(
+    topMenu,
+    (value) => {
+      let hasSideMenu = value.children && value.children.length > 0;
+      console.log(hasSideMenu);
+      menuEmitter.emit('sideMenuChange', hasSideMenu);
+    },
+    { immediate: true, deep: true }
+  );
+
+  // 监听选中顶级菜单事件
+  function onSelectTopMenu(selectedTopMenu) {
+    topMenu.value = selectedTopMenu;
+    if (selectedTopMenu.children && selectedTopMenu.children.length > 0) {
+      openKeys.value = _.map(selectedTopMenu.children, 'menuId').map((e) => e.toString());
+    } else {
+      openKeys.value = [];
+    }
+    selectedKeys.value = [];
   }
-  selectedKeys.value = [];
-}
 
-//展开的菜单
-const selectedKeys = ref([]);
-const openKeys = ref([]);
+  //展开的菜单
+  let currentRoute = useRoute();
+  const selectedKeys = ref([]);
+  const openKeys = ref([]);
 
-function updateSelectKeyAndOpenKey(parentList, currentSelectKey) {
-  if (!parentList) {
-    return;
+  function updateSelectKeyAndOpenKey(parentList, currentSelectKey) {
+    if (!parentList) {
+      return;
+    }
+    //获取需要展开的menu key集合
+    openKeys.value = _.map(parentList, 'name');
+    selectedKeys.value = [currentSelectKey];
   }
-  //获取需要展开的menu key集合
-  openKeys.value = _.map(parentList, 'name');
-  selectedKeys.value = [currentSelectKey];
-}
 
-// 页面跳转
-function turnToPage(route) {
-  useUserStore().deleteKeepAliveIncludes(route.menuId.toString());
-  router.push({ name: route.menuId.toString() });
-}
+  watch(
+    currentRoute,
+    (value) => {
+      selectedKeys.value = [value.name];
+    },
+    {
+      immediate: true,
+    }
+  );
 
-function onGoHome() {
-  router.push({ name: HOME_PAGE_NAME });
-}
+  // 页面跳转
+  function turnToPage(route) {
+    useUserStore().deleteKeepAliveIncludes(route.menuId.toString());
+    router.push({ name: route.menuId.toString() });
+  }
 
-defineExpose({ updateSelectKeyAndOpenKey });
+  function onGoHome() {
+    router.push({ name: HOME_PAGE_NAME });
+  }
 
-const isLight = computed(() => useAppConfigStore().$state.sideMenuTheme === 'light');
-const color = computed(() => {
-  let isLight = useAppConfigStore().$state.sideMenuTheme === 'light';
-  return {
-    background: isLight ? '#FFFFFF' : '#001529',
-  };
-});
+  defineExpose({ updateSelectKeyAndOpenKey });
+
+  const isLight = computed(() => useAppConfigStore().$state.sideMenuTheme === 'light');
+  const color = computed(() => {
+    let isLight = useAppConfigStore().$state.sideMenuTheme === 'light';
+    return {
+      background: isLight ? '#FFFFFF' : '#001529',
+    };
+  });
 </script>
 <style scoped lang="less">
-.recursion-container {
-  height: 100%;
-  background-color: v-bind('color.background');
-}
+  .recursion-container {
+    height: 100%;
+    background-color: v-bind('color.background');
+  }
 
   .min-logo {
     height: @header-user-height;
@@ -129,40 +155,40 @@ const color = computed(() => {
       height: 30px;
     }
   }
-.top-menu {
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: @header-user-height;
-  font-size: 16px;
-  color: #515a6e;
-  border-bottom: 1px solid #f3f3f3;
-  border-right: 1px solid #f3f3f3;
-}
-.logo {
-  height: @header-user-height;
-  line-height: @header-user-height;
-  padding: 0px 15px 0px 15px;
-  width: 100%;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-
-  .logo-img {
-    width: 30px;
-    height: 30px;
-  }
-
-  .title {
-    font-size: 16px;
-    font-weight: 600;
+  .top-menu {
     overflow: hidden;
-    word-wrap: break-word;
-    white-space: nowrap;
-    color: v-bind('theme === "light" ? "#001529": "#ffffff"');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: @header-user-height;
+    font-size: 16px;
+    color: #515a6e;
+    border-bottom: 1px solid #f3f3f3;
+    border-right: 1px solid #f3f3f3;
   }
-}
+  .logo {
+    height: @header-user-height;
+    line-height: @header-user-height;
+    padding: 0px 15px 0px 15px;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    .logo-img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      overflow: hidden;
+      word-wrap: break-word;
+      white-space: nowrap;
+      color: v-bind('theme === "light" ? "#001529": "#ffffff"');
+    }
+  }
 </style>

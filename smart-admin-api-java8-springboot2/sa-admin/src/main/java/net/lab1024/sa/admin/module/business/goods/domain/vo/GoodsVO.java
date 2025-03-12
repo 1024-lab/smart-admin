@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import net.lab1024.sa.admin.module.business.goods.constant.GoodsStatusEnum;
-import net.lab1024.sa.base.common.json.serializer.DictValueVoSerializer;
 import net.lab1024.sa.base.common.swagger.SchemaEnum;
 
 import java.math.BigDecimal;
@@ -32,7 +31,6 @@ public class GoodsVO  {
     private Integer goodsStatus;
 
     @Schema(description = "产地")
-    @JsonSerialize(using = DictValueVoSerializer.class)
     private String place;
 
     @Schema(description = "商品价格")

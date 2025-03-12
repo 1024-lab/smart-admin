@@ -60,102 +60,102 @@
   </div>
 </template>
 <script setup>
-import { reactive, ref } from 'vue';
-import { noticeApi } from '/@/api/business/oa/notice-api';
-import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
-import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
-import uaparser from 'ua-parser-js';
+  import { reactive, ref } from 'vue';
+  import { noticeApi } from '/@/api/business/oa/notice-api';
+  import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
+  import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
+  import uaparser from 'ua-parser-js';
 
-const props = defineProps({
-  noticeId: {
-    type: [Number, String],
-  },
-});
+  const props = defineProps({
+    noticeId: {
+      type: [Number, String],
+    },
+  });
 
-defineExpose({
-  onSearch,
-});
+  defineExpose({
+    onSearch,
+  });
 
-const tableColumns = [
-  {
-    title: '姓名',
-    dataIndex: 'employeeName',
-  },
-  {
-    title: '查看次数',
-    dataIndex: 'pageViewCount',
-  },
-  {
-    title: '首次查看设备',
-    dataIndex: 'firstIp',
-  },
-  {
-    title: '首次查看时间',
-    dataIndex: 'createTime',
-  },
-  {
-    title: '最后一次查看设备',
-    dataIndex: 'lastIp',
-  },
-  {
-    title: '最后一次查看时间',
-    dataIndex: 'updateTime',
-    with: 80,
-  },
-];
+  const tableColumns = [
+    {
+      title: '姓名',
+      dataIndex: 'employeeName',
+    },
+    {
+      title: '查看次数',
+      dataIndex: 'pageViewCount',
+    },
+    {
+      title: '首次查看设备',
+      dataIndex: 'firstIp',
+    },
+    {
+      title: '首次查看时间',
+      dataIndex: 'createTime',
+    },
+    {
+      title: '最后一次查看设备',
+      dataIndex: 'lastIp',
+    },
+    {
+      title: '最后一次查看时间',
+      dataIndex: 'updateTime',
+      with: 80,
+    },
+  ];
 
-const tableData = ref([]);
-const total = ref(0);
-const tableLoading = ref(false);
+  const tableData = ref([]);
+  const total = ref(0);
+  const tableLoading = ref(false);
 
-const defaultQueryForm = {
-  noticeId: props.noticeId,
-  departmentId: null,
-  keywords: '',
-  pageNum: 1,
-  pageSize: PAGE_SIZE,
-};
+  const defaultQueryForm = {
+    noticeId: props.noticeId,
+    departmentId: null,
+    keywords: '',
+    pageNum: 1,
+    pageSize: PAGE_SIZE,
+  };
 
-const queryForm = reactive({ ...defaultQueryForm });
+  const queryForm = reactive({ ...defaultQueryForm });
 
-function buildDeviceInfo(userAgent) {
-  if (!userAgent) {
-    return '';
-  }
-
-  let ua = uaparser(userAgent);
-  let browser = ua.browser.name;
-  let os = ua.os.name;
-  return browser + '/' + os + '/' + (ua.device.vendor ? ua.device.vendor + ua.device.model : '');
-}
-
-async function queryViewRecord() {
-  try {
-    tableLoading.value = true;
-    const result = await noticeApi.queryViewRecord(queryForm);
-
-    for (const e of result.data.list) {
-      e.firstDevice = buildDeviceInfo(e.firstUserAgent);
-      e.lastDevice = buildDeviceInfo(e.lastUserAgent);
+  function buildDeviceInfo(userAgent) {
+    if (!userAgent) {
+      return '';
     }
 
-    tableData.value = result.data.list;
-    total.value = result.data.total;
-  } catch (err) {
-    console.log(err);
-  } finally {
-    tableLoading.value = false;
+    let ua = uaparser(userAgent);
+    let browser = ua.browser.name;
+    let os = ua.os.name;
+    return browser + '/' + os + '/' + (ua.device.vendor ? ua.device.vendor + ua.device.model : '');
   }
-}
-// 点击查询
-function onSearch() {
-  queryForm.pageNum = 1;
-  queryViewRecord();
-}
 
-// 点击重置
-function resetQuery() {
-  Object.assign(queryForm, defaultQueryForm);
-  queryViewRecord();
-}
+  async function queryViewRecord() {
+    try {
+      tableLoading.value = true;
+      const result = await noticeApi.queryViewRecord(queryForm);
+
+      for (const e of result.data.list) {
+        e.firstDevice = buildDeviceInfo(e.firstUserAgent);
+        e.lastDevice = buildDeviceInfo(e.lastUserAgent);
+      }
+
+      tableData.value = result.data.list;
+      total.value = result.data.total;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      tableLoading.value = false;
+    }
+  }
+  // 点击查询
+  function onSearch() {
+    queryForm.pageNum = 1;
+    queryViewRecord();
+  }
+
+  // 点击重置
+  function resetQuery() {
+    Object.assign(queryForm, defaultQueryForm);
+    queryViewRecord();
+  }
 </script>

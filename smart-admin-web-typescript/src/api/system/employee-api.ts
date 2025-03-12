@@ -36,10 +36,10 @@ export const employeeApi = {
     return postRequest('/employee/update', params);
   },
   /**
-   * 更新登录人信息
+   * 更新员工个人中心信息
    */
-  updateByLogin: (params) => {
-    return postRequest('/employee/update/login', params);
+  updateCenter: (params) => {
+    return postRequest('/employee/update/center', params);
   },
   /**
    * 更新登录人头像
@@ -77,25 +77,22 @@ export const employeeApi = {
   updateEmployeePassword: (param) => {
     return postEncryptRequest('/employee/update/password', param);
   },
-
   /**
    * 获取密码复杂度
    */
   getPasswordComplexityEnabled: () => {
     return getRequest('/employee/getPasswordComplexityEnabled');
   },
-
   /**
    * 更新员工禁用状态
    */
   updateDisabled: (employeeId) => {
     return getRequest(`/employee/update/disabled/${employeeId}`);
   },
-
   /**
    * 查询员工-根据部门id
    */
   queryEmployeeByDeptId: (departmentId) => {
-    return getRequest(`/employee/query/dept/${departmentId}`);
+    return getRequest(`/employee/getAllEmployeeByDepartmentId/${departmentId}`);
   },
 };

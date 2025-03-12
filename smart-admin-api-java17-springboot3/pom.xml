@@ -21,6 +21,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <springboot.version>3.3.1</springboot.version>
         <spring-mock.version>2.0.8</spring-mock.version>
+        <spring-security-crypto.version>6.4.3</spring-security-crypto.version>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <p6spy.version>3.9.1</p6spy.version>
         <knife4j.version>4.4.0</knife4j.version>
@@ -33,10 +34,11 @@
         <commons-io.version>2.15.0</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-compress.version>1.26.0</commons-compress.version>
         <commons-codec.version>1.13</commons-codec.version>
         <commons-text.version>1.9</commons-text.version>
         <xerces.version>2.12.0</xerces.version>
-        <easy-excel.version>3.3.2</easy-excel.version>
+        <fast-excel.version>1.0.0</fast-excel.version>
         <poi.version>5.2.4</poi.version>
         <ooxml-schemas.version>1.4</ooxml-schemas.version>
         <aws-java-sdk.version>1.11.842</aws-java-sdk.version>
@@ -48,7 +50,7 @@
         <velocity-tools.version>3.1</velocity-tools.version>
         <sa-token.version>1.37.0</sa-token.version>
         <ip2region.version>2.7.0</ip2region.version>
-        <bcprov.version>1.59</bcprov.version>
+        <bcprov.version>1.80</bcprov.version>
         <jackson-datatype-jsr310.version>2.13.4</jackson-datatype-jsr310.version>
         <jackson-dataformat-yaml.version>2.16.1</jackson-dataformat-yaml.version>
         <smartdb.version>1.2.0</smartdb.version>
@@ -56,6 +58,7 @@
         <snakeyaml.version>2.2</snakeyaml.version>
         <freemarker.version>2.3.33</freemarker.version>
         <jsoup.version>1.18.1</jsoup.version>
+        <tika.version>3.1.0</tika.version>
     </properties>
 
     <dependencyManagement>
@@ -81,6 +84,12 @@
                         <artifactId>spring-boot-starter-logging</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-crypto</artifactId>
+                <version>${spring-security-crypto.version}</version>
             </dependency>
 
             <dependency>
@@ -154,6 +163,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
             </dependency>
 
             <dependency>
@@ -235,18 +250,18 @@
 
             <dependency>
                 <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
+                <artifactId>bcprov-jdk18on</artifactId>
                 <version>${bcprov.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>easyexcel</artifactId>
-                <version>${easy-excel.version}</version>
+                <groupId>cn.idev.excel</groupId>
+                <artifactId>fastexcel</artifactId>
+                <version>${fast-excel.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>poi-ooxml-schemas</artifactId>
-                        <groupId>org.apache.poi</groupId>
+                        <artifactId>logback-classic</artifactId>
+                        <groupId>ch.qos.logback</groupId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -316,6 +331,12 @@
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>${freemarker.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${tika.version}</version>
             </dependency>
 
         </dependencies>

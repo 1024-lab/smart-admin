@@ -30,6 +30,9 @@ import 'vue3-tabs-chrome/dist/vue3-tabs-chrome.css';
 import '/@/theme/index.less';
 import { localRead } from '/@/utils/local-util.js';
 import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
+import { Table } from 'ant-design-vue';
+import { useAppConfigStore } from '/@/store/modules/system/app-config';
+import '/@/utils/ployfill';
 
 /*
  * -------------------- ※ 着重 解释说明下main.js的初始化逻辑 begin ※ --------------------
@@ -64,7 +67,7 @@ async function getLoginInfo() {
   }
 }
 
-function initVue() {
+async function initVue() {
   let vueApp = createApp(App);
   let app = vueApp.use(router).use(store).use(i18n).use(Antd).use(smartEnumPlugin, constantsInfo).use(privilegePlugin).use(JsonViewer);
   //注入权限
@@ -83,11 +86,17 @@ function initVue() {
   //挂载
   app.mount('#app');
 }
-
+function setTableYHeight() {
+  Table.props.scroll.default = {
+    y: useAppConfigStore().tableYHeight,
+  };
+}
 //不需要获取用户信息、用户菜单、用户菜单动态路由，直接初始化vue即可
 let token = localRead(LocalStorageKeyConst.USER_TOKEN);
 if (!token) {
-  initVue();
+  await initVue();
+  setTableYHeight();
 } else {
-  getLoginInfo();
+  await getLoginInfo();
+  setTableYHeight();
 }

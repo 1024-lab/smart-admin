@@ -14,6 +14,10 @@ export const appDefaultConfig = {
   layout: 'side',
   // 侧边菜单宽度 ， 默认为200px
   sideMenuWidth: 200,
+  // 表格高度
+  tableYHeight: 300,
+  //标签页位置
+  pageTagLocation: 'top',
   // 菜单主题
   sideMenuTheme: 'dark',
   // 主题颜色索引

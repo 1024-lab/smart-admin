@@ -8,14 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-menu
-    v-model:openKeys="openKeys"
-    v-model:selectedKeys="selectedKeys"
-    class="smart-menu"
-    mode="inline"
-    :theme="theme"
-    :inlineCollapsed="collapsed"
-  >
+  <a-menu v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" class="smart-menu" mode="inline" :theme="theme">
     <template v-for="item in menuTree" :key="item.menuId">
       <template v-if="item.visibleFlag && !item.disabledFlag">
         <template v-if="$lodash.isEmpty(item.children)">
@@ -80,7 +73,7 @@
     let parentList = menuParentIdListMap.get(currentRoute.name) || [];
 
     // 如果是折叠菜单的话，则不需要设置openkey
-    if(!props.collapsed){
+    if (!props.collapsed) {
       // 使用lodash的union函数，进行 去重合并两个数组
       let needOpenKeys = _.map(parentList, 'name').map(Number);
       openKeys.value = _.union(openKeys.value, needOpenKeys);

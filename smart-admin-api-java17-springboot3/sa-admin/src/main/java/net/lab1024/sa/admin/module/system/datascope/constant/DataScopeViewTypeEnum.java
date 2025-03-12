@@ -5,7 +5,7 @@ import net.lab1024.sa.base.common.enumeration.BaseEnum;
 
 
 /**
- * 数据范围 种类
+ * 数据可见范围类型
  *
  * @Author 1024创新实验室: 罗伊
  * @Date 2020/11/28  20:59:17

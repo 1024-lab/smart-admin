@@ -46,7 +46,6 @@ let currentRoute = useRoute();
 function updateSelectKeyAndOpenKey() {
   // 第一步，根据路由 更新选中 顶级菜单
   let parentList = useUserStore().menuParentIdListMap.get(currentRoute.name) || [];
-  console.log('parentList', parentList)
   if (parentList.length === 0) {
     topMenuRef.value.updateSelectKey(currentRoute.name);
     return;

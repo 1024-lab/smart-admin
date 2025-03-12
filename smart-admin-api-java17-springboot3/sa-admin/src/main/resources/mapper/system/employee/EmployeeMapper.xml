@@ -33,21 +33,19 @@
         </where>
     </select>
 
-
     <update id="updateDisableFlag">
         UPDATE t_employee
         SET disabled_flag = #{disabledFlag}
         WHERE employee_id = #{employeeId}
     </update>
 
-
     <select id="getByLoginName" resultType="net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity">
         SELECT *
         FROM t_employee
         <where>
             login_name = #{loginName}
-            <if test="disabledFlag != null">
-                AND disabled_flag = #{disabledFlag}
+            <if test="deletedFlag != null">
+                AND deleted_flag = #{deletedFlag}
             </if>
         </where>
     </select>
@@ -57,24 +55,33 @@
         FROM t_employee
         <where>
             actual_name = #{actualName}
-            <if test="disabledFlag != null">
-                AND disabled_flag = #{disabledFlag}
+            <if test="deletedFlag != null">
+                AND deleted_flag = #{deletedFlag}
             </if>
         </where>
     </select>
-
 
     <select id="getByPhone" resultType="net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity">
         SELECT *
         FROM t_employee
         <where>
             phone = #{phone}
-            <if test="disabledFlag != null">
-                AND disabled_flag = #{disabledFlag}
+            <if test="deletedFlag != null">
+                AND deleted_flag = #{deletedFlag}
             </if>
         </where>
     </select>
 
+    <select id="getByEmail" resultType="net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity">
+        SELECT *
+        FROM t_employee
+        <where>
+            email = #{email}
+            <if test="deletedFlag != null">
+                AND deleted_flag = #{deletedFlag}
+            </if>
+        </where>
+    </select>
 
     <select id="listAll" resultType="net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO">
         SELECT *
@@ -88,22 +95,19 @@
         department_id = #{departmentId} AND deleted_flag = #{deletedFlag}
     </select>
 
-
-    <select id="selectByDepartmentId"
-            resultType="net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity">
+    <select id="selectByDepartmentId" resultType="net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity">
         SELECT *
         FROM t_employee
         <where>
             department_id = #{departmentId}
-            <if test="disabledFlag != null">
-                AND disabled_flag = #{disabledFlag}
+            <if test="deletedFlag != null">
+                AND deleted_flag = #{deletedFlag}
             </if>
         </where>
         ORDER BY create_time DESC
     </select>
 
-    <select id="selectByActualName"
-            resultType="net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity">
+    <select id="selectByActualName" resultType="net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity">
         SELECT * FROM t_employee
         <where>
             actual_name = #{actualName}
@@ -111,8 +115,8 @@
             <foreach collection="departmentIdList" item="item" open="(" close=")" separator=",">
                 #{item}
             </foreach>
-            <if test="disabledFlag != null">
-                AND disabled_flag = #{disabledFlag}
+            <if test="deletedFlag != null">
+                AND deleted_flag = #{deletedFlag}
             </if>
         </where>
     </select>
@@ -125,20 +129,19 @@
             <foreach collection="departmentIds" item="item" open="(" close=")" separator=",">
                 #{item}
             </foreach>
-            <if test="disabledFlag != null">
-                AND disabled_flag = #{disabledFlag}
+            <if test="deletedFlag != null">
+                AND deleted_flag = #{deletedFlag}
             </if>
         </where>
         ORDER BY create_time DESC
     </select>
 
-
     <select id="getEmployeeId" resultType="java.lang.Long">
         SELECT employee_id
         FROM t_employee
         <where>
-            <if test="disabledFlag != null">
-                AND disabled_flag = #{disabledFlag}
+            <if test="deletedFlag != null">
+                AND deleted_flag = #{deletedFlag}
             </if>
         </where>
     </select>
@@ -148,8 +151,8 @@
         FROM t_employee
         <where>
             department_id = #{departmentId}
-            <if test="disabledFlag != null">
-                AND disabled_flag = #{disabledFlag}
+            <if test="deletedFlag != null">
+                AND deleted_flag = #{deletedFlag}
             </if>
         </where>
         ORDER BY create_time DESC
@@ -164,7 +167,6 @@
         ORDER BY create_time DESC
     </select>
 
-
     <select id="getEmployeeById" resultType="net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO">
         SELECT t_employee.*,
                t_department.name AS departmentName
@@ -173,8 +175,7 @@
         where t_employee.employee_id = #{employeeId}
     </select>
 
-    <select id="selectEmployeeByDisabledAndDeleted"
-            resultType="net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO">
+    <select id="selectEmployeeByDisabledAndDeleted" resultType="net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO">
         SELECT
         t_employee.*,
         t_department.name AS departmentName
@@ -195,6 +196,5 @@
         SET login_pwd = #{password}
         WHERE employee_id = #{employeeId}
     </update>
-
 
 </mapper>

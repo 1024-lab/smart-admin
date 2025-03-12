@@ -19,9 +19,8 @@
 
     <select id="selectMenuListByRoleIdList"
             resultType="net.lab1024.sa.admin.module.system.menu.domain.entity.MenuEntity">
-
         SELECT
-        t_menu.*
+        distinct t_menu.*
         from t_menu
         left join t_role_menu on t_role_menu.menu_id = t_menu.menu_id
         <where>
@@ -35,8 +34,6 @@
                 </foreach>
             </if>
         </where>
-        group by t_menu.menu_id
         ORDER BY t_menu.sort ASC
-
     </select>
 </mapper>

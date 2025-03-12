@@ -4,13 +4,13 @@
     <div class="password-form-area">
       <a-form ref="formRef" :model="form" :rules="rules" layout="vertical">
         <a-form-item label="原密码" name="oldPassword">
-          <a-input-password class="form-item" v-model:value.trim="form.oldPassword" type="password" placeholder="请输入原密码" />
+          <a-input-password class="form-item" v-model:value.trim="form.oldPassword" type="password" placeholder="请输入原密码" autocomplete="off" />
         </a-form-item>
         <a-form-item label="新密码" name="newPassword" :help="tips">
-          <a-input-password class="form-item" v-model:value.trim="form.newPassword" type="password" placeholder="请输入新密码" />
+          <a-input-password class="form-item" v-model:value.trim="form.newPassword" type="password" placeholder="请输入新密码" autocomplete="off" />
         </a-form-item>
         <a-form-item label="确认密码" name="confirmPwd" :help="tips">
-          <a-input-password class="form-item" v-model:value.trim="form.confirmPwd" type="password" placeholder="请输入确认密码" />
+          <a-input-password class="form-item" v-model:value.trim="form.confirmPwd" type="password" placeholder="请输入确认密码" autocomplete="off" />
         </a-form-item>
       </a-form>
       <a-button type="primary" style="margin: 20px 0 0 250px" @click="onSubmit">修改密码</a-button>
@@ -74,6 +74,7 @@
   const formDefault = {
     oldPassword: '',
     newPassword: '',
+    confirmPwd: '',
   };
   let form = reactive({
     ...formDefault,

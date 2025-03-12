@@ -99,10 +99,20 @@
     getHtml,
     getText,
   });
-
 </script>
+
 <style scoped>
   .w-e-full-screen-container {
     z-index: 9999 !important;
+  }
+</style>
+<!-- 解决弹窗高度警告信息显示 -->
+<style>
+  ::v-deep .w-e-text-container {
+    height: 420px !important;
+  }
+  .w-e-text-container .w-e-scroll {
+    height: 500px !important;
+    -webkit-overflow-scrolling: touch;
   }
 </style>

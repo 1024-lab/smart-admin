@@ -303,7 +303,7 @@ public class DataTracerChangeContentService {
                 fieldContent = SmartEnumUtil.getEnumDescByValue(fieldValue, dataTracerFieldEnum.enumClass());
             }
         } else if (dataTracerFieldDict != null) {
-            fieldContent = dictCacheService.selectValueNameByValueCodeSplit(fieldValue.toString());
+            fieldContent = dictCacheService.selectValueNameByValueCodeSplit(dataTracerFieldDict.keyCode(), fieldValue.toString());
         } else if (dataTracerFieldSql != null) {
             fieldContent = this.getRelateDisplayValue(fieldValue, dataTracerFieldSql);
         } else if (fieldValue instanceof Date) {

@@ -162,10 +162,15 @@ public class LoginService implements StpInterface {
         // 验证登录名
         EmployeeEntity employeeEntity = employeeService.getByLoginName(loginForm.getLoginName());
         if (null == employeeEntity) {
-            return ResponseDTO.userErrorParam("登录名不存在！");
+            return ResponseDTO.userErrorParam("登录名或密码错误！");
         }
 
         // 验证账号状态
+        if (employeeEntity.getDeletedFlag()) {
+            saveLoginLog(employeeEntity, ip, userAgent, "账号已删除", LoginLogResultEnum.LOGIN_FAIL);
+            return ResponseDTO.userErrorParam("您的账号已被删除,请联系工作人员！");
+        }
+
         if (employeeEntity.getDisabledFlag()) {
             saveLoginLog(employeeEntity, ip, userAgent, "账号已禁用", LoginLogResultEnum.LOGIN_FAIL);
             return ResponseDTO.userErrorParam("您的账号已被禁用,请联系工作人员！");
@@ -201,7 +206,7 @@ public class LoginService implements StpInterface {
             }
 
             // 密码错误
-            if (!employeeEntity.getLoginPwd().equals(SecurityPasswordService.getEncryptPwd(requestPassword))) {
+            if ( !SecurityPasswordService.matchesPwd(requestPassword,employeeEntity.getLoginPwd()) ) {
                 // 记录登录失败
                 saveLoginLog(employeeEntity, ip, userAgent, "密码错误", LoginLogResultEnum.LOGIN_FAIL);
                 // 记录等级保护次数
@@ -371,10 +376,10 @@ public class LoginService implements StpInterface {
     /**
      * 退出登录
      */
-    public ResponseDTO<String> logout(String token, RequestUser requestUser) {
+    public ResponseDTO<String> logout(RequestUser requestUser) {
 
         // sa token 登出
-        StpUtil.logoutByTokenValue(token);
+        StpUtil.logout();
 
         // 清空登录信息缓存
         loginEmployeeCache.remove(requestUser.getUserId());
@@ -504,10 +509,14 @@ public class LoginService implements StpInterface {
         // 验证登录名
         EmployeeEntity employeeEntity = employeeService.getByLoginName(loginName);
         if (null == employeeEntity) {
-            return ResponseDTO.userErrorParam("登录名不存在！");
+            return ResponseDTO.ok();
         }
 
         // 验证账号状态
+        if (employeeEntity.getDeletedFlag()) {
+            return ResponseDTO.userErrorParam("您的账号已被删除,请联系工作人员！");
+        }
+
         if (employeeEntity.getDisabledFlag()) {
             return ResponseDTO.userErrorParam("您的账号已被禁用,请联系工作人员！");
         }

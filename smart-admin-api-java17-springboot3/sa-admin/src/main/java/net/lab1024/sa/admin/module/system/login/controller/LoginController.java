@@ -59,8 +59,8 @@ public class LoginController {
 
     @Operation(summary = "退出登陆  @author 卓大")
     @GetMapping("/login/logout")
-    public ResponseDTO<String> logout(@RequestHeader(value = RequestHeaderConst.TOKEN, required = false) String token) {
-        return loginService.logout(token, SmartRequestUtil.getRequestUser());
+    public ResponseDTO<String> logout() {
+        return loginService.logout(SmartRequestUtil.getRequestUser());
     }
 
     @Operation(summary = "获取验证码  @author 卓大")

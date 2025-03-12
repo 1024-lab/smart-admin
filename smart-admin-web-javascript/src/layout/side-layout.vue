@@ -1,7 +1,14 @@
 <template>
   <a-layout class="admin-layout" style="min-height: 100%">
     <!-- 侧边菜单 side-menu -->
-    <a-layout-sider :id="LAYOUT_ELEMENT_IDS.menu" class="side-menu" :width="sideMenuWidth" :collapsed="collapsed" :theme="theme" v-show="!fullScreenFlag">
+    <a-layout-sider
+      :id="LAYOUT_ELEMENT_IDS.menu"
+      class="side-menu"
+      :width="sideMenuWidth"
+      v-model:collapsed="collapsed"
+      :theme="theme"
+      v-show="!fullScreenFlag"
+    >
       <!-- 左侧菜单 -->
       <SideMenu :collapsed="collapsed" />
     </a-layout-sider>
@@ -11,27 +18,35 @@
       <!-- 顶部头部信息 -->
       <a-layout-header class="layout-header" :id="LAYOUT_ELEMENT_IDS.header" v-show="!fullScreenFlag">
         <a-row class="layout-header-user" justify="space-between">
-          <a-col class="layout-header-left">
-            <span class="collapsed-button">
-              <menu-unfold-outlined v-if="collapsed" class="trigger" @click="() => (collapsed = !collapsed)" />
-              <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
-            </span>
-            <a-tooltip placement="bottom">
-              <template #title>首页</template>
-              <span class="home-button" @click="goHome">
-                <home-outlined class="trigger" />
+          <a-col
+            class="layout-header-left"
+            :style="{
+              'max-width': `calc(100% - ${rightWidth}px)`,
+            }"
+          >
+            <div class="layout-header-box">
+              <span class="collapsed-button">
+                <menu-unfold-outlined v-if="collapsed" class="trigger" @click="() => (collapsed = !collapsed)" />
+                <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
               </span>
-            </a-tooltip>
-            <span class="location-breadcrumb">
-              <MenuLocationBreadcrumb />
-            </span>
+              <a-tooltip placement="bottom">
+                <template #title>首页</template>
+                <span class="home-button" @click="goHome">
+                  <home-outlined class="trigger" />
+                </span>
+              </a-tooltip>
+              <span class="location-breadcrumb">
+                <PageTag v-if="pageTagLocation === 'top'" />
+                <MenuLocationBreadcrumb />
+              </span>
+            </div>
           </a-col>
           <!---用戶操作区域-->
           <a-col class="layout-header-right">
             <HeaderUserSpace />
           </a-col>
         </a-row>
-        <PageTag />
+        <PageTag v-if="pageTagLocation === 'center'" />
       </a-layout-header>
 
       <!--中间内容-->
@@ -94,6 +109,8 @@
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
+  import { nextTick } from 'vue';
+  const appConfigStore = useAppConfigStore();
 
   const windowHeight = ref(window.innerHeight);
   //是否全屏
@@ -112,6 +129,8 @@
   const footerFlag = computed(() => useAppConfigStore().$state.footerFlag);
   // 是否显示水印
   const watermarkFlag = computed(() => useAppConfigStore().$state.watermarkFlag);
+  // 标签页位置
+  const pageTagLocation = computed(() => useAppConfigStore().$state.pageTagLocation);
   // 多余高度
   const dueHeight = computed(() => {
     let due = 40;
@@ -123,6 +142,36 @@
     }
     return due;
   });
+
+  watch(
+    pageTagLocation,
+    (newVal) => {
+      if (newVal == 'top') {
+        nextTick(() => {
+          sizeComputed();
+        });
+      }
+    },
+    {
+      immediate: true,
+    }
+  );
+
+  const rightWidth = ref(0);
+  function sizeComputed() {
+    const tagParentElement = document.querySelector('.location-breadcrumb');
+    const tagsElement = tagParentElement.querySelector('.ant-tabs-nav-list');
+    const parentElement = document.querySelector('.layout-header-user');
+    const rightElement = document.querySelector('.layout-header-right');
+    rightWidth.value = rightElement.offsetWidth;
+    let ro = new ResizeObserver((e) => {
+      rightWidth.value = rightElement.offsetWidth + 10;
+    });
+    ro.observe(rightElement);
+    ro.observe(tagsElement);
+    ro.observe(parentElement);
+  }
+
   //是否隐藏菜单
   const collapsed = ref(false);
 
@@ -188,6 +237,11 @@
     display: flex;
     height: @header-user-height;
 
+    .layout-header-box {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+    }
     .collapsed-button {
       margin-left: 10px;
       line-height: @header-user-height;
@@ -205,6 +259,7 @@
     }
 
     .location-breadcrumb {
+      width: calc(100% - 56px);
       margin-left: 15px;
       line-height: @header-user-height;
     }

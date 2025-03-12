@@ -9,7 +9,7 @@
 -->
 
 <template>
-  <a-drawer :title="$t('setting.title')" placement="right" :open="visible" @close="close">
+  <a-drawer :title="$t('setting.title')" placement="right" :width="450" :open="visible" @close="close">
     <a-form layout="horizontal" :label-col="{ span: 8 }">
       <a-form-item label="语言/Language">
         <a-select v-model:value="formState.language" @change="changeLanguage" style="width: 120px">
@@ -47,6 +47,10 @@
         <a-input-number @change="changeSideMenuWidth" v-model:value="formState.sideMenuWidth" :min="1" />
         像素（px）
       </a-form-item>
+      <a-form-item :label="$t('setting.table.yHeight')">
+        <a-input-number @change="changeTableYHeight" v-model:value="formState.tableYHeight" :min="100" />
+        像素（px）
+      </a-form-item>
       <a-form-item :label="$t('setting.page.width')" v-if="formState.layout === LAYOUT_ENUM.TOP.value">
         <a-input @change="changePageWidth" v-model:value="formState.pageWidth" />
         像素（px）或者 百分比
@@ -70,6 +74,12 @@
           <a-radio-button value="light">Light</a-radio-button>
         </a-radio-group>
       </a-form-item>
+      <a-form-item :label="$t('setting.pagetag.location')">
+        <a-radio-group v-model:value="formState.pageTagLocation" button-style="solid" @change="changePageTagLocation">
+          <a-radio-button value="top">顶部</a-radio-button>
+          <a-radio-button value="center">中部</a-radio-button>
+        </a-radio-group>
+      </a-form-item>
       <a-form-item :label="$t('setting.pagetag.style')">
         <a-radio-group v-model:value="formState.pageTagStyle" button-style="solid" @change="changePageTagStyle">
           <a-radio-button value="default">默认</a-radio-button>
@@ -81,7 +91,13 @@
         <a-switch @change="changePageTagFlag" v-model:checked="formState.pageTagFlag" checked-children="显示" un-checked-children="隐藏" />
       </a-form-item>
       <a-form-item :label="$t('setting.bread')">
-        <a-switch @change="changeBreadCrumbFlag" v-model:checked="formState.breadCrumbFlag" checked-children="显示" un-checked-children="隐藏" />
+        <a-switch
+          @change="changeBreadCrumbFlag"
+          :disabled="formState.pageTagLocation === 'top'"
+          v-model:checked="formState.breadCrumbFlag"
+          checked-children="显示"
+          un-checked-children="隐藏"
+        />
       </a-form-item>
       <a-form-item :label="$t('setting.footer')">
         <a-switch @change="changeFooterFlag" v-model:checked="formState.footerFlag" checked-children="显示" un-checked-children="隐藏" />
@@ -111,12 +127,12 @@
   </a-drawer>
 </template>
 <script setup lang="ts">
-  import { ref, reactive, h } from 'vue';
+  import { ref, reactive, h, watch } from 'vue';
   import { i18nList } from '/@/i18n/index';
   import { useI18n } from 'vue-i18n';
   import localStorageKeyConst from '/@/constants/local-storage-key-const';
   import { LAYOUT_ENUM } from '/@/constants/layout-const';
-  import { localRead, localSave } from '/@/utils/local-util';
+  import { localSave } from '/@/utils/local-util';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { Modal } from 'ant-design-vue';
   import { appDefaultConfig } from '/@/config/app-config';
@@ -186,6 +202,8 @@
     colorIndex: appConfigStore.colorIndex,
     // 侧边菜单宽度
     sideMenuWidth: appConfigStore.sideMenuWidth,
+    // 表格高度
+    tableYHeight: appConfigStore.tableYHeight,
     // 菜单主题
     sideMenuTheme: appConfigStore.sideMenuTheme,
     // 页面紧凑
@@ -206,15 +224,37 @@
     helpDocExpandFlag: appConfigStore.helpDocExpandFlag,
     // 水印
     watermarkFlag: appConfigStore.watermarkFlag,
+    //标签页位置
+    pageTagLocation: appConfigStore.pageTagLocation,
   };
 
   let formState = reactive({ ...formValue });
+
+  watch(
+    () => formState.pageTagLocation,
+    () => {
+      if (formState.pageTagLocation === 'top') {
+        formState.breadCrumbFlag = false;
+      } else {
+        formState.breadCrumbFlag = true;
+      }
+    },
+    {
+      immediate: true,
+    }
+  );
 
   const { locale } = useI18n();
   function changeLanguage(languageValue) {
     locale.value = languageValue;
     appConfigStore.$patch({
       language: languageValue,
+    });
+  }
+
+  function changePageTagLocation(e: any) {
+    appConfigStore.$patch({
+      pageTagLocation: e.target.value,
     });
   }
 
@@ -235,6 +275,12 @@
     appConfigStore.$patch({
       sideMenuWidth: value,
     });
+  }
+  function changeTableYHeight(value: any) {
+    appConfigStore.$patch({
+      tableYHeight: value,
+    });
+    window.location.reload();
   }
 
   function changePageWidth(e) {

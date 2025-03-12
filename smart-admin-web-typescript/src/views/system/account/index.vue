@@ -31,10 +31,13 @@
   });
   // 选中的菜单
   let selectedMenu = ref({ menuId: 0 });
-  let selectedKeys = computed(() => {
-    return _.isEmpty(selectedMenu.value) ? [] : [selectedMenu.value.menuId];
-  });
-
+  let selectedKeys = ref([]);
+  watch(
+    () => selectedMenu.value,
+    () => {
+      selectedKeys.value = _.isEmpty(selectedMenu.value) ? [] : [selectedMenu.value.menuId];
+    }
+  );
   function selectMenu(menuId) {
     selectedMenu.value = menuList.value.find((e) => e.menuId === menuId);
   }

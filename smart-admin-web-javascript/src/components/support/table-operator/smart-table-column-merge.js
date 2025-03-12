@@ -1,12 +1,12 @@
-/* 
-  *  表格列设置
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-08-26 23:45:51 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
-  */
+/*
+ *  表格列设置
+ *
+ * @Author:    1024创新实验室-主任：卓大
+ * @Date:      2022-08-26 23:45:51
+ * @Wechat:    zhuda1024
+ * @Email:     lab1024@163.com
+ * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
+ */
 
 import _ from 'lodash';
 
@@ -16,6 +16,7 @@ import _ from 'lodash';
  * @param {*} userTableColumnArray
  */
 export function mergeColumn(originalTableColumnArray, userTableColumnArray) {
+  let saveFlag = false;
   if (!userTableColumnArray) {
     return originalTableColumnArray;
   }
@@ -40,8 +41,13 @@ export function mergeColumn(originalTableColumnArray, userTableColumnArray) {
     if (userColumn) {
       fontColumn.sort = userColumn.sort;
       fontColumn.showFlag = userColumn.showFlag;
-      if (userColumn.width) {
-        fontColumn.width = userColumn.width;
+      if (fontColumn.dragAndDropFlag) {
+        saveFlag = true;
+        delete fontColumn.dragAndDropFlag;
+      } else {
+        if (userColumn.width) {
+          fontColumn.width = userColumn.width;
+        }
       }
     }
     newColumns.push(fontColumn);
@@ -50,5 +56,8 @@ export function mergeColumn(originalTableColumnArray, userTableColumnArray) {
 
   //第三步：前端列进行排序
   newColumns = _.sortBy(newColumns, (e) => e.sort);
-  return newColumns;
+  return {
+    newColumns,
+    saveFlag,
+  };
 }

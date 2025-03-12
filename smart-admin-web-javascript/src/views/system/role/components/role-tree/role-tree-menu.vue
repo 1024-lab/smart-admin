@@ -30,7 +30,7 @@
   const props = defineProps({
     tree: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     index: {
       type: Number,

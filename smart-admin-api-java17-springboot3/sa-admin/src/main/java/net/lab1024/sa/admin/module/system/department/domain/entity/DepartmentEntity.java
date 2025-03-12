@@ -3,6 +3,8 @@ package net.lab1024.sa.admin.module.system.department.domain.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -34,6 +36,7 @@ public class DepartmentEntity {
     /**
      * 负责人员工 id
      */
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private Long managerId;
 
     /**

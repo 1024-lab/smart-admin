@@ -17,7 +17,7 @@
   </a-modal>
 </template>
 <script setup>
-  import { ref, reactive } from 'vue';
+  import { ref, reactive, nextTick } from 'vue';
   import { message } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import _ from 'lodash';
@@ -43,6 +43,21 @@
       Object.assign(form, rowData);
     }
     visible.value = true;
+    nextTick(() => {
+      // 解决弹窗错误信息显示,没有可忽略
+      const domArr = document.getElementsByClassName('ant-modal');
+      if (domArr && domArr.length > 0) {
+        Array.from(domArr).forEach((item) => {
+          if (item.childNodes && item.childNodes.length > 0) {
+            Array.from(item.childNodes).forEach((child) => {
+              if (child.setAttribute) {
+                child.setAttribute('aria-hidden', 'false');
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   function onClose() {

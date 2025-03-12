@@ -75,19 +75,22 @@ function updateSelectKey(key) {
 defineExpose({ updateSelectKey });
 
 // 动态计算当前导航宽度
-let menuInfo = computed(() => {
+let hasSideMenu = ref(false);
+menuEmitter.on('sideMenuChange', (data) => {
+  hasSideMenu.value = data;
+});
+
+const menuInfo = computed(() => {
   let width = '100vw';
   let right = '-100vw';
-  let selectedItem = _.find(menuTree.value, { menuId: Number(selectedKeys.value[0]) });
-  const hasSecoundMenu = selectedItem && !_.isEmpty(selectedItem.children) && selectedItem.children.some((e) => e.visibleFlag);
-  if (hasSecoundMenu) {
-    if (props.collapsed) {
-      width = 'calc(100vw - 80px)';
-      right = 'calc(-100vw + 80px)';
-    } else {
-      width = 'calc(100vw - 180px)';
-      right = 'calc(-100vw + 180px)';
-    }
+  if (hasSideMenu.value) {
+      if (props.collapsed) {
+        width = 'calc(100vw - 80px)';
+        right = 'calc(-100vw + 80px)';
+      } else {
+        width = 'calc(100vw - 180px)';
+        right = 'calc(-100vw + 180px)';
+      }
   }
   return {
     width,

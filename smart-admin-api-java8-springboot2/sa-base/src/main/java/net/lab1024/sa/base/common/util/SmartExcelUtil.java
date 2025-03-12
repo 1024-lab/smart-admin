@@ -1,9 +1,9 @@
 package net.lab1024.sa.base.common.util;
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.write.handler.SheetWriteHandler;
-import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
-import com.alibaba.excel.write.metadata.holder.WriteWorkbookHolder;
+import cn.idev.excel.FastExcel;
+import cn.idev.excel.write.handler.SheetWriteHandler;
+import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
+import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.opc.PackagePartName;
@@ -43,7 +43,7 @@ public final class SmartExcelUtil {
         // 设置下载消息头
         SmartResponseUtil.setDownloadFileHeader(response, fileName, null);
         // 下载
-        EasyExcel.write(response.getOutputStream(), head)
+        FastExcel.write(response.getOutputStream(), head)
                 .autoCloseStream(Boolean.FALSE)
                 .sheet(sheetName)
                 .doWrite(data);
@@ -58,7 +58,7 @@ public final class SmartExcelUtil {
         // 水印
         Watermark watermark = new Watermark(watermarkString);
         // 一定要inMemory
-        EasyExcel.write(response.getOutputStream(), head)
+        FastExcel.write(response.getOutputStream(), head)
                 .inMemory(true)
                 .sheet(sheetName)
                 .registerWriteHandler(new CustomWaterMarkHandler(watermark))

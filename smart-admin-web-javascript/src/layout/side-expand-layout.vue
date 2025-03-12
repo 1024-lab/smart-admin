@@ -20,7 +20,12 @@
       <!-- 顶部头部信息 -->
       <a-layout-header class="smart-layout-header" :id="LAYOUT_ELEMENT_IDS.header" v-show="!fullScreenFlag">
         <a-row justify="space-between" class="smart-layout-header-user">
-          <a-col class="smart-layout-header-left">
+          <a-col
+            class="smart-layout-header-left"
+            :style="{
+              'max-width': `calc(100% - ${rightWidth}px)`,
+            }"
+          >
             <span class="collapsed-button">
               <menu-unfold-outlined v-if="collapsed" class="trigger" @click="() => (collapsed = !collapsed)" />
               <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
@@ -32,7 +37,8 @@
               </span>
             </a-tooltip>
             <span class="location-breadcrumb">
-              <MenuLocationBreadcrumb />
+              <PageTag v-if="pageTagLocation === 'top'" />
+              <MenuLocationBreadcrumb v-if="pageTagLocation !== 'top'" />
             </span>
           </a-col>
           <!---用戶操作区域-->
@@ -40,7 +46,7 @@
             <HeaderUserSpace />
           </a-col>
         </a-row>
-        <PageTag />
+        <PageTag v-if="pageTagLocation === 'center'" />
       </a-layout-header>
 
       <!--中间内容-->
@@ -84,7 +90,7 @@
   </a-layout>
 </template>
 <script setup>
-  import { computed, onMounted, ref, watch } from 'vue';
+  import { computed, nextTick, onMounted, ref, watch } from 'vue';
   import HeaderUserSpace from './components/header-user-space/index.vue';
   import MenuLocationBreadcrumb from './components/menu-location-breadcrumb/index.vue';
   import PageTag from './components/page-tag/index.vue';
@@ -99,6 +105,7 @@
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
+  const appConfigStore = useAppConfigStore();
 
   const windowHeight = ref(window.innerHeight);
   //是否全屏
@@ -115,6 +122,8 @@
   const footerFlag = computed(() => useAppConfigStore().$state.footerFlag);
   // 是否显示水印
   const watermarkFlag = computed(() => useAppConfigStore().$state.watermarkFlag);
+  // 标签页位置
+  const pageTagLocation = computed(() => useAppConfigStore().$state.pageTagLocation);
   // 多余高度
   const dueHeight = computed(() => {
     let due = 40;
@@ -126,6 +135,34 @@
     }
     return due;
   });
+
+  watch(
+    pageTagLocation,
+    (newVal) => {
+      if (newVal == 'top') {
+        nextTick(() => {
+          sizeComputed();
+        });
+      }
+    },
+    {
+      immediate: true,
+    }
+  );
+  const rightWidth = ref(0);
+  function sizeComputed() {
+    const tagParentElement = document.querySelector('.location-breadcrumb');
+    const tagsElement = tagParentElement.querySelector('.ant-tabs-nav-list');
+    const parentElement = document.querySelector('.smart-layout-header-user');
+    const rightElement = document.querySelector('.smart-layout-header-right');
+    rightWidth.value = rightElement.offsetWidth;
+    let ro = new ResizeObserver((e) => {
+      rightWidth.value = rightElement.offsetWidth + 10;
+    });
+    ro.observe(rightElement);
+    ro.observe(tagsElement);
+    ro.observe(parentElement);
+  }
   //是否隐藏菜单
   const collapsed = ref(false);
 
@@ -204,6 +241,7 @@
     }
 
     .location-breadcrumb {
+      width: calc(100% - 56px);
       margin-left: 15px;
       line-height: @header-user-height;
     }

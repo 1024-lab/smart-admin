@@ -21,7 +21,7 @@ export function privilegeDirective(el, binding) {
   if (!userPointsList) {
     return false;
   }
-  // 如果有权限，删除节点
+  // 如果没有权限，删除节点
   if (!_.some(userPointsList, ['webPerms', binding.value])) {
     el.parentNode.removeChild(el);
   }

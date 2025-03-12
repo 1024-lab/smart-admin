@@ -14,6 +14,8 @@ export default {
   antdLocale: antd,
   dayjsLocale: dayjs,
   'setting.title': 'Setting',
+  'setting.table.yHeight': 'Table Height',
+  'setting.pagetag.location': 'TagPage Position',
   'setting.color': 'Theme Color',
   'setting.menu.layout': 'Menu Layout',
   'setting.menu.width': 'Menu Width',

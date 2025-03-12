@@ -35,7 +35,7 @@
         </a-button-group>
       </a-form-item>
     </a-row>
-    <a-row class="smart-query-form-row"> </a-row>
+    <a-row class="smart-query-form-row" />
   </a-form>
 
   <a-card size="small" :bordered="false">

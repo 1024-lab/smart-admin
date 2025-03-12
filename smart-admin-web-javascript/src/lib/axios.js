@@ -17,7 +17,7 @@ import _ from 'lodash';
 import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
 
 // token的消息头
-const TOKEN_HEADER = 'x-access-token';
+const TOKEN_HEADER = 'Authorization';
 
 // 创建axios对象
 const smartAxios = axios.create({
@@ -37,7 +37,7 @@ smartAxios.interceptors.request.use(
     // 在发送请求之前消息头加入token token
     const token = localRead(LocalStorageKeyConst.USER_TOKEN);
     if (token) {
-      config.headers[TOKEN_HEADER] = token;
+      config.headers[TOKEN_HEADER] = 'Bearer ' + token;
     } else {
       delete config.headers[TOKEN_HEADER];
     }

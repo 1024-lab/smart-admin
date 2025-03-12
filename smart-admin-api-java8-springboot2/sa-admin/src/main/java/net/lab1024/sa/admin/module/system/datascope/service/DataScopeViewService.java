@@ -44,10 +44,9 @@ public class DataScopeViewService {
     private DepartmentService departmentService;
 
     /**
-     * 获取某人可以查看的所有人员信息
+     * 获取某人可以查看的所有人员数据
      */
-    public List<Long> getCanViewEmployeeId(DataScopeTypeEnum dataScopeTypeEnum, Long employeeId) {
-        DataScopeViewTypeEnum viewType = this.getEmployeeDataScopeViewType(dataScopeTypeEnum, employeeId);
+    public List<Long> getCanViewEmployeeId(DataScopeViewTypeEnum viewType, Long employeeId) {
         if (DataScopeViewTypeEnum.ME == viewType) {
             return this.getMeEmployeeIdList(employeeId);
         }
@@ -57,16 +56,17 @@ public class DataScopeViewService {
         if (DataScopeViewTypeEnum.DEPARTMENT_AND_SUB == viewType) {
             return this.getDepartmentAndSubEmployeeIdList(employeeId);
         }
+        // 可以查看所有员工数据
         return Lists.newArrayList();
     }
 
     /**
-     * 获取某人可以查看的所有部门信息
+     * 获取某人可以查看的所有部门数据
      */
-    public List<Long> getCanViewDepartmentId(DataScopeTypeEnum dataScopeTypeEnum, Long employeeId) {
-        DataScopeViewTypeEnum viewType = this.getEmployeeDataScopeViewType(dataScopeTypeEnum, employeeId);
+    public List<Long> getCanViewDepartmentId(DataScopeViewTypeEnum viewType, Long employeeId) {
         if (DataScopeViewTypeEnum.ME == viewType) {
-            return this.getMeDepartmentIdList(employeeId);
+            // 数据可见范围类型为本人时 不可以查看任何部门数据
+            return Lists.newArrayList(0L);
         }
         if (DataScopeViewTypeEnum.DEPARTMENT == viewType) {
             return this.getMeDepartmentIdList(employeeId);
@@ -74,6 +74,7 @@ public class DataScopeViewService {
         if (DataScopeViewTypeEnum.DEPARTMENT_AND_SUB == viewType) {
             return this.getDepartmentAndSubIdList(employeeId);
         }
+        // 可以查看所有部门数据
         return Lists.newArrayList();
     }
 
@@ -91,8 +92,14 @@ public class DataScopeViewService {
      * 根据员工id 获取各数据范围最大的可见范围 map<dataScopeType,viewType></>
      */
     public DataScopeViewTypeEnum getEmployeeDataScopeViewType(DataScopeTypeEnum dataScopeTypeEnum, Long employeeId) {
-        if (employeeId == null) {
+        EmployeeEntity employeeEntity = employeeDao.selectById(employeeId);
+        if (employeeEntity == null || employeeEntity.getEmployeeId() == null) {
             return DataScopeViewTypeEnum.ME;
+        }
+
+        // 如果是超级管理员 则可查看全部
+        if (employeeEntity.getAdministratorFlag()) {
+            return DataScopeViewTypeEnum.ALL;
         }
 
         List<Long> roleIdList = roleEmployeeDao.selectRoleIdByEmployeeId(employeeId);

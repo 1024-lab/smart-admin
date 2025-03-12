@@ -29,7 +29,7 @@
   let props = defineProps({
     tree: {
       type: Array,
-      default: [],
+      default: () => [],
     },
   });
   defineEmits(['update:value']);

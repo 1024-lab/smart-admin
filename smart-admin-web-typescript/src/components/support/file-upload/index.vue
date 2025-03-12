@@ -11,12 +11,12 @@
 <template>
   <div class="clearfix">
     <a-upload
-      multiple
+      :multiple="props.multiple"
       :accept="props.accept"
       :before-upload="beforeUpload"
       :customRequest="customRequest"
       :file-list="fileList"
-      :headers="{ 'x-access-token': useUserStore().getToken }"
+      :headers="{ Authorization: 'Bearer ' + useUserStore().getToken }"
       :list-type="listType"
       @change="handleChange"
       @preview="handlePreview"

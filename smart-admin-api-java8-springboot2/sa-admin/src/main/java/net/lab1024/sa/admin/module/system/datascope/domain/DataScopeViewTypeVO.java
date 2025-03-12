@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * 数据范围
+ * 数据可见范围
  *
  * @Author 1024创新实验室: 罗伊
  * @Date 2020/11/28  20:59:17

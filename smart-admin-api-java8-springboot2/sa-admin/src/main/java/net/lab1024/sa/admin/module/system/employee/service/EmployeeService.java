@@ -168,19 +168,14 @@ public class EmployeeService {
             return ResponseDTO.userErrorParam("部门不存在");
         }
 
-
-        EmployeeEntity existEntity = employeeDao.getByLoginName(employeeUpdateForm.getLoginName(), null);
-        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
-            return ResponseDTO.userErrorParam("登录名重复");
+        // 检查唯一性
+        ResponseDTO<String> checkResponse = checkUniqueness(employeeId, employeeUpdateForm.getLoginName(), employeeUpdateForm.getPhone(), employeeUpdateForm.getEmail());
+        if (!checkResponse.getOk()) {
+            return checkResponse;
         }
 
-        existEntity = employeeDao.getByPhone(employeeUpdateForm.getPhone(), null);
-        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
-            return ResponseDTO.userErrorParam("手机号已存在");
-        }
-
-        // 不更新密码
         EmployeeEntity entity = SmartBeanUtil.copy(employeeUpdateForm, EmployeeEntity.class);
+        // 不更新密码
         entity.setLoginPwd(null);
 
         // 更新数据
@@ -192,6 +187,57 @@ public class EmployeeService {
         return ResponseDTO.ok();
     }
 
+    /**
+     * 更新员工个人中心信息
+     */
+    public ResponseDTO<String> updateCenter(EmployeeUpdateCenterForm updateCenterForm) {
+
+        Long employeeId = updateCenterForm.getEmployeeId();
+        EmployeeEntity employeeEntity = employeeDao.selectById(employeeId);
+        if (null == employeeEntity) {
+            return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
+        }
+
+        // 检查唯一性 登录账号不能修改则不需要检查
+        ResponseDTO<String> checkResponse = checkUniqueness(employeeId, "", updateCenterForm.getPhone(), updateCenterForm.getEmail());
+        if (!checkResponse.getOk()) {
+            return checkResponse;
+        }
+
+        EmployeeEntity employee = SmartBeanUtil.copy(updateCenterForm, EmployeeEntity.class);
+        // 不更新密码
+        employee.setLoginPwd(null);
+
+        // 更新数据
+        employeeDao.updateById(employee);
+
+        // 清除员工缓存
+        loginService.clearLoginEmployeeCache(employeeId);
+
+        return ResponseDTO.ok();
+    }
+
+    /**
+     * 检查唯一性
+     */
+    private ResponseDTO<String> checkUniqueness(Long employeeId, String loginName, String phone, String email) {
+        EmployeeEntity existEntity = employeeDao.getByLoginName(loginName, null);
+        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
+            return ResponseDTO.userErrorParam("登录名重复");
+        }
+
+        existEntity = employeeDao.getByPhone(phone, null);
+        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
+            return ResponseDTO.userErrorParam("手机号已存在");
+        }
+
+        existEntity = employeeDao.getByEmail(email, null);
+        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
+            return ResponseDTO.userErrorParam("邮箱账号已存在");
+        }
+
+        return ResponseDTO.ok();
+    }
 
     /**
      * 更新登录人头像
@@ -297,10 +343,15 @@ public class EmployeeService {
         if (employeeEntity == null) {
             return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
         }
+
         // 校验原始密码
-        String oldPassword = SecurityPasswordService.getEncryptPwd(updatePasswordForm.getOldPassword());
-        if (!Objects.equals(oldPassword, employeeEntity.getLoginPwd())) {
+        if (!SecurityPasswordService.matchesPwd(updatePasswordForm.getOldPassword(),employeeEntity.getLoginPwd()) ) {
             return ResponseDTO.userErrorParam("原密码有误，请重新输入");
+        }
+
+        // 新旧密码相同
+        if (Objects.equals(updatePasswordForm.getOldPassword(), updatePasswordForm.getNewPassword()) ){
+            return ResponseDTO.userErrorParam("新密码与原始密码相同，请重新输入");
         }
 
         // 校验密码复杂度
@@ -309,26 +360,22 @@ public class EmployeeService {
             return validatePassComplexity;
         }
 
-        // 新旧密码相同
-        String newPassword = SecurityPasswordService.getEncryptPwd(updatePasswordForm.getNewPassword());
-        if (Objects.equals(oldPassword, newPassword)) {
-            return ResponseDTO.userErrorParam("新密码与原始密码相同，请重新输入");
-        }
-
         // 根据三级等保规则，校验密码是否重复
         ResponseDTO<String> passwordRepeatTimes = securityPasswordService.validatePasswordRepeatTimes(requestUser, updatePasswordForm.getNewPassword());
         if (!passwordRepeatTimes.getOk()) {
             return ResponseDTO.error(passwordRepeatTimes);
         }
 
+
         // 更新密码
+        String newEncryptPassword = SecurityPasswordService.getEncryptPwd(updatePasswordForm.getNewPassword());
         EmployeeEntity updateEntity = new EmployeeEntity();
         updateEntity.setEmployeeId(employeeId);
-        updateEntity.setLoginPwd(newPassword);
+        updateEntity.setLoginPwd(newEncryptPassword);
         employeeDao.updateById(updateEntity);
 
         // 保存修改密码密码记录
-        securityPasswordService.saveUserChangePasswordLog(requestUser, newPassword, oldPassword);
+        securityPasswordService.saveUserChangePasswordLog(requestUser, newEncryptPassword, employeeEntity.getLoginPwd());
 
         return ResponseDTO.ok();
     }
@@ -336,11 +383,8 @@ public class EmployeeService {
     /**
      * 获取某个部门的员工信息
      */
-    public ResponseDTO<List<EmployeeVO>> getAllEmployeeByDepartmentId(Long departmentId, Boolean disabledFlag) {
-        List<EmployeeEntity> employeeEntityList = employeeDao.selectByDepartmentId(departmentId, disabledFlag);
-        if (disabledFlag != null) {
-            employeeEntityList = employeeEntityList.stream().filter(e -> e.getDisabledFlag().equals(disabledFlag)).collect(Collectors.toList());
-        }
+    public ResponseDTO<List<EmployeeVO>> getAllEmployeeByDepartmentId(Long departmentId) {
+        List<EmployeeEntity> employeeEntityList = employeeDao.selectByDepartmentId(departmentId, Boolean.FALSE);
 
         if (CollectionUtils.isEmpty(employeeEntityList)) {
             return ResponseDTO.ok(Collections.emptyList());
@@ -381,7 +425,7 @@ public class EmployeeService {
      * 根据登录名获取员工
      */
     public EmployeeEntity getByLoginName(String loginName) {
-        return employeeDao.getByLoginName(loginName, null);
+        return employeeDao.getByLoginName(loginName, false);
     }
 
 }

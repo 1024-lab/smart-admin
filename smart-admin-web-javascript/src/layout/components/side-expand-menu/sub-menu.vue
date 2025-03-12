@@ -40,7 +40,7 @@
   };
 </script>
 <style scoped lang="less">
-  ::v-deep(.ant-menu-item-selected) {
+  :deep(.ant-menu-item-selected) {
     border-right: 3px !important;
   }
 </style>

@@ -73,7 +73,7 @@ public class SwaggerConfig {
 
     private Components components() {
         return new Components()
-                .addSecuritySchemes(RequestHeaderConst.TOKEN, new SecurityScheme().type(SecurityScheme.Type.APIKEY).in(SecurityScheme.In.HEADER).name(RequestHeaderConst.TOKEN));
+                .addSecuritySchemes(RequestHeaderConst.TOKEN, new SecurityScheme().scheme("Bearer").description("请输入token,格式为[Bearer xxxxxxxx]").type(SecurityScheme.Type.APIKEY).in(SecurityScheme.In.HEADER).name(RequestHeaderConst.TOKEN));
     }
 
     @Bean

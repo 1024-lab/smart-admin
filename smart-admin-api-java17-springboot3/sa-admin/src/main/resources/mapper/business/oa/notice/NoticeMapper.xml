@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.lab1024.sa.admin.module.business.oa.notice.dao.NoticeDao">
 
+    <!-- 查询结果列 -->
+    <sql id="base_columns">
+        t_notice.notice_id,
+        t_notice.notice_type_id,
+        t_notice.title,
+        t_notice.all_visible_flag,
+        t_notice.scheduled_publish_flag,
+        t_notice.publish_time,
+        t_notice.content_text,
+        t_notice.content_html,
+        t_notice.attachment,
+        t_notice.page_view_count,
+        t_notice.user_view_count,
+        t_notice.source,
+        t_notice.author,
+        t_notice.document_number,
+        t_notice.deleted_flag,
+        t_notice.create_user_id,
+        t_notice.update_time,
+        t_notice.create_time
+    </sql>
+
     <!-- ================================== 可见范围相关 ================================== -->
 
     <insert id="insertVisibleRange">
@@ -35,32 +57,30 @@
     <!-- 后管分页查询资讯 -->
     <select id="query" resultType="net.lab1024.sa.admin.module.business.oa.notice.domain.vo.NoticeVO">
         SELECT
-        t_notice.* ,
+        <include refid="base_columns"/>,
         t_notice_type.notice_type_name as noticeTypeName,
-        t_employee.actual_name as createUserName,
-        t_department.name as departmentName
+        t_employee.actual_name as createUserName
         FROM t_notice
-        left join t_notice_type on t_notice_type.notice_type_id = t_notice.notice_type_id
-        left join t_employee on t_notice.create_user_id = t_employee.employee_id
-        left join t_department on t_employee.department_id = t_department.department_id
+        LEFT JOIN t_notice_type on t_notice.notice_type_id = t_notice_type.notice_type_id
+        LEFT JOIN t_employee on t_notice.create_user_id = t_employee.employee_id
         <where>
             <if test="query.noticeTypeId != null">
                 AND t_notice_type.notice_type_id = #{query.noticeTypeId}
             </if>
-            <if test="query.keywords != null and query.keywords !=''">
+            <if test="query.keywords != null and query.keywords != ''">
                 AND ( INSTR(t_notice.title,#{query.keywords})
                 OR INSTR(t_notice.author,#{query.keywords})
                 OR INSTR(t_notice.source,#{query.keywords})
                 )
             </if>
-            <if test="query.documentNumber != null and query.documentNumber !=''">
+            <if test="query.documentNumber != null and query.documentNumber != ''">
                 AND INSTR(t_notice.document_number, #{query.documentNumber})
             </if>
-            <if test="query.createUserId != null">
-                AND t_notice.create_user_id = #{createUserId}
+            <if test="query.createUserName != null and query.createUserName != ''">
+                AND t_employee.actual_name = #{query.createUserName}
             </if>
             <if test="query.deletedFlag != null">
-                and t_notice.deleted_flag = #{query.deletedFlag}
+                AND t_notice.deleted_flag = #{query.deletedFlag}
             </if>
             <if test="query.createTimeBegin != null">
                 AND DATE_FORMAT(t_notice.create_time, '%Y-%m-%d') &gt;= DATE_FORMAT(#{query.createTimeBegin},
@@ -84,10 +104,9 @@
     </select>
 
     <!-- ================================== 通知公告【员工查看】相关 ================================== -->
-    <select id="queryEmployeeNotice"
-            resultType="net.lab1024.sa.admin.module.business.oa.notice.domain.vo.NoticeEmployeeVO">
+    <select id="queryEmployeeNotice" resultType="net.lab1024.sa.admin.module.business.oa.notice.domain.vo.NoticeEmployeeVO">
         select
-        t_notice.*,
+        <include refid="base_columns"/>,
         t_notice_type.notice_type_name,
         (select count(*) from t_notice_view_record where t_notice_view_record.employee_id = #{requestEmployeeId} and
         t_notice_view_record.notice_id = t_notice.notice_id) as viewFlag
@@ -142,12 +161,11 @@
         </where>
         order by t_notice.publish_time desc
     </select>
-    <select id="queryEmployeeNotViewNotice"
-            resultType="net.lab1024.sa.admin.module.business.oa.notice.domain.vo.NoticeEmployeeVO">
+    <select id="queryEmployeeNotViewNotice" resultType="net.lab1024.sa.admin.module.business.oa.notice.domain.vo.NoticeEmployeeVO">
         select * from
         (
         select
-        t_notice.*,
+        <include refid="base_columns"/>,
         t_notice_type.notice_type_name,
         (select count(*) from t_notice_view_record where t_notice_view_record.employee_id = #{requestEmployeeId} and
         t_notice_view_record.notice_id = t_notice.notice_id) as viewFlag
@@ -198,8 +216,7 @@
         ) t where viewFlag = 0
         order by t.publish_time desc
     </select>
-    <select id="queryNoticeViewRecordList"
-            resultType="net.lab1024.sa.admin.module.business.oa.notice.domain.vo.NoticeViewRecordVO">
+    <select id="queryNoticeViewRecordList" resultType="net.lab1024.sa.admin.module.business.oa.notice.domain.vo.NoticeViewRecordVO">
         select t_notice_view_record.*,
         t_employee.actual_name as employeeName,
         t_department.name as departmentName

@@ -208,6 +208,10 @@ public class NoticeService {
         }
 
         NoticeUpdateFormVO updateFormVO = SmartBeanUtil.copy(noticeEntity, NoticeUpdateFormVO.class);
+        NoticeTypeVO noticeType = noticeTypeService.getByNoticeTypeId(noticeEntity.getNoticeTypeId());
+        updateFormVO.setNoticeTypeName(noticeType.getNoticeTypeName());
+        updateFormVO.setPublishFlag(updateFormVO.getPublishTime() != null && updateFormVO.getPublishTime().isBefore(LocalDateTime.now()));
+
         if (!updateFormVO.getAllVisibleFlag()) {
             List<NoticeVisibleRangeVO> noticeVisibleRangeList = noticeDao.queryVisibleRange(noticeId);
             List<Long> employeeIdList = noticeVisibleRangeList.stream().filter(e -> NoticeVisibleRangeDataTypeEnum.EMPLOYEE.getValue().equals(e.getDataType()))

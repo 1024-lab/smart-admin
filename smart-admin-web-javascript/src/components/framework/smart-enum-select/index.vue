@@ -19,18 +19,18 @@
     @change="handleChange"
     :disabled="disabled"
   >
-    <a-select-option v-for="item in $smartEnumPlugin.getValueDescList(props.enumName)" :key="item.value" :value="item.value">
+    <a-select-option v-for="item in valueDescList" :key="item.value" :value="item.value" :disabled="disabledOption.includes(item.value)">
       {{ item.desc }}
     </a-select-option>
   </a-select>
 </template>
 
 <script setup>
-  import { ref, watch } from 'vue';
+  import { ref, watch, onMounted, getCurrentInstance } from 'vue';
 
   const props = defineProps({
     enumName: String,
-    value: [Number,String],
+    value: [Number, String],
     width: {
       type: String,
       default: '100%',
@@ -43,22 +43,43 @@
       type: String,
       default: 'default',
     },
+    // 禁用整个下拉选择框
     disabled: {
       type: Boolean,
       default: false,
     },
+    // 需要禁用的选项枚举值
+    disabledOption: {
+      type: Array,
+      default: () => [],
+    },
+    // 需要隐藏的选项枚举值
+    hiddenOption: {
+      type: Array,
+      default: () => [],
+    },
   });
 
-  const emit = defineEmits(['update:value', 'change']);
+  const valueDescList = ref([]);
+
+  onMounted(() => {
+    const internalInstance = getCurrentInstance(); // 有效  全局
+    const smartEnumPlugin = internalInstance.appContext.config.globalProperties.$smartEnumPlugin;
+    valueDescList.value = smartEnumPlugin.getValueDescList(props.enumName).filter((item) => !props.hiddenOption.includes(item.value));
+  });
 
   const selectValue = ref(props.value);
 
   watch(
     () => props.value,
     (newValue) => {
-      selectValue.value = newValue;
-    }
+      // 如果传入的值是被禁用或被隐藏的选项，则移除该选项
+      selectValue.value = props.disabledOption.includes(newValue) || props.hiddenOption.includes(newValue) ? undefined : newValue;
+    },
+    { immediate: true }
   );
+
+  const emit = defineEmits(['update:value', 'change']);
 
   function handleChange(value) {
     emit('update:value', value);

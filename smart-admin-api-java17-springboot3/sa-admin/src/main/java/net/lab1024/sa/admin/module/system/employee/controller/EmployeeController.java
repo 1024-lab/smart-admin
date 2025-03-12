@@ -57,11 +57,11 @@ public class EmployeeController {
         return employeeService.updateEmployee(employeeUpdateForm);
     }
 
-    @Operation(summary = "更新登录人信息 @author 善逸")
-    @PostMapping("/employee/update/login")
-    public ResponseDTO<String> updateByLogin(@Valid @RequestBody EmployeeUpdateForm employeeUpdateForm) {
-        employeeUpdateForm.setEmployeeId(SmartRequestUtil.getRequestUserId());
-        return employeeService.updateEmployee(employeeUpdateForm);
+    @Operation(summary = "更新员工个人中心信息 @author 善逸")
+    @PostMapping("/employee/update/center")
+    public ResponseDTO<String> updateCenter(@Valid @RequestBody EmployeeUpdateCenterForm updateCenterForm) {
+        updateCenterForm.setEmployeeId(SmartRequestUtil.getRequestUserId());
+        return employeeService.updateCenter(updateCenterForm);
     }
 
     @Operation(summary = "更新登录人头像 @author 善逸")

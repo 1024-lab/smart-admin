@@ -8,7 +8,8 @@
     <!--中间内容-->
     <a-layout-content :id="LAYOUT_ELEMENT_IDS.content" class="admin-layout-content">
       <!---标签页-->
-      <div class="page-tag-div" v-show="pageTagFlag && !fullScreenFlag" :id="LAYOUT_ELEMENT_IDS.header">
+      <div class="page-tag-div" v-show="(pageTagFlag && !fullScreenFlag) || breadCrumbFlag" :id="LAYOUT_ELEMENT_IDS.header">
+        <MenuLocationBreadcrumb v-if="pageTagLocation !== 'top'" />
         <PageTag />
       </div>
 
@@ -56,6 +57,7 @@
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
+  import MenuLocationBreadcrumb from './components/menu-location-breadcrumb/index.vue';
 
   const windowHeight = ref(window.innerHeight);
   //主题颜色
@@ -76,6 +78,10 @@
   const footerFlag = computed(() => useAppConfigStore().$state.footerFlag);
   // 是否显示水印
   const watermarkFlag = computed(() => useAppConfigStore().$state.watermarkFlag);
+  // 标签页位置
+  const pageTagLocation = computed(() => useAppConfigStore().$state.pageTagLocation);
+  // 面包屑
+  const breadCrumbFlag = computed(() => useAppConfigStore().$state.breadCrumbFlag);
   // 页面宽度
   const pageWidth = computed(() => useAppConfigStore().$state.pageWidth);
   // 多余高度
@@ -85,8 +91,15 @@
     }
 
     let due = '45px';
-    if (useAppConfigStore().$state.pageTagFlag) {
+    if (useAppConfigStore().$state.pageTagFlag || useAppConfigStore().$state.breadCrumbFlag) {
       due = '85px';
+    }
+    if (
+      useAppConfigStore().$state.pageTagFlag &&
+      useAppConfigStore().$state.pageTagLocation === 'center' &&
+      useAppConfigStore().$state.breadCrumbFlag
+    ) {
+      due = '125px';
     }
     return due;
   });

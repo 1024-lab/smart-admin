@@ -161,6 +161,10 @@ public class Level3ProtectConfigService {
             this.maxUploadFileSizeMb = configForm.getMaxUploadFileSizeMb();
         }
 
+        if (configForm.getLoginFailMaxTimes() != null) {
+            this.loginFailMaxTimes = configForm.getLoginFailMaxTimes();
+        }
+
         if (configForm.getLoginFailLockMinutes() != null) {
             this.loginFailLockSeconds = configForm.getLoginFailLockMinutes() * 60;
         }

@@ -18,6 +18,7 @@
       :allowClear="true"
       :size="size"
       @change="onChange"
+      :disabled="disabled"
     >
       <a-select-option v-for="item in dictKeyCodeList" :key="item.keyCode" :value="item.keyCode">
         {{ item.keyName }}
@@ -27,7 +28,7 @@
 </template>
 
 <script setup>
-  import { computed, onMounted, ref, watch, defineExpose } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import { dictApi } from '/@/api/support/dict-api';
 
   defineExpose({
@@ -49,7 +50,7 @@
       default: 'default',
     },
     // 禁用标识
-    disabledFlag: {
+    disabled: {
       type: Number,
       default: null,
     },

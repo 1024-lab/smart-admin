@@ -17,16 +17,16 @@
   >
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 6 }">
       <a-form-item label="职务名称" name="positionName">
-        <a-input style="width: 100%" v-model:value="form.positionName" placeholder="职务名称"/>
+        <a-input style="width: 100%" v-model:value="form.positionName" placeholder="职务名称" />
       </a-form-item>
       <a-form-item label="职级" name="level">
-        <a-input style="width: 100%" v-model:value="form.level" placeholder="职级"/>
+        <a-input style="width: 100%" v-model:value="form.level" placeholder="职级" />
       </a-form-item>
       <a-form-item label="排序" name="sort">
-        <a-input-number :min="0" :step="1" :precision="0" style="width: 100%" v-model:value="form.sort" placeholder="排序"/>
+        <a-input-number :min="0" :step="1" :precision="0" style="width: 100%" v-model:value="form.sort" placeholder="排序" />
       </a-form-item>
       <a-form-item label="备注" name="remark">
-        <a-input style="width: 100%" v-model:value="form.remark" placeholder="备注"/>
+        <a-input style="width: 100%" v-model:value="form.remark" placeholder="备注" />
       </a-form-item>
     </a-form>
 
@@ -39,86 +39,99 @@
   </a-modal>
 </template>
 <script setup lang="ts">
-import { reactive, ref, nextTick } from 'vue';
-import _ from 'lodash';
-import { message } from 'ant-design-vue';
-import { SmartLoading } from '/@/components/framework/smart-loading';
-import { positionApi } from '/@/api/system/position-api';
-import { smartSentry } from '/@/lib/smart-sentry';
+  import { reactive, ref, nextTick } from 'vue';
+  import _ from 'lodash';
+  import { message } from 'ant-design-vue';
+  import { SmartLoading } from '/@/components/framework/smart-loading';
+  import { positionApi } from '/@/api/system/position-api';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
-// ------------------------ 事件 ------------------------
+  // ------------------------ 事件 ------------------------
 
-const emits = defineEmits(['reloadList']);
+  const emits = defineEmits(['reloadList']);
 
-// ------------------------ 显示与隐藏 ------------------------
-// 是否显示
-const visibleFlag = ref(false);
+  // ------------------------ 显示与隐藏 ------------------------
+  // 是否显示
+  const visibleFlag = ref(false);
 
-function show (rowData) {
-  Object.assign(form, formDefault);
-  if (rowData && !_.isEmpty(rowData)) {
-    Object.assign(form, rowData);
-  }
-  visibleFlag.value = true;
-  nextTick(() => {
-    formRef.value.clearValidate();
-  });
-}
-
-function onClose () {
-  Object.assign(form, formDefault);
-  visibleFlag.value = false;
-}
-
-// ------------------------ 表单 ------------------------
-
-// 组件ref
-const formRef = ref();
-
-const formDefault = {
-  positionId: undefined,
-  positionName: undefined, //职务名称
-  level: undefined,//职纪
-  sort: 0,
-  remark: undefined, //备注
-};
-
-let form = reactive({ ...formDefault });
-
-const rules = {
-  positionName: [{ required: true, message: '请输入职务名称' }],
-};
-
-// 点击确定，验证表单
-async function onSubmit () {
-  try {
-    await formRef.value.validateFields();
-    save();
-  } catch (err) {
-    message.error('参数验证错误，请仔细填写表单数据!');
-  }
-}
-
-// 新建、编辑API
-async function save () {
-  SmartLoading.show();
-  try {
-    if (form.positionId) {
-      await positionApi.update(form);
-    } else {
-      await positionApi.add(form);
+  function show(rowData) {
+    Object.assign(form, formDefault);
+    if (rowData && !_.isEmpty(rowData)) {
+      Object.assign(form, rowData);
     }
-    message.success('操作成功');
-    emits('reloadList');
-    onClose();
-  } catch (err) {
-    smartSentry.captureError(err);
-  } finally {
-    SmartLoading.hide();
+    visibleFlag.value = true;
+    nextTick(() => {
+      formRef.value.clearValidate();
+      // 解决弹窗错误信息显示,没有可忽略
+      const domArr = document.getElementsByClassName('ant-modal');
+      if (domArr && domArr.length > 0) {
+        Array.from(domArr).forEach((item) => {
+          if (item.childNodes && item.childNodes.length > 0) {
+            Array.from(item.childNodes).forEach((child) => {
+              if (child.setAttribute) {
+                child.setAttribute('aria-hidden', 'false');
+              }
+            });
+          }
+        });
+      }
+    });
   }
-}
 
-defineExpose({
-  show,
-});
+  function onClose() {
+    Object.assign(form, formDefault);
+    visibleFlag.value = false;
+  }
+
+  // ------------------------ 表单 ------------------------
+
+  // 组件ref
+  const formRef = ref();
+
+  const formDefault = {
+    positionId: undefined,
+    positionName: undefined, //职务名称
+    level: undefined, //职纪
+    sort: 0,
+    remark: undefined, //备注
+  };
+
+  let form = reactive({ ...formDefault });
+
+  const rules = {
+    positionName: [{ required: true, message: '请输入职务名称' }],
+  };
+
+  // 点击确定，验证表单
+  async function onSubmit() {
+    try {
+      await formRef.value.validateFields();
+      save();
+    } catch (err) {
+      message.error('参数验证错误，请仔细填写表单数据!');
+    }
+  }
+
+  // 新建、编辑API
+  async function save() {
+    SmartLoading.show();
+    try {
+      if (form.positionId) {
+        await positionApi.update(form);
+      } else {
+        await positionApi.add(form);
+      }
+      message.success('操作成功');
+      emits('reloadList');
+      onClose();
+    } catch (err) {
+      smartSentry.captureError(err);
+    } finally {
+      SmartLoading.hide();
+    }
+  }
+
+  defineExpose({
+    show,
+  });
 </script>

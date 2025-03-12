@@ -2,8 +2,8 @@ package net.lab1024.sa.admin.interceptor;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,14 +14,9 @@ import net.lab1024.sa.admin.module.system.login.service.LoginService;
 import net.lab1024.sa.base.common.annoation.NoNeedLogin;
 import net.lab1024.sa.base.common.code.SystemErrorCode;
 import net.lab1024.sa.base.common.code.UserErrorCode;
-import net.lab1024.sa.base.common.constant.StringConst;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
-import net.lab1024.sa.base.common.domain.SystemEnvironment;
-import net.lab1024.sa.base.common.enumeration.SystemEnvironmentEnum;
-import net.lab1024.sa.base.common.enumeration.UserTypeEnum;
 import net.lab1024.sa.base.common.util.SmartRequestUtil;
 import net.lab1024.sa.base.common.util.SmartResponseUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -47,9 +42,6 @@ public class AdminInterceptor implements HandlerInterceptor {
     @Resource
     private LoginService loginService;
 
-    @Resource
-    private SystemEnvironment systemEnvironment;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
@@ -68,17 +60,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             // --------------- 第一步： 根据token 获取用户 ---------------
 
             String tokenValue = StpUtil.getTokenValue();
-            boolean debugNumberTokenFlag = isDevDebugNumberToken(tokenValue);
-
-            String loginId = null;
-            if (debugNumberTokenFlag) {
-                //开发、测试环境，且为数字的话，则表明为 调试临时用户，即需要调用 sa-token switch
-                loginId = UserTypeEnum.ADMIN_EMPLOYEE.getValue() + StringConst.COLON + tokenValue;
-                StpUtil.switchTo(loginId);
-            } else {
-                loginId = (String) StpUtil.getLoginIdByToken(tokenValue);
-            }
-
+            String loginId = (String) StpUtil.getLoginIdByToken(tokenValue);
             RequestEmployee requestEmployee = loginService.getLoginEmployee(loginId, request);
 
             // --------------- 第二步： 校验 登录 ---------------
@@ -86,7 +68,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             Method method = ((HandlerMethod) handler).getMethod();
             NoNeedLogin noNeedLogin = ((HandlerMethod) handler).getMethodAnnotation(NoNeedLogin.class);
             if (noNeedLogin != null) {
-                checkActiveTimeout(requestEmployee, debugNumberTokenFlag);
+                checkActiveTimeout(requestEmployee);
                 return true;
             }
 
@@ -96,7 +78,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             }
 
             // 检测token 活跃频率
-            checkActiveTimeout(requestEmployee, debugNumberTokenFlag);
+            checkActiveTimeout(requestEmployee);
 
 
             // --------------- 第三步： 校验 权限 ---------------
@@ -143,12 +125,7 @@ public class AdminInterceptor implements HandlerInterceptor {
     /**
      * 检测：token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结
      */
-    private void checkActiveTimeout(RequestEmployee requestEmployee, boolean debugNumberTokenFlag) {
-
-        // 对于开发环境的 数字 debug token ，不需要检测活跃有效期
-        if (debugNumberTokenFlag) {
-            return;
-        }
+    private void checkActiveTimeout(RequestEmployee requestEmployee) {
 
         // 用户不在线，也不用检测
         if (requestEmployee == null) {
@@ -160,28 +137,11 @@ public class AdminInterceptor implements HandlerInterceptor {
     }
 
 
-    /**
-     * 是否为开发使用的 debug token
-     *
-     * @param token
-     * @return
-     */
-    private boolean isDevDebugNumberToken(String token) {
-        if (!StrUtil.isNumeric(token)) {
-            return false;
-        }
-        return systemEnvironment.getCurrentEnvironment() == SystemEnvironmentEnum.DEV
-                || systemEnvironment.getCurrentEnvironment() == SystemEnvironmentEnum.TEST;
-    }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         // 清除上下文
         SmartRequestUtil.remove();
-        // 开发环境，关闭 sa token 的临时切换用户
-        if (systemEnvironment.getCurrentEnvironment() == SystemEnvironmentEnum.DEV) {
-            StpUtil.endSwitch();
-        }
     }
 
 

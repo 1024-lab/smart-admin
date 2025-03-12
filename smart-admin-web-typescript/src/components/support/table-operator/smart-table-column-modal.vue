@@ -80,7 +80,7 @@
   function hide() {
     visible.value = false;
   }
-
+  const saveFlag = ref(false);
   //获取用户的列数据
   async function getUserTableColumns(tableId, columns) {
     SmartLoading.show();
@@ -101,13 +101,17 @@
     }
 
     //根据前端列和后端列构建新的列数据
-    tableData.value = mergeColumn(columns, userTableColumnArray);
-
+    let obj = mergeColumn(columns, userTableColumnArray);
+    tableData.value = obj.newColumns;
+    saveFlag.value = obj.saveFlag;
     //将已经显示的展示出来
     for (const item of tableData.value) {
       if (item.showFlag) {
         selectedRowKeyList.value.push(item.columnKey);
       }
+    }
+    if (saveFlag.value) {
+      save(false);
     }
 
     nextTick(() => {
@@ -226,7 +230,7 @@
   }
 
   //保存
-  async function save() {
+  async function save(closeFlag = true) {
     submitLoading.value = true;
     try {
       let columnList = [];
@@ -250,9 +254,11 @@
         columnList,
       });
 
-      message.success('保存成功');
       emit('change', columnList);
-      hide();
+      if (closeFlag) {
+        message.success('保存成功');
+        hide();
+      }
     } catch (e) {
       smartSentry.captureError(e);
     } finally {

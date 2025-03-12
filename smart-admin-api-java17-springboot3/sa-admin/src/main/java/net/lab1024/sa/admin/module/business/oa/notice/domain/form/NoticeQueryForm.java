@@ -28,7 +28,7 @@ public class NoticeQueryForm extends PageParam {
     private String documentNumber;
 
     @Schema(description = "创建人")
-    private Long createUserId;
+    private String createUserName;
 
     @Schema(description = "删除标识")
     private Boolean deletedFlag;

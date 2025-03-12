@@ -9,6 +9,7 @@
  */
 import { useUserStore } from '/@/store/modules/system/user';
 import { App } from 'vue';
+import _ from 'lodash';
 
 const privilege = (value: string) => {
   // 超级管理员
@@ -20,7 +21,7 @@ const privilege = (value: string) => {
   if (!userPointsList) {
     return false;
   }
-  return userPointsList && userPointsList.includes(value);
+  return _.some(userPointsList, ['apiPerms', value]);
 };
 
 export default {

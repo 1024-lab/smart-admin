@@ -43,7 +43,7 @@
           新建
         </a-button>
 
-        <a-button @click="confirmBatchDelete" v-privilege="'support:dict:batchDelete'" type="text" danger :disabled="selectedRowKeyList.length === 0">
+        <a-button @click="confirmBatchDelete" v-privilege="'support:dict:batchDelete'" type="primary" danger :disabled="selectedRowKeyList.length === 0">
           <template #icon>
             <DeleteOutlined />
           </template>

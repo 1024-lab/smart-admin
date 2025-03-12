@@ -11,17 +11,17 @@
   <a-card style="margin-bottom: 15px" size="small">
     <a-descriptions :title="noticeDetail.title" :column="4" size="small">
       <template #extra>
-        <a-button v-if="!noticeDetail.publishFlag" type="primary" size="small" @click="onEdit">编辑</a-button>
+        <a-button type="primary" size="small" @click="onEdit">编辑</a-button>
       </template>
       <a-descriptions-item label="分类">{{ noticeDetail.noticeTypeName }}</a-descriptions-item>
-      <a-descriptions-item label="文号">{{ noticeDetail.documentNumber }}</a-descriptions-item>
+      <a-descriptions-item label="文号">{{ noticeDetail.documentNumber ? noticeDetail.documentNumber : '无' }}</a-descriptions-item>
       <a-descriptions-item label="来源">{{ noticeDetail.source }}</a-descriptions-item>
       <a-descriptions-item label="作者">{{ noticeDetail.author }}</a-descriptions-item>
       <a-descriptions-item label="页面浏览量">{{ noticeDetail.pageViewCount }}</a-descriptions-item>
       <a-descriptions-item label="用户浏览量">{{ noticeDetail.userViewCount }}</a-descriptions-item>
       <a-descriptions-item label="创建时间">{{ noticeDetail.createTime }}</a-descriptions-item>
       <a-descriptions-item label="发布时间">{{ noticeDetail.publishTime }}</a-descriptions-item>
-      <a-descriptions-item label="定时发布">{{ noticeDetail.publishFlag ? '已发布' : '待发布' }}</a-descriptions-item>
+      <a-descriptions-item label="发布状态">{{ noticeDetail.publishFlag ? '已发布' : '待发布' }}</a-descriptions-item>
       <a-descriptions-item label="删除状态">{{ noticeDetail.deletedFlag ? '已删除' : '未删除' }}</a-descriptions-item>
       <a-descriptions-item v-if="!$lodash.isEmpty(noticeDetail.attachment)" label="附件">
         <div class="file-list">
