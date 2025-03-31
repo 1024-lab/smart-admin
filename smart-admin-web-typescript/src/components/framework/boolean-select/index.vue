@@ -29,7 +29,7 @@
   import { ref, watch } from 'vue';
 
   const props = defineProps({
-    value: Number,
+    value: Boolean,
     width: {
       type: Number,
       default: 100,

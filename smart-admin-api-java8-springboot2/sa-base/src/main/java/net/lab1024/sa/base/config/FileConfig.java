@@ -25,7 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Date 2019-09-02 23:21:10
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 @Configuration
@@ -68,7 +68,7 @@ public class FileConfig implements WebMvcConfigurer {
      * @return
      */
     @Bean
-    @ConditionalOnProperty(prefix = "file.storage", name = {"mode"}, havingValue = "cloud")
+    @ConditionalOnProperty(prefix = "file.storage", name = {"mode"}, havingValue = MODE_CLOUD)
     public AmazonS3 initAmazonS3() {
         ClientConfiguration clientConfig = new ClientConfiguration();
         clientConfig.setProtocol(Protocol.HTTPS);

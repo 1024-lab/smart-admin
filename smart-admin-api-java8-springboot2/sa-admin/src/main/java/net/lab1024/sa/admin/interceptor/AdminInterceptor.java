@@ -3,6 +3,7 @@ package net.lab1024.sa.admin.interceptor;
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import cn.dev33.satoken.strategy.SaStrategy;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.module.system.login.domain.RequestEmployee;
@@ -83,7 +84,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             // --------------- 第三步： 校验 权限 ---------------
 
             SmartRequestUtil.setRequestUser(requestEmployee);
-            if (SaStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
+            if (SaAnnotationStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
                 return true;
             }
 
@@ -92,7 +93,7 @@ public class AdminInterceptor implements HandlerInterceptor {
                 return true;
             }
 
-            SaStrategy.instance.checkMethodAnnotation.accept(method);
+            SaAnnotationStrategy.instance.checkMethodAnnotation.accept(method);
 
         } catch (SaTokenException e) {
             /*

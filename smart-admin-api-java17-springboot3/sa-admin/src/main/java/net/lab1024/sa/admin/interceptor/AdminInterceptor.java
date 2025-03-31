@@ -2,9 +2,8 @@ package net.lab1024.sa.admin.interceptor;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -84,7 +83,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             // --------------- 第三步： 校验 权限 ---------------
 
             SmartRequestUtil.setRequestUser(requestEmployee);
-            if (SaStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
+            if (SaAnnotationStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
                 return true;
             }
 
@@ -93,7 +92,7 @@ public class AdminInterceptor implements HandlerInterceptor {
                 return true;
             }
 
-            SaStrategy.instance.checkMethodAnnotation.accept(method);
+            SaAnnotationStrategy.instance.checkMethodAnnotation.accept(method);
 
         } catch (SaTokenException e) {
             /*
@@ -126,7 +125,6 @@ public class AdminInterceptor implements HandlerInterceptor {
      * 检测：token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结
      */
     private void checkActiveTimeout(RequestEmployee requestEmployee) {
-
         // 用户不在线，也不用检测
         if (requestEmployee == null) {
             return;
@@ -137,12 +135,9 @@ public class AdminInterceptor implements HandlerInterceptor {
     }
 
 
-
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         // 清除上下文
         SmartRequestUtil.remove();
     }
-
-
 }

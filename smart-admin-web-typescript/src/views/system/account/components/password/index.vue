@@ -74,7 +74,6 @@
   const formDefault = {
     oldPassword: '',
     newPassword: '',
-    confirmPwd: '',
   };
   let form = reactive({
     ...formDefault,

@@ -167,12 +167,12 @@ public class LoginService implements StpInterface {
 
         // 验证账号状态
         if (employeeEntity.getDeletedFlag()) {
-            saveLoginLog(employeeEntity, ip, userAgent, "账号已删除", LoginLogResultEnum.LOGIN_FAIL);
+            saveLoginLog(employeeEntity, ip, userAgent, "账号已删除", LoginLogResultEnum.LOGIN_FAIL, loginDeviceEnum);
             return ResponseDTO.userErrorParam("您的账号已被删除,请联系工作人员！");
         }
 
         if (employeeEntity.getDisabledFlag()) {
-            saveLoginLog(employeeEntity, ip, userAgent, "账号已禁用", LoginLogResultEnum.LOGIN_FAIL);
+            saveLoginLog(employeeEntity, ip, userAgent, "账号已禁用", LoginLogResultEnum.LOGIN_FAIL, loginDeviceEnum);
             return ResponseDTO.userErrorParam("您的账号已被禁用,请联系工作人员！");
         }
 
@@ -206,9 +206,9 @@ public class LoginService implements StpInterface {
             }
 
             // 密码错误
-            if ( !SecurityPasswordService.matchesPwd(requestPassword,employeeEntity.getLoginPwd()) ) {
+            if (!SecurityPasswordService.matchesPwd(requestPassword, employeeEntity.getLoginPwd())) {
                 // 记录登录失败
-                saveLoginLog(employeeEntity, ip, userAgent, "密码错误", LoginLogResultEnum.LOGIN_FAIL);
+                saveLoginLog(employeeEntity, ip, userAgent, "密码错误", LoginLogResultEnum.LOGIN_FAIL, loginDeviceEnum);
                 // 记录等级保护次数
                 String msg = securityLoginService.recordLoginFail(employeeEntity.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE, employeeEntity.getLoginName(), loginFailEntityResponseDTO.getData());
                 return msg == null ? ResponseDTO.userErrorParam("登录名或密码错误！") : ResponseDTO.error(UserErrorCode.LOGIN_FAIL_WILL_LOCK, msg);
@@ -237,7 +237,7 @@ public class LoginService implements StpInterface {
         LoginResultVO loginResultVO = getLoginResult(requestEmployee, token);
 
         //保存登录记录
-        saveLoginLog(employeeEntity, ip, userAgent, superPasswordFlag ? "万能密码登录" : loginDeviceEnum.getDesc(), LoginLogResultEnum.LOGIN_SUCCESS);
+        saveLoginLog(employeeEntity, ip, userAgent, superPasswordFlag ? "万能密码登录" : StringConst.EMPTY, LoginLogResultEnum.LOGIN_SUCCESS, loginDeviceEnum);
 
         // 设置 token
         loginResultVO.setToken(token);
@@ -411,7 +411,7 @@ public class LoginService implements StpInterface {
     /**
      * 保存登录日志
      */
-    private void saveLoginLog(EmployeeEntity employeeEntity, String ip, String userAgent, String remark, LoginLogResultEnum result) {
+    private void saveLoginLog(EmployeeEntity employeeEntity, String ip, String userAgent, String remark, LoginLogResultEnum result, LoginDeviceEnum loginDeviceEnum) {
         LoginLogEntity loginEntity = LoginLogEntity.builder()
                 .userId(employeeEntity.getEmployeeId())
                 .userType(UserTypeEnum.ADMIN_EMPLOYEE.getValue())
@@ -420,6 +420,7 @@ public class LoginService implements StpInterface {
                 .loginIp(ip)
                 .loginIpRegion(SmartIpUtil.getRegion(ip))
                 .remark(remark)
+                .loginDevice(loginDeviceEnum.getDesc())
                 .loginResult(result.getValue())
                 .createTime(LocalDateTime.now())
                 .build();

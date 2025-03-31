@@ -44,15 +44,16 @@
 
 <script setup lang="ts">
   import dayjs from 'dayjs';
-  import { computed, h } from 'vue';
+  import { computed, h, useSlots } from 'vue';
   import { messages } from '/@/i18n';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useSpinStore } from '/@/store/modules/system/spin';
   import { theme } from 'ant-design-vue';
   import { themeColors } from '/@/theme/color.js';
   import { Popover } from 'ant-design-vue';
-  import SmartCopyIcon from '/@/components/smart-copy-icon/index.vue';
+  import SmartCopyIcon from '/@/components/framework/smart-copy-icon/index.vue';
 
+  const slots = useSlots();
   const antdLocale = computed(() => messages[useAppConfigStore().language].antdLocale);
   const dayjsLocale = computed(() => messages[useAppConfigStore().language].dayjsLocale);
   dayjs.locale(dayjsLocale);

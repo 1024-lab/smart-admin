@@ -21,18 +21,20 @@ import constantsInfo from '/@/constants/index';
 import { privilegeDirective } from '/@/directives/privilege';
 import i18n from '/@/i18n/index';
 import privilegePlugin from '/@/plugins/privilege-plugin';
+import dictPlugin from '/@/plugins/dict-plugin';
 import smartEnumPlugin from '/@/plugins/smart-enums-plugin';
 import { buildRoutes, router } from '/@/router';
 import { store } from '/@/store';
 import { useUserStore } from '/@/store/modules/system/user';
 import 'ant-design-vue/dist/reset.css';
-import 'vue3-tabs-chrome/dist/vue3-tabs-chrome.css';
 import '/@/theme/index.less';
 import { localRead } from '/@/utils/local-util.js';
 import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
 import { Table } from 'ant-design-vue';
 import { useAppConfigStore } from '/@/store/modules/system/app-config';
 import '/@/utils/ployfill';
+import { useDictStore } from '/@/store/modules/system/dict.js';
+import { dictApi } from '/@/api/support/dict-api.js';
 
 /*
  * -------------------- ※ 着重 解释说明下main.js的初始化逻辑 begin ※ --------------------
@@ -54,10 +56,13 @@ async function getLoginInfo() {
   try {
     //获取登录用户信息
     const res = await loginApi.getLoginInfo();
+    const dictRes = await dictApi.getAllDictData();
     //构建系统的路由
     let menuRouterList = res.data.menuList.filter((e) => e.path || e.frameUrl);
     buildRoutes(menuRouterList);
     initVue();
+    // 初始化数据字典
+    useDictStore().initData(dictRes.data);
     //更新用户信息到pinia
     useUserStore().setUserLoginInfo(res.data);
   } catch (e) {
@@ -69,7 +74,15 @@ async function getLoginInfo() {
 
 async function initVue() {
   let vueApp = createApp(App);
-  let app = vueApp.use(router).use(store).use(i18n).use(Antd).use(smartEnumPlugin, constantsInfo).use(privilegePlugin).use(JsonViewer);
+  let app = vueApp
+    .use(router)
+    .use(store)
+    .use(i18n)
+    .use(Antd)
+    .use(smartEnumPlugin, constantsInfo)
+    .use(privilegePlugin)
+    .use(dictPlugin)
+    .use(JsonViewer);
   //注入权限
   app.directive('privilege', {
     mounted(el, binding) {

@@ -239,7 +239,6 @@ public class EmployeeService {
         return ResponseDTO.ok();
     }
 
-
     /**
      * 更新登录人头像
      *
@@ -384,11 +383,8 @@ public class EmployeeService {
     /**
      * 获取某个部门的员工信息
      */
-    public ResponseDTO<List<EmployeeVO>> getAllEmployeeByDepartmentId(Long departmentId, Boolean disabledFlag) {
-        List<EmployeeEntity> employeeEntityList = employeeDao.selectByDepartmentId(departmentId, disabledFlag);
-        if (disabledFlag != null) {
-            employeeEntityList = employeeEntityList.stream().filter(e -> e.getDisabledFlag().equals(disabledFlag)).collect(Collectors.toList());
-        }
+    public ResponseDTO<List<EmployeeVO>> getAllEmployeeByDepartmentId(Long departmentId) {
+        List<EmployeeEntity> employeeEntityList = employeeDao.selectByDepartmentId(departmentId, Boolean.FALSE);
 
         if (CollectionUtils.isEmpty(employeeEntityList)) {
             return ResponseDTO.ok(Collections.emptyList());
@@ -429,7 +425,7 @@ public class EmployeeService {
      * 根据登录名获取员工
      */
     public EmployeeEntity getByLoginName(String loginName) {
-        return employeeDao.getByLoginName(loginName, null);
+        return employeeDao.getByLoginName(loginName, false);
     }
 
 }

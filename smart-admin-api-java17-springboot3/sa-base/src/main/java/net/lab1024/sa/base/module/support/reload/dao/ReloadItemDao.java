@@ -17,7 +17,6 @@ import java.util.List;
  * @Email lab1024@163.com
  * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
-@Component
 @Mapper
 public interface ReloadItemDao extends BaseMapper<ReloadItemEntity> {
 

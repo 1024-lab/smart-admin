@@ -25,8 +25,8 @@
   import { shallowRef, onBeforeUnmount, watch, ref } from 'vue';
   import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
   import { fileApi } from '/@/api/support/file-api';
-  import '@wangeditor/editor/dist/css/style.css';
-  import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
+  import '@wangeditor-next/editor/dist/css/style.css';
+  import { Editor, Toolbar } from '@wangeditor-next/editor-for-vue';
   import { smartSentry } from '/@/lib/smart-sentry';
 
   //菜单
@@ -100,6 +100,7 @@
     getText,
   });
 </script>
+
 <style scoped>
   .w-e-full-screen-container {
     z-index: 9999 !important;

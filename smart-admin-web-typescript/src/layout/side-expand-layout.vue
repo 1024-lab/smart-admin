@@ -105,6 +105,7 @@
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
+  const appConfigStore = useAppConfigStore();
 
   const windowHeight = ref(window.innerHeight);
   //是否全屏
@@ -151,18 +152,16 @@
   const rightWidth = ref(0);
   function sizeComputed() {
     const tagParentElement = document.querySelector('.location-breadcrumb');
-    if (tagParentElement) {
-      const tagsElement = tagParentElement.querySelector('.ant-tabs-nav-list');
-      const parentElement = document.querySelector('.smart-layout-header-user');
-      const rightElement = document.querySelector('.smart-layout-header-right');
-      rightWidth.value = rightElement.offsetWidth;
-      let ro = new ResizeObserver((e) => {
-        rightWidth.value = rightElement.offsetWidth + 10;
-      });
-      ro.observe(rightElement);
-      ro.observe(tagsElement);
-      ro.observe(parentElement);
-    }
+    const tagsElement = tagParentElement.querySelector('.ant-tabs-nav-list');
+    const parentElement = document.querySelector('.smart-layout-header-user');
+    const rightElement = document.querySelector('.smart-layout-header-right');
+    rightWidth.value = rightElement.offsetWidth;
+    let ro = new ResizeObserver((e) => {
+      rightWidth.value = rightElement.offsetWidth + 10;
+    });
+    ro.observe(rightElement);
+    ro.observe(tagsElement);
+    ro.observe(parentElement);
   }
   //是否隐藏菜单
   const collapsed = ref(false);

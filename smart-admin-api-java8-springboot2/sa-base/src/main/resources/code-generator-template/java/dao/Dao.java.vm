@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
  */
 
 @Mapper
-@Component
 public interface ${name.upperCamel}Dao extends BaseMapper<${name.upperCamel}Entity> {
 
     /**

@@ -14,7 +14,7 @@ import java.util.function.Function;
  * @Date 2020-11-25 20:56:58
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 public class RepeatSubmitCaffeineTicket extends AbstractRepeatSubmitTicket {
 
@@ -23,9 +23,9 @@ public class RepeatSubmitCaffeineTicket extends AbstractRepeatSubmitTicket {
      * 默认缓存时间
      * 初始大小为：100万
      */
-    private static Cache<String, Long> cache = Caffeine.newBuilder()
+    private static final Cache<String, Long> cache = Caffeine.newBuilder()
             .maximumSize(100 * 10000)
-            .expireAfterWrite(RepeatSubmit.MAX_INTERVAL, TimeUnit.MILLISECONDS).build();
+            .expireAfterWrite(300 * 1000L, TimeUnit.MILLISECONDS).build();
 
 
     public RepeatSubmitCaffeineTicket(Function<String, String> ticketFunction) {
@@ -41,10 +41,5 @@ public class RepeatSubmitCaffeineTicket extends AbstractRepeatSubmitTicket {
     @Override
     public void putTicket(String ticket) {
         cache.put(ticket, System.currentTimeMillis());
-    }
-
-    @Override
-    public void removeTicket(String ticket) {
-        cache.invalidate(ticket);
     }
 }

@@ -10,50 +10,66 @@
 import { postRequest, getRequest } from '/@/lib/axios';
 
 export const dictApi = {
-  // 分页查询数据字典KEY - @author 卓大
-  keyQuery: (param) => {
-    return postRequest('/support/dict/key/query', param);
+
+  // 获取所有字典code @author 1024创新实验室-主任-卓大
+  getAllDict: () => {
+    return getRequest('/support/dict/getAllDict');
   },
-  // 查询全部字典key - @author 卓大
-  queryAllKey: () => {
-    return getRequest('/support/dict/key/queryAll');
+
+  // 获取全部字典数据 @author 1024创新实验室-主任-卓大
+  getAllDictData: () => {
+    return getRequest('/support/dict/getAllDictData');
   },
-  /**
-   * 分页查询数据字典value - @author 卓大  
-   */ 
-  valueQuery: (param) => {
-    return postRequest('/support/dict/value/query', param);
+
+  // 分页查询 @author 1024创新实验室-主任-卓大
+  queryDict: (param) => {
+    return postRequest('/support/dict/queryPage', param);
   },
-  // 数据字典KEY-添加- @author 卓大
-  keyAdd: (param) => {
-    return postRequest('/support/dict/key/add', param);
+
+  // 添加 @author 1024创新实验室-主任-卓大
+  addDict: (param) => {
+    return postRequest('/support/dict/add', param);
   },
-  // 分页查询数据字典value - @author 卓大
-  valueAdd: (param) => {
-    return postRequest('/support/dict/value/add', param);
+
+  // 更新 @author 1024创新实验室-主任-卓大
+  updateDict: (param) => {
+    return postRequest('/support/dict/update', param);
   },
-  // 数据字典key-更新- @author 卓大
-  keyEdit: (param) => {
-    return postRequest('/support/dict/key/edit', param);
+
+  // 字典-删除- @author 卓大
+  batchDeleteDict: (dictIdList) => {
+    return postRequest('/support/dict/batchDelete', dictIdList);
   },
-  // 数据字典Value-更新- @author 卓大
-  valueEdit: (param) => {
-    return postRequest('/support/dict/value/edit', param);
+
+  // 字典 启用 禁用 @author 1024创新实验室-主任-卓大
+  updateDisabled: (dictId) => {
+    return getRequest(`/support/dict/updateDisabled/${dictId}`);
   },
-  // 数据字典key-删除- @author 卓大
-  keyDelete: (keyIdList) => {
-    return postRequest('/support/dict/key/delete', keyIdList);
+
+  // ------------- 查询字典数据 -------------
+
+  // 字典数据 分页查询 @author 1024创新实验室-主任-卓大
+  queryDictData: (dictId) => {
+    return getRequest(`/support/dict/dictData/queryDictData/${dictId}`);
   },
-  // 数据字典Value-删除- @author 卓大
-  valueDelete: (valueIdList) => {
-    return postRequest('/support/dict/value/delete', valueIdList);
+
+  // 字典数据 添加 - @author 卓大
+  addDictData: (param) => {
+    return postRequest('/support/dict/dictData/add', param);
   },
-  // 缓存刷新- @author 卓大
-  cacheRefresh: () => {
-    return getRequest('/support/dict/cache/refresh');
+
+  // 字典数据 更新- @author 卓大
+  updateDictData: (param) => {
+    return postRequest('/support/dict/dictData/update', param);
   },
-  // 数据字典-值列表- @author 卓大
-  valueList: (keyCode) => {
-    return getRequest(`/support/dict/value/list/${keyCode}`);
+
+  // 字典数据-删除- @author 卓大
+  batchDeleteDictData: (dictDataIdList) => {
+    return postRequest('/support/dict/dictData/batchDelete', dictDataIdList);
+  },
+
+  // 字典数据 启用 禁用 @author 1024创新实验室-主任-卓大
+  updateDictDataDisabled: (dictDataId) => {
+    return getRequest(`/support/dict/dictData/updateDisabled/${dictDataId}`);
   },
 };

@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
  * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Mapper
-@Component
 public interface SerialNumberDao extends BaseMapper<SerialNumberEntity> {
 
     /**

@@ -22,7 +22,7 @@
 #end
 #if($field.queryTypeEnum == "Dict")
             <a-form-item label="${field.label}" class="smart-query-form-item">
-                <DictSelect keyCode="$!{field.dict}" placeholder="${field.label}" v-model:value="queryForm.${field.fieldName}" width="${field.width}" />
+                <DictSelect dictCode="$!{field.dict}" placeholder="${field.label}" v-model:value="queryForm.${field.fieldName}" width="${field.width}" />
             </a-form-item>
 #end
 #if($field.queryTypeEnum == "Enum")

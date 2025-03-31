@@ -12,7 +12,14 @@
               <a-input class="form-item" v-model:value.trim="form.loginName" placeholder="请输入登录账号" disabled />
             </a-form-item>
             <a-form-item label="部门" name="departmentId">
-              <DepartmentTreeSelect class="form-item" ref="departmentTreeSelect" width="100%" :init="false" v-model:value="form.departmentId" disabled />
+              <DepartmentTreeSelect
+                class="form-item"
+                ref="departmentTreeSelect"
+                width="100%"
+                :init="false"
+                v-model:value="form.departmentId"
+                disabled
+              />
             </a-form-item>
             <a-form-item label="员工名称" name="actualName">
               <a-input class="form-item" v-model:value.trim="form.actualName" placeholder="请输入员工名称" />

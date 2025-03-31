@@ -1,18 +1,18 @@
 <!--
   * 代码生成 配置信息
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-22 21:50:41 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-22 21:50:41
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-alert :closable="true" message="请务必将每一个字段的 “ 字段名词 ” 填写完整！！！" type="success" show-icon>
     <template #icon><smile-outlined /></template>
   </a-alert>
   <!-- 为了方便再配置时中途新增字典后 可以重新刷新字典下拉 (需要先随便选择一个字典后才能看到最新的字典) -->
-  <div style="float: right; padding: 10px 0px">
+  <div style="float: right; padding: 10px 0">
     <a-button type="primary" @click="refreshDict">刷新字典</a-button>
   </div>
   <a-table
@@ -68,7 +68,7 @@
       </template>
 
       <template v-if="column.dataIndex === 'dict'">
-        <DictKeySelect ref="dictRef" v-model:value="record.dict" />
+        <DictCodeSelect ref="dictRef" v-model:value="record.dict" />
       </template>
 
       <template v-if="column.dataIndex === 'enumName'">
@@ -81,7 +81,7 @@
 <script setup lang="ts">
   import { inject, ref } from 'vue';
   import { checkExistEnum, convertJavaEnumName, getJavaType, getJsType, JavaTypeList, JsTypeList } from '../../code-generator-util';
-  import DictKeySelect from '/@/components/support/dict-key-select/index.vue';
+  import DictCodeSelect from '/@/components/support/dict-code-select/index.vue';
   import { convertUpperCamel, convertLowerCamel } from '/@/utils/str-util';
   import _ from 'lodash';
 

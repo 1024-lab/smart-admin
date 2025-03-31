@@ -46,6 +46,8 @@ public class LoginLogVO {
     @SchemaEnum(LoginLogResultEnum.class)
     private Integer loginResult;
 
+    private String loginDevice;
+
     private LocalDateTime createTime;
 
 }

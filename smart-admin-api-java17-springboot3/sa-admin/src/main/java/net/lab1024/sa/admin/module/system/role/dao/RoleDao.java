@@ -16,7 +16,6 @@ import net.lab1024.sa.admin.module.system.role.domain.entity.RoleEntity;
  * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Mapper
-@Component
 public interface RoleDao extends BaseMapper<RoleEntity> {
 
     /**

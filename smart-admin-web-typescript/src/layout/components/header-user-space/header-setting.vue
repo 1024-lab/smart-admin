@@ -132,7 +132,7 @@
   import { useI18n } from 'vue-i18n';
   import localStorageKeyConst from '/@/constants/local-storage-key-const';
   import { LAYOUT_ENUM } from '/@/constants/layout-const';
-  import { localSave } from '/@/utils/local-util';
+  import { localRead, localSave } from '/@/utils/local-util';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { Modal } from 'ant-design-vue';
   import { appDefaultConfig } from '/@/config/app-config';

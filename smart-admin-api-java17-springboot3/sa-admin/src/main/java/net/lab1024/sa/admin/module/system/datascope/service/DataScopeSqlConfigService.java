@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date 2020/11/28  20:59:17
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Slf4j
 @Service
@@ -89,7 +89,6 @@ public class DataScopeSqlConfigService {
 
     /**
      * 根据调用的方法获取，此方法的配置信息
-     *
      */
     public DataScopeSqlConfig getSqlConfig(String method) {
         return this.dataScopeMethodMap.get(method);
@@ -125,7 +124,7 @@ public class DataScopeSqlConfigService {
                 log.warn("data scope custom strategy class：{} ,bean is null", sqlConfigDTO.getJoinSqlImplClazz());
                 return "";
             }
-            return powerStrategy.getCondition(viewTypeEnum,paramMap, sqlConfigDTO);
+            return powerStrategy.getCondition(viewTypeEnum, paramMap, sqlConfigDTO);
         }
         if (DataScopeWhereInTypeEnum.EMPLOYEE == sqlConfigDTO.getDataScopeWhereInType()) {
             List<Long> canViewEmployeeIds = dataScopeViewService.getCanViewEmployeeId(viewTypeEnum, employeeId);

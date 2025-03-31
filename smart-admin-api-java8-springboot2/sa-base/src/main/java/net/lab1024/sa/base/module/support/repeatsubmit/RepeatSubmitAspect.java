@@ -22,18 +22,16 @@ import java.lang.reflect.Method;
  * @Date 2020-11-25 20:56:58
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Aspect
 @Slf4j
 public class RepeatSubmitAspect {
 
-    private AbstractRepeatSubmitTicket repeatSubmitTicket;
+    private final AbstractRepeatSubmitTicket repeatSubmitTicket;
 
     /**
      * 获取凭证信息
-     *
-     * @param repeatSubmitTicket
      */
     public RepeatSubmitAspect(AbstractRepeatSubmitTicket repeatSubmitTicket) {
         this.repeatSubmitTicket = repeatSubmitTicket;
@@ -41,10 +39,6 @@ public class RepeatSubmitAspect {
 
     /**
      * 定义切入点
-     *
-     * @param point
-     * @return
-     * @throws Throwable
      */
     @Around("@annotation(net.lab1024.sa.base.module.support.repeatsubmit.annoation.RepeatSubmit)")
     public Object around(ProceedingJoinPoint point) throws Throwable {
@@ -55,20 +49,24 @@ public class RepeatSubmitAspect {
         if (StringUtils.isEmpty(ticket)) {
             return point.proceed();
         }
+
+        Method method = ((MethodSignature) point.getSignature()).getMethod();
+        RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
+        int limit = annotation.value();
+
+        // 获取上一次请求时间
         Long lastRequestTime = this.repeatSubmitTicket.getTicketTimestamp(ticket);
-        if (lastRequestTime != null) {
-            Method method = ((MethodSignature) point.getSignature()).getMethod();
-            RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
-            int interval = Math.min(annotation.value(), RepeatSubmit.MAX_INTERVAL);
-            if (System.currentTimeMillis() < lastRequestTime + interval) {
-                // 提交频繁
-                return ResponseDTO.error(UserErrorCode.REPEAT_SUBMIT);
-            }
+        // 校验是否限制时间内重复提交
+        if (lastRequestTime != null && System.currentTimeMillis() < lastRequestTime + limit) {
+            return ResponseDTO.error(UserErrorCode.REPEAT_SUBMIT);
         }
+
+        // 执行
         Object obj = null;
         try {
-            // 先给 ticket 设置在执行中
+            // 给 ticket 设置在执行中
             this.repeatSubmitTicket.putTicket(ticket);
+            // 执行
             obj = point.proceed();
         } catch (Throwable throwable) {
             log.error("", throwable);

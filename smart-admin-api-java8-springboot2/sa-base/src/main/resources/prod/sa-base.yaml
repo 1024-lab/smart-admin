@@ -38,7 +38,7 @@ spring:
     host: smtp.163.com
     port: 465
     username: lab1024@163.com
-    password: 1024lab
+    password: LAB1024LAB
     properties:
       mail:
         smtp:
@@ -99,12 +99,13 @@ springdoc:
     enabled: true # 开关
     doc-expansion: none  #关闭展开
     tags-sorter: alpha
+    server-base-url: https://preview.smartadmin.vip/smart-admin-api
   api-docs:
     enabled: true # 开关
 knife4j:
   enable: true
   basic:
-    enable: true
+    enable: false
     username: api # Basic认证用户名
     password: 1024 # Basic认证密码
 

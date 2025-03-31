@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
  * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Mapper
-@Component
 public interface CodeGeneratorConfigDao extends BaseMapper<CodeGeneratorConfigEntity> {
 
 }

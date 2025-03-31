@@ -67,7 +67,7 @@ export default {
         },
       },
     },
-    target: 'modules',
+    target: 'esnext',
     outDir: 'dist', // 指定输出路径
     assetsDir: 'assets', // 指定生成静态文件目录
     assetsInlineLimit: '4096', // 小于此阈值的导入或引用资源将内联为 base64 编码

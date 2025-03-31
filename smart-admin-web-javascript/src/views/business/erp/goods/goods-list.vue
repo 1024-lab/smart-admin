@@ -25,7 +25,7 @@
       </a-form-item>
 
       <a-form-item label="产地" name="place" class="smart-query-form-item">
-        <DictSelect key-code="GOODS_PLACE" v-model:value="queryForm.place" width="120px" />
+        <DictSelect :dictCode="DICT_CODE_ENUM.GOODS_PLACE" v-model:value="queryForm.place" width="120px" />
       </a-form-item>
 
       <a-form-item label="商品状态" name="goodsStatus" class="smart-query-form-item">
@@ -44,13 +44,13 @@
         <a-button-group>
           <a-button type="primary" @click="onSearch" v-privilege="'goods:query'">
             <template #icon>
-              <ReloadOutlined />
+              <SearchOutlined />
             </template>
             查询
           </a-button>
           <a-button @click="resetQuery" v-privilege="'goods:query'">
             <template #icon>
-              <SearchOutlined />
+              <ReloadOutlined />
             </template>
             重置
           </a-button>
@@ -93,7 +93,7 @@
         </a-button>
       </div>
       <div class="smart-table-setting-block">
-        <TableOperator v-model="columns" :tableId="TABLE_ID_CONST.BUSINESS.ERP.GOODS" :refresh="queryData" />
+        <TableOperator v-model="columns" :tableId="TABLE_ID_CONST.BUSINESS.ERP.GOODS" :refresh="queryData"/>
       </div>
     </a-row>
     <!---------- 表格操作行 end ----------->
@@ -120,7 +120,7 @@
           {{ text }}
         </template>
         <template v-if="column.dataIndex === 'place'">
-          <DictPreview :options="descList.GOODS_PLACE" :value="text" />
+          <DictLabel :dict-code="DICT_CODE_ENUM.GOODS_PLACE" :dataValue="text" />
         </template>
         <template v-if="column.dataIndex === 'remark'">
           <span>{{ text ? text : '' }}</span>
@@ -203,11 +203,10 @@
   import DictSelect from '/@/components/support/dict-select/index.vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import _ from 'lodash';
-  import SmartHeaderCell from '/@/components/smart-table-header-cell/index.vue';
-  import DictPreview from '/@/components/dict-preview/index.vue';
-  import { useDict } from '/@/utils/dict';
+  import SmartHeaderCell from '/@/components/support/table-header-cell/index.vue';
+  import { DICT_CODE_ENUM } from '/@/constants/support/dict-const.js';
+  import DictLabel from '/@/components/support/dict-label/index.vue';
 
-  const descList = useDict('GOODS_PLACE');
   // ---------------------------- 表格列 ----------------------------
 
   const columns = ref([
@@ -249,7 +248,7 @@
       resizable: true,
       filterOptions: {
         type: 'dict-select',
-        keyCode: 'GOODS_PLACE',
+        dictCode: DICT_CODE_ENUM.GOODS_PLACE,
       },
       width: 150,
     },

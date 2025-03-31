@@ -17,7 +17,7 @@ public class ${name.upperCamel}VO {
 
 #foreach ($field in $fields)
 
-    ${field.apiModelProperty}$!{field.notEmpty}$!{field.dict}$!{field.file}
+    ${field.apiModelProperty}$!{field.notEmpty}$!{field.file}
     private $field.javaType $field.fieldName;
 #end
 

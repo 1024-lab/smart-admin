@@ -10,13 +10,13 @@
 <template>
   <div class="menu-container">
     <!-- 顶部导航：取自菜单管理中第一级菜单，建议一级菜单都设为目录 -->
-    <TopMenu ref="topMenuRef" class="top-menu" />
+    <TopMenu ref="topMenuRef" :collapsed="collapsed" class="top-menu" />
     <!-- 左侧导航：通过在一级菜单下建立页面或目录实现菜单分组 -->
     <RecursionMenu :collapsed="collapsed" ref="recursionMenuRef" class="recursion-menu" />
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import RecursionMenu from './recursion-menu.vue';
 import TopMenu from './top-menu.vue';
@@ -33,12 +33,14 @@ const props = defineProps({
     default: false,
   },
 });
+
 // 选中的顶级菜单
 const topMenuRef = ref();
 // 二级菜单引用
 const recursionMenuRef = ref();
 
 let currentRoute = useRoute();
+
 
 // 根据路由更新菜单展开和选中状态
 function updateSelectKeyAndOpenKey() {

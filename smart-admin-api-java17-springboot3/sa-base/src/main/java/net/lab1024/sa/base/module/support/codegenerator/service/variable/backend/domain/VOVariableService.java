@@ -84,14 +84,6 @@ public class VOVariableService extends CodeGenerateBaseVariableService {
                 packageList.add("import io.swagger.v3.oas.annotations.media.Schema;");
             }
 
-
-            //字典
-            if (isDict(field.getColumnName(), form)) {
-                finalFieldMap.put("dict", "\n    @JsonSerialize(using = DictValueVoSerializer.class)");
-                packageList.add("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
-                packageList.add("import net.lab1024.sa.base.common.json.serializer.DictValueVoSerializer;");
-            }
-
             //文件上传
             if (isFile(field.getColumnName(), form)) {
                 finalFieldMap.put("file", "\n    @JsonSerialize(using = FileKeyVoSerializer.class)");

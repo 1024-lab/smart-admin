@@ -20,7 +20,7 @@
         <SmartEnumSelect enum-name="GOODS_STATUS_ENUM" v-model:value="form.goodsStatus" />
       </a-form-item>
       <a-form-item label="产地" name="place">
-        <DictSelect width="100%" key-code="GOODS_PLACE" v-model:value="form.place" mode="tags" />
+        <DictSelect width="100%" :dict-code="DICT_CODE_ENUM.GOODS_PLACE" v-model:value="form.place" mode="tags" />
       </a-form-item>
       <a-form-item label="上架状态" name="shelvesFlag">
         <a-radio-group v-model:value="form.shelvesFlag">
@@ -65,6 +65,7 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import DictSelect from '/@/components/support/dict-select/index.vue';
+  import { DICT_CODE_ENUM } from '/@/constants/support/dict-const';
 
   // emit
   const emit = defineEmits(['reloadList']);

@@ -48,7 +48,7 @@
         <jjwt.version>0.9.1</jjwt.version>
         <jwks-rsa.version>0.9.0</jwks-rsa.version>
         <velocity-tools.version>3.1</velocity-tools.version>
-        <sa-token.version>1.37.0</sa-token.version>
+        <sa-token.version>1.41.0</sa-token.version>
         <ip2region.version>2.7.0</ip2region.version>
         <bcprov.version>1.80</bcprov.version>
         <jackson-datatype-jsr310.version>2.13.4</jackson-datatype-jsr310.version>

@@ -19,8 +19,8 @@
 原理：内部有三种实现方式： 1) 基于内存锁实现 （不支持分布式和集群）；  2) 基于redis锁实现 ；  3) 基于Mysql 锁for update 实现
 - 支持随机生成和查询生成记录
 - 支持动态配置
-</pre
-        >
+</pre>
+        <div style="color:red">系统默认使用“内存锁”类型，若修改，请将后端代码 @Service 注解加到对应的实现类上：SerialNumberInternService、SerialNumberMysqlService、SerialNumberRedisService</div>
       </template>
     </a-alert>
 

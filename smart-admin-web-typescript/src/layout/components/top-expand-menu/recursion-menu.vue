@@ -1,11 +1,11 @@
 <!--
   * 递归菜单
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-06 20:29:12 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-06 20:29:12
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <div class="recursion-container" v-show="topMenu.children && topMenu.children.length > 0">
@@ -72,7 +72,6 @@
     topMenu,
     (value) => {
       let hasSideMenu = value.children && value.children.length > 0;
-      console.log(hasSideMenu);
       menuEmitter.emit('sideMenuChange', hasSideMenu);
     },
     { immediate: true, deep: true }
@@ -112,7 +111,6 @@
       immediate: true,
     }
   );
-
   // 页面跳转
   function turnToPage(route) {
     useUserStore().deleteKeepAliveIncludes(route.menuId.toString());

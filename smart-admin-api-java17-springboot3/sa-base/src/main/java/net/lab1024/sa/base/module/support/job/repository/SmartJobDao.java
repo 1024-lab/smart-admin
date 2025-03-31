@@ -18,7 +18,6 @@ import java.util.List;
  * @date 2024/6/17 21:30
  */
 @Mapper
-@Component
 public interface SmartJobDao extends BaseMapper<SmartJobEntity> {
 
     /**

@@ -36,13 +36,13 @@
         <a-button-group>
           <a-button type="primary" @click="ajaxQuery">
             <template #icon>
-              <ReloadOutlined />
+              <SearchOutlined />
             </template>
             查询
           </a-button>
           <a-button @click="resetQuery">
             <template #icon>
-              <SearchOutlined />
+              <ReloadOutlined />
             </template>
             重置
           </a-button>

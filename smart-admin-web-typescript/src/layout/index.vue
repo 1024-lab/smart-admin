@@ -14,10 +14,10 @@
   <SideExpandLayout v-if="layout === LAYOUT_ENUM.SIDE_EXPAND.value" />
   <!--顶部菜单 模式-->
   <TopLayout v-if="layout === LAYOUT_ENUM.TOP.value" />
-    <!--顶部展开 模式-->
-  <TopExpandLayout v-if="layout === LAYOUT_ENUM.TOP_EXPAND.value" />
   <!--定期修改密码-->
   <RegularChangePasswordModal />
+  <!--顶部展开 模式-->
+  <TopExpandLayout v-if="layout === LAYOUT_ENUM.TOP_EXPAND.value" />
 </template>
 <script setup lang="ts">
   import { computed } from 'vue';

@@ -17,7 +17,6 @@ import java.util.List;
  * @author luoyi
  * @date 2024/06/22 20:20
  */
-@Component
 @Mapper
 public interface MessageDao extends BaseMapper<MessageEntity> {
 

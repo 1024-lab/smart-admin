@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import net.lab1024.sa.admin.module.business.goods.constant.GoodsStatusEnum;
-import net.lab1024.sa.base.common.json.deserializer.DictValueVoDeserializer;
+import net.lab1024.sa.base.common.json.deserializer.DictDataDeserializer;
 import net.lab1024.sa.base.common.swagger.SchemaEnum;
 import net.lab1024.sa.base.common.validator.enumeration.CheckEnum;
 
@@ -39,7 +39,7 @@ public class GoodsAddForm {
 
     @Schema(description = "产地")
     @NotBlank(message = "产地 不能为空 ")
-    @JsonDeserialize(using = DictValueVoDeserializer.class)
+    @JsonDeserialize(using = DictDataDeserializer.class)
     private String place;
 
     @Schema(description = "商品价格")

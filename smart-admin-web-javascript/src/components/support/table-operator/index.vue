@@ -61,16 +61,25 @@
       type: Number,
       require: true,
     },
+    //如果开启表格scroll，需要传递 scroll标识,由于main.js中设置的全局默认的表格高度，所以scroll默认值设置为true
+    scroll: {
+      type: Boolean,
+      default: true,
+    },
   });
 
   const emit = defineEmits(['update:modelValue']);
 
   // 原始表格列数据（复制一份最原始的columns集合，以供后续各个地方使用）
   let originalColumn = reactive(_.cloneDeep(props.modelValue));
+  // 存储最新的列数据
+  let newColumn = reactive(_.cloneDeep(props.modelValue));
+
+  // 用于监听表格拖拽后新的列数据
   watch(
     () => props.modelValue,
     (value) => {
-      originalColumn = value;
+      newColumn = value;
     },
     {
       deep: true,
@@ -170,13 +179,19 @@
 
   const smartTableColumnModal = ref();
   function showModal() {
-    smartTableColumnModal.value.show(originalColumn, props.tableId);
+    smartTableColumnModal.value.show(newColumn, props.tableId,props.scroll);
   }
 
   // 将弹窗修改的列数据，赋值给原表格 列数组
   function updateColumn(changeColumnArray) {
+    let obj={}
+    // 如果为空数组代表恢复默认，使用原始表格数据
     //合并列
-    let obj = mergeColumn(_.cloneDeep(originalColumn), changeColumnArray);
+    if(_.isEmpty(changeColumnArray)){
+      obj = mergeColumn(_.cloneDeep(originalColumn), changeColumnArray);
+    }else{
+      obj = mergeColumn(_.cloneDeep(newColumn), changeColumnArray);
+    }
     const newColumns = obj.newColumns;
     emit(
       'update:modelValue',
@@ -190,6 +205,7 @@
     (e) => {
       if (e) {
         originalColumn = _.cloneDeep(props.modelValue);
+        newColumn = _.cloneDeep(props.modelValue);
         buildUserTableColumns();
       }
     },

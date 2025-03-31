@@ -22,7 +22,6 @@ import java.util.List;
  * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Mapper
-@Component
 public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
     /**
      * 查询员工列表
@@ -35,7 +34,7 @@ public interface EmployeeDao extends BaseMapper<EmployeeEntity> {
     List<EmployeeVO> selectEmployeeByDisabledAndDeleted(@Param("disabledFlag") Boolean disabledFlag, @Param("deletedFlag") Boolean deletedFlag);
 
     /**
-     * 更新禁用状态
+     * 更新单个
      */
     void updateDisableFlag(@Param("employeeId") Long employeeId, @Param("disabledFlag") Boolean disabledFlag);
 

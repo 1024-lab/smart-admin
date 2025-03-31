@@ -61,6 +61,11 @@ public class LoginLogEntity {
     private String remark;
 
     /**
+     * 登录设备
+     */
+    private String loginDevice;
+
+    /**
      * 登录类型
      */
     private Integer loginResult;

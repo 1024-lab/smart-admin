@@ -117,7 +117,7 @@ public class EmployeeController {
     @Operation(summary = "查询员工-根据部门id @author 卓大")
     @GetMapping("/employee/getAllEmployeeByDepartmentId/{departmentId}")
     public ResponseDTO<List<EmployeeVO>> getAllEmployeeByDepartmentId(@PathVariable Long departmentId) {
-        return employeeService.getAllEmployeeByDepartmentId(departmentId, Boolean.FALSE);
+        return employeeService.getAllEmployeeByDepartmentId(departmentId);
     }
 
     @Operation(summary = "查询所有员工 @author 卓大")

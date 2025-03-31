@@ -27,7 +27,6 @@
 <script setup lang="ts">
   import _ from 'lodash';
   import { computed, ref } from 'vue';
-  import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
   import { router } from '/@/router';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
@@ -117,7 +116,7 @@
     background: #1677ff;
     color: #fff;
   }
-  :deep(.ant-menu-item-selected) {
+  :deep(.ant-menu-item-selected){
     background: #0958d9 !important;
     color: #fff !important;
   }

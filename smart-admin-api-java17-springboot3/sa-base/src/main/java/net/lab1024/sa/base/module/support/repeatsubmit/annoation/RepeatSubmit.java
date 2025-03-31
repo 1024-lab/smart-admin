@@ -21,13 +21,7 @@ public @interface RepeatSubmit {
 
     /**
      * 重复提交间隔时间/毫秒
-     *
-     * @return
      */
     int value() default 300;
 
-    /**
-     * 最长间隔30s
-     */
-    int MAX_INTERVAL = 30000;
 }

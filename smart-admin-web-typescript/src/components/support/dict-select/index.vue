@@ -20,8 +20,8 @@
       @change="onChange"
       :disabled="disabled"
     >
-      <a-select-option v-for="item in dictValueList" :key="item.valueCode" :value="item.valueCode" :disabled="disabledOption.includes(item.valueCode)">
-        {{ item.valueName }}
+      <a-select-option v-for="item in dictDataList" :key="item.dataValue" :value="item.dataValue" :disabled="disabledOption.includes(item.valueCode)">
+        {{ item.dataLabel }}
       </a-select-option>
     </a-select>
   </div>
@@ -29,10 +29,10 @@
 
 <script setup lang="ts">
   import { onMounted, ref, watch } from 'vue';
-  import { dictApi } from '/@/api/support/dict-api';
+  import { useDictStore } from '/@/store/modules/system/dict.js';
 
   const props = defineProps({
-    keyCode: String,
+    dictCode: String,
     value: [Array, String],
     mode: {
       type: String,
@@ -69,13 +69,13 @@
 
   // -------------------------- 查询 字典数据 --------------------------
 
-  const dictValueList = ref([]);
-  async function queryDict() {
-    let res = await dictApi.valueList(props.keyCode);
-    dictValueList.value = res.data.filter((item) => !props.hiddenOption.includes(item.valueCode));
+  const dictDataList = ref([]);
+  function initDictData() {
+    let list = useDictStore().getDictData(props.dictCode);
+    dictDataList.value = list.filter((item) => !props.hiddenOption.includes(item.dataValue) && !item.disabledFlag);
   }
 
-  onMounted(queryDict);
+  onMounted(initDictData);
 
   // -------------------------- 选中 相关、事件 --------------------------
 

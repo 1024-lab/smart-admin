@@ -51,7 +51,7 @@
   import { theme } from 'ant-design-vue';
   import { themeColors } from '/@/theme/color.js';
   import { Popover } from 'ant-design-vue';
-  import SmartCopyIcon from '/@/components/smart-copy-icon/index.vue';
+  import SmartCopyIcon from '/@/components/framework/smart-copy-icon/index.vue';
 
   const slots = useSlots();
   const antdLocale = computed(() => messages[useAppConfigStore().language].antdLocale);

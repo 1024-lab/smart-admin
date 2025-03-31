@@ -124,6 +124,10 @@ export const useUserStore = defineStore({
       localRemove(localKey.USER_TOKEN);
       localRemove(localKey.USER_POINTS);
       localRemove(localKey.USER_TAG_NAV);
+      localRemove(localKey.APP_CONFIG);
+      localRemove(localKey.HOME_QUICK_ENTRY);
+      localRemove(localKey.NOTICE_READ);
+      localRemove(localKey.TO_BE_DONE);
     },
     // 查询未读消息数量
     async queryUnreadMessageCount() {
@@ -179,9 +183,11 @@ export const useUserStore = defineStore({
       // 获取待办工作数
       this.queryToBeDoneList();
     },
+
     setToken(token) {
       this.token = token;
     },
+
     //设置标签页
     setTagNav(route, from) {
       if (_.isNull(this.tagNav)) {
@@ -206,6 +212,7 @@ export const useUserStore = defineStore({
           // @ts-ignore
           menuTitle: route.meta.title,
           menuQuery: route.query,
+          menuIcon:route.meta?.icon,
           // @ts-ignore
           fromMenuName: from.name,
           fromMenuQuery: from.query,

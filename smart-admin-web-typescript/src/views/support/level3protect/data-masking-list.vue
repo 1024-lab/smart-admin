@@ -33,7 +33,7 @@
           <a-button-group>
             <a-button type="primary" @click="onSearch">
               <template #icon>
-                <ReloadOutlined />
+                <SearchOutlined />
               </template>
               查询
             </a-button>

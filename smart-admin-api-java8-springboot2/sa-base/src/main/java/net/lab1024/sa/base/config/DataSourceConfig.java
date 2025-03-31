@@ -145,7 +145,7 @@ public class DataSourceConfig {
         if (dataScopePlugin != null) {
             pluginsList.add(dataScopePlugin);
         }
-        factoryBean.setPlugins(pluginsList.toArray(new Interceptor[pluginsList.size()]));
+        factoryBean.setPlugins(pluginsList.toArray(new Interceptor[0]));
         // 添加字段自动填充处理
         factoryBean.setGlobalConfig(new GlobalConfig().setBanner(false).setMetaObjectHandler(new MybatisPlusFillHandler()));
 

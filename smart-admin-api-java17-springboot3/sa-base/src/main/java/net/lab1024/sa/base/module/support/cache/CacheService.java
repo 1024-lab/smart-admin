@@ -14,61 +14,30 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 缓存操作
+ * 缓存服务
  *
  * @Author 1024创新实验室: 罗伊
  * @Date 2021/10/11 20:07
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
-public class CacheService {
-
-    @Resource
-    private CaffeineCacheManager caffeineCacheManager;
+public interface CacheService {
 
     /**
      * 获取所有缓存名称
-     *
      */
-    public List<String> cacheNames() {
-        return Lists.newArrayList(caffeineCacheManager.getCacheNames());
-    }
+    List<String> cacheNames();
 
     /**
-     * 某个缓存下的所有key
-     *
+     * 某个缓存下的所有 key
      */
-    public List<String> cacheKey(String cacheName) {
-        CaffeineCache cache = (CaffeineCache) caffeineCacheManager.getCache(cacheName);
-        if (cache == null) {
-            return Lists.newArrayList();
-        }
-        Set<Object> cacheKey = cache.getNativeCache().asMap().keySet();
-        return cacheKey.stream().map(e -> e.toString()).collect(Collectors.toList());
-    }
+    List<String> cacheKey(String cacheName);
 
     /**
-     * 移除某个key
-     *
+     * 移除某个 key
      */
+    void removeCache(String cacheName);
 
-    public void removeCache(String cacheName) {
-        CaffeineCache cache = (CaffeineCache) caffeineCacheManager.getCache(cacheName);
-        if (cache != null) {
-            cache.clear();
-        }
-    }
-
-    @SmartReload(ReloadConst.CACHE_SERVICE)
-    public void clearAllCache() {
-        Collection<String> cacheNames = caffeineCacheManager.getCacheNames();
-        for (String name : cacheNames) {
-            CaffeineCache cache = (CaffeineCache) caffeineCacheManager.getCache(name);
-            if (cache != null) {
-                cache.clear();
-            }
-        }
-    }
 }

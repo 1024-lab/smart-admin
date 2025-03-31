@@ -26,7 +26,6 @@ import net.lab1024.sa.base.common.util.SmartEnumUtil;
 import net.lab1024.sa.base.common.util.SmartPageUtil;
 import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerTypeEnum;
 import net.lab1024.sa.base.module.support.datatracer.service.DataTracerService;
-import net.lab1024.sa.base.module.support.dict.service.DictCacheService;
 import net.lab1024.sa.base.module.support.dict.service.DictService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -60,7 +59,7 @@ public class GoodsService {
     private DataTracerService dataTracerService;
 
     @Resource
-    private DictCacheService dictCacheService;
+    private DictService dictService;
 
     /**
      * 添加商品
@@ -194,13 +193,13 @@ public class GoodsService {
      */
     public List<GoodsExcelVO> getAllGoods() {
         List<GoodsEntity> goodsEntityList = goodsDao.selectList(null);
-        String keyCode="GODOS_PLACE";
+        String dictCode = "GOODS_PLACE";
         return goodsEntityList.stream()
                 .map(e ->
                         GoodsExcelVO.builder()
                                 .goodsStatus(SmartEnumUtil.getEnumDescByValue(e.getGoodsStatus(), GoodsStatusEnum.class))
                                 .categoryName(categoryQueryService.queryCategoryName(e.getCategoryId()))
-                                .place(Arrays.stream(e.getPlace().split(",")).map(code -> dictCacheService.selectValueNameByValueCode(keyCode,code)).collect(Collectors.joining(",")))
+                                .place(Arrays.stream(e.getPlace().split(",")).map(code -> dictService.getDictDataLabel(dictCode, code)).collect(Collectors.joining(",")))
                                 .price(e.getPrice())
                                 .goodsName(e.getGoodsName())
                                 .remark(e.getRemark())

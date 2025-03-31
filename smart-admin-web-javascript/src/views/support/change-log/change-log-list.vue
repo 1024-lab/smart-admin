@@ -25,13 +25,13 @@
         <a-button-group>
           <a-button type="primary" @click="onSearch">
             <template #icon>
-              <ReloadOutlined />
+              <SearchOutlined />
             </template>
             查询
           </a-button>
           <a-button @click="resetQuery" class="smart-margin-left10">
             <template #icon>
-              <SearchOutlined />
+              <ReloadOutlined />
             </template>
             重置
           </a-button>

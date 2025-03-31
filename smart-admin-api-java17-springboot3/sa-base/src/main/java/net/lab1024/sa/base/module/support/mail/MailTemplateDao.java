@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
  * @Copyright <a href="https://1024lab.net">1024创新实验室</a> ，Since 2012
  */
 @Mapper
-@Component
 public interface MailTemplateDao extends BaseMapper<MailTemplateEntity> {
 
 }

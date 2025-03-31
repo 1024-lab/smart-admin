@@ -29,15 +29,11 @@ public class ${name.upperCamel}Service {
 
     /**
      * 分页查询
-     *
-     * @param queryForm
-     * @return
      */
     public PageResult<${name.upperCamel}VO> queryPage(${name.upperCamel}QueryForm queryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
         List<${name.upperCamel}VO> list = ${name.lowerCamel}Dao.queryPage(page, queryForm);
-        PageResult<${name.upperCamel}VO> pageResult = SmartPageUtil.convert2PageResult(page, list);
-        return pageResult;
+        return SmartPageUtil.convert2PageResult(page, list);
     }
 
 #if($insertAndUpdate.isSupportInsertAndUpdate)
@@ -53,8 +49,6 @@ public class ${name.upperCamel}Service {
     /**
      * 更新
      *
-     * @param updateForm
-     * @return
      */
     public ResponseDTO<String> update(${name.upperCamel}UpdateForm updateForm) {
         ${name.upperCamel}Entity ${name.lowerCamel}Entity = SmartBeanUtil.copy(updateForm, ${name.upperCamel}Entity.class);
@@ -67,9 +61,6 @@ public class ${name.upperCamel}Service {
     #if($deleteInfo.deleteEnum == "Batch" || $deleteInfo.deleteEnum == "SingleAndBatch")
     /**
      * 批量删除
-     *
-     * @param idList
-     * @return
      */
     public ResponseDTO<String> batchDelete(List<${primaryKeyJavaType}> idList) {
         if (CollectionUtils.isEmpty(idList)){

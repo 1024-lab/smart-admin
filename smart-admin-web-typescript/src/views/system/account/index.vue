@@ -34,10 +34,11 @@
   let selectedKeys = ref([]);
   watch(
     () => selectedMenu.value,
-    () => {
+    (newQuery, oldQuery) => {
       selectedKeys.value = _.isEmpty(selectedMenu.value) ? [] : [selectedMenu.value.menuId];
     }
   );
+
   function selectMenu(menuId) {
     selectedMenu.value = menuList.value.find((e) => e.menuId === menuId);
   }

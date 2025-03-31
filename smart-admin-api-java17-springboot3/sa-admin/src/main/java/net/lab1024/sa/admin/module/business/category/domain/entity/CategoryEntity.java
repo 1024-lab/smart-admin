@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import net.lab1024.sa.admin.module.business.category.constant.CategoryTypeEnum;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -15,11 +16,13 @@ import java.time.LocalDateTime;
  * @Date 2021/08/05 21:26:58
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 @TableName("t_category")
-public class CategoryEntity {
+public class CategoryEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.AUTO)
     private Long categoryId;

@@ -31,13 +31,13 @@
                 <a-button-group>
                   <a-button type="primary" @click="onSearch" v-privilege="'support:job:query'">
                     <template #icon>
-                      <ReloadOutlined />
+                      <SearchOutlined />
                     </template>
                     查询
                   </a-button>
                   <a-button @click="resetQuery" v-privilege="'support:job:query'">
                     <template #icon>
-                      <SearchOutlined />
+                      <ReloadOutlined />
                     </template>
                     重置
                   </a-button>
@@ -107,7 +107,8 @@
               <template v-if="column.dataIndex === 'enabledFlag'">
                 <a-switch
                   v-model:checked="record.enabledFlag"
-                  checked-children="已启用" un-checked-children="已禁用"
+                  checked-children="已启用"
+                  un-checked-children="已禁用"
                   @change="(checked) => handleEnabledUpdate(checked, record)"
                   :loading="record.enabledLoading"
                 />
@@ -117,7 +118,9 @@
                   <a-button v-privilege="'support:job:update'" @click="openUpdateModal(record)" type="link">编辑</a-button>
                   <a-button v-privilege="'support:job:execute'" type="link" @click="openExecuteModal(record)">执行</a-button>
                   <a-button v-privilege="'support:job:log:query'" @click="openJobLogModal(record.jobId, record.jobName)" type="link">记录</a-button>
-                  <a-button danger v-privilege="'support:job:log:delete'" @click="confirmDelete(record.jobId, record.jobName)" type="link">删除</a-button>
+                  <a-button danger v-privilege="'support:job:log:delete'" @click="confirmDelete(record.jobId, record.jobName)" type="link"
+                    >删除</a-button
+                  >
                 </div>
               </template>
             </template>
@@ -163,7 +166,6 @@
   import JobLogListModal from './components/job-log-list-modal.vue';
   import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
   const activeKey = ref('1');
-
   const columns = ref([
     {
       title: 'id',

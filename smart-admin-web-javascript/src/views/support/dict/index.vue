@@ -2,7 +2,7 @@
   * 数据 字典
   *
   * @Author:    1024创新实验室-主任：卓大
-  * @Date:      2022-06-08 21:50:41
+  * @Date:      2025-03-26 21:50:41
   * @Wechat:    zhuda1024
   * @Email:     lab1024@163.com
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
@@ -11,20 +11,22 @@
   <a-form class="smart-query-form">
     <a-row class="smart-query-form-row">
       <a-form-item label="关键字" class="smart-query-form-item">
-        <a-input style="width: 300px" v-model:value="queryForm.searchWord" placeholder="关键字" />
+        <a-input style="width: 300px" v-model:value="queryForm.keywords" placeholder="编码/名称/备注" />
       </a-form-item>
-
+      <a-form-item label="禁用" class="smart-query-form-item">
+        <BooleanSelect v-model:value="queryForm.disabledFlag" style="width: 150px" />
+      </a-form-item>
       <a-form-item class="smart-query-form-item smart-margin-left10">
         <a-button-group>
           <a-button type="primary" @click="onSearch">
             <template #icon>
-              <ReloadOutlined />
+              <SearchOutlined />
             </template>
             查询
           </a-button>
           <a-button @click="resetQuery">
             <template #icon>
-              <SearchOutlined />
+              <ReloadOutlined />
             </template>
             重置
           </a-button>
@@ -36,25 +38,24 @@
   <a-card size="small" :bordered="false" :hoverable="true">
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button @click="addOrUpdateKey" v-privilege="'support:dict:add'" type="primary">
+        <a-button @click="addOrUpdateDict" v-privilege="'support:dict:add'" type="primary">
           <template #icon>
             <PlusOutlined />
           </template>
           新建
         </a-button>
 
-        <a-button @click="confirmBatchDelete" v-privilege="'support:dict:batchDelete'" type="primary" danger :disabled="selectedRowKeyList.length === 0">
+        <a-button
+          @click="confirmBatchDelete"
+          v-privilege="'support:dict:batchDelete'"
+          type="primary"
+          danger
+          :disabled="selectedRowKeyList.length === 0"
+        >
           <template #icon>
             <DeleteOutlined />
           </template>
           批量删除
-        </a-button>
-
-        <a-button @click="cacheRefresh" v-privilege="'support:dict:refresh'" type="primary">
-          <template #icon>
-            <cloud-sync-outlined />
-          </template>
-          缓存刷新
         </a-button>
       </div>
       <div class="smart-table-setting-block">
@@ -73,12 +74,20 @@
       :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
     >
       <template #bodyCell="{ record, column }">
-        <template v-if="column.dataIndex === 'keyCode'">
-          <a @click="showValueList(record.dictKeyId)">{{ record.keyCode }}</a>
+        <template v-if="column.dataIndex === 'dictCode'">
+          <a @click="showDictData(record)">{{ record.dictCode }}</a>
+        </template>
+        <template v-if="column.dataIndex === 'disabledFlag'">
+          <a-switch
+            @change="(checked) => handleChangeDisabled(checked, record)"
+            v-model:checked="record.enabled"
+            checked-children="启用中"
+            un-checked-children="已禁用"
+          />
         </template>
         <template v-else-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="addOrUpdateKey(record)" v-privilege="'support:dict:edit'" type="link">编辑</a-button>
+            <a-button @click="addOrUpdateDict(record)" v-privilege="'support:dict:edit'" type="link">编辑</a-button>
           </div>
         </template>
       </template>
@@ -100,15 +109,15 @@
       />
     </div>
 
-    <DictKeyOperateModal ref="operateModal" @reloadList="ajaxQuery" />
+    <DictFormModal ref="dictFormModalRef" @reloadList="ajaxQuery" />
     <!-- 值列表 -->
-    <DictValueModal ref="dictValueModal" />
+    <DictDataModal ref="dictDataModalRef" />
   </a-card>
 </template>
 <script setup>
-  import DictKeyOperateModal from './components/dict-key-operate-modal.vue';
-  import DictValueModal from './components/dict-value-modal.vue';
-  import { reactive, ref, onMounted } from 'vue';
+  import DictFormModal from './components/dict-form-modal.vue';
+  import DictDataModal from './components/dict-data-modal.vue';
+  import { onMounted, reactive, ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { dictApi } from '/@/api/support/dict-api';
@@ -116,24 +125,35 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
+  import BooleanSelect from '/@/components/framework/boolean-select/index.vue';
 
   const columns = ref([
     {
       title: 'ID',
       width: 90,
-      dataIndex: 'dictKeyId',
+      dataIndex: 'dictId',
     },
     {
       title: '编码',
-      dataIndex: 'keyCode',
+      dataIndex: 'dictCode',
     },
     {
       title: '名称',
-      dataIndex: 'keyName',
+      dataIndex: 'dictName',
     },
     {
       title: '备注',
       dataIndex: 'remark',
+    },
+    {
+      title: '状态',
+      width: 90,
+      dataIndex: 'disabledFlag',
+    },
+    {
+      title: '更新时间',
+      width: 160,
+      dataIndex: 'updateTime',
     },
     {
       title: '操作',
@@ -146,7 +166,8 @@
   // ---------------- 查询数据 -----------------
 
   const queryFormState = {
-    searchWord: '',
+    keywords: '',
+    disabledFlag: null,
     pageNum: 1,
     pageSize: 10,
   };
@@ -155,12 +176,12 @@
   const selectedRowKeyList = ref([]);
   const tableData = ref([]);
   const total = ref(0);
-  const operateModal = ref();
-  const dictValueModal = ref();
+  const dictFormModalRef = ref();
+  const dictDataModalRef = ref();
 
   // 显示操作记录弹窗
-  function showValueList(dictKeyId) {
-    dictValueModal.value.showModal(dictKeyId);
+  function showDictData(dict) {
+    dictDataModalRef.value.showModal(dict.dictId, dict.dictCode);
   }
 
   function onSelectChange(selectedRowKeys) {
@@ -178,9 +199,12 @@
   async function ajaxQuery() {
     try {
       tableLoading.value = true;
-      let responseModel = await dictApi.keyQuery(queryForm);
-      const list = responseModel.data.list;
-      total.value = responseModel.data.total;
+      let responseData = await dictApi.queryDict(queryForm);
+      const list = responseData.data.list;
+      for (let item of list) {
+        item.enabled = !item.disabledFlag;
+      }
+      total.value = responseData.data.total;
       tableData.value = list;
     } catch (e) {
       smartSentry.captureError(e);
@@ -189,14 +213,14 @@
     }
   }
 
-  // ---------------- 刷新缓存 -----------------
-
-  async function cacheRefresh() {
+  // ----------------------- 启用/禁用 ------------------------
+  async function handleChangeDisabled(disabledFlag, dict) {
+    SmartLoading.show();
     try {
-      SmartLoading.show();
-      await dictApi.cacheRefresh();
-      message.success('缓存刷新成功');
-      ajaxQuery();
+      await dictApi.updateDisabled(dict.dictId);
+      dict.disabledFlag = !disabledFlag;
+      message.success('操作成功');
+      onSearch();
     } catch (e) {
       smartSentry.captureError(e);
     } finally {
@@ -209,7 +233,7 @@
   function confirmBatchDelete() {
     Modal.confirm({
       title: '提示',
-      content: '确定要删除选中Key吗?',
+      content: '确定要删除选中的字典吗?',
       okText: '删除',
       okType: 'danger',
       onOk() {
@@ -220,23 +244,23 @@
     });
   }
 
-  const batchDelete = async () => {
+  async function batchDelete() {
     try {
       SmartLoading.show();
-      await dictApi.keyDelete(selectedRowKeyList.value);
+      await dictApi.batchDeleteDict(selectedRowKeyList.value);
       message.success('删除成功');
-      ajaxQuery();
+      await ajaxQuery();
     } catch (e) {
       smartSentry.captureError(e);
     } finally {
       SmartLoading.hide();
     }
-  };
+  }
 
   // ---------------- 添加/更新 -----------------
 
-  function addOrUpdateKey(rowData) {
-    operateModal.value.showModal(rowData);
+  function addOrUpdateDict(rowData) {
+    dictFormModalRef.value.showModal(rowData);
   }
 
   onMounted(ajaxQuery);

@@ -62,6 +62,7 @@
     visibleFlag.value = true;
     nextTick(() => {
       formRef.value.clearValidate();
+
       // 解决弹窗错误信息显示,没有可忽略
       const domArr = document.getElementsByClassName('ant-modal');
       if (domArr && domArr.length > 0) {

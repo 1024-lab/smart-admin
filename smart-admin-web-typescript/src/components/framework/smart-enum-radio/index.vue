@@ -62,15 +62,13 @@
 
   const valueDescList = ref([]);
 
-  const selectValue = ref(props.value);
-
   onMounted(() => {
     const internalInstance = getCurrentInstance(); // 有效  全局
     const smartEnumPlugin = internalInstance.appContext.config.globalProperties.$smartEnumPlugin;
     valueDescList.value = smartEnumPlugin.getValueDescList(props.enumName).filter((item) => !props.hiddenOption.includes(item.value));
   });
 
-  const emit = defineEmits(['update:value', 'change']);
+  const selectValue = ref(props.value);
 
   watch(
     () => props.value,
@@ -80,6 +78,8 @@
     },
     { immediate: true }
   );
+
+  const emit = defineEmits(['update:value', 'change']);
 
   function handleChange(e) {
     emit('update:value', e.target.value);

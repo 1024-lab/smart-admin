@@ -7,8 +7,14 @@ package net.lab1024.sa.base.constant;
  * @Date 2022-05-30 21:22:12
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 public class CacheKeyConst {
+
+    public static class Dict {
+
+        public static final String DICT_DATA = "dict_data_cache";
+
+    }
 
 }

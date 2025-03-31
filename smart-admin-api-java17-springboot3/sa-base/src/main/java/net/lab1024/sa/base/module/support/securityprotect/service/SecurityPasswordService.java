@@ -38,7 +38,6 @@ public class SecurityPasswordService {
     private static final int PASSWORD_LENGTH = 8;
 
 
-
     @Resource
     private PasswordLogDao passwordLogDao;
 
@@ -151,8 +150,8 @@ public class SecurityPasswordService {
     /**
      * 校验密码是否匹配
      */
-    public static Boolean matchesPwd( String password,  String encodedPassword){
-        return ARGON2_PASSWORD_ENCODER.matches( password, encodedPassword);
+    public static Boolean matchesPwd(String password, String encodedPassword) {
+        return ARGON2_PASSWORD_ENCODER.matches(password, encodedPassword);
     }
 
 }

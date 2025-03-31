@@ -36,14 +36,14 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
 
-  // ----------------------- 对外暴漏 ---------------------
+// ----------------------- 对外暴漏 ---------------------
 
-  defineExpose({
-    showModal,
-  });
+defineExpose({
+  showModal,
+});
 
-  // ----------------------- modal 的显示与隐藏 ---------------------
-  const emits = defineEmits(['refresh']);
+// ----------------------- modal 的显示与隐藏 ---------------------
+const emits = defineEmits(['refresh']);
 
   const visible = ref(false);
   function showModal(data) {
@@ -134,21 +134,21 @@ function resetFormData() {
     }
   }
 
-//更新部门ajax请求
-async function updateDepartment() {
-  SmartLoading.show();
-  try {
-    if (formState.parentId == formState.departmentId) {
-      message.warning('上级部门不能为自己');
-      return;
+  //更新部门ajax请求
+  async function updateDepartment() {
+    SmartLoading.show();
+    try {
+      if (formState.parentId == formState.departmentId) {
+        message.warning('上级菜单不能为自己');
+        return;
+      }
+      await departmentApi.updateDepartment(formState);
+      emits('refresh');
+      closeModal();
+    } catch (error) {
+      smartSentry.captureError(error);
+    } finally {
+      SmartLoading.hide();
     }
-    await departmentApi.updateDepartment(formState);
-    emits('refresh');
-    closeModal();
-  } catch (error) {
-    smartSentry.captureError(error);
-  } finally {
-    SmartLoading.hide();
   }
-}
 </script>

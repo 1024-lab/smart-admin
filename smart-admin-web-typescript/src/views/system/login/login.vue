@@ -131,6 +131,8 @@
   import { h } from 'vue';
   import { localSave } from '/@/utils/local-util.js';
   import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
+  import { useDictStore } from '/@/store/modules/system/dict.js';
+  import {dictApi} from "/@/api/support/dict-api.js";
 
   //--------------------- 登录表单 ---------------------------------
 
@@ -198,6 +200,9 @@
         message.success('登录成功');
         //更新用户信息到pinia
         useUserStore().setUserLoginInfo(res.data);
+        // 初始化数据字典
+        const dictRes = await dictApi.getAllDictData();
+        useDictStore().initData(dictRes.data);
         //构建系统的路由
         buildRoutes();
         router.push('/home');

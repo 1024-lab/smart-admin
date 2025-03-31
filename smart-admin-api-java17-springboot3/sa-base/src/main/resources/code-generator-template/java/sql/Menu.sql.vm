@@ -10,13 +10,13 @@ SET @parent_id = NULL;
 SELECT t_menu.menu_id INTO @parent_id FROM t_menu WHERE t_menu.menu_name = '${basic.description}';
 
 INSERT INTO t_menu ( menu_name, menu_type, parent_id, frame_flag, cache_flag, visible_flag, disabled_flag, api_perms, perms_type, context_menu_id, create_user_id )
-VALUES ( '查询', 3, @parent_id, false, false, true, false, '${name.lowerCamel}:query', 1, @parent_id, 1 );
+VALUES ( '查询', 3, @parent_id, false, true, true, false, '${name.lowerCamel}:query', 1, @parent_id, 1 );
 
 INSERT INTO t_menu ( menu_name, menu_type, parent_id, frame_flag, cache_flag, visible_flag, disabled_flag, api_perms, perms_type, context_menu_id, create_user_id )
-VALUES ( '添加', 3, @parent_id, false, false, true, false, '${name.lowerCamel}:add', 1, @parent_id, 1 );
+VALUES ( '添加', 3, @parent_id, false, true, true, false, '${name.lowerCamel}:add', 1, @parent_id, 1 );
 
 INSERT INTO t_menu ( menu_name, menu_type, parent_id, frame_flag, cache_flag, visible_flag, disabled_flag, api_perms, perms_type, context_menu_id, create_user_id )
-VALUES ( '更新', 3, @parent_id, false, false, true, false, '${name.lowerCamel}:update', 1, @parent_id, 1 );
+VALUES ( '更新', 3, @parent_id, false, true, true, false, '${name.lowerCamel}:update', 1, @parent_id, 1 );
 
 INSERT INTO t_menu ( menu_name, menu_type, parent_id, frame_flag, cache_flag, visible_flag, disabled_flag, api_perms, perms_type, context_menu_id, create_user_id )
-VALUES ( '删除', 3, @parent_id, false, false, true, false, '${name.lowerCamel}:delete', 1, @parent_id, 1 );
+VALUES ( '删除', 3, @parent_id, false, true, true, false, '${name.lowerCamel}:delete', 1, @parent_id, 1 );

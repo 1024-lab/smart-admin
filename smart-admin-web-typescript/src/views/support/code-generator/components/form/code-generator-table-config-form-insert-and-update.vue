@@ -199,7 +199,7 @@
   function setData(tableColumns, config) {
     //------------- 更新基础信息 -----------------
     if (config.insertAndUpdate) {
-      formData.isSupportInsertAndUpdate = config.insertAndUpdate.isSupportInsertAndUpdate ? config.insertAndUpdate.isSupportInsertAndUpdate : true;
+      formData.isSupportInsertAndUpdate = config.insertAndUpdate.isSupportInsertAndUpdate;
       formData.pageType = config.insertAndUpdate.pageType;
       formData.width = config.insertAndUpdate.width;
       formData.countPerLine = config.insertAndUpdate.countPerLine;

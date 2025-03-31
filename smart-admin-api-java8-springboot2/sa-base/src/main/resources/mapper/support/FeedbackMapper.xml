@@ -9,7 +9,7 @@
             <if test="query.searchWord != null and query.searchWord != '' ">
                 AND (
                 INSTR(feedback_content,#{query.searchWord})
-                OR INSTR(create_name,#{query.searchWord})
+                OR INSTR(user_name,#{query.searchWord})
                 )
             </if>
             <if test="query.startDate != null">

@@ -16,7 +16,8 @@ import net.lab1024.sa.base.common.util.SmartStringUtil;
 import net.lab1024.sa.base.module.support.datatracer.annoation.*;
 import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerConst;
 import net.lab1024.sa.base.module.support.datatracer.domain.bo.DataTracerContentBO;
-import net.lab1024.sa.base.module.support.dict.service.DictCacheService;
+import net.lab1024.sa.base.module.support.dict.domain.vo.DictDataVO;
+import net.lab1024.sa.base.module.support.dict.service.DictService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
@@ -39,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date 2022-07-23 19:38:52
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Slf4j
 @Service
@@ -48,7 +49,7 @@ public class DataTracerChangeContentService {
     @Resource
     private ApplicationContext applicationContext;
     @Resource
-    private DictCacheService dictCacheService;
+    private DictService dictService;
     /**
      * 字段描述缓存
      */
@@ -64,7 +65,7 @@ public class DataTracerChangeContentService {
      *
      * @param oldObjectList 原始对象列表
      * @param newObjectList 新的对象列表
-     * @param <T> Class类型
+     * @param <T>           Class类型
      * @return 变更内容
      */
     public <T> String getChangeContent(List<T> oldObjectList, List<T> newObjectList) {
@@ -143,7 +144,7 @@ public class DataTracerChangeContentService {
     /**
      * 单个对象变动内容
      *
-     * @param oldObjectList  旧的对象列表
+     * @param oldObjectList 旧的对象列表
      * @param newObjectList 新的对象列表
      * @return 拼接后的内容
      */
@@ -163,7 +164,7 @@ public class DataTracerChangeContentService {
      * 获取一个对象的内容信息
      *
      * @param objectList 对象列表
-     * @param <T> 类型
+     * @param <T>        类型
      * @return 内容
      */
     private <T> String getObjectListContent(List<T> objectList) {
@@ -275,7 +276,6 @@ public class DataTracerChangeContentService {
 
     /**
      * 获取字段值
-     *
      */
     private DataTracerContentBO getFieldValue(Field field, Object object) {
         Object fieldValue = "";
@@ -303,7 +303,8 @@ public class DataTracerChangeContentService {
                 fieldContent = SmartEnumUtil.getEnumDescByValue(fieldValue, dataTracerFieldEnum.enumClass());
             }
         } else if (dataTracerFieldDict != null) {
-            fieldContent = dictCacheService.selectValueNameByValueCodeSplit(dataTracerFieldDict.keyCode(), fieldValue.toString());
+            DictDataVO dictData = dictService.getDictData(dataTracerFieldDict.dictCode(), fieldValue.toString());
+            fieldContent = dictData == null ? fieldValue.toString() : dictData.getDataLabel();
         } else if (dataTracerFieldSql != null) {
             fieldContent = this.getRelateDisplayValue(fieldValue, dataTracerFieldSql);
         } else if (fieldValue instanceof Date) {
@@ -330,7 +331,6 @@ public class DataTracerChangeContentService {
 
     /**
      * 获取关联字段的显示值
-     *
      */
     private String getRelateDisplayValue(Object fieldValue, DataTracerFieldSql dataTracerFieldSql) {
         Class<? extends BaseMapper> relateMapper = dataTracerFieldSql.relateMapper();
@@ -351,7 +351,6 @@ public class DataTracerChangeContentService {
 
     /**
      * 获取字段描述信息 优先 OperateField 没得话swagger判断
-     *
      */
     private String getFieldDesc(Field field) {
         // 根据字段名称 从缓存中查询
@@ -370,7 +369,6 @@ public class DataTracerChangeContentService {
 
     /**
      * 获取操作类型
-     *
      */
     private String getOperateType(Object oldObject, Object newObject) {
         if (oldObject == null && newObject != null) {
@@ -384,7 +382,6 @@ public class DataTracerChangeContentService {
 
     /**
      * 校验是否进行比对
-     *
      */
     private boolean valid(Object oldObject, Object newObject) {
         if (oldObject == null && newObject == null) {
@@ -404,7 +401,6 @@ public class DataTracerChangeContentService {
 
     /**
      * 校验
-     *
      */
     private <T> boolean valid(List<T> oldObjectList, List<T> newObjectList) {
         if (CollectionUtils.isEmpty(oldObjectList) && CollectionUtils.isEmpty(newObjectList)) {
@@ -429,7 +425,6 @@ public class DataTracerChangeContentService {
     /**
      * 查询 包含 file key 注解的字段
      * 使用缓存
-     *
      */
     private List<Field> getField(Object obj) {
         // 从缓存中查询

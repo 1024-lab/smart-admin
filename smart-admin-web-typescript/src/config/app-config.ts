@@ -23,7 +23,7 @@ export const appDefaultConfig: AppConfig = {
   // 表格高度
   tableYHeight: 300,
   //标签页位置
-  pageTagLocation: 'top',
+  pageTagLocation: 'center',
   // 菜单主题
   sideMenuTheme: 'dark',
   // 主题颜色索引
@@ -34,7 +34,7 @@ export const appDefaultConfig: AppConfig = {
   borderRadius: 6,
   // 标签页
   pageTagFlag: true,
-  // 标签页样式: default、 antd
+  // 标签页样式: default、 antd、chrome
   pageTagStyle: 'default',
   // 面包屑
   breadCrumbFlag: true,

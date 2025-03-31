@@ -27,7 +27,6 @@ import java.util.List;
  * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Mapper
-@Component
 public interface NoticeDao extends BaseMapper<NoticeEntity> {
 
     // ================================= 数据范围相关 【子表】 =================================

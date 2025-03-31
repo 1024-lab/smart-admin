@@ -9,13 +9,13 @@
         <a-button-group>
           <a-button v-privilege="'support:department:query'" type="primary" @click="onSearch">
             <template #icon>
-              <ReloadOutlined />
+              <SearchOutlined />
             </template>
             查询
           </a-button>
           <a-button v-privilege="'support:department:query'" @click="resetQuery">
             <template #icon>
-              <SearchOutlined />
+              <ReloadOutlined />
             </template>
             重置
           </a-button>
