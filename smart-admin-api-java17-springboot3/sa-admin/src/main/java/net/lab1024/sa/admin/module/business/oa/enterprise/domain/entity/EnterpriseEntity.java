@@ -137,7 +137,7 @@ public class EnterpriseEntity {
     private Long createUserId;
 
     /**
-     * 创建人ID
+     * 创建人
      */
     private String createUserName;
 

@@ -23,6 +23,12 @@
             <version>3.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>3.1.8</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -30,6 +36,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.3.1</version>
                 <configuration>
                     <mainClass>net.lab1024.sa.admin.AdminApplication</mainClass>
                 </configuration>

@@ -6,7 +6,8 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
-import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -84,13 +85,21 @@ public class LoginService implements StpInterface {
     /**
      * 登录信息二级缓存
      */
-    private final ConcurrentMap<Long, RequestEmployee> loginEmployeeCache = new ConcurrentLinkedHashMap.Builder<Long, RequestEmployee>().maximumWeightedCapacity(CACHE_MAX_ONLINE_PERSON_COUNT).build();
+//    private final ConcurrentMap<Long, RequestEmployee> loginEmployeeCache = new ConcurrentLinkedHashMap.Builder<Long, RequestEmployee>().maximumWeightedCapacity(CACHE_MAX_ONLINE_PERSON_COUNT).build();
+
+    private final Cache<Long, RequestEmployee> loginEmployeeCache =
+            Caffeine.newBuilder()
+                    .maximumSize(CACHE_MAX_ONLINE_PERSON_COUNT)
+                    .build();
 
 
     /**
      * 权限 缓存
      */
-    private final ConcurrentMap<Long, UserPermission> permissionCache = new ConcurrentLinkedHashMap.Builder<Long, UserPermission>().maximumWeightedCapacity(CACHE_MAX_ONLINE_PERSON_COUNT).build();
+    private final Cache<Long, UserPermission> permissionCache =
+            Caffeine.newBuilder()
+                    .maximumSize(CACHE_MAX_ONLINE_PERSON_COUNT)
+                    .build();
 
     @Resource
     private EmployeeService employeeService;
@@ -243,7 +252,7 @@ public class LoginService implements StpInterface {
         loginResultVO.setToken(token);
 
         // 清除权限缓存
-        permissionCache.remove(employeeEntity.getEmployeeId());
+        permissionCache.invalidate(employeeEntity.getEmployeeId());
 
         return ResponseDTO.ok(loginResultVO);
     }
@@ -328,7 +337,7 @@ public class LoginService implements StpInterface {
             return null;
         }
 
-        RequestEmployee requestEmployee = loginEmployeeCache.get(requestEmployeeId);
+        RequestEmployee requestEmployee = loginEmployeeCache.getIfPresent(requestEmployeeId);
         if (requestEmployee == null) {
             // 员工基本信息
             EmployeeEntity employeeEntity = employeeService.getById(requestEmployeeId);
@@ -382,7 +391,7 @@ public class LoginService implements StpInterface {
         StpUtil.logout();
 
         // 清空登录信息缓存
-        loginEmployeeCache.remove(requestUser.getUserId());
+        loginEmployeeCache.invalidate(requestUser.getUserId());
 
         //保存登出日志
         LoginLogEntity loginEntity = LoginLogEntity.builder()
@@ -405,7 +414,7 @@ public class LoginService implements StpInterface {
      */
     public void clearLoginEmployeeCache(Long employeeId) {
         // 清空登录信息缓存
-        loginEmployeeCache.remove(employeeId);
+        loginEmployeeCache.invalidate(employeeId);
     }
 
     /**
@@ -434,7 +443,7 @@ public class LoginService implements StpInterface {
             return Collections.emptyList();
         }
 
-        UserPermission userPermission = permissionCache.get(employeeId);
+        UserPermission userPermission = permissionCache.getIfPresent(employeeId);
         if (userPermission == null) {
             userPermission = getUserPermission(employeeId);
             permissionCache.put(employeeId, userPermission);
@@ -450,7 +459,7 @@ public class LoginService implements StpInterface {
             return Collections.emptyList();
         }
 
-        UserPermission userPermission = permissionCache.get(employeeId);
+        UserPermission userPermission = permissionCache.getIfPresent(employeeId);
         if (userPermission == null) {
             userPermission = getUserPermission(employeeId);
             permissionCache.put(employeeId, userPermission);

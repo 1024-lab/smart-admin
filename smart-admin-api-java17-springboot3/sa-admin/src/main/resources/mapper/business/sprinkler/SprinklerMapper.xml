@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.sprinkler.dao.SprinklerDao">
+    <select id="queryBySprinklerSerial"
+            resultType="net.lab1024.sa.admin.module.business.sprinkler.domain.entity.SprinklerEntity">
+            SELECT *
+            FROM t_sprinkler
+            WHERE sprinkler_serial = #{sprinklerSerial}
+            AND deleted_flag = #{deletedFlag}
+            <if test="excludeSprinklerId != null">
+                AND sprinkler_id != #{excludeSprinklerId}
+            </if>
+    </select>
+
+</mapper>
