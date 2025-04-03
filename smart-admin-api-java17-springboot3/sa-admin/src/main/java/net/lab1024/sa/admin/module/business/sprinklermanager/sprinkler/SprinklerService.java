@@ -1,14 +1,14 @@
-package net.lab1024.sa.admin.module.business.sprinkler;
+package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.admin.module.business.sprinkler.dao.SprinklerDao;
-import net.lab1024.sa.admin.module.business.sprinkler.domain.entity.SprinklerEntity;
-import net.lab1024.sa.admin.module.business.sprinkler.domain.form.SprinklerCreateForm;
-import net.lab1024.sa.admin.module.business.sprinkler.domain.form.SprinklerQueryForm;
-import net.lab1024.sa.admin.module.business.sprinkler.domain.vo.SprinklerVO;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao.SprinklerDao;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerEntity;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerCreateForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
@@ -29,12 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @Slf4j

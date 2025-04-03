@@ -1,4 +1,4 @@
-package net.lab1024.sa.admin.module.business.sprinkler.domain.entity;
+package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

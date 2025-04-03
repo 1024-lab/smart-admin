@@ -1,4 +1,4 @@
-package net.lab1024.sa.admin.module.business.sprinkler.domain.form;
+package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

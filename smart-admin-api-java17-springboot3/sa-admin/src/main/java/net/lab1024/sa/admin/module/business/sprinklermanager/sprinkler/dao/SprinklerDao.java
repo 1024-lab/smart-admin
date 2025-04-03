@@ -1,12 +1,15 @@
-package net.lab1024.sa.admin.module.business.sprinkler.dao;
+package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import net.lab1024.sa.admin.module.business.sprinkler.domain.entity.SprinklerEntity;
-import net.lab1024.sa.admin.module.business.sprinkler.domain.form.SprinklerQueryForm;
-import net.lab1024.sa.admin.module.business.sprinkler.domain.vo.SprinklerVO;
+import jakarta.validation.constraints.NotBlank;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerEntity;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,4 +34,6 @@ public interface SprinklerDao extends BaseMapper<SprinklerEntity> {
      */
     SprinklerEntity queryBySprinklerSerial(@Param("sprinklerSerial") String sprinklerSerial, @Param("excludeSprinklerId") Long excludeSprinklerId, @Param("deletedFlag") Boolean deletedFlag);
 
+    @Select("SELECT sprinkler_id FROM t_sprinkler WHERE sprinkler_serial = #{sprinklerSerial}")
+    long findIdBySprinklerSerial(@NotBlank(message = "喷头序列号不能为空") @Length(max = 20, message = "sprinklerSerial最多20字符") String sprinklerSerial);
 }

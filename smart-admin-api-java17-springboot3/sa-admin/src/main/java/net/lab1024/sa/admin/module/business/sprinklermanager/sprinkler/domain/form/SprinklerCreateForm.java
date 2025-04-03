@@ -1,4 +1,4 @@
-package net.lab1024.sa.admin.module.business.sprinkler.domain.form;
+package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 @Data
 public class SprinklerCreateForm {
+
     @Schema(description = "喷头序列号")
     @NotBlank(message = "喷头序列号不能为空")
     @Length(max = 20, message = "sprinklerSerial最多20字符")
@@ -27,6 +28,5 @@ public class SprinklerCreateForm {
 
     @Schema(description = "创建人", hidden = true)
     private String createUserName;
-
 
 }

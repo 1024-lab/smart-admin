@@ -1,12 +1,12 @@
-package net.lab1024.sa.admin.module.business.sprinkler;
+package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.admin.module.business.sprinkler.domain.form.SprinklerQueryForm;
-import net.lab1024.sa.admin.module.business.sprinkler.domain.vo.SprinklerVO;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
