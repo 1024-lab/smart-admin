@@ -4,6 +4,8 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.OperationSheetDao;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.OperationSheetEntity;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerAllocateOperationSheetCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.handler.SprinklerOperationHandler;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.registry.OperationHandlerRegistry;
@@ -108,5 +110,81 @@ public class OperationSheetService {
     }
 
     public ResponseDTO<String> batchCreateAllocateOperationSheet(@Valid MultipartFile file, RequestUser requestUser) {
+        try(InputStream stream = file.getInputStream()) {
+            // 使用POI解析为导入DTO
+            Workbook workbook = new XSSFWorkbook(stream);
+            List<SprinklerAllocateOperationSheetCreateForm> createVOs = new ArrayList<>();
+            for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(i);
+                for (int j =0; j < sheet.getLastRowNum(); j++) {
+                    Row row = sheet.getRow(j);
+                    if (row == null||row.getRowNum() == 0) continue; // 跳过标题行
+                    if (row.getCell(2) == null) continue;
+                    String headSerial = row.getCell(2).getStringCellValue();
+                    SprinklerAllocateOperationSheetCreateForm createVO = new SprinklerAllocateOperationSheetCreateForm();
+                    createVO.setSprinklerSerial(headSerial);
+                    if(row.getCell(4) == null) {
+                        createVO.setAllocateDate(null);
+                    }else {
+                        if (row.getCell(4).getCellType() == CellType.NUMERIC) {
+                            row.getCell(4).setCellType(CellType.STRING);
+                        }
+                        createVO.setAllocateDate(LocalDateParseUtil.parseDate(row.getCell(4).getStringCellValue()));
+                    }
+                    if(row.getCell(5) == null) {
+                        createVO.setAllocateUser(null);
+                    }else {
+                        if (row.getCell(5).getCellType() == CellType.NUMERIC) {
+                            row.getCell(5).setCellType(CellType.STRING);
+                        }
+                        createVO.setAllocateUser(row.getCell(5).getStringCellValue());
+                    }
+                    if(row.getCell(6) == null) {
+                        createVO.setAllocateMachine(null);
+                    }else {
+                        if (row.getCell(6).getCellType() == CellType.NUMERIC) {
+                            row.getCell(6).setCellType(CellType.STRING);
+                        }
+                        createVO.setAllocateMachine(row.getCell(6).getStringCellValue());
+                    }
+                    if(row.getCell(7) == null) {
+                        createVO.setColorPosition(null);
+                    }else {
+                        if (row.getCell(7).getCellType() == CellType.NUMERIC) {
+                            row.getCell(7).setCellType(CellType.STRING);
+                        }
+                        createVO.setColorPosition(row.getCell(7).getStringCellValue());
+                    }
+                    if(row.getCell(8) == null) {
+                        createVO.setHistory(null);
+                    }else {
+                        if (row.getCell(8).getCellType() == CellType.NUMERIC) {
+                            row.getCell(8).setCellType(CellType.STRING);
+                        }
+                        createVO.setHistory(row.getCell(8).getStringCellValue());
+                    }
+                    if(headSerial=="") continue;
+                    Long sprinklerId = sprinklerDao.findIdBySprinklerSerial(headSerial);
+                    createVO.setSprinklerId(sprinklerId);
+                    OperationSheetEntity operationSheetEntity = new OperationSheetEntity();
+                    operationSheetEntity.setSprinklerId(sprinklerId);
+                    operationSheetEntity.setDisabledFlag(Boolean.FALSE);
+                    operationSheetEntity.setDeletedFlag(Boolean.FALSE);
+                    operationSheetDao.insert(operationSheetEntity);
+                    Long operationSheetId = operationSheetEntity.getOperationSheetId();
+                    createVO.setOperationSheetId(operationSheetId);
+                    createVO.setDisabledFlag(Boolean.FALSE);
+                    createVO.setCreateUserId(requestUser.getUserId());
+                    createVO.setCreateUserName(requestUser.getUserName());
+                    createVOs.add(createVO);
+                }
+            }
+            SprinklerOperationHandler handler = operationHandlerRegistry.getHandler("allocate");
+            createVOs.forEach(handler::createOperationSheet);
+            return ResponseDTO.ok();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

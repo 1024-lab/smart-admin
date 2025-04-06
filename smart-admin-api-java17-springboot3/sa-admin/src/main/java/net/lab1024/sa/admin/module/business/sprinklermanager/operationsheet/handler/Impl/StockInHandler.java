@@ -37,6 +37,6 @@ public class StockInHandler extends BaseSprinklerHandler<SprinklerStockInOperati
 
     @Override
     protected String getBizType() {
-        return "喷头记录表";
+        return "喷头入库记录表";
     }
 }
