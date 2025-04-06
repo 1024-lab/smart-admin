@@ -37,4 +37,28 @@ public class OperationSheetController {
         RequestUser requestUser = SmartRequestUtil.getRequestUser();
         return operationSheetService.batchCreateAllocateOperationSheet(file, requestUser);
     }
+
+    @Operation(summary = "批量新建维修操作记录表 @author 芦苇")
+    @PostMapping("/maintainoperationsheet/create")
+    @SaCheckPermission("maintainoperationsheet:add")
+    public ResponseDTO<String> createMaintainOperationSheet(@RequestPart("file") @Valid MultipartFile file) {
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+        return operationSheetService.batchCreateMaintainOperationSheet(file, requestUser);
+    }
+
+    @Operation(summary = "批量新建RMA操作记录表 @author 芦苇")
+    @PostMapping("/rmaoperationsheet/create")
+    @SaCheckPermission("rmaoperationsheet:add")
+    public ResponseDTO<String> createMaintainOperationSheet(@RequestPart("file") @Valid MultipartFile file) {
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+        return operationSheetService.batchCreateMaintainOperationSheet(file, requestUser);
+    }
+
+    @Operation(summary = "处理RMA操作记录表 @author 芦苇")
+    @PostMapping("/processRma")
+    @SaCheckPermission("processRma")
+    public ResponseDTO<String> processRma(@RequestPart("file") @Valid MultipartFile file) {
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+        return operationSheetService.processRma(file, requestUser);
+    }
 }

@@ -22,15 +22,15 @@
   </div>
   <a-card class="smart-margin-top10" size="small">
     <a-tabs>
-      <a-tab-pane key="employee" tab="员工信息">
-        <EmployeeList :sprinklerId="sprinklerId" />
-      </a-tab-pane>
-      <a-tab-pane key="bank" tab="银行信息">
-        <BankList :sprinklerId="sprinklerId" />
-      </a-tab-pane>
-      <a-tab-pane key="invoice" tab="发票信息">
-        <InvoiceList :sprinklerId="sprinklerId" />
-      </a-tab-pane>
+<!--      <a-tab-pane key="employee" tab="员工信息">-->
+<!--        <EmployeeList :sprinklerId="sprinklerId" />-->
+<!--      </a-tab-pane>-->
+<!--      <a-tab-pane key="bank" tab="银行信息">-->
+<!--        <BankList :sprinklerId="sprinklerId" />-->
+<!--      </a-tab-pane>-->
+<!--      <a-tab-pane key="invoice" tab="发票信息">-->
+<!--        <InvoiceList :sprinklerId="sprinklerId" />-->
+<!--      </a-tab-pane>-->
       <a-tab-pane key="dataTracer" tab="变更记录">
         <DataTracer :dataId="sprinklerId" :type="DATA_TRACER_TYPE_ENUM.OA_ENTERPRISE.value" />
       </a-tab-pane>
