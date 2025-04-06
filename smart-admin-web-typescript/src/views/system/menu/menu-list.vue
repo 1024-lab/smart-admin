@@ -88,6 +88,7 @@
       <a-table
         :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         size="small"
+        :scroll="{ x: 1000 }"
         :defaultExpandAllRows="true"
         :dataSource="tableData"
         bordered

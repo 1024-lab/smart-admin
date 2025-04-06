@@ -67,6 +67,7 @@ public class FormVariableService extends CodeGenerateBaseVariableService {
 
             if (CodeFrontComponentEnum.DICT_SELECT.equalsValue(field.getFrontComponent())) {
                 frontImportSet.add("import DictSelect from '/@/components/support/dict-select/index.vue';");
+                frontImportSet.add("import { DICT_CODE_ENUM } from '/@/constants/support/dict-const.js';");
             }
 
             if (CodeFrontComponentEnum.FILE_UPLOAD.equalsValue(field.getFrontComponent())) {

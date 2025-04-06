@@ -59,6 +59,7 @@
 
   <a-table
     size="small"
+    :scroll="{ x: 1000 }"
     bordered
     class="smart-margin-top10"
     :dataSource="tableData"

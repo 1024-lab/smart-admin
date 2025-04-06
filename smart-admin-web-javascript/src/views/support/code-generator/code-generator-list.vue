@@ -39,7 +39,16 @@
         <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.CONFIG" :refresh="ajaxQuery" />
       </a-row>
 
-      <a-table size="small" :loading="tableLoading" bordered :dataSource="tableData" :columns="columns" rowKey="configId" :pagination="false">
+      <a-table
+        size="small"
+        :scroll="{ x: 1000 }"
+        :loading="tableLoading"
+        bordered
+        :dataSource="tableData"
+        :columns="columns"
+        rowKey="configId"
+        :pagination="false"
+      >
         <template #bodyCell="{ record, index, column }">
           <template v-if="column.dataIndex === 'seq'">
             {{ index + 1 }}

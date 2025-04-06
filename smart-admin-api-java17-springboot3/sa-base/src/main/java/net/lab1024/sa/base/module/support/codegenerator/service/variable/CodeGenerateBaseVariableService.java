@@ -64,8 +64,7 @@ public abstract class CodeGenerateBaseVariableService {
             return null;
         }
 
-        return fields.stream().filter(e -> columnName.equals(e.getColumnName()))
-                .findFirst().get();
+        return fields.stream().filter(e -> SmartStringUtil.equals(columnName, e.getColumnName())).findFirst().orElse(null);
     }
 
 
@@ -89,7 +88,7 @@ public abstract class CodeGenerateBaseVariableService {
         }
 
         CodeInsertAndUpdateField field = first.get();
-        return SmartStringUtil.equals(field.getFrontComponent(), CodeFrontComponentEnum.FILE_UPLOAD.getValue());
+        return CodeFrontComponentEnum.FILE_UPLOAD.equalsValue(field.getFrontComponent());
     }
 
     /**
@@ -114,8 +113,7 @@ public abstract class CodeGenerateBaseVariableService {
             return null;
         }
 
-        Optional<CodeField> first = fields.stream().filter(e -> columnName.equals(e.getColumnName())).findFirst();
-        return first.orElse(null);
+        return fields.stream().filter(e -> columnName.equals(e.getColumnName())).findFirst().orElse(null);
     }
 
     /**

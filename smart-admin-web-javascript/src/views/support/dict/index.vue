@@ -68,7 +68,7 @@
       :dataSource="tableData"
       :columns="columns"
       :loading="tableLoading"
-      rowKey="dictKeyId"
+      rowKey="dictId"
       :pagination="false"
       bordered
       :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"

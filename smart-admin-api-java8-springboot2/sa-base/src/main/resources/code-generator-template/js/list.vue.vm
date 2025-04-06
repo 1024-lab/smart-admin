@@ -22,12 +22,12 @@
 #end
 #if($field.queryTypeEnum == "Dict")
             <a-form-item label="${field.label}" class="smart-query-form-item">
-                <DictSelect dictCode="$!{field.dict}" placeholder="${field.label}" v-model:value="queryForm.${field.fieldName}" width="${field.width}" />
+              <DictSelect dict-code="DICT_CODE_ENUM.$!{field.dict} || '$!{field.dict}'" placeholder="${field.label}" v-model:value="queryForm.${field.fieldName}" width="${field.width}" />
             </a-form-item>
 #end
 #if($field.queryTypeEnum == "Enum")
             <a-form-item label="$codeGeneratorTool.removeEnumDesc(${field.label})" class="smart-query-form-item">
-                <SmartEnumSelect width="${field.width}" v-model:value="queryForm.${field.fieldName}" enumName="$!{field.frontEnumName}" placeholder="$codeGeneratorTool.removeEnumDesc(${field.label})"/>
+              <SmartEnumSelect width="${field.width}" v-model:value="queryForm.${field.fieldName}" enum-name="$!{field.frontEnumName}" placeholder="$codeGeneratorTool.removeEnumDesc(${field.label})"/>
             </a-form-item>
 #end
 #if($field.queryTypeEnum == "Date")
@@ -101,18 +101,20 @@
         >
             <template #bodyCell="{ text, record, column }">
 
-	    <!-- 有图片预览时 注释解开并把下面的'picture'修改成自己的图片字段名即可 -->
-              <!-- <template v-if="column.dataIndex === 'picture'">
-                  <FilePreview :fileList="text" type="picture" />
-                </template> -->
-
-	    <!-- 使用字典时 注释解开并把下面的'dict'修改成自己的字典字段名即可 有多个字典字段就复制多份同理修改 不然不显示字典 -->
-              <!-- 方便修改tag的颜色 orange green purple success processing error default warning -->
-              <!-- <template v-if="column.dataIndex === 'dict'">
-                <a-tag color="cyan">
-                  {{ text && text.length > 0 ? text.map((e) => e.valueName).join(',') : '暂无' }}
-                </a-tag>
-              </template> -->
+            #foreach ($field in $listFields)
+                #if($field.frontComponent == "FileUpload")
+                <template v-if="column.dataIndex === '$field.fieldName'">
+                    <FilePreview :file-list="text" type="picture" />
+                </template>
+                #end
+            #end
+            #foreach ($field in $listFields)
+                #if($field.dict)
+                <template v-if="column.dataIndex === '$!{field.fieldName}'">
+                    <DictLabel :dict-code="DICT_CODE_ENUM.$!{field.dict} || '$!{field.dict}'" :data-value="text" />
+                </template>
+                #end
+            #end
 
                 <template v-if="column.dataIndex === 'action'">
                     <div class="smart-table-operate">
@@ -159,7 +161,6 @@
 #foreach ($import in $frontImportList)
     $!{import}
 #end
-    //import FilePreview from '/@/components/support/file-preview/index.vue'; // 图片预览组件
 
     // ---------------------------- 表格列 ----------------------------
 

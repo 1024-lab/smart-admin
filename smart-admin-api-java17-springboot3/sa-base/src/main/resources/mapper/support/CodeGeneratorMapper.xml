@@ -9,8 +9,7 @@
           and table_name = #{tableName}
     </select>
 
-    <select id="selectTableColumn"
-            resultType="net.lab1024.sa.base.module.support.codegenerator.domain.vo.TableColumnVO">
+    <select id="selectTableColumn" resultType="net.lab1024.sa.base.module.support.codegenerator.domain.vo.TableColumnVO">
         select *
         from information_schema.columns
         where table_schema = (select database())
@@ -18,19 +17,18 @@
         order by ordinal_position
     </select>
 
-    <select id="queryTableList"
-            resultType="net.lab1024.sa.base.module.support.codegenerator.domain.vo.TableVO">
+    <select id="queryTableList" resultType="net.lab1024.sa.base.module.support.codegenerator.domain.vo.TableVO">
         select
-        tables.table_name,
-        tables.table_comment,
-        tables.create_time,
-        tables.update_time,
+        `tables`.table_name,
+        `tables`.table_comment,
+        `tables`.create_time,
+        `tables`.update_time,
         t_code_generator_config.update_time configTime
-        from information_schema.tables tables
-        left join t_code_generator_config on tables.table_name = t_code_generator_config.table_name
-        where tables.table_schema = (select database())
+        from information_schema.tables `tables`
+        left join t_code_generator_config on `tables`.table_name = t_code_generator_config.table_name
+        where `tables`.table_schema = (select database())
         <if test="queryForm.tableNameKeywords != null and queryForm.tableNameKeywords != ''">
-            AND INSTR(tables.table_name,#{queryForm.tableNameKeywords})
+            AND INSTR(`tables`.table_name,#{queryForm.tableNameKeywords})
         </if>
     </select>
 </mapper>

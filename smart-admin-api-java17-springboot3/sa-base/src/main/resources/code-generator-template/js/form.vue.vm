@@ -43,12 +43,12 @@
       #end
       #if($field.frontComponent == "SmartEnumSelect")
         <a-form-item label="$codeGeneratorTool.removeEnumDesc($!{field.label})"  name="${field.fieldName}">
-          <SmartEnumSelect width="100%" v-model:value="form.${field.fieldName}" enumName="$!{field.upperUnderscoreEnum}" placeholder="$codeGeneratorTool.removeEnumDesc($!{field.label})"/>
+          <SmartEnumSelect width="100%" v-model:value="form.${field.fieldName}" enum-name="$!{field.upperUnderscoreEnum}" placeholder="$codeGeneratorTool.removeEnumDesc($!{field.label})"/>
         </a-form-item>
       #end
       #if($field.frontComponent == "DictSelect")
         <a-form-item label="$codeGeneratorTool.removeEnumDesc($!{field.label})"  name="${field.fieldName}">
-          <DictSelect width="100%" v-model:value="form.${field.fieldName}" dictCode="$!{field.dict}" placeholder="$!{field.label}"/>
+          <DictSelect width="100%" v-model:value="form.${field.fieldName}" dict-code="DICT_CODE_ENUM.$!{field.dict} || '$!{field.dict}'" placeholder="$!{field.label}"/>
         </a-form-item>
       #end
       #if($field.frontComponent == "Date")
@@ -101,12 +101,12 @@
         #end
         #if($field.frontComponent == "SmartEnumSelect")
           <a-form-item label="$codeGeneratorTool.removeEnumDesc($!{field.label})"  name="${field.fieldName}">
-            <SmartEnumSelect width="100%" v-model:value="form.${field.fieldName}" enumName="$!{field.upperUnderscoreEnum}" placeholder="$codeGeneratorTool.removeEnumDesc($!{field.label})"/>
+            <SmartEnumSelect width="100%" v-model:value="form.${field.fieldName}" enum-name="$!{field.upperUnderscoreEnum}" placeholder="$codeGeneratorTool.removeEnumDesc($!{field.label})"/>
           </a-form-item>
         #end
         #if($field.frontComponent == "DictSelect")
           <a-form-item label="$codeGeneratorTool.removeEnumDesc($!{field.label})"  name="${field.fieldName}">
-            <DictSelect width="100%" v-model:value="form.${field.fieldName}" dictCode="$!{field.dict}" placeholder="$!{field.label}"/>
+            <DictSelect width="100%" v-model:value="form.${field.fieldName}" dict-code="DICT_CODE_ENUM.$!{field.dict} || '$!{field.dict}'" placeholder="$!{field.label}"/>
           </a-form-item>
         #end
         #if($field.frontComponent == "Date")

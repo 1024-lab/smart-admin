@@ -25,7 +25,7 @@
       </a-form-item>
 
       <a-form-item label="产地" name="place" class="smart-query-form-item">
-        <DictSelect :dictCode="DICT_CODE_ENUM.GOODS_PLACE" v-model:value="queryForm.place" width="120px" />
+        <DictSelect :dict-code="DICT_CODE_ENUM.GOODS_PLACE" v-model:value="queryForm.place" width="120px" />
       </a-form-item>
 
       <a-form-item label="商品状态" name="goodsStatus" class="smart-query-form-item">
@@ -93,7 +93,7 @@
         </a-button>
       </div>
       <div class="smart-table-setting-block">
-        <TableOperator v-model="columns" :tableId="TABLE_ID_CONST.BUSINESS.ERP.GOODS" :refresh="queryData"/>
+        <TableOperator v-model="columns" :tableId="TABLE_ID_CONST.BUSINESS.ERP.GOODS" :refresh="queryData" />
       </div>
     </a-row>
     <!---------- 表格操作行 end ----------->
@@ -120,7 +120,7 @@
           {{ text }}
         </template>
         <template v-if="column.dataIndex === 'place'">
-          <DictLabel :dict-code="DICT_CODE_ENUM.GOODS_PLACE" :dataValue="text" />
+          <DictLabel :dict-code="DICT_CODE_ENUM.GOODS_PLACE" :data-value="text" />
         </template>
         <template v-if="column.dataIndex === 'remark'">
           <span>{{ text ? text : '' }}</span>
@@ -199,7 +199,6 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
-  import { GOODS_STATUS_ENUM } from '/@/constants/business/erp/goods-const';
   import DictSelect from '/@/components/support/dict-select/index.vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import _ from 'lodash';
@@ -235,7 +234,6 @@
       title: '商品状态',
       dataIndex: 'goodsStatus',
       resizable: true,
-      sorter: true,
       filterOptions: {
         type: 'enum-select',
         enumName: 'GOODS_STATUS_ENUM',
@@ -248,7 +246,7 @@
       resizable: true,
       filterOptions: {
         type: 'dict-select',
-        dictCode: DICT_CODE_ENUM.GOODS_PLACE,
+        dictCode: DICT_CODE_ENUM.GOODS_PLACE || 'GOODS_PLACE',
       },
       width: 150,
     },

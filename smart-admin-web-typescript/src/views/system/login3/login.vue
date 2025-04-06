@@ -13,9 +13,9 @@
     <div class="box-item desc">
       <div class="welcome">
         <p>欢迎登录 SmartAdmin V3</p>
-        <p class="sub-welcome">「高质量代码、简洁、安全」的开发平台</p>
+        <p class="sub-welcome">「高质量代码、简洁、高效、安全」的开发平台</p>
       </div>
-      <img class="welcome-img" :src="leftBg2" />
+      <img class="welcome-img" :src="loginGif" />
     </div>
     <div class="box-item login">
       <img class="login-qr" :src="loginQR" />
@@ -81,6 +81,7 @@
   import { useUserStore } from '/@/store/modules/system/user';
   import loginQR from '/@/assets/images/login/login-qr.png';
   import leftBg2 from '/@/assets/images/login/left-bg2.png';
+  import loginGif from '/@/assets/images/login/login.gif';
   import wechatIcon from '/@/assets/images/login/wechat-icon.png';
   import aliIcon from '/@/assets/images/login/ali-icon.png';
   import douyinIcon from '/@/assets/images/login/douyin-icon.png';
