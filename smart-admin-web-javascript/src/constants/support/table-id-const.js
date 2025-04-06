@@ -32,6 +32,9 @@ export const TABLE_ID_CONST = {
     ERP: {
       GOODS: businessERPInitTableId + 1, //商品管理
     },
+    SPRINKLERMANAGER: {
+      SPRINKLER: businessOAInitTableId + 6
+    }
   },
 
   /**

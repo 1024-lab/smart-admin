@@ -2,13 +2,13 @@ package net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.han
 
 import jakarta.annotation.Resource;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.BaseDao;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.Impl.StockInOperationSheepDao;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.Impl.StockInOperationSheetEntity;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.StockInOperationSheetCreateForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.Impl.SprinklerStockInOperationSheetDao;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.Impl.SprinklerStockInOperationSheetEntity;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetCreateForm;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StockInHandler extends BaseSprinklerHandler<StockInOperationSheetCreateForm, StockInOperationSheetEntity>{
+public class StockInHandler extends BaseSprinklerHandler<SprinklerStockInOperationSheetCreateForm, SprinklerStockInOperationSheetEntity>{
 
 
 
@@ -18,25 +18,25 @@ public class StockInHandler extends BaseSprinklerHandler<StockInOperationSheetCr
     }
 
     @Override
-    protected Boolean validateBusiness(StockInOperationSheetCreateForm form) {
+    protected Boolean validateBusiness(SprinklerStockInOperationSheetCreateForm form) {
         return Boolean.FALSE;
     }
 
     @Resource
-    private StockInOperationSheepDao stockInOperationSheepDao;
+    private SprinklerStockInOperationSheetDao stockInOperationSheepDao;
 
     @Override
-    protected BaseDao<StockInOperationSheetEntity> getDao() {
+    protected BaseDao<SprinklerStockInOperationSheetEntity> getDao() {
         return stockInOperationSheepDao;
     }
 
     @Override
-    protected Class<StockInOperationSheetEntity> getEntityClass() {
-        return StockInOperationSheetEntity.class;
+    protected Class<SprinklerStockInOperationSheetEntity> getEntityClass() {
+        return SprinklerStockInOperationSheetEntity.class;
     }
 
     @Override
     protected String getBizType() {
-        return "入库喷头记录表";
+        return "喷头记录表";
     }
 }

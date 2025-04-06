@@ -4,6 +4,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.Impl.SprinklerStockInOperationSheetDao;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.OperationSheetDao;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.OperationSheetEntity;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetQueryForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerStockInOperationSheetVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao.SprinklerDao;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerEntity;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerCreateForm;
@@ -38,6 +43,12 @@ public class SprinklerService {
 
     @Resource
     private SprinklerDao sprinklerDao;
+
+    @Resource
+    private SprinklerStockInOperationSheetDao sprinklerStockInOperationSheetDao;
+
+    @Resource
+    private OperationSheetDao operationSheetDao;
 
     @Resource
     private DataTracerService dataTracerService;
@@ -105,6 +116,31 @@ public class SprinklerService {
         SprinklerEntity insertSprinkler = SmartBeanUtil.copy(createVO, SprinklerEntity.class);
         sprinklerDao.insert(insertSprinkler);
         dataTracerService.insert(insertSprinkler.getSprinklerId(), DataTracerTypeEnum.SPRINKLER);
+        Long sprinklerId = insertSprinkler.getSprinklerId();
+        OperationSheetEntity operationSheetEntity = new OperationSheetEntity();
+        operationSheetEntity.setSprinklerId(sprinklerId);
+        operationSheetEntity.setDisabledFlag(Boolean.FALSE);
+        operationSheetEntity.setDeletedFlag(Boolean.FALSE);
+        operationSheetDao.insert(operationSheetEntity);
+
         return ResponseDTO.ok();
+    }
+
+    /**
+     * 查询喷头详情
+     *
+     */
+    public SprinklerVO getDetail(Long sprinklerId) {
+        return sprinklerDao.getDetail(sprinklerId, Boolean.FALSE);
+    }
+
+    /**
+     * 分页查询喷头入库记录
+     *
+     */
+    public PageResult<SprinklerStockInOperationSheetVO> queryPageStockInOperationSheetList(SprinklerStockInOperationSheetQueryForm queryForm) {
+        Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
+        List<SprinklerStockInOperationSheetVO> sprinklerStockInOperationSheetVOList = sprinklerStockInOperationSheetDao.queryPageStockInOperationSheetList(page, queryForm);
+        return SmartPageUtil.convert2PageResult(page, sprinklerStockInOperationSheetVOList);
     }
 }

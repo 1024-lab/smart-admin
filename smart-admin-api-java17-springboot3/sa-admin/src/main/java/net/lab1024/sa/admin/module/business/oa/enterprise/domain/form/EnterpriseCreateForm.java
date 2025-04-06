@@ -91,7 +91,7 @@ public class EnterpriseCreateForm {
     @NotNull(message = "禁用状态不能为空")
     private Boolean disabledFlag;
 
-    @Schema(description = "创建人", hidden = true)
+    @Schema(description = "创建人ID", hidden = true)
     private Long createUserId;
 
     @Schema(description = "创建人", hidden = true)

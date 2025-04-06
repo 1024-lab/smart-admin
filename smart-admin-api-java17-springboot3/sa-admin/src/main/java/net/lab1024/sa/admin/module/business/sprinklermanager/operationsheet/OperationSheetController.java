@@ -22,11 +22,19 @@ public class OperationSheetController {
     @Resource
     private OperationSheetService operationSheetService;
 
-    @Operation(summary = "批量新建入库操作字段表 @author 芦苇")
+    @Operation(summary = "批量新建入库操作记录表 @author 芦苇")
     @PostMapping("/stockinoperationsheet/create")
     @SaCheckPermission("stockinoperationsheet:add")
     public ResponseDTO<String> createStockInOperationSheet(@RequestPart("file") @Valid MultipartFile file) {
         RequestUser requestUser = SmartRequestUtil.getRequestUser();
         return operationSheetService.batchCreateStockInOperationSheet(file, requestUser);
+    }
+
+    @Operation(summary = "批量新建领用操作记录表 @author 芦苇")
+    @PostMapping("/allocateoperationsheet/create")
+    @SaCheckPermission("allocateoperationsheet:add")
+    public ResponseDTO<String> createAllocateOperationSheet(@RequestPart("file") @Valid MultipartFile file) {
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+        return operationSheetService.batchCreateAllocateOperationSheet(file, requestUser);
     }
 }

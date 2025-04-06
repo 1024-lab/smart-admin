@@ -1,11 +1,12 @@
 package net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.BaseForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerCreateForm;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
  * @Author 海印:芦苇
  */
 @Data
-public class StockInOperationSheetCreateForm implements BaseForm {
+public class SprinklerStockInOperationSheetCreateForm implements BaseForm {
 
     @Schema(description = "喷头日期")
     private LocalDate purchaseDate;
@@ -28,6 +29,10 @@ public class StockInOperationSheetCreateForm implements BaseForm {
     @Schema(description = "喷头Id")
     @NotNull(message = "喷头Id不能为空")
     private Long sprinklerId;
+
+    @Schema(description = "喷头Id")
+    @NotNull(message = "喷头Id不能为空")
+    private Long operationSheetId;
 
     @Schema(description = "喷头序列号")
     @NotBlank(message = "喷头序列号不能为空")
