@@ -6,4 +6,4 @@
 
 
 #### 更新
-跟随 SmartAdmin更新，则需要执行 sql-update-log目录中的SQL脚本，需要按照文件版本大小，从小到达执行；
+跟随 SmartAdmin更新，则需要执行 sql-update-log目录中的SQL脚本，需要按照文件版本从小到大执行；

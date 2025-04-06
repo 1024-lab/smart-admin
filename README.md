@@ -12,8 +12,9 @@
 - 前端：JavaScript/TypeScript + Vue3 + Vite5 + Pinia + Ant Design Vue 4.X
 - 移动端：uniapp (vue3版本) + uni-ui + （同时支持APP、小程序、H5）
 - 后端：Java8/17 + SpringBoot2/3 + Sa Token + Mybatis-plus + 多种数据库
-- 官方文档：[http://115.190.111.229/smart-admin/](http://115.190.111.229/smart-admin/)
-- 在线预览：[http://115.190.111.229/smart-admin-preview/](http://115.190.111.229/smart-admin-preview/)
+- 官方文档：[https://smartadmin.vip](https://smartadmin.vip)
+- 电脑在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)
+- 移动端在线预览：[https://app.smartadmin.vip](https://app.smartadmin.vip/#/pages/login/login)
 ### **理念与思想**
 
 - 我们分享的不是徒劳无功的各种功能，而是必须有的功能，如：数据变动记录、系统说明文档、版本更新记录、意见反馈、日志、心跳、单号生成器等等。
