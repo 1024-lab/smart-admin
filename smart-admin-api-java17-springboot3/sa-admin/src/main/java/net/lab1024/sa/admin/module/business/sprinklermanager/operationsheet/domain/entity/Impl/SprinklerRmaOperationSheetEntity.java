@@ -3,7 +3,6 @@ package net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dom
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.BaseEntity;
@@ -13,9 +12,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("t_sprinkler_maintain_operation_sheet")
+@TableName("t_sprinkler_rma_operation_sheet")
 @NoArgsConstructor
-public class SprinklerMaintainOperationSheetEntity extends BaseEntity {
+public class SprinklerRmaOperationSheetEntity extends BaseEntity {
 
     /**
      * 操作列表ID
@@ -42,10 +41,58 @@ public class SprinklerMaintainOperationSheetEntity extends BaseEntity {
     private String sprinklerSerial;
 
     /**
-     * 返修日期
+     * 快递日期
      */
-    @DataTracerFieldLabel("返修日期")
-    private LocalDate maintainDate;
+    @DataTracerFieldLabel("快递日期")
+    private LocalDate rmaDate;
+
+    /**
+     * rma号
+     */
+    @DataTracerFieldLabel("rma号")
+    private String rmaNumber;
+
+    /**
+     * 寄件地点
+     */
+    @DataTracerFieldLabel("寄件地点")
+    private String rmaPosition;
+
+    /**
+     * rma原因
+     */
+    @DataTracerFieldLabel("rma原因")
+    private String rmaReason;
+
+    /**
+     * 快递单号
+     */
+    @DataTracerFieldLabel("快递单号")
+    private String postNumber;
+
+    /**
+     * 处理结果
+     */
+    @DataTracerFieldLabel("处理结果")
+    private String processResult;
+
+    /**
+     * 是否换新
+     */
+    @DataTracerFieldLabel("是否换新")
+    private String agreeReplacement;
+
+    /**
+     * 换回
+     */
+    @DataTracerFieldLabel("换回")
+    private String replacementResult;
+
+    /**
+     * 算不算在维修仓
+     */
+    @DataTracerFieldLabel("算不算在维修仓")
+    private String inMaintainWarehouse;
 
     /**
      * 返修原因
@@ -54,16 +101,16 @@ public class SprinklerMaintainOperationSheetEntity extends BaseEntity {
     private String maintainReason;
 
     /**
-     * 具体原因
+     * 返修日期
      */
-    @DataTracerFieldLabel("具体原因")
-    private String realReason;
+    @DataTracerFieldLabel("返修日期")
+    private LocalDate maintainDate;
 
     /**
-     * 返修机台
+     * 返修客户
      */
-    @DataTracerFieldLabel("返修机台")
-    private String maintainMachine;
+    @DataTracerFieldLabel("返修客户")
+    private String maintainUser;
 
     /**
      * 历史

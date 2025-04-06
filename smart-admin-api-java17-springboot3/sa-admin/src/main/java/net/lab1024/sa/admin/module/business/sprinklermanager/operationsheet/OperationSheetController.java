@@ -49,9 +49,9 @@ public class OperationSheetController {
     @Operation(summary = "批量新建RMA操作记录表 @author 芦苇")
     @PostMapping("/rmaoperationsheet/create")
     @SaCheckPermission("rmaoperationsheet:add")
-    public ResponseDTO<String> createMaintainOperationSheet(@RequestPart("file") @Valid MultipartFile file) {
+    public ResponseDTO<String> createRmaOperationSheet(@RequestPart("file") @Valid MultipartFile file) {
         RequestUser requestUser = SmartRequestUtil.getRequestUser();
-        return operationSheetService.batchCreateMaintainOperationSheet(file, requestUser);
+        return operationSheetService.batchCreateRmaOperationSheet(file, requestUser);
     }
 
     @Operation(summary = "处理RMA操作记录表 @author 芦苇")

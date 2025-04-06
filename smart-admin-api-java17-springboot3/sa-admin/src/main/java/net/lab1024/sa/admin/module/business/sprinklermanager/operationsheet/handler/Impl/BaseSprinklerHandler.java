@@ -26,9 +26,6 @@ public abstract class BaseSprinklerHandler<F extends BaseForm, E extends BaseEnt
     @Resource
     private SprinklerDao sprinklerDao;
 
-    /**
-     * 模板方法定义创建流程
-     */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> createOperationSheet(F form) {
         // 基础校验

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.Impl.SprinklerRmaOperationSheetDao">
+
+    <select id="queryPageRmaOperationSheetList"
+            resultType="net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerRmaOperationSheetVO">
+        select
+            t_sprinkler_rma_operation_sheet.*,
+            t_sprinkler.sprinkler_serial,
+            t_operation_sheet.*
+        from t_sprinkler_rma_operation_sheet
+        left join t_sprinkler on t_sprinkler_rma_operation_sheet.sprinkler_id = t_sprinkler.sprinkler_id
+        left join t_operation_sheet on t_sprinkler_rma_operation_sheet.operation_sheet_id = t_operation_sheet.operation_sheet_id
+        where t_sprinkler_rma_operation_sheet.sprinkler_id = #{queryForm.sprinklerId}
+        <if test="queryForm.keyword != null and queryForm.keyword != ''">
+            AND (
+                INSTR(t_sprinkler_rma_operation_sheet.actual_name, #{queryForm.keyword})
+            OR INSTR(t_sprinkler_rma_operation_sheet.phone, #{queryForm.keyword})
+            OR INSTR(t_employee.login_name,#{queryForm.keyword})
+            )
+        </if>
+    </select>
+</mapper>
