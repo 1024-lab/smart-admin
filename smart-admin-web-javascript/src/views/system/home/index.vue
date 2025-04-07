@@ -10,35 +10,35 @@
 -->
 <template>
   <!--  顶部用户信息-->
-  <a-row>
-    <HomeHeader />
-  </a-row>
+<!--  <a-row>-->
+<!--    <HomeHeader />-->
+<!--  </a-row>-->
   <!--下方左右布局-->
   <a-row :gutter="[10, 10]">
     <!--左侧-->
     <a-col :span="16">
       <a-row :gutter="[10, 10]">
         <!--公告信息-->
-        <a-col :span="12">
-          <HomeNotice title="公告" :noticeTypeId="1" />
-        </a-col>
+<!--        <a-col :span="12">-->
+<!--          <HomeNotice title="公告" :noticeTypeId="1" />-->
+<!--        </a-col>-->
         <!--企业动态-->
-        <a-col :span="12">
-          <HomeNotice title="通知" :noticeTypeId="2" />
-        </a-col>
+<!--        <a-col :span="12">-->
+<!--          <HomeNotice title="通知" :noticeTypeId="2" />-->
+<!--        </a-col>-->
         <!--各类报表-->
         <!-- <a-col :span="6">
           <Gauge :percent="saleTargetPercent" />
         </a-col> -->
-        <a-col :span="12">
-          <Pie />
-        </a-col>
-        <a-col :span="12">
-          <Category />
-        </a-col>
-        <a-col :span="24">
-          <Gradient />
-        </a-col>
+<!--        <a-col :span="12">-->
+<!--          <Pie />-->
+<!--        </a-col>-->
+<!--        <a-col :span="12">-->
+<!--          <Category />-->
+<!--        </a-col>-->
+<!--        <a-col :span="24">-->
+<!--          <Gradient />-->
+<!--        </a-col>-->
       </a-row>
     </a-col>
     <!--右侧-->
@@ -49,17 +49,17 @@
           <HomeQuickEntry />
         </a-col> -->
         <!--关注公众号-->
-        <a-col :span="24">
-          <OfficialAccountCard />
-        </a-col>
+<!--        <a-col :span="24">-->
+<!--          <OfficialAccountCard />-->
+<!--        </a-col>-->
         <!--待办、已办-->
-        <a-col :span="24">
-          <ToBeDoneCard />
-        </a-col>
+<!--        <a-col :span="24">-->
+<!--          <ToBeDoneCard />-->
+<!--        </a-col>-->
         <!--更新日志-->
-        <a-col :span="24">
-          <ChangelogCard />
-        </a-col>
+<!--        <a-col :span="24">-->
+<!--          <ChangelogCard />-->
+<!--        </a-col>-->
       </a-row>
     </a-col>
 <!--    <AdModal/>-->

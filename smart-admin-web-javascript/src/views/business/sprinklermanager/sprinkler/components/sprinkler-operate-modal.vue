@@ -1,57 +1,17 @@
 <template>
-  <a-modal :open="visible" title="添加" :width="700" forceRender ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
+  <a-modal :open="visible" title="添加/编辑" :width="700" forceRender ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 6 }">
-      <a-form-item label="企业名称" name="enterpriseName">
-        <a-input v-model:value="form.enterpriseName" placeholder="请输入企业名称" />
+      <a-form-item label="喷头序列号" name="sprinklerSerial">
+        <a-input v-model:value="form.sprinklerSerial" placeholder="请输入喷头序列号" />
       </a-form-item>
 
-      <a-form-item label="企业logo" name="enterpriseLogo">
-        <Upload
-          accept=".jpg,.jpeg,.png,.gif"
-          :maxUploadSize="1"
-          buttonText="点击上传企业logo"
-          :default-file-list="form.enterpriseLogo"
-          @change="enterpriseLogoChange"
-        />
-      </a-form-item>
-
-      <a-form-item label="统一社会信用代码" name="unifiedSocialCreditCode">
-        <a-input v-model:value="form.unifiedSocialCreditCode" placeholder="请输入统一社会信用代码" />
-      </a-form-item>
-
-      <a-form-item label="类型" name="type">
-        <SmartEnumSelect width="100%" v-model:value="form.type" placeholder="请选择类型" enum-name="ENTERPRISE_TYPE_ENUM" />
-      </a-form-item>
-
-      <a-form-item label="联系人" name="contact">
-        <a-input v-model:value="form.contact" placeholder="请输入联系人" />
-      </a-form-item>
-      <a-form-item label="联系人电话" name="contactPhone">
-        <a-input v-model:value="form.contactPhone" placeholder="请输入联系人电话" />
-      </a-form-item>
-
-      <a-form-item label="所在城市" name="provinceCityDistrict">
-        <AreaCascader type="province_city_district" style="width: 100%" v-model:value="area" placeholder="请选择所在城市" @change="changeArea" />
-      </a-form-item>
-      <a-form-item label="详细地址" name="address">
-        <a-input v-model:value="form.address" placeholder="请输入详细地址" />
-      </a-form-item>
-
-      <a-form-item label="邮箱" name="email">
-        <a-input v-model:value="form.email" placeholder="请输入邮箱" />
+      <a-form-item label="入库日期" class="smart-query-form-item">
+        <a-space direction="vertical" :size="12">
+          <a-date-picker valueFormat="YYYY-MM-DD" v-model:value="form.warehouseDate" style="width: 150px" />
+        </a-space>
       </a-form-item>
       <a-form-item label="启用状态" name="disabledFlag">
         <a-switch v-model:checked="enabledChecked" @change="enabledCheckedChange" />
-      </a-form-item>
-
-      <a-form-item label="营业执照" name="businessLicense">
-        <Upload
-          accept=".jpg,.jpeg,.png,.gif"
-          :maxUploadSize="1"
-          buttonText="点击上传营业执照"
-          :default-file-list="form.businessLicense"
-          @change="businessLicenseChange"
-        />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -61,13 +21,14 @@
   import { message } from 'ant-design-vue';
   import _ from 'lodash';
   import { nextTick, reactive, ref } from 'vue';
-  import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
   import AreaCascader from '/@/components/framework/area-cascader/index.vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import Upload from '/@/components/support/file-upload/index.vue';
   import { regular } from '/@/constants/regular-const';
   import { smartSentry } from '/@/lib/smart-sentry';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
+  import {sprinklerApi} from "/@/api/business/sprinklermanager/sprinkler-api.js";
+  import {defaultTimeRanges} from "/@/lib/default-time-ranges.js";
 
   defineExpose({
     showModal,
@@ -78,11 +39,11 @@
   // 是否展示
   const visible = ref(false);
 
-  function showModal(enterpriseId) {
+  function showModal(sprinklerId) {
     Object.assign(form, formDefault);
     area.value = [];
-    if (enterpriseId) {
-      detail(enterpriseId);
+    if (sprinklerId) {
+      detail(sprinklerId);
     }
     visible.value = true;
     nextTick(() => {
@@ -106,9 +67,9 @@
     visible.value = false;
   }
 
-  async function detail(enterpriseId) {
+  async function detail(sprinklerId) {
     try {
-      let result = await enterpriseApi.detail(enterpriseId);
+      let result = await sprinklerApi.detail(sprinklerId);
       let data = result.data;
       Object.assign(form, data);
       nextTick(() => {
@@ -144,33 +105,17 @@
   const formRef = ref();
 
   const formDefault = {
-    enterpriseId: undefined,
-    enterpriseName: undefined,
-    unifiedSocialCreditCode: undefined,
-    businessLicense: undefined,
-    contact: undefined,
-    enterpriseLogo: undefined,
-    contactPhone: undefined,
-    email: undefined,
-    province: undefined,
-    provinceName: undefined,
-    city: undefined,
-    cityName: undefined,
-    district: undefined,
-    districtName: undefined,
-    address: undefined,
+    sprinklerId: undefined,
+    sprinklerSerial: undefined,
+    warehouseDate: undefined,
     disabledFlag: false,
   };
   let form = reactive({ ...formDefault });
+
+
   const rules = {
-    enterpriseName: [{ required: true, message: '请输入企业名称' }],
-    unifiedSocialCreditCode: [{ required: true, message: '请输入统一社会信用代码' }],
-    contact: [{ required: true, message: '请输入联系人' }],
-    contactPhone: [
-      { required: true, message: '请输入联系人电话' },
-      { pattern: regular.phone, message: '请输入正确的联系人电话', trigger: 'blur' },
-    ],
-    type: [{ required: true, message: '请选择类型' }],
+    sprinklerSerial: [{ required: true, message: '请输入喷头序列号' }],
+    warehouseDate: [{ required: true, message: '请输入入仓时间' }],
   };
 
   function onSubmit() {
@@ -179,12 +124,12 @@
       .then(async () => {
         SmartLoading.show();
         try {
-          if (form.enterpriseId) {
-            await enterpriseApi.update(form);
+          if (form.sprinklerId) {
+            await sprinklerApi.update(form);
           } else {
-            await enterpriseApi.create(form);
+            await sprinklerApi.create(form);
           }
-          message.success(`${form.enterpriseId ? '修改' : '添加'}成功`);
+          message.success(`${form.sprinklerId ? '修改' : '添加'}成功`);
           emit('refresh');
           onClose();
         } catch (error) {
@@ -232,13 +177,7 @@
     }
   }
 
-  function enterpriseLogoChange(fileList) {
-    form.enterpriseLogo = fileList;
-  }
 
-  function businessLicenseChange(fileList) {
-    form.businessLicense = fileList;
-  }
 </script>
 
 <style lang="less" scoped>

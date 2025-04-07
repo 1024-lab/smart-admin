@@ -42,7 +42,7 @@ export const sprinklerApi = {
 
     // 编辑企业 @author 开云
     update: (param) => {
-        return postRequest('/oa/enterprise/update', param);
+        return postRequest('/sprinklermanager/sprinkler/update', param);
     },
     // 企业全部员工List @author yandy
     employeeList: (param) => {

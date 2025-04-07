@@ -72,12 +72,12 @@ public abstract class BaseSprinklerHandler<F extends BaseForm, E extends BaseEnt
      */
     protected abstract Class<E> getEntityClass();
     /**
-     * 添加数据追踪（钩子方法，可选覆盖）
+     * 添加数据追踪
      */
     protected void addDataTrace(Long sprinklerId, E entity) {
         String traceContent = "新增" + getBizType() + ":" + DataTracerConst.HTML_BR
                 + dataTracerService.getChangeContent(entity);
-        dataTracerService.addTrace(sprinklerId, DataTracerTypeEnum.OA_ENTERPRISE, traceContent);
+        dataTracerService.addTrace(sprinklerId, DataTracerTypeEnum.SPRINKLER, traceContent);
     }
 
     /**

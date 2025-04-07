@@ -110,7 +110,7 @@
   import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { useRouter } from 'vue-router';
-  import EnterpriseOperate from './components/enterprise-operate-modal.vue';
+  import EnterpriseOperate from './components/sprinkler-operate-modal.vue';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   import TableOperator from '/@/components/support/table-operator/index.vue';

@@ -13,6 +13,7 @@ import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao.Sprin
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerEntity;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerUpdateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
@@ -21,6 +22,7 @@ import net.lab1024.sa.base.common.util.LocalDateParseUtil;
 import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import net.lab1024.sa.base.common.util.SmartPageUtil;
 import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerTypeEnum;
+import net.lab1024.sa.base.module.support.datatracer.domain.form.DataTracerForm;
 import net.lab1024.sa.base.module.support.datatracer.service.DataTracerService;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -73,7 +75,7 @@ public class SprinklerService {
             List<SprinklerCreateForm> createVOs = new ArrayList<>();
             for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
                 XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(i);
-                for (int j =0; j < sheet.getLastRowNum(); j++) {
+                for (int j =0; j <= sheet.getLastRowNum(); j++) {
                     Row row = sheet.getRow(j);
                     if (row == null||row.getRowNum() == 0) continue; // 跳过标题行
                     if (row.getCell(2) == null) continue;
@@ -142,5 +144,39 @@ public class SprinklerService {
         Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
         List<SprinklerStockInOperationSheetVO> sprinklerStockInOperationSheetVOList = sprinklerStockInOperationSheetDao.queryPageStockInOperationSheetList(page, queryForm);
         return SmartPageUtil.convert2PageResult(page, sprinklerStockInOperationSheetVOList);
+    }
+    /**
+     * 编辑喷头
+     *
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<String> updateSprinkler(@Valid SprinklerUpdateForm updateVO) {
+        Long sprinklerId = updateVO.getSprinklerId();
+        //校验喷头是否存在
+        SprinklerEntity sprinklerDetail = sprinklerDao.selectById(sprinklerId);
+        if(Objects.isNull(sprinklerDetail) || sprinklerDetail.getDeletedFlag()) {
+            return ResponseDTO.userErrorParam("喷头不存在");
+        }
+        //验证喷头名称是否重复
+        SprinklerEntity validateSprinkler = sprinklerDao.queryBySprinklerSerial(updateVO.getSprinklerSerial(), sprinklerId, Boolean.FALSE);
+        if (Objects.nonNull(validateSprinkler)){
+            return ResponseDTO.userErrorParam("喷头序列号重复");
+        }
+        //数据编排
+        SprinklerEntity updateEntity = SmartBeanUtil.copy(sprinklerDetail, SprinklerEntity.class);
+        SmartBeanUtil.copyProperties(updateVO, updateEntity);
+        sprinklerDao.updateById(updateEntity);
+
+        //变更记录
+        DataTracerForm dataTracerForm = DataTracerForm.builder()
+                .dataId(updateVO.getSprinklerId())
+                .type(DataTracerTypeEnum.SPRINKLER)
+                .content("修改喷头信息")
+                .diffOld(dataTracerService.getChangeContent(sprinklerDetail))
+                .diffNew(dataTracerService.getChangeContent(updateEntity))
+                .build();
+
+        dataTracerService.addTrace(dataTracerForm);
+        return ResponseDTO.ok();
     }
 }

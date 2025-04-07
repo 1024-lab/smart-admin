@@ -57,6 +57,7 @@
   }
 
   function showModal(rowData) {
+    console.log("hello")
     Object.assign(form, formDefault);
     if (rowData) {
       Object.assign(form, rowData);

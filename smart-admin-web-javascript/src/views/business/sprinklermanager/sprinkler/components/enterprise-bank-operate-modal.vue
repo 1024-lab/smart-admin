@@ -51,6 +51,7 @@
   // 是否展示
   const visible = ref(false);
   function showModal(rowData) {
+    console.log("hello")
     Object.assign(form, formDefault);
     if (rowData) {
       Object.assign(form, rowData);

@@ -32,7 +32,7 @@
 <!--        <InvoiceList :sprinklerId="sprinklerId" />-->
 <!--      </a-tab-pane>-->
       <a-tab-pane key="dataTracer" tab="变更记录">
-        <DataTracer :dataId="sprinklerId" :type="DATA_TRACER_TYPE_ENUM.OA_ENTERPRISE.value" />
+        <DataTracer :dataId="sprinklerId" :type="DATA_TRACER_TYPE_ENUM.SPRINKLER.value" />
       </a-tab-pane>
     </a-tabs>
     <EnterpriseOperate ref="operateRef" @refresh="getDetail" />
@@ -46,7 +46,7 @@
   import BankList from './components/enterprise-bank-list.vue';
   import EmployeeList from './components/enterprise-employee-list.vue';
   import InvoiceList from './components/enterprise-invoice-list.vue';
-  import EnterpriseOperate from './components/enterprise-operate-modal.vue';
+  import EnterpriseOperate from './components/sprinkler-operate-modal.vue';
   import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import DataTracer from '/@/components/support/data-tracer/index.vue';

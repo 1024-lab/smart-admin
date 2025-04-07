@@ -9,6 +9,7 @@ import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.doma
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerMaintainOperationSheetCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerRmaOperationSheetCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetCreateForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerUsableOperationSheetCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.handler.SprinklerOperationHandler;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.registry.OperationHandlerRegistry;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao.SprinklerDao;
@@ -201,7 +202,7 @@ public class OperationSheetService {
             Workbook workbook = new XSSFWorkbook(stream);
             List<SprinklerMaintainOperationSheetCreateForm> createVOs = new ArrayList<>();
             XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(0);
-            for (int i = 0; i < sheet.getLastRowNum(); i++) {
+            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if (row == null || row.getRowNum() == 0) continue; // 跳过标题行
                 if (row.getCell(2) == null) continue;
@@ -279,91 +280,8 @@ public class OperationSheetService {
             List<SprinklerRmaOperationSheetCreateForm> createVOs = new ArrayList<>();
             Map<String, SprinklerRmaOperationSheetCreateForm> createVOMap = new HashMap<>();
 
-            XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(0);
-            for (int i = 0; i < sheet.getLastRowNum(); i++) {
-                Row row = sheet.getRow(i);
-                if (row == null || row.getRowNum() == 0) continue; // 跳过标题行
-                if (row.getCell(2) == null) continue;
-                String headSerial = row.getCell(2).getStringCellValue();
-                SprinklerRmaOperationSheetCreateForm createVO = new SprinklerRmaOperationSheetCreateForm();
-                createVO.setSprinklerSerial(headSerial);
-                createVOMap.put(headSerial, createVO);
-                if (row.getCell(0) == null) {
-                    createVO.setRmaDate(null);
-                } else {
-                    if (row.getCell(0).getCellType() == CellType.NUMERIC) {
-                        row.getCell(0).setCellType(CellType.STRING);
-                    }
-                    createVO.setMaintainDate(LocalDateParseUtil.parseDate(row.getCell(0).getStringCellValue()));
-                }
-                if (row.getCell(1) == null) {
-                    createVO.setRmaNumber(null);
-                } else {
-                    if (row.getCell(1).getCellType() == CellType.NUMERIC) {
-                        row.getCell(1).setCellType(CellType.STRING);
-                    }
-                    createVO.setRmaNumber(row.getCell(1).getStringCellValue());
-                }
-                if (row.getCell(3) == null) {
-                    createVO.setRmaPosition(null);
-                } else {
-                    if (row.getCell(3).getCellType() == CellType.NUMERIC) {
-                        row.getCell(3).setCellType(CellType.STRING);
-                    }
-                    createVO.setRmaPosition(row.getCell(3).getStringCellValue());
-                }
-                if (row.getCell(4) == null) {
-                    createVO.setRmaReason(null);
-                } else {
-                    if (row.getCell(4).getCellType() == CellType.NUMERIC) {
-                        row.getCell(4).setCellType(CellType.STRING);
-                    }
-                    createVO.setRmaReason(row.getCell(4).getStringCellValue());
-                }
-                if (row.getCell(5) == null) {
-                    createVO.setHistory(null);
-                } else {
-                    if (row.getCell(5).getCellType() == CellType.NUMERIC) {
-                        row.getCell(5).setCellType(CellType.STRING);
-                    }
-                    createVO.setHistory(row.getCell(5).getStringCellValue());
-                }
-                if (headSerial == "") continue;
-                Long sprinklerId = sprinklerDao.findIdBySprinklerSerial(headSerial);
-                createVO.setSprinklerId(sprinklerId);
-                OperationSheetEntity operationSheetEntity = new OperationSheetEntity();
-                operationSheetEntity.setSprinklerId(sprinklerId);
-                operationSheetEntity.setDisabledFlag(Boolean.FALSE);
-                operationSheetEntity.setDeletedFlag(Boolean.FALSE);
-                operationSheetDao.insert(operationSheetEntity);
-                Long operationSheetId = operationSheetEntity.getOperationSheetId();
-                createVO.setOperationSheetId(operationSheetId);
-                createVO.setDisabledFlag(Boolean.FALSE);
-                createVO.setCreateUserId(requestUser.getUserId());
-                createVO.setCreateUserName(requestUser.getUserName());
-                createVOs.add(createVO);
-            }
-
-
-
-            SprinklerOperationHandler handler = operationHandlerRegistry.getHandler("rma");
-            createVOs.forEach(handler::createOperationSheet);
-            return ResponseDTO.ok();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public ResponseDTO<String> processRma(@Valid MultipartFile file, RequestUser requestUser) {
-        try (InputStream stream = file.getInputStream()) {
-            // 使用POI解析为导入DTO
-            Workbook workbook = new XSSFWorkbook(stream);
-            List<SprinklerRmaOperationSheetCreateForm> createVOs = new ArrayList<>();
-            Map<String, SprinklerRmaOperationSheetCreateForm> createVOMap = new HashMap<>();
-
             XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(2);
-            for (int i = 0; i < sheet.getLastRowNum(); i++) {
+            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if (row == null || row.getRowNum() == 0) continue; // 跳过标题行
                 if (row.getCell(0) == null || row.getCell(0).getStringCellValue()=="" || createVOMap.containsKey(row.getCell(0).getStringCellValue())) continue;
@@ -415,7 +333,7 @@ public class OperationSheetService {
             }
 
             sheet = (XSSFSheet) workbook.getSheetAt(0);
-            for (int i = 0; i < sheet.getLastRowNum(); i++) {
+            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if (row == null || row.getRowNum() == 0) continue; // 跳过标题行
                 if (row.getCell(2) == null || row.getCell(2).getStringCellValue()=="") continue;
@@ -498,7 +416,7 @@ public class OperationSheetService {
             }
 
             sheet = (XSSFSheet) workbook.getSheetAt(1);
-            for (int i = 0; i < sheet.getLastRowNum(); i++) {
+            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if (row == null || row.getRowNum() == 0) continue; // 跳过标题行
                 if (row.getCell(2) == null || row.getCell(2).getStringCellValue()=="") continue;
@@ -605,4 +523,67 @@ public class OperationSheetService {
     }
 
 
+    public ResponseDTO<String> batchCreateUsableOperationSheet(@Valid MultipartFile file, RequestUser requestUser) {
+        try (InputStream stream = file.getInputStream()) {
+            // 使用POI解析为导入DTO
+            Workbook workbook = new XSSFWorkbook(stream);
+            List<SprinklerUsableOperationSheetCreateForm> createVOs = new ArrayList<>();
+            XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(0);
+            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                if (row == null || row.getRowNum() == 0) continue; // 跳过标题行
+                if (row.getCell(0) == null) continue;
+                if (row.getCell(0).getCellType() == CellType.NUMERIC) {
+                    row.getCell(0).setCellType(CellType.STRING);
+                }
+                String headSerial = row.getCell(0).getStringCellValue();
+                SprinklerUsableOperationSheetCreateForm createVO = new SprinklerUsableOperationSheetCreateForm();
+                createVO.setSprinklerSerial(headSerial);
+                if (row.getCell(1) == null) {
+                    createVO.setHistory(null);
+                } else {
+                    if (row.getCell(1).getCellType() == CellType.NUMERIC) {
+                        row.getCell(1).setCellType(CellType.STRING);
+                    }
+                    createVO.setHistory(row.getCell(1).getStringCellValue());
+                }
+                if (row.getCell(2) == null) {
+                    createVO.setNote1(null);
+                } else {
+                    if (row.getCell(2).getCellType() == CellType.NUMERIC) {
+                        row.getCell(2).setCellType(CellType.STRING);
+                    }
+                    createVO.setNote1(row.getCell(2).getStringCellValue());
+                }
+                if (row.getCell(3) == null) {
+                    createVO.setNote2(null);
+                } else {
+                    if (row.getCell(3).getCellType() == CellType.NUMERIC) {
+                        row.getCell(3).setCellType(CellType.STRING);
+                    }
+                    createVO.setNote2(row.getCell(3).getStringCellValue());
+                }
+                if (headSerial == "") continue;
+                Long sprinklerId = sprinklerDao.findIdBySprinklerSerial(headSerial);
+                createVO.setSprinklerId(sprinklerId);
+                OperationSheetEntity operationSheetEntity = new OperationSheetEntity();
+                operationSheetEntity.setSprinklerId(sprinklerId);
+                operationSheetEntity.setDisabledFlag(Boolean.FALSE);
+                operationSheetEntity.setDeletedFlag(Boolean.FALSE);
+                operationSheetDao.insert(operationSheetEntity);
+                Long operationSheetId = operationSheetEntity.getOperationSheetId();
+                createVO.setOperationSheetId(operationSheetId);
+                createVO.setDisabledFlag(Boolean.FALSE);
+                createVO.setCreateUserId(requestUser.getUserId());
+                createVO.setCreateUserName(requestUser.getUserName());
+                createVOs.add(createVO);
+            }
+            SprinklerOperationHandler handler = operationHandlerRegistry.getHandler("usable");
+            createVOs.forEach(handler::createOperationSheet);
+            return ResponseDTO.ok();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

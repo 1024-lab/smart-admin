@@ -5,10 +5,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import net.lab1024.sa.admin.module.business.oa.enterprise.domain.form.EnterpriseUpdateForm;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseEmployeeVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetQueryForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerStockInOperationSheetVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerUpdateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
@@ -48,6 +50,13 @@ public class SprinklerController {
     ) {
         RequestUser requestUser = SmartRequestUtil.getRequestUser();
         return sprinklerService.batchImport(file, requestUser);
+    }
+
+    @Operation(summary = "编辑喷头 @author 芦苇")
+    @PostMapping("/sprinklermanager/sprinkler/update")
+    @SaCheckPermission("sprinklermanager:sprinkler:update")
+    public ResponseDTO<String> updateSprinkler(@RequestBody @Valid SprinklerUpdateForm updateVO) {
+        return sprinklerService.updateSprinkler(updateVO);
     }
 
     @Operation(summary = "查询喷头详情 @author 芦苇")

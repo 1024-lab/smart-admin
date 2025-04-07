@@ -12,4 +12,5 @@
 export const HOME_PAGE_NAME = 'Home';
 
 //首页页面路径
-export const HOME_PAGE_PATH = '/home';
+// export const HOME_PAGE_PATH = '/home';
+export const HOME_PAGE_PATH = '/sprinklermanager/sprinkler/sprinkler-list';
