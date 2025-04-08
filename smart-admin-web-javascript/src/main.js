@@ -99,17 +99,10 @@ async function initVue() {
   //挂载
   app.mount('#app');
 }
-function setTableYHeight() {
-  Table.props.scroll.default = {
-    y: useAppConfigStore().tableYHeight,
-  };
-}
 //不需要获取用户信息、用户菜单、用户菜单动态路由，直接初始化vue即可
 let token = localRead(LocalStorageKeyConst.USER_TOKEN);
 if (!token) {
   await initVue();
-  setTableYHeight();
 } else {
   await getLoginInfo();
-  setTableYHeight();
 }

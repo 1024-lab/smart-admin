@@ -52,6 +52,7 @@
   import { themeColors } from '/@/theme/color.js';
   import { Popover } from 'ant-design-vue';
   import SmartCopyIcon from '/@/components/framework/smart-copy-icon/index.vue';
+  import _ from 'lodash';
 
   const slots = useSlots();
   const antdLocale = computed(() => messages[useAppConfigStore().language].antdLocale);
@@ -90,6 +91,9 @@
       return text;
     }
   }
+  window.addEventListener('resize',_.throttle(()=>{
+    window.location.reload()
+  },1000));
 </script>
 <style scoped lang="less">
   :deep(.ant-table-column-sorters) {

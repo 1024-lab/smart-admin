@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-menu v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" class="smart-menu" mode="inline" :theme="theme">
+  <a-menu :open-keys="openKeys" v-model:selectedKeys="selectedKeys" class="smart-menu" mode="inline" :theme="theme" @openChange="onOpenChange">
     <template v-for="item in menuTree" :key="item.menuId">
       <template v-if="item.visibleFlag && !item.disabledFlag">
         <template v-if="$lodash.isEmpty(item.children)">
@@ -36,6 +36,7 @@
   import { useUserStore } from '/@/store/modules/system/user';
 
   const theme = computed(() => useAppConfigStore().$state.sideMenuTheme);
+  const flatPattern = computed(() => useAppConfigStore().$state.flatPattern);
 
   const props = defineProps({
     collapsed: {
@@ -45,6 +46,8 @@
   });
 
   const menuTree = computed(() => useUserStore().getMenuTree || []);
+  const rootSubmenuKeys = computed(()=>menuTree.value.map(item=>item.menuId));
+
 
   //展开的菜单
   let currentRoute = useRoute();
@@ -89,7 +92,17 @@
       immediate: true,
     }
   );
-
+  function onOpenChange(openKeysParams){
+  if(flatPattern.value){
+    return;
+  }
+  const latestOpenKey = openKeysParams.find(key => openKeys.value.indexOf(key) === -1);
+  if (rootSubmenuKeys.value.indexOf(latestOpenKey) === -1) {
+    openKeys.value = openKeysParams;
+  } else {
+    openKeys.value = latestOpenKey ? [latestOpenKey] : [];
+  }
+};
   defineExpose({
     updateOpenKeysAndSelectKeys,
   });

@@ -67,7 +67,7 @@ export const request = function (url, method, data) {
       data: data,
       method: method,
       header: {
-        'x-access-token': getUserToken(),
+        'Authorization':'Bearer ' + getUserToken(),
       },
       success: (response) => {
         handleResponse(response, resolve, reject);
@@ -110,7 +110,7 @@ export const uploadRequest = function (filePath, folder) {
       url: baseUrl + '/support/file/upload',
       filePath,
       header: {
-        'x-access-token': getUserToken(),
+        'Authorization':'Bearer ' +  getUserToken(),
       },
       name: 'file',
       formData: {

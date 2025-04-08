@@ -24,6 +24,7 @@ export default {
   'setting.border.radius': 'Border Radius',
   'setting.compact': 'Page Compact',
   'setting.bread': 'Show Bread',
+  'setting.flatPattern': 'Flat Pattern',
   'setting.pagetag': 'Show PageTag',
   'setting.pagetag.style': 'PageTag Style',
   'setting.footer': 'Show Footer',

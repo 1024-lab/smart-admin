@@ -20,8 +20,6 @@ export const appDefaultConfig: AppConfig = {
   layout: 'side',
   // 侧边菜单宽度 ， 默认为200px
   sideMenuWidth: 200,
-  // 表格高度
-  tableYHeight: 300,
   //标签页位置
   pageTagLocation: 'center',
   // 菜单主题
@@ -32,6 +30,8 @@ export const appDefaultConfig: AppConfig = {
   pageWidth: '99%',
   // 圆角
   borderRadius: 6,
+  // 展开模式
+  flatPattern: true,
   // 标签页
   pageTagFlag: true,
   // 标签页样式: default、 antd、chrome

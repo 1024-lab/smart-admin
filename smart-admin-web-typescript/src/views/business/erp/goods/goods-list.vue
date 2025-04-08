@@ -102,7 +102,7 @@
       :dataSource="tableData"
       :columns="columns"
       rowKey="goodsId"
-      :scroll="{ x: 1000 }"
+      :scroll="{ x: 1000,y: yHeight }"
       bordered
       :pagination="false"
       :showSorterTooltip="false"
@@ -110,8 +110,6 @@
       @change="onChange"
       @resizeColumn="handleResizeColumn"
     >
-      <!-- main.js中有全局表格高度配置，也可单独配置 -->
-      <!-- :scroll="{ y: 300 }" -->
       <template #headerCell="{ column }">
         <SmartHeaderCell v-model:value="queryForm[column.filterOptions?.key || column.dataIndex]" :column="column" @change="queryData" />
       </template>
@@ -497,4 +495,15 @@
   function camelToUnderscore(str) {
     return str.replace(/([A-Z])/g, '_$1').toLowerCase();
   }
+  const dueHeight=ref(0)
+  const yHeight=ref(0)
+  onMounted(() => {
+    let doc = document.querySelector('.ant-form');
+    let btn = document.querySelector('.smart-table-btn-block');
+    let tableCell = document.querySelector('.ant-table-cell');
+    let page = document.querySelector('.smart-query-table-page');
+    let box = document.querySelector('.ant-layout-content>div');
+    dueHeight.value = doc.offsetHeight+10+24+btn.offsetHeight+15+tableCell.offsetHeight+page.offsetHeight+20
+    yHeight.value=box.offsetHeight-dueHeight.value
+  });
 </script>

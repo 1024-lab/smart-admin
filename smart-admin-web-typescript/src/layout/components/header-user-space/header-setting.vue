@@ -47,10 +47,6 @@
         <a-input-number @change="changeSideMenuWidth" v-model:value="formState.sideMenuWidth" :min="1" />
         像素（px）
       </a-form-item>
-      <a-form-item :label="$t('setting.table.yHeight')">
-        <a-input-number @change="changeTableYHeight" v-model:value="formState.tableYHeight" :min="100" />
-        像素（px）
-      </a-form-item>
       <a-form-item :label="$t('setting.page.width')" v-if="formState.layout === LAYOUT_ENUM.TOP.value">
         <a-input @change="changePageWidth" v-model:value="formState.pageWidth" />
         像素（px）或者 百分比
@@ -86,6 +82,9 @@
           <a-radio-button value="antd">Ant</a-radio-button>
           <a-radio-button value="chrome">Chrome</a-radio-button>
         </a-radio-group>
+      </a-form-item>
+      <a-form-item :label="$t('setting.flatPattern')">
+        <a-switch @change="changeFlatPattern" v-model:checked="formState.flatPattern" checked-children="单个" un-checked-children="多个" />
       </a-form-item>
       <a-form-item :label="$t('setting.pagetag')">
         <a-switch @change="changePageTagFlag" v-model:checked="formState.pageTagFlag" checked-children="显示" un-checked-children="隐藏" />
@@ -202,14 +201,14 @@
     colorIndex: appConfigStore.colorIndex,
     // 侧边菜单宽度
     sideMenuWidth: appConfigStore.sideMenuWidth,
-    // 表格高度
-    tableYHeight: appConfigStore.tableYHeight,
     // 菜单主题
     sideMenuTheme: appConfigStore.sideMenuTheme,
     // 页面紧凑
     compactFlag: appConfigStore.compactFlag,
     // 页面圆角
     borderRadius: appConfigStore.borderRadius,
+    // 标签页
+    flatPattern: appConfigStore.flatPattern,
     // 标签页
     pageTagFlag: appConfigStore.pageTagFlag,
     // 标签页 样式
@@ -276,12 +275,6 @@
       sideMenuWidth: value,
     });
   }
-  function changeTableYHeight(value: any) {
-    appConfigStore.$patch({
-      tableYHeight: value,
-    });
-    window.location.reload();
-  }
 
   function changePageWidth(e) {
     appConfigStore.$patch({
@@ -315,6 +308,11 @@
   function changePageTagFlag(e) {
     appConfigStore.$patch({
       pageTagFlag: e,
+    });
+  }
+  function changeFlatPattern(e) {
+    appConfigStore.$patch({
+      flatPattern: e,
     });
   }
 

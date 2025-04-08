@@ -32,8 +32,6 @@ export interface AppConfig {
   layout: string;
   // 主题
   sideMenuTheme: ThemeType;
-  // 表格高度
-  tableYHeight: number;
   //标签页位置
   pageTagLocation: string;
   // 侧边菜单宽度 ， 默认为256px
