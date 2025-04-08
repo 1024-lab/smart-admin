@@ -27,10 +27,10 @@
       <HeaderAvatar />
     </div>
     <!---帮助文档--->
-    <div class="user-space-item" @click="showHelpDoc" v-if="showHelpDocFlag">
-      <span>帮助文档</span>
-      <DoubleLeftOutlined v-if="!helpDocExpandFlag" />
-    </div>
+<!--    <div class="user-space-item" @click="showHelpDoc" v-if="showHelpDocFlag">-->
+<!--      <span>帮助文档</span>-->
+<!--      <DoubleLeftOutlined v-if="!helpDocExpandFlag" />-->
+<!--    </div>-->
 
     <HeaderSetting ref="headerSetting" />
   </a-space>

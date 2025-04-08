@@ -13,8 +13,8 @@
   <!-- 1、顶部logo区域 -->
   <div class="logo" @click="onGoHome" :style="sideMenuWidth" v-if="!collapsed">
     <img class="logo-img" :src="logoImg" />
-    <div class="title smart-logo title-light" v-if="sideMenuTheme === 'light'">{{ websiteName }}</div>
-    <div class="title smart-logo title-dark" v-if="sideMenuTheme === 'dark'">{{ websiteName }}</div>
+    <div class="title smart-logo title-light" v-if="sideMenuTheme === 'light'">海印喷头管理系统</div>
+    <div class="title smart-logo title-dark" v-if="sideMenuTheme === 'dark'">海印喷头管理系统</div>
   </div>
   <div class="min-logo" @click="onGoHome" v-if="collapsed">
     <img class="logo-img" :src="logoImg" />

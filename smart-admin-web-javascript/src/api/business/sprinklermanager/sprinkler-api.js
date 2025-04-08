@@ -23,7 +23,7 @@ export const sprinklerApi = {
 
     // 分页查询企业模块 @author 开云
     pageQuery: (param) => {
-        return postRequest('sprinklermanager/sprinkler/page/query', param);
+        return postRequest('/sprinklermanager/sprinkler/page/query', param);
     },
 
     // 导出企业数据excel @author 卓大

@@ -22,35 +22,20 @@
   </div>
   <a-card class="smart-margin-top10" size="small">
     <a-tabs>
-<!--      <a-tab-pane key="employee" tab="员工信息">-->
-<!--        <EmployeeList :sprinklerId="sprinklerId" />-->
-<!--      </a-tab-pane>-->
-<!--      <a-tab-pane key="bank" tab="银行信息">-->
-<!--        <BankList :sprinklerId="sprinklerId" />-->
-<!--      </a-tab-pane>-->
-<!--      <a-tab-pane key="invoice" tab="发票信息">-->
-<!--        <InvoiceList :sprinklerId="sprinklerId" />-->
-<!--      </a-tab-pane>-->
       <a-tab-pane key="dataTracer" tab="变更记录">
         <DataTracer :dataId="sprinklerId" :type="DATA_TRACER_TYPE_ENUM.SPRINKLER.value" />
       </a-tab-pane>
     </a-tabs>
-    <EnterpriseOperate ref="operateRef" @refresh="getDetail" />
+    <SprinklerOperate ref="operateRef" @refresh="getDetail" />
   </a-card>
 </template>
 
 <script setup>
-  import _ from 'lodash';
-  import { computed, onMounted, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router';
-  import BankList from './components/enterprise-bank-list.vue';
-  import EmployeeList from './components/enterprise-employee-list.vue';
-  import InvoiceList from './components/enterprise-invoice-list.vue';
-  import EnterpriseOperate from './components/sprinkler-operate-modal.vue';
-  import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
+  import SprinklerOperate from './components/sprinkler-operate-modal.vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import DataTracer from '/@/components/support/data-tracer/index.vue';
-  import FilePreview from '/@/components/support/file-preview/index.vue';
   import { DATA_TRACER_TYPE_ENUM } from '/@/constants/support/data-tracer-const';
   import { smartSentry } from '/@/lib/smart-sentry';
   import {sprinklerApi} from "/@/api/business/sprinklermanager/sprinkler-api.js";
@@ -86,33 +71,7 @@
     }
   }
 
-  // 地区
-  const area = computed(() => {
-    let area = '';
-    if (!detail.value) {
-      return area;
-    }
-    if (detail.value.provinceName) {
-      area = area + detail.value.provinceName;
-    }
-    if (detail.value.cityName) {
-      area = area + detail.value.cityName;
-    }
-    if (detail.value.districtName) {
-      area = area + detail.value.districtName;
-    }
-    return area;
-  });
 
-  const logo = computed(() => {
-    if (!detail.value) {
-      return '';
-    }
-    if (!_.isEmpty(detail.value.enterpriseLogo)) {
-      return detail.value.enterpriseLogo[0].fileUrl;
-    }
-    return '';
-  });
 </script>
 
 <style lang="less" scoped>

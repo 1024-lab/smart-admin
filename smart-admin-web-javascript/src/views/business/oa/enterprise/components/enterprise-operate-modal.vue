@@ -111,6 +111,7 @@
       let result = await enterpriseApi.detail(enterpriseId);
       let data = result.data;
       Object.assign(form, data);
+      console.log(form)
       nextTick(() => {
         // 省市区不存在，不需要赋值
         if (!data.provinceName) {

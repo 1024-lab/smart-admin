@@ -7,7 +7,7 @@
   <a-form class="smart-query-form" v-privilege="'sprinklermanager:sprinkler:query'">
     <a-row class="smart-query-form-row">
       <a-form-item label="关键字" class="smart-query-form-item">
-        <a-input style="width: 300px" v-model:value="queryForm.keywords" placeholder="企业名称/联系人/联系电话" />
+        <a-input style="width: 300px" v-model:value="queryForm.keywords" placeholder="喷头序列号/入仓日期/喷头历史" />
       </a-form-item>
 
       <a-form-item label="创建时间" class="smart-query-form-item">

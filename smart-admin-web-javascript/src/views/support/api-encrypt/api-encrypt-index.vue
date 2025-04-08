@@ -148,7 +148,7 @@
   //请求参数加密
   const requestEncryptForm = reactive({
     age: 100, // 年龄
-    name: '卓大', //姓名
+    name: '芦苇', //姓名
   });
 
   // 参数字符串
@@ -172,7 +172,7 @@
 
   const responseEncryptForm = reactive({
     age: 100, // 年龄
-    name: '卓大', //姓名
+    name: '芦苇', //姓名
   });
 
   const responseEncryptFormStr = ref('');
@@ -190,7 +190,7 @@
 
   const form = reactive({
     age: 100, // 年龄
-    name: '卓大', //姓名
+    name: '芦苇', //姓名
   });
 
   const formStr = ref('');

@@ -8,8 +8,7 @@
         <where>
             deleted_flag = #{queryForm.deletedFlag}
             <if test="queryForm.keywords != null and queryForm.keywords != ''">
-                AND (INSTR(enterprise_name,#{queryForm.keywords}) OR INSTR(contact,#{queryForm.keywords}) OR
-                INSTR(contact_phone,#{queryForm.keywords}) OR INSTR(create_user_name,#{queryForm.keywords}))
+                AND (INSTR(sprinkler_serial,#{queryForm.keywords}) OR INSTR(warehouse_date,#{queryForm.keywords}))
             </if>
             <if test="queryForm.startTime != null">
                 AND DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= #{queryForm.startTime}

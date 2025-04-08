@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 public class SprinklerVO {
 
-    @TableId(type = IdType.AUTO)
+    @Schema(description = "喷头ID")
     private Long sprinklerId;
 
     @DataTracerFieldLabel("喷头序列号")

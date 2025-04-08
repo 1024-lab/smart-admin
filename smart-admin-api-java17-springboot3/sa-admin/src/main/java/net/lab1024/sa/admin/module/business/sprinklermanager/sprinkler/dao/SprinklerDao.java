@@ -37,5 +37,5 @@ public interface SprinklerDao extends BaseMapper<SprinklerEntity> {
     @Select("SELECT sprinkler_id FROM t_sprinkler WHERE sprinkler_serial = #{sprinklerSerial}")
     long findIdBySprinklerSerial(@NotBlank(message = "喷头序列号不能为空") @Length(max = 20, message = "sprinklerSerial最多20字符") String sprinklerSerial);
 
-    SprinklerVO getDetail(@Param("sprinklerId") Long sprinklerId, @Param("deletedFlag") Boolean aFalse);
+    SprinklerVO getDetail(@Param("sprinklerId") Long sprinklerId, @Param("deletedFlag") Boolean deletedFlag);
 }

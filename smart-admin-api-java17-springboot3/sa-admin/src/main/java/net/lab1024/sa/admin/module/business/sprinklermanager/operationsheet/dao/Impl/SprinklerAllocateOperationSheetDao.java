@@ -3,11 +3,8 @@ package net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.BaseDao;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.Impl.SprinklerAllocateOperationSheetEntity;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.Impl.SprinklerStockInOperationSheetEntity;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerAllocateOperationSheetQueryForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetQueryForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerAllocateOperationSheetVO;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerStockInOperationSheetVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

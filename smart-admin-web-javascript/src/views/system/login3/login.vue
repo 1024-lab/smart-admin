@@ -12,7 +12,7 @@
   <div class="login-container">
     <div class="box-item desc">
       <div class="welcome">
-        <p>欢迎登录 SmartAdmin V3</p>
+        <p>欢迎登录 海印喷头管理系统</p>
         <p class="sub-welcome">「高质量代码、简洁、安全」的开发平台</p>
       </div>
       <img class="welcome-img" :src="leftBg2" />

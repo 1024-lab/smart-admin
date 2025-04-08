@@ -60,8 +60,8 @@
   function showMessage() {
     headerMessage.value.showMessage();
   }
-
-  const websiteName = computed(() => useAppConfigStore().websiteName);
+  console.log("hello")
+  const websiteName = computed(() =>useAppConfigStore().websiteName);
   const sideMenuTheme = computed(() => useAppConfigStore().sideMenuTheme);
 
   const props = defineProps({
