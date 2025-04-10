@@ -20,6 +20,7 @@ import net.lab1024.sa.base.module.support.datatracer.domain.form.DataTracerQuery
 import net.lab1024.sa.base.module.support.datatracer.domain.vo.DataTracerVO;
 import net.lab1024.sa.base.module.support.fileparser.domain.vo.OutputExcelVO;
 import net.lab1024.sa.base.module.support.fileparser.generator.HeaderGenerator;
+import net.lab1024.sa.base.module.support.fileparser.processor.ExcelProcessor;
 import net.lab1024.sa.base.module.support.fileparser.sorter.ExcelSorter;
 import net.lab1024.sa.base.module.support.fileparser.wrapper.DataWrapper;
 import org.apache.commons.collections.CollectionUtils;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -77,64 +79,27 @@ public class FileParserController extends SupportBaseController {
     @Operation(summary = "数据排序导出 - @author 芦苇")
     @PostMapping("/fileParser/exportExcel")
     public void exportExcel(@RequestPart("file") MultipartFile importExcel, HttpServletResponse response) {
-        String fileName = "file1.xlsx";
-        try(InputStream stream = importExcel.getInputStream()){
-            // 使用POI解析为导入DTO
-            Workbook workbook = new XSSFWorkbook(stream);
-            List<OutputExcelVO> data = new ArrayList<>();
-            List<List<String>> headers = new ArrayList<>();
-            for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-                XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(i);
-                for (int j =0; j <= sheet.getLastRowNum(); j++) {
-                    Row row = sheet.getRow(j);
-                    if(row == null) continue;
-                    if(row.getRowNum() == 0) {
-                        for(int k=0;k<=row.getLastCellNum();k++){
-                            String header = safeGetCellValue(row, k);
-                            if(header!=""){
-                                headers.add(Collections.singletonList(header));
-                            }
-                        }
-                    }else{
-                        OutputExcelVO outputExcelVO = new OutputExcelVO();;
-                        for(int k = 0; k <= row.getLastCellNum(); k++) {
-                            String header = safeGetCellValue(row, k);
-                            if(header!=""){
-                                outputExcelVO.getDynamicFields().put("A" + k, safeGetCellValue(row, k));
-                            }
-                        }
-                        if(outputExcelVO.getDynamicFields().get("A2") ==null){
-                            System.out.println("表名："+sheet.getSheetName()+"j="+j);
-                        }
-                        if (outputExcelVO.getDynamicFields().get("A2") != null) {
-                            outputExcelVO.getDynamicFields().put("machine_name", sheet.getSheetName());
-                            outputExcelVO.getDynamicFields().put("position", String.valueOf(j));
-                            data.add(outputExcelVO);
-                        }
-                    }
-                }
-            }
-//            // 1. 准备表头和数据
-//            List<List<String>> headers = HeaderGenerator.generateDynamicHeaders();
-            ExcelSorter.sortByComplexField(data);
-            List<List<Object>> dataRows = DataWrapper.wrapData(data);
-
-            // 2. 创建写入器
-            ExcelWriter excelWriter = EasyExcel.write(fileName)
-                    .head(headers)
-                    .build();
-
-            // 3. 写入数据
-            WriteSheet sheet = EasyExcel.writerSheet(fileName).build();
-            excelWriter.write(dataRows, sheet);
-
-            // 4. 关闭资源
-            excelWriter.finish();
-
+        ExcelProcessor processor = new ExcelProcessor();
+        try {
+            processor.process(importExcel.getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        // 获取处理结果
+        List<OutputExcelVO> finalData = processor.getMergedData();
+        List<String> errorLogs = processor.getErrors();
+
+        // 输出错误日志
+        if (!errorLogs.isEmpty()) {
+            System.err.println("发现错误: \n" +
+                    String.join("\n", errorLogs));
+        }
+
+        // 导出处理后的数据
+        EasyExcel.write("output.xlsx", OutputExcelVO.class)
+                .sheet("合并数据")
+                .doWrite(finalData);
     }
 
     private String safeGetCellValue(Row row, int column) {
