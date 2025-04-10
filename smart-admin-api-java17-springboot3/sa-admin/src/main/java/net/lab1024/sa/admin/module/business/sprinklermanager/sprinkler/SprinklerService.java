@@ -14,6 +14,7 @@ import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.en
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerUpdateForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerExcelVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
@@ -124,6 +125,10 @@ public class SprinklerService {
         operationSheetEntity.setDisabledFlag(Boolean.FALSE);
         operationSheetEntity.setDeletedFlag(Boolean.FALSE);
         operationSheetDao.insert(operationSheetEntity);
+        Long operationSheetId = operationSheetEntity.getOperationSheetId();
+        insertSprinkler.setLastOperationSheetId(operationSheetId);
+        insertSprinkler.setStatus(Byte.valueOf("0"));
+        sprinklerDao.updateById(insertSprinkler);
 
         return ResponseDTO.ok();
     }
@@ -178,5 +183,28 @@ public class SprinklerService {
 
         dataTracerService.addTrace(dataTracerForm);
         return ResponseDTO.ok();
+    }
+
+    /**
+     * 删除喷头
+     *
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<String> deleteSprinkler(Long sprinklerId) {
+        //校验喷头是否存在
+        SprinklerEntity sprinklerDetail = sprinklerDao.selectById(sprinklerId);
+        if(Objects.isNull(sprinklerDetail) || sprinklerDetail.getDeletedFlag()) {
+            return ResponseDTO.userErrorParam("喷头不存在");
+        }
+        sprinklerDao.deleteSprinkler(sprinklerId, Boolean.TRUE);
+        dataTracerService.delete(sprinklerId, DataTracerTypeEnum.SPRINKLER);
+        return ResponseDTO.ok();
+    }
+    /**
+     * 获取导出数据
+     */
+    public List<SprinklerExcelVO> getExcelExportData(@Valid SprinklerQueryForm queryForm) {
+        queryForm.setDeletedFlag(false);
+        return sprinklerDao.selectExcelExportData(queryForm);
     }
 }

@@ -10,6 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class StockInHandler extends BaseSprinklerHandler<SprinklerStockInOperationSheetCreateForm, SprinklerStockInOperationSheetEntity>{
 
+    @Override
+    protected Byte getSprinklerStatus() {
+        return Byte.valueOf("0");
+    }
+
 
 
     @Override

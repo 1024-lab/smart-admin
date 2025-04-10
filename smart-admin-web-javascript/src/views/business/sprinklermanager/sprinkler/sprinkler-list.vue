@@ -44,7 +44,7 @@
           </template>
           新建喷头
         </a-button>
-        <a-button @click="exportExcel()" v-privilege="'oa:enterprise:exportExcel'" type="primary">
+        <a-button @click="exportExcel()" v-privilege="'sprinklermanager:sprinkler:exportExcel'" type="primary">
           <template #icon>
             <FileExcelOutlined />
           </template>
@@ -73,13 +73,10 @@
         <template v-if="column.dataIndex === 'sprinklerSerial'">
           <a @click="detail(record.sprinklerId)">{{ record.sprinklerSerial }}</a>
         </template>
-        <template v-if="column.dataIndex === 'type'">
-          <span>{{ $smartEnumPlugin.getDescByValue('ENTERPRISE_TYPE_ENUM', text) }}</span>
-        </template>
         <template v-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="update(record.sprinklerId)" size="small" v-privilege="'oa:enterprise:update'" type="link">编辑</a-button>
-            <a-button @click="confirmDelete(record.sprinklerId)" size="small" danger v-privilege="'oa:enterprise:delete'" type="link">删除</a-button>
+            <a-button @click="update(record.sprinklerId)" size="small" v-privilege="'sprinklermanager:sprinkler:update'" type="link">编辑</a-button>
+            <a-button @click="confirmDelete(record.sprinklerId)" size="small" danger v-privilege="'sprinklermanager:sprinkler:delete'" type="link">删除</a-button>
           </div>
         </template>
       </template>
@@ -100,17 +97,16 @@
         :show-total="(total) => `共${total}条`"
       />
     </div>
-    <EnterpriseOperate ref="operateRef" @refresh="ajaxQuery" />
+    <SprinklerOperate ref="operateRef" @refresh="ajaxQuery" />
   </a-card>
 </template>
 <script setup>
   import { reactive, ref, onMounted } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-  import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { useRouter } from 'vue-router';
-  import EnterpriseOperate from './components/sprinkler-operate-modal.vue';
+  import SprinklerOperate from './components/sprinkler-operate-modal.vue';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   import TableOperator from '/@/components/support/table-operator/index.vue';
@@ -205,7 +201,7 @@
 
   // --------------------------- 导出 ---------------------------
   async function exportExcel() {
-    await enterpriseApi.exportExcel(queryForm);
+    await sprinklerApi.exportExcel(queryForm);
   }
 
   // --------------------------- 删除 ---------------------------
@@ -227,7 +223,7 @@
   async function del(sprinklerId) {
     try {
       SmartLoading.show();
-      await enterpriseApi.delete(sprinklerId);
+      await sprinklerApi.delete(sprinklerId);
       message.success('删除成功');
       ajaxQuery();
     } catch (e) {

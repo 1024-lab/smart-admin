@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.OperationSheetDao;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.OperationSheetEntity;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerAllocateOperationSheetCreateForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerDamageOperationSheetCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerMaintainOperationSheetCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerRmaOperationSheetCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetCreateForm;
@@ -579,6 +580,97 @@ public class OperationSheetService {
                 createVOs.add(createVO);
             }
             SprinklerOperationHandler handler = operationHandlerRegistry.getHandler("usable");
+            createVOs.forEach(handler::createOperationSheet);
+            return ResponseDTO.ok();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ResponseDTO<String> batchCreateDamageOperationSheet(@Valid MultipartFile file, RequestUser requestUser) {
+        try (InputStream stream = file.getInputStream()) {
+            // 使用POI解析为导入DTO
+            Workbook workbook = new XSSFWorkbook(stream);
+            List<SprinklerDamageOperationSheetCreateForm> createVOs = new ArrayList<>();
+            XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(0);
+            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                if (row == null || row.getRowNum() == 0) continue; // 跳过标题行
+                if (row.getCell(2) == null) continue;
+                if (row.getCell(2).getCellType() == CellType.NUMERIC) {
+                    row.getCell(2).setCellType(CellType.STRING);
+                }
+                String headSerial = row.getCell(2).getStringCellValue();
+                SprinklerDamageOperationSheetCreateForm createVO = new SprinklerDamageOperationSheetCreateForm();
+                createVO.setSprinklerSerial(headSerial);
+                if (row.getCell(1) == null) {
+                    createVO.setDamageDate(null);
+                } else {
+                    if (row.getCell(1).getCellType() == CellType.NUMERIC) {
+                        row.getCell(1).setCellType(CellType.STRING);
+                    }
+                    createVO.setDamageDate(LocalDateParseUtil.parseDate(row.getCell(1).getStringCellValue()));
+                }
+                if (row.getCell(3) == null) {
+                    createVO.setHistory(null);
+                } else {
+                    if (row.getCell(3).getCellType() == CellType.NUMERIC) {
+                        row.getCell(3).setCellType(CellType.STRING);
+                    }
+                    createVO.setHistory(row.getCell(3).getStringCellValue());
+                }
+                if (row.getCell(4) == null) {
+                    createVO.setNote1(null);
+                } else {
+                    if (row.getCell(4).getCellType() == CellType.NUMERIC) {
+                        row.getCell(4).setCellType(CellType.STRING);
+                    }
+                    createVO.setNote1(row.getCell(4).getStringCellValue());
+                }
+
+                if (row.getCell(5) == null) {
+                    createVO.setDamageReason(null);
+                } else {
+                    if (row.getCell(5).getCellType() == CellType.NUMERIC) {
+                        row.getCell(5).setCellType(CellType.STRING);
+                    }
+                    createVO.setDamageReason(row.getCell(5).getStringCellValue());
+                }
+
+                if (row.getCell(6) == null) {
+                    createVO.setRealReason(null);
+                } else {
+                    if (row.getCell(6).getCellType() == CellType.NUMERIC) {
+                        row.getCell(6).setCellType(CellType.STRING);
+                    }
+                    createVO.setRealReason(row.getCell(6).getStringCellValue());
+                }
+
+                if (row.getCell(7) == null) {
+                    createVO.setUsableFilter(null);
+                } else {
+                    if (row.getCell(7).getCellType() == CellType.NUMERIC) {
+                        row.getCell(7).setCellType(CellType.STRING);
+                    }
+                    createVO.setUsableFilter(row.getCell(7).getStringCellValue());
+                }
+                if (headSerial == "") continue;
+                Long sprinklerId = sprinklerDao.findIdBySprinklerSerial(headSerial);
+                createVO.setSprinklerId(sprinklerId);
+                OperationSheetEntity operationSheetEntity = new OperationSheetEntity();
+                operationSheetEntity.setSprinklerId(sprinklerId);
+                operationSheetEntity.setDisabledFlag(Boolean.FALSE);
+                operationSheetEntity.setDeletedFlag(Boolean.FALSE);
+                operationSheetDao.insert(operationSheetEntity);
+                Long operationSheetId = operationSheetEntity.getOperationSheetId();
+                createVO.setOperationSheetId(operationSheetId);
+                createVO.setDisabledFlag(Boolean.FALSE);
+                createVO.setCreateUserId(requestUser.getUserId());
+                createVO.setCreateUserName(requestUser.getUserName());
+                createVOs.add(createVO);
+            }
+            SprinklerOperationHandler handler = operationHandlerRegistry.getHandler("damage");
             createVOs.forEach(handler::createOperationSheet);
             return ResponseDTO.ok();
 

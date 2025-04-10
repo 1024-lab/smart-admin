@@ -3,20 +3,30 @@ package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import net.lab1024.sa.admin.module.business.oa.enterprise.domain.form.EnterpriseQueryForm;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.form.EnterpriseUpdateForm;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseEmployeeVO;
+import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseExcelVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetQueryForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerStockInOperationSheetVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerUpdateForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerExcelVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
+import net.lab1024.sa.admin.util.AdminRequestUtil;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.util.SmartDateFormatterEnum;
+import net.lab1024.sa.base.common.util.SmartExcelUtil;
+import net.lab1024.sa.base.common.util.SmartLocalDateUtil;
 import net.lab1024.sa.base.common.util.SmartRequestUtil;
+import net.lab1024.sa.base.common.util.SmartResponseUtil;
 import net.lab1024.sa.base.module.support.operatelog.annotation.OperateLog;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +35,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -70,6 +82,29 @@ public class SprinklerController {
     @PostMapping("/sprinklermanager/sprinkler/stockinoperationsheet/queryPage")
     public ResponseDTO<PageResult<SprinklerStockInOperationSheetVO>> queryPageStockInOperationSheetList(@RequestBody @Valid SprinklerStockInOperationSheetQueryForm queryForm){
         return ResponseDTO.ok(sprinklerService.queryPageStockInOperationSheetList(queryForm));
+    }
+
+    @Operation(summary = "删除喷头 @author 芦苇")
+    @GetMapping("/sprinklermanager/sprinkler/delete/{sprinklerId}")
+    @SaCheckPermission("sprinklermanager:sprinkler:delete")
+    public ResponseDTO<String> deleteSprinkler(@PathVariable Long sprinklerId) {
+        return sprinklerService.deleteSprinkler(sprinklerId);
+    }
+
+    @Operation(summary = "导出喷头信息 @author 芦苇")
+    @PostMapping("/sprinklermanager/sprinkler/exportExcel")
+    public void exportExcel(@RequestBody @Valid SprinklerQueryForm queryForm, HttpServletResponse response) throws IOException {
+        List<SprinklerExcelVO> data = sprinklerService.getExcelExportData(queryForm);
+        if (CollectionUtils.isEmpty(data)) {
+            SmartResponseUtil.write(response, ResponseDTO.userErrorParam("暂无数据"));
+            return;
+        }
+
+        String watermark = AdminRequestUtil.getRequestUser().getActualName();
+        watermark += SmartLocalDateUtil.format(LocalDateTime.now(), SmartDateFormatterEnum.YMD_HMS);
+
+        SmartExcelUtil.exportExcelWithWatermark(response,"喷头基本信息.xlsx","喷头信息",EnterpriseExcelVO.class,data,watermark);
+
     }
 
 }

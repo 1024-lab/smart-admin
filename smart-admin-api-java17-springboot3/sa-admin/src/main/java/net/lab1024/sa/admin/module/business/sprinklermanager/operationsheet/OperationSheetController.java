@@ -62,4 +62,12 @@ public class OperationSheetController {
         RequestUser requestUser = SmartRequestUtil.getRequestUser();
         return operationSheetService.batchCreateUsableOperationSheet(file, requestUser);
     }
+
+    @Operation(summary = "批量新建破损操作记录表 @author 芦苇")
+    @PostMapping("/damageoperationsheet/create")
+    @SaCheckPermission("damageoperationsheet:add")
+    public ResponseDTO<String> createDamageOperationSheet(@RequestPart("file") @Valid MultipartFile file) {
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+        return operationSheetService.batchCreateDamageOperationSheet(file, requestUser);
+    }
 }

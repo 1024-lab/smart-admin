@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @TableName("t_sprinkler_stock_in_operation_sheet")
 @NoArgsConstructor
-public class SprinklerStockInOperationSheetEntity extends BaseEntity {
+public class SprinklerStockInOperationSheetEntity implements BaseEntity {
 
     /**
      * 操作列表ID
@@ -76,4 +76,8 @@ public class SprinklerStockInOperationSheetEntity extends BaseEntity {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    public Long getOSId(){
+        return this.getOperationSheetId();
+    }
 }

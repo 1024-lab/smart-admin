@@ -2,9 +2,11 @@ package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerEntity;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerExcelVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -38,4 +40,15 @@ public interface SprinklerDao extends BaseMapper<SprinklerEntity> {
     long findIdBySprinklerSerial(@NotBlank(message = "喷头序列号不能为空") @Length(max = 20, message = "sprinklerSerial最多20字符") String sprinklerSerial);
 
     SprinklerVO getDetail(@Param("sprinklerId") Long sprinklerId, @Param("deletedFlag") Boolean deletedFlag);
+
+    /**
+     * 删除喷头
+     */
+    void deleteSprinkler(@Param("sprinklerId") Long sprinklerId,@Param("deletedFlag") Boolean deletedFlag);
+
+    /**
+     * 查询导出的数据
+     *
+     */
+    List<SprinklerExcelVO> selectExcelExportData(@Valid SprinklerQueryForm queryForm);
 }

@@ -28,9 +28,9 @@ public abstract class BaseSprinklerHandler<F extends BaseForm, E extends BaseEnt
 
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> createOperationSheet(F form) {
-        // 基础校验
-        Boolean sprinklerCheck = validateSprinkler(form.getId());
-        if (sprinklerCheck) {
+
+        SprinklerEntity sprinklerDetail = sprinklerDao.selectById(form.getId());
+        if (Objects.isNull(sprinklerDetail) || sprinklerDetail.getDeletedFlag()) {
             return ResponseDTO.userErrorParam("喷头不存在");
         }
 
@@ -43,8 +43,14 @@ public abstract class BaseSprinklerHandler<F extends BaseForm, E extends BaseEnt
         // 数据转换
         E entity = convertToEntity(form);
 
+        Long operationSheetId = entity.getOSId();
+
         // 数据持久化
         getDao().insert(entity);
+
+        sprinklerDetail.setLastOperationSheetId(operationSheetId);
+        sprinklerDetail.setStatus(this.getSprinklerStatus());
+        sprinklerDao.updateById(sprinklerDetail);
 
         // 添加数据追踪
         addDataTrace(form.getId(), entity);
@@ -59,6 +65,11 @@ public abstract class BaseSprinklerHandler<F extends BaseForm, E extends BaseEnt
      * 获取对应DAO（抽象方法）
      */
     protected abstract BaseDao<E> getDao();
+
+    /**
+     * 获取喷头状态（抽象方法）
+     */
+    protected abstract Byte getSprinklerStatus();
 
     /**
      * 实体转换（通用实现）
@@ -84,10 +95,6 @@ public abstract class BaseSprinklerHandler<F extends BaseForm, E extends BaseEnt
      * 获取业务类型（用于追踪记录）
      */
     protected abstract String getBizType();
-    private Boolean validateSprinkler(Long sprinklerId) {
-        SprinklerEntity sprinklerDetail = sprinklerDao.selectById(sprinklerId);
-        return Objects.isNull(sprinklerDetail) || sprinklerDetail.getDeletedFlag();
-    }
 
 
 

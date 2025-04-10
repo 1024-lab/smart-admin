@@ -42,4 +42,10 @@
               s.deleted_flag = #{deletedFlag}
     </select>
 
+    <update id="deleteSprinkler">
+        UPDATE t_sprinkler
+        SET deleted_flag = #{deletedFlag}
+        WHERE sprinkler_id = #{sprinklerId}
+    </update>
+
 </mapper>

@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @Data
 @TableName("t_sprinkler_rma_operation_sheet")
 @NoArgsConstructor
-public class SprinklerRmaOperationSheetEntity extends BaseEntity {
+public class SprinklerRmaOperationSheetEntity implements BaseEntity {
 
     /**
      * 操作列表ID
      */
     @TableId(type = IdType.AUTO)
-    private Long sprinklerStockInOperationSheetId;
+    private Long sprinklerRmaOperationSheetId;
 
     /**
      * 喷头Id
@@ -149,4 +149,8 @@ public class SprinklerRmaOperationSheetEntity extends BaseEntity {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    public Long getOSId(){
+        return this.getOperationSheetId();
+    }
 }

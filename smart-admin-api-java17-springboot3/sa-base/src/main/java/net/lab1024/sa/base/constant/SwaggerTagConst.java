@@ -35,6 +35,8 @@ public class SwaggerTagConst {
 
         public static final String DATA_TRACER = "业务支撑-数据变动记录";
 
+        public static final String FILE_PARSER = "业务支撑-文件解析";
+
         public static final String DICT = "业务支撑-数据字典";
 
         public static final String CODE_GENERATOR = "业务支撑-代码生成";

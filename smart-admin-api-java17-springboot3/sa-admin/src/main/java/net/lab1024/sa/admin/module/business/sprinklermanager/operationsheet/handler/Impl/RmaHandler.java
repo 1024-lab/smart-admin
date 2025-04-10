@@ -10,6 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class RmaHandler extends BaseSprinklerHandler<SprinklerRmaOperationSheetCreateForm, SprinklerRmaOperationSheetEntity>{
 
+    @Override
+    protected Byte getSprinklerStatus() {
+        return Byte.valueOf("4");
+    }
+
     @Resource
     private SprinklerRmaOperationSheetDao sprinklerRmaOperationSheetDao;
 

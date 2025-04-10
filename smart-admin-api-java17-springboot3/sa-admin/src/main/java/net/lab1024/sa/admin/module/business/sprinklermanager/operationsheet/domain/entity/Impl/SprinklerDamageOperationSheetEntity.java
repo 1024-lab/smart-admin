@@ -3,7 +3,6 @@ package net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dom
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.BaseEntity;
@@ -13,15 +12,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("t_sprinkler_maintain_operation_sheet")
+@TableName("t_sprinkler_damage_operation_sheet")
 @NoArgsConstructor
-public class SprinklerMaintainOperationSheetEntity implements BaseEntity {
+public class SprinklerDamageOperationSheetEntity implements BaseEntity {
 
     /**
      * 操作列表ID
      */
     @TableId(type = IdType.AUTO)
-    private Long sprinklerMaintainOperationSheetId;
+    private Long sprinklerDamageOperationSheetId;
 
     /**
      * 喷头Id
@@ -42,16 +41,22 @@ public class SprinklerMaintainOperationSheetEntity implements BaseEntity {
     private String sprinklerSerial;
 
     /**
-     * 返修日期
+     * 入破损仓日期
      */
-    @DataTracerFieldLabel("返修日期")
-    private LocalDate maintainDate;
+    @DataTracerFieldLabel("入破损仓日期")
+    private LocalDate damageDate;
 
     /**
-     * 返修原因
+     * 备注1
      */
-    @DataTracerFieldLabel("返修原因")
-    private String maintainReason;
+    @DataTracerFieldLabel("备注1")
+    private String note1;
+
+    /**
+     * 破损原因分类
+     */
+    @DataTracerFieldLabel("破损原因分类")
+    private String damageReason;
 
     /**
      * 具体原因
@@ -60,16 +65,11 @@ public class SprinklerMaintainOperationSheetEntity implements BaseEntity {
     private String realReason;
 
     /**
-     * 返修机台
-     */
-    @DataTracerFieldLabel("返修机台")
-    private String maintainMachine;
-
-    /**
      * 历史
      */
     @DataTracerFieldLabel("历史")
     private String history;
+
 
     /**
      * 禁用状态

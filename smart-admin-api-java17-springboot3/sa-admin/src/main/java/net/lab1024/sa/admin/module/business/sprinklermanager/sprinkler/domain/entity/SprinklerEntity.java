@@ -25,6 +25,18 @@ public class SprinklerEntity {
     private Long sprinklerId;
 
     /**
+     * 最后一次操作记录Id
+     */
+    @DataTracerFieldLabel("最后一次操作记录Id")
+    private Long lastOperationSheetId;
+
+    /**
+     * 状态
+     */
+    @DataTracerFieldLabel("状态")
+    private Byte status;
+
+    /**
      * 喷头序列号
      */
     @DataTracerFieldLabel("喷头序列号")

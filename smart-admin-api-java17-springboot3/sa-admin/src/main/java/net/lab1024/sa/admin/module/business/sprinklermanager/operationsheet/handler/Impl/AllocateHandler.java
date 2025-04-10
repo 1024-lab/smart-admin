@@ -30,6 +30,11 @@ public class AllocateHandler extends BaseSprinklerHandler<SprinklerAllocateOpera
     }
 
     @Override
+    protected Byte getSprinklerStatus() {
+        return Byte.valueOf("1");
+    }
+
+    @Override
     protected Class<SprinklerAllocateOperationSheetEntity> getEntityClass() {
         return SprinklerAllocateOperationSheetEntity.class;
     }

@@ -8,12 +8,12 @@ import {postRequest, getRequest, postDownload} from '/@/lib/axios';
 export const sprinklerApi = {
     // 新建喷头 @author 开云
     create: (param) => {
-        return postRequest('/oa/enterprise/create', param);
+        return postRequest('/sprinklermanager/sprinkler/create', param);
     },
 
-    // 删除企业 @author 开云
+    // 删除喷头 @author 芦苇
     delete: (sprinklerId) => {
-        return getRequest(`/oa/enterprise/delete/${sprinklerId}`);
+        return getRequest(`/sprinklermanager/sprinkler/delete/${sprinklerId}`);
     },
 
     // 查询喷头详情 @author 芦苇
@@ -28,7 +28,7 @@ export const sprinklerApi = {
 
     // 导出企业数据excel @author 卓大
     exportExcel: (param) => {
-        return postDownload('/oa/enterprise/exportExcel', param);
+        return postDownload('/sprinklermanager/sprinkler/exportExcel', param);
     },
 
     //企业列表查询 含数据范围 @author 开云

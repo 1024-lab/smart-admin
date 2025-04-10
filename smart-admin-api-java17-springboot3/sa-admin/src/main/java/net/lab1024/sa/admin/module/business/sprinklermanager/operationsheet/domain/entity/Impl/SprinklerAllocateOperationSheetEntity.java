@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @Data
 @TableName("t_sprinkler_allocate_operation_sheet")
 @NoArgsConstructor
-public class SprinklerAllocateOperationSheetEntity extends BaseEntity {
+public class SprinklerAllocateOperationSheetEntity implements BaseEntity {
 
     /**
      * 操作列表ID
      */
     @TableId(type = IdType.AUTO)
-    private Long sprinklerStockInOperationSheetId;
+    private Long sprinklerAllocateOperationSheetId;
 
     /**
      * 喷头Id
@@ -33,6 +33,12 @@ public class SprinklerAllocateOperationSheetEntity extends BaseEntity {
      */
     @DataTracerFieldLabel("喷头操作记录Id")
     private Long operationSheetId;
+
+    /**
+     * 喷头序列号
+     */
+    @DataTracerFieldLabel("喷头序列号")
+    private String sprinklerSerial;
 
     /**
      * 领用日期
@@ -95,4 +101,8 @@ public class SprinklerAllocateOperationSheetEntity extends BaseEntity {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    public Long getOSId(){
+        return this.getOperationSheetId();
+    }
 }

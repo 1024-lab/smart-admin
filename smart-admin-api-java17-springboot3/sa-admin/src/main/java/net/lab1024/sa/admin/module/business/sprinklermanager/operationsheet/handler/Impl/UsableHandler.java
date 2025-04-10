@@ -10,6 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsableHandler extends BaseSprinklerHandler<SprinklerUsableOperationSheetCreateForm, SprinklerUsableOperationSheetEntity>{
 
+    @Override
+    protected Byte getSprinklerStatus() {
+        return Byte.valueOf("0");
+    }
+
     @Resource
     private SprinklerUsableOperationSheetDao sprinklerUsableOperationSheetDao;
 
