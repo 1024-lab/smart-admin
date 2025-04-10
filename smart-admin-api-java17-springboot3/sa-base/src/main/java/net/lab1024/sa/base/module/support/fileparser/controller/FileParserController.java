@@ -20,6 +20,7 @@ import net.lab1024.sa.base.module.support.datatracer.domain.form.DataTracerQuery
 import net.lab1024.sa.base.module.support.datatracer.domain.vo.DataTracerVO;
 import net.lab1024.sa.base.module.support.fileparser.domain.vo.OutputExcelVO;
 import net.lab1024.sa.base.module.support.fileparser.generator.HeaderGenerator;
+import net.lab1024.sa.base.module.support.fileparser.sorter.ExcelSorter;
 import net.lab1024.sa.base.module.support.fileparser.wrapper.DataWrapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -40,6 +41,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -94,18 +96,29 @@ public class FileParserController extends SupportBaseController {
                             }
                         }
                     }else{
-                        OutputExcelVO outputExcelVO = new OutputExcelVO();
+                        OutputExcelVO outputExcelVO = new OutputExcelVO();;
                         for(int k = 0; k <= row.getLastCellNum(); k++) {
-                            Cell cell = row.getCell(k);
-                            outputExcelVO.getDynamicFields().put("A" + k, safeGetCellValue(row, k));
+                            String header = safeGetCellValue(row, k);
+                            if(header!=""){
+                                outputExcelVO.getDynamicFields().put("A" + k, safeGetCellValue(row, k));
+                            }
                         }
-                        data.add(outputExcelVO);
+                        if(outputExcelVO.getDynamicFields().get("A2") ==null){
+                            System.out.println("表名："+sheet.getSheetName()+"j="+j);
+                        }
+                        if (outputExcelVO.getDynamicFields().get("A2") != null) {
+                            outputExcelVO.getDynamicFields().put("machine_name", sheet.getSheetName());
+                            outputExcelVO.getDynamicFields().put("position", String.valueOf(j));
+                            data.add(outputExcelVO);
+                        }
                     }
                 }
             }
 //            // 1. 准备表头和数据
 //            List<List<String>> headers = HeaderGenerator.generateDynamicHeaders();
+            ExcelSorter.sortByComplexField(data);
             List<List<Object>> dataRows = DataWrapper.wrapData(data);
+
             // 2. 创建写入器
             ExcelWriter excelWriter = EasyExcel.write(fileName)
                     .head(headers)
@@ -124,25 +137,21 @@ public class FileParserController extends SupportBaseController {
 
     }
 
-    public String safeGetCellValue(Row row, int columnIndex) {
-        if (row == null) {
-            return "";
-        }
-        Cell cell = row.getCell(columnIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
-        if (cell == null) {
-            return "";
-        }
+    private String safeGetCellValue(Row row, int column) {
+        if (row == null) return "";
 
-        // 根据单元格类型处理
-        switch (cell.getCellType()) {
-            case STRING:
-                return cell.getStringCellValue().trim();
-            case NUMERIC:
-                return String.valueOf((int) cell.getNumericCellValue());
-            case BOOLEAN:
-                return String.valueOf(cell.getBooleanCellValue());
-            default:
-                return "";
+        Cell cell = row.getCell(column, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+        if (cell == null) return "";
+
+        try {
+            return switch (cell.getCellType()) {
+                case STRING -> cell.getStringCellValue().trim();
+                case NUMERIC -> String.valueOf((int) cell.getNumericCellValue());
+                case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
+                default -> "";
+            };
+        } catch (Exception e) {
+            return "[解析错误]"; // 标记异常单元格
         }
     }
 }
