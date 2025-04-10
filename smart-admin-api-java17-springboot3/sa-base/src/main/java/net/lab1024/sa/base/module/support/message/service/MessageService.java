@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import jakarta.annotation.Resource;
 import net.lab1024.sa.base.common.domain.PageResult;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.enumeration.UserTypeEnum;
 import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import net.lab1024.sa.base.common.util.SmartPageUtil;
@@ -104,5 +105,14 @@ public class MessageService {
             return messageEntity;
         }).collect(Collectors.toList());
         messageManager.saveBatch(messageEntityList);
+    }
+
+    // 删除消息
+    public ResponseDTO<String> delete(Long messageId) {
+        if(messageId == null){
+            return ResponseDTO.userErrorParam();
+        }
+        messageDao.deleteById(messageId);
+        return ResponseDTO.ok();
     }
 }

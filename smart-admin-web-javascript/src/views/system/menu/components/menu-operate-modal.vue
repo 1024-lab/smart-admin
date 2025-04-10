@@ -15,8 +15,9 @@
     :open="visible"
     :width="600"
     @close="onClose"
+    destroyOnClose
   >
-    <a-form ref="formRef" :labelCol="{ span: labelColSpan }" :labelWrap="true" :model="form" :rules="rules">
+    <a-form ref="formRef" :labelCol="{ span: 5 }" :labelWrap="true" :model="form" :rules="rules">
       <a-form-item label="菜单类型" name="menuType">
         <a-radio-group v-model:value="form.menuType" button-style="solid">
           <a-radio-button v-for="item in MENU_TYPE_ENUM" :key="item.value" :value="item.value">
@@ -61,11 +62,17 @@
           <a-switch v-model:checked="form.visibleFlag" checked-children="显示" un-checked-children="不显示" />
         </a-form-item>
         <a-form-item label="禁用状态" name="disabledFlag">
-          <a-switch v-model:checked="form.disabledFlag" :checkedValue="false" :unCheckedValue="true" checked-children="启用" un-checked-children="禁用" />
+          <a-switch
+            v-model:checked="form.disabledFlag"
+            :checkedValue="false"
+            :unCheckedValue="true"
+            checked-children="启用"
+            un-checked-children="禁用"
+          />
         </a-form-item>
       </template>
       <!--      目录 菜单 end   -->
-      <!--      按钮 start   -->
+      <!--      功能点 start   -->
       <template v-if="form.menuType === MENU_TYPE_ENUM.POINTS.value">
         <a-form-item label="功能点名称" name="menuName">
           <a-input v-model:value="form.menuName" placeholder="请输入功能点名称" />
@@ -74,7 +81,13 @@
           <MenuTreeSelect ref="contextMenuTreeSelect" v-model:value="form.contextMenuId" />
         </a-form-item>
         <a-form-item label="功能点状态" name="funcDisabledFlag">
-          <a-switch v-model:checked="form.disabledFlag" :checkedValue="false" :unCheckedValue="true" checked-children="启用" un-checked-children="禁用" />
+          <a-switch
+            v-model:checked="form.disabledFlag"
+            :checkedValue="false"
+            :unCheckedValue="true"
+            checked-children="启用"
+            un-checked-children="禁用"
+          />
         </a-form-item>
         <a-form-item label="权限类型" name="permsType">
           <a-radio-group v-model:value="form.permsType">
@@ -90,7 +103,7 @@
           <a-input v-model:value="form.apiPerms" placeholder="请输入后端权限" />
         </a-form-item>
       </template>
-      <!--      按钮 end   -->
+      <!--      功能点 end   -->
       <a-form-item label="排序" name="sort" help="值越小越靠前">
         <a-input-number v-model:value="form.sort" :min="0" placeholder="请输入排序" style="width: 100px" />
       </a-form-item>
@@ -105,7 +118,7 @@
 <script setup>
   import { message } from 'ant-design-vue';
   import _ from 'lodash';
-  import { computed, nextTick, reactive, ref } from 'vue';
+  import { nextTick, reactive, ref } from 'vue';
   import MenuTreeSelect from './menu-tree-select.vue';
   import { menuApi } from '/@/api/system/menu-api';
   import IconSelect from '/@/components/framework/icon-select/index.vue';
@@ -121,13 +134,6 @@
 
   // 是否展示抽屉
   const visible = ref(false);
-
-  const labelColSpan = computed(() => {
-    if (form.menuType === MENU_TYPE_ENUM.POINTS.value) {
-      return 6;
-    }
-    return 4;
-  });
 
   const contextMenuTreeSelect = ref();
   const parentMenuTreeSelect = ref();
@@ -178,7 +184,7 @@
     apiPerms: undefined,
     sort: undefined,
     visibleFlag: true,
-    cacheFlag: true,
+    cacheFlag: false,
     component: undefined,
     contextMenuId: undefined,
     disabledFlag: false,
@@ -196,6 +202,9 @@
     formRef.value.resetFields();
     form.menuType = menuType;
     form.parentId = parentId;
+    if (form.menuType === MENU_TYPE_ENUM.POINTS.value) {
+      form.contextMenuId = parentId;
+    }
     // 移除最后一个：后面的内容
     if (webPerms && webPerms.lastIndexOf(':')) {
       form.webPerms = webPerms.substring(0, webPerms.lastIndexOf(':') + 1);

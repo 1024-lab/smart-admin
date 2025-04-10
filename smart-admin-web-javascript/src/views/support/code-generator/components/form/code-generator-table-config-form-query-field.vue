@@ -178,8 +178,8 @@
       chosenClass: 'smart-ghost-class', //设置选中样式类名
       handle: '.handle',
       onEnd: ({ oldIndex, newIndex }) => {
-        const oldRow = tableData.value.splice(oldIndex, 1)[0];
-        tableData.value.splice(newIndex, 0, oldRow);
+        const oldRow = tableData.value.splice(oldIndex - 1, 1)[0];
+        tableData.value.splice(newIndex - 1, 0, oldRow);
       },
     });
   }

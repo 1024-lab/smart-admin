@@ -30,15 +30,19 @@
       </div>
     </a-page-header>
   </div>
-  <a-card class="smart-margin-top10" size="small">
+  <a-card
+    class="smart-margin-top10"
+    size="small"
+    v-if="$privilege('oa:enterprise:queryEmployee') || $privilege('oa:bank:query') || $privilege('oa:invoice:query')"
+  >
     <a-tabs>
-      <a-tab-pane key="employee" tab="员工信息">
+      <a-tab-pane key="employee" tab="员工信息" v-if="$privilege('oa:enterprise:queryEmployee')">
         <EmployeeList :enterpriseId="enterpriseId" />
       </a-tab-pane>
-      <a-tab-pane key="bank" tab="银行信息">
+      <a-tab-pane key="bank" tab="银行信息" v-if="$privilege('oa:bank:query')">
         <BankList :enterpriseId="enterpriseId" />
       </a-tab-pane>
-      <a-tab-pane key="invoice" tab="发票信息">
+      <a-tab-pane key="invoice" tab="发票信息" v-if="$privilege('oa:invoice:query')">
         <InvoiceList :enterpriseId="enterpriseId" />
       </a-tab-pane>
       <a-tab-pane key="dataTracer" tab="变更记录">

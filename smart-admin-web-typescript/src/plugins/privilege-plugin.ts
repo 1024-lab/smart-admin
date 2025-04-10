@@ -21,7 +21,7 @@ const privilege = (value: string) => {
   if (!userPointsList) {
     return false;
   }
-  return _.some(userPointsList, ['apiPerms', value]);
+  return _.some(userPointsList, ['webPerms', value]);
 };
 
 export default {

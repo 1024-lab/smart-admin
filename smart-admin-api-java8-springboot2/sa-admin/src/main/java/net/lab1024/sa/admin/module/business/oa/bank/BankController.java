@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.business.oa.bank;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
@@ -35,24 +36,28 @@ public class BankController {
 
     @Operation(summary = "分页查询银行信息 @author 善逸")
     @PostMapping("/oa/bank/page/query")
+    @SaCheckPermission("oa:bank:query")
     public ResponseDTO<PageResult<BankVO>> queryByPage(@RequestBody @Valid BankQueryForm queryForm) {
         return bankService.queryByPage(queryForm);
     }
 
     @Operation(summary = "根据企业ID查询银行信息列表 @author 善逸")
     @GetMapping("/oa/bank/query/list/{enterpriseId}")
+    @SaCheckPermission("oa:bank:query")
     public ResponseDTO<List<BankVO>> queryList(@PathVariable Long enterpriseId) {
         return bankService.queryList(enterpriseId);
     }
 
     @Operation(summary = "查询银行信息详情 @author 善逸")
     @GetMapping("/oa/bank/get/{bankId}")
+    @SaCheckPermission("oa:bank:query")
     public ResponseDTO<BankVO> getDetail(@PathVariable Long bankId) {
         return bankService.getDetail(bankId);
     }
 
     @Operation(summary = "新建银行信息 @author 善逸")
     @PostMapping("/oa/bank/create")
+    @SaCheckPermission("oa:bank:add")
     public ResponseDTO<String> createBank(@RequestBody @Valid BankCreateForm createVO) {
         RequestUser requestUser = SmartRequestUtil.getRequestUser();
         createVO.setCreateUserId(requestUser.getUserId());
@@ -62,12 +67,14 @@ public class BankController {
 
     @Operation(summary = "编辑银行信息 @author 善逸")
     @PostMapping("/oa/bank/update")
+    @SaCheckPermission("oa:bank:update")
     public ResponseDTO<String> updateBank(@RequestBody @Valid BankUpdateForm updateVO) {
         return bankService.updateBank(updateVO);
     }
 
     @Operation(summary = "删除银行信息 @author 善逸")
     @GetMapping("/oa/bank/delete/{bankId}")
+    @SaCheckPermission("oa:bank:delete")
     public ResponseDTO<String> deleteBank(@PathVariable Long bankId) {
         return bankService.deleteBank(bankId);
     }

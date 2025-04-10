@@ -18,7 +18,7 @@ export const MENU_TYPE_ENUM = {
   },
   POINTS: {
     value: 3,
-    desc: '按钮',
+    desc: '功能点',
   },
 };
 

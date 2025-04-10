@@ -9,7 +9,7 @@
 -->
 <template>
   <a-modal :open="visible" :title="form.dictDataId ? '编辑字典值' : '添加字典值'" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
-    <br/>
+    <br />
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
       <a-form-item label="字典项名称" name="dataLabel">
         <a-input v-model:value="form.dataLabel" placeholder="请输入 字典项名称" />
@@ -21,7 +21,7 @@
         <a-input-number style="width: 100%" v-model:value="form.sortOrder" :min="0" :max="1000" />
       </a-form-item>
       <a-form-item label="备注" name="remark">
-        <textarea v-model="form.remark" style="width: 100%; height: 100px; outline: none"></textarea>
+        <a-textarea v-model="form.remark" style="width: 100%; height: 100px; outline: none" />
       </a-form-item>
     </a-form>
   </a-modal>

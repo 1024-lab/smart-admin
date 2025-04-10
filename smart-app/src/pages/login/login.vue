@@ -19,6 +19,21 @@
         />
       </view>
 
+      <view class="input-view smart-margin-top10" v-if="emailCodeShowFlag">
+        <image src="@/static/images/login/login-password.png"></image>
+        <uni-easyinput
+          class="input"
+          placeholder="请输入邮箱验证码"
+          :clearable="true"
+          placeholderStyle="color:#CCCCCC"
+          border="none"
+          v-model="loginForm.emailCode"
+        />
+        <button @click="sendSmsCode" class="code-btn" :disabled="emailCodeButtonDisabled">
+              {{ emailCodeTips }}
+        </button>
+      </view>
+
       <view class="input-view smart-margin-top10">
         <image src="@/static/images/login/login-password.png"></image>
         <uni-easyinput
@@ -155,7 +170,54 @@
     }
   }
 
-  onShow(getCaptcha);
+  const emailCodeShowFlag = ref(false);
+  let emailCodeTips = ref('获取邮箱验证码');
+  let emailCodeButtonDisabled = ref(false);
+  // 定时器
+  let countDownTimer = null;
+  // 开始倒计时
+  function runCountDown() {
+    emailCodeButtonDisabled.value = true;
+    let countDown = 60;
+    emailCodeTips.value = `${countDown}秒后重新获取`;
+    countDownTimer = setInterval(() => {
+      if (countDown > 1) {
+        countDown--;
+        emailCodeTips.value = `${countDown}秒后重新获取`;
+      } else {
+        clearInterval(countDownTimer);
+        emailCodeButtonDisabled.value = false;
+        emailCodeTips.value = '获取验证码';
+      }
+    }, 1000);
+  }
+
+  // 获取双因子登录标识
+  async function getTwoFactorLoginFlag() {
+    try {
+      let result = await loginApi.getTwoFactorLoginFlag();
+      emailCodeShowFlag.value = result.data;
+    } catch (e) {
+      smartSentry.captureError(e);
+    }
+  }
+  // 发送邮箱验证码
+  async function sendSmsCode() {
+  try {
+    uni.showLoading();
+    let result = await loginApi.sendLoginEmailCode(loginForm.loginName);
+    message.success('验证码发送成功!请登录邮箱查看验证码~');
+    runCountDown();
+  } catch (e) {
+    smartSentry.captureError(e);
+  } finally {
+    uni.hideLoading();
+  }
+  }
+  onShow(()=>{
+    getCaptcha()
+    getTwoFactorLoginFlag();
+  });
 </script>
 <style lang="scss" scoped>
   .bottom-view {
@@ -293,5 +355,12 @@
     margin-top: 150rpx;
     margin-bottom: 120rpx;
     align-self: flex-start;
+  }
+  .code-btn{
+    width: 240rpx;
+    font-size: 24rpx;
+    margin-right: 20rpx;
+    background-color: $main-color;
+    color: #fff;
   }
 </style>

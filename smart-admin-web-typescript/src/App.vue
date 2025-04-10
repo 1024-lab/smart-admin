@@ -91,9 +91,6 @@
       return text;
     }
   }
-  window.addEventListener('resize',_.throttle(()=>{
-    window.location.reload()
-  },1000));
 </script>
 <style scoped lang="less">
   :deep(.ant-table-column-sorters) {

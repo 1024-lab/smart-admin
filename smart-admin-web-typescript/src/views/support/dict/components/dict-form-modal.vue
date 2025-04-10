@@ -9,7 +9,7 @@
 -->
 <template>
   <a-modal :open="visible" :title="form.dictId ? '编辑字典' : '添加字典'" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
-    <br/>
+    <br />
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
       <a-form-item label="字典编码" name="dictCode">
         <a-input v-model:value="form.dictCode" placeholder="请输入编码" />
@@ -19,7 +19,7 @@
       </a-form-item>
 
       <a-form-item label="备注" name="remark">
-        <textarea v-model="form.remark" style="width: 100%; height: 100px; outline: none"></textarea>
+        <a-textarea v-model="form.remark" style="width: 100%; height: 100px; outline: none"/>
       </a-form-item>
     </a-form>
   </a-modal>

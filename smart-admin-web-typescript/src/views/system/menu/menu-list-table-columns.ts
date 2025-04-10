@@ -13,12 +13,13 @@ export const columns = ref([
     title: '名称',
     dataIndex: 'menuName',
     key: 'ID',
-    width: 200,
+    width: 220,
   },
   {
     title: '类型',
     dataIndex: 'menuType',
-    width: 80,
+    width: 100,
+    align: "center"
   },
   {
     title: '图标',
@@ -53,6 +54,7 @@ export const columns = ref([
   {
     title: '操作',
     dataIndex: 'operate',
-    width: 100,
+    width: 170,
+    align: "center"
   },
 ]);

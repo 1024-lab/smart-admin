@@ -15,6 +15,7 @@
     :open="visible"
     :width="600"
     @close="onClose"
+    destroyOnClose
   >
     <a-form ref="formRef" :labelCol="{ span: labelColSpan }" :labelWrap="true" :model="form" :rules="rules">
       <a-form-item label="菜单类型" name="menuType">
@@ -65,7 +66,7 @@
         </a-form-item>
       </template>
       <!--      目录 菜单 end   -->
-      <!--      按钮 start   -->
+      <!--      功能点 start   -->
       <template v-if="form.menuType === MENU_TYPE_ENUM.POINTS.value">
         <a-form-item label="功能点名称" name="menuName">
           <a-input v-model:value="form.menuName" placeholder="请输入功能点名称" />
@@ -90,7 +91,7 @@
           <a-input v-model:value="form.apiPerms" placeholder="请输入后端权限" />
         </a-form-item>
       </template>
-      <!--      按钮 end   -->
+      <!--      功能点 end   -->
       <a-form-item label="排序" name="sort" help="值越小越靠前">
         <a-input-number v-model:value="form.sort" :min="0" placeholder="请输入排序" style="width: 100px" />
       </a-form-item>

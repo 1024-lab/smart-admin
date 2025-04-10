@@ -33,14 +33,20 @@
 
     <a-row class="smart-table-btn-block">
       <div class="smart-table-operate-block">
-        <a-button @click="addOrUpdateData" type="primary">
+        <a-button @click="addOrUpdateData" type="primary" v-privilege="'support:dictData:add'">
           <template #icon>
             <PlusOutlined />
           </template>
           新建
         </a-button>
 
-        <a-button @click="confirmBatchDelete" type="primary" danger :disabled="selectedRowKeyList.length === 0">
+        <a-button
+          @click="confirmBatchDelete"
+          type="primary"
+          danger
+          :disabled="selectedRowKeyList.length === 0"
+          v-privilege="'support:dictData:delete'"
+        >
           <template #icon>
             <DeleteOutlined />
           </template>
@@ -69,7 +75,7 @@
           />
         </template>
         <template v-if="column.dataIndex === 'action'">
-          <a-button @click="addOrUpdateData(record)" type="link">编辑</a-button>
+          <a-button @click="addOrUpdateData(record)" type="link" v-privilege="'support:dictData:update'">编辑</a-button>
         </template>
       </template>
     </a-table>

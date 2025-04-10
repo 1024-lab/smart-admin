@@ -93,11 +93,9 @@
   // ---------------- 显示 / 隐藏 --------------------
   let tableId = null;
   const visible = ref(false);
-  const scroll = ref(true);
   //显示
-  function show(columns, showTableId,scrollFlag) {
+  function show(columns, showTableId) {
     tableId = showTableId;
-    scroll.value = scrollFlag;
     visible.value = true;
     getUserTableColumns(tableId, _.cloneDeep(columns));
   }
@@ -183,12 +181,7 @@
         if (newIndex === oldIndex) {
           return;
         }
-        // 如果表格开启scroll会多一个虚拟列，所以要减1
-        if(scroll.value){
-          moveTableData(oldIndex-1, newIndex-1);
-        }else{
-          moveTableData(oldIndex, newIndex);
-        }
+        moveTableData(oldIndex, newIndex);
       },
     });
   }

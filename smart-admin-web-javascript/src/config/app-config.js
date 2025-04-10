@@ -24,7 +24,7 @@ export const appDefaultConfig = {
   pageWidth: '99%',
   // 圆角
   borderRadius: 6,
-  // 展开模式
+  // 菜单展开模式
   flatPattern: true,
   // 标签页
   pageTagFlag: true,

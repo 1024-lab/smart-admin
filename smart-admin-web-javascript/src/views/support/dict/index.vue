@@ -45,13 +45,7 @@
           新建
         </a-button>
 
-        <a-button
-          @click="confirmBatchDelete"
-          v-privilege="'support:dict:batchDelete'"
-          type="primary"
-          danger
-          :disabled="selectedRowKeyList.length === 0"
-        >
+        <a-button @click="confirmBatchDelete" v-privilege="'support:dict:delete'" type="primary" danger :disabled="selectedRowKeyList.length === 0">
           <template #icon>
             <DeleteOutlined />
           </template>
@@ -87,7 +81,7 @@
         </template>
         <template v-else-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="addOrUpdateDict(record)" v-privilege="'support:dict:edit'" type="link">编辑</a-button>
+            <a-button @click="addOrUpdateDict(record)" v-privilege="'support:dict:update'" type="link">编辑</a-button>
           </div>
         </template>
       </template>

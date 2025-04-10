@@ -100,6 +100,7 @@ public class EnterpriseController {
 
     @Operation(summary = "按照类型查询企业 @author 开云")
     @GetMapping("/oa/enterprise/query/list")
+    @SaCheckPermission("oa:enterprise:query")
     public ResponseDTO<List<EnterpriseListVO>> queryList(@RequestParam(value = "type", required = false) Integer type) {
         return enterpriseService.queryList(type);
     }
@@ -114,12 +115,14 @@ public class EnterpriseController {
 
     @Operation(summary = "查询企业全部员工 @author 罗伊")
     @PostMapping("/oa/enterprise/employee/list")
+    @SaCheckPermission("oa:enterprise:queryEmployee")
     public ResponseDTO<List<EnterpriseEmployeeVO>> employeeList(@RequestBody @Valid List<Long> enterpriseIdList) {
         return ResponseDTO.ok(enterpriseService.employeeList(enterpriseIdList));
     }
 
     @Operation(summary = "分页查询企业员工 @author 卓大")
     @PostMapping("/oa/enterprise/employee/queryPage")
+    @SaCheckPermission("oa:enterprise:queryEmployee")
     public ResponseDTO<PageResult<EnterpriseEmployeeVO>> queryPageEmployeeList(@RequestBody @Valid EnterpriseEmployeeQueryForm queryForm) {
         return ResponseDTO.ok(enterpriseService.queryPageEmployeeList(queryForm));
     }

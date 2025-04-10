@@ -75,7 +75,9 @@
           {{ text ? '禁用' : '启用' }}
         </template>
         <template v-if="column.dataIndex === 'enterpriseName'">
-          <a @click="detail(record.enterpriseId)">{{ record.enterpriseName }}</a>
+          <a-button type="link" @click="detail(record.enterpriseId)" :disabled="!$privilege('oa:enterprise:detail')">
+            {{ record.enterpriseName }}
+          </a-button>
         </template>
         <template v-if="column.dataIndex === 'type'">
           <span>{{ $smartEnumPlugin.getDescByValue('ENTERPRISE_TYPE_ENUM', text) }}</span>

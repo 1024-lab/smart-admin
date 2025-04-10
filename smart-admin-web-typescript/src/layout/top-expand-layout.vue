@@ -62,7 +62,7 @@
           :url="item.meta.frameUrl"
         />
         <!--非iframe使用router-view-->
-        <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)">
+        <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)" style="height: 100%;" class="admin-content">
           <router-view v-slot="{ Component }">
             <keep-alive :include="keepAliveIncludes">
               <component :is="Component" :key="route.name" />

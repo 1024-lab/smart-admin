@@ -52,43 +52,43 @@ public class AdminDictController extends SupportBaseController {
 
     @Operation(summary = "分页查询 @author 1024创新实验室-主任-卓大")
     @PostMapping("/dict/queryPage")
-    @SaCheckPermission("dict:query")
+    @SaCheckPermission("support:dict:query")
     public ResponseDTO<PageResult<DictVO>> queryPage(@RequestBody @Valid DictQueryForm queryForm) {
         return ResponseDTO.ok(dictService.queryPage(queryForm));
     }
 
     @Operation(summary = "添加 @author 1024创新实验室-主任-卓大")
     @PostMapping("/dict/add")
-    @SaCheckPermission("dict:add")
+    @SaCheckPermission("support:dict:add")
     public ResponseDTO<String> add(@RequestBody @Valid DictAddForm addForm) {
         return dictService.add(addForm);
     }
 
     @Operation(summary = "更新 @author 1024创新实验室-主任-卓大")
     @PostMapping("/dict/update")
-    @SaCheckPermission("dict:update")
+    @SaCheckPermission("support:dict:update")
     public ResponseDTO<String> update(@RequestBody @Valid DictUpdateForm updateForm) {
         return dictService.update(updateForm);
     }
 
-    @Operation(summary = "字典数据 启用/禁用 @author 1024创新实验室-主任-卓大")
+    @Operation(summary = "启用/禁用 @author 1024创新实验室-主任-卓大")
     @GetMapping("/dict/updateDisabled/{dictId}")
-    @SaCheckPermission("dictData:updateDisabled")
+    @SaCheckPermission("support:dict:updateDisabled")
     public ResponseDTO<String> updateDisabled(@PathVariable Long dictId) {
         return dictService.updateDisabled(dictId);
     }
 
     @Operation(summary = "批量删除 @author 1024创新实验室-主任-卓大")
     @PostMapping("/dict/batchDelete")
-    @SaCheckPermission("dict:delete")
+    @SaCheckPermission("support:dict:delete")
     public ResponseDTO<String> batchDelete(@RequestBody ValidateList<Long> idList) {
         return dictService.batchDelete(idList);
     }
 
     @Operation(summary = "单个删除 @author 1024创新实验室-主任-卓大")
     @GetMapping("/dict/delete/{dictId}")
-    @SaCheckPermission("dict:delete")
-    public ResponseDTO<String> batchDelete(@PathVariable Long dictId) {
+    @SaCheckPermission("support:dict:delete")
+    public ResponseDTO<String> delete(@PathVariable Long dictId) {
         return dictService.delete(dictId);
     }
 
@@ -96,42 +96,42 @@ public class AdminDictController extends SupportBaseController {
 
     @Operation(summary = "字典数据 分页查询 @author 1024创新实验室-主任-卓大")
     @GetMapping("/dict/dictData/queryDictData/{dictId}")
-    @SaCheckPermission("dictData:query")
+    @SaCheckPermission("support:dictData:query")
     public ResponseDTO<List<DictDataVO>> queryDictData(@PathVariable Long dictId) {
         return ResponseDTO.ok(dictService.queryDictData(dictId));
     }
 
     @Operation(summary = "字典数据 启用/禁用 @author 1024创新实验室-主任-卓大")
     @GetMapping("/dict/dictData/updateDisabled/{dictDataId}")
-    @SaCheckPermission("dictData:updateDisabled")
+    @SaCheckPermission("support:dictData:updateDisabled")
     public ResponseDTO<String> updateDictDataDisabled(@PathVariable Long dictDataId) {
         return dictService.updateDictDataDisabled(dictDataId);
     }
 
     @Operation(summary = "字典数据 添加 @author 1024创新实验室-主任-卓大")
     @PostMapping("/dict/dictData/add")
-    @SaCheckPermission("dictData:add")
+    @SaCheckPermission("support:dictData:add")
     public ResponseDTO<String> addDictData(@RequestBody @Valid DictDataAddForm addForm) {
         return dictService.addDictData(addForm);
     }
 
     @Operation(summary = "字典数据 更新 @author 1024创新实验室-主任-卓大")
     @PostMapping("/dict/dictData/update")
-    @SaCheckPermission("dictData:update")
+    @SaCheckPermission("support:dictData:update")
     public ResponseDTO<String> updateDictData(@RequestBody @Valid DictDataUpdateForm updateForm) {
         return dictService.updateDictData(updateForm);
     }
 
     @Operation(summary = "字典数据 批量删除 @author 1024创新实验室-主任-卓大")
     @PostMapping("/dict/dictData/batchDelete")
-    @SaCheckPermission("dictData:delete")
+    @SaCheckPermission("support:dictData:delete")
     public ResponseDTO<String> batchDeleteDictData(@RequestBody ValidateList<Long> idList) {
         return dictService.batchDeleteDictData(idList);
     }
 
     @Operation(summary = "字典数据 单个删除 @author 1024创新实验室-主任-卓大")
     @GetMapping("/dict/dictData/delete/{dictDataId}")
-    @SaCheckPermission("dictData:delete")
+    @SaCheckPermission("support:dictData:delete")
     public ResponseDTO<String> deleteDictData(@PathVariable Long dictDataId) {
         return dictService.deleteDictData(dictDataId);
     }

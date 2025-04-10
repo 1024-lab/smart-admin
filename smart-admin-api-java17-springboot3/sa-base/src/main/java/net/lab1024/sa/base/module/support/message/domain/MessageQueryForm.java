@@ -36,9 +36,9 @@ public class MessageQueryForm extends PageParam {
     @Schema(description = "查询结束时间")
     private LocalDate endDate;
 
-    @Schema(hidden = true)
+    @Schema(description = "接收人")
     private Long receiverUserId;
 
-    @Schema(hidden = true)
+    @Schema(description = "接收人类型")
     private Integer receiverUserType;
 }

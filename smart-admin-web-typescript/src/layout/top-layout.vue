@@ -26,7 +26,7 @@
       />
 
       <!--非iframe使用router-view-->
-      <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name !== e.name)">
+      <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name !== e.name)" :style="{height: contentBoxHeight+'px'}" class="admin-content">
         <router-view v-slot="{ Component }">
           <keep-alive :include="keepAliveIncludes">
             <component :is="Component" :key="route.name" />
@@ -84,6 +84,8 @@
   const breadCrumbFlag = computed(() => useAppConfigStore().$state.breadCrumbFlag);
   // 页面宽度
   const pageWidth = computed(() => useAppConfigStore().$state.pageWidth);
+  
+  let contentBoxHeight=ref()
   // 多余高度
   const dueHeight = computed(() => {
     if (fullScreenFlag.value) {
@@ -104,6 +106,14 @@
     return due;
   });
 
+  watch(() => dueHeight.value, () => {
+    let dom=document.querySelector('.admin-layout-content')
+    contentBoxHeight.value=dom.offsetHeight - 20 - dueHeight.value.split('px')[0]
+  });
+  onMounted(() => {
+    let dom=document.querySelector('.admin-layout-content')
+    contentBoxHeight.value=dom.offsetHeight - 20 - dueHeight.value.split('px')[0]
+  });
   //页面初始化的时候加载水印
   onMounted(() => {
     if (watermarkFlag.value) {

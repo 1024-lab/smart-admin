@@ -61,11 +61,6 @@
       type: Number,
       require: true,
     },
-    //如果开启表格scroll，需要传递 scroll标识,由于main.js中设置的全局默认的表格高度，所以scroll默认值设置为true
-    scroll: {
-      type: Boolean,
-      default: true,
-    },
   });
 
   const emit = defineEmits(['update:modelValue']);
@@ -79,7 +74,13 @@
   watch(
     () => props.modelValue,
     (value) => {
-      newColumn = value;
+      newColumn.forEach(item=>{
+        value.forEach(itemNewColumns=>{
+          if(item.dataIndex==itemNewColumns.dataIndex){
+            Object.assign(item,itemNewColumns)
+          }
+        })
+      })
     },
     {
       deep: true,
@@ -179,7 +180,7 @@
 
   const smartTableColumnModal = ref();
   function showModal() {
-    smartTableColumnModal.value.show(newColumn, props.tableId,props.scroll);
+    smartTableColumnModal.value.show(newColumn, props.tableId);
   }
 
   // 将弹窗修改的列数据，赋值给原表格 列数组
@@ -193,6 +194,13 @@
       obj = mergeColumn(_.cloneDeep(newColumn), changeColumnArray);
     }
     const newColumns = obj.newColumns;
+    newColumn.forEach(item=>{
+      obj.newColumns.forEach(itemNewColumns=>{
+        if(item.dataIndex==itemNewColumns.dataIndex){
+          Object.assign(item,itemNewColumns)
+        }
+      })
+    })
     emit(
       'update:modelValue',
       newColumns.filter((e) => e.showFlag)

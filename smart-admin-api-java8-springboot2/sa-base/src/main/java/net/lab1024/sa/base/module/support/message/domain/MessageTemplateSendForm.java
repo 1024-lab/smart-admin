@@ -1,10 +1,13 @@
 package net.lab1024.sa.base.module.support.message.domain;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import net.lab1024.sa.base.common.enumeration.UserTypeEnum;
 import net.lab1024.sa.base.module.support.message.constant.MessageTemplateEnum;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +27,10 @@ public class MessageTemplateSendForm {
 
     @NotNull(message = "接收者id不能为空")
     private Long receiverUserId;
+
+    @Schema(description = "接收者id")
+    @NotEmpty(message = "接收者id不能为空")
+    private List<Long> receiverUserIdList;
 
     /**
      * 相关业务id | 可选

@@ -24,7 +24,7 @@ export default {
   'setting.border.radius': '页面圆角',
   'setting.page.width': '页面宽度',
   'setting.bread': '面包屑',
-  'setting.flatPattern': '展开模式',
+  'setting.flatPattern': '菜单展开模式',
   'setting.pagetag': '标签页',
   'setting.pagetag.style': '标签页样式',
   'setting.footer': '页脚',

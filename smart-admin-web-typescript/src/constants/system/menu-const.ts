@@ -21,7 +21,7 @@ export const MENU_TYPE_ENUM: SmartEnum<number> = {
   },
   POINTS: {
     value: 3,
-    desc: '按钮',
+    desc: '功能点',
   },
 };
 

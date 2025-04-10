@@ -40,7 +40,7 @@ export const TABLE_ID_CONST = {
   SYSTEM: {
     EMPLOYEE: systemInitTableId + 1, //员工
     MENU: systemInitTableId + 2, //菜单
-    POSITION:systemInitTableId + 3, //职位
+    POSITION: systemInitTableId + 3, //职位
   },
   /**
    * 支撑
@@ -56,5 +56,6 @@ export const TABLE_ID_CONST = {
     HELP_DOC: supportInitTableId + 8, //帮助文档
     JOB: supportInitTableId + 9, //Job
     JOB_LOG: supportInitTableId + 10, //JobLog
+    MAIL: supportInitTableId + 11,
   },
 };

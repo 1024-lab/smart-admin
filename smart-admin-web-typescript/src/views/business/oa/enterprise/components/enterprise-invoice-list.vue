@@ -36,7 +36,8 @@
           </a-button>
         </a-button-group>
 
-        <a-button @click="addOrUpdate()" type="primary" class="smart-margin-left20">
+
+        <a-button @click="addOrUpdate()" type="primary" class="smart-margin-left20" v-if="$privilege('oa:invoice:add')">
           <template #icon>
             <PlusOutlined />
           </template>
@@ -51,14 +52,14 @@
       <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.BUSINESS.OA.ENTERPRISE_INVOICE" :refresh="ajaxQuery" />
     </a-row>
     <a-table :scroll="{ x: 1300 }" size="small" :dataSource="tableData" :columns="columns" rowKey="invoiceId" :pagination="false" bordered>
-      <template #bodyCell="{ text, record, index, column }">
+      <template #bodyCell="{ record, column }">
         <template v-if="column.dataIndex === 'disabledFlag'">
           {{ record.disabledFlag ? '禁用' : '启用' }}
         </template>
         <template v-else-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="addOrUpdate(record)" type="link">编辑</a-button>
-            <a-button @click="confirmDelete(record.invoiceId)" type="link" danger>删除</a-button>
+            <a-button @click="addOrUpdate(record)" type="link" v-if="$privilege('oa:invoice:update')">编辑</a-button>
+            <a-button @click="confirmDelete(record.invoiceId)" type="link" danger v-if="$privilege('oa:invoice:delete')">删除</a-button>
           </div>
         </template>
       </template>

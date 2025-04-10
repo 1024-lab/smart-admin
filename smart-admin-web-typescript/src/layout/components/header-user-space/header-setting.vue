@@ -83,8 +83,8 @@
           <a-radio-button value="chrome">Chrome</a-radio-button>
         </a-radio-group>
       </a-form-item>
-      <a-form-item :label="$t('setting.flatPattern')">
-        <a-switch @change="changeFlatPattern" v-model:checked="formState.flatPattern" checked-children="单个" un-checked-children="多个" />
+      <a-form-item :label="$t('setting.flatPattern')" v-if="formState.layout === LAYOUT_ENUM.SIDE.value">
+        <a-switch @change="changeFlatPattern" v-model:checked="formState.flatPattern" checked-children="多个" un-checked-children="单个" />
       </a-form-item>
       <a-form-item :label="$t('setting.pagetag')">
         <a-switch @change="changePageTagFlag" v-model:checked="formState.pageTagFlag" checked-children="显示" un-checked-children="隐藏" />

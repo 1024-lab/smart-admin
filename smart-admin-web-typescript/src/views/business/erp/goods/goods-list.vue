@@ -102,7 +102,7 @@
       :dataSource="tableData"
       :columns="columns"
       rowKey="goodsId"
-      :scroll="{ x: 1000,y: yHeight }"
+      :scroll="{ x: 1000, y: yHeight }"
       bordered
       :pagination="false"
       :showSorterTooltip="false"
@@ -495,15 +495,32 @@
   function camelToUnderscore(str) {
     return str.replace(/([A-Z])/g, '_$1').toLowerCase();
   }
-  const dueHeight=ref(0)
-  const yHeight=ref(0)
+
+  // 动态设置表格高度
+  const yHeight = ref(0);
   onMounted(() => {
-    let doc = document.querySelector('.ant-form');
-    let btn = document.querySelector('.smart-table-btn-block');
-    let tableCell = document.querySelector('.ant-table-cell');
-    let page = document.querySelector('.smart-query-table-page');
-    let box = document.querySelector('.ant-layout-content>div');
-    dueHeight.value = doc.offsetHeight+10+24+btn.offsetHeight+15+tableCell.offsetHeight+page.offsetHeight+20
-    yHeight.value=box.offsetHeight-dueHeight.value
+    resetGetHeight();
   });
+  function resetGetHeight() {
+    // 搜索部分高度
+    let doc = document.querySelector('.ant-form');
+    // 按钮部分高度
+    let btn = document.querySelector('.smart-table-btn-block');
+    // 表格头高度
+    let tableCell = document.querySelector('.ant-table-cell');
+    // 分页高度
+    let page = document.querySelector('.smart-query-table-page');
+    // 内容区总高度
+    let box = document.querySelector('.admin-content');
+    setTimeout(() => {
+      let dueHeight = doc.offsetHeight + 10 + 24 + btn.offsetHeight + 15 + tableCell.offsetHeight + page.offsetHeight + 20;
+      yHeight.value = box.offsetHeight - dueHeight;
+    }, 100);
+  }
+  window.addEventListener(
+    'resize',
+    _.throttle(() => {
+      resetGetHeight();
+    }, 1000)
+  );
 </script>

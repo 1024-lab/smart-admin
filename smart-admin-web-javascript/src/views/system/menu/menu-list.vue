@@ -88,7 +88,7 @@
       <a-table
         :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         size="small"
-        :scroll="{ x: 1000 }"
+        :scroll="{ y: 800 }"
         :defaultExpandAllRows="true"
         :dataSource="tableData"
         bordered
@@ -132,6 +132,15 @@
 
           <template v-if="column.dataIndex === 'operate'">
             <div class="smart-table-operate">
+              <a-button
+                v-if="record.menuType !== MENU_TYPE_ENUM.POINTS.value"
+                v-privilege="'system:menu:update'"
+                type="link"
+                size="small"
+                @click="showAddSub(record)"
+              >
+                添加下级
+              </a-button>
               <a-button v-privilege="'system:menu:update'" type="link" size="small" @click="showDrawer(record)">编辑</a-button>
               <a-button v-privilege="'system:menu:batchDelete'" danger type="link" @click="singleDelete(record)">删除</a-button>
             </div>
@@ -157,6 +166,7 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
+  import { MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
 
   // ------------------------ 表格渲染 ------------------------
   const menuTypeColorArray = ['red', 'blue', 'orange', 'green'];
@@ -255,5 +265,14 @@
   const menuOperateModal = ref();
   function showDrawer(rowData) {
     menuOperateModal.value.showDrawer(rowData);
+  }
+
+  function showAddSub(rowData) {
+    const subData = {
+      parentId: rowData.menuId,
+      menuType: rowData.menuType === MENU_TYPE_ENUM.CATALOG.value ? MENU_TYPE_ENUM.MENU.value : MENU_TYPE_ENUM.POINTS.value,
+      contextMenuId: rowData.menuType === MENU_TYPE_ENUM.MENU.value ? rowData.menuId : undefined,
+    };
+    menuOperateModal.value.showDrawer(subData);
   }
 </script>
