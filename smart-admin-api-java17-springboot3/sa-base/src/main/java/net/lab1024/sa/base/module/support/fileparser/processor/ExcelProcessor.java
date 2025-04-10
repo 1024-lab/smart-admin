@@ -2,13 +2,11 @@ package net.lab1024.sa.base.module.support.fileparser.processor;
 
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.FastExcel;
-import cn.idev.excel.read.builder.ExcelReaderBuilder;
 import cn.idev.excel.read.listener.PageReadListener;
 import lombok.Data;
 import net.lab1024.sa.base.module.support.fileparser.domain.vo.OutputExcelVO;
 import net.lab1024.sa.base.module.support.fileparser.validator.A2Validator;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +19,18 @@ public class ExcelProcessor {
     private final List<OutputExcelVO> unsortableData = new ArrayList<>();
     private final List<String> errors = new ArrayList<>();
 
+
+
     public void process(InputStream stream) {
         ExcelReader reader = FastExcel.read(stream, OutputExcelVO.class,
                 new PageReadListener<OutputExcelVO>(dataList->{
                     dataList.forEach(data->{
-                        if(!A2Validator.isValid(data.getDynamicFields().get("A2"))){
-                            errors.add("无效A2值："+ data.getDynamicFields().get("A2"));
+                        if(!A2Validator.isValid(data.getC())){
+                            errors.add("无效C值："+ data.getC());
                             return;
                         }
 
-                        if(A2Validator.isSortable(data.getDynamicFields().get("A2"))){
+                        if(A2Validator.isSortable(data.getC())){
                             sortableData.add(data);
                         }else {
                             unsortableData.add(data);
@@ -45,8 +45,8 @@ public class ExcelProcessor {
 
     private void sortData(){
         sortableData.sort((d1, d2)->{
-            String[] p1 = d1.getDynamicFields().get("A2").split("-");
-            String[] p2 = d2.getDynamicFields().get("A2").split("-");
+            String[] p1 = d1.getC().split("-");
+            String[] p2 = d2.getC().split("-");
 
             int cmp1 = Integer.compare(
                     Integer.parseInt(p1[0]),
