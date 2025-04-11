@@ -2,16 +2,18 @@ package net.lab1024.sa.base.module.support.fileparser.processor;
 
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.FastExcel;
-import cn.idev.excel.read.listener.PageReadListener;
 import lombok.Data;
 import net.lab1024.sa.base.module.support.fileparser.domain.vo.OutputExcelVO;
+import net.lab1024.sa.base.module.support.fileparser.exception.ValidationException;
+import net.lab1024.sa.base.module.support.fileparser.listener.ValidatingReadListener;
 import net.lab1024.sa.base.module.support.fileparser.validator.CValidator;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Data
 public class ExcelProcessor {
@@ -69,33 +71,30 @@ public class ExcelProcessor {
 
 
     public void process(InputStream stream) {
-        ExcelReader reader = FastExcel.read(stream, OutputExcelVO.class,
-                new PageReadListener<OutputExcelVO>(dataList->{
-                    dataList.forEach(data->{
-                        if(CValidator.isValid(data.getC())){
-                            System.out.println(data.getC());
-                        }
+        ValidatingReadListener listener = new ValidatingReadListener();
 
-                        //imp 安全获取字段
-                        String cValue = Optional.ofNullable(data.getC()).orElse("");
 
-                        //imp 增强校验器防御逻辑
-                        if(!CValidator.isValid(data.getC())){
-                            errors.add("无效C值："+ (cValue.isEmpty()? "[空值]": cValue));
-                            return;
-                        }
+        try (ExcelReader reader = FastExcel.read(stream, OutputExcelVO.class, listener).build()) {
+            reader.readAll();
+        }o
 
-                        //imp 校验排序能力时服用已校验值
-                        if(CValidator.isSortable(cValue)){
-                            sortableData.add(data);
-                        }else {
-                            unsortableData.add(data);
-                        }
-                    });
-                }, 1000))
-                .build();
-        reader.readAll();
-        reader.close();
+        if(!listener.getErrors().isEmpty()){
+            listener.getErrors().forEach(error->
+                System.err.printf("第%d行[%s]错误: %s%n",
+                        error.getRowNumber(),
+                        error.getColumnIndex(),
+                        error.getMessage()
+                        )
+            );
+            throw new ValidationException("Excel 数据校验失败");
+        }
+
+        //数据分类处理
+        Map<Boolean, List<OutputExcelVO>> partitionedData = listener.getValidData().stream().collect(Collectors.partitioningBy(data -> CValidator.isSortable(data.getC())));
+
+        List<OutputExcelVO> sortableData = partitionedData.get(true);
+        List<OutputExcelVO> unsortableData = partitionedData.get(false);
+
         if(!sortableData.isEmpty()){
             sortData();
         }
