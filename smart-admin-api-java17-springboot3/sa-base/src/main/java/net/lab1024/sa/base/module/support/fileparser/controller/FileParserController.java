@@ -28,21 +28,6 @@ import java.util.List;
 @RestController
 public class FileParserController extends SupportBaseController {
 
-//    @Operation(summary = "导出企业信息 @author 卓大")
-//    @PostMapping("/oa/enterprise/exportExcel")
-//    public void exportExcel(@RequestBody @Valid EnterpriseQueryForm queryForm, HttpServletResponse response) throws IOException {
-//        List<EnterpriseExcelVO> data = enterpriseService.getExcelExportData(queryForm);
-//        if (CollectionUtils.isEmpty(data)) {
-//            SmartResponseUtil.write(response, ResponseDTO.userErrorParam("暂无数据"));
-//            return;
-//        }
-//
-//        String watermark = AdminRequestUtil.getRequestUser().getActualName();
-//        watermark += SmartLocalDateUtil.format(LocalDateTime.now(), SmartDateFormatterEnum.YMD_HMS);
-//
-//        SmartExcelUtil.exportExcelWithWatermark(response,"企业基本信息.xlsx","企业信息",EnterpriseExcelVO.class,data,watermark);
-//
-//    }
 
     /**
      * 生成动态表头（示例数据）

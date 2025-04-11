@@ -2,8 +2,8 @@ package net.lab1024.sa.base.module.support.fileparser.validator;
 
 
 import java.util.regex.Pattern;
-
-public class A2Validator {
+//imp 增强校验器
+public class CValidator {
     //可排序格式正则
     private static final Pattern SORTABLE_PATTEN = Pattern.compile("^\\d{6}-\\d{2}$");
 
@@ -14,6 +14,9 @@ public class A2Validator {
     }
 
     public static boolean isValid(String value){
-        return SORTABLE_PATTEN.matcher(value).matches() || UNSORTABLE_PATTEN.matcher(value).matches();
+        if(value==null || value.trim().isEmpty()){
+            return false;
+        }
+        return isSortable(value) || UNSORTABLE_PATTEN.matcher(value).matches();
     }
 }

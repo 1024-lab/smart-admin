@@ -6,31 +6,31 @@ import lombok.Data;
 @Data
 public class OutputExcelVO {
 
-    @ExcelProperty("购入日期（合同编号）")
+    @ExcelProperty(value = "购入日期（合同编号）", index = 0)
     private String A;
 
-    @ExcelProperty("喷头型号")
+    @ExcelProperty(value = "喷头型号", index = 1)
     private String B;
 
-    @ExcelProperty("喷头序列号")
-    private String C;
+    @ExcelProperty(value = "喷头序列号", index = 2)
+    private String C="00000-00";
 
-    @ExcelProperty("入仓日期")
+    @ExcelProperty(value = "入仓日期", index = 3)
     private String D;
 
-    @ExcelProperty("领用日期")
+    @ExcelProperty(value = "领用日期", index = 4)
     private String E;
 
-    @ExcelProperty("领用人")
+    @ExcelProperty(value = "领用人", index = 5)
     private String F;
 
-    @ExcelProperty("领用用途")
+    @ExcelProperty(value = "领用用途", index = 6)
     private String G;
 
-    @ExcelProperty("位置")
+    @ExcelProperty(value = "位置", index = 7)
     private String H;
 
-    @ExcelProperty("历史")
+    @ExcelProperty(value = "历史", index = 8)
     private String I;
 
 }
