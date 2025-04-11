@@ -3,6 +3,7 @@ package net.lab1024.sa.base.module.support.fileparser.listener;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.exception.ExcelDataConvertException;
+import jakarta.validation.Valid;
 import net.lab1024.sa.base.module.support.fileparser.domain.vo.OutputExcelVO;
 import net.lab1024.sa.base.module.support.fileparser.error.ValidationError;
 
@@ -29,7 +30,7 @@ public class ValidatingReadListener extends AnalysisEventListener<OutputExcelVO>
     }
 
     @Override
-    public void invoke(OutputExcelVO data, AnalysisContext context) {
+    public void invoke(@Valid OutputExcelVO data, AnalysisContext context) {
         //自动触发校验，无效数据直接跳过
         validData.add(data);
     }

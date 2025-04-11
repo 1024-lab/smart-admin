@@ -19,55 +19,10 @@ import java.util.stream.Collectors;
 public class ExcelProcessor {
 
     //分桶存储数据,imp 线程安全集合
-    private final List<OutputExcelVO> sortableData = Collections.synchronizedList(new ArrayList<>());
-    private final List<OutputExcelVO> unsortableData = Collections.synchronizedList(new ArrayList<>());
+    private List<OutputExcelVO> sortableData = Collections.synchronizedList(new ArrayList<>());
+    private List<OutputExcelVO> unsortableData = Collections.synchronizedList(new ArrayList<>());
     private final List<String> errors = Collections.synchronizedList(new ArrayList<>());
 
-//    public class MyPageReadListener<T> implements ReadListener<T>{
-//
-//        public static int BATCH_COUNT = 1;
-//        /**
-//         * Temporary storage of data
-//         */
-//        private List<T> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-//        /**
-//         * consumer
-//         */
-//        private final Consumer<List<T>> consumer;
-//
-//        /**
-//         * Single handle the amount of data
-//         */
-//        private final int batchCount;
-//
-//        public MyPageReadListener(Consumer<List<T>> consumer) {
-//            this(consumer, BATCH_COUNT);
-//        }
-//
-//        public MyPageReadListener(Consumer<List<T>> consumer, int batchCount) {
-//            this.consumer = consumer;
-//            this.batchCount = batchCount;
-//        }
-//
-//        @Override
-//        public void invoke(T data, AnalysisContext context) {
-////            ReadRowHolder
-//            ReadRowHolder readRowHolder = context.readRowHolder();
-//            Map cellMap = readRowHolder.getCellMap();
-//            cachedDataList.add(data);
-//            if (cachedDataList.size() >= batchCount) {
-//                consumer.accept(cachedDataList);
-//                cachedDataList = ListUtils.newArrayListWithExpectedSize(batchCount);
-//            }
-//        }
-//
-//        @Override
-//        public void doAfterAllAnalysed(AnalysisContext context) {
-//            if (CollectionUtils.isNotEmpty(cachedDataList)) {
-//                consumer.accept(cachedDataList);
-//            }
-//        }
-//    }
 
 
     public void process(InputStream stream) {
@@ -76,7 +31,7 @@ public class ExcelProcessor {
 
         try (ExcelReader reader = FastExcel.read(stream, OutputExcelVO.class, listener).build()) {
             reader.readAll();
-        }o
+        }
 
         if(!listener.getErrors().isEmpty()){
             listener.getErrors().forEach(error->
@@ -92,8 +47,8 @@ public class ExcelProcessor {
         //数据分类处理
         Map<Boolean, List<OutputExcelVO>> partitionedData = listener.getValidData().stream().collect(Collectors.partitioningBy(data -> CValidator.isSortable(data.getC())));
 
-        List<OutputExcelVO> sortableData = partitionedData.get(true);
-        List<OutputExcelVO> unsortableData = partitionedData.get(false);
+        sortableData = partitionedData.get(true);
+        unsortableData = partitionedData.get(false);
 
         if(!sortableData.isEmpty()){
             sortData();
@@ -112,7 +67,7 @@ public class ExcelProcessor {
             return cmp1 != 0? cmp1:
                     Integer.compare(
                             Integer.parseInt(p1[1]),
-                            Integer.parseInt(p2[2])
+                            Integer.parseInt(p2[1])
                     );
         });
     }

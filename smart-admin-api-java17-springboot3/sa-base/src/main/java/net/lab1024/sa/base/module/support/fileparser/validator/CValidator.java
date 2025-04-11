@@ -10,6 +10,9 @@ public class CValidator {
     private static final Pattern UNSORTABLE_PATTEN = Pattern.compile("^[A-Z0-9]{2}L\\d+$");
 
     public static boolean isSortable(String value){
+        if(value==null || value.trim().isEmpty()){
+            return false;
+        }
         return SORTABLE_PATTEN.matcher(value).matches();
     }
 
