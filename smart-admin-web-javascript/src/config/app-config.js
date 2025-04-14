@@ -25,7 +25,7 @@ export const appDefaultConfig = {
   // 圆角
   borderRadius: 6,
   // 菜单展开模式
-  flatPattern: true,
+  flatPattern: false,
   // 标签页
   pageTagFlag: true,
   // 标签页样式: default、 antd、chrome
@@ -37,7 +37,7 @@ export const appDefaultConfig = {
   // 帮助文档
   helpDocFlag: true,
   // 帮助文档默认展开
-  helpDocExpandFlag: true,
+  helpDocExpandFlag: false,
   // 水印
   watermarkFlag: true,
   // 网站名称

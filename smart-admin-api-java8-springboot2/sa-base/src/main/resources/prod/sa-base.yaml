@@ -39,6 +39,7 @@ spring:
     port: 465
     username: lab1024@163.com
     password: LAB1024LAB
+    test-connection: false
     properties:
       mail:
         smtp:
