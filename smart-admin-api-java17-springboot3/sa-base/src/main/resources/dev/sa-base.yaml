@@ -63,7 +63,10 @@ spring:
     default-property-inclusion: always
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   # 缓存实现类型
   cache:
     type: caffeine

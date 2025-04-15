@@ -3,7 +3,6 @@ package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.f
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import net.lab1024.sa.admin.module.business.oa.enterprise.domain.form.EnterpriseCreateForm;
 
 /**
  * 喷头信息编辑编辑

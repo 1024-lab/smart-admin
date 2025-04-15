@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao.SprinklerStockInDao">
+    <select id="queryPage"
+            resultType="net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInVO">
+        SELECT t_sprinkler_instock.*
+        FROM t_sprinkler_instock
+        <where>
+            deleted_flag = #{queryForm.deletedFlag}
+            <if test="queryForm.keywords != null and queryForm.keywords != ''">
+                AND (INSTR(sprinkler_serial,#{queryForm.keywords}) OR INSTR(warehouse_date,#{queryForm.keywords}) OR INSTR(history,#{queryForm.keywords}))
+            </if>
+            <if test="queryForm.startTime != null">
+                AND DATE_FORMAT(warehouse_date, '%Y-%m-%d') &gt;= #{queryForm.startTime}
+            </if>
+            <if test="queryForm.endTime != null">
+                AND DATE_FORMAT(warehouse_date, '%Y-%m-%d') &lt;= #{queryForm.endTime}
+            </if>
+            <if test="queryForm.disabledFlag != null">
+                AND disabled_flag = #{queryForm.disabledFlag}
+            </if>
+        </where>
+        <if test="queryForm.sortItemList == null or queryForm.sortItemList.size == 0">
+            ORDER BY create_time DESC
+        </if>
+    </select>
+    <select id="queryBySprinklerSerial"
+            resultType="net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerStockInEntity">
+            SELECT *
+            FROM t_sprinkler_instock
+            WHERE sprinkler_serial = #{sprinklerSerial}
+            AND deleted_flag = #{deletedFlag}
+            <if test="excludeSprinklerId != null">
+                AND sprinkler_id != #{excludeSprinklerId}
+            </if>
+    </select>
+
+    <select id="selectExcelExportData"
+            resultType="net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInExcelVO">
+        SELECT t_sprinkler_instock.*
+        FROM t_sprinkler_instock
+        <where>
+            deleted_flag = #{queryForm.deletedFlag}
+            <if test="queryForm.keywords != null and queryForm.keywords != ''">
+                AND (INSTR(sprinkler_serial,#{queryForm.keywords}) OR INSTR(warehouse_date,#{queryForm.keywords}) OR INSTR(history,#{queryForm.keywords}))
+            </if>
+            <if test="queryForm.startTime != null">
+                AND DATE_FORMAT(warehouse_date, '%Y-%m-%d') &gt;= #{queryForm.startTime}
+            </if>
+            <if test="queryForm.endTime != null">
+                AND DATE_FORMAT(warehouse_date, '%Y-%m-%d') &lt;= #{queryForm.endTime}
+            </if>
+            <if test="queryForm.disabledFlag != null">
+                AND disabled_flag = #{queryForm.disabledFlag}
+            </if>
+        </where>
+        <if test="queryForm.sortItemList == null or queryForm.sortItemList.size == 0">
+            ORDER BY create_time DESC
+        </if>
+    </select>
+    <select id="getDetail"
+            resultType="net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInVO">
+        SELECT s.*
+        FROM t_sprinkler_instock s
+        WHERE s.sprinkler_id = #{sprinklerId} AND
+              s.deleted_flag = #{deletedFlag}
+    </select>
+
+    <update id="deleteSprinkler">
+        UPDATE t_sprinkler_instock
+        SET deleted_flag = #{deletedFlag}
+        WHERE sprinkler_id = #{sprinklerId}
+    </update>
+
+</mapper>
