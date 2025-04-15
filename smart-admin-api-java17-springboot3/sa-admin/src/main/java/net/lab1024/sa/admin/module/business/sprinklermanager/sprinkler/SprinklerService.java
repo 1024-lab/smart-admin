@@ -5,10 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.Impl.SprinklerStockInOperationSheetDao;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.OperationSheetDao;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetQueryForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerStockInOperationSheetVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao.SprinklerStockInDao;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.bo.SprinklerStockInCreateBO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerStockInEntity;
@@ -40,11 +36,6 @@ public class SprinklerService {
     @Resource
     private SprinklerStockInDao sprinklerStockInDao;
 
-    @Resource
-    private SprinklerStockInOperationSheetDao sprinklerStockInOperationSheetDao;
-
-    @Resource
-    private OperationSheetDao operationSheetDao;
 
     @Resource
     private DataTracerService dataTracerService;
@@ -119,15 +110,6 @@ public class SprinklerService {
         return sprinklerStockInDao.getDetail(sprinklerId, Boolean.FALSE);
     }
 
-    /**
-     * 分页查询喷头入库记录
-     *
-     */
-    public PageResult<SprinklerStockInOperationSheetVO> queryPageStockInOperationSheetList(SprinklerStockInOperationSheetQueryForm queryForm) {
-        Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
-        List<SprinklerStockInOperationSheetVO> sprinklerStockInOperationSheetVOList = sprinklerStockInOperationSheetDao.queryPageStockInOperationSheetList(page, queryForm);
-        return SmartPageUtil.convert2PageResult(page, sprinklerStockInOperationSheetVOList);
-    }
 
     /**
      * 获取导出数据

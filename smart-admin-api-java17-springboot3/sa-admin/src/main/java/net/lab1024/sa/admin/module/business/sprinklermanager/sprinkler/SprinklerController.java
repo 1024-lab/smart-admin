@@ -6,8 +6,6 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetQueryForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerStockInOperationSheetVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerStockInQueryForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInExcelVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInVO;
@@ -68,11 +66,6 @@ public class SprinklerController {
         return ResponseDTO.ok(sprinklerService.getDetail(sprinklerId));
     }
 
-    @Operation(summary = "分页查询喷头入库信息 @author 芦苇")
-    @PostMapping("/sprinklermanager/sprinkler/stockinoperationsheet/queryPage")
-    public ResponseDTO<PageResult<SprinklerStockInOperationSheetVO>> queryPageStockInOperationSheetList(@RequestBody @Valid SprinklerStockInOperationSheetQueryForm queryForm){
-        return ResponseDTO.ok(sprinklerService.queryPageStockInOperationSheetList(queryForm));
-    }
 
     @Operation(summary = "导出喷头信息 @author 芦苇")
     @PostMapping("/sprinklermanager/sprinkler/exportExcel")
