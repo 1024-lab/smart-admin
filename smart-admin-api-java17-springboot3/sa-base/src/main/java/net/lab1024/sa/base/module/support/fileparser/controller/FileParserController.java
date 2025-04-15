@@ -8,8 +8,6 @@ import net.lab1024.sa.base.common.controller.SupportBaseController;
 import net.lab1024.sa.base.constant.SwaggerTagConst;
 import net.lab1024.sa.base.module.support.fileparser.domain.vo.OutputExcelVO;
 import net.lab1024.sa.base.module.support.fileparser.processor.ExcelProcessor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +33,7 @@ public class FileParserController extends SupportBaseController {
      */
     @Operation(summary = "数据排序导出 - @author 芦苇")
     @PostMapping("/fileParser/exportExcel")
-    public void exportExcel(@RequestPart("file") MultipartFile importExcel, HttpServletResponse response) {
+    public void exportExcel(@RequestPart("file") MultipartFile importExcel, HttpServletResponse response) throws IOException {
         ExcelProcessor processor = new ExcelProcessor();
         try {
             processor.process(importExcel.getInputStream());
@@ -59,21 +57,4 @@ public class FileParserController extends SupportBaseController {
                 .doWrite(finalData);
     }
 
-    private String safeGetCellValue(Row row, int column) {
-        if (row == null) return "";
-
-        Cell cell = row.getCell(column, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
-        if (cell == null) return "";
-
-        try {
-            return switch (cell.getCellType()) {
-                case STRING -> cell.getStringCellValue().trim();
-                case NUMERIC -> String.valueOf((int) cell.getNumericCellValue());
-                case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
-                default -> "";
-            };
-        } catch (Exception e) {
-            return "[解析错误]"; // 标记异常单元格
-        }
-    }
 }

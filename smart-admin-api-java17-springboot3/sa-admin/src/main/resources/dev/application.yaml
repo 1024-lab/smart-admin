@@ -20,3 +20,4 @@ server:
 spring:
   profiles:
     active: '@profiles.active@'
+

@@ -1,51 +1,44 @@
 package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler;
 
+import cn.idev.excel.FastExcel;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.Impl.SprinklerStockInOperationSheetDao;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.dao.OperationSheetDao;
-import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.entity.OperationSheetEntity;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetQueryForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerStockInOperationSheetVO;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao.SprinklerDao;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerEntity;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerCreateForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerUpdateForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerExcelVO;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao.SprinklerStockInDao;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.bo.SprinklerStockInCreateBO;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerStockInEntity;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerStockInCreateForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerStockInQueryForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInExcelVO;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInVO;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.listener.SprinklerStockInCreateBOParseListener;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
-import net.lab1024.sa.base.common.util.LocalDateParseUtil;
 import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import net.lab1024.sa.base.common.util.SmartPageUtil;
-import net.lab1024.sa.base.module.support.datatracer.constant.DataTracerTypeEnum;
-import net.lab1024.sa.base.module.support.datatracer.domain.form.DataTracerForm;
 import net.lab1024.sa.base.module.support.datatracer.service.DataTracerService;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class SprinklerService {
 
     @Resource
-    private SprinklerDao sprinklerDao;
+    private SprinklerStockInDao sprinklerStockInDao;
 
     @Resource
     private SprinklerStockInOperationSheetDao sprinklerStockInOperationSheetDao;
@@ -60,47 +53,42 @@ public class SprinklerService {
      * 分页查询喷头模块
      *
      */
-    public ResponseDTO<PageResult<SprinklerVO>> queryByPage(SprinklerQueryForm queryForm) {
+    public ResponseDTO<PageResult<SprinklerStockInVO>> queryByPage(SprinklerStockInQueryForm queryForm) {
         queryForm.setDeletedFlag(Boolean.FALSE);
         Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
-        List<SprinklerVO> sprinklerList = sprinklerDao.queryPage(page, queryForm);
-        PageResult<SprinklerVO> pageResult = SmartPageUtil.convert2PageResult(page, sprinklerList);
+        List<SprinklerStockInVO> sprinklerList = sprinklerStockInDao.queryPage(page, queryForm);
+        PageResult<SprinklerStockInVO> pageResult = SmartPageUtil.convert2PageResult(page, sprinklerList);
         return ResponseDTO.ok(pageResult);
     }
 
     public ResponseDTO<String> batchImport(@Valid MultipartFile file, RequestUser requestUser) {
 
         try(InputStream stream = file.getInputStream()) {
-            // 使用POI解析为导入DTO
-            Workbook workbook = new XSSFWorkbook(stream);
-            List<SprinklerCreateForm> createVOs = new ArrayList<>();
-            for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-                XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(i);
-                for (int j =0; j <= sheet.getLastRowNum(); j++) {
-                    Row row = sheet.getRow(j);
-                    if (row == null||row.getRowNum() == 0) continue; // 跳过标题行
-                    if (row.getCell(2) == null) continue;
-                    String headSerial = row.getCell(2).getStringCellValue();
-                    SprinklerCreateForm createVO = new SprinklerCreateForm();
-                    createVO.setSprinklerSerial(headSerial);
 
-                    if(row.getCell(3) == null) {
-                        createVO.setWarehouseDate(null);
-                    }else {
-                        if (row.getCell(3).getCellType() == CellType.NUMERIC) {
-                            row.getCell(3).setCellType(CellType.STRING);
-                        }
-                        createVO.setWarehouseDate(LocalDateParseUtil.parseDate(row.getCell(3).getStringCellValue()));
-                    }
+            SprinklerStockInCreateBOParseListener listener = new SprinklerStockInCreateBOParseListener();
 
-                    if (headSerial != "") {
+            FastExcel.read(stream, SprinklerStockInCreateBO.class, listener).sheet().doRead();
+            List<SprinklerStockInCreateBO> createBOs = listener.getSprinklerStockInCreateBOList();
+
+            List<SprinklerStockInCreateForm> createVOs = createBOs.stream().map(
+                    createBO->{
+                        SprinklerStockInCreateForm createVO = new SprinklerStockInCreateForm();
+                        createVO.setPurchaseDateContractNumber(createBO.getPurchaseDateContractNumber());
+                        createVO.setSprinklerModel(createBO.getSprinklerModel());
+                        createVO.setSprinklerSerial(createBO.getSprinklerSerial());
+                        createVO.setShippingDate(createBO.getShippingDate());
+                        createVO.setWarehouseDate(createBO.getWarehouseDate());
+                        createVO.setVoltage(createBO.getVoltage());
+                        createVO.setJetsout(createBO.getJetsout());
+                        createVO.setHistory(createBO.getHistory());
+                        createVO.setStatus(createBO.getStatus());
+                        createVO.setDisabledFlag(Boolean.FALSE);
                         createVO.setCreateUserId(requestUser.getUserId());
                         createVO.setCreateUserName(requestUser.getUserName());
-                        createVOs.add(createVO);
+                        return createVO;
                     }
-                }
-            }
-            createVOs.forEach(this::createSprinkler);
+            ).collect(Collectors.toList());
+            createVOs.forEach(this::createSprinklerStockIn);
             return ResponseDTO.ok();
 
         } catch (IOException e) {
@@ -108,27 +96,17 @@ public class SprinklerService {
         }
     }
 
+
     @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<String> createSprinkler(SprinklerCreateForm createVO) {
+    public ResponseDTO<String> createSprinklerStockIn(SprinklerStockInCreateForm createVO) {
         //验证喷头序列号是否重复
-        SprinklerEntity validateSprinkler = sprinklerDao.queryBySprinklerSerial(createVO.getSprinklerSerial(), null, Boolean.FALSE);
+        SprinklerStockInEntity validateSprinkler = sprinklerStockInDao.queryBySprinklerSerial(createVO.getSprinklerSerial(), null, Boolean.FALSE);
         if(Objects.nonNull(validateSprinkler)) {
             return ResponseDTO.userErrorParam("喷头序列号重复");
         }
         //数据插入
-        SprinklerEntity insertSprinkler = SmartBeanUtil.copy(createVO, SprinklerEntity.class);
-        sprinklerDao.insert(insertSprinkler);
-        dataTracerService.insert(insertSprinkler.getSprinklerId(), DataTracerTypeEnum.SPRINKLER);
-        Long sprinklerId = insertSprinkler.getSprinklerId();
-        OperationSheetEntity operationSheetEntity = new OperationSheetEntity();
-        operationSheetEntity.setSprinklerId(sprinklerId);
-        operationSheetEntity.setDisabledFlag(Boolean.FALSE);
-        operationSheetEntity.setDeletedFlag(Boolean.FALSE);
-        operationSheetDao.insert(operationSheetEntity);
-        Long operationSheetId = operationSheetEntity.getOperationSheetId();
-        insertSprinkler.setLastOperationSheetId(operationSheetId);
-        insertSprinkler.setStatus(Byte.valueOf("0"));
-        sprinklerDao.updateById(insertSprinkler);
+        SprinklerStockInEntity insertSprinkler = SmartBeanUtil.copy(createVO, SprinklerStockInEntity.class);
+        sprinklerStockInDao.insert(insertSprinkler);
 
         return ResponseDTO.ok();
     }
@@ -137,8 +115,8 @@ public class SprinklerService {
      * 查询喷头详情
      *
      */
-    public SprinklerVO getDetail(Long sprinklerId) {
-        return sprinklerDao.getDetail(sprinklerId, Boolean.FALSE);
+    public SprinklerStockInVO getDetail(Long sprinklerId) {
+        return sprinklerStockInDao.getDetail(sprinklerId, Boolean.FALSE);
     }
 
     /**
@@ -150,61 +128,13 @@ public class SprinklerService {
         List<SprinklerStockInOperationSheetVO> sprinklerStockInOperationSheetVOList = sprinklerStockInOperationSheetDao.queryPageStockInOperationSheetList(page, queryForm);
         return SmartPageUtil.convert2PageResult(page, sprinklerStockInOperationSheetVOList);
     }
-    /**
-     * 编辑喷头
-     *
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<String> updateSprinkler(@Valid SprinklerUpdateForm updateVO) {
-        Long sprinklerId = updateVO.getSprinklerId();
-        //校验喷头是否存在
-        SprinklerEntity sprinklerDetail = sprinklerDao.selectById(sprinklerId);
-        if(Objects.isNull(sprinklerDetail) || sprinklerDetail.getDeletedFlag()) {
-            return ResponseDTO.userErrorParam("喷头不存在");
-        }
-        //验证喷头名称是否重复
-        SprinklerEntity validateSprinkler = sprinklerDao.queryBySprinklerSerial(updateVO.getSprinklerSerial(), sprinklerId, Boolean.FALSE);
-        if (Objects.nonNull(validateSprinkler)){
-            return ResponseDTO.userErrorParam("喷头序列号重复");
-        }
-        //数据编排
-        SprinklerEntity updateEntity = SmartBeanUtil.copy(sprinklerDetail, SprinklerEntity.class);
-        SmartBeanUtil.copyProperties(updateVO, updateEntity);
-        sprinklerDao.updateById(updateEntity);
 
-        //变更记录
-        DataTracerForm dataTracerForm = DataTracerForm.builder()
-                .dataId(updateVO.getSprinklerId())
-                .type(DataTracerTypeEnum.SPRINKLER)
-                .content("修改喷头信息")
-                .diffOld(dataTracerService.getChangeContent(sprinklerDetail))
-                .diffNew(dataTracerService.getChangeContent(updateEntity))
-                .build();
-
-        dataTracerService.addTrace(dataTracerForm);
-        return ResponseDTO.ok();
-    }
-
-    /**
-     * 删除喷头
-     *
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<String> deleteSprinkler(Long sprinklerId) {
-        //校验喷头是否存在
-        SprinklerEntity sprinklerDetail = sprinklerDao.selectById(sprinklerId);
-        if(Objects.isNull(sprinklerDetail) || sprinklerDetail.getDeletedFlag()) {
-            return ResponseDTO.userErrorParam("喷头不存在");
-        }
-        sprinklerDao.deleteSprinkler(sprinklerId, Boolean.TRUE);
-        dataTracerService.delete(sprinklerId, DataTracerTypeEnum.SPRINKLER);
-        return ResponseDTO.ok();
-    }
     /**
      * 获取导出数据
      */
-    public List<SprinklerExcelVO> getExcelExportData(@Valid SprinklerQueryForm queryForm) {
+    public List<SprinklerStockInExcelVO> getExcelExportData(@Valid SprinklerStockInQueryForm queryForm) {
         queryForm.setDeletedFlag(false);
-        return sprinklerDao.selectExcelExportData(queryForm);
+        return sprinklerStockInDao.selectExcelExportData(queryForm);
     }
+
 }

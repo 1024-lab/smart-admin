@@ -1,15 +1,13 @@
-package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form;
+package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.bo;
 
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-public class SprinklerCreateForm {
-
+public class SprinklerCreateBO {
     @ExcelProperty("喷头序列号")
     @Schema(description = "喷头序列号")
     @NotBlank(message = "喷头序列号不能为空")
@@ -20,14 +18,5 @@ public class SprinklerCreateForm {
     @Schema(description = "所在仓status")
     private Byte status;
 
-    @Schema(description = "禁用状态")
-    @NotNull(message = "禁用状态不能为空")
-    private Boolean disabledFlag;
-
-    @Schema(description = "创建人", hidden = true)
-    private Long createUserId;
-
-    @Schema(description = "创建人", hidden = true)
-    private String createUserName;
 
 }

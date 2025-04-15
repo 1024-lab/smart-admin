@@ -6,16 +6,11 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.admin.module.business.oa.enterprise.domain.form.EnterpriseQueryForm;
-import net.lab1024.sa.admin.module.business.oa.enterprise.domain.form.EnterpriseUpdateForm;
-import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseEmployeeVO;
-import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseExcelVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.form.Impl.SprinklerStockInOperationSheetQueryForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.operationsheet.domain.vo.SprinklerStockInOperationSheetVO;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerUpdateForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerExcelVO;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerVO;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerStockInQueryForm;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInExcelVO;
+import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInVO;
 import net.lab1024.sa.admin.util.AdminRequestUtil;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
@@ -49,9 +44,10 @@ public class SprinklerController {
     @Operation(summary = "分页查询喷头模块 @author 芦苇")
     @PostMapping("/sprinklermanager/sprinkler/page/query")
     @SaCheckPermission("sprinklermanager:sprinkler:query")
-    public ResponseDTO<PageResult<SprinklerVO>> queryByPage(@RequestBody @Valid SprinklerQueryForm queryForm) {
+    public ResponseDTO<PageResult<SprinklerStockInVO>> queryByPage(@RequestBody @Valid SprinklerStockInQueryForm queryForm) {
         return sprinklerService.queryByPage(queryForm);
     }
+
 
     @Operation(summary = "批量新建喷头 @author 芦苇")
     @PostMapping("/sprinklermanager/sprinkler/create")
@@ -64,17 +60,11 @@ public class SprinklerController {
         return sprinklerService.batchImport(file, requestUser);
     }
 
-    @Operation(summary = "编辑喷头 @author 芦苇")
-    @PostMapping("/sprinklermanager/sprinkler/update")
-    @SaCheckPermission("sprinklermanager:sprinkler:update")
-    public ResponseDTO<String> updateSprinkler(@RequestBody @Valid SprinklerUpdateForm updateVO) {
-        return sprinklerService.updateSprinkler(updateVO);
-    }
 
     @Operation(summary = "查询喷头详情 @author 芦苇")
     @GetMapping("/sprinklermanager/sprinkler/get/{sprinklerId}")
     @SaCheckPermission("sprinklermanager:sprinkler:detail")
-    public ResponseDTO<SprinklerVO> getDetail(@PathVariable Long sprinklerId) {
+    public ResponseDTO<SprinklerStockInVO> getDetail(@PathVariable Long sprinklerId) {
         return ResponseDTO.ok(sprinklerService.getDetail(sprinklerId));
     }
 
@@ -84,17 +74,10 @@ public class SprinklerController {
         return ResponseDTO.ok(sprinklerService.queryPageStockInOperationSheetList(queryForm));
     }
 
-    @Operation(summary = "删除喷头 @author 芦苇")
-    @GetMapping("/sprinklermanager/sprinkler/delete/{sprinklerId}")
-    @SaCheckPermission("sprinklermanager:sprinkler:delete")
-    public ResponseDTO<String> deleteSprinkler(@PathVariable Long sprinklerId) {
-        return sprinklerService.deleteSprinkler(sprinklerId);
-    }
-
     @Operation(summary = "导出喷头信息 @author 芦苇")
     @PostMapping("/sprinklermanager/sprinkler/exportExcel")
-    public void exportExcel(@RequestBody @Valid SprinklerQueryForm queryForm, HttpServletResponse response) throws IOException {
-        List<SprinklerExcelVO> data = sprinklerService.getExcelExportData(queryForm);
+    public void exportExcel(@RequestBody @Valid SprinklerStockInQueryForm queryForm, HttpServletResponse response) throws IOException {
+        List<SprinklerStockInExcelVO> data = sprinklerService.getExcelExportData(queryForm);
         if (CollectionUtils.isEmpty(data)) {
             SmartResponseUtil.write(response, ResponseDTO.userErrorParam("暂无数据"));
             return;
@@ -103,7 +86,7 @@ public class SprinklerController {
         String watermark = AdminRequestUtil.getRequestUser().getActualName();
         watermark += SmartLocalDateUtil.format(LocalDateTime.now(), SmartDateFormatterEnum.YMD_HMS);
 
-        SmartExcelUtil.exportExcelWithWatermark(response,"喷头基本信息.xlsx","喷头信息",EnterpriseExcelVO.class,data,watermark);
+        SmartExcelUtil.exportExcelWithWatermark(response,"喷头基本信息.xlsx","喷头信息", SprinklerStockInExcelVO.class,data,watermark);
 
     }
 
