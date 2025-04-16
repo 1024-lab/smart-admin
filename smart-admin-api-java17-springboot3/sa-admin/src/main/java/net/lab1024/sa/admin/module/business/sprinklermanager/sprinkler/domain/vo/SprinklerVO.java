@@ -1,7 +1,5 @@
 package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import net.lab1024.sa.base.module.support.datatracer.annoation.DataTracerFieldLabel;

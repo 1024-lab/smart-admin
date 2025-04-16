@@ -25,6 +25,18 @@ public class SprinklerStockInEntity {
     private Long sprinklerId;
 
     /**
+     * 购入日期（合同编号）
+     */
+    @DataTracerFieldLabel("购入日期（合同编号）")
+    private String purchaseDateContractNumber;
+
+    /**
+     * 喷头型号
+     */
+    @DataTracerFieldLabel("喷头型号")
+    private String sprinklerModel;
+
+    /**
      * 喷头序列号
      */
     @DataTracerFieldLabel("喷头序列号")

@@ -13,6 +13,12 @@ import java.time.LocalDate;
 @Data
 public class SprinklerStockInExcelVO {
 
+    @ExcelProperty("购入日期（合同编号）")
+    private String purchaseDateContractNumber;
+
+    @ExcelProperty("喷头型号")
+    private String sprinklerModel;
+
     @ExcelProperty("喷头序列号")
     private String sprinklerSerial;
 

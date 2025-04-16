@@ -17,6 +17,12 @@ public class SprinklerStockInVO {
     @Schema(description = "喷头ID")
     private Long sprinklerId;
 
+    @DataTracerFieldLabel("购入日期（合同编号）")
+    private String purchaseDateContractNumber;
+
+    @DataTracerFieldLabel("喷头型号")
+    private String sprinklerModel;
+
     @DataTracerFieldLabel("喷头序列号")
     private String sprinklerSerial;
 

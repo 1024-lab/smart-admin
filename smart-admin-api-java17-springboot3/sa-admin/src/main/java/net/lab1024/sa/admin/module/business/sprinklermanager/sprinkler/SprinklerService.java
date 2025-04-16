@@ -59,27 +59,13 @@ public class SprinklerService {
             SprinklerStockInCreateBOParseListener listener = new SprinklerStockInCreateBOParseListener();
 
             FastExcel.read(stream, SprinklerStockInCreateBO.class, listener).sheet().doRead();
-            List<SprinklerStockInCreateBO> createBOs = listener.getSprinklerStockInCreateBOList();
-
-            List<SprinklerStockInCreateForm> createVOs = createBOs.stream().map(
-                    createBO->{
-                        SprinklerStockInCreateForm createVO = new SprinklerStockInCreateForm();
-                        createVO.setPurchaseDateContractNumber(createBO.getPurchaseDateContractNumber());
-                        createVO.setSprinklerModel(createBO.getSprinklerModel());
-                        createVO.setSprinklerSerial(createBO.getSprinklerSerial());
-                        createVO.setShippingDate(createBO.getShippingDate());
-                        createVO.setWarehouseDate(createBO.getWarehouseDate());
-                        createVO.setVoltage(createBO.getVoltage());
-                        createVO.setJetsout(createBO.getJetsout());
-                        createVO.setHistory(createBO.getHistory());
-                        createVO.setStatus(createBO.getStatus());
-                        createVO.setDisabledFlag(Boolean.FALSE);
-                        createVO.setCreateUserId(requestUser.getUserId());
-                        createVO.setCreateUserName(requestUser.getUserName());
-                        return createVO;
-                    }
-            ).collect(Collectors.toList());
-            createVOs.forEach(this::createSprinklerStockIn);
+            List<SprinklerStockInCreateForm> createVOs = listener.getSprinklerStockInCreateVOList();
+            List<ResponseDTO> result = createVOs.stream().map(createVO->{
+                createVO.setDisabledFlag(Boolean.FALSE);
+                createVO.setCreateUserId(requestUser.getUserId());
+                createVO.setCreateUserName(requestUser.getUserName());
+                return this.createSprinklerStockIn(createVO);
+            }).collect(Collectors.toList());
             return ResponseDTO.ok();
 
         } catch (IOException e) {
