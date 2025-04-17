@@ -1,7 +1,5 @@
 package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import net.lab1024.sa.base.module.support.datatracer.annoation.DataTracerFieldLabel;
@@ -15,13 +13,12 @@ import java.time.LocalDateTime;
  * @Author 海印: 芦苇
  */
 @Data
-@TableName("t_sprinkler_instock")
-public class SprinklerStockInEntity {
+@TableName("t_usable_sprinkler")
+public class UsableSprinklerEntity {
 
     /**
      * 喷头ID
      */
-    @TableId(type = IdType.AUTO)
     private Long sprinklerId;
 
     /**

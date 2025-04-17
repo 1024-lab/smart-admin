@@ -2,7 +2,6 @@ package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerEntity;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerQueryForm;
@@ -50,5 +49,5 @@ public interface SprinklerDao extends BaseMapper<SprinklerEntity> {
      * 查询导出的数据
      *
      */
-    List<SprinklerExcelVO> selectExcelExportData(@Valid SprinklerQueryForm queryForm);
+    List<SprinklerExcelVO> selectExcelExportData(@Param("queryForm") SprinklerQueryForm queryForm);
 }

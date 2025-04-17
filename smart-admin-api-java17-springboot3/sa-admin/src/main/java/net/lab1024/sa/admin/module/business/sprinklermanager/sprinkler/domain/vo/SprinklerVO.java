@@ -17,11 +17,29 @@ public class SprinklerVO {
     @Schema(description = "喷头ID")
     private Long sprinklerId;
 
+    @DataTracerFieldLabel("购入日期（合同编号）")
+    private String purchaseDateContractNumber;
+
+    @DataTracerFieldLabel("喷头型号")
+    private String sprinklerModel;
+
     @DataTracerFieldLabel("喷头序列号")
     private String sprinklerSerial;
 
+    @DataTracerFieldLabel("发货日期")
+    private LocalDate shippingDate;
+
     @DataTracerFieldLabel("入仓日期")
     private LocalDate warehouseDate;
+
+    @DataTracerFieldLabel("电压")
+    private Float voltage;
+
+    @DataTracerFieldLabel("jetsout")
+    private Byte jetsout;
+
+    @DataTracerFieldLabel("history")
+    private String history;
 
     @Schema(description = "禁用状态")
     private Boolean disabledFlag;

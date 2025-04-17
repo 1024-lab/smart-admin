@@ -25,16 +25,16 @@ public class SprinklerEntity {
     private Long sprinklerId;
 
     /**
-     * 最后一次操作记录Id
+     * 购入日期（合同编号）
      */
-    @DataTracerFieldLabel("最后一次操作记录Id")
-    private Long lastOperationSheetId;
+    @DataTracerFieldLabel("购入日期（合同编号）")
+    private String purchaseDateContractNumber;
 
     /**
-     * 状态
+     * 喷头型号
      */
-    @DataTracerFieldLabel("状态")
-    private Byte status;
+    @DataTracerFieldLabel("喷头型号")
+    private String sprinklerModel;
 
     /**
      * 喷头序列号
@@ -43,10 +43,43 @@ public class SprinklerEntity {
     private String sprinklerSerial;
 
     /**
+     * 发货日期
+     */
+    @DataTracerFieldLabel("发货日期")
+    private LocalDate shippingDate;
+
+    /**
      * 入仓日期
      */
     @DataTracerFieldLabel("入仓日期")
     private LocalDate warehouseDate;
+
+    /**
+     * 电压
+     */
+    @DataTracerFieldLabel("电压")
+    private Float voltage;
+
+    /**
+     * jetsout
+     */
+    @DataTracerFieldLabel("jetsout")
+    private Byte jetsout;
+
+    /**
+     * history
+     */
+    @DataTracerFieldLabel("history")
+    private String history;
+
+
+
+    /**
+     * 所在仓status
+     */
+    @DataTracerFieldLabel("所在仓status")
+    private Byte status;
+
 
     /**
      * 禁用状态
