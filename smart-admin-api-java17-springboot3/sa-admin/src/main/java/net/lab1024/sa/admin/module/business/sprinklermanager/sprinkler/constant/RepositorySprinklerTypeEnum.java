@@ -15,27 +15,27 @@ public enum RepositorySprinklerTypeEnum implements BaseEnum {
     /**
      * 可用仓
      */
-    USABLE_REPOSITORY(0, "Usable"),
+    USABLE_REPOSITORY(0, "usable"),
 
     /**
      * 机台
      */
-    MACHINE_REPOSITORY(1, "Machine"),
+    MACHINE_REPOSITORY(1, "machine"),
 
     /**
      * 维修仓
      */
-    MAINTAINING_REPOSITORY(2, "Maintaining"),
+    MAINTAINING_REPOSITORY(2, "maintaining"),
 
     /**
      * 破损仓
      */
-    DAMAGED_REPOSITORY(3, "Damaged"),
+    DAMAGED_REPOSITORY(3, "damaged"),
 
     /**
      * RMA
      */
-    RMA_REPOSITORY(4, "Rma"),
+    RMA_REPOSITORY(4, "rma"),
     ;
 
     private Integer value;

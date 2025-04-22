@@ -24,44 +24,37 @@ public class UsableSprinklerEntity {
     private Long sprinklerId;
 
     /**
+     * 喷头序列号
+     */
+    @DataTracerFieldLabel("喷头序列号")
+    private String sprinklerSerial;
+
+    /**
      * 历史
      */
     @DataTracerFieldLabel("历史")
     private String history;
 
     /**
-     * 喷头序列号
+     * 返仓日期
      */
-    @DataTracerFieldLabel("喷头序列号")
-    private String sprinklerSerial;
-
-
-    /**
-     * 发货日期
-     */
-    @DataTracerFieldLabel("发货日期")
-    private LocalDate shippingDate;
-
-    /**
-     * 入仓日期
-     */
-    @DataTracerFieldLabel("入仓日期")
-    private LocalDate warehouseDate;
-
-    /**
-     * 领用日期
-     */
-    @DataTracerFieldLabel("领用日期")
-    private LocalDate allocateDate;
+    @DataTracerFieldLabel("返仓日期")
+    private LocalDate retWarehouseDate;
 
 
 
 
     /**
-     * 所在仓status
+     * 领用是否有限制
      */
-    @DataTracerFieldLabel("所在仓status")
-    private Byte status;
+    @DataTracerFieldLabel("领用是否有限制")
+    private String allocateLimitation;
+
+    /**
+     * 领用时备注1
+     */
+    @DataTracerFieldLabel("领用时备注1")
+    private String allocateNote1;
 
     /**
      * 禁用状态
