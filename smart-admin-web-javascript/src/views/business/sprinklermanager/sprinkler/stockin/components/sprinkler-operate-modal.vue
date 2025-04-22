@@ -1,15 +1,6 @@
 <template>
   <a-modal :open="visible" title="添加/编辑" :width="700" forceRender ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 6 }">
-      <a-form-item label="喷头序列号" name="purchaseDateContractNumber">
-        <a-input v-model:value="form.purchaseDateContractNumber" placeholder="请输入喷头序列号" />
-      </a-form-item>
-      <a-form-item label="喷头序列号" name="sprinklerModel">
-        <a-input v-model:value="form.sprinklerModel" placeholder="请输入喷头序列号" />
-      </a-form-item>
-      <a-form-item label="喷头序列号" name="sprinklerSerial">
-        <a-input v-model:value="form.sprinklerSerial" placeholder="请输入喷头序列号" />
-      </a-form-item>
       <a-form-item label="喷头序列号" name="sprinklerSerial">
         <a-input v-model:value="form.sprinklerSerial" placeholder="请输入喷头序列号" />
       </a-form-item>

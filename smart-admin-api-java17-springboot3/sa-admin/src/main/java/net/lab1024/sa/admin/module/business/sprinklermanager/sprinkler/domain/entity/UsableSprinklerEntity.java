@@ -1,5 +1,7 @@
 package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import net.lab1024.sa.base.module.support.datatracer.annoation.DataTracerFieldLabel;
@@ -8,36 +10,31 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * 喷头
+ * 可用仓喷头
  *
  * @Author 海印: 芦苇
  */
 @Data
 @TableName("t_usable_sprinkler")
 public class UsableSprinklerEntity {
-
     /**
      * 喷头ID
      */
+    @TableId(type = IdType.AUTO)
     private Long sprinklerId;
 
     /**
-     * 购入日期（合同编号）
+     * 历史
      */
-    @DataTracerFieldLabel("购入日期（合同编号）")
-    private String purchaseDateContractNumber;
-
-    /**
-     * 喷头型号
-     */
-    @DataTracerFieldLabel("喷头型号")
-    private String sprinklerModel;
+    @DataTracerFieldLabel("历史")
+    private String history;
 
     /**
      * 喷头序列号
      */
     @DataTracerFieldLabel("喷头序列号")
     private String sprinklerSerial;
+
 
     /**
      * 发货日期
@@ -52,22 +49,11 @@ public class UsableSprinklerEntity {
     private LocalDate warehouseDate;
 
     /**
-     * 电压
+     * 领用日期
      */
-    @DataTracerFieldLabel("电压")
-    private Float voltage;
+    @DataTracerFieldLabel("领用日期")
+    private LocalDate allocateDate;
 
-    /**
-     * jetsout
-     */
-    @DataTracerFieldLabel("jetsout")
-    private Byte jetsout;
-
-    /**
-     * history
-     */
-    @DataTracerFieldLabel("history")
-    private String history;
 
 
 
@@ -76,7 +62,6 @@ public class UsableSprinklerEntity {
      */
     @DataTracerFieldLabel("所在仓status")
     private Byte status;
-
 
     /**
      * 禁用状态
@@ -109,5 +94,4 @@ public class UsableSprinklerEntity {
      * 更新时间
      */
     private LocalDateTime updateTime;
-
 }

@@ -117,18 +117,6 @@
 
   const columns = ref([
     {
-      title: '购入日期（合同编号）',
-      dataIndex: 'purchaseDateContractNumber',
-      minWidth: 180,
-      ellipsis: true,
-    },
-    {
-      title: '喷头型号',
-      dataIndex: 'sprinklerModel',
-      minWidth: 180,
-      ellipsis: true,
-    },
-    {
       title: '喷头序列号',
       dataIndex: 'sprinklerSerial',
       minWidth: 180,

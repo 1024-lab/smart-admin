@@ -36,6 +36,7 @@ public class SprinklerEntity {
     @DataTracerFieldLabel("喷头型号")
     private String sprinklerModel;
 
+
     /**
      * 喷头序列号
      */
@@ -55,6 +56,12 @@ public class SprinklerEntity {
     private LocalDate warehouseDate;
 
     /**
+     * 领用日期
+     */
+    @DataTracerFieldLabel("领用日期")
+    private LocalDate allocateDate;
+
+    /**
      * 电压
      */
     @DataTracerFieldLabel("电压")
@@ -67,19 +74,16 @@ public class SprinklerEntity {
     private Byte jetsout;
 
     /**
-     * history
+     * 历史
      */
-    @DataTracerFieldLabel("history")
+    @DataTracerFieldLabel("历史")
     private String history;
-
-
 
     /**
      * 所在仓status
      */
     @DataTracerFieldLabel("所在仓status")
     private Byte status;
-
 
     /**
      * 禁用状态

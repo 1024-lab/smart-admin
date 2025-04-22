@@ -13,29 +13,11 @@ import java.time.LocalDate;
 @Data
 public class SprinklerExcelVO {
 
-    @ExcelProperty("购入日期（合同编号）")
-    private String purchaseDateContractNumber;
-
-    @ExcelProperty("喷头型号")
-    private String sprinklerModel;
-
     @ExcelProperty("喷头序列号")
     private String sprinklerSerial;
 
-    @ExcelProperty("发货日期")
-    private LocalDate shippingDate;
-
     @ExcelProperty("入仓日期")
     private LocalDate warehouseDate;
-
-    @ExcelProperty("电压")
-    private Float voltage;
-
-    @ExcelProperty("jetsout")
-    private Byte jetsout;
-
-    @ExcelProperty("历史")
-    private String history;
 
 
 }
