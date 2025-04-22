@@ -1,18 +1,17 @@
 package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.processor.impl;
 
 import cn.idev.excel.util.StringUtils;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.SprinklerEntity;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.entity.UsableSprinklerEntity;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.BaseCreateForm;
-import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.UsableSprinklerCreateForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.processor.DataProcessor;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.repository.SprinklerRepository;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.repository.UsableSprinklerRepository;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.util.SmartBeanUtil;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -20,6 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component("usable")
@@ -81,15 +81,21 @@ public class UsableSprinklerDataProcessorImpl implements DataProcessor<UsableSpr
     }
 
     // 辅助方法：获取已存在序列号
-    private <T extends BaseCreateForm> Set<String> getExistingSprinklerSerials(List<T> createVOs) {
+    private <Entity> Set<String> getExistingSerials(
+            ServiceImpl<BaseMapper<Entity>, Entity> repository, // 假设使用Spring Data JPA
+            List<? extends BaseCreateForm> createVOs,
+            Function<Entity, String> serialExtractor) {
+
+        // 提取所有序列号
         List<String> serials = createVOs.stream()
                 .map(BaseCreateForm::getSprinklerSerial)
                 .toList();
 
-        return sprinklerRepository.getListBySprinklerSerials(serials)
+        // 直接调用约定方法（需所有Repository有findBySerialIn方法）
+        return repository.getListBySprinklerSerials(serials)
                 .stream()
-                .map(SprinklerEntity::getSprinklerSerial)
-                .collect(Collectors.toCollection(LinkedHashSet::new)); // 保持查询顺序
+                .map(serialExtractor)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     // 辅助方法：对象转换

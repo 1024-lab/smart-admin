@@ -2,10 +2,12 @@ package net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.form.SprinklerStockInQueryForm;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInExcelVO;
 import net.lab1024.sa.admin.module.business.sprinklermanager.sprinkler.domain.vo.SprinklerStockInVO;
@@ -35,6 +37,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @OperateLog
+@Tag(name = AdminSwaggerTagConst.System.SYSTEM_DEPARTMENT)
 public class SprinklerController {
     @Resource
     private SprinklerService sprinklerService;
