@@ -1,4 +1,4 @@
-package net.lab1024.sa.admin.module.system.datascope;
+package net.lab1024.sa.admin.module.system.datascope.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;

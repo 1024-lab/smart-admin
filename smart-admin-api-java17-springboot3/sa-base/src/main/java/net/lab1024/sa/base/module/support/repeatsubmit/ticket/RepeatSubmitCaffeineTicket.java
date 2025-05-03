@@ -2,7 +2,6 @@ package net.lab1024.sa.base.module.support.repeatsubmit.ticket;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import net.lab1024.sa.base.module.support.repeatsubmit.annoation.RepeatSubmit;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;

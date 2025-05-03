@@ -2,7 +2,6 @@ package net.lab1024.sa.base.module.support.reload.core.thread;
 
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.base.module.support.reload.core.AbstractSmartReloadCommand;
-import net.lab1024.sa.base.module.support.reload.core.SmartReloadManager;
 import net.lab1024.sa.base.module.support.reload.core.domain.SmartReloadItem;
 import net.lab1024.sa.base.module.support.reload.core.domain.SmartReloadObject;
 import net.lab1024.sa.base.module.support.reload.core.domain.SmartReloadResult;

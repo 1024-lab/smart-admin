@@ -65,7 +65,7 @@ spring:
 
   # 缓存实现类型
   cache:
-    type: caffeine
+    type: redis
 
 # tomcat 配置，主要用于 配置 访问日志（便于将来排查错误）
 server:

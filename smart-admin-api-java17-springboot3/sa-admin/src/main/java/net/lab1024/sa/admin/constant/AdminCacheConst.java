@@ -21,11 +21,6 @@ public class AdminCacheConst extends CacheKeyConst {
         public static final String DEPARTMENT_LIST_CACHE = "department_list_cache";
 
         /**
-         * 部门map
-         */
-        public static final String DEPARTMENT_MAP_CACHE = "department_map_cache";
-
-        /**
          * 部门树
          */
         public static final String DEPARTMENT_TREE_CACHE = "department_tree_cache";
@@ -52,6 +47,22 @@ public class AdminCacheConst extends CacheKeyConst {
         public static final String CATEGORY_SUB = "category_sub_cache";
 
         public static final String CATEGORY_TREE = "category_tree_cache";
+    }
+
+    /**
+     * 登录相关
+     */
+    public static class Login {
+
+        /**
+         * 请求用户信息
+         */
+        public static final String REQUEST_EMPLOYEE = "login_request_employee";
+
+        /**
+         * 请求用户信息权限
+         */
+        public static final String USER_PERMISSION = "login_user_permission";
     }
 
 }

@@ -8,7 +8,7 @@
 
   const props = defineProps({
     dictCode: String,
-    dataValue: String,
+    dataValue: [String, Number],
   });
   const dataLabels = computed(() => {
     return useDictStore().getDataLabels(props.dictCode, props.dataValue);

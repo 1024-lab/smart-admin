@@ -1,4 +1,4 @@
-package net.lab1024.sa.admin.module.business.oa.bank;
+package net.lab1024.sa.admin.module.business.oa.bank.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.v3.oas.annotations.Operation;
@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
+import net.lab1024.sa.admin.module.business.oa.bank.service.BankService;
 import net.lab1024.sa.admin.module.business.oa.bank.domain.BankCreateForm;
 import net.lab1024.sa.admin.module.business.oa.bank.domain.BankQueryForm;
 import net.lab1024.sa.admin.module.business.oa.bank.domain.BankUpdateForm;

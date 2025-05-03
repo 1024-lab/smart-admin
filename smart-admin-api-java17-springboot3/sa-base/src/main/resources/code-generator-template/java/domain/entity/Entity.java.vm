@@ -18,7 +18,7 @@ public class ${name.upperCamel}Entity {
 #foreach ($field in $fields)
 
     /**
-     * $field.label
+     * $field.columnComment
      */
     #if($field.primaryKeyFlag && $field.autoIncreaseFlag)
     @TableId(type = IdType.AUTO)

@@ -80,8 +80,7 @@
   import { LOGIN_DEVICE_ENUM } from '/@/constants/system/login-device-const';
   import { useUserStore } from '/@/store/modules/system/user';
   import loginQR from '/@/assets/images/login/login-qr.png';
-  import leftBg2 from '/@/assets/images/login/left-bg2.png';
-  import loginGif from '/@/assets/images/login/login.gif';
+  import loginGif from '/@/assets/images/login/login-min.gif';
   import wechatIcon from '/@/assets/images/login/wechat-icon.png';
   import aliIcon from '/@/assets/images/login/ali-icon.png';
   import douyinIcon from '/@/assets/images/login/douyin-icon.png';

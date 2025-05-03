@@ -7,13 +7,7 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import { AppConfig } from '/@/types/config';
-
-/**
- * 应用默认配置
- */
-
-export const appDefaultConfig: AppConfig = {
+export const appDefaultConfig = {
   // i18n 语言选择
   language: 'zh_CN',
   // 布局: side 或者 side-expand 或者 top

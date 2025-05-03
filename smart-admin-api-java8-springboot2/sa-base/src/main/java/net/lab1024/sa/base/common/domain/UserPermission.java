@@ -2,6 +2,7 @@ package net.lab1024.sa.base.common.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 
 @Data
-public class UserPermission {
+public class UserPermission implements Serializable {
 
     /**
      * 权限列表

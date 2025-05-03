@@ -1,17 +1,8 @@
 package net.lab1024.sa.base.module.support.cache;
 
-import com.google.common.collect.Lists;
-import jakarta.annotation.Resource;
-import net.lab1024.sa.base.constant.ReloadConst;
-import net.lab1024.sa.base.module.support.reload.core.annoation.SmartReload;
-import org.springframework.cache.caffeine.CaffeineCache;
-import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 缓存服务

@@ -208,9 +208,9 @@
     // 页面圆角
     borderRadius: appConfigStore.borderRadius,
     // 标签页
-    flatPattern: appConfigStore.flatPattern,
-    // 标签页
     pageTagFlag: appConfigStore.pageTagFlag,
+    // 标签页
+    flatPattern: appConfigStore.flatPattern,
     // 标签页 样式
     pageTagStyle: appConfigStore.pageTagStyle,
     // 面包屑
@@ -251,7 +251,7 @@
     });
   }
 
-  function changePageTagLocation(e: any) {
+  function changePageTagLocation(e) {
     appConfigStore.$patch({
       pageTagLocation: e.target.value,
     });

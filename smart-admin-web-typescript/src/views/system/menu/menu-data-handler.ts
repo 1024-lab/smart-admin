@@ -126,7 +126,7 @@ function isMenuExistMenuType(menu, menuType) {
 /**
  * 过滤关键字
  */
-function isMenuExistKeywords(menu: any, keywords: string) {
+function isMenuExistKeywords(menu, keywords) {
   if (!keywords) {
     return true;
   }

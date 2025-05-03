@@ -266,7 +266,7 @@
   function showDrawer(rowData) {
     menuOperateModal.value.showDrawer(rowData);
   }
-  
+
   function showAddSub(rowData) {
     const subData = {
       parentId: rowData.menuId,

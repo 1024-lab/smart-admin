@@ -1,4 +1,4 @@
-package net.lab1024.sa.admin.module.business.oa.invoice;
+package net.lab1024.sa.admin.module.business.oa.invoice.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -7,7 +7,6 @@ import net.lab1024.sa.admin.module.business.oa.invoice.domain.InvoiceQueryForm;
 import net.lab1024.sa.admin.module.business.oa.invoice.domain.InvoiceVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

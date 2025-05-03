@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:open="visible" title="推送人" width="1100px" ok-text="确定" cancel-text="取消" @ok="onSubmit" @cancel="onClose"  :zIndex="9999">
+  <a-modal v-model:open="visible" title="推送人" width="1100px" ok-text="确定" cancel-text="取消" @ok="onSubmit" @cancel="onClose" :zIndex="9999">
     <a-form class="smart-query-form">
       <a-row class="smart-query-form-row">
         <a-form-item label="关键词搜索" class="smart-query-form-item">
@@ -54,13 +54,11 @@
   </a-modal>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { reactive, ref } from 'vue';
-  import { message, Modal } from 'ant-design-vue';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
-  import { smartSentry } from '/src/lib/smart-sentry';
-  import { SmartLoading } from '/src/components/framework/smart-loading';
-  import SmartEnumSelect from '/src/components/framework/smart-enum-select/index.vue';
+  import { smartSentry } from '/@/lib/smart-sentry';
+  import { SmartLoading } from '/@/components/framework/smart-loading';
   import { employeeApi } from '/@/api/system/employee-api';
   // ---------------查询条件----------------
   const queryParamState = {

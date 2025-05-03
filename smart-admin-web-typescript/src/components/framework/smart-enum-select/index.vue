@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch, onMounted, getCurrentInstance} from 'vue';
+  import { ref, watch, onMounted, getCurrentInstance } from 'vue';
 
   const props = defineProps({
     enumName: String,

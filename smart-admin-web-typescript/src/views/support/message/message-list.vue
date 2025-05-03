@@ -86,7 +86,7 @@
     <MessageSendForm ref="formRef" @reloadList="queryData" />
   </a-card>
 </template>
-<script setup>
+<script setup lang="ts">
   import { onMounted, reactive, ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';

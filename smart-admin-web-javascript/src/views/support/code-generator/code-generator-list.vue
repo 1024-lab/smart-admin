@@ -41,7 +41,7 @@
 
       <a-table
         size="small"
-        :scroll="{ y: 800 }"
+        :scroll="{ x: 1000 }"
         :loading="tableLoading"
         bordered
         :dataSource="tableData"

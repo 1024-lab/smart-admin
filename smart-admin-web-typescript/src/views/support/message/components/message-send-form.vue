@@ -24,15 +24,15 @@
   </a-modal>
   <MessageReceiverModal ref="receiverModalRef" @reloadList="addReceiverIdList" />
 </template>
-<script setup>
+<script setup lang="ts">
   import { nextTick, reactive, ref } from 'vue';
   import { message } from 'ant-design-vue';
-  import { SmartLoading } from '/src/components/framework/smart-loading';
-  import { smartSentry } from '/src/lib/smart-sentry';
-  import SmartEnumSelect from '/src/components/framework/smart-enum-select/index.vue';
+  import { SmartLoading } from '/@/components/framework/smart-loading';
+  import { smartSentry } from '/@/lib/smart-sentry';
+  import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import MessageReceiverModal from './message-receiver-modal.vue';
-  import { USER_TYPE_ENUM } from '/src/constants/common-const.js';
-  import { messageApi } from '/@/api/support/message-api.js';
+  import { USER_TYPE_ENUM } from '/@/constants/common-const';
+  import { messageApi } from '/@/api/support/message-api';
   // ------------------------ 事件 ------------------------
 
   const emits = defineEmits(['reloadList']);

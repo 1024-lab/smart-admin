@@ -14,10 +14,7 @@ import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 部门 service
@@ -26,7 +23,7 @@ import java.util.Map;
  * @Date 2022-01-12 20:37:48
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class DepartmentService {
@@ -44,7 +41,6 @@ public class DepartmentService {
 
     /**
      * 新增添加部门
-     *
      */
 
     public ResponseDTO<String> addDepartment(DepartmentAddForm departmentAddForm) {
@@ -57,7 +53,6 @@ public class DepartmentService {
 
     /**
      * 更新部门信息
-     *
      */
     public ResponseDTO<String> updateDepartment(DepartmentUpdateForm updateDTO) {
         if (updateDTO.getParentId() == null) {
@@ -78,7 +73,6 @@ public class DepartmentService {
      * 根据id删除部门
      * 1、需要判断当前部门是否有子部门,有子部门则不允许删除
      * 2、需要判断当前部门是否有员工，有员工则不能删除
-     *
      */
     public ResponseDTO<String> deleteDepartment(Long departmentId) {
         DepartmentEntity departmentEntity = departmentDao.selectById(departmentId);
@@ -122,7 +116,6 @@ public class DepartmentService {
 
     /**
      * 自身以及所有下级的部门id列表
-     *
      */
     public List<Long> selfAndChildrenIdList(Long departmentId) {
         return departmentCacheManager.getDepartmentSelfAndChildren(departmentId);
@@ -131,7 +124,6 @@ public class DepartmentService {
 
     /**
      * 获取所有部门
-     *
      */
     public List<DepartmentVO> listAll() {
         return departmentCacheManager.getDepartmentList();
@@ -140,10 +132,9 @@ public class DepartmentService {
 
     /**
      * 获取部门
-     *
      */
     public DepartmentVO getDepartmentById(Long departmentId) {
-        return departmentCacheManager.getDepartmentMap().get(departmentId);
+        return departmentDao.selectDepartmentVO(departmentId);
     }
 
     /**
@@ -151,40 +142,6 @@ public class DepartmentService {
      */
     public String getDepartmentPath(Long departmentId) {
         return departmentCacheManager.getDepartmentPathMap().get(departmentId);
-    }
-
-    /**
-     * 查询全部父级部门（不包含自己）
-     *
-     */
-    public List<DepartmentVO> queryAllParentDepartment(Long departmentId) {
-        List<DepartmentVO> list = new ArrayList<>();
-
-        Map<Long, DepartmentVO> departmentMap = departmentCacheManager.getDepartmentMap();
-        DepartmentVO departmentVO = departmentMap.get(departmentId);
-        while (departmentVO != null) {
-            list.add(departmentVO);
-            departmentVO = departmentMap.get(departmentVO.getParentId());
-        }
-        Collections.reverse(list);
-        return list;
-    }
-
-    /**
-     * 查询全部父级部门（不包含自己）
-     *
-     */
-    public List<Long> queryAllParentDepartmentIdList(Long departmentId) {
-        List<Long> list = new ArrayList<>();
-
-        Map<Long, DepartmentVO> departmentMap = departmentCacheManager.getDepartmentMap();
-        DepartmentVO departmentVO = departmentMap.get(departmentId);
-        while (departmentVO != null) {
-            list.add(departmentVO.getDepartmentId());
-            departmentVO = departmentMap.get(departmentVO.getParentId());
-        }
-        Collections.reverse(list);
-        return list;
     }
 
 }

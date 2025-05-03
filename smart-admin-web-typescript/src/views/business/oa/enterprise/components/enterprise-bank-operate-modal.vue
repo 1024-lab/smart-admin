@@ -8,8 +8,8 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-modal :open="visible" :title="form.bankId ? '编辑' : '添加'" :width="700" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
-    <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 4 }" :wrapper-col="{ span: 19 }">
+  <a-modal :open="visible" :title="form.bankId ? '编辑' : '添加'" ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
+    <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
       <a-form-item label="开户银行" name="bankName">
         <a-input v-model:value="form.bankName" placeholder="请输入开户银行" />
       </a-form-item>

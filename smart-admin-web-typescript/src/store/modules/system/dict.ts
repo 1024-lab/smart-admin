@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia';
-import { dictApi } from '/@/api/support/dict-api';
-import { smartSentry } from '/@/lib/smart-sentry';
 import { DICT_SPLIT } from '/@/constants/support/dict-const.js';
 import _ from 'lodash';
 
@@ -23,12 +21,19 @@ export const useDictStore = defineStore({
 
     // 获取字典的值名称
     getDataLabels(dictCode, dataValue) {
-      if (!dataValue) {
+      if (_.isNil(dataValue) || _.isNaN(dataValue)) {
         return '';
       }
+
       let dict = this.getDictData(dictCode);
       if (dict.length === 0) {
         return '';
+      }
+
+      // 是数字的话，需要特殊处理
+      if(_.isNumber(dataValue)){
+        let target = _.find(dict, { dataValue: dataValue });
+        return target ? target.dataLabel : '';
       }
 
       let valueArray = dataValue.split(DICT_SPLIT);
@@ -42,7 +47,7 @@ export const useDictStore = defineStore({
       return result.join(DICT_SPLIT);
     },
     // 初始化字典
-    initData(dictDataList){
+    initData(dictDataList) {
       this.dictMap.clear();
       for (let data of dictDataList) {
         let dataArray = this.dictMap.get(data.dictCode);

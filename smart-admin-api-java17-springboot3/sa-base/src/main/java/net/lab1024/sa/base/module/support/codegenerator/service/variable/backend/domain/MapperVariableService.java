@@ -3,10 +3,8 @@ package net.lab1024.sa.base.module.support.codegenerator.service.variable.backen
 import cn.hutool.core.bean.BeanUtil;
 import net.lab1024.sa.base.module.support.codegenerator.constant.CodeQueryFieldQueryTypeEnum;
 import net.lab1024.sa.base.module.support.codegenerator.domain.form.CodeGeneratorConfigForm;
-import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeInsertAndUpdateField;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeQueryField;
 import net.lab1024.sa.base.module.support.codegenerator.service.variable.CodeGenerateBaseVariableService;
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

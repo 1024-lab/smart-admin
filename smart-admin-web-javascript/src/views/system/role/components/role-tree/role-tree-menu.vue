@@ -12,11 +12,11 @@
   <li v-for="module in props.tree" :key="module.menuId">
     <div class="menu" :style="{ marginLeft: `${props.index * 4}%` }">
       <a-checkbox @change="selectCheckbox(module)" class="checked-box-label" :value="module.menuId">{{ module.menuName }} </a-checkbox>
-      <div v-if="module.children && module.children.some((e) => e.menuType == MENU_TYPE_ENUM.POINTS.value)">
+      <div v-if="module.children && module.children.some((e) => e.menuType === MENU_TYPE_ENUM.POINTS.value)">
         <RoleTreePoint :tree="module.children" @selectCheckbox="selectCheckbox" />
       </div>
     </div>
-    <template v-if="module.children && !module.children.some((e) => e.menuType == MENU_TYPE_ENUM.POINTS.value)">
+    <template v-if="module.children && !module.children.some((e) => e.menuType === MENU_TYPE_ENUM.POINTS.value)">
       <RoleTreeMenu :tree="module.children" :index="props.index + 1" />
     </template>
   </li>
@@ -47,7 +47,7 @@
     let checkedData = roleStore.checkedData;
     let findIndex = checkedData.indexOf(module.menuId);
     // 选中
-    if (findIndex == -1) {
+    if (findIndex === -1) {
       // 选中本级以及子级
       roleStore.addCheckedDataAndChildren(module);
       // 选中上级

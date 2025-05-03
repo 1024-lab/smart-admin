@@ -10,7 +10,6 @@ import net.lab1024.sa.admin.module.system.department.domain.vo.DepartmentVO;
 import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ import java.util.stream.Collectors;
  * @Date 2022-01-12 20:37:48
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Slf4j
 @Service
@@ -43,7 +42,7 @@ public class DepartmentCacheManager {
         log.info("clear " + cache);
     }
 
-    @CacheEvict(value = {AdminCacheConst.Department.DEPARTMENT_LIST_CACHE, AdminCacheConst.Department.DEPARTMENT_MAP_CACHE, AdminCacheConst.Department.DEPARTMENT_SELF_CHILDREN_CACHE, AdminCacheConst.Department.DEPARTMENT_TREE_CACHE, AdminCacheConst.Department.DEPARTMENT_PATH_CACHE,}, allEntries = true)
+    @CacheEvict(value = {AdminCacheConst.Department.DEPARTMENT_LIST_CACHE, AdminCacheConst.Department.DEPARTMENT_SELF_CHILDREN_CACHE, AdminCacheConst.Department.DEPARTMENT_TREE_CACHE, AdminCacheConst.Department.DEPARTMENT_PATH_CACHE,}, allEntries = true)
     public void clearCache() {
         logClearInfo(AdminCacheConst.Department.DEPARTMENT_LIST_CACHE);
     }
@@ -58,18 +57,7 @@ public class DepartmentCacheManager {
     }
 
     /**
-     * 部门map
-     *
-     */
-    @Cacheable(AdminCacheConst.Department.DEPARTMENT_MAP_CACHE)
-    public Map<Long, DepartmentVO> getDepartmentMap() {
-        return departmentDao.listAll().stream().collect(Collectors.toMap(DepartmentVO::getDepartmentId, Function.identity()));
-    }
-
-
-    /**
      * 缓存部门树结构
-     *
      */
     @Cacheable(AdminCacheConst.Department.DEPARTMENT_TREE_CACHE)
     public List<DepartmentTreeVO> getDepartmentTree() {
@@ -79,7 +67,6 @@ public class DepartmentCacheManager {
 
     /**
      * 缓存某个部门的下级id列表
-     *
      */
     @Cacheable(AdminCacheConst.Department.DEPARTMENT_SELF_CHILDREN_CACHE)
     public List<Long> getDepartmentSelfAndChildren(Long departmentId) {
@@ -90,7 +77,6 @@ public class DepartmentCacheManager {
 
     /**
      * 部门的路径名称
-     *
      */
     @Cacheable(AdminCacheConst.Department.DEPARTMENT_PATH_CACHE)
     public Map<Long, String> getDepartmentPathMap() {
@@ -126,7 +112,6 @@ public class DepartmentCacheManager {
 
     /**
      * 构建部门树结构
-     *
      */
     public List<DepartmentTreeVO> buildTree(List<DepartmentVO> voList) {
         if (CollectionUtils.isEmpty(voList)) {
@@ -141,15 +126,15 @@ public class DepartmentCacheManager {
         return treeVOList;
     }
 
-     /**
+    /**
      * 构建所有根节点的下级树形结构
-     * 返回值为层序遍历结果 
+     * 返回值为层序遍历结果
      * [由于departmentDao中listAll给出数据根据Sort降序 所以同一层中Sort值较大的优先遍历]
      */
     private List<Long> recursiveBuildTree(List<DepartmentTreeVO> nodeList, List<DepartmentVO> allDepartmentList) {
         int nodeSize = nodeList.size();
         List<Long> childIdList = new ArrayList<>();
-        for(int i = 0; i < nodeSize; i++) {
+        for (int i = 0; i < nodeSize; i++) {
             int preIndex = i - 1;
             int nextIndex = i + 1;
             DepartmentTreeVO node = nodeList.get(i);
@@ -161,39 +146,38 @@ public class DepartmentCacheManager {
             }
 
             List<DepartmentTreeVO> children = getChildren(node.getDepartmentId(), allDepartmentList);
-            
+
             List<Long> tempChildIdList = new ArrayList<>();
             if (CollectionUtils.isNotEmpty(children)) {
                 node.setChildren(children);
                 tempChildIdList = this.recursiveBuildTree(children, allDepartmentList);
             }
 
-            if(CollectionUtils.isEmpty(node.getSelfAndAllChildrenIdList())) {
+            if (CollectionUtils.isEmpty(node.getSelfAndAllChildrenIdList())) {
                 node.setSelfAndAllChildrenIdList(
                         new ArrayList<>()
                 );
             }
             node.getSelfAndAllChildrenIdList().add(node.getDepartmentId());
-            
-            if(CollectionUtils.isNotEmpty(tempChildIdList)) {
+
+            if (CollectionUtils.isNotEmpty(tempChildIdList)) {
                 node.getSelfAndAllChildrenIdList().addAll(tempChildIdList);
                 childIdList.addAll(tempChildIdList);
             }
-            
+
         }
-        
+
         // 保证本层遍历顺序
-        for(int i = nodeSize - 1; i >= 0; i--) {
+        for (int i = nodeSize - 1; i >= 0; i--) {
             childIdList.add(0, nodeList.get(i).getDepartmentId());
         }
-        
+
         return childIdList;
     }
 
 
     /**
      * 获取子元素
-     *
      */
     private List<DepartmentTreeVO> getChildren(Long departmentId, List<DepartmentVO> voList) {
         List<DepartmentVO> childrenEntityList = voList.stream().filter(e -> departmentId.equals(e.getParentId())).collect(Collectors.toList());
@@ -206,7 +190,6 @@ public class DepartmentCacheManager {
 
     /**
      * 通过部门id,获取当前以及下属部门
-     *
      */
     public List<Long> selfAndChildrenIdList(Long departmentId, List<DepartmentVO> voList) {
         List<Long> selfAndChildrenIdList = Lists.newArrayList();

@@ -89,6 +89,7 @@
         <!---------- 表格 begin ----------->
         <a-table
             size="small"
+            :scroll="{ y: 800 }"
             :dataSource="tableData"
             :columns="columns"
             rowKey="$!{primaryKeyFieldName}"
@@ -105,6 +106,13 @@
                 #if($field.frontComponent == "FileUpload")
                 <template v-if="column.dataIndex === '$field.fieldName'">
                     <FilePreview :file-list="text" type="picture" />
+                </template>
+                #end
+            #end
+            #foreach ($field in $listFields)
+                #if($field.frontEnumPlugin)
+                <template v-if="column.dataIndex === '$!{field.fieldName}'">
+                    <span>{{ $!{field.frontEnumPlugin} }}</span>
                 </template>
                 #end
             #end

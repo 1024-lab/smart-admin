@@ -2,9 +2,7 @@ package net.lab1024.sa.admin.module.system.employee.domain.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import net.lab1024.sa.base.common.util.SmartVerificationUtil;
 
 /**
  * 修改密码所需参数

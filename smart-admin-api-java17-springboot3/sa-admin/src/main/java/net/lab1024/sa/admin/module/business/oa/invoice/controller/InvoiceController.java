@@ -1,10 +1,13 @@
-package net.lab1024.sa.admin.module.business.oa.invoice;
+package net.lab1024.sa.admin.module.business.oa.invoice.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
+import net.lab1024.sa.admin.module.business.oa.invoice.service.InvoiceService;
 import net.lab1024.sa.admin.module.business.oa.invoice.domain.InvoiceAddForm;
 import net.lab1024.sa.admin.module.business.oa.invoice.domain.InvoiceQueryForm;
 import net.lab1024.sa.admin.module.business.oa.invoice.domain.InvoiceUpdateForm;
@@ -16,8 +19,6 @@ import net.lab1024.sa.base.common.util.SmartRequestUtil;
 import net.lab1024.sa.base.module.support.operatelog.annotation.OperateLog;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.validation.Valid;
 import java.util.List;
 
 /**

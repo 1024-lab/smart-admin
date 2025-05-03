@@ -54,11 +54,11 @@
         </a-col>
         <!--待办、已办-->
         <a-col :span="24">
-          <ToBeDoneCard />
+          <ChangelogCard />
         </a-col>
         <!--更新日志-->
         <a-col :span="24">
-          <ChangelogCard />
+          <ToBeDoneCard />
         </a-col>
       </a-row>
     </a-col>

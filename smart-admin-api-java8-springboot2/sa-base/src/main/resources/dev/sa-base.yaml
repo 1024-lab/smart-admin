@@ -66,7 +66,7 @@ spring:
 
   # 缓存实现类型
   cache:
-    type: caffeine
+    type: redis
 
 # tomcat 配置，主要用于 配置 访问日志（便于将来排查错误）
 server:
@@ -88,8 +88,8 @@ file:
       region: oss-cn-hangzhou
       endpoint: oss-cn-hangzhou.aliyuncs.com
       bucket-name: 1024lab-smart-admin
-      access-key: 
-      secret-key: 
+      access-key:
+      secret-key:
       url-prefix: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/
       private-url-expire-seconds: 3600
 

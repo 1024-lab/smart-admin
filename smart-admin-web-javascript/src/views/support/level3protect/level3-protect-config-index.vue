@@ -24,7 +24,7 @@
       :model="form"
       :rules="rules"
       ref="formRef"
-      style="width: 800px"
+      style="width: 100%"
       :label-col="{ span: 6 }"
       :wrapper-col="{ span: 18 }"
       autocomplete="off"

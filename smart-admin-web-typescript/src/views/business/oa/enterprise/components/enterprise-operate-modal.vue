@@ -1,15 +1,6 @@
 <template>
-  <a-modal
-    :open="visible"
-    :title="form.enterpriseId ? '编辑' : '添加'"
-    :width="700"
-    forceRender
-    ok-text="确认"
-    cancel-text="取消"
-    @ok="onSubmit"
-    @cancel="onClose"
-  >
-    <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+  <a-modal :open="visible" title="添加" :width="700" forceRender ok-text="确认" cancel-text="取消" @ok="onSubmit" @cancel="onClose">
+    <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 6 }">
       <a-form-item label="企业名称" name="enterpriseName">
         <a-input v-model:value="form.enterpriseName" placeholder="请输入企业名称" />
       </a-form-item>
