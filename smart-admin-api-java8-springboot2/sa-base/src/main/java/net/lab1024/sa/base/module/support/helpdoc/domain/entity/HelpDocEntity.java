@@ -53,7 +53,6 @@ public class HelpDocEntity {
     /**
      * 排序
      */
-    @TableField("`sort`")
     private Integer sort;
 
     /**

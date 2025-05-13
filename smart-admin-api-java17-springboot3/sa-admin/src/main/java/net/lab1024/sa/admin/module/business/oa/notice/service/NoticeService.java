@@ -230,7 +230,7 @@ public class NoticeService {
                     noticeVisibleRange.setDataName(employeeEntity == null ? StringConst.EMPTY : employeeEntity.getActualName());
                 } else {
                     DepartmentVO departmentVO = departmentService.getDepartmentById(noticeVisibleRange.getDataId());
-                    noticeVisibleRange.setDataName(departmentVO == null ? StringConst.EMPTY : departmentVO.getName());
+                    noticeVisibleRange.setDataName(departmentVO == null ? StringConst.EMPTY : departmentVO.getDepartmentName());
                 }
             }
             updateFormVO.setVisibleRangeList(noticeVisibleRangeList);

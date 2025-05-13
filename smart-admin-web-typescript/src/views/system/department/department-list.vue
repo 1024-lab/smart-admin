@@ -95,8 +95,8 @@
   const columns = ref([
     {
       title: '部门名称',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'departmentName',
+      key: 'departmentName',
     },
     {
       title: '负责人',
@@ -189,7 +189,7 @@
       return;
     }
     // 筛选出名称符合的部门
-    let filterDepartment = originData.filter((e) => e.name.indexOf(keywords.value) > -1);
+    let filterDepartment = originData.filter((e) => e.departmentName.indexOf(keywords.value) > -1);
     let filterDepartmentList = [];
     // 循环筛选出的部门 构建部门树
     filterDepartment.forEach((e) => {
@@ -220,7 +220,7 @@
   function addDepartment(e) {
     let data = {
       departmentId: 0,
-      name: '',
+      departmentName: '',
       parentId: e.departmentId || null,
     };
     departmentFormModal.value.showModal(data);

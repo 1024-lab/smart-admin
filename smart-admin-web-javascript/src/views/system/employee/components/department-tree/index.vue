@@ -18,7 +18,7 @@
       v-model:checkedKeys="checkedKeys"
       class="tree"
       :treeData="departmentTreeData"
-      :fieldNames="{ title: 'name', key: 'departmentId', value: 'departmentId' }"
+      :fieldNames="{ title: 'departmentName', key: 'departmentId', value: 'departmentId' }"
       style="width: 100%; overflow-x: auto"
       :style="[!height ? '' : { height: `${height}px`, overflowY: 'auto' }]"
       :checkable="props.checkable"
@@ -28,7 +28,7 @@
       @select="treeSelectChange"
     >
       <template #title="item">
-        <div>{{ item.name }}</div>
+        <div>{{ item.departmentName }}</div>
       </template>
     </a-tree>
     <div class="no-data" v-else>暂无结果</div>
@@ -158,7 +158,7 @@
     selectedDepartmentChildren.value = departmentList.value.filter((e) => e.parentId == id);
     let filterDepartmentList = [];
     recursionFilterDepartment(filterDepartmentList, id, true);
-    breadcrumb.value = filterDepartmentList.map((e) => e.name);
+    breadcrumb.value = filterDepartmentList.map((e) => e.departmentName);
   }
 
   // -----------------------  筛选 ---------------------
@@ -181,7 +181,7 @@
       return;
     }
     // 筛选出名称符合的部门
-    let filterDepartment = originData.filter((e) => e.name.indexOf(keywords.value) > -1);
+    let filterDepartment = originData.filter((e) => e.departmentName.indexOf(keywords.value) > -1);
     let filterDepartmentList = [];
     // 循环筛选出的部门 构建部门树
     filterDepartment.forEach((e) => {

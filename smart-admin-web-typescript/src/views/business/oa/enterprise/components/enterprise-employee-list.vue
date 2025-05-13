@@ -16,50 +16,59 @@
         <a-button class="button-style" type="primary" @click="onSearch">搜索</a-button>
         <a-button class="button-style" type="default" @click="resetQueryEmployee">重置</a-button>
       </div>
-
       <div>
         <a-button class="button-style" type="primary" @click="addEmployee" v-privilege="'oa:enterprise:addEmployee'"> 添加员工 </a-button>
         <a-button class="button-style" type="primary" danger @click="batchDelete" v-privilege="'oa:enterprise:deleteEmployee'"> 批量移除 </a-button>
       </div>
     </div>
-    <a-table
-      :loading="tableLoading"
-      :dataSource="tableData"
-      :columns="columns"
-      :pagination="false"
-      rowKey="employeeId"
-      :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
-      size="small"
-      bordered
-    >
-      <template #bodyCell="{ text, record, index, column }">
-        <template v-if="column.dataIndex === 'disabledFlag'">
-          <a-tag :color="text ? 'error' : 'processing'">{{ text ? '禁用' : '启用' }}</a-tag>
+    <a-card size="small" :bordered="false" :hoverable="false">
+      <a-row justify="end">
+        <TableOperator
+          class="smart-margin-bottom5"
+          v-model="columns"
+          :tableId="TABLE_ID_CONST.BUSINESS.OA.ENTERPRISE_EMPLOYEE"
+          :refresh="queryEmployee"
+        />
+      </a-row>
+      <a-table
+        :loading="tableLoading"
+        :dataSource="tableData"
+        :columns="columns"
+        :pagination="false"
+        rowKey="employeeId"
+        :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
+        size="small"
+        bordered
+      >
+        <template #bodyCell="{ text, record, column }">
+          <template v-if="column.dataIndex === 'disabledFlag'">
+            <a-tag :color="text ? 'error' : 'processing'">{{ text ? '禁用' : '启用' }}</a-tag>
+          </template>
+          <template v-else-if="column.dataIndex === 'gender'">
+            <span>{{ $smartEnumPlugin.getDescByValue('GENDER_ENUM', text) }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'operate'">
+            <a-button type="link" @click="deleteEmployee(record.employeeId)" v-privilege="'oa:enterprise:deleteEmployee'">移除</a-button>
+          </template>
         </template>
-        <template v-else-if="column.dataIndex === 'gender'">
-          <span>{{ $smartEnumPlugin.getDescByValue('GENDER_ENUM', text) }}</span>
-        </template>
-        <template v-if="column.dataIndex === 'operate'">
-          <a @click="deleteEmployee(record.employeeId)" v-privilege="'oa:enterprise:deleteEmployee'">移除</a>
-        </template>
-      </template>
-    </a-table>
-    <div class="smart-query-table-page">
-      <a-pagination
-        showSizeChanger
-        showQuickJumper
-        show-less-items
-        :pageSizeOptions="PAGE_SIZE_OPTIONS"
-        :defaultPageSize="queryForm.pageSize"
-        v-model:current="queryForm.pageNum"
-        v-model:pageSize="queryForm.pageSize"
-        :total="total"
-        @change="queryEmployee"
-        @showSizeChange="queryEmployee"
-        :show-total="showTableTotal"
-      />
-    </div>
-    <EmployeeTableSelectModal ref="selectEmployeeModal" @selectData="selectData" />
+      </a-table>
+      <div class="smart-query-table-page">
+        <a-pagination
+          showSizeChanger
+          showQuickJumper
+          show-less-items
+          :pageSizeOptions="PAGE_SIZE_OPTIONS"
+          :defaultPageSize="queryForm.pageSize"
+          v-model:current="queryForm.pageNum"
+          v-model:pageSize="queryForm.pageSize"
+          :total="total"
+          @change="queryEmployee"
+          @showSizeChange="queryEmployee"
+          :show-total="showTableTotal"
+        />
+      </div>
+      <EmployeeTableSelectModal ref="selectEmployeeModal" @selectData="selectData" />
+    </a-card>
   </div>
 </template>
 <script setup lang="ts">
@@ -72,6 +81,8 @@
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS, showTableTotal } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
+  import TableOperator from '/@/components/support/table-operator/index.vue';
+  import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
 
   const props = defineProps({
     enterpriseId: {
@@ -112,7 +123,8 @@
     {
       title: '操作',
       dataIndex: 'operate',
-      width: 60,
+      width: 90,
+      align: 'center',
     },
   ]);
 
@@ -271,7 +283,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 20px 0;
+    padding: 10px 10px;
+    margin-bottom: 10px;
   }
 
   .button-style {

@@ -242,8 +242,6 @@ public class EmployeeService {
     /**
      * 更新登录人头像
      *
-     * @param employeeUpdateAvatarForm
-     * @return
      */
     public ResponseDTO<String> updateAvatar(EmployeeUpdateAvatarForm employeeUpdateAvatarForm) {
         Long employeeId = employeeUpdateAvatarForm.getEmployeeId();
@@ -395,7 +393,7 @@ public class EmployeeService {
         List<EmployeeVO> voList = employeeEntityList.stream().map(e -> {
             EmployeeVO employeeVO = SmartBeanUtil.copy(e, EmployeeVO.class);
             if (department != null) {
-                employeeVO.setDepartmentName(department.getName());
+                employeeVO.setDepartmentName(department.getDepartmentName());
             }
             return employeeVO;
         }).collect(Collectors.toList());

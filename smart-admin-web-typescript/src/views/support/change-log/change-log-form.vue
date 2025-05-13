@@ -17,8 +17,8 @@
     :destroyOnClose="true"
   >
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }">
-      <a-form-item label="版本" name="version">
-        <a-input style="width: 100%" v-model:value="form.version" placeholder="版本" />
+      <a-form-item label="版本" name="updateVersion">
+        <a-input style="width: 100%" v-model:value="form.updateVersion" placeholder="版本" />
       </a-form-item>
       <a-form-item label="更新类型" name="type">
         <SmartEnumSelect width="100%" v-model:value="form.type" enumName="CHANGE_LOG_TYPE_ENUM" placeholder="更新类型" />
@@ -85,7 +85,7 @@
 
   const formDefault = {
     changeLogId: undefined,
-    version: undefined, //版本
+    updateVersion: undefined, //版本
     type: undefined, //更新类型:[1:特大版本功能更新;2:功能更新;3:bug修复]
     publishAuthor: undefined, //发布人
     publicDate: undefined, //发布日期
@@ -96,7 +96,7 @@
   let form = reactive({ ...formDefault });
 
   const rules = {
-    version: [{ required: true, message: '版本 必填' }],
+    updateVersion: [{ required: true, message: '版本 必填' }],
     type: [{ required: true, message: '更新类型:[1:特大版本功能更新;2:功能更新;3:bug修复] 必填' }],
     publishAuthor: [{ required: true, message: '发布人 必填' }],
     publicDate: [{ required: true, message: '发布日期 必填' }],

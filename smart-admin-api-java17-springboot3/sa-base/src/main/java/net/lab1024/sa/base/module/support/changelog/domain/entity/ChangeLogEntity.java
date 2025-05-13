@@ -28,7 +28,7 @@ public class ChangeLogEntity {
     /**
      * 版本
      */
-    private String version;
+    private String updateVersion;
 
     /**
      * 更新类型:[1:特大版本功能更新;2:功能更新;3:bug修复]

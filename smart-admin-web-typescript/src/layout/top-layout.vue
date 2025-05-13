@@ -84,7 +84,7 @@
   const breadCrumbFlag = computed(() => useAppConfigStore().$state.breadCrumbFlag);
   // 页面宽度
   const pageWidth = computed(() => useAppConfigStore().$state.pageWidth);
-  
+
   let contentBoxHeight=ref()
   // 多余高度
   const dueHeight = computed(() => {

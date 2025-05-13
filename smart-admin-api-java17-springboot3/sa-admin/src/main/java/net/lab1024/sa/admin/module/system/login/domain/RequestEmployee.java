@@ -7,6 +7,8 @@ import net.lab1024.sa.base.common.enumeration.GenderEnum;
 import net.lab1024.sa.base.common.enumeration.UserTypeEnum;
 import net.lab1024.sa.base.common.swagger.SchemaEnum;
 
+import java.io.Serializable;
+
 /**
  * 请求员工登录信息
  *
@@ -17,7 +19,7 @@ import net.lab1024.sa.base.common.swagger.SchemaEnum;
  * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
-public class RequestEmployee implements RequestUser {
+public class RequestEmployee implements RequestUser, Serializable {
 
     @Schema(description = "员工id")
     private Long employeeId;

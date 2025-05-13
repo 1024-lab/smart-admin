@@ -97,15 +97,15 @@ public class DepartmentCacheManager {
      */
     private String buildDepartmentPath(DepartmentVO departmentVO, Map<Long, DepartmentVO> departmentMap) {
         if (Objects.equals(departmentVO.getParentId(), NumberUtils.LONG_ZERO)) {
-            return departmentVO.getName();
+            return departmentVO.getDepartmentName();
         }
         //父节点
         DepartmentVO parentDepartment = departmentMap.get(departmentVO.getParentId());
         if (parentDepartment == null) {
-            return departmentVO.getName();
+            return departmentVO.getDepartmentName();
         }
         String pathName = buildDepartmentPath(parentDepartment, departmentMap);
-        return pathName + "/" + departmentVO.getName();
+        return pathName + "/" + departmentVO.getDepartmentName();
 
     }
     // ---------------------- 构造树的一些方法 ------------------------------

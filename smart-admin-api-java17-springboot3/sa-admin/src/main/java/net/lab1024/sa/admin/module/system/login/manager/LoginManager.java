@@ -88,7 +88,7 @@ public class LoginManager {
 
         // 部门信息
         DepartmentVO department = departmentService.getDepartmentById(employeeEntity.getDepartmentId());
-        requestEmployee.setDepartmentName(null == department ? StringConst.EMPTY : department.getName());
+        requestEmployee.setDepartmentName(null == department ? StringConst.EMPTY : department.getDepartmentName());
 
         // 头像信息
         String avatar = employeeEntity.getAvatar();

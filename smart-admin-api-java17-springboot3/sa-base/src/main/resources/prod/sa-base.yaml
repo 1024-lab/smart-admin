@@ -34,6 +34,7 @@ spring:
           min-idle: 10
           max-idle: 50
           max-wait: 30000ms
+
   # 邮件，置以SSL的方式发送, 这个需要使用这种方式并且端口是465
   mail:
     host: smtp.163.com
@@ -106,7 +107,7 @@ springdoc:
 knife4j:
   enable: true
   basic:
-    enable: true
+    enable: false
     username: api # Basic认证用户名
     password: 1024 # Basic认证密码
 
@@ -131,7 +132,7 @@ reload:
 sa-token:
   # token 名称（同时也是 cookie 名称）
   token-name: Authorization
-  # token 前缀 例如:Bear
+  # token 前缀 例如:Bearer
   token-prefix: Bearer
   # token 有效期（单位：秒） 默认30天（2592000秒），-1 代表永久有效
   timeout: 2592000

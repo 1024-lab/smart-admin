@@ -24,7 +24,7 @@ public class DepartmentVO implements Serializable {
     private Long departmentId;
 
     @Schema(description = "部门名称")
-    private String name;
+    private String departmentName;
 
     @Schema(description = "部门负责人姓名")
     private String managerName;

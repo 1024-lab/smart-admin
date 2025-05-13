@@ -12,7 +12,7 @@
   <a-tree-select
     :value="props.value"
     :treeData="treeData"
-    :fieldNames="{ label: 'name', key: 'departmentId', value: 'departmentId' }"
+    :fieldNames="{ label: 'departmentName', key: 'departmentId', value: 'departmentId' }"
     show-search
     style="width: 100%"
     :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"

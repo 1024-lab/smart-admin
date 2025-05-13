@@ -47,7 +47,7 @@ import java.util.Map;
 @Component
 public class MailService {
 
-    @Autowired
+    @Resource
     private JavaMailSender javaMailSender;
 
     @Resource

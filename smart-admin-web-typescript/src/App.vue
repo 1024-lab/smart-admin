@@ -43,15 +43,16 @@
 </template>
 
 <script setup lang="ts">
-import dayjs from 'dayjs';
-import {computed, h} from 'vue';
-import {messages} from '/@/i18n';
-import {useAppConfigStore} from '/@/store/modules/system/app-config';
-import {useSpinStore} from '/@/store/modules/system/spin';
-import {Popover, theme} from 'ant-design-vue';
-import {themeColors} from '/@/theme/color.js';
-import SmartCopyIcon from '/@/components/framework/smart-copy-icon/index.vue';
+  import dayjs from 'dayjs';
+  import { computed, h, useSlots } from 'vue';
+  import { messages } from '/@/i18n';
+  import { useAppConfigStore } from '/@/store/modules/system/app-config';
+  import { useSpinStore } from '/@/store/modules/system/spin';
+  import { Popover, theme } from 'ant-design-vue';
+  import { themeColors } from '/@/theme/color.js';
+  import SmartCopyIcon from '/@/components/framework/smart-copy-icon/index.vue';
 
+  const slots = useSlots();
   const antdLocale = computed(() => messages[useAppConfigStore().language].antdLocale);
   const dayjsLocale = computed(() => messages[useAppConfigStore().language].dayjsLocale);
   dayjs.locale(dayjsLocale);
@@ -88,7 +89,6 @@ import SmartCopyIcon from '/@/components/framework/smart-copy-icon/index.vue';
       return text;
     }
   }
-
 </script>
 <style scoped lang="less">
   :deep(.ant-table-column-sorters) {

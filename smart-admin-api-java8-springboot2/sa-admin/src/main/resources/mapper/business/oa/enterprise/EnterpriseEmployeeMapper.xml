@@ -70,7 +70,7 @@
     <select id="queryPageEmployeeList"
             resultType="net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseEmployeeVO">
         select
-        t_oa_enterprise_employee.*,
+        t_oa_enterprise_employee.enterprise_id,
         t_oa_enterprise.enterprise_name,
         t_employee.*,
         t_employee.actual_name as employeeName

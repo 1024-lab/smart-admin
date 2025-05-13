@@ -27,7 +27,7 @@ public class ChangeLogUpdateForm {
 
     @Schema(description = "版本", required = true)
     @NotBlank(message = "版本 不能为空")
-    private String version;
+    private String updateVersion;
 
     @SchemaEnum(value = ChangeLogTypeEnum.class, desc = "更新类型:[1:特大版本功能更新;2:功能更新;3:bug修复]")
     @CheckEnum(value = ChangeLogTypeEnum.class, message = "更新类型:[1:特大版本功能更新;2:功能更新;3:bug修复] 错误", required = true)

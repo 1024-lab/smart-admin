@@ -23,20 +23,26 @@ public class TableColumnVO {
     @Schema(description = "列描述")
     private String columnComment;
 
-    @Schema(description = "columnKey")
-    private String columnKey;
-
-    @Schema(description = "extra")
-    private String extra;
-
-    @Schema(description = "是否为空")
-    private String isNullable;
-
     @Schema(description = "数据类型varchar")
     private String dataType;
 
-    @Schema(description = "列类型varchar(50)")
-    private String columnType;
+    @Schema(description = "是否为空")
+    private Boolean nullableFlag;
 
+    @Schema(description = "是否为主键")
+    private Boolean primaryKeyFlag;
 
+    @Schema(description = "是否递增")
+    private Boolean autoIncreaseFlag;
+
+    // --------------- 临时字段 -------------------
+
+    @Schema(hidden = true)
+    private String columnKey;
+
+    @Schema(hidden = true)
+    private String extra;
+
+    @Schema(hidden = true)
+    private String isNullable;
 }

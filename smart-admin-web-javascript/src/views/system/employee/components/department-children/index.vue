@@ -19,7 +19,7 @@
       <template #renderItem="{ item }">
         <a-list-item>
           <div class="department-item" @click="selectTree(item.departmentId)">
-            {{ item.name }}
+            {{ item.departmentName }}
             <RightOutlined />
           </div>
         </a-list-item>

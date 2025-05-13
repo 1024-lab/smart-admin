@@ -3,6 +3,7 @@ package net.lab1024.sa.base.module.support.securityprotect.service;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.module.support.config.ConfigKeyEnum;
@@ -29,17 +30,29 @@ public class Level3ProtectConfigService {
 
     /**
      * 开启双因子登录，默认：开启
+     * -- GETTER --
+     *  开启双因子登录，默认：开启
+
      */
+    @Getter
     private boolean twoFactorLoginEnabled = false;
 
     /**
      * 连续登录失败次数则锁定，-1表示不受限制，可以一直尝试登录
+     * -- GETTER --
+     *  连续登录失败次数则锁定，-1表示不受限制，可以一直尝试登录
+
      */
+    @Getter
     private int loginFailMaxTimes = -1;
 
     /**
      * 连续登录失败锁定时间（单位：秒），-1表示不锁定，建议锁定30分钟
+     * -- GETTER --
+     *  连续登录失败锁定时间（单位：秒），-1表示不锁定，建议锁定30分钟
+
      */
+    @Getter
     private int loginFailLockSeconds = 1800;
 
     /**
@@ -49,27 +62,47 @@ public class Level3ProtectConfigService {
 
     /**
      * 密码复杂度 是否开启，默认：开启
+     * -- GETTER --
+     *  密码复杂度 是否开启，默认：开启
+
      */
+    @Getter
     private boolean passwordComplexityEnabled = true;
 
     /**
      * 定期修改密码时间间隔（默认：天），默认：建议90天更换密码
+     * -- GETTER --
+     *  定期修改密码时间间隔（默认：天），默认：建议90天更换密码
+
      */
+    @Getter
     private int regularChangePasswordDays = 90;
 
     /**
      * 定期修改密码不允许相同次数，默认：3次以内密码不能相同
+     * -- GETTER --
+     *  定期修改密码不允许相同次数，默认：3次以内密码不能相同
+
      */
+    @Getter
     private int regularChangePasswordNotAllowRepeatTimes = 3;
 
     /**
      * 文件大小限制，单位 mb ，(默认：50 mb)
+     * -- GETTER --
+     *  文件大小限制，单位 mb ，(默认：50 mb)
+
      */
+    @Getter
     private long maxUploadFileSizeMb = 50;
 
     /**
      * 文件检测，默认：不开启
+     * -- GETTER --
+     *  文件检测，默认：不开启
+
      */
+    @Getter
     private boolean fileDetectFlag = false;
 
 
@@ -77,66 +110,10 @@ public class Level3ProtectConfigService {
     private ConfigService configService;
 
     /**
-     * 文件检测，默认：不开启
-     */
-    public boolean isFileDetectFlag() {
-        return fileDetectFlag;
-    }
-
-    /**
-     * 文件大小限制，单位 mb ，(默认：50 mb)
-     */
-    public long getMaxUploadFileSizeMb() {
-        return maxUploadFileSizeMb;
-    }
-
-    /**
-     * 连续登录失败次数则锁定，-1表示不受限制，可以一直尝试登录
-     */
-    public int getLoginFailMaxTimes() {
-        return loginFailMaxTimes;
-    }
-
-    /**
-     * 连续登录失败锁定时间（单位：秒），-1表示不锁定，建议锁定30分钟
-     */
-    public int getLoginFailLockSeconds() {
-        return loginFailLockSeconds;
-    }
-
-    /**
      * 最低活跃时间（单位：秒），超过此时间没有操作系统就会被冻结，默认-1 代表不限制，永不冻结; 默认 30分钟
      */
     public int getLoginActiveTimeoutSeconds() {
         return loginActiveTimeoutSeconds > 0 ? loginActiveTimeoutSeconds : -1;
-    }
-
-    /**
-     * 定期修改密码时间间隔（默认：天），默认：建议90天更换密码
-     */
-    public int getRegularChangePasswordDays() {
-        return regularChangePasswordDays;
-    }
-
-    /**
-     * 开启双因子登录，默认：开启
-     */
-    public boolean isTwoFactorLoginEnabled() {
-        return twoFactorLoginEnabled;
-    }
-
-    /**
-     * 密码复杂度 是否开启，默认：开启
-     */
-    public boolean isPasswordComplexityEnabled() {
-        return passwordComplexityEnabled;
-    }
-
-    /**
-     * 定期修改密码不允许相同次数，默认：3次以内密码不能相同
-     */
-    public int getRegularChangePasswordNotAllowRepeatTimes() {
-        return regularChangePasswordNotAllowRepeatTimes;
     }
 
     @PostConstruct

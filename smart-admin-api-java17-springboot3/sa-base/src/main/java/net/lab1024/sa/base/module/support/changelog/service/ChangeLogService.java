@@ -44,7 +44,7 @@ public class ChangeLogService {
      * 添加
      */
     public synchronized ResponseDTO<String> add(ChangeLogAddForm addForm) {
-        ChangeLogEntity existVersion = changeLogDao.selectByVersion(addForm.getVersion());
+        ChangeLogEntity existVersion = changeLogDao.selectByVersion(addForm.getUpdateVersion());
         if (existVersion != null) {
             return ResponseDTO.userErrorParam("此版本已经存在");
         }
@@ -58,7 +58,7 @@ public class ChangeLogService {
      * 更新
      */
     public synchronized ResponseDTO<String> update(ChangeLogUpdateForm updateForm) {
-        ChangeLogEntity existVersion = changeLogDao.selectByVersion(updateForm.getVersion());
+        ChangeLogEntity existVersion = changeLogDao.selectByVersion(updateForm.getUpdateVersion());
         if (existVersion != null && !updateForm.getChangeLogId().equals(existVersion.getChangeLogId())) {
             return ResponseDTO.userErrorParam("此版本已经存在");
         }

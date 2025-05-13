@@ -29,7 +29,7 @@ export const appDefaultConfig = {
   // 标签页
   pageTagFlag: true,
   // 标签页样式: default、 antd、chrome
-  pageTagStyle: 'default',
+  pageTagStyle: 'chrome',
   // 面包屑
   breadCrumbFlag: true,
   // 页脚

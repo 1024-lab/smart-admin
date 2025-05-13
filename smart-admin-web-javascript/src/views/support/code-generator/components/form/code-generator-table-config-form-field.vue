@@ -176,9 +176,9 @@
         columnName: column.columnName,
         columnComment: column.columnComment,
         dataType: column.dataType,
-        nullableFlag: column.isNullable === 'NO',
-        primaryKeyFlag: column.columnKey === 'PRI',
-        autoIncreaseFlag: column.extra === 'auto_increment',
+        nullableFlag: column.nullableFlag,
+        primaryKeyFlag: column.primaryKeyFlag,
+        autoIncreaseFlag: column.autoIncreaseFlag,
         //表单
         fieldName: configField ? configField.fieldName : convertLowerCamel(column.columnName),
         label: configField ? configField.label : column.columnComment,

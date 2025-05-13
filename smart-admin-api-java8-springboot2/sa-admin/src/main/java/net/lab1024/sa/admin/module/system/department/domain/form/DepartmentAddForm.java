@@ -21,7 +21,7 @@ public class DepartmentAddForm {
     @Schema(description = "部门名称")
     @Length(min = 1, max = 50, message = "请输入正确的部门名称(1-50个字符)")
     @NotNull(message = "请输入正确的部门名称(1-50个字符)")
-    private String name;
+    private String departmentName;
 
     @Schema(description = "排序")
     @NotNull(message = "排序值")

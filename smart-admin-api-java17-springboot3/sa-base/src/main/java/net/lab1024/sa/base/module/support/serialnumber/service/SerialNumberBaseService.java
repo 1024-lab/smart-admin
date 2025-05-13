@@ -11,6 +11,8 @@ import net.lab1024.sa.base.module.support.serialnumber.dao.SerialNumberDao;
 import net.lab1024.sa.base.module.support.serialnumber.dao.SerialNumberRecordDao;
 import net.lab1024.sa.base.module.support.serialnumber.domain.*;
 import org.apache.commons.lang3.RandomUtils;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -92,6 +94,7 @@ public abstract class SerialNumberBaseService implements SerialNumberService {
     public abstract void initLastGenerateData(List<SerialNumberEntity> serialNumberEntityList);
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String generate(SerialNumberIdEnum serialNumberIdEnum) {
         List<String> generateList = this.generate(serialNumberIdEnum, 1);
         if (generateList == null || generateList.isEmpty()) {
@@ -101,6 +104,7 @@ public abstract class SerialNumberBaseService implements SerialNumberService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<String> generate(SerialNumberIdEnum serialNumberIdEnum, int count) {
         SerialNumberInfoBO serialNumberInfoBO = serialNumberMap.get(serialNumberIdEnum.getSerialNumberId());
         if (serialNumberInfoBO == null) {

@@ -75,7 +75,7 @@
       :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
     >
       <template #bodyCell="{ text, record, column }">
-        <template v-if="column.dataIndex === 'version'">
+        <template v-if="column.dataIndex === 'updateVersion'">
           <a-button @click="showModal(record)" type="link">{{ text }}</a-button>
         </template>
         <template v-if="column.dataIndex === 'type'">
@@ -135,7 +135,7 @@
   const columns = ref([
     {
       title: '版本',
-      dataIndex: 'version',
+      dataIndex: 'updateVersion',
       ellipsis: true,
     },
     {

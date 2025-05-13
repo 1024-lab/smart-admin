@@ -5,7 +5,7 @@
     <select id="queryEmployee" resultType="net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO">
         SELECT
         t_employee.*,
-        t_department.name AS departmentName
+        t_department.department_name
         FROM t_employee
         LEFT JOIN t_department ON t_department.department_id = t_employee.department_id
         <where>
@@ -169,7 +169,7 @@
 
     <select id="getEmployeeById" resultType="net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO">
         SELECT t_employee.*,
-               t_department.name AS departmentName
+               t_department.department_name
         FROM t_employee
                  LEFT JOIN t_department ON t_department.department_id = t_employee.department_id
         where t_employee.employee_id = #{employeeId}
@@ -178,7 +178,7 @@
     <select id="selectEmployeeByDisabledAndDeleted" resultType="net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO">
         SELECT
         t_employee.*,
-        t_department.name AS departmentName
+        t_department.department_name
         FROM t_employee
         LEFT JOIN t_department ON t_department.department_id = t_employee.department_id
         <where>

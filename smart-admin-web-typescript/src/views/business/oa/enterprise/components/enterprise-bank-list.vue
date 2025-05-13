@@ -36,7 +36,7 @@
           </a-button>
         </a-button-group>
 
-        <a-button @click="addOrUpdate()" type="primary" class="smart-margin-left20">
+        <a-button @click="addOrUpdate()" type="primary" class="smart-margin-left20" v-if="$privilege('oa:bank:add')">
           <template #icon>
             <PlusOutlined />
           </template>
@@ -60,8 +60,8 @@
         </template>
         <template v-else-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="addOrUpdate(record)" type="link">编辑</a-button>
-            <a-button @click="confirmDelete(record.bankId)" danger type="link">删除</a-button>
+            <a-button @click="addOrUpdate(record)" type="link" v-if="$privilege('oa:bank:update')">编辑</a-button>
+            <a-button @click="confirmDelete(record.bankId)" danger type="link" v-if="$privilege('oa:bank:delete')">删除</a-button>
           </div>
         </template>
       </template>

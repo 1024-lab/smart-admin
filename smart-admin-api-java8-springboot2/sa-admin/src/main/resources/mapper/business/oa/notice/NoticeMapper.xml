@@ -219,7 +219,7 @@
     <select id="queryNoticeViewRecordList" resultType="net.lab1024.sa.admin.module.business.oa.notice.domain.vo.NoticeViewRecordVO">
         select t_notice_view_record.*,
         t_employee.actual_name as employeeName,
-        t_department.name as departmentName
+        t_department.department_name
         from t_notice_view_record
         left join t_employee on t_employee.employee_id = t_notice_view_record.employee_id
         left join t_department on t_department.department_id = t_employee.department_id

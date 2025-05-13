@@ -60,22 +60,24 @@ public class SerialNumberRedisService extends SerialNumberBaseService {
     public List<String> generateSerialNumberList(SerialNumberInfoBO serialNumberInfo, int count) {
         SerialNumberGenerateResultBO serialNumberGenerateResult = null;
         String lockKey = RedisKeyConst.Support.SERIAL_NUMBER + serialNumberInfo.getSerialNumberId();
-        try {
-            boolean lock = false;
-            for (int i = 0; i < MAX_GET_LOCK_COUNT; i++) {
-                try {
-                    lock = redisService.getLock(lockKey, 60 * 1000L);
-                    if (lock) {
-                        break;
-                    }
-                    Thread.sleep(SLEEP_MILLISECONDS);
-                } catch (Throwable e) {
-                    log.error(e.getMessage(), e);
+
+        boolean lock = false;
+        for (int i = 0; i < MAX_GET_LOCK_COUNT; i++) {
+            try {
+                lock = redisService.getLock(lockKey, 60 * 1000L);
+                if (lock) {
+                    break;
                 }
+                Thread.sleep(SLEEP_MILLISECONDS);
+            } catch (Throwable e) {
+                log.error(e.getMessage(), e);
             }
-            if (!lock) {
-                throw new BusinessException("SerialNumber 尝试5次，未能生成单号");
-            }
+        }
+        if (!lock) {
+            throw new BusinessException("SerialNumber 尝试5次，未能生成单号");
+        }
+
+        try {
             // 获取上次的生成结果
             SerialNumberLastGenerateBO lastGenerateBO = (SerialNumberLastGenerateBO) redisService.mget(
                     RedisKeyConst.Support.SERIAL_NUMBER_LAST_INFO,

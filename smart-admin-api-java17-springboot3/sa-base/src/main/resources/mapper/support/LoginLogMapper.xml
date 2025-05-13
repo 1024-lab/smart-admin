@@ -13,7 +13,7 @@
             <if test="query.userType != null">
                 AND user_type = #{query.userType}
             </if>
-            <if test="query.ip != null">
+            <if test="query.ip != null and query.ip != ''">
                 AND INSTR(login_ip,#{query.ip})
             </if>
             <if test="query.startDate != null and query.startDate != ''">
@@ -25,9 +25,6 @@
             <if test="query.userName != null and query.userName != ''">
                 AND INSTR(user_name,#{query.userName})
             </if>
-            <if test="query.ip != null">
-                AND INSTR(login_ip,#{query.ip})
-            </if>
         </where>
         order by create_time desc
     </select>
@@ -37,9 +34,9 @@
         *
         from t_login_log
         where
-        user_id = #{userId}
-        and user_type = #{userType}
-        and login_result = #{loginLogResult}
+            user_id = #{userId}
+            and user_type = #{userType}
+            and login_result = #{loginLogResult}
         order by login_log_id desc
         limit 1
     </select>

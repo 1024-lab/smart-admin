@@ -14,8 +14,8 @@
         <DepartmentTreeSelect ref="departmentTreeSelect" v-model:value="formState.parentId" :defaultValueFlag="false"
           width="100%" />
       </a-form-item>
-      <a-form-item label="部门名称" name="name">
-        <a-input v-model:value.trim="formState.name" placeholder="请输入部门名称" />
+      <a-form-item label="部门名称" name="departmentName">
+        <a-input v-model:value.trim="formState.departmentName" placeholder="请输入部门名称" />
       </a-form-item>
       <a-form-item label="部门负责人" name="managerId">
         <EmployeeSelect ref="employeeSelect" placeholder="请选择部门负责人" width="100%" v-model:value="formState.managerId"
@@ -76,7 +76,7 @@ const emits = defineEmits(['refresh']);
   const defaultDepartmentForm = {
     id: undefined,
     managerId: undefined, //部门负责人
-    name: undefined,
+    departmentName: undefined,
     parentId: undefined,
     sort: 0,
   };
@@ -88,7 +88,7 @@ let formState = reactive({
 // 表单校验规则
 const rules = {
   parentId: [{ required: true, message: '上级部门不能为空' }],
-  name: [
+  departmentName: [
     { required: true, message: '部门名称不能为空' },
     { max: 50, message: '部门名称不能大于20个字符', trigger: 'blur' },
   ],

@@ -23,7 +23,7 @@ public class ChangeLogVO {
     private Long changeLogId;
 
     @Schema(description = "版本")
-    private String version;
+    private String updateVersion;
 
     @SchemaEnum(value = ChangeLogTypeEnum.class, desc = "更新类型:[1:特大版本功能更新;2:功能更新;3:bug修复]")
     private Integer type;
