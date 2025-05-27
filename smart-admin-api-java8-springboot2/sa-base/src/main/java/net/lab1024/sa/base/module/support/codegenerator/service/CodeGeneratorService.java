@@ -40,6 +40,12 @@ import java.util.Optional;
 @Service
 public class CodeGeneratorService {
 
+    private static final String COLUMN_NULLABLE_IDENTIFY = "NO";
+
+    private static final String COLUMN_PRIMARY_KEY = "PRI";
+
+    private static final String COLUMN_AUTO_INCREASE = "auto_increment";
+
     @Resource
     private CodeGeneratorDao codeGeneratorDao;
 
@@ -57,7 +63,13 @@ public class CodeGeneratorService {
      * @return
      */
     public List<TableColumnVO> getTableColumns(String tableName) {
-        return codeGeneratorDao.selectTableColumn(tableName);
+        List<TableColumnVO> tableColumns = codeGeneratorDao.selectTableColumn(tableName);
+        for (TableColumnVO tableColumn : tableColumns) {
+            tableColumn.setNullableFlag(!COLUMN_NULLABLE_IDENTIFY.equalsIgnoreCase(tableColumn.getIsNullable()));
+            tableColumn.setPrimaryKeyFlag(COLUMN_PRIMARY_KEY.equalsIgnoreCase(tableColumn.getColumnKey()));
+            tableColumn.setAutoIncreaseFlag(SmartStringUtil.isNotEmpty(tableColumn.getExtra()) && COLUMN_AUTO_INCREASE.equalsIgnoreCase(tableColumn.getExtra()));
+        }
+        return tableColumns;
     }
 
 
@@ -150,7 +162,7 @@ public class CodeGeneratorService {
         }
 
         // 校验表必须有主键
-        if(!tableColumns.stream().filter( e -> "PRI".equalsIgnoreCase(e.getColumnKey())).findAny().isPresent()){
+        if (tableColumns.stream().noneMatch(e -> COLUMN_PRIMARY_KEY.equalsIgnoreCase(e.getColumnKey()))) {
             return ResponseDTO.userErrorParam("表必须有主键，请联系后端查看下数据库表结构");
         }
 
@@ -199,6 +211,7 @@ public class CodeGeneratorService {
 
     /**
      * 下载代码
+     *
      * @param tableName
      * @return
      */

@@ -41,6 +41,7 @@
 <style scoped lang="less">
   .height100 {
     height: 100%;
+    flex-wrap: nowrap;
   }
   .role-setting {
     width: calc(100% - 250px);

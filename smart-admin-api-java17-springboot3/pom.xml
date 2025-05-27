@@ -45,8 +45,6 @@
         <log4j-spring-boot.version>2.23.1</log4j-spring-boot.version>
         <hutool.version>5.8.29</hutool.version>
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
-        <jjwt.version>0.9.1</jjwt.version>
-        <jwks-rsa.version>0.9.0</jwks-rsa.version>
         <velocity-tools.version>3.1</velocity-tools.version>
         <sa-token.version>1.41.0</sa-token.version>
         <ip2region.version>2.7.0</ip2region.version>
@@ -199,18 +197,6 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
-                <version>${jjwt.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.auth0</groupId>
-                <artifactId>jwks-rsa</artifactId>
-                <version>${jwks-rsa.version}</version>
             </dependency>
 
             <!--velocity begin-->

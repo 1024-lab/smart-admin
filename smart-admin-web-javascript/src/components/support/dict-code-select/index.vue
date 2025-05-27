@@ -36,7 +36,7 @@
   });
 
   const props = defineProps({
-    value: [Array, String],
+    value: [Array, String, Number],
     placeholder: {
       type: String,
       default: '请选择字典',

@@ -33,7 +33,7 @@
 
   const props = defineProps({
     dictCode: String,
-    value: [Array, String],
+    value: [Array, String, Number],
     mode: {
       type: String,
       default: 'combobox',
