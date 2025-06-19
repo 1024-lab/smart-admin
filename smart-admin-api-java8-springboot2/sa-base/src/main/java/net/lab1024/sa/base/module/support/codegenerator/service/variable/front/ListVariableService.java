@@ -47,7 +47,7 @@ public class ListVariableService extends CodeGenerateBaseVariableService {
 
             CodeField codeField = getCodeFieldByColumnName(queryField.getColumnNameList().get(0), form);
 
-            if (CodeQueryFieldQueryTypeEnum.ENUM.equalsValue(queryField.getQueryTypeEnum())) {
+            if (CodeQueryFieldQueryTypeEnum.ENUM.equalsValue(queryField.getQueryTypeEnum()) && SmartStringUtil.isNotBlank(codeField.getEnumName())) {
                 String upperUnderscoreEnum = CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, codeField.getEnumName());
                 objectMap.put("frontEnumName", upperUnderscoreEnum);
                 frontImportSet.add("import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';");

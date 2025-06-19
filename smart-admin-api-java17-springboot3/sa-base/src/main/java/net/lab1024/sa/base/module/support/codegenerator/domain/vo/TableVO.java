@@ -25,12 +25,6 @@ public class TableVO {
     @Schema(description = "表备注")
     private String tableComment;
 
-    @Schema(description = "创建时间")
-    private LocalDateTime createTime;
-
-    @Schema(description = "更新时间")
-    private LocalDateTime updateTime;
-
     @Schema(description = "配置时间")
     private LocalDateTime configTime;
 

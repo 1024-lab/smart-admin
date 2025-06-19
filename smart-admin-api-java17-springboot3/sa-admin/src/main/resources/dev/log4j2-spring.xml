@@ -5,12 +5,13 @@
 -->
 <Configuration status="INFO" monitorInterval="30">
     <Properties>
-        <Property name="log-directory" value="${sys:project.log-directory}"/>
+        <Property name="log-directory" value="${spring:project.log-directory}"/>
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <PatternLayout pattern="[%blue{%d}][%highlight{%-5p}][%t][%cyan{%c{1.}:%L}] %m %n"
+                           disableAnsi="false" noConsoleNoAnsi="false"/>
         </Console>
         <RollingFile name="debug" fileName="${log-directory}/debug/debug.log"
                      filePattern="${log-directory}/debug/debug-%d{yyyy-MM-dd}-%i.log">
@@ -18,7 +19,7 @@
                 <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <PatternLayout pattern="[%d][%-5p][%t][%c{1.}:%L] %m %n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="50 MB"/>
@@ -36,7 +37,7 @@
                 <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <PatternLayout pattern="[%d][%-5p][%t][%c{1.}:%L] %m %n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="50 MB"/>
@@ -54,7 +55,7 @@
                 <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <PatternLayout pattern="[%d][%-5p][%t][%c{1.}:%L] %m %n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="50 MB"/>
@@ -72,7 +73,7 @@
                 <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <PatternLayout pattern="[%d][%-5p][%t][%c{1.}:%L] %m %n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="10 MB"/>
@@ -86,7 +87,7 @@
         </RollingFile>
         <RollingFile name="druidSlowSqlLog" fileName="${log-directory}/slow-sql/slow-sql.log"
                      filePattern="${log-directory}/slow-sql/slow-sql-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <PatternLayout pattern="[%d][%-5p][%t][%c{1.}:%L] %m %n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="50 MB"/>
@@ -101,11 +102,9 @@
     </Appenders>
 
     <Loggers>
-
         <logger name="com.alibaba.druid.filter.stat.StatFilter" level="ERROR" additivity="false">
             <AppenderRef ref="druidSlowSqlLog"/>
         </logger>
-
         <Root level="debug">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="debug"/>

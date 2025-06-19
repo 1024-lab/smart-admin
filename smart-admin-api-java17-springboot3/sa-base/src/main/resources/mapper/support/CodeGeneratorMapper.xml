@@ -21,8 +21,6 @@
         select
         `tables`.table_name,
         `tables`.table_comment,
-        `tables`.create_time,
-        `tables`.update_time,
         t_code_generator_config.update_time configTime
         from information_schema.tables `tables`
         left join t_code_generator_config on `tables`.table_name = t_code_generator_config.table_name

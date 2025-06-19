@@ -3,7 +3,7 @@ package net.lab1024.sa.admin.module.business.oa.invoice.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.admin.module.business.oa.enterprise.EnterpriseService;
+import net.lab1024.sa.admin.module.business.oa.enterprise.service.EnterpriseService;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseVO;
 import net.lab1024.sa.admin.module.business.oa.invoice.dao.InvoiceDao;
 import net.lab1024.sa.admin.module.business.oa.invoice.domain.*;

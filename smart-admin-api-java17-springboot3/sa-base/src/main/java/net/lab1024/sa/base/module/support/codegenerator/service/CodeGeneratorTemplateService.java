@@ -33,7 +33,6 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.OutputStream;
 import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -75,6 +74,11 @@ public class CodeGeneratorTemplateService {
         map.put("js/const.js", new ConstVariableService());
         map.put("js/list.vue", new ListVariableService());
         map.put("js/form.vue", new FormVariableService());
+        // ts前端
+        map.put("ts/api.ts", new ApiVariableService());
+        map.put("ts/const.ts", new ConstVariableService());
+        map.put("ts/list.vue", new ListVariableService());
+        map.put("ts/form.vue", new FormVariableService());
     }
 
     public void zipGeneratedFiles(OutputStream outputStream, String tableName, CodeGeneratorConfigEntity codeGeneratorConfigEntity) {

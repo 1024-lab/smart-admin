@@ -11,7 +11,7 @@
 
 - 前端：JavaScript/TypeScript + Vue3 + Vite5 + Pinia + Ant Design Vue 4.X
 - 移动端：uniapp (vue3版本) + uni-ui + （同时支持APP、小程序、H5）
-- 后端：Java8/17 + SpringBoot2/3 + Sa Token + Mybatis-plus + 多种数据库
+- 后端：Java8/17 + SpringBoot2/3 + Sa Token + Mybatis-plus + 主流数据库/国产数据库
 - 官方文档：[https://smartadmin.vip](https://smartadmin.vip)
 - 电脑在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)
 - 移动端在线预览：[https://app.smartadmin.vip](https://app.smartadmin.vip/#/pages/login/login)

@@ -106,9 +106,9 @@ public class QueryFormVariableService extends CodeGenerateBaseVariableService {
                 case DICT:
                     codeField = getCodeFieldByColumnName(field.getColumnNameList().get(0), form);
                     if (SmartStringUtil.isNotEmpty(codeField.getDict())) {
-                        finalFieldMap.put("dict", "\n    @JsonDeserialize(using = DictValueVoDeserializer.class)");
+                        finalFieldMap.put("dict", "\n    @JsonDeserialize(using = DictDataDeserializer.class)");
                         packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
-                        packageList.add("import net.lab1024.sa.base.common.json.deserializer.DictValueVoDeserializer;");
+                        packageList.add("import net.lab1024.sa.base.common.json.deserializer.DictDataDeserializer;");
                     }
                     finalFieldMap.put("javaType", "String");
                 default:

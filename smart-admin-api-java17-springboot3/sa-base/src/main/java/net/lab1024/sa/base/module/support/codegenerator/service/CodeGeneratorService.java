@@ -156,7 +156,7 @@ public class CodeGeneratorService {
         List<TableColumnVO> tableColumns = getTableColumns(form.getTableName());
         if (null != form.getDeleteInfo() && form.getDeleteInfo().getIsSupportDelete() && !form.getDeleteInfo().getIsPhysicallyDeleted()) {
             Optional<TableColumnVO> any = tableColumns.stream().filter(e -> e.getColumnName().equals(CodeGeneratorConstant.DELETED_FLAG)).findAny();
-            if (any.isEmpty()) {
+            if (!any.isPresent()) {
                 return ResponseDTO.userErrorParam("表结构中没有假删字段：" + CodeGeneratorConstant.DELETED_FLAG + ",请仔细排查");
             }
         }

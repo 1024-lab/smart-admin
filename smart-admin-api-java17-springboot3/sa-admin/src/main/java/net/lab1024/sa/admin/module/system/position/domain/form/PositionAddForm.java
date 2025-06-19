@@ -21,7 +21,7 @@ public class PositionAddForm {
     private String positionName;
 
     @Schema(description = "职级")
-    private String level;
+    private String positionLevel;
 
     @Schema(description = "排序")
     @NotNull(message = "排序不能为空")

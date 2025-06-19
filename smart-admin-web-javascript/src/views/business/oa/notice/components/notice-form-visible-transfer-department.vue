@@ -10,14 +10,14 @@
 <template>
   <div class="wrapper">
     <div class="sider-fl">
-      <a-tree :tree-data="treeData" :fieldNames="{ title: 'name', key: 'departmentId' }" :selectable="false" v-model:expandedKeys="expandedKeys">
+      <a-tree :tree-data="treeData" :fieldNames="{ title: 'departmentName', key: 'departmentId' }" :selectable="false" v-model:expandedKeys="expandedKeys">
         <template #switcherIcon="{ switcherCls }">
           <caret-down-outlined :class="switcherCls" />
         </template>
-        <template #title="{ name, departmentId }">
+        <template #title="{ departmentName, departmentId }">
           <div class="list-item" :class="{ active: checkExists(departmentId) }">
-            <div class="list-item-title">{{ name }}</div>
-            <check-circle-filled class="check-icon-style" @click="onSelectAdd(name, departmentId)" />
+            <div class="list-item-title">{{ departmentName }}</div>
+            <check-circle-filled class="check-icon-style" @click="onSelectAdd(departmentName, departmentId)" />
           </div>
         </template>
       </a-tree>

@@ -19,8 +19,8 @@
       <a-form-item label="职务名称" name="positionName">
         <a-input style="width: 100%" v-model:value="form.positionName" placeholder="职务名称" />
       </a-form-item>
-      <a-form-item label="职级" name="level">
-        <a-input style="width: 100%" v-model:value="form.level" placeholder="职级" />
+      <a-form-item label="职级" name="positionLevel">
+        <a-input style="width: 100%" v-model:value="form.positionLevel" placeholder="职级" />
       </a-form-item>
       <a-form-item label="排序" name="sort">
         <a-input-number :min="0" :step="1" :precision="0" style="width: 100%" v-model:value="form.sort" placeholder="排序" />
@@ -92,7 +92,7 @@
   const formDefault = {
     positionId: undefined,
     positionName: undefined, //职务名称
-    level: undefined, //职纪
+    positionLevel: undefined, //职纪
     sort: 0,
     remark: undefined, //备注
   };

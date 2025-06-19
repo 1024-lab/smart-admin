@@ -1,4 +1,4 @@
-package net.lab1024.sa.admin.module.business.oa.enterprise;
+package net.lab1024.sa.admin.module.business.oa.enterprise.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
+import net.lab1024.sa.admin.module.business.oa.enterprise.service.EnterpriseService;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.form.*;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseEmployeeVO;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseExcelVO;

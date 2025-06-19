@@ -28,12 +28,8 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref, watch } from 'vue';
-  import { dictApi } from '/@/api/support/dict-api';
-
-  defineExpose({
-    queryDict,
-  });
+  import { computed, ref, watch } from 'vue';
+  import { useDictStore } from '/@/store/modules/system/dict.js';
 
   const props = defineProps({
     value: [Array, String, Number],
@@ -56,15 +52,9 @@
     },
   });
 
-  // -------------------------- 查询 字典数据 --------------------------
+  // -------------------------- 字典数据 --------------------------
 
-  const dictList = ref([]);
-  async function queryDict() {
-    let response = await dictApi.getAllDict();
-    dictList.value = response.data;
-  }
-
-  onMounted(queryDict);
+  const dictList = computed(() => useDictStore().dictList.filter((item) => !item.disabledFlag));
 
   // -------------------------- 选中 相关、事件 --------------------------
   const emit = defineEmits(['update:value', 'change']);

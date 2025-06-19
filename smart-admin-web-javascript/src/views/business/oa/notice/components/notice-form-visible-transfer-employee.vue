@@ -88,6 +88,7 @@
       }
 
       department.id = department.departmentId;
+      department.name = department.departmentName;
       department.key = 'department_' + department.departmentId;
       department.dataType = NOTICE_VISIBLE_RANGE_DATA_TYPE_ENUM.DEPARTMENT.value;
       let employeeChildren = employeeList

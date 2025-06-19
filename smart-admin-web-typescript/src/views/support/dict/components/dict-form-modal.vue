@@ -19,7 +19,7 @@
       </a-form-item>
 
       <a-form-item label="备注" name="remark">
-        <a-textarea v-model="form.remark" style="width: 100%; height: 100px; outline: none" />
+        <a-textarea v-model:value="form.remark" style="width: 100%; height: 100px; outline: none" />
       </a-form-item>
     </a-form>
   </a-modal>

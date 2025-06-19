@@ -12,7 +12,9 @@
 
     <select id="getAll" resultType="net.lab1024.sa.base.module.support.dict.domain.vo.DictDataVO">
         select t_dict_data.*,
-               t_dict.dict_code
+               t_dict.dict_code,
+               t_dict.dict_name,
+               t_dict.disabled_flag dictDisabledFlag
         from t_dict_data
                  left join t_dict on t_dict_data.dict_id = t_dict.dict_id
         order by t_dict_data.sort_order desc

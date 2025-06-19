@@ -115,7 +115,7 @@
     },
     {
       title: '职级',
-      dataIndex: 'level',
+      dataIndex: 'positionLevel',
       ellipsis: true,
     },
     {

@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { useDictStore } from '/@/store/modules/system/dict.js';
 
   const props = defineProps({
@@ -69,13 +69,11 @@
 
   // -------------------------- 查询 字典数据 --------------------------
 
-  const dictDataList = ref([]);
-  function initDictData() {
-    let list = useDictStore().getDictData(props.dictCode);
-    dictDataList.value = list.filter((item) => !props.hiddenOption.includes(item.dataValue) && !item.disabledFlag);
-  }
-
-  onMounted(initDictData);
+  const dictDataList = computed(() =>
+    useDictStore()
+      .getDictData(props.dictCode)
+      .filter((item) => !props.hiddenOption.includes(item.dataValue) && !item.disabledFlag)
+  );
 
   // -------------------------- 选中 相关、事件 --------------------------
 

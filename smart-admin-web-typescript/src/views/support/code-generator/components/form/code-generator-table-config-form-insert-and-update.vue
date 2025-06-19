@@ -87,7 +87,7 @@
       </template>
 
       <template v-if="column.dataIndex === 'nullableFlag'">
-        <a-tag color="error" v-if="text">非空</a-tag>
+        <a-tag color="error" v-if="!text">非空</a-tag>
       </template>
 
       <template v-if="column.dataIndex === 'required'">
@@ -222,8 +222,8 @@
       };
 
       //表单
-      field.requiredFlag = configField ? configField.requiredFlag : field.nullableFlag;
-      field.insertFlag = configField ? configField.insertFlag : field.nullableFlag;
+      field.requiredFlag = configField ? configField.requiredFlag : !field.nullableFlag;
+      field.insertFlag = configField ? configField.insertFlag : !field.nullableFlag;
       field.updateFlag = configField ? configField.updateFlag : false;
 
       if (configField && configField.frontComponent) {

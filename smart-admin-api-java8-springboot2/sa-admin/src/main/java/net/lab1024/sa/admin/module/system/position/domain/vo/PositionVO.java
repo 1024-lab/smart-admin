@@ -23,7 +23,7 @@ public class PositionVO {
     private String positionName;
 
     @Schema(description = "职级")
-    private String level;
+    private String positionLevel;
 
     @Schema(description = "排序")
     private Integer sort;

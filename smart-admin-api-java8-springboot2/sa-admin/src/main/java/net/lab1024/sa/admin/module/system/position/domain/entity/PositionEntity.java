@@ -34,7 +34,7 @@ public class PositionEntity {
     /**
      * 职级
      */
-    private String level;
+    private String positionLevel;
 
     /**
      * 排序

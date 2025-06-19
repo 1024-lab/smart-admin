@@ -27,11 +27,10 @@
         <p6spy.version>3.9.1</p6spy.version>
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <knife4j.version>4.3.0</knife4j.version>
-        <fastjson.version>2.0.16</fastjson.version>
+        <fastjson.version>2.0.48</fastjson.version>
         <druid.version>1.2.14</druid.version>
         <google-linkedhashmap.version>1.4.2</google-linkedhashmap.version>
         <google-guava.version>20.0</google-guava.version>
-        <user-agent-utils.version>1.21</user-agent-utils.version>
         <reflections.version>0.9.11</reflections.version>
         <commons-io.version>2.15.0</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
@@ -150,12 +149,6 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${google-guava.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>eu.bitwalker</groupId>
-                <artifactId>UserAgentUtils</artifactId>
-                <version>${user-agent-utils.version}</version>
             </dependency>
 
             <dependency>

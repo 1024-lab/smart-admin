@@ -1,4 +1,4 @@
-package net.lab1024.sa.admin.module.business.oa.enterprise;
+package net.lab1024.sa.admin.module.business.oa.enterprise.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
@@ -13,6 +13,7 @@ import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseEm
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseExcelVO;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseListVO;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseVO;
+import net.lab1024.sa.admin.module.business.oa.enterprise.manager.EnterpriseEmployeeManager;
 import net.lab1024.sa.admin.module.system.department.service.DepartmentService;
 import net.lab1024.sa.base.common.code.UserErrorCode;
 import net.lab1024.sa.base.common.domain.PageResult;

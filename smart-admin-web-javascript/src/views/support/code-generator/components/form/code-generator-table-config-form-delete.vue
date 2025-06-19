@@ -68,7 +68,6 @@
     if (deletedFlagColumn) {
       deleteFlagColumnName.value = deletedFlagColumn.columnName;
     }
-    console.log(deletedFlagColumn);
 
     //表单
     let deleteInfo = config.deleteInfo;

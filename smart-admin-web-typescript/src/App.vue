@@ -89,6 +89,7 @@
       return text;
     }
   }
+
 </script>
 <style scoped lang="less">
   :deep(.ant-table-column-sorters) {

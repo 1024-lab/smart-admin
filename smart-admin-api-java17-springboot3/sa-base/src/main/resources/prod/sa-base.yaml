@@ -102,6 +102,7 @@ springdoc:
     enabled: true # 开关
     doc-expansion: none  #关闭展开
     tags-sorter: alpha
+    server-base-url: https://preview.smartadmin.vip/smart-admin-api
   api-docs:
     enabled: true # 开关
 knife4j:
@@ -132,7 +133,7 @@ reload:
 sa-token:
   # token 名称（同时也是 cookie 名称）
   token-name: Authorization
-  # token 前缀 例如:Bearer
+  # token 前缀 例如:Bear
   token-prefix: Bearer
   # token 有效期（单位：秒） 默认30天（2592000秒），-1 代表永久有效
   timeout: 2592000

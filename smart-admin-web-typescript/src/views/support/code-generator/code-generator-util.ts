@@ -112,8 +112,8 @@ export const JS_FILE_LIST = [
 export const TS_FILE_LIST = [
   'ts/list.vue', //
   'ts/form.vue', //
-  'ts/api.js', //
-  'ts/const.js', //
+  'ts/api.ts', //
+  'ts/const.ts', //
 ];
 
 // -------------------------------- 后端文件 --------------------------------
