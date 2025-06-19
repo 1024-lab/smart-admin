@@ -40,7 +40,7 @@
         <commons-text.version>1.9</commons-text.version>
         <xerces.version>2.12.0</xerces.version>
         <fast-excel.version>1.0.0</fast-excel.version>
-        <poi.version>5.2.4</poi.version>
+        <poi.version>5.4.0</poi.version>
         <ooxml-schemas.version>1.4</ooxml-schemas.version>
         <aws-java-sdk.version>1.11.842</aws-java-sdk.version>
         <log4j-spring-boot.version>2.23.1</log4j-spring-boot.version>
