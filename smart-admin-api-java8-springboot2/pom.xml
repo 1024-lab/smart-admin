@@ -267,6 +267,10 @@
                         <artifactId>logback-classic</artifactId>
                         <groupId>ch.qos.logback</groupId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcprov-jdk15on</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
 

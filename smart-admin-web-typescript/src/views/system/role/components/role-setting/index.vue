@@ -37,8 +37,3 @@
 
   let activeKey = ref();
 </script>
-<style scoped lang="less">
-  .role-container {
-    height: 100%;
-  }
-</style>
