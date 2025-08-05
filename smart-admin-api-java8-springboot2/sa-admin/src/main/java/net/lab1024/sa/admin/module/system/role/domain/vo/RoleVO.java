@@ -2,9 +2,6 @@ package net.lab1024.sa.admin.module.system.role.domain.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * 角色

@@ -252,7 +252,6 @@
   }
 
   .dropdown-tabs {
-    background-color: @base-bg-color;
     border-radius: 4px;
   }
 

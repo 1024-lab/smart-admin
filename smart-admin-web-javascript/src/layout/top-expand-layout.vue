@@ -10,7 +10,7 @@
 <template>
   <a-layout class="admin-layout" style="min-height: 100%">
     <!-- 侧边菜单 side-menu -->
-    <a-layout-sider :theme="theme" class="side-menu" :collapsed="collapsed" :trigger="null">
+    <a-layout-sider theme="light" class="side-menu" :collapsed="collapsed" :trigger="null">
       <!-- 左侧菜单 -->
       <TopExpandMenu :collapsed="collapsed" />
     </a-layout-sider>
@@ -62,7 +62,11 @@
           :url="item.meta.frameUrl"
         />
         <!--非iframe使用router-view-->
-        <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)" style="height: 100%;" class="admin-content">
+        <div
+          v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)"
+          style="height: 100%"
+          class="admin-content"
+        >
           <router-view v-slot="{ Component }">
             <keep-alive :include="keepAliveIncludes">
               <component :is="Component" :key="route.name" />
@@ -71,7 +75,9 @@
         </div>
       </a-layout-content>
       <!-- footer 版权公司信息 -->
-      <a-layout-footer class="smart-layout-footer" v-show="footerFlag"> <SmartFooter /></a-layout-footer>
+      <a-layout-footer class="smart-layout-footer" v-show="footerFlag">
+        <SmartFooter />
+      </a-layout-footer>
       <!---- 回到顶部 --->
       <a-back-top :target="backTopTarget" :visibilityHeight="80" />
     </a-layout>
@@ -96,6 +102,7 @@
   import SideHelpDoc from './components/side-help-doc/index.vue';
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
+  import { theme as antDesignTheme } from 'ant-design-vue';
 
   const windowHeight = ref(window.innerHeight);
 
@@ -125,7 +132,7 @@
   watch(
     pageTagLocation,
     (newVal) => {
-      if (newVal == 'top') {
+      if (newVal === 'top') {
         nextTick(() => {
           sizeComputed();
         });
@@ -136,6 +143,7 @@
     }
   );
   const rightWidth = ref(0);
+
   function sizeComputed() {
     const tagParentElement = document.querySelector('.location-breadcrumb');
     const tagsElement = tagParentElement.querySelector('.ant-tabs-nav-list');
@@ -149,6 +157,7 @@
     ro.observe(tagsElement);
     ro.observe(parentElement);
   }
+
   //是否隐藏菜单
   const collapsed = ref(false);
 
@@ -183,27 +192,36 @@
   // ----------------------- keep-alive相关 -----------------------
   let { route, keepAliveIncludes, iframeNotKeepAlivePageFlag, keepAliveIframePages } = smartKeepAlive();
   const router = useRouter();
+
   function goHome() {
     router.push({ name: HOME_PAGE_NAME });
   }
+
+  const { useToken } = antDesignTheme;
+  const { token } = useToken();
+  console.log(33,token.value)
 </script>
 <style scoped lang="less">
+  @color-border-secondary: v-bind('token.colorBorderSecondary');
+  @color-bg-container: v-bind('token.colorBgContainer');
+
   :deep(.ant-layout-header) {
     height: auto;
   }
+
   :deep(.layout-header) {
     height: auto;
   }
 
   .smart-layout-header {
-    background: #fff;
+    background: @color-bg-container;
     padding: 0;
     z-index: 21;
   }
 
   .smart-layout-header-user {
     height: @header-user-height;
-    border-bottom: 1px solid #f6f6f6;
+    border-bottom: 1px solid @color-border-secondary;
   }
 
   .smart-layout-header-left {
@@ -223,7 +241,7 @@
     }
 
     .home-button:hover {
-      background-color: #efefef;
+      background-color: @color-bg-container;
     }
 
     .location-breadcrumb {
@@ -252,13 +270,16 @@
         top: 0;
       }
     }
+
     .side-menu::-webkit-scrollbar {
       width: 4px;
     }
+
     .side-menu::-webkit-scrollbar-thumb {
       border-radius: 10px;
       background: rgba(0, 0, 0, 0.2);
     }
+
     .side-menu::-webkit-scrollbar-track {
       border-radius: 0;
       background: rgba(0, 0, 0, 0.1);
@@ -270,6 +291,7 @@
       height: 100vh;
       max-width: 100px;
       width: auto !important;
+
       &.fixed-side {
         position: fixed;
         height: 100vh;
@@ -300,7 +322,7 @@
       background-color: inherit;
       min-height: auto;
       position: relative;
-      padding: 10px 10px 0px 10px;
+      padding: 5px 10px 0px 10px;
       height: calc(100% - v-bind(dueHeight) px);
       overflow-x: hidden;
     }

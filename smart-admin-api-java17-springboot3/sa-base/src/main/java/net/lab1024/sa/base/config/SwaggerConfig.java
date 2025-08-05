@@ -12,6 +12,7 @@ import net.lab1024.sa.base.common.constant.RequestHeaderConst;
 import net.lab1024.sa.base.common.swagger.SmartOperationCustomizer;
 import net.lab1024.sa.base.constant.SwaggerTagConst;
 import org.apache.commons.lang3.StringUtils;
+import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
 import org.springdoc.core.customizers.OpenApiBuilderCustomizer;
 import org.springdoc.core.customizers.ServerBaseUrlCustomizer;
 import org.springdoc.core.models.GroupedOpenApi;
@@ -24,6 +25,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -81,6 +84,21 @@ public class SwaggerConfig {
     }
 
     @Bean
+    public GlobalOpenApiCustomizer orderGlobalOpenApiCustomizer() {
+        return openApi -> {
+            // 全局添加鉴权参数
+            if(openApi.getPaths()!=null){
+                openApi.getPaths().forEach((s, pathItem) -> {
+                    // 为所有接口添加鉴权
+                    pathItem.readOperations().forEach(operation -> {
+                        operation.addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION));
+                    });
+                });
+            }
+        };
+    }
+
+    @Bean
     public GroupedOpenApi businessApi() {
         return GroupedOpenApi.builder()
                 .group("业务接口")
@@ -122,11 +140,11 @@ public class SwaggerConfig {
                                          Optional<JavadocProvider> javadocProvider) {
         List<ServerBaseUrlCustomizer> list = Lists.newArrayList(new ServerBaseUrlCustomizer() {
             @Override
-            public String customize(String baseUrl) {
+            public String customize(String serverBaseUrl, HttpRequest request) {
                 if (StringUtils.isNotBlank(serverBaseUrl)) {
                     return serverBaseUrl;
                 }
-                return baseUrl;
+                return serverBaseUrl;
             }
         });
         return new OpenAPIService(openAPI, securityParser, springDocConfigProperties,

@@ -52,11 +52,7 @@ public class SmartPageUtil {
                 log.error("《存在SQL注入：》 : {}", sortItem.getColumn());
                 throw new BusinessException("存在SQL注入风险，请联系技术工作人员！");
             }
-
-            OrderItem orderItem = new OrderItem();
-            orderItem.setColumn(sortItem.getColumn());
-            orderItem.setAsc(sortItem.getIsAsc());
-            orderItemList.add(orderItem);
+            orderItemList.add(sortItem.getIsAsc() ? OrderItem.asc(sortItem.getColumn()) : OrderItem.desc(sortItem.getColumn()));
         }
         page.setOrders(orderItemList);
         return page;

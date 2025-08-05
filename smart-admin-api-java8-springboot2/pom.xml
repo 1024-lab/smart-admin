@@ -22,48 +22,43 @@
         <springboot.version>2.7.18</springboot.version>
         <spring-mock.version>2.0.8</spring-mock.version>
         <spring-security-crypto.version>5.8.16</spring-security-crypto.version>
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
-        <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
+        <mybatis-plus.version>3.5.12</mybatis-plus.version>
+        <mysql-connector-j.version>9.3.0</mysql-connector-j.version>
         <p6spy.version>3.9.1</p6spy.version>
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
-        <knife4j.version>4.3.0</knife4j.version>
-        <fastjson.version>2.0.48</fastjson.version>
-        <druid.version>1.2.14</druid.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <fastjson.version>2.0.57</fastjson.version>
+        <druid.version>1.2.25</druid.version>
         <google-linkedhashmap.version>1.4.2</google-linkedhashmap.version>
         <google-guava.version>20.0</google-guava.version>
-        <reflections.version>0.9.11</reflections.version>
-        <commons-io.version>2.15.0</commons-io.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
-        <commons-collections4.version>4.4</commons-collections4.version>
-        <commons-compress.version>1.26.0</commons-compress.version>
-        <commons-codec.version>1.13</commons-codec.version>
-        <commons-text.version>1.9</commons-text.version>
-        <xerces.version>2.12.0</xerces.version>
-        <fast-excel.version>1.0.0</fast-excel.version>
-        <poi.version>5.2.4</poi.version>
-        <ooxml-schemas.version>1.4</ooxml-schemas.version>
-        <aws-java-sdk.version>1.11.842</aws-java-sdk.version>
-        <log4j-spring-boot.version>2.23.1</log4j-spring-boot.version>
-        <hutool.version>5.7.22</hutool.version>
-        <velocity-engine-core.version>2.3</velocity-engine-core.version>
+        <reflections.version>0.10.2</reflections.version>
+        <commons-io.version>2.19.0</commons-io.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
+        <commons-collections4.version>4.5.0</commons-collections4.version>
+        <commons-compress.version>1.27.1</commons-compress.version>
+        <commons-codec.version>1.18.0</commons-codec.version>
+        <commons-text.version>1.13.1</commons-text.version>
+        <fast-excel.version>1.2.0</fast-excel.version>
+        <poi.version>5.4.1</poi.version>
+        <awssdk-s3.version>2.31.78</awssdk-s3.version>
+        <hutool.version>5.8.39</hutool.version>
+        <velocity-engine-core.version>2.4.1</velocity-engine-core.version>
         <velocity-tools.version>3.1</velocity-tools.version>
-        <sa-token.version>1.41.0</sa-token.version>
+        <sa-token.version>1.44.0</sa-token.version>
         <ip2region.version>2.7.0</ip2region.version>
         <bcprov.version>1.80</bcprov.version>
-        <jackson-datatype-jsr310.version>2.13.4</jackson-datatype-jsr310.version>
-        <jackson-dataformat-yaml.version>2.16.1</jackson-dataformat-yaml.version>
         <smartdb.version>1.2.0</smartdb.version>
-        <redisson.version>3.25.0</redisson.version>
-        <snakeyaml.version>2.2</snakeyaml.version>
-        <freemarker.version>2.3.33</freemarker.version>
-        <jsoup.version>1.18.1</jsoup.version>
-        <tika.version>2.9.3</tika.version>
+        <redisson.version>3.50.0</redisson.version>
+        <snakeyaml.version>2.4</snakeyaml.version>
+        <freemarker.version>2.3.34</freemarker.version>
+        <jsoup.version>1.21.1</jsoup.version>
+        <tika.version>2.9.4</tika.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
 
-            <!--BOM begin-->
+            <!--SpringBoot BOM begin-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -71,7 +66,16 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--BOM end-->
+            <!--SpringBoot BOM end-->
+            <!--mybatis-plus BOM begin-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>${mybatis-plus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--mybatis-plus BOM end-->
 
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -95,18 +99,6 @@
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql-connector-j.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-logging</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <dependency>
@@ -194,9 +186,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.amazonaws</groupId>
-                <artifactId>aws-java-sdk-s3</artifactId>
-                <version>${aws-java-sdk.version}</version>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>s3</artifactId>
+                <version>${awssdk-s3.version}</version>
                 <exclusions>
                     <exclusion>
                         <artifactId>commons-logging</artifactId>
@@ -294,20 +286,8 @@
 
             <dependency>
                 <groupId>org.apache.poi</groupId>
-                <artifactId>ooxml-schemas</artifactId>
-                <version>${ooxml-schemas.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson-datatype-jsr310.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-yaml</artifactId>
-                <version>${jackson-dataformat-yaml.version}</version>
+                <artifactId>poi-ooxml-full</artifactId>
+                <version>${poi.version}</version>
             </dependency>
 
             <dependency>

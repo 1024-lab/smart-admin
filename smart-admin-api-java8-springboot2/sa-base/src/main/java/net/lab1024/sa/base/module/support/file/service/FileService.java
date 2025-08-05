@@ -18,7 +18,6 @@ import net.lab1024.sa.base.module.support.file.domain.form.FileQueryForm;
 import net.lab1024.sa.base.module.support.file.domain.vo.FileDownloadVO;
 import net.lab1024.sa.base.module.support.file.domain.vo.FileUploadVO;
 import net.lab1024.sa.base.module.support.file.domain.vo.FileVO;
-import net.lab1024.sa.base.module.support.redis.RedisService;
 import net.lab1024.sa.base.module.support.securityprotect.service.SecurityFileService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -54,9 +53,6 @@ public class FileService {
 
     @Resource
     private FileDao fileDao;
-
-    @Resource
-    private RedisService redisService;
 
     @Resource
     private SecurityFileService securityFileService;

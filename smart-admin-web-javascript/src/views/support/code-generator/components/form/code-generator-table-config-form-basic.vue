@@ -136,7 +136,7 @@
 </template>
 
 <script setup>
-  import { message } from 'ant-design-vue';
+  import { message, theme } from 'ant-design-vue';
   import dayjs from 'dayjs';
   import _ from 'lodash';
   import { computed, inject, reactive, ref } from 'vue';
@@ -279,9 +279,13 @@
       '常量类：' + formData.moduleName + 'Const.java', //
     ];
   });
+
+  const { useToken } = theme;
+  const { token } = useToken();
 </script>
 
 <style lang="less" scoped>
+  @color-fill-tertiary: v-bind('token.colorFillTertiary');
   .preview-title {
     font-weight: 600;
     margin: 5px 0px;
@@ -289,7 +293,7 @@
 
   .preview-block {
     font-size: 14px;
-    background-color: #f9f9f9;
     padding: 10px 5px;
+    background-color: @color-fill-tertiary;
   }
 </style>

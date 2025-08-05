@@ -394,9 +394,6 @@
   }
 </script>
 <style scoped lang="less">
-  .employee-container {
-    height: 100%;
-  }
   .header {
     display: flex;
     align-items: center;

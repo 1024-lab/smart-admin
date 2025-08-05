@@ -204,7 +204,6 @@
     .gradient-main {
       width: 1200px;
       height: 300px;
-      background: #fff;
     }
   }
 </style>

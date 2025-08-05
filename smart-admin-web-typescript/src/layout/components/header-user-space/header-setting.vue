@@ -13,7 +13,7 @@
     <a-form layout="horizontal" :label-col="{ span: 8 }">
       <a-form-item label="语言/Language">
         <a-select v-model:value="formState.language" @change="changeLanguage" style="width: 120px">
-          <a-select-option v-for="item in i18nList" :key="item.value" :value="item.value">{{ item.text }}</a-select-option>
+          <a-select-option v-for="item in i18nList" :key="item.value" :value="item.value">{{ item.text }} </a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item :label="$t('setting.color')">
@@ -51,12 +51,6 @@
         <a-input @change="changePageWidth" v-model:value="formState.pageWidth" />
         像素（px）或者 百分比
       </a-form-item>
-      <a-form-item :label="$t('setting.compact')">
-        <a-radio-group v-model:value="formState.compactFlag" button-style="solid" @change="changeCompactFlag">
-          <a-radio-button :value="false">默认</a-radio-button>
-          <a-radio-button :value="true">紧凑</a-radio-button>
-        </a-radio-group>
-      </a-form-item>
       <a-form-item :label="$t('setting.menu.layout')">
         <a-radio-group @change="changeLayout" button-style="solid" v-model:value="formState.layout">
           <a-radio-button v-for="item in $smartEnumPlugin.getValueDescList('LAYOUT_ENUM')" :key="item.value" :value="item.value">
@@ -68,6 +62,12 @@
         <a-radio-group v-model:value="formState.sideMenuTheme" button-style="solid" @change="changeMenuTheme">
           <a-radio-button value="dark">Dark</a-radio-button>
           <a-radio-button value="light">Light</a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item :label="$t('setting.compact')">
+        <a-radio-group v-model:value="formState.compactFlag" button-style="solid" @change="changeCompactFlag">
+          <a-radio-button :value="false">默认</a-radio-button>
+          <a-radio-button :value="true">紧凑</a-radio-button>
         </a-radio-group>
       </a-form-item>
       <a-form-item :label="$t('setting.pagetag.location')">
@@ -92,7 +92,6 @@
       <a-form-item :label="$t('setting.bread')">
         <a-switch
           @change="changeBreadCrumbFlag"
-          :disabled="formState.pageTagLocation === 'top'"
           v-model:checked="formState.breadCrumbFlag"
           checked-children="显示"
           un-checked-children="隐藏"
@@ -115,23 +114,26 @@
           un-checked-children="默认不展开"
         />
       </a-form-item>
+      <a-form-item :label="$t('setting.darkmode')">
+        <a-switch @change="changeDarkMode" v-model:checked="formState.darkModeFlag" checked-children="开启" un-checked-children="关闭" />
+      </a-form-item>
       <br />
       <br />
     </a-form>
 
     <div class="footer">
       <a-button style="margin-right: 8px" type="primary" @click="copy">复制配置信息</a-button>
-      <a-button type="block" danger @click="reset">恢复默认配置 </a-button>
+      <a-button type="primary" danger @click="reset">恢复默认配置</a-button>
     </div>
   </a-drawer>
 </template>
 <script setup lang="ts">
-  import { ref, reactive, h, watch } from 'vue';
+  import { h, reactive, ref, watch } from 'vue';
   import { i18nList } from '/@/i18n/index';
   import { useI18n } from 'vue-i18n';
   import localStorageKeyConst from '/@/constants/local-storage-key-const';
   import { LAYOUT_ENUM } from '/@/constants/layout-const';
-  import { localRead, localSave } from '/@/utils/local-util';
+  import { localSave } from '/@/utils/local-util';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { Modal } from 'ant-design-vue';
   import { appDefaultConfig } from '/@/config/app-config';
@@ -203,6 +205,8 @@
     sideMenuWidth: appConfigStore.sideMenuWidth,
     // 菜单主题
     sideMenuTheme: appConfigStore.sideMenuTheme,
+    // 夜间模式
+    darkModeFlag: appConfigStore.darkModeFlag,
     // 页面紧凑
     compactFlag: appConfigStore.compactFlag,
     // 页面圆角
@@ -229,21 +233,8 @@
 
   let formState = reactive({ ...formValue });
 
-  watch(
-    () => formState.pageTagLocation,
-    () => {
-      if (formState.pageTagLocation === 'top') {
-        formState.breadCrumbFlag = false;
-      } else {
-        formState.breadCrumbFlag = true;
-      }
-    },
-    {
-      immediate: true,
-    }
-  );
-
   const { locale } = useI18n();
+
   function changeLanguage(languageValue) {
     locale.value = languageValue;
     appConfigStore.$patch({
@@ -293,6 +284,7 @@
       compactFlag: e.target.value,
     });
   }
+
   function changeBorderRadius(e) {
     appConfigStore.$patch({
       borderRadius: e,
@@ -310,6 +302,7 @@
       pageTagFlag: e,
     });
   }
+
   function changeFlatPattern(e) {
     appConfigStore.$patch({
       flatPattern: e,
@@ -345,6 +338,12 @@
       watermarkFlag: e,
     });
   }
+
+  function changeDarkMode(e) {
+    appConfigStore.$patch({
+      darkModeFlag: e,
+    });
+  }
 </script>
 <style lang="less" scoped>
   .footer {
@@ -354,9 +353,9 @@
     width: 100%;
     border-top: 1px solid #e9e9e9;
     padding: 10px 16px;
-    background: #fff;
     text-align: left;
-    z-index: 1;
+    z-index: 99999;
+    background-color: white;
   }
 
   .color-container {

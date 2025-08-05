@@ -57,7 +57,7 @@ public class LoginController {
         return ResponseDTO.ok(loginResult);
     }
 
-    @Operation(summary = "退出登陆  @author 卓大")
+    @Operation(summary = "退出登录  @author 卓大")
     @GetMapping("/login/logout")
     public ResponseDTO<String> logout() {
         return loginService.logout(SmartRequestUtil.getRequestUser());

@@ -17,6 +17,7 @@ export default {
   'setting.table.yHeight': '表格高度',
   'setting.pagetag.location': '标签页位置',
   'setting.color': '主题颜色',
+  'setting.darkmode': '夜间模式',
   'setting.menu.layout': '菜单布局',
   'setting.menu.width': '菜单宽度',
   'setting.menu.theme': '菜单主题',

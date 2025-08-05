@@ -9,13 +9,13 @@
   *
 -->
 <template>
-  <div class="user-header">
+  <a-card class="user-header">
     <a-page-header :title="welcomeSentence">
       <template #subTitle>
-        <span style="color: #666; margin-left: 20px">所属部门：{{ departmentName }} </span>
+        <a-typography-text type="secondary" style="margin-left: 20px">所属部门： {{ departmentName }}</a-typography-text>
       </template>
       <template #extra>
-        <p style="color: #333">{{ dayInfo }}</p>
+        <a-typography-text type="secondary">{{ dayInfo }}</a-typography-text>
       </template>
       <a-row class="content">
         <span class="left-content">
@@ -34,7 +34,7 @@
         </div>
       </a-row>
     </a-page-header>
-  </div>
+  </a-card>
 </template>
 <script setup lang="ts">
   import { computed } from 'vue';
@@ -123,11 +123,16 @@
 <style scoped lang="less">
   .user-header {
     width: 100%;
-    background-color: #fff;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    padding: 0;
+
+    :deep(.ant-card-body) {
+      padding: 0;
+    }
 
     .left-content {
       width: calc(100% - 420px);
+
       h3 {
         color: rgba(0, 0, 0, 0.75);
       }
@@ -136,6 +141,7 @@
     .content {
       display: flex;
       justify-content: space-between;
+
       .weather {
         width: 400px;
       }
@@ -157,6 +163,7 @@
       padding: 5px 0 0 0;
       margin: 6px 0 0 0;
     }
+
     .sentence:hover {
       cursor: pointer;
       text-decoration: underline;

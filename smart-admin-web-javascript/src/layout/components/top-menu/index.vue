@@ -48,6 +48,7 @@
   import HeaderAvatar from '../header-user-space/header-avatar.vue';
   import HeaderSetting from '../header-user-space/header-setting.vue';
   import HeaderMessage from '../header-user-space/header-message.vue';
+  import { theme } from 'ant-design-vue';
 
   // 设置
   const headerSetting = ref();
@@ -96,9 +97,14 @@
   function onGoHome() {
     router.push({ name: HOME_PAGE_NAME });
   }
+
+  const { useToken } = theme;
+  const { token } = useToken();
 </script>
 
 <style lang="less" scoped>
+  @color-border-secondary: v-bind('token.colorBorderSecondary');
+
   .header-main {
     display: flex;
     flex-direction: row;
@@ -107,7 +113,7 @@
     padding-left: 16px;
     height: 48px;
     z-index: 21;
-    border-bottom: 1px solid rgb(238, 238, 238);
+    border-bottom: 1px solid @color-border-secondary;
 
     .logo {
       min-width: 192px;

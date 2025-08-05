@@ -24,6 +24,12 @@ public class EmployeeEntity {
     private Long employeeId;
 
     /**
+     * 唯一id
+     */
+    private String employeeUid;
+
+
+    /**
      * 登录账号
      */
     private String loginName;

@@ -9,8 +9,10 @@
     <a-layout-content :id="LAYOUT_ELEMENT_IDS.content" class="admin-layout-content">
       <!---标签页-->
       <div class="page-tag-div" v-show="(pageTagFlag && !fullScreenFlag) || breadCrumbFlag" :id="LAYOUT_ELEMENT_IDS.header">
-        <MenuLocationBreadcrumb v-if="pageTagLocation !== 'top'" />
         <PageTag />
+      </div>
+      <div class="bread-crumb-div" v-if="breadCrumbFlag">
+        <MenuLocationBreadcrumb />
       </div>
 
       <!--不keepAlive的iframe使用单个iframe组件-->
@@ -26,7 +28,11 @@
       />
 
       <!--非iframe使用router-view-->
-      <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name !== e.name)" :style="{height: contentBoxHeight+'px'}" class="admin-content">
+      <div
+        v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name !== e.name)"
+        :style="{ height: contentBoxHeight + 'px' }"
+        class="admin-content"
+      >
         <router-view v-slot="{ Component }">
           <keep-alive :include="keepAliveIncludes">
             <component :is="Component" :key="route.name" />
@@ -58,6 +64,7 @@
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
   import MenuLocationBreadcrumb from './components/menu-location-breadcrumb/index.vue';
+  import { theme as antDesignTheme } from 'ant-design-vue';
 
   const windowHeight = ref(window.innerHeight);
   //主题颜色
@@ -78,42 +85,48 @@
   const footerFlag = computed(() => useAppConfigStore().$state.footerFlag);
   // 是否显示水印
   const watermarkFlag = computed(() => useAppConfigStore().$state.watermarkFlag);
-  // 标签页位置
-  const pageTagLocation = computed(() => useAppConfigStore().$state.pageTagLocation);
   // 面包屑
   const breadCrumbFlag = computed(() => useAppConfigStore().$state.breadCrumbFlag);
   // 页面宽度
   const pageWidth = computed(() => useAppConfigStore().$state.pageWidth);
 
-  let contentBoxHeight=ref()
-  // 多余高度
-  const dueHeight = computed(() => {
-    if (fullScreenFlag.value) {
-      return '0';
+  let contentBoxHeight = ref();
+  // 页面内容区域的高度
+  const contentTop = computed(() => {
+    let due = 45;
+    let existComponentCount = 0;
+    if (useAppConfigStore().$state.pageTagFlag) {
+      existComponentCount++;
     }
-
-    let due = '45px';
-    if (useAppConfigStore().$state.pageTagFlag || useAppConfigStore().$state.breadCrumbFlag) {
-      due = '85px';
+    if (useAppConfigStore().$state.breadCrumbFlag) {
+      existComponentCount++;
+      due = 40;
     }
-    if (
-      useAppConfigStore().$state.pageTagFlag &&
-      useAppConfigStore().$state.pageTagLocation === 'center' &&
-      useAppConfigStore().$state.breadCrumbFlag
-    ) {
-      due = '125px';
-    }
-    return due;
+    return due + existComponentCount * 40 + 'px';
   });
 
-  watch(() => dueHeight.value, () => {
-    let dom=document.querySelector('.admin-layout-content')
-    contentBoxHeight.value=dom.offsetHeight - 20 - dueHeight.value.split('px')[0]
+  // 面包屑高度
+  const breadCrumbTop = computed(() => {
+    if (useAppConfigStore().$state.pageTagFlag) {
+      return '88px';
+    } else {
+      return '45px';
+    }
   });
+
+  watch(
+    () => contentTop.value,
+    () => {
+      let dom = document.querySelector('.admin-layout-content');
+      contentBoxHeight.value = dom.offsetHeight - 20 - contentTop.value.split('px')[0];
+    }
+  );
+
   onMounted(() => {
-    let dom=document.querySelector('.admin-layout-content')
-    contentBoxHeight.value=dom.offsetHeight - 20 - dueHeight.value.split('px')[0]
+    let dom = document.querySelector('.admin-layout-content');
+    contentBoxHeight.value = dom.offsetHeight - 20 - contentTop.value.split('px')[0];
   });
+
   //页面初始化的时候加载水印
   onMounted(() => {
     if (watermarkFlag.value) {
@@ -140,6 +153,7 @@
   };
 
   const router = useRouter();
+
   function goHome() {
     router.push({ name: HOME_PAGE_NAME });
   }
@@ -150,9 +164,14 @@
 
   // ----------------------- keep-alive相关 -----------------------
   let { route, keepAliveIncludes, iframeNotKeepAlivePageFlag, keepAliveIframePages } = smartKeepAlive();
+
+  const { useToken } = antDesignTheme;
+  const { token } = useToken();
 </script>
 
 <style lang="less" scoped>
+  @color-border-secondary: v-bind('token.colorBorderSecondary');
+  @color-bg-container: v-bind('token.colorBgContainer');
   .admin-layout {
     min-height: 100%;
 
@@ -174,13 +193,23 @@
       overflow-x: hidden;
       padding: 10px 0;
       width: v-bind(pageWidth);
-      margin-top: v-bind(dueHeight);
+      margin-top: v-bind(contentTop);
       margin-left: auto;
       margin-right: auto;
 
       .page-tag-div {
+        background: @color-bg-container;
         position: fixed;
         top: 48px;
+        width: v-bind(pageWidth);
+        height: 40px;
+        line-height: 40px;
+        z-index: 3;
+      }
+
+      .bread-crumb-div {
+        position: fixed;
+        top: v-bind(breadCrumbTop);
         width: v-bind(pageWidth);
         height: 40px;
         line-height: 40px;

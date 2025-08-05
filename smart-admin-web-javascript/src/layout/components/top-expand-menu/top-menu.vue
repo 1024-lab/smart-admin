@@ -10,7 +10,7 @@
 <template>
   <div class="top-menu-container">
     <!-- 一级菜单展示 -->
-    <a-menu :selectedKeys="selectedKeys" mode="horizontal" :theme="theme">
+    <a-menu :selectedKeys="selectedKeys" mode="horizontal" theme="dark">
       <template v-for="item in menuTree" :key="item.menuId">
         <template v-if="item.visibleFlag">
           <a-menu-item :key="item.menuId.toString()" @click="onSelectMenu(item)">
@@ -29,13 +29,10 @@
   import { computed, ref } from 'vue';
   import { MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
   import { router } from '/@/router';
-  import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useUserStore } from '/@/store/modules/system/user';
 
   import menuEmitter from './top-expand-menu-mitt';
 
-  const websiteName = computed(() => useAppConfigStore().websiteName);
-  const theme = computed(() => useAppConfigStore().$state.sideMenuTheme);
   const menuTree = computed(() => useUserStore().getMenuTree || []);
 
   const props = defineProps({
@@ -108,15 +105,15 @@
     width: v-bind('menuInfo.width');
     flex-shrink: 0;
   }
-  .ant-menu-dark {
-    background: #1677ff;
-    color: #fff;
-  }
-  .ant-menu-light {
-    background: #1677ff;
-    color: #fff;
-  }
-  :deep(.ant-menu-item-selected){
+  //.ant-menu-dark {
+  //  background: #1677ff;
+  //  color: #fff;
+  //}
+  //.ant-menu-light {
+  //  background: #1677ff;
+  //  color: #fff;
+  //}
+  :deep(.ant-menu-item-selected) {
     background: #0958d9 !important;
     color: #fff !important;
   }
@@ -145,7 +142,7 @@
       overflow: hidden;
       word-wrap: break-word;
       white-space: nowrap;
-      color: v-bind('theme === "light" ? "#001529": "#ffffff"');
+      color: #ffffff;
     }
   }
 </style>

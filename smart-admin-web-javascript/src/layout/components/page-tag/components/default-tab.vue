@@ -9,16 +9,17 @@
 -->
 <template>
   <!-- 标签页，共两部分：1、标签 ；2、标签操作区 -->
-  <a-row style="border-bottom: 1px solid #eeeeee; position: relative" v-show="pageTagFlag">
+  <a-row style=" position: relative" v-show="pageTagFlag">
     <a-dropdown :trigger="['contextmenu']">
       <div class="smart-page-tag">
         <a-tabs style="width: 100%" :tab-position="mode" v-model:activeKey="selectedKey" size="small" @tabClick="selectTab">
           <a-tab-pane v-for="item in tagNav" :key="item.menuName">
             <template #tab>
-              <span>
+              <span class="smart-page-tag-span">
+                <home-outlined v-if="item.menuName === HOME_PAGE_NAME" class="smart-page-tag-close smart-page-tag-icon" />
+                <component class="smart-page-tag-icon" v-else :is="$antIcons[item.menuIcon]" />
                 {{ item.menuTitle }}
                 <close-outlined @click.stop="closeTag(item, false)" v-if="item.menuName !== HOME_PAGE_NAME" class="smart-page-tag-close" />
-                <home-outlined style="font-size: 12px" v-if="item.menuName === HOME_PAGE_NAME" class="smart-page-tag-close" />
               </span>
             </template>
           </a-tab-pane>
@@ -137,18 +138,17 @@
 <style scoped lang="less">
   @smart-page-tag-operate-width: 40px;
   @color-primary: v-bind('token.colorPrimary');
+  @color-primary-bg: v-bind('token.colorPrimaryBg');
 
   .smart-page-tag-operate {
     width: @smart-page-tag-operate-width;
     height: @smart-page-tag-operate-width;
-    background-color: #ffffff;
     font-size: 17px;
     text-align: center;
     vertical-align: middle;
     line-height: @smart-page-tag-operate-width;
     padding-right: 10px;
     cursor: pointer;
-    color: #606266;
 
     .smart-page-tag-operate-icon {
       width: 20px;
@@ -168,6 +168,14 @@
     color: @color-primary;
   }
 
+  .smart-page-tag-span:first-child {
+    padding-right: 15px;
+
+    .smart-page-tag-icon {
+      font-size: 12px;
+    }
+  }
+
   .smart-page-tag {
     position: relative;
     box-sizing: border-box;
@@ -179,8 +187,11 @@
     padding-right: 20px;
     padding-left: 20px;
     user-select: none;
-    background: #fff;
     width: calc(100% - @smart-page-tag-operate-width);
+
+    .smart-page-tag-icon {
+      margin-right: 4px;
+    }
 
     .smart-page-tag-close {
       margin-left: 5px;
@@ -194,10 +205,9 @@
       margin: 0;
       padding: 0 0 2px 0;
       max-height: 32px;
-    }
-
-    :deep(.ant-tabs-nav::before) {
-      border-bottom: 1px solid #ffffff;
+      &::before{
+        border-bottom: none !important;
+      }
     }
 
     :deep(.ant-tabs-small > .ant-tabs-nav .ant-tabs-tab) {
@@ -207,13 +217,16 @@
     }
 
     :deep(.ant-tabs-tab-active) {
-      background-color: #eeeeee;
+      background-color: @color-primary-bg;
+
       .smart-page-tag-close {
         color: @color-primary;
       }
     }
+
     :deep(.ant-tabs-nav .ant-tabs-tab:hover) {
-      background-color: #eeeeee;
+      background-color: @color-primary-bg;
+
       .smart-page-tag-close {
         color: @color-primary;
       }

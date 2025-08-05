@@ -74,13 +74,13 @@
   watch(
     () => props.modelValue,
     (value) => {
-      newColumn.forEach(item=>{
-        value.forEach(itemNewColumns=>{
-          if(item.dataIndex==itemNewColumns.dataIndex){
-            Object.assign(item,itemNewColumns)
+      newColumn.forEach((item) => {
+        value.forEach((itemNewColumns) => {
+          if (item.dataIndex === itemNewColumns.dataIndex) {
+            Object.assign(item, itemNewColumns);
           }
-        })
-      })
+        });
+      });
     },
     {
       deep: true,
@@ -90,6 +90,7 @@
 
   //构建用户的数据列
   async function buildUserTableColumns() {
+
     if (!props.tableId) {
       return;
     }
@@ -127,6 +128,7 @@
 
   // 处理退出全屏
   function handleExitFullScreen() {
+    document.querySelector('#smartAdminHeader').style.display = 'block';
     fullScreenFlag.value = false;
     useAppConfigStore().exitFullScreen();
     document.removeEventListener('fullscreenchange', handleFullscreenChange);
@@ -137,6 +139,7 @@
 
   //判断各种浏览器 -全屏
   function launchElementFullScreen(element) {
+    document.querySelector('#smartAdminHeader').style.display = 'none';
     if (element.requestFullscreen) {
       element.requestFullscreen();
     } else if (element.mozRequestFullScreen) {
@@ -179,28 +182,29 @@
   // ----------------- 弹窗 修改表格列 -------------------
 
   const smartTableColumnModal = ref();
+
   function showModal() {
     smartTableColumnModal.value.show(newColumn, props.tableId);
   }
 
   // 将弹窗修改的列数据，赋值给原表格 列数组
   function updateColumn(changeColumnArray) {
-    let obj={}
+    let obj = {};
     // 如果为空数组代表恢复默认，使用原始表格数据
     //合并列
-    if(_.isEmpty(changeColumnArray)){
+    if (_.isEmpty(changeColumnArray)) {
       obj = mergeColumn(_.cloneDeep(originalColumn), changeColumnArray);
-    }else{
+    } else {
       obj = mergeColumn(_.cloneDeep(newColumn), changeColumnArray);
     }
     const newColumns = obj.newColumns;
-    newColumn.forEach(item=>{
-      obj.newColumns.forEach(itemNewColumns=>{
-        if(item.dataIndex==itemNewColumns.dataIndex){
-          Object.assign(item,itemNewColumns)
+    newColumn.forEach((item) => {
+      obj.newColumns.forEach((itemNewColumns) => {
+        if (item.dataIndex === itemNewColumns.dataIndex) {
+          Object.assign(item, itemNewColumns);
         }
-      })
-    })
+      });
+    });
     emit(
       'update:modelValue',
       newColumns.filter((e) => e.showFlag)
@@ -217,6 +221,6 @@
         buildUserTableColumns();
       }
     },
-    { immediate: true }
+    { immediate: false }
   );
 </script>

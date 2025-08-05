@@ -4,6 +4,8 @@
 
 **<font color="#DC143C">国内首个满足《网络安全-三级等保》、《数据安全》</font>** 功能要求，支持登录限制、接口国产加解密、数据脱敏等一系列安全要求。
 
+**<font color="#DC143C">支持国产数据库：达梦、金仓、南大通用、OceanBase、GaussDB 高斯、阿里PolarDB、GoldenDB。 </font>**
+
 前端提供 **<font color="#DC143C">JavaScript和TypeScript双版本</font>**，后端提供 **<font color="#DC143C">Java8+SpringBoot2.X和Java17+SpringBoot3.X 双版本</font>**。
 
 同时 **<font color="#DC143C">重磅开源</font>** 开源六年来 **<font color="#DC143C">千余家企业验证过且正在使用</font>** 的代码规范: **<font color="#DC143C">《高质量代码思想》、《Vue3规范》、《Java规范》</font>** ，让大家在这浮躁的世界里感受到一股把代码写好的清流！同时又能节省大量时间，减少加班，快乐工作，保持谦逊，保持学习，**<font color="#DC143C">热爱代码，更热爱生活</font>** ！

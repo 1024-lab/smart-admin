@@ -204,6 +204,7 @@ export const useUserStore = defineStore({
         // @ts-ignore
         findTag.fromMenuName = from.name;
         findTag.fromMenuQuery = from.query;
+        findTag.menuQuery = route.query;
       } else {
         // @ts-ignore
         this.tagNav.push({
@@ -212,7 +213,7 @@ export const useUserStore = defineStore({
           // @ts-ignore
           menuTitle: route.meta.title,
           menuQuery: route.query,
-          menuIcon:route.meta?.icon,
+          menuIcon:route.meta.icon,
           // @ts-ignore
           fromMenuName: from.name,
           fromMenuQuery: from.query,

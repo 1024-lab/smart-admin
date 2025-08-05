@@ -12,14 +12,13 @@
     <!-- 顶部logo区域 -->
     <div class="logo" @click="onGoHome" :style="sideMenuWidth" v-if="!collapsed">
       <img class="logo-img" :src="logoImg" />
-      <div class="title smart-logo title-light" v-if="isLight">{{ websiteName }}</div>
-      <div class="title smart-logo title-dark" v-if="!isLight">{{ websiteName }}</div>
+      <div class="title" >{{ websiteName }}</div>
     </div>
     <div class="min-logo" @click="onGoHome" v-if="collapsed">
       <img class="logo-img" :src="logoImg" />
     </div>
     <!-- 次级菜单展示 -->
-    <a-menu :selectedKeys="selectedKeys" :theme="theme" :openKeys="openKeys" mode="inline">
+    <a-menu :selectedKeys="selectedKeys" theme="light" :openKeys="openKeys" mode="inline">
       <template v-for="item in topMenu.children" :key="item.menuId">
         <template v-if="item.visibleFlag">
           <template v-if="$lodash.isEmpty(item.children)">
@@ -123,25 +122,25 @@
 
   defineExpose({ updateSelectKeyAndOpenKey });
 
-  const isLight = computed(() => useAppConfigStore().$state.sideMenuTheme === 'light');
-  const color = computed(() => {
-    let isLight = useAppConfigStore().$state.sideMenuTheme === 'light';
-    return {
-      background: isLight ? '#FFFFFF' : '#001529',
-    };
+  const darkModeFlag = computed(() => useAppConfigStore().$state.darkModeFlag);
+
+  const logoHeight = computed(() => {
+    if(useAppConfigStore().$state.compactFlag){
+      return '40px';
+    }else{
+      return '46px';
+    }
   });
 </script>
 <style scoped lang="less">
   .recursion-container {
     height: 100%;
-    background-color: v-bind('color.background');
   }
 
   .min-logo {
-    height: @header-user-height;
-    line-height: @header-user-height;
+    height: v-bind(logoHeight);
+    line-height: v-bind(logoHeight);
     padding: 0px 15px 0px 15px;
-    // background-color: v-bind('color.background');
 
     width: 80px;
     z-index: 21;
@@ -158,15 +157,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: @header-user-height;
+    height: v-bind(logoHeight);
     font-size: 16px;
     color: #515a6e;
     border-bottom: 1px solid #f3f3f3;
     border-right: 1px solid #f3f3f3;
   }
   .logo {
-    height: @header-user-height;
-    line-height: @header-user-height;
+    height: v-bind(logoHeight);
+    line-height: v-bind(logoHeight);
     padding: 0px 15px 0px 15px;
     width: 100%;
     z-index: 100;
@@ -174,6 +173,7 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    background-color: #001529;
 
     .logo-img {
       width: 30px;
@@ -186,7 +186,7 @@
       overflow: hidden;
       word-wrap: break-word;
       white-space: nowrap;
-      color: v-bind('theme === "light" ? "#001529": "#ffffff"');
+      color: #ffffff;
     }
   }
 </style>

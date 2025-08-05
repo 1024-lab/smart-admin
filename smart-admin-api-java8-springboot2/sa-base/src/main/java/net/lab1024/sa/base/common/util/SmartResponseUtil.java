@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 import static cn.hutool.core.util.CharsetUtil.UTF_8;
 
@@ -55,9 +54,8 @@ public class SmartResponseUtil {
         if (SmartStringUtil.isNotEmpty(fileName)) {
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaTypeFactory.getMediaType(fileName).orElse(MediaType.APPLICATION_OCTET_STREAM) + ";charset=utf-8");
             try {
-                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(fileName, UTF_8).replaceAll("\\+", "%20"));
+                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(fileName, "utf-8").replaceAll("\\+", "%20"));
             } catch (UnsupportedEncodingException e) {
-                log.error(e.getMessage(), e);
                 throw new RuntimeException(e);
             }
             response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);

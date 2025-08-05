@@ -52,8 +52,7 @@ public class SmartPageUtil {
                 log.error("《存在SQL注入：》 : {}", sortItem.getColumn());
                 throw new BusinessException("存在SQL注入风险，请联系技术工作人员！");
             }
-
-            orderItemList.add(new OrderItem(sortItem.getColumn(), sortItem.getIsAsc()));
+            orderItemList.add(sortItem.getIsAsc() ? OrderItem.asc(sortItem.getColumn()) : OrderItem.desc(sortItem.getColumn()));
         }
         page.setOrders(orderItemList);
         return page;
@@ -94,7 +93,7 @@ public class SmartPageUtil {
         return newPageResult;
     }
 
-    public static <T> PageResult subListPage(Integer pageNum, Integer pageSize, List<T> list) {
+    public static <T> PageResult<T> subListPage(Integer pageNum, Integer pageSize, List<T> list) {
         PageResult<T> pageRet = new PageResult<T>();
         //总条数
         int count = list.size();

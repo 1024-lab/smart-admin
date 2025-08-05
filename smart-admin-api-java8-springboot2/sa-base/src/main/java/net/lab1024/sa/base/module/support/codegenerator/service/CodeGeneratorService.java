@@ -40,7 +40,7 @@ import java.util.Optional;
 @Service
 public class CodeGeneratorService {
 
-    private static final String COLUMN_NULLABLE_IDENTIFY = "NO";
+    private static final String COLUMN_NO_NULLABLE_IDENTIFY = "NO";
 
     private static final String COLUMN_PRIMARY_KEY = "PRI";
 
@@ -65,7 +65,7 @@ public class CodeGeneratorService {
     public List<TableColumnVO> getTableColumns(String tableName) {
         List<TableColumnVO> tableColumns = codeGeneratorDao.selectTableColumn(tableName);
         for (TableColumnVO tableColumn : tableColumns) {
-            tableColumn.setNullableFlag(!COLUMN_NULLABLE_IDENTIFY.equalsIgnoreCase(tableColumn.getIsNullable()));
+            tableColumn.setNullableFlag(!COLUMN_NO_NULLABLE_IDENTIFY.equalsIgnoreCase(tableColumn.getIsNullable()));
             tableColumn.setPrimaryKeyFlag(COLUMN_PRIMARY_KEY.equalsIgnoreCase(tableColumn.getColumnKey()));
             tableColumn.setAutoIncreaseFlag(SmartStringUtil.isNotEmpty(tableColumn.getExtra()) && COLUMN_AUTO_INCREASE.equalsIgnoreCase(tableColumn.getExtra()));
         }

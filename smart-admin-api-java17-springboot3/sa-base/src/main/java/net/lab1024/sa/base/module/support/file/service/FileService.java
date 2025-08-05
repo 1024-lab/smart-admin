@@ -56,9 +56,6 @@ public class FileService {
     private FileDao fileDao;
 
     @Resource
-    private RedisService redisService;
-
-    @Resource
     private SecurityFileService securityFileService;
 
     /**

@@ -3,10 +3,10 @@ package net.lab1024.sa.base.module.support.captcha;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.img.ImgUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.base.common.constant.StringConst;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.domain.SystemEnvironment;
 import net.lab1024.sa.base.constant.RedisKeyConst;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.awt.*;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * 图形验证码 服务
@@ -70,7 +69,7 @@ public class CaptchaService {
          * 图片 base64格式
          */
         // uuid 唯一标识
-        String uuid = UUID.randomUUID().toString().replace("-", StringConst.EMPTY);
+        String uuid = IdUtil.fastSimpleUUID();
 
         CaptchaVO captchaVO = new CaptchaVO();
         captchaVO.setCaptchaUuid(uuid);

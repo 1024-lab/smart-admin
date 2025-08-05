@@ -12,7 +12,7 @@
   <a-config-provider
     :locale="antdLocale"
     :theme="{
-      algorithm: compactFlag ? theme.compactAlgorithm : theme.defaultAlgorithm,
+      algorithm: themeAlgorithm,
       token: {
         colorPrimary: themeColors[colorIndex].primaryColor,
         colorLink: themeColors[colorIndex].primaryColor,
@@ -48,12 +48,10 @@
   import { messages } from '/@/i18n';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useSpinStore } from '/@/store/modules/system/spin';
-  import { theme } from 'ant-design-vue';
+  import { Popover, theme } from 'ant-design-vue';
   import { themeColors } from '/@/theme/color.js';
-  import { Popover } from 'ant-design-vue';
   import SmartCopyIcon from '/@/components/framework/smart-copy-icon/index.vue';
-  import _ from 'lodash';
-  const slots = useSlots();
+
   const antdLocale = computed(() => messages[useAppConfigStore().language].antdLocale);
   const dayjsLocale = computed(() => messages[useAppConfigStore().language].dayjsLocale);
   dayjs.locale(dayjsLocale);
@@ -61,16 +59,24 @@
   // 全局loading
   let spinStore = useSpinStore();
   const spinning = computed(() => spinStore.loading);
-  // 是否紧凑
-  const compactFlag = computed(() => useAppConfigStore().compactFlag);
   // 主题颜色
   const colorIndex = computed(() => {
     return useAppConfigStore().colorIndex;
+  });
+  // 主题
+  const themeAlgorithm = computed(() => {
+    let themeArray = [];
+    themeArray.push(useAppConfigStore().darkModeFlag ? theme.darkAlgorithm : theme.defaultAlgorithm);
+    if (useAppConfigStore().compactFlag) {
+      themeArray.push(theme.compactAlgorithm);
+    }
+    return themeArray;
   });
   // 圆角
   const borderRadius = computed(() => {
     return useAppConfigStore().borderRadius;
   });
+
   function transformCellText({ text, column, record, index }) {
     if (column && column.textEllipsisFlag === true) {
       return h(
@@ -78,7 +84,14 @@
         { placement: 'bottom' },
         {
           default: () =>
-            h('div', { style: { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }, id: `${column.dataIndex}${index}` }, text),
+            h(
+              'div',
+              {
+                style: { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
+                id: `${column.dataIndex}${index}`,
+              },
+              text
+            ),
           content: () =>
             h('div', { style: { display: 'flex' } }, [
               h('div', text),
@@ -91,9 +104,24 @@
     }
   }
 
+  const { useToken } = theme;
+  const { token } = useToken();
 </script>
-<style scoped lang="less">
+<style lang="less">
+  @color-bg-container: v-bind('token.colorBgContainer');
+
   :deep(.ant-table-column-sorters) {
     align-items: flex-start !important;
+  }
+
+  .smart-query-form {
+    background-color: @color-bg-container;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+  }
+
+  .smart-detail-header {
+    background-color: @color-bg-container;
+    padding: 10px;
   }
 </style>

@@ -1,12 +1,5 @@
 package net.lab1024.sa.base.config;
 
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.Protocol;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import lombok.Data;
 import net.lab1024.sa.base.module.support.file.service.FileStorageCloudServiceImpl;
 import net.lab1024.sa.base.module.support.file.service.FileStorageLocalServiceImpl;
@@ -17,6 +10,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3Configuration;
+
+import java.net.URI;
 
 /**
  * 文件上传 配置
@@ -30,6 +30,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Data
 @Configuration
 public class FileConfig implements WebMvcConfigurer {
+
+    private static final String HTTPS = "https://";
+
+    private static final String HTTP = "http://";
 
     private static final String MODE_CLOUD = "cloud";
 
@@ -69,15 +73,17 @@ public class FileConfig implements WebMvcConfigurer {
      */
     @Bean
     @ConditionalOnProperty(prefix = "file.storage", name = {"mode"}, havingValue = MODE_CLOUD)
-    public AmazonS3 initAmazonS3() {
-        ClientConfiguration clientConfig = new ClientConfiguration();
-        clientConfig.setProtocol(Protocol.HTTPS);
-        return AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
-                .withClientConfiguration(clientConfig)
-                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region))
-                .withPathStyleAccessEnabled(false)
-                .withChunkedEncodingDisabled(true)
+    public S3Client initAmazonS3() {
+        return S3Client.builder()
+                .region(Region.AWS_GLOBAL)
+                .endpointOverride(URI.create((urlPrefix.startsWith(HTTPS) ? HTTPS : HTTP) + endpoint))
+                .credentialsProvider(
+                        StaticCredentialsProvider.create(
+                                AwsBasicCredentials.create(accessKey, secretKey)))
+                .serviceConfiguration(S3Configuration.builder()
+                        .pathStyleAccessEnabled(false)
+                        .chunkedEncodingEnabled(false)
+                        .build())
                 .build();
     }
 

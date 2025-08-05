@@ -43,6 +43,7 @@
   import _ from 'lodash';
   import menuEmitter from './side-expand-menu-mitt';
   import { useUserStore } from '/@/store/modules/system/user';
+  import { theme } from 'ant-design-vue';
 
   // 选中的顶级菜单
   let topMenu = ref({});
@@ -83,12 +84,20 @@
   }
 
   defineExpose({ updateSelectKeyAndOpenKey });
+
+  const { useToken } = theme;
+  const { token } = useToken();
 </script>
 <style scoped lang="less">
+  @color-bg-container: v-bind('token.colorBgContainer');
+  @color-border-secondary: v-bind('token.colorBorderSecondary');
+
   .recursion-container {
     height: 100vh;
-    background: #ffffff;
+    background-color: @color-bg-container;
   }
+  .recursion-container ::-webkit-scrollbar { width: 0 !important }
+
   .bottom-menu{
     overflow: auto;
     display: flex;
@@ -102,8 +111,7 @@
     justify-content: center;
     height: @header-user-height;
     font-size: 16px;
-    color: #515a6e;
-    border-bottom: 1px solid #f3f3f3;
-    border-right: 1px solid #f3f3f3;
+    border-bottom: 1px solid  @color-border-secondary;
+    border-right: 1px solid  @color-border-secondary;
   }
 </style>

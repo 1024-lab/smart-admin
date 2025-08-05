@@ -2,6 +2,7 @@ package net.lab1024.sa.base.module.support.securityprotect.service;
 
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
+import org.apache.commons.io.IOUtils;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.TikaInputStream;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,27 +37,9 @@ public class SecurityFileService {
     private Level3ProtectConfigService level3ProtectConfigService;
 
     // 定义白名单MIME类型
-    private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList(
-            "application/json",
-            "application/zip",
-            "application/x-7z-compressed",
-            "application/pdf",
-            "application/vnd.ms-excel",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "application/vnd.ms-powerpoint",
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-            "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "application/vnd.ms-works",
-            "text/csv",
-            "audio/*",
-            "video/*",
+    private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("application/json", "application/zip", "application/x-7z-compressed", "application/pdf", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-works", "text/csv", "audio/*", "video/*",
             // 图片类型 svg有安全隐患，所以不使用"image/*"
-            "image/jpeg",
-            "image/png",
-            "image/gif",
-            "image/bmp"
-    );
+            "image/jpeg", "image/png", "image/gif", "image/bmp");
 
     /**
      * 检测文件安全类型
@@ -73,8 +57,7 @@ public class SecurityFileService {
         // 文件类型安全检测
         if (level3ProtectConfigService.isFileDetectFlag()) {
             String fileType = getFileMimeType(file);
-            if (ALLOWED_MIME_TYPES.stream()
-                    .noneMatch(allowedType -> matchesMimeType(fileType, allowedType))) {
+            if (ALLOWED_MIME_TYPES.stream().noneMatch(allowedType -> matchesMimeType(fileType, allowedType))) {
                 return ResponseDTO.userErrorParam("禁止上传此文件类型");
             }
         }
@@ -89,16 +72,20 @@ public class SecurityFileService {
      * @return 文件的 MIME 类型
      */
     public static String getFileMimeType(MultipartFile file) {
+        InputStream inputStream = null;
         try {
+            inputStream = file.getInputStream();
             TikaConfig tika = new TikaConfig();
             Metadata metadata = new Metadata();
             metadata.set(TikaCoreProperties.RESOURCE_NAME_KEY, file.getOriginalFilename());
-            TikaInputStream stream = TikaInputStream.get(file.getInputStream());
+            TikaInputStream stream = TikaInputStream.get(inputStream);
             MediaType mimetype = tika.getDetector().detect(stream, metadata);
             return mimetype.toString();
         } catch (IOException | TikaException e) {
             log.error(e.getMessage(), e);
             return MimeTypes.OCTET_STREAM;
+        } finally {
+            IOUtils.closeQuietly(inputStream);
         }
     }
 

@@ -9,7 +9,7 @@
 -->
 <template>
   <!-- 标签页，共两部分：1、标签 ；2、标签操作区 -->
-  <a-row style="border-bottom: 1px solid #eeeeee; position: relative" v-show="pageTagFlag">
+  <a-row style="position: relative" v-show="pageTagFlag">
     <a-dropdown :trigger="['contextmenu']">
       <div class="smart-page-tag">
         <a-tabs style="width: 100%" type="card" :tab-position="mode" v-model:activeKey="selectedKey" size="small" @tabClick="selectTab">
@@ -138,18 +138,17 @@
 <style scoped lang="less">
   @smart-page-tag-operate-width: 40px;
   @color-primary: v-bind('token.colorPrimary');
+  @color-primary-bg: v-bind('token.colorPrimaryBg');
 
   .smart-page-tag-operate {
     width: @smart-page-tag-operate-width;
     height: @smart-page-tag-operate-width;
-    background-color: #ffffff;
     font-size: 17px;
     text-align: center;
     vertical-align: middle;
     line-height: @smart-page-tag-operate-width;
     padding-right: 10px;
     cursor: pointer;
-    color: #606266;
 
     .smart-page-tag-operate-icon {
       width: 20px;
@@ -167,6 +166,7 @@
 
   .smart-page-tag-operate:hover {
     color: @color-primary;
+    background-color: @color-primary-bg;
   }
 
   .smart-page-tag {
@@ -180,7 +180,6 @@
     padding-right: 20px;
     padding-left: 20px;
     user-select: none;
-    background: #fff;
     width: calc(100% - @smart-page-tag-operate-width);
 
     .smart-page-tag-close {
@@ -193,11 +192,11 @@
 
     :deep(.ant-tabs-nav) {
       margin: 0;
+      &::before{
+        border-bottom: none !important;
+      }
     }
 
-    :deep(.ant-tabs-nav::before) {
-      border-bottom: 1px solid #ffffff;
-    }
 
     :deep(.ant-tabs-small > .ant-tabs-nav .ant-tabs-tab) {
       padding: 5px 8px 3px 15px;
@@ -209,12 +208,16 @@
     }
 
     :deep(.ant-tabs-tab-active) {
+      background-color: @color-primary-bg;
+
       .smart-page-tag-close {
         color: @color-primary;
       }
     }
+
     :deep(.ant-tabs-nav .ant-tabs-tab:hover) {
-      background-color: white;
+      background-color: @color-primary-bg;
+
       .smart-page-tag-close {
         color: @color-primary;
       }

@@ -105,6 +105,7 @@
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
+  import { theme as antDesignTheme } from 'ant-design-vue';
   const appConfigStore = useAppConfigStore();
 
   const windowHeight = ref(window.innerHeight);
@@ -139,7 +140,7 @@
   watch(
     pageTagLocation,
     (newVal) => {
-      if (newVal == 'top') {
+      if (newVal === 'top') {
         nextTick(() => {
           sizeComputed();
         });
@@ -200,8 +201,14 @@
   function goHome() {
     router.push({ name: HOME_PAGE_NAME });
   }
+
+  const { useToken } = antDesignTheme;
+  const { token } = useToken();
 </script>
 <style scoped lang="less">
+  @color-bg-container: v-bind('token.colorBgContainer');
+  @color-border-secondary: v-bind('token.colorBorderSecondary');
+
   :deep(.ant-layout-header) {
     height: auto;
   }
@@ -210,14 +217,14 @@
   }
 
   .smart-layout-header {
-    background: #fff;
+    background: @color-bg-container;
     padding: 0;
     z-index: 21;
   }
 
   .smart-layout-header-user {
     height: @header-user-height;
-    border-bottom: 1px solid #f6f6f6;
+    border-bottom: 1px solid @color-border-secondary;
   }
 
   .smart-layout-header-left {
@@ -237,7 +244,7 @@
     }
 
     .home-button:hover {
-      background-color: #efefef;
+      background-color: @color-bg-container;
     }
 
     .location-breadcrumb {
@@ -301,7 +308,7 @@
       background-color: inherit;
       min-height: auto;
       position: relative;
-      padding: 10px 10px 0px 10px;
+      padding: 5px 10px 0px 10px;
       height: calc(100% - v-bind(dueHeight) px);
       overflow-x: hidden;
     }

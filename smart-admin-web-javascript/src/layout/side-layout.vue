@@ -62,7 +62,11 @@
           :url="item.meta.frameUrl"
         />
         <!--非iframe使用router-view-->
-        <div v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)" style="height: 100%;" class="admin-content">
+        <div
+          v-show="!iframeNotKeepAlivePageFlag && keepAliveIframePages.every((e) => route.name != e.name)"
+          style="height: 100%"
+          class="admin-content"
+        >
           <router-view v-slot="{ Component }">
             <keep-alive :include="keepAliveIncludes">
               <component :is="Component" :key="route.name" />
@@ -94,7 +98,7 @@
 </template>
 
 <script setup>
-  import { computed, onMounted, ref, watch } from 'vue';
+  import { computed, onMounted, ref, watch, nextTick } from 'vue';
   import { useAppConfigStore } from '../store/modules/system/app-config';
   import HeaderUserSpace from './components/header-user-space/index.vue';
   import MenuLocationBreadcrumb from './components/menu-location-breadcrumb/index.vue';
@@ -109,7 +113,8 @@
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
-  import { nextTick } from 'vue';
+  import { theme as antDesignTheme } from 'ant-design-vue';
+
   const appConfigStore = useAppConfigStore();
 
   const windowHeight = ref(window.innerHeight);
@@ -133,7 +138,7 @@
   const pageTagLocation = computed(() => useAppConfigStore().$state.pageTagLocation);
   // 多余高度
   const dueHeight = computed(() => {
-    let due = 40;
+    let due = 45;
     if (useAppConfigStore().$state.pageTagFlag) {
       due = due + 40;
     }
@@ -146,7 +151,7 @@
   watch(
     pageTagLocation,
     (newVal) => {
-      if (newVal == 'top') {
+      if (newVal === 'top') {
         nextTick(() => {
           sizeComputed();
         });
@@ -158,6 +163,7 @@
   );
 
   const rightWidth = ref(0);
+
   function sizeComputed() {
     const tagParentElement = document.querySelector('.location-breadcrumb');
     const tagsElement = tagParentElement.querySelector('.ant-tabs-nav-list');
@@ -201,6 +207,7 @@
   };
 
   const router = useRouter();
+
   function goHome() {
     router.push({ name: HOME_PAGE_NAME });
   }
@@ -211,9 +218,14 @@
 
   // ----------------------- keep-alive相关 -----------------------
   let { route, keepAliveIncludes, iframeNotKeepAlivePageFlag, keepAliveIframePages } = smartKeepAlive();
+
+  const { useToken } = antDesignTheme;
+  const { token } = useToken();
 </script>
 
 <style lang="less" scoped>
+  @color-border-secondary: v-bind('token.colorBorderSecondary');
+  @color-bg-container: v-bind('token.colorBgContainer');
   :deep(.ant-layout-header) {
     height: auto;
   }
@@ -223,14 +235,14 @@
   }
 
   .layout-header {
-    background: #fff;
+    background: @color-bg-container;
     padding: 0;
     z-index: 21;
   }
 
   .layout-header-user {
     height: @header-user-height;
-    border-bottom: 1px solid #f6f6f6;
+    border-bottom: 1px solid @color-border-secondary;
   }
 
   .layout-header-left {
@@ -242,6 +254,7 @@
       overflow: hidden;
       display: flex;
     }
+
     .collapsed-button {
       margin-left: 10px;
       line-height: @header-user-height;
@@ -255,7 +268,7 @@
     }
 
     .home-button:hover {
-      background-color: #efefef;
+      background-color: @color-bg-container;
     }
 
     .location-breadcrumb {
@@ -280,6 +293,7 @@
       height: 100vh;
       overflow-x: hidden;
       overflow-y: scroll;
+
       &.fixed-side {
         position: fixed;
         height: 100vh;
@@ -291,10 +305,12 @@
     .side-menu::-webkit-scrollbar {
       width: 4px;
     }
+
     .side-menu::-webkit-scrollbar-thumb {
       border-radius: 10px;
       background: rgba(0, 0, 0, 0.2);
     }
+
     .side-menu::-webkit-scrollbar-track {
       border-radius: 0;
       background: rgba(0, 0, 0, 0.1);
@@ -338,7 +354,7 @@
       min-height: auto;
       position: relative;
       overflow-x: hidden;
-      padding: 10px 10px 0px 10px;
+      padding: 5px 10px 0px 10px;
       height: calc(100% - v-bind(dueHeight) px);
     }
   }

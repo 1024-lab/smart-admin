@@ -122,7 +122,6 @@
 
   .preview-block {
     font-size: 14px;
-    background-color: #f9f9f9;
     padding: 10px 5px;
   }
 </style>

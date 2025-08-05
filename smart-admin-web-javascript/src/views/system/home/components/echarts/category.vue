@@ -86,7 +86,6 @@
     .category-main {
       width: 800px;
       height: 280px;
-      background: #fff;
     }
   }
 </style>

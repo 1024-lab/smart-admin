@@ -30,8 +30,6 @@ import 'ant-design-vue/dist/reset.css';
 import '/@/theme/index.less';
 import { localRead } from '/@/utils/local-util.js';
 import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
-import { Table } from 'ant-design-vue';
-import { useAppConfigStore } from '/@/store/modules/system/app-config';
 import '/@/utils/ployfill';
 import { useDictStore } from '/@/store/modules/system/dict.js';
 import { dictApi } from '/@/api/support/dict-api.js';

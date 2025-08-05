@@ -17,6 +17,7 @@ export default {
   'setting.table.yHeight': 'Table Height',
   'setting.pagetag.location': 'TagPage Position',
   'setting.color': 'Theme Color',
+  'setting.darkmode': 'Dark Mode',
   'setting.menu.layout': 'Menu Layout',
   'setting.menu.width': 'Menu Width',
   'setting.menu.theme': 'Menu Theme',

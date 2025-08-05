@@ -16,6 +16,8 @@ export const appDefaultConfig = {
   sideMenuWidth: 200,
   //标签页位置
   pageTagLocation: 'center',
+  // 夜间模式
+  darkModeFlag: false,
   // 菜单主题
   sideMenuTheme: 'dark',
   // 主题颜色索引

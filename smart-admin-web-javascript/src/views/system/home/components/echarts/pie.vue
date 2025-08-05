@@ -72,7 +72,6 @@
     .pie-main {
       width: 260px;
       height: 260px;
-      background: #fff;
     }
   }
 </style>

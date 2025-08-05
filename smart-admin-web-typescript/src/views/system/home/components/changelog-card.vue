@@ -16,7 +16,7 @@
         <li class="un-read">
           <a class="content" @click="goDetail(item)">
             <a-badge status="geekblue" />
-            {{ $smartEnumPlugin.getDescByValue('CHANGE_LOG_TYPE_ENUM', item.type) }}：{{ item.version }} 版本
+            {{ $smartEnumPlugin.getDescByValue('CHANGE_LOG_TYPE_ENUM', item.type) }}：{{ item.updateVersion }} 版本
           </a>
           <span class="time"> {{ item.publicDate }}</span>
         </li>

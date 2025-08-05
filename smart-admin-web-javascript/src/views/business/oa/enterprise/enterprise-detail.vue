@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <div class="detail-header">
+  <div class="smart-detail-header">
     <a-page-header :title="detail.enterpriseName" :avatar="{ src: logo }">
       <template #extra>
         <a-button @click="showUpdate" type="primary">编辑</a-button>
@@ -126,9 +126,3 @@
   });
 </script>
 
-<style lang="less" scoped>
-  .detail-header {
-    background-color: #fff;
-    padding: 10px;
-  }
-</style>

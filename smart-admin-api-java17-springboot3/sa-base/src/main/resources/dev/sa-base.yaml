@@ -65,9 +65,25 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+  # 上传文件和请求大小
+  servlet:
+    multipart:
+      max-file-size: 20MB # 单个文件的最大大小
+      max-request-size: 10MB # 整个请求的最大大小
+
   # 缓存实现类型
   cache:
     type: redis
+
+# 健康检查
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  health:
+    mail:
+      enabled: false
 
 # tomcat 配置，主要用于 配置 访问日志（便于将来排查错误）
 server:
@@ -110,7 +126,7 @@ knife4j:
     username: api # Basic认证用户名
     password: 1024 # Basic认证密码
 
-# RestTemplate 请求配置
+# RestTemplate 请求配置 毫秒
 http:
   pool:
     max-total: 20

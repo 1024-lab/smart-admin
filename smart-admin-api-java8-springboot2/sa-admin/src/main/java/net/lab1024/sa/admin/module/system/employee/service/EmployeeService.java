@@ -1,6 +1,7 @@
 package net.lab1024.sa.admin.module.system.employee.service;
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.lang.UUID;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import net.lab1024.sa.admin.module.system.department.dao.DepartmentDao;
@@ -138,16 +139,20 @@ public class EmployeeService {
         }
 
         EmployeeEntity entity = SmartBeanUtil.copy(employeeAddForm, EmployeeEntity.class);
+        // 员工uid
+        String employeeUid = UUID.randomUUID(true).toString(true);
+        entity.setEmployeeUid(employeeUid);
 
-        // 设置密码 默认密码
-        String password = securityPasswordService.randomPassword();
-        entity.setLoginPwd(SecurityPasswordService.getEncryptPwd(password));
+        // 设置密码 随机密码
+        String randomPassword = securityPasswordService.randomPassword();
+        String generateSaltPassword = this.generateSaltPassword(randomPassword, employeeUid);
+        entity.setLoginPwd(SecurityPasswordService.getEncryptPwd(generateSaltPassword));
 
         // 保存数据
         entity.setDeletedFlag(Boolean.FALSE);
         employeeManager.saveEmployee(entity, employeeAddForm.getRoleIdList());
 
-        return ResponseDTO.ok(password);
+        return ResponseDTO.ok(randomPassword);
     }
 
     /**
@@ -241,7 +246,6 @@ public class EmployeeService {
 
     /**
      * 更新登录人头像
-     *
      */
     public ResponseDTO<String> updateAvatar(EmployeeUpdateAvatarForm employeeUpdateAvatarForm) {
         Long employeeId = employeeUpdateAvatarForm.getEmployeeId();
@@ -343,12 +347,12 @@ public class EmployeeService {
         }
 
         // 校验原始密码
-        if (!SecurityPasswordService.matchesPwd(updatePasswordForm.getOldPassword(),employeeEntity.getLoginPwd()) ) {
+        if (!SecurityPasswordService.matchesPwd(this.generateSaltPassword(updatePasswordForm.getOldPassword(), employeeEntity.getEmployeeUid()), employeeEntity.getLoginPwd())) {
             return ResponseDTO.userErrorParam("原密码有误，请重新输入");
         }
 
         // 新旧密码相同
-        if (Objects.equals(updatePasswordForm.getOldPassword(), updatePasswordForm.getNewPassword()) ){
+        if (Objects.equals(updatePasswordForm.getOldPassword(), updatePasswordForm.getNewPassword())) {
             return ResponseDTO.userErrorParam("新密码与原始密码相同，请重新输入");
         }
 
@@ -359,14 +363,13 @@ public class EmployeeService {
         }
 
         // 根据三级等保规则，校验密码是否重复
-        ResponseDTO<String> passwordRepeatTimes = securityPasswordService.validatePasswordRepeatTimes(requestUser, updatePasswordForm.getNewPassword());
+        ResponseDTO<String> passwordRepeatTimes = securityPasswordService.validatePasswordRepeatTimes(requestUser, this.generateSaltPassword(updatePasswordForm.getNewPassword(), employeeEntity.getEmployeeUid()));
         if (!passwordRepeatTimes.getOk()) {
             return ResponseDTO.error(passwordRepeatTimes);
         }
 
-
         // 更新密码
-        String newEncryptPassword = SecurityPasswordService.getEncryptPwd(updatePasswordForm.getNewPassword());
+        String newEncryptPassword = SecurityPasswordService.getEncryptPwd(this.generateSaltPassword(updatePasswordForm.getNewPassword(), employeeEntity.getEmployeeUid()));
         EmployeeEntity updateEntity = new EmployeeEntity();
         updateEntity.setEmployeeId(employeeId);
         updateEntity.setLoginPwd(newEncryptPassword);
@@ -405,8 +408,14 @@ public class EmployeeService {
      * 重置密码
      */
     public ResponseDTO<String> resetPassword(Long employeeId) {
+        EmployeeEntity employeeEntity = employeeDao.selectById(employeeId);
+        if (employeeEntity == null) {
+            return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
+        }
+
         String password = securityPasswordService.randomPassword();
-        employeeDao.updatePassword(employeeId, SecurityPasswordService.getEncryptPwd(password));
+        String saltPassword = this.generateSaltPassword(password, employeeEntity.getEmployeeUid());
+        employeeDao.updatePassword(employeeId, SecurityPasswordService.getEncryptPwd(saltPassword));
         return ResponseDTO.ok(password);
     }
 
@@ -426,4 +435,14 @@ public class EmployeeService {
         return employeeDao.getByLoginName(loginName, false);
     }
 
+    /**
+     * 生成加盐密码
+     * 格式为：[password]_[uid大写]_[uid小写]
+     */
+    public String generateSaltPassword(String password, String employeeUid) {
+        return password + StringConst.UNDERLINE +
+                employeeUid.toUpperCase() +
+                StringConst.UNDERLINE +
+                employeeUid.toLowerCase();
+    }
 }

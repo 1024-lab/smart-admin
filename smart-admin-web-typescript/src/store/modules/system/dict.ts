@@ -39,7 +39,7 @@ export const useDictStore = defineStore({
 
       // 是数字的话，需要特殊处理
       if (_.isNumber(dataValue)) {
-        let target = _.find(dict, { dataValue: dataValue });
+        let target = _.find(dict, { dataValue: String(dataValue) });
         return target ? target.dataLabel : '';
       }
 

@@ -1,7 +1,7 @@
 package net.lab1024.sa.base.module.support.mail;
 
 
-import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.IdUtil;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -19,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringSubstitutor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -163,7 +162,7 @@ public class MailService {
     private String freemarkerResolverContent(String htmlTemplate, Map<String, Object> templateParamsMap) {
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_23);
         StringTemplateLoader stringLoader = new StringTemplateLoader();
-        String templateName = UUID.fastUUID().toString(true);
+        String templateName = IdUtil.fastSimpleUUID();
         stringLoader.putTemplate(templateName, htmlTemplate);
         configuration.setTemplateLoader(stringLoader);
         try {

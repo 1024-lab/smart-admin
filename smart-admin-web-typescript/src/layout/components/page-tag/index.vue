@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
-  <div id="smartAdminPageTag">
+  <div id="smartAdminPageTag" class="page-tag-div">
     <DefaultTab v-if="pageTagStyle === PAGE_TAG_ENUM.DEFAULT.value" />
     <AntdTab v-if="pageTagStyle === PAGE_TAG_ENUM.ANTD.value" />
     <ChromeTab v-if="pageTagStyle === PAGE_TAG_ENUM.CHROME.value" />
@@ -22,6 +22,15 @@
   import AntdTab from './components/antd-tab.vue';
   import ChromeTab from './components/chrome-tab.vue';
   import { PAGE_TAG_ENUM } from '/@/constants/layout-const.js';
+  import { theme } from 'ant-design-vue';
 
   const pageTagStyle = computed(() => useAppConfigStore().$state.pageTagStyle);
+  const { useToken } = theme;
+  const { token } = useToken();
 </script>
+<style lang="less" scoped>
+  @color-border-secondary: v-bind('token.colorBorderSecondary');
+  .page-tag-div{
+    border-bottom: 1px solid @color-border-secondary;
+  }
+</style>

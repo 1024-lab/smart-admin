@@ -68,6 +68,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             NoNeedLogin noNeedLogin = ((HandlerMethod) handler).getMethodAnnotation(NoNeedLogin.class);
             if (noNeedLogin != null) {
                 checkActiveTimeout(requestEmployee);
+                SmartRequestUtil.setRequestUser(requestEmployee);
                 return true;
             }
 

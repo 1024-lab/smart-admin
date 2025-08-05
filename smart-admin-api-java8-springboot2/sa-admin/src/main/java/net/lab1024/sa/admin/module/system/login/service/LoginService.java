@@ -7,7 +7,6 @@ import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.admin.module.system.department.domain.vo.DepartmentVO;
 import net.lab1024.sa.admin.module.system.department.service.DepartmentService;
 import net.lab1024.sa.admin.module.system.employee.domain.entity.EmployeeEntity;
 import net.lab1024.sa.admin.module.system.employee.service.EmployeeService;
@@ -49,8 +48,6 @@ import net.lab1024.sa.base.module.support.securityprotect.domain.LoginFailEntity
 import net.lab1024.sa.base.module.support.securityprotect.service.Level3ProtectConfigService;
 import net.lab1024.sa.base.module.support.securityprotect.service.SecurityLoginService;
 import net.lab1024.sa.base.module.support.securityprotect.service.SecurityPasswordService;
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -83,9 +80,6 @@ public class LoginService implements StpInterface {
     private EmployeeService employeeService;
 
     @Resource
-    private DepartmentService departmentService;
-
-    @Resource
     private CaptchaService captchaService;
 
     @Resource
@@ -105,9 +99,6 @@ public class LoginService implements StpInterface {
 
     @Resource
     private SecurityPasswordService protectPasswordService;
-
-    @Resource
-    private IFileStorageService fileStorageService;
 
     @Resource
     private ApiEncryptService apiEncryptService;
@@ -132,7 +123,7 @@ public class LoginService implements StpInterface {
     }
 
     /**
-     * 员工登陆
+     * 员工登录
      *
      * @return 返回用户登录信息
      */
@@ -196,7 +187,7 @@ public class LoginService implements StpInterface {
             }
 
             // 密码错误
-            if (!SecurityPasswordService.matchesPwd(requestPassword, employeeEntity.getLoginPwd())) {
+            if (!SecurityPasswordService.matchesPwd(employeeService.generateSaltPassword(requestPassword, employeeEntity.getEmployeeUid()), employeeEntity.getLoginPwd())) {
                 // 记录登录失败
                 saveLoginLog(employeeEntity, ip, userAgent, "密码错误", LoginLogResultEnum.LOGIN_FAIL, loginDeviceEnum);
                 // 记录等级保护次数
@@ -273,7 +264,7 @@ public class LoginService implements StpInterface {
 
 
     /**
-     * 根据登陆token 获取员请求工信息
+     * 根据登录token 获取员请求工信息
      */
     public RequestEmployee getLoginEmployee(String loginId, HttpServletRequest request) {
         if (loginId == null) {

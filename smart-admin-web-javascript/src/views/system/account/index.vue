@@ -24,6 +24,7 @@
   import { ACCOUNT_MENU } from '/@/views/system/account/account-menu.js';
   import { useRoute } from 'vue-router';
   import { useUserStore } from '/@/store/modules/system/user.js';
+  import { theme as antDesignTheme } from 'ant-design-vue';
 
   // 菜单展示
   let menuList = computed(() => {
@@ -77,26 +78,27 @@
       selectMenu(menuId);
     }
   );
+  const { useToken } = antDesignTheme;
+  const { token } = useToken();
 </script>
 <style lang="less" scoped>
+  @color-bg-container: v-bind('token.colorBgContainer');
+
   .account-container {
     display: flex;
     height: 100%;
-    background-color: white;
-    padding: 20px 0;
 
     .account-menu-list {
       width: 180px;
       height: calc(100% - 100);
-      border-right: solid 1px #efefef;
     }
 
     .account-content {
       flex: 1;
       margin-left: 10px;
-      background: #ffffff;
       padding: 20px;
       border-radius: 8px;
+      background-color: @color-bg-container;
     }
   }
 </style>
