@@ -13,6 +13,10 @@
       <a-row class="smart-margin-top10">
         <a-col :span="16">
           <a-row class="detail-info">
+            <a-col :span="12"> 用户id：{{ detail.operateUserId }}</a-col>
+            <a-col :span="12"> 用户名称： {{ detail.operateUserName }}</a-col>
+          </a-row>
+          <a-row class="detail-info">
             <a-col :span="12"> 请求url： {{ detail.url }}</a-col>
             <a-col :span="12"> 请求日期： {{ detail.createTime }}</a-col>
           </a-row>
@@ -21,8 +25,7 @@
             <a-col :span="12"> IP地区： {{ detail.ipRegion }}</a-col>
           </a-row>
           <a-row class="detail-info">
-            <a-col :span="12"> 用户id：{{ detail.operateUserId }}</a-col>
-            <a-col :span="12"> 用户名称： {{ detail.operateUserName }}</a-col>
+            <a-col :span="12"> 客户端： {{ detail.os }} / {{ detail.browser }}  {{ detail.device ? '/' + detail.device : detail.device }}</a-col>
           </a-row>
         </a-col>
         <a-col :span="8">
@@ -32,21 +35,26 @@
           </a-typography-text>
         </a-col>
       </a-row>
-    </div>
-    <div class="info-box">
-      <h4>请求明细：</h4>
-      <a-col :span="24"> 方法： {{ detail.method }}</a-col>
-      <a-col :span="24"> 说明： {{ detail.module }} - {{ detail.content }}</a-col>
+      <a-row class="detail-info">
+        <a-col :span="24"> 方法： {{ detail.method }}</a-col>
+      </a-row>
+      <a-row class="detail-info">
+        <a-col :span="24"> 说明： {{ detail.module }} - {{ detail.content }}</a-col>
+      </a-row>
     </div>
     <div class="info-box">
       <h4>请求参数：</h4>
-      <JsonViewer :value="detail.param ? JSON.parse(detail.param) : ''" theme="jv-dark" copyable boxed sort />
+      <JsonViewer :value="detail.param ? JSON.parse(detail.param) : ''" :expanded="true" :expandDepth="10" copyable boxed sort theme="light" />
+    </div>
+    <div class="info-box" v-if="detail.successFlag">
+      <h4>返回结果：</h4>
+      <JsonViewer :value="detail.response ? JSON.parse(detail.response) : ''" :expanded="true" :expandDepth="10" copyable boxed sort theme="light" />
     </div>
     <div class="info-box" v-if="detail.failReason">
       <h4>请求失败原因：</h4>
-      <div>
+      <a-card>
         {{ detail.failReason }}
-      </div>
+      </a-card>
     </div>
   </a-modal>
 </template>
@@ -57,6 +65,7 @@
   import { operateLogApi } from '/@/api/support/operate-log-api';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { SmartLoading } from '/@/components/framework/smart-loading';
+  import uaparser from 'ua-parser-js';
 
   defineExpose({
     show,
@@ -87,11 +96,16 @@
     param: '',
     url: '',
   });
+
   async function getDetail(operateLogId) {
     try {
       SmartLoading.show();
       let res = await operateLogApi.detail(operateLogId);
       detail = Object.assign(detail, res.data);
+      let ua = uaparser(res.data.userAgent);
+      detail.browser = ua.browser.name;
+      detail.os = ua.os.name;
+      detail.device = ua.device.vendor ? ua.device.vendor + ua.device.model : '';
     } catch (e) {
       smartSentry.captureError(e);
     } finally {
@@ -107,10 +121,11 @@
     font-size: 20px;
     font-weight: bold;
   }
+
   .info-box {
-    border-bottom: 1px solid #f0f0f0;
     padding: 10px 8px;
   }
+
   .detail-info {
     .ant-col {
       line-height: 1.46;
@@ -118,6 +133,7 @@
       padding-right: 5px;
     }
   }
+
   .detail-right-title {
     text-align: right;
     color: grey;

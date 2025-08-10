@@ -3,11 +3,12 @@ package net.lab1024.sa.base.module.support.operatelog.core;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.base.common.constant.StringConst;
 import net.lab1024.sa.base.common.domain.RequestUser;
+import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.util.SmartIpUtil;
 import net.lab1024.sa.base.common.util.SmartRequestUtil;
 import net.lab1024.sa.base.module.support.operatelog.OperateLogDao;
@@ -20,7 +21,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
-import java.net.BindException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -48,7 +47,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @Date 2021-12-08 20:48:52
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Slf4j
 @Aspect
@@ -73,14 +72,14 @@ public abstract class OperateLogAspect {
     public void logPointCut() {
     }
 
-    @AfterReturning(pointcut = "logPointCut()")
-    public void doAfterReturning(JoinPoint joinPoint) {
-        handleLog(joinPoint, null);
+    @AfterReturning(pointcut = "logPointCut()", returning = "responseDTO")
+    public void doAfterReturning(JoinPoint joinPoint, Object responseDTO) {
+        handleLog(joinPoint, null, responseDTO);
     }
 
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-        handleLog(joinPoint, e);
+        handleLog(joinPoint, e, null);
     }
 
     /**
@@ -111,16 +110,15 @@ public abstract class OperateLogAspect {
         taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
     }
 
-    protected void handleLog(final JoinPoint joinPoint, final Exception e) {
+    protected void handleLog(final JoinPoint joinPoint, final Exception e, Object responseDTO) {
         try {
             OperateLog operateLog = this.getAnnotationLog(joinPoint);
             if (operateLog == null) {
                 return;
             }
-            this.submitLog(joinPoint, e);
+            this.submitLog(joinPoint, e, responseDTO);
         } catch (Exception exp) {
             log.error("保存操作日志异常:{}", exp.getMessage());
-            exp.printStackTrace();
         }
     }
 
@@ -175,11 +173,8 @@ public abstract class OperateLogAspect {
     /**
      * 提交存储操作日志
      *
-     * @param joinPoint
-     * @param e
-     * @throws Exception
      */
-    private void submitLog(final JoinPoint joinPoint, final Throwable e) throws Exception {
+    private void submitLog(final JoinPoint joinPoint, final Throwable e, Object responseDTO) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //设置用户信息
         RequestUser user = SmartRequestUtil.getRequestUser();
@@ -193,7 +188,7 @@ public abstract class OperateLogAspect {
         String methodName = joinPoint.getSignature().getName();
         String operateMethod = className + "." + methodName;
         String failReason = null;
-        Boolean successFlag = true;
+        boolean successFlag = true;
         if (e != null) {
             successFlag = false;
             failReason = getExceptionString(e);
@@ -212,15 +207,32 @@ public abstract class OperateLogAspect {
                         .userAgent(user.getUserAgent())
                         .failReason(failReason)
                         .successFlag(successFlag).build();
+
         Operation apiOperation = this.getApiOperation(joinPoint);
         if (apiOperation != null) {
             operateLogEntity.setContent(apiOperation.summary());
         }
+
         Tag api = this.getApi(joinPoint);
         if (api != null) {
             String name = api.name();
             operateLogEntity.setModule(StrUtil.join(",", name));
         }
+
+        // 处理返回值 ResponseDTO
+        if(responseDTO instanceof ResponseDTO) {
+            ResponseDTO response = (ResponseDTO) responseDTO;
+            ResponseDTO logResponseDTO = new ResponseDTO(
+                    response.getCode(),
+                    response.getLevel(),
+                    response.getOk(),
+                    response.getMsg(),
+                    null
+            );
+            logResponseDTO.setDataType(response.getDataType());
+            operateLogEntity.setResponse(JSON.toJSONString(logResponseDTO));
+        }
+
         taskExecutor.execute(() -> {
             this.saveLog(operateLogEntity);
         });

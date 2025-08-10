@@ -89,7 +89,6 @@
         v-model:pageSize="queryForm.pageSize"
         :total="total"
         @change="ajaxQuery"
-        @showSizeChange="ajaxQuery"
         :show-total="(total) => `共${total}条`"
       />
     </div>

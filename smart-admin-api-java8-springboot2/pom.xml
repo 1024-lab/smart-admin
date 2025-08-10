@@ -48,7 +48,7 @@
         <ip2region.version>2.7.0</ip2region.version>
         <bcprov.version>1.80</bcprov.version>
         <smartdb.version>1.2.0</smartdb.version>
-        <redisson.version>3.50.0</redisson.version>
+        <redisson.version>3.25.0</redisson.version>
         <snakeyaml.version>2.4</snakeyaml.version>
         <freemarker.version>2.3.34</freemarker.version>
         <jsoup.version>1.21.1</jsoup.version>

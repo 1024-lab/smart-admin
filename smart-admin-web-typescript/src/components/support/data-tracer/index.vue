@@ -51,7 +51,6 @@
       v-model:pageSize="queryForm.pageSize"
       :total="total"
       @change="ajaxQuery"
-      @showSizeChange="ajaxQuery"
       :show-total="(total) => `共${total}条`"
     />
     <a-modal v-model:open="visibleDiff" width="90%" title="数据比对" :footer="null">

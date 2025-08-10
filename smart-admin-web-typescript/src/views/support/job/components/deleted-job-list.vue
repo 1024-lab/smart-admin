@@ -117,7 +117,6 @@
         v-model:pageSize="queryForm.pageSize"
         :total="total"
         @change="queryJobList"
-        @showSizeChange="queryJobList"
         :show-total="(total) => `共${total}条`"
       />
     </div>

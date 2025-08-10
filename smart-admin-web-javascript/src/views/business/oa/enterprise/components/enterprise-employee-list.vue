@@ -63,7 +63,6 @@
           v-model:pageSize="queryForm.pageSize"
           :total="total"
           @change="queryEmployee"
-          @showSizeChange="queryEmployee"
           :show-total="showTableTotal"
         />
       </div>

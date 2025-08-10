@@ -71,7 +71,6 @@
         v-model:pageSize="params.pageSize"
         :total="total"
         @change="queryEmployee"
-        @showSizeChange="queryEmployee"
         :show-total="(total) => `共${total}条`"
       />
     </div>

@@ -72,6 +72,11 @@ public class OperateLogEntity {
     private String param;
 
     /**
+     * 返回值
+     */
+    private String response;
+
+    /**
      * 客户ip
      */
     private String ip;

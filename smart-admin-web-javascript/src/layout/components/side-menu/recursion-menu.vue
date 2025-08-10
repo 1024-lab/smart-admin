@@ -36,7 +36,7 @@
   import { useUserStore } from '/@/store/modules/system/user';
 
   const theme = computed(() => useAppConfigStore().$state.sideMenuTheme);
-  const flatPattern = computed(() => useAppConfigStore().$state.flatPattern);
+  const menuSingleExpandFlag = computed(() => useAppConfigStore().$state.menuSingleExpandFlag);
 
   const props = defineProps({
     collapsed: {
@@ -46,8 +46,7 @@
   });
 
   const menuTree = computed(() => useUserStore().getMenuTree || []);
-  const rootSubmenuKeys = computed(()=>menuTree.value.map(item=>item.menuId));
-
+  const rootSubmenuKeys = computed(() => menuTree.value.map((item) => item.menuId));
 
   //展开的菜单
   let currentRoute = useRoute();
@@ -76,9 +75,15 @@
     let parentList = menuParentIdListMap.get(currentRoute.name) || [];
 
     // 如果是折叠菜单的话，则不需要设置openkey
-    if (!props.collapsed) {
+    if (props.collapsed) {
+      return;
+    }
+
+    let needOpenKeys = _.map(parentList, 'name').map(Number);
+    if (menuSingleExpandFlag.value) {
+      openKeys.value = [...needOpenKeys];
+    } else {
       // 使用lodash的union函数，进行 去重合并两个数组
-      let needOpenKeys = _.map(parentList, 'name').map(Number);
       openKeys.value = _.union(openKeys.value, needOpenKeys);
     }
   }
@@ -92,17 +97,18 @@
       immediate: true,
     }
   );
-  function onOpenChange(openKeysParams){
-  if(flatPattern.value){
-    return;
+
+  function onOpenChange(openKeysParams) {
+    if (!menuSingleExpandFlag.value) {
+      return;
+    }
+    const latestOpenKey = openKeysParams.find((key) => openKeys.value.indexOf(key) === -1);
+    if (rootSubmenuKeys.value.indexOf(latestOpenKey) === -1) {
+      openKeys.value = openKeysParams;
+    } else {
+      openKeys.value = latestOpenKey ? [latestOpenKey] : [];
+    }
   }
-  const latestOpenKey = openKeysParams.find(key => openKeys.value.indexOf(key) === -1);
-  if (rootSubmenuKeys.value.indexOf(latestOpenKey) === -1) {
-    openKeys.value = openKeysParams;
-  } else {
-    openKeys.value = latestOpenKey ? [latestOpenKey] : [];
-  }
-};
   defineExpose({
     updateOpenKeysAndSelectKeys,
   });

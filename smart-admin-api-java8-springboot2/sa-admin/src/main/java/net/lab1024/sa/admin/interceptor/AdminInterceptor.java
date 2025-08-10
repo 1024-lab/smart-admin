@@ -67,7 +67,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             Method method = ((HandlerMethod) handler).getMethod();
             NoNeedLogin noNeedLogin = ((HandlerMethod) handler).getMethodAnnotation(NoNeedLogin.class);
             if (noNeedLogin != null) {
-                checkActiveTimeout(requestEmployee);
+                updateActiveTimeout(requestEmployee);
                 SmartRequestUtil.setRequestUser(requestEmployee);
                 return true;
             }
@@ -77,8 +77,8 @@ public class AdminInterceptor implements HandlerInterceptor {
                 return false;
             }
 
-            // 检测token 活跃频率
-            checkActiveTimeout(requestEmployee);
+            // 更新活跃
+            updateActiveTimeout(requestEmployee);
 
 
             // --------------- 第三步： 校验 权限 ---------------
@@ -123,15 +123,12 @@ public class AdminInterceptor implements HandlerInterceptor {
 
 
     /**
-     * 检测：token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结
+     * 更新活跃时间
      */
-    private void checkActiveTimeout(RequestEmployee requestEmployee) {
-        // 用户不在线，也不用检测
+    private void updateActiveTimeout(RequestEmployee requestEmployee) {
         if (requestEmployee == null) {
             return;
         }
-
-        StpUtil.checkActiveTimeout();
         StpUtil.updateLastActiveToNow();
     }
 

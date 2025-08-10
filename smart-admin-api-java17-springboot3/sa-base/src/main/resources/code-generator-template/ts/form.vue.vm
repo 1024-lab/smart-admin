@@ -48,7 +48,7 @@
       #end
       #if($field.frontComponent == "DictSelect")
         <a-form-item label="$codeGeneratorTool.removeEnumDesc($!{field.label})"  name="${field.fieldName}">
-          <DictSelect width="100%" v-model:value="form.${field.fieldName}" dict-code="DICT_CODE_ENUM.$!{field.dict} || '$!{field.dict}'" placeholder="$!{field.label}"/>
+          <DictSelect width="100%" v-model:value="form.${field.fieldName}" :dict-code="DICT_CODE_ENUM.$!{field.dict} || '$!{field.dict}'" placeholder="$!{field.label}"/>
         </a-form-item>
       #end
       #if($field.frontComponent == "Date")
@@ -106,7 +106,7 @@
         #end
         #if($field.frontComponent == "DictSelect")
           <a-form-item label="$codeGeneratorTool.removeEnumDesc($!{field.label})"  name="${field.fieldName}">
-            <DictSelect width="100%" v-model:value="form.${field.fieldName}" dict-code="DICT_CODE_ENUM.$!{field.dict} || '$!{field.dict}'" placeholder="$!{field.label}"/>
+            <DictSelect width="100%" v-model:value="form.${field.fieldName}" :dict-code="DICT_CODE_ENUM.$!{field.dict} || '$!{field.dict}'" placeholder="$!{field.label}"/>
           </a-form-item>
         #end
         #if($field.frontComponent == "Date")

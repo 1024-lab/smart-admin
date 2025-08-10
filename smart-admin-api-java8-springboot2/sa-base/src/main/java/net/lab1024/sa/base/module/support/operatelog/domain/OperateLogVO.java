@@ -47,6 +47,9 @@ public class OperateLogVO {
     @Schema(description = "请求参数")
     private String param;
 
+    @Schema(description = "返回值")
+    private String response;
+
     @Schema(description = "客户ip")
     private String ip;
 

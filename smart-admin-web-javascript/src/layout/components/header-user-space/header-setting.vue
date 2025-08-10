@@ -83,8 +83,8 @@
           <a-radio-button value="chrome">Chrome</a-radio-button>
         </a-radio-group>
       </a-form-item>
-      <a-form-item :label="$t('setting.flatPattern')" v-if="formState.layout === LAYOUT_ENUM.SIDE.value">
-        <a-switch @change="changeFlatPattern" v-model:checked="formState.flatPattern" checked-children="多个" un-checked-children="单个" />
+      <a-form-item :label="$t('setting.menu.expand')" v-if="formState.layout === LAYOUT_ENUM.SIDE.value">
+        <a-switch @change="changeMenuExpandFlag" v-model:checked="formState.menuSingleExpandFlag" checked-children="单个" un-checked-children="多个" />
       </a-form-item>
       <a-form-item :label="$t('setting.pagetag')">
         <a-switch @change="changePageTagFlag" v-model:checked="formState.pageTagFlag" checked-children="显示" un-checked-children="隐藏" />
@@ -213,8 +213,8 @@
     borderRadius: appConfigStore.borderRadius,
     // 标签页
     pageTagFlag: appConfigStore.pageTagFlag,
-    // 标签页
-    flatPattern: appConfigStore.flatPattern,
+    // 菜单展开方式
+    menuSingleExpandFlag: appConfigStore.menuSingleExpandFlag,
     // 标签页 样式
     pageTagStyle: appConfigStore.pageTagStyle,
     // 面包屑
@@ -303,9 +303,9 @@
     });
   }
 
-  function changeFlatPattern(e) {
+  function changeMenuExpandFlag(e) {
     appConfigStore.$patch({
-      flatPattern: e,
+      menuSingleExpandFlag: e,
     });
   }
 

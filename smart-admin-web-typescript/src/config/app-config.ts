@@ -27,7 +27,7 @@ export const appDefaultConfig = {
   // 圆角
   borderRadius: 6,
   // 菜单展开模式
-  flatPattern: false,
+  menuSingleExpandFlag: true,
   // 标签页
   pageTagFlag: true,
   // 标签页样式: default、 antd、chrome

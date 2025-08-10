@@ -101,7 +101,18 @@ public class FileStorageCloudServiceImpl implements IFileStorageService {
         userMetadata.put(USER_METADATA_FILE_FORMAT, fileType);
         userMetadata.put(USER_METADATA_FILE_SIZE, String.valueOf(file.getSize()));
 
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder().bucket(cloudConfig.getBucketName()).key(fileKey).metadata(userMetadata).contentLength(file.getSize()).contentType(this.getContentType(fileType)).contentEncoding(StandardCharsets.UTF_8.name()).contentDisposition("attachment;filename=" + urlEncoderFilename).build();
+        // 根据文件路径获取并设置访问权限
+        ObjectCannedACL acl = this.getACL(path);
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(cloudConfig.getBucketName())
+                .key(fileKey)
+                .metadata(userMetadata)
+                .contentLength(file.getSize())
+                .contentType(this.getContentType(fileType))
+                .contentEncoding(StandardCharsets.UTF_8.name())
+                .contentDisposition("attachment;filename=" + urlEncoderFilename)
+                .acl(acl)
+                .build();
         InputStream inputStream = null;
         try {
             inputStream = file.getInputStream();
@@ -112,10 +123,6 @@ public class FileStorageCloudServiceImpl implements IFileStorageService {
         } finally {
             IOUtils.closeQuietly(inputStream);
         }
-        // 根据文件路径获取并设置访问权限
-        ObjectCannedACL acl = this.getACL(path);
-        PutObjectAclRequest aclRequest = PutObjectAclRequest.builder().bucket(cloudConfig.getBucketName()).key(fileKey).acl(this.getACL(path)).build();
-        s3Client.putObjectAcl(aclRequest);
         // 返回上传结果
         FileUploadVO uploadVO = new FileUploadVO();
         uploadVO.setFileName(originalFileName);

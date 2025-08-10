@@ -108,7 +108,7 @@
     let lunarMonth = lunar.getMonthInChinese();
     let lunarDay = lunar.getDayInChinese();
     //节气
-    let jieqi = lunar.getPrevJieQi().getName();
+    let jieqi = lunar.getJieQi();
     let next = lunar.getNextJieQi();
     let nextJieqi = next.getName() + ' ' + next.getSolar().toYmd();
 

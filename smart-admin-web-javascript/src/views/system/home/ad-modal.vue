@@ -8,23 +8,24 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
-  <a-modal :open="visible" width="600px" :bodyStyle="{height:'480px'}"   title="" :closable="false" :maskClosable="true">
-    <a-row><div style="font-weight:bolder;margin: 0 auto;font-size: 16px">助力卓大抖音1000个粉丝，开播写代码🎉🎉</div> </a-row>
-    <a-row><div style="font-weight:bolder;margin: 20px auto;font-size: 15px">和1024创新实验室一起，热爱代码，热爱生活，永远年轻，永远前行🎉🎉</div> </a-row>
+  <a-modal :open="visible" width="600px" :bodyStyle="{height:'360px'}"   title="" :closable="false" :maskClosable="true">
+    <a-row><div style="font-weight:bolder;margin: 0 auto;font-size: 16px;color: red;">重磅更新：国产数据库支持🎉🎉</div> </a-row>
+    <a-row><div style="font-weight:bolder;margin: 10px auto;font-size: 16px;color: red;">支持：达梦、人大金仓、华为高斯GaussDB 等🎉🎉</div> </a-row>
     <br />
     <div class="app-qr-box">
       <div class="app-qr">
         <a-image
-            :width="300"
+            :width="200"
             style="border-radius: 15px;"
-            src="https://img.smartadmin.1024lab.net/wechat/douyin.png"
+            src="https://img.smartadmin.1024lab.net/wechat/zhuoda-wechat.jpg"
         />
 
-        <span class="qr-desc strong"> 打开【抖音APP】-点击【左上角侧边栏】-【点击扫一扫】-【进行关注】</span>
+        <span class="qr-desc strong"> 添加“卓大”微信，备注对应数据库，如 达梦</span>
       </div>
     </div>
     <template #footer>
-      <a-button type="primary" @click="hide">知道了</a-button>
+      <a-button type="default" @click="hide">知道了</a-button>
+      <a-button danger type="default" @click="goto" target="_blank" href="https://smartadmin.vip/views/other/china-db/">去看看国产数据库，了解一下</a-button>
     </template>
   </a-modal>
 </template>
@@ -36,6 +37,9 @@ defineExpose({
   });
 
   const visible = ref(true);
+  function goto(){
+
+  }
   function show() {
     visible.value = true;
   }
@@ -64,8 +68,7 @@ defineExpose({
         display: flex;
         margin-top: 20px;
         align-items: center;
-        font-size: 13px;
-        color: red;
+        font-size: 15px;
         text-align: center;
         overflow-x: hidden;
         > img {

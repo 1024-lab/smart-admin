@@ -88,7 +88,6 @@
         v-model:pageSize="queryForm.pageSize"
         :total="total"
         @change="queryHelpDocList"
-        @showSizeChange="queryHelpDocList"
         :show-total="(total) => `共${total}条`"
       />
     </div>

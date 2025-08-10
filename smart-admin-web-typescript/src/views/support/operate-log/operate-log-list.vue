@@ -14,7 +14,7 @@
         <a-input style="width: 150px" v-model:value="queryForm.keywords" placeholder="模块/操作内容" />
       </a-form-item>
       <a-form-item label="请求关键字" class="smart-query-form-item">
-        <a-input style="width: 220px" v-model:value="queryForm.requestKeywords" placeholder="请求地址/请求方法/请求参数" />
+        <a-input style="width: 270px" v-model:value="queryForm.requestKeywords" placeholder="请求地址/请求方法/请求参数/返回结果" />
       </a-form-item>
       <a-form-item label="用户名称" class="smart-query-form-item">
         <a-input style="width: 100px" v-model:value="queryForm.userName" placeholder="用户名称" />
@@ -24,7 +24,7 @@
         <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :presets="defaultChooseTimeRange" style="width: 240px" />
       </a-form-item>
 
-      <a-form-item label="快速筛选" class="smart-query-form-item">
+      <a-form-item label="状态：" class="smart-query-form-item">
         <a-radio-group v-model:value="queryForm.successFlag" @change="onSearch">
           <a-radio-button :value="undefined">全部</a-radio-button>
           <a-radio-button :value="true">成功</a-radio-button>
@@ -51,18 +51,23 @@
     </a-row>
   </a-form>
 
-  <a-card size="small" :bordered="false" :hoverable="true" style="height: 100%">
+  <a-card size="small" :bordered="false" :hoverable="true" >
     <a-row justify="end">
       <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.CONFIG" :refresh="ajaxQuery" />
     </a-row>
     <a-table size="small" :loading="tableLoading" :dataSource="tableData" :columns="columns" bordered rowKey="operateLogId" :pagination="false">
       <template #bodyCell="{ text, record, column }">
+        <template v-if="column.dataIndex === 'response'">
+          <a-typography-text v-if="text && text.ok">{{ text ? text.msg : '-' }}</a-typography-text>
+          <a-typography-text v-else type="warning">{{ text ? text.msg : '-' }}</a-typography-text>
+        </template>
+
         <template v-if="column.dataIndex === 'successFlag'">
-          <a-tag :color="text ? 'success' : 'error'">{{ text ? '成功' : '失败' }}</a-tag>
+          <a-tag :color="text ? 'success' : 'error'">{{ text ? '成功' : '报错' }}</a-tag>
         </template>
 
         <template v-if="column.dataIndex === 'userAgent'">
-          <div>{{ record.browser }} / {{ record.os }} / {{ record.device }}</div>
+          <div>{{ record.os }} / {{ record.browser }}  {{ record.device ? '/' + record.device : record.device }}</div>
         </template>
 
         <template v-if="column.dataIndex === 'operateUserType'">
@@ -88,7 +93,6 @@
         v-model:pageSize="queryForm.pageSize"
         :total="total"
         @change="ajaxQuery"
-        @showSizeChange="ajaxQuery"
         :show-total="(total) => `共${total}条`"
       />
     </div>
@@ -135,14 +139,15 @@
       ellipsis: true,
     },
     {
-      title: 'IP',
-      dataIndex: 'ip',
+      title: '返回结果',
+      dataIndex: 'response',
       ellipsis: true,
     },
     {
       title: 'IP地区',
       dataIndex: 'ipRegion',
       ellipsis: true,
+      width: 150,
     },
     {
       title: '客户端',
@@ -150,19 +155,14 @@
       ellipsis: true,
     },
     {
-      title: '请求方法',
-      dataIndex: 'method',
-      ellipsis: true,
-    },
-    {
-      title: '请求结果',
-      dataIndex: 'successFlag',
-      width: 80,
-    },
-    {
-      title: '时间',
+      title: '操作时间',
       dataIndex: 'createTime',
       width: 150,
+    },
+    {
+      title: '状态',
+      dataIndex: 'successFlag',
+      width: 60,
     },
     {
       title: '操作',
@@ -212,6 +212,10 @@
       let responseModel = await operateLogApi.queryList(queryForm);
 
       for (const e of responseModel.data.list) {
+        if(e.response){
+          e.response = JSON.parse(e.response);
+        }
+
         if (!e.userAgent) {
           continue;
         }
