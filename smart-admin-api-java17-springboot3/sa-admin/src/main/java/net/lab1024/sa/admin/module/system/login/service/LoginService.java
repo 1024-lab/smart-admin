@@ -317,8 +317,8 @@ public class LoginService implements StpInterface {
         // sa token 登出
         StpUtil.logout();
 
-        // 清空登录信息缓存
-        loginManager.clear();
+        // 清除用户登录信息缓存和权限信息
+        this.clearLoginEmployeeCache(requestUser.getUserId());
 
         //保存登出日志
         LoginLogEntity loginEntity = LoginLogEntity.builder()
@@ -474,6 +474,7 @@ public class LoginService implements StpInterface {
     }
 
     public void clearLoginEmployeeCache(Long employeeId) {
-        loginManager.clear();
+        loginManager.clearUserPermission(employeeId);
+        loginManager.clearUserLoginInfo(employeeId);
     }
 }

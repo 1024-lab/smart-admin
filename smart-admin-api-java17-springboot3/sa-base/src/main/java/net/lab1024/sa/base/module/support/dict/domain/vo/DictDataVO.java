@@ -30,7 +30,7 @@ public class DictDataVO implements Serializable {
     private String dictName;
 
     @Schema(description = "字典禁用状态")
-    private Integer dictDisabledFlag;
+    private Boolean dictDisabledFlag;
 
     @Schema(description = "字典项值")
     private String dataValue;

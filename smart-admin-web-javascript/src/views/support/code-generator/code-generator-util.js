@@ -3,12 +3,16 @@ import { convertUpperCamel } from '/@/utils/str-util';
 // -------------------------------- java 类型 --------------------------------
 export const JavaTypeMap = new Map();
 JavaTypeMap.set('bit', 'Boolean');
+JavaTypeMap.set('bool', 'Boolean');
 JavaTypeMap.set('int', 'Integer');
+JavaTypeMap.set('int2', 'Integer');
+JavaTypeMap.set('int4', 'Integer');
 JavaTypeMap.set('tinyint', 'Integer');
 JavaTypeMap.set('smallint', 'Integer');
 JavaTypeMap.set('integer', 'Integer');
 JavaTypeMap.set('year', 'Integer');
 JavaTypeMap.set('bigint', 'Long');
+JavaTypeMap.set('int8', 'Long');
 JavaTypeMap.set('float', 'BigDecimal');
 JavaTypeMap.set('double', 'BigDecimal');
 JavaTypeMap.set('decimal', 'BigDecimal');
@@ -20,6 +24,7 @@ JavaTypeMap.set('longtext', 'String');
 JavaTypeMap.set('blob', 'String');
 JavaTypeMap.set('date', 'LocalDate');
 JavaTypeMap.set('datetime', 'LocalDateTime');
+JavaTypeMap.set('timestamp', 'LocalDateTime');
 
 export const JavaTypeList = [
   'Boolean', //
@@ -39,7 +44,11 @@ export function getJavaType(dataType) {
 // -------------------------------- js 类型 --------------------------------
 export const JsTypeMap = new Map();
 JsTypeMap.set('bit', 'Boolean');
+JsTypeMap.set('bool', 'Boolean');
 JsTypeMap.set('int', 'Number');
+JsTypeMap.set('int2', 'Number');
+JsTypeMap.set('int4', 'Number');
+JsTypeMap.set('int8', 'Number');
 JsTypeMap.set('tinyint', 'Number');
 JsTypeMap.set('smallint', 'Number');
 JsTypeMap.set('integer', 'Number');
@@ -50,12 +59,14 @@ JsTypeMap.set('double', 'Number');
 JsTypeMap.set('decimal', 'Number');
 JsTypeMap.set('char', 'String');
 JsTypeMap.set('varchar', 'String');
+JsTypeMap.set('character', 'String');
 JsTypeMap.set('tinytext', 'String');
 JsTypeMap.set('text', 'String');
 JsTypeMap.set('longtext', 'String');
 JsTypeMap.set('blob', 'String');
 JsTypeMap.set('date', 'Date');
 JsTypeMap.set('datetime', 'Date');
+JsTypeMap.set('timestamp', 'Date');
 
 export const JsTypeList = [
   'Boolean', //
@@ -72,17 +83,23 @@ export function getJsType(dataType) {
 
 export const FrontComponentMap = new Map();
 FrontComponentMap.set('bit', 'BooleanSelect');
+FrontComponentMap.set('bool', 'BooleanSelect');
 FrontComponentMap.set('int', 'InputNumber');
+FrontComponentMap.set('int2', 'InputNumber');
+FrontComponentMap.set('int4', 'InputNumber');
+FrontComponentMap.set('int8', 'InputNumber');
 FrontComponentMap.set('tinyint', 'InputNumber');
 FrontComponentMap.set('smallint', 'InputNumber');
 FrontComponentMap.set('integer', 'InputNumber');
 FrontComponentMap.set('year', 'Date');
+FrontComponentMap.set('timestamp', 'Date');
 FrontComponentMap.set('bigint', 'InputNumber');
 FrontComponentMap.set('float', 'InputNumber');
 FrontComponentMap.set('double', 'InputNumber');
 FrontComponentMap.set('decimal', 'InputNumber');
 FrontComponentMap.set('char', 'Input');
 FrontComponentMap.set('varchar', 'Input');
+FrontComponentMap.set('character', 'Input');
 FrontComponentMap.set('tinytext', 'Input');
 FrontComponentMap.set('text', 'Textarea');
 FrontComponentMap.set('longtext', 'Textarea');

@@ -153,8 +153,19 @@ public class LoginManager {
     }
 
 
-    @CacheEvict(value = {AdminCacheConst.Login.USER_PERMISSION, AdminCacheConst.Login.REQUEST_EMPLOYEE}, allEntries = true)
-    public void clear(){
+    /**
+     * 清除用户权限
+     */
+    @CacheEvict(value = AdminCacheConst.Login.USER_PERMISSION)
+    public void clearUserPermission(Long employeeId) {
+
+    }
+
+    /**
+     * 清除用户登录信息
+     */
+    @CacheEvict(value = AdminCacheConst.Login.REQUEST_EMPLOYEE)
+    public void clearUserLoginInfo(Long employeeId) {
 
     }
 

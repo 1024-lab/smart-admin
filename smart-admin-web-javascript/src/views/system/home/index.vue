@@ -52,13 +52,13 @@
         <a-col :span="24">
           <OfficialAccountCard />
         </a-col>
-        <!--待办、已办-->
-        <a-col :span="24">
-          <ChangelogCard />
-        </a-col>
         <!--更新日志-->
         <a-col :span="24">
           <ToBeDoneCard />
+        </a-col>
+        <!--待办、已办-->
+        <a-col :span="24">
+          <ChangelogCard />
         </a-col>
       </a-row>
     </a-col>
