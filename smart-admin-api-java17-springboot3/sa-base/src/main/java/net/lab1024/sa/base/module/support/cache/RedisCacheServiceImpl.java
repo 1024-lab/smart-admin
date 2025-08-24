@@ -10,7 +10,6 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +53,7 @@ public class RedisCacheServiceImpl implements CacheService {
 
         if (keys != null) {
             return keys.stream().map(key -> {
-                String redisKey = StrUtil.str(key, StandardCharsets.UTF_8);
+                String redisKey = StrUtil.str(key, "utf-8");
                 // 从 Redis 键中提取出最后一个冒号后面的字符串作为真正的键
                 return redisKey.substring(redisKey.lastIndexOf(":") + 1);
             }).collect(Collectors.toList());

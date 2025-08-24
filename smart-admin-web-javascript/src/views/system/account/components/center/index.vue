@@ -233,11 +233,11 @@
   });
 </script>
 <style lang="less" scoped>
-.center-container {
+  .center-container {
     height: 100%;
     display: flex;
     flex-direction: column;
-    
+
     .header-title {
       font-size: 20px;
       flex-shrink: 0;
@@ -248,6 +248,7 @@
       flex: 1;
       overflow-y: auto;
       min-height: 0;
+
 
       .avatar-container {
         position: relative;

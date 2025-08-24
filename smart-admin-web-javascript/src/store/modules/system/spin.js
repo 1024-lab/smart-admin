@@ -8,6 +8,7 @@
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
 import { defineStore } from 'pinia';
+import { smartSentry } from '/@/lib/smart-sentry.js';
 
 export const useSpinStore = defineStore({
   id: 'spin',
@@ -25,7 +26,7 @@ export const useSpinStore = defineStore({
           spins.style.zIndex = '999';
         }
       } catch (error) {
-        console.warn('Spin hide操作失败:', error);
+        smartSentry.captureError('Spin hide操作失败:', error);
       }
     },
     show() {
@@ -37,7 +38,7 @@ export const useSpinStore = defineStore({
           spins.style.zIndex = '1001';
         }
       } catch (error) {
-        console.warn('Spin show操作失败:', error);
+        smartSentry.captureError('Spin hide操作失败:', error);
       }
     },
   },
