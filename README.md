@@ -4,7 +4,7 @@
 
 **<font color="#DC143C">国内首个满足《网络安全-三级等保》、《数据安全》</font>** 功能要求，支持登录限制、接口国产加解密、数据脱敏等一系列安全要求。
 
-**<font color="#DC143C">支持国产数据库：【达梦、金仓、南大通用、OceanBase、GaussDB 高斯、阿里PolarDB、GoldenDB】等，主流数据库：【Mysql, PostgreSQL】等</font>**
+**<font color="#DC143C">支持国产数据库：【达梦、金仓、南大通用、海量数据、神州通用、OceanBase、GaussDB 高斯、阿里PolarDB、GoldenDB】等，主流数据库：【Mysql, PostgreSQL】等</font>**
 
  **<font color="#DC143C">前端提供JavaScript和TypeScript双版本，后端提供Java8+SpringBoot2.X和Java17+SpringBoot3.X 双版本</font>**。
 

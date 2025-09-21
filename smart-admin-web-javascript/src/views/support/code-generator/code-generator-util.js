@@ -25,6 +25,7 @@ JavaTypeMap.set('blob', 'String');
 JavaTypeMap.set('date', 'LocalDate');
 JavaTypeMap.set('datetime', 'LocalDateTime');
 JavaTypeMap.set('timestamp', 'LocalDateTime');
+JavaTypeMap.set('timestamp without time zone', 'LocalDateTime');
 
 export const JavaTypeList = [
   'Boolean', //
@@ -67,6 +68,7 @@ JsTypeMap.set('blob', 'String');
 JsTypeMap.set('date', 'Date');
 JsTypeMap.set('datetime', 'Date');
 JsTypeMap.set('timestamp', 'Date');
+JsTypeMap.set('timestamp without time zone', 'Date');
 
 export const JsTypeList = [
   'Boolean', //
@@ -106,6 +108,7 @@ FrontComponentMap.set('longtext', 'Textarea');
 FrontComponentMap.set('blob', 'FileUpload');
 FrontComponentMap.set('date', 'Date');
 FrontComponentMap.set('datetime', 'DateTime');
+FrontComponentMap.set('timestamp without time zone', 'DateTime');
 
 export function getFrontComponent(dataType) {
   return FrontComponentMap.get(dataType);
