@@ -61,7 +61,7 @@
     "stylelint-config-standard": "~25.0.0",
     "stylelint-order": "~5.0.0",
     "terser": "~5.29.2",
-    "vite": "5.2.12",
+    "vite": "5.4.21",
     "vue-eslint-parser": "~9.4.2"
   },
   "engines": {
