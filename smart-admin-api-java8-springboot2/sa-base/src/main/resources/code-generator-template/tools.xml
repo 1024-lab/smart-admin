@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<tools>
-    <toolbox scope="application">
-        <tool key="codeGeneratorTool" class="net.lab1024.sa.base.module.support.codegenerator.util.CodeGeneratorTool"></tool>
-    </toolbox>
-</tools>

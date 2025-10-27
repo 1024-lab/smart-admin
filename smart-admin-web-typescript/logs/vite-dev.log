@@ -1,0 +1,38 @@
+
+> smartadmin@3.0.0 dev
+> vite
+
+Port 8081 is in use, trying another one...
+
+  VITE v5.2.12  ready in 1022 ms
+
+  ➜  Local:   http://localhost:8082/
+  ➜  Network: http://192.168.3.48:8021:45:20 [vite] Internal server error: Faile21:52:03 [vite] page reload src/router/prototype/student-followup.ts
+22:45:17 [vite] page reload src/views/business/wecom/chat-record/chat-record-list.vue
+22:46:14 [vite] page reload src/views/business/wecom/chat-record/chat-record-detail.vue
+22:57:08 [vite] page reload src/router/routers.ts
+22:57:10 [vite] page reload src/router/routers.ts
+30
+  2  |  import { useRouter, useRoute } from 'vue-router';
+  3  |  import { message } from 'ant-design-vue';
+  4  |  import { customerApi } from '/@/api/prototype/ai-sales/customer-api';
+     |                               ^
+  5  |  import {
+  6  |    MessageOutlined,
+      at formatError (file:///Users/xiaowang/AISales/wecom-ai-assistant/smart-admin/smart-admin-web-typescript/node_modules/vite/dist/node/chunks/dep-BKbDVx1T.js:52003:46)
+      at TransformContext.error (file:///Users/xiaowang/AISales/wecom-ai-assistant/smart-admin/smart-admin-web-typescript/node_modules/vite/dist/node/chunks/dep-BKbDVx1T.js:51997:19)
+      at normalizeUrl (file:///Users/xiaowang/AISales/wecom-ai-assistant/smart-admin/smart-admin-web-typescript/node_modules/vite/dist/node/chunks/dep-BKbDVx1T.js:67300:33)
+      at async file:///Users/xiaowang/AISales/wecom-ai-assistant/smart-admin/smart-admin-web-typescript/node_modules/vite/dist/node/chunks/dep-BKbDVx1T.js:67455:47
+      at async Promise.all (index 3)
+      at async TransformContext.transform (file:///Users/xiaowang/AISales/wecom-ai-assistant/smart-admin/smart-admin-web-typescript/node_modules/vite/dist/node/chunks/dep-BKbDVx1T.js:67376:13)
+      at async Object.transform (file:///Users/xiaowang/AISales/wecom-ai-assistant/smart-admin/smart-admin-web-typescript/node_modules/vite/dist/node/chunks/dep-BKbDVx1T.js:52312:30)
+      at async loadAndTransform (file:///Users/xiaowang/AISales/wecom-ai-assistant/smart-admin/smart-admin-web-typescript/node_modules/vite/dist/node/chunks/dep-BKbDVx1T.js:55067:29)
+21:47:05 [vite] page reload src/views/prototype/student-followup/student/student-detail.vue
+21:47:59 [vite] page reload src/views/prototype/student-followup/student/student-detail.vue
+21:52:03 [vite] page reload src/router/prototype/student-followup.ts
+22:45:18 [vite] page reload src/views/business/wecom/chat-record/chat-record-list.vue
+22:46:14 [vite] page reload src/views/business/wecom/chat-record/chat-record-detail.vue
+22:57:08 [vite] page reload src/router/routers.ts
+22:57:10 [vite] page reload src/router/routers.ts
+00:27:01 [vite] page reload src/router/prototype/wecom.ts
+00:27:28 [vite] hmr update /src/views/business/wecom/chat-record/chat-record-list.vue

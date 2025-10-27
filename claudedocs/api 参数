@@ -1,0 +1,14 @@
+# 企业微信 API 配置参数
+# @Author: wangxiao
+# @Date: 2025-10-14
+
+# 企业ID (所有应用通用)
+CORP_ID=ww7d5bca9c66c2e988
+
+# 会话存档Secret (用于拉取会话消息)
+CHAT_ARCHIVE_SECRET=n4TgNHACnKUe8Q_vzcDFpDXtfQ-Go3mHmoG_S1mxPYM
+
+# 通讯录管理Secret (用于获取员工/部门信息)
+CONTACTS_SECRET=URKzVx0vJRWJ7QPbjizd5WbrABSkqyq5EjKsNOeLhx4
+
+MERIDIAN_ONLY=QqpeavHxoI553VNbNy3xqJLE_kttG2o8Y9pQcoBs4Ek
