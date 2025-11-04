@@ -18,12 +18,14 @@ JavaTypeMap.set('double', 'BigDecimal');
 JavaTypeMap.set('decimal', 'BigDecimal');
 JavaTypeMap.set('char', 'String');
 JavaTypeMap.set('varchar', 'String');
+JavaTypeMap.set('nvarchar', 'String');
 JavaTypeMap.set('tinytext', 'String');
 JavaTypeMap.set('text', 'String');
 JavaTypeMap.set('longtext', 'String');
 JavaTypeMap.set('blob', 'String');
 JavaTypeMap.set('date', 'LocalDate');
 JavaTypeMap.set('datetime', 'LocalDateTime');
+JavaTypeMap.set('datetime2', 'LocalDateTime');
 JavaTypeMap.set('timestamp', 'LocalDateTime');
 JavaTypeMap.set('timestamp without time zone', 'LocalDateTime');
 
@@ -60,6 +62,7 @@ JsTypeMap.set('double', 'Number');
 JsTypeMap.set('decimal', 'Number');
 JsTypeMap.set('char', 'String');
 JsTypeMap.set('varchar', 'String');
+JsTypeMap.set('nvarchar', 'String');
 JsTypeMap.set('character', 'String');
 JsTypeMap.set('tinytext', 'String');
 JsTypeMap.set('text', 'String');
@@ -67,6 +70,7 @@ JsTypeMap.set('longtext', 'String');
 JsTypeMap.set('blob', 'String');
 JsTypeMap.set('date', 'Date');
 JsTypeMap.set('datetime', 'Date');
+JsTypeMap.set('datetime2', 'Date');
 JsTypeMap.set('timestamp', 'Date');
 JsTypeMap.set('timestamp without time zone', 'Date');
 
@@ -101,6 +105,7 @@ FrontComponentMap.set('double', 'InputNumber');
 FrontComponentMap.set('decimal', 'InputNumber');
 FrontComponentMap.set('char', 'Input');
 FrontComponentMap.set('varchar', 'Input');
+FrontComponentMap.set('nvarchar', 'Input');
 FrontComponentMap.set('character', 'Input');
 FrontComponentMap.set('tinytext', 'Input');
 FrontComponentMap.set('text', 'Textarea');
@@ -108,6 +113,7 @@ FrontComponentMap.set('longtext', 'Textarea');
 FrontComponentMap.set('blob', 'FileUpload');
 FrontComponentMap.set('date', 'Date');
 FrontComponentMap.set('datetime', 'DateTime');
+FrontComponentMap.set('datetime2', 'DateTime');
 FrontComponentMap.set('timestamp without time zone', 'DateTime');
 
 export function getFrontComponent(dataType) {
