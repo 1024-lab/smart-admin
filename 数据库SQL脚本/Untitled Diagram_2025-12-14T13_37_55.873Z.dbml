@@ -1,0 +1,54 @@
+Table ai_app [headercolor: #175e7a] {
+	id varchar(36) [ pk, not null, unique, note: 'id' ]
+	name varchar(50) [ note: '应用名称' ]
+	description varchar(255) [ note: '应用描述' ]
+	app_provider_id varchar(10) [ note: '''应用提供商id
+
+''' ]
+	create_by varchar(36) [ note: '创建人' ]
+	create_by_name varchar(255) [ note: '创建人姓名' ]
+	create_at datetime [ note: '创建时间' ]
+	update_by varchar(36)
+	update_at datetime [ note: '更新时间' ]
+	update_by_name varchar(255) [ note: '更新人姓名' ]
+
+	Note: 'ai应用管理表'
+}
+
+Table ai_app_provider [headercolor: #175e7a] {
+	id varchar(36) [ pk, not null, unique, note: 'id' ]
+	name varchar(36) [ note: '名称' ]
+	base_url varchar(255) [ note: 'baseUrl' ]
+	key varchar(255) [ note: '密钥' ]
+	create_at datetime [ note: '创建时间' ]
+	create_by varchar(36) [ note: '创建人' ]
+	create_by_name varchar(255) [ note: '创建人名称' ]
+	update_at datetime [ note: '更新时间' ]
+	update_by varchar(36) [ note: '更新人' ]
+	update_by_name varchar(255) [ note: '创建人名称' ]
+
+	Note: '应用提供商'
+}
+
+Table ai_conversations [headercolor: #175e7a] {
+	id varchar(36) [ pk, not null, unique ]
+	app_id varchar(36) [ note: '应用id' ]
+	create_at datetime [ default: '创建时间' ]
+	create_by varchar(36) [ note: '创建人' ]
+	create_by_name varchar(255) [ note: '创建人姓名' ]
+	update_at datetime [ note: '更新时间' ]
+	update_by varchar(36) [ note: '更新人' ]
+	update_by_name varchar(255) [ note: '更新人姓名' ]
+
+	Note: '会话表'
+}
+
+Table ai_messages [headercolor: #175e7a] {
+	id integer [ pk, increment, not null, unique ]
+
+	Note: '消息表'
+}
+
+Ref fk_ai_app_app_provider_id_ai_app_provider {
+	ai_app.app_provider_id > ai_app_provider.id [ delete: no action, update: no action ]
+}
