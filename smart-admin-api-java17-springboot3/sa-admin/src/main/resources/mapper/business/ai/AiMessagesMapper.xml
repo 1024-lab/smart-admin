@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.dao.AiMessagesDao">
+
+    <!-- 查询结果列 -->
+    <sql id="base_columns">
+        t_ai_messages.id,
+        t_ai_messages.conversaton_id,
+        t_ai_messages.query,
+        t_ai_messages.message,
+        t_ai_messages.inputs,
+        t_ai_messages.answer,
+        t_ai_messages.create_by,
+        t_ai_messages.create_by_name,
+        t_ai_messages.create_at,
+        t_ai_messages.update_by,
+        t_ai_messages.update_by_name,
+        t_ai_messages.update_at
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.domain.vo.AiMessagesVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_messages
+    </select>
+
+
+</mapper>

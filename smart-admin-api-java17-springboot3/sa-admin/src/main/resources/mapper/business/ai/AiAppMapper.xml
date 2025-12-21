@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.dao.AiAppDao">
+
+    <!-- 查询结果列 -->
+    <sql id="base_columns">
+        t_ai_app.id,
+        t_ai_app.name,
+        t_ai_app.description,
+        t_ai_app.app_provider_id,
+        t_ai_app.create_by,
+        t_ai_app.create_by_name,
+        t_ai_app.create_at,
+        t_ai_app.update_by,
+        t_ai_app.update_at,
+        t_ai_app.update_by_name
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.domain.vo.AiAppVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_app
+        <where>
+            <!--关键字查询-->
+            <if test="queryForm.keywords != null and queryForm.keywords != ''">
+                AND (
+                  INSTR(t_ai_app.name,#{queryForm.keywords})
+                  OR INSTR(t_ai_app.description,#{queryForm.keywords})
+                )
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

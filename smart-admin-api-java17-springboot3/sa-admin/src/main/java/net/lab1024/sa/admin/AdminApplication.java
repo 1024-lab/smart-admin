@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -21,6 +22,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @Email lab1024@163.com
  * @Copyright  <a href="https://1024lab.net">1024创 新实验室</a>
  */
+@EnableAsync
 @EnableCaching
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
