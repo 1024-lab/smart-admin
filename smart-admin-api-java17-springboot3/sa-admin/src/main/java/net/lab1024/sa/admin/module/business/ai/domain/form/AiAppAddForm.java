@@ -15,19 +15,18 @@ import lombok.Data;
 @Data
 public class AiAppAddForm {
 
-    @Schema(description = "id", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "id 不能为空")
+    @Schema(description = "id")
     private String id;
 
-    @Schema(description = "应用名称", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "应用名称")
     @NotBlank(message = "应用名称 不能为空")
     private String name;
 
-    @Schema(description = "应用描述", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "应用描述")
     @NotBlank(message = "应用描述 不能为空")
     private String description;
 
-    @Schema(description = "应用提供商id", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "应用提供商id")
     @NotBlank(message = "应用提供商id 不能为空")
     private String appProviderId;
 

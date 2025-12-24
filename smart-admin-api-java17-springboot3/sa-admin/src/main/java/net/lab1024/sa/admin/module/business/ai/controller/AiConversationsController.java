@@ -1,8 +1,8 @@
 package net.lab1024.sa.admin.module.business.ai.controller;
 
-import net.lab1024.sa.admin.module.business.ai.domain.form.AiConversationsAddForm;
+//import net.lab1024.sa.admin.module.business.ai.domain.form.AiConversationsAddForm;
 import net.lab1024.sa.admin.module.business.ai.domain.form.AiConversationsQueryForm;
-import net.lab1024.sa.admin.module.business.ai.domain.form.AiConversationsUpdateForm;
+//import net.lab1024.sa.admin.module.business.ai.domain.form.AiConversationsUpdateForm;
 import net.lab1024.sa.admin.module.business.ai.domain.vo.AiConversationsVO;
 import net.lab1024.sa.admin.module.business.ai.service.AiConversationsService;
 import net.lab1024.sa.base.common.domain.ValidateList;

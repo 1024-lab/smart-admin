@@ -8,16 +8,16 @@
 <template>
   <a-drawer
       :title="form.id ? '编辑' : '添加'"
-      :width="500"
+      :width="800"
       :open="visibleFlag"
       @close="onClose"
       :maskClosable="false"
       :destroyOnClose="true"
   >
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" >
-        <a-form-item label="id"  name="id">
-          <a-input style="width: 100%" v-model:value="form.id" placeholder="id" />
-        </a-form-item>
+<!--        <a-form-item label="id"  name="id">-->
+<!--          <a-input style="width: 100%" v-model:value="form.id" placeholder="id" />-->
+<!--        </a-form-item>-->
         <a-form-item label="名称"  name="name">
           <a-input style="width: 100%" v-model:value="form.name" placeholder="名称" />
         </a-form-item>
@@ -88,10 +88,10 @@
   let form = reactive({ ...formDefault });
 
   const rules = {
-      id: [{ required: true, message: 'id 必填' }],
+      // id: [{ required: true, message: 'id 必填' }],
       name: [{ required: true, message: '名称 必填' }],
       baseUrl: [{ required: true, message: 'baseUrl 必填' }],
-      key: [{ required: true, message: 'key 必填' }],
+      // key: [{ required: true, message: 'key 必填' }],
   };
 
   // 点击确定，验证表单

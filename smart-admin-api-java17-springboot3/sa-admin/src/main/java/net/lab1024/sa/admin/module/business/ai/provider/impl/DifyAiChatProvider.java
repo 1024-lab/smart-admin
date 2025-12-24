@@ -6,8 +6,7 @@ import net.lab1024.sa.admin.module.business.ai.constant.AiProviderTypeEnum;
 import net.lab1024.sa.admin.module.business.ai.domain.dto.AiChatContextDTO;
 import net.lab1024.sa.admin.module.business.ai.domain.vo.AiChatMessageVO;
 import net.lab1024.sa.admin.module.business.ai.provider.AiChatProvider;
-import net.lab1024.sa.base.common.code.UserErrorCode;
-import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.exception.BusinessException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -93,7 +92,7 @@ public class DifyAiChatProvider implements AiChatProvider {
 
     @Override
     public AiChatMessageVO chatBlocking(AiChatContextDTO context) {
-        throw ResponseDTO.error(UserErrorCode.DEVELOPING, "暂不支持阻塞模式").exception();
+        throw new BusinessException("暂不支持阻塞模式");
     }
 
     private Map<String, Object> buildRequestBody(AiChatContextDTO context, String responseMode) {

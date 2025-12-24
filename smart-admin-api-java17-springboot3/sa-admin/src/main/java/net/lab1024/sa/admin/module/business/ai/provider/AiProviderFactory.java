@@ -2,8 +2,7 @@ package net.lab1024.sa.admin.module.business.ai.provider;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
-import net.lab1024.sa.base.common.code.UserErrorCode;
-import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.base.common.exception.BusinessException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,8 +34,7 @@ public class AiProviderFactory {
     public AiChatProvider getProvider(String providerType) {
         AiChatProvider provider = providerMap.get(providerType);
         if (provider == null) {
-            throw ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST,
-                "不支持的供应商类型: " + providerType).exception();
+            throw new BusinessException("不支持的供应商类型: " + providerType);
         }
         return provider;
     }
