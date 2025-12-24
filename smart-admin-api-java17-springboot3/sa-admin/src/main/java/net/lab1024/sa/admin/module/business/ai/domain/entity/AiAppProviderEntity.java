@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.business.ai.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
@@ -36,7 +37,13 @@ public class AiAppProviderEntity {
     /**
      * key
      */
+    @TableField("`key`")
     private String key;
+
+    /**
+     * 平台扩展配置(JSON格式)
+     */
+    private String configJson;
 
     /**
      * 创建时间

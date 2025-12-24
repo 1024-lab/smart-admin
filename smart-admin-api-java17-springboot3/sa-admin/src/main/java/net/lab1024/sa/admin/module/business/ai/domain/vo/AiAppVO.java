@@ -28,6 +28,9 @@ public class AiAppVO {
     @Schema(description = "应用提供商id")
     private String appProviderId;
 
+    @Schema(description = "应用级别配置(JSON格式)")
+    private String appConfigJson;
+
     @Schema(description = "创建人姓名")
     private String createByName;
 

@@ -82,4 +82,12 @@ public class AiAppProviderService {
         aiAppProviderDao.deleteById(id);
         return ResponseDTO.ok();
     }
+
+    /**
+     * 查询所有供应商
+     */
+    public List<AiAppProviderVO> queryAll() {
+        List<AiAppProviderEntity> list = aiAppProviderDao.selectList(null);
+        return SmartBeanUtil.copyList(list, AiAppProviderVO.class);
+    }
 }

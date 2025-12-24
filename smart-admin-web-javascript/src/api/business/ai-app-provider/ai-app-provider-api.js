@@ -45,4 +45,11 @@ export const aiAppProviderApi = {
       return postRequest('/aiAppProvider/batchDelete', idList);
   },
 
+  /**
+   * 查询所有供应商  @author  Mission
+   */
+  queryAll: () => {
+      return getRequest('/aiAppProvider/queryAll');
+  },
+
 };

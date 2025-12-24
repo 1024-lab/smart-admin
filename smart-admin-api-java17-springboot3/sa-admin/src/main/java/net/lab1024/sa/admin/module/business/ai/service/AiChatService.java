@@ -9,8 +9,9 @@ import net.lab1024.sa.admin.module.business.ai.domain.form.AiChatMessageForm;
 import net.lab1024.sa.admin.module.business.ai.domain.vo.AiChatMessageVO;
 import net.lab1024.sa.admin.module.business.ai.provider.AiChatProvider;
 import net.lab1024.sa.admin.module.business.ai.provider.AiProviderFactory;
-import net.lab1024.sa.base.common.code.UserErrorCode;
-import net.lab1024.sa.base.common.domain.ResponseDTO;
+import net.lab1024.sa.admin.module.business.ai.domain.config.ProviderConfigFactory;
+import net.lab1024.sa.admin.module.business.ai.domain.config.ProviderConfigBase;
+import net.lab1024.sa.base.common.exception.BusinessException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -34,6 +35,9 @@ public class AiChatService {
 
     @Resource
     private AiAppProviderService aiAppProviderService;
+
+    @Resource
+    private ProviderConfigFactory providerConfigFactory;
 
     /**
      * 流式聊天（异步）
@@ -70,15 +74,26 @@ public class AiChatService {
      */
     private AiChatContextDTO buildChatContext(AiChatMessageForm form) {
         AiAppProviderEntity provider = getProviderByAppId(form.getAppId());
+        AiAppEntity app = aiAppService.aiAppDao.selectById(form.getAppId());
 
         AiChatContextDTO context = new AiChatContextDTO();
         context.setBaseUrl(provider.getBaseUrl());
-        context.setApiKey(provider.getKey());
+        context.setApiKey(provider.getKey());  // 平台级 Key（可能为空）
         context.setQuery(form.getQuery());
         context.setInputs(form.getInputs());
         context.setConversationId(form.getConversationId());
         context.setUser(form.getUser());
         context.setFiles(form.getFiles());
+
+        // 解析平台配置
+        ProviderConfigBase providerConfig = providerConfigFactory.parseProviderConfig(
+            provider.getName(),
+            provider.getConfigJson()
+        );
+        context.setProviderConfig(providerConfig);
+
+        // 设置应用级配置
+        context.setAppConfigJson(app.getAppConfigJson());
 
         return context;
     }
@@ -90,13 +105,13 @@ public class AiChatService {
         // 1. 查询应用
         AiAppEntity app = aiAppService.aiAppDao.selectById(appId);
         if (app == null) {
-            throw ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST, "应用不存在").exception();
+            throw new BusinessException("应用不存在: " + appId);
         }
 
         // 2. 查询供应商
         AiAppProviderEntity provider = aiAppProviderService.aiAppProviderDao.selectById(app.getAppProviderId());
         if (provider == null) {
-            throw ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST, "供应商不存在").exception();
+            throw new BusinessException("供应商不存在: " + app.getAppProviderId());
         }
 
         return provider;

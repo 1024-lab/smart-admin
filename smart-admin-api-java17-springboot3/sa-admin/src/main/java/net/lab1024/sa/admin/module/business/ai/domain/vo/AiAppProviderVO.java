@@ -28,6 +28,9 @@ public class AiAppProviderVO {
     @Schema(description = "key")
     private String key;
 
+    @Schema(description = "平台扩展配置(JSON格式)")
+    private String configJson;
+
     @Schema(description = "创建时间")
     private LocalDateTime createAt;
 

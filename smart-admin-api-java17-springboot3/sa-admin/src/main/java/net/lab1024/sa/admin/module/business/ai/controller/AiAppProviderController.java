@@ -19,6 +19,8 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 /**
  * 应用提供商 Controller
  *
@@ -67,5 +69,12 @@ public class AiAppProviderController {
     @SaCheckPermission("aiAppProvider:delete")
     public ResponseDTO<String> batchDelete(@PathVariable String id) {
         return aiAppProviderService.delete(id);
+    }
+
+    @Operation(summary = "查询所有供应商 @author Mission")
+    @GetMapping("/aiAppProvider/queryAll")
+    @SaCheckPermission("aiAppProvider:query")
+    public ResponseDTO<List<AiAppProviderVO>> queryAll() {
+        return ResponseDTO.ok(aiAppProviderService.queryAll());
     }
 }

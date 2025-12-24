@@ -2,6 +2,7 @@ package net.lab1024.sa.admin.module.business.ai.domain.dto;
 
 import lombok.Data;
 import net.lab1024.sa.admin.module.business.ai.domain.form.AiChatFileForm;
+import net.lab1024.sa.admin.module.business.ai.domain.config.ProviderConfigBase;
 
 import java.util.List;
 import java.util.Map;
@@ -23,4 +24,14 @@ public class AiChatContextDTO {
     private String conversationId;
     private String user;
     private List<AiChatFileForm> files;
+
+    /**
+     * 平台配置对象
+     */
+    private ProviderConfigBase providerConfig;
+
+    /**
+     * 应用级配置 JSON
+     */
+    private String appConfigJson;
 }

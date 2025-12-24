@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.module.business.ai.constant.AiProviderTypeEnum;
 import net.lab1024.sa.admin.module.business.ai.domain.dto.AiChatContextDTO;
 import net.lab1024.sa.admin.module.business.ai.domain.vo.AiChatMessageVO;
+import net.lab1024.sa.admin.module.business.ai.domain.config.DifyAppConfig;
 import net.lab1024.sa.admin.module.business.ai.provider.AiChatProvider;
 import net.lab1024.sa.base.common.exception.BusinessException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -37,6 +39,9 @@ public class DifyAiChatProvider implements AiChatProvider {
     public void chatStreaming(AiChatContextDTO context, SseEmitter emitter) {
         HttpURLConnection connection = null;
         try {
+            // 获取 API Key
+            String apiKey = getDifyApiKey(context);
+
             // 构建请求体
             Map<String, Object> requestBody = buildRequestBody(context, "streaming");
 
@@ -44,7 +49,7 @@ public class DifyAiChatProvider implements AiChatProvider {
             String url = context.getBaseUrl() + "/v1/chat-messages";
             connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Authorization", "Bearer " + context.getApiKey());
+            connection.setRequestProperty("Authorization", "Bearer " + apiKey);
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setDoOutput(true);
             connection.setReadTimeout(300000); // 5分钟超时
@@ -93,6 +98,29 @@ public class DifyAiChatProvider implements AiChatProvider {
     @Override
     public AiChatMessageVO chatBlocking(AiChatContextDTO context) {
         throw new BusinessException("暂不支持阻塞模式");
+    }
+
+    /**
+     * 获取 Dify API Key（优先使用应用级配置）
+     */
+    private String getDifyApiKey(AiChatContextDTO context) {
+        // 1. 优先使用应用级配置中的 API Key
+        if (StringUtils.isNotBlank(context.getAppConfigJson())) {
+            try {
+                DifyAppConfig appConfig = JSON.parseObject(context.getAppConfigJson(), DifyAppConfig.class);
+                appConfig.validate();
+                return appConfig.getApiKey();
+            } catch (Exception e) {
+                log.warn("解析 Dify 应用配置失败，尝试使用平台级 API Key", e);
+            }
+        }
+
+        // 2. 降级使用平台级 API Key（向后兼容）
+        if (StringUtils.isNotBlank(context.getApiKey())) {
+            return context.getApiKey();
+        }
+
+        throw new BusinessException("Dify 配置缺少 API Key");
     }
 
     private Map<String, Object> buildRequestBody(AiChatContextDTO context, String responseMode) {

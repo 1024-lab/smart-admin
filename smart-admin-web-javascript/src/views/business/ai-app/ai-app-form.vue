@@ -24,8 +24,28 @@
         <a-form-item label="应用描述"  name="description">
           <a-input style="width: 100%" v-model:value="form.description" placeholder="应用描述" />
         </a-form-item>
-        <a-form-item label="应用提供商id"  name="appProviderId">
-          <a-input style="width: 100%" v-model:value="form.appProviderId" placeholder="应用提供商id" />
+        <a-form-item label="智能体平台"  name="appProviderId">
+          <AiAppProviderSelect
+            v-model:value="form.appProviderId"
+            @change="handleProviderChange"
+          />
+        </a-form-item>
+
+        <!-- Dify 平台显示 API Key 输入 -->
+        <a-form-item
+          v-if="selectedProviderType === 'dify'"
+          label="Dify API Key"
+          name="appConfigJson"
+          :rules="[{ required: true, message: 'Dify 应用需要配置 API Key' }]"
+        >
+          <a-input
+            v-model:value="difyApiKey"
+            placeholder="app-xxx123456"
+            @blur="updateAppConfigJson"
+          />
+          <div style="color: #999; font-size: 12px; margin-top: 4px;">
+            在 Dify 平台查看应用的 API Key
+          </div>
         </a-form-item>
     </a-form>
 
@@ -44,6 +64,7 @@
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { aiAppApi } from '/@/api/business/ai-app/ai-app-api';
   import { smartSentry } from '/@/lib/smart-sentry';
+  import AiAppProviderSelect from '/@/components/ai-app-provider-select/index.vue';
 
   // ------------------------ 事件 ------------------------
 
@@ -53,15 +74,31 @@
   // 是否显示
   const visibleFlag = ref(false);
 
+  // 选中的供应商类型
+  const selectedProviderType = ref('');
+  const difyApiKey = ref('');
+
   function show(rowData) {
     Object.assign(form, formDefault);
+    selectedProviderType.value = '';
+    difyApiKey.value = '';
+
     if (rowData && !_.isEmpty(rowData)) {
       Object.assign(form, rowData);
+
+      // 如果有应用配置，解析 Dify API Key
+      if (rowData.appConfigJson) {
+        try {
+          const config = JSON.parse(rowData.appConfigJson);
+          if (config.apiKey) {
+            difyApiKey.value = config.apiKey;
+          }
+        } catch (e) {
+          console.error('解析应用配置失败', e);
+        }
+      }
     }
-    // 使用字典时把下面这注释修改成自己的字典字段 有多个字典字段就复制多份同理修改 不然打开表单时不显示字典初始值
-    // if (form.status && form.status.length > 0) {
-    //   form.status = form.status.map((e) => e.valueCode);
-    // }
+
     visibleFlag.value = true;
     nextTick(() => {
       formRef.value.clearValidate();
@@ -70,7 +107,29 @@
 
   function onClose() {
     Object.assign(form, formDefault);
+    selectedProviderType.value = '';
+    difyApiKey.value = '';
     visibleFlag.value = false;
+  }
+
+  // 处理供应商变化
+  function handleProviderChange(providerId, providerData) {
+    if (providerData) {
+      selectedProviderType.value = providerData.name;
+
+      // 如果切换到非 Dify 供应商，清空应用配置
+      if (providerData.name !== 'dify') {
+        form.appConfigJson = null;
+        difyApiKey.value = '';
+      }
+    }
+  }
+
+  // 更新应用配置 JSON
+  function updateAppConfigJson() {
+    if (selectedProviderType.value === 'dify' && difyApiKey.value) {
+      form.appConfigJson = JSON.stringify({ apiKey: difyApiKey.value });
+    }
   }
 
   // ------------------------ 表单 ------------------------
@@ -83,6 +142,7 @@
       name: undefined, //应用名称
       description: undefined, //应用描述
       appProviderId: undefined, //应用提供商id
+      appConfigJson: undefined, //应用配置
   };
 
   let form = reactive({ ...formDefault });
@@ -91,12 +151,15 @@
       id: [{ required: true, message: 'id 必填' }],
       name: [{ required: true, message: '应用名称 必填' }],
       description: [{ required: true, message: '应用描述 必填' }],
-      appProviderId: [{ required: true, message: '应用提供商id 必填' }],
+      appProviderId: [{ required: true, message: '智能体平台 必填' }],
   };
 
   // 点击确定，验证表单
   async function onSubmit() {
     try {
+      // 在提交前确保 appConfigJson 是最新的
+      updateAppConfigJson();
+
       await formRef.value.validateFields();
       save();
     } catch (err) {

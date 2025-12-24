@@ -39,6 +39,11 @@ public class AiAppEntity {
     private String appProviderId;
 
     /**
+     * 应用级别配置(JSON格式)
+     */
+    private String appConfigJson;
+
+    /**
      * 创建人
      */
     private String createBy;
