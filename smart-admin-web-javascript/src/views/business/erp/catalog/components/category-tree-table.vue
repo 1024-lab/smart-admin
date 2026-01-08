@@ -143,7 +143,7 @@
       okText: '确定',
       okType: 'danger',
       async onOk() {
-        deleteCategory(categoryId);
+        await deleteCategory(categoryId);
       },
       cancelText: '取消',
       onCancel() {},
@@ -154,7 +154,7 @@
       SmartLoading.show();
       await categoryApi.deleteCategoryById(categoryId);
       message.success('删除成功');
-      queryList();
+      await queryList();
     } catch (e) {
       smartSentry.captureError(e);
     } finally {
