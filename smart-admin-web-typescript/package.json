@@ -27,7 +27,7 @@
     "dayjs": "1.11.13",
     "decimal.js": "10.3.1",
     "default-passive-events": "^2.0.0",
-    "diff": "5.2.0",
+    "diff": "8.0.3",
     "diff2html": "3.4.47",
     "echarts": "5.4.3",
     "highlight.js": "11.8.0",
