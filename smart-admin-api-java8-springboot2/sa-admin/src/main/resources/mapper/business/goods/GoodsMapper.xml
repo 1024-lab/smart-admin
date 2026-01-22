@@ -15,7 +15,7 @@
         SELECT * FROM t_goods
         <where>
             <if test="query.searchWord != null and query.searchWord !=''">
-                INSTR(goods_name,#{query.searchWord})
+                AND INSTR(goods_name,#{query.searchWord})
             </if>
             <if test="query.place != null">
                 AND INSTR(place,#{query.place})

@@ -4,7 +4,7 @@
   * @Date:      2024/06/25
 -->
 <template>
-  <a-drawer v-model:open="showFlag" :width="1000" :title="title" placement="right" :destroyOnClose="true">
+  <a-drawer v-model:open="showFlag" :width="1100" :title="title" placement="right" :destroyOnClose="true">
     <a-form class="smart-query-form">
       <a-row class="smart-query-form-row">
         <a-form-item label="关键字" class="smart-query-form-item">
@@ -12,13 +12,13 @@
         </a-form-item>
         <a-form-item label="执行结果" class="smart-query-form-item">
           <a-select style="width: 100px" v-model:value="queryForm.successFlag" placeholder="请选择" allowClear>
-            <a-select-option :key="1"> 成功 </a-select-option>
-            <a-select-option :key="0"> 失败 </a-select-option>
+            <a-select-option :key="1"> 成功</a-select-option>
+            <a-select-option :key="0"> 失败</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="执行时间" class="smart-query-form-item">
           <a-space direction="vertical" :size="12">
-            <a-range-picker v-model:value="searchDate" style="width: 220px" @change="dateChange" />
+            <a-range-picker v-model:value="searchDate" style="width: 220px" :presets="defaultTimeRanges" @change="dateChange" />
           </a-space>
         </a-form-item>
 
@@ -41,7 +41,6 @@
       </a-row>
     </a-form>
 
-    <a-card size="small" :bordered="false" :hoverable="true">
       <a-row justify="end">
         <TableOperator class="smart-margin-bottom5" v-model="columns" :tableId="TABLE_ID_CONST.SUPPORT.JOB_LOG" :refresh="queryLogList" />
       </a-row>
@@ -49,13 +48,25 @@
       <a-table size="small" :loading="tableLoading" bordered :dataSource="tableData" :columns="columns" rowKey="jobLogId" :pagination="false">
         <template #bodyCell="{ record, column }">
           <template v-if="column.dataIndex === 'executeStartTime'">
-            <div><a-tag color="green">始</a-tag>{{ record.executeStartTime }}</div>
-            <div style="margin-top: 5px"><a-tag color="blue">终</a-tag>{{ record.executeEndTime }}</div>
+            <div>
+              <a-tag color="green">始</a-tag>
+              {{ record.executeStartTime }}
+            </div>
+            <div style="margin-top: 5px">
+              <a-tag color="blue">终</a-tag>
+              {{ record.executeEndTime }}
+            </div>
           </template>
-          <template v-if="column.dataIndex === 'executeTimeMillis'"> {{ record.executeTimeMillis }} ms </template>
+          <template v-if="column.dataIndex === 'executeTimeMillis'"> {{ record.executeTimeMillis }} ms</template>
           <template v-if="column.dataIndex === 'successFlag'">
-            <div v-if="record.successFlag" style="color: #39c710"><CheckOutlined />成功</div>
-            <div v-else style="color: #f50"><WarningOutlined />失败</div>
+            <div v-if="record.successFlag" style="color: #39c710">
+              <CheckOutlined />
+              成功
+            </div>
+            <div v-else style="color: #f50">
+              <WarningOutlined />
+              失败
+            </div>
           </template>
         </template>
       </a-table>
@@ -74,7 +85,6 @@
           :show-total="(total) => `共${total}条`"
         />
       </div>
-    </a-card>
   </a-drawer>
 </template>
 <script setup>
@@ -84,6 +94,7 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
+  import { defaultTimeRanges } from '/@/lib/default-time-ranges.js';
 
   const showFlag = ref(false);
   const title = ref('');

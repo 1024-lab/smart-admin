@@ -23,7 +23,10 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 public class CacheConfig {
 
     private static final String REDIS_CACHE = "redis";
+
     private static final String CAFFEINE_CACHE = "caffeine";
+
+    public static final String REDIS_CACHE_PREFIX = "cache";
 
 
     @Resource
@@ -45,7 +48,7 @@ public class CacheConfig {
         RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
                 // 禁止缓存 null 值，避免缓存穿透
                 .disableCachingNullValues()
-                .computePrefixWith(name -> "cache:" + name + ":")
+                .computePrefixWith(name -> REDIS_CACHE_PREFIX + name + ":")
                 // 使用 FastJSON 序列化缓存值，支持复杂对象
                 .serializeValuesWith(RedisSerializationContext.SerializationPair
                         .fromSerializer(new GenericFastJsonRedisSerializer()));

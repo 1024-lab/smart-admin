@@ -274,12 +274,12 @@ public class EmployeeService {
         if (null == employeeEntity) {
             return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
         }
+
+        // 更新禁用状态
         employeeDao.updateDisableFlag(employeeId, !employeeEntity.getDisabledFlag());
 
-        if (employeeEntity.getDisabledFlag()) {
-            // 强制退出登录
-            StpUtil.logout(UserTypeEnum.ADMIN_EMPLOYEE.getValue() + StringConst.COLON + employeeId);
-        }
+        // 强制退出登录
+        StpUtil.logout(UserTypeEnum.ADMIN_EMPLOYEE.getValue() + StringConst.COLON + employeeId);
 
         return ResponseDTO.ok();
     }

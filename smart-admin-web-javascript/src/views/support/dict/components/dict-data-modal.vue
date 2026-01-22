@@ -168,9 +168,9 @@
       let keywordsFilterFlag = true;
       if (keywords.value) {
         keywordsFilterFlag =
-          _.includes(item.dataValue.toLowerCase(), keywords.value.toLowerCase()) ||
-          _.includes(item.dataLabel.toLowerCase(), keywords.value.toLowerCase()) ||
-          _.includes(item.remark.toLowerCase(), keywords.value.toLowerCase());
+          (item.dataValue &&_.includes(item.dataValue.toLowerCase(), keywords.value.toLowerCase())) ||
+          (item.dataLabel && _.includes(item.dataLabel.toLowerCase(), keywords.value.toLowerCase())) ||
+          (item.remark && _.includes(item.remark.toLowerCase(), keywords.value.toLowerCase()));
       }
       let disabledFilterFlag = _.isNull(disabledFlag.value) ? true : item.disabledFlag === disabledFlag.value;
       return disabledFilterFlag && keywordsFilterFlag;

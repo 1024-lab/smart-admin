@@ -8,9 +8,10 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
-  <a-modal :open="visible" width="600px" :bodyStyle="{height:'360px'}"   title="" :closable="false" :maskClosable="true">
+  <a-modal :open="visible" width="600px" :bodyStyle="{height:'400px'}"   title="" :closable="false" :maskClosable="true">
     <a-row><div style="font-weight:bolder;margin: 0 auto;font-size: 16px;color: red;">重磅更新：国产数据库支持🎉🎉</div> </a-row>
-    <a-row><div style="font-weight:bolder;margin: 10px auto;font-size: 16px;color: red;">支持：达梦、人大金仓、华为高斯GaussDB 等🎉🎉</div> </a-row>
+    <a-row><div style="font-weight:bolder;margin: 10px auto;font-size: 16px;color: red;">国产数据库：达梦、人大金仓、华为高斯GaussDB 等🎉🎉</div> </a-row>
+    <a-row><div style="font-weight:bolder;margin: 0 auto;font-size: 16px;color: red;">主流数据库：Mysql、PostgreSQL 等🎉🎉</div> </a-row>
     <br />
     <div class="app-qr-box">
       <div class="app-qr">

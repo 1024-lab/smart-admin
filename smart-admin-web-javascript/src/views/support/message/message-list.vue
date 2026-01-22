@@ -12,7 +12,7 @@
         <SmartEnumSelect width="120px" enum-name="FLAG_NUMBER_ENUM" v-model:value="queryForm.readFlag" />
       </a-form-item>
       <a-form-item label="创建时间" class="smart-query-form-item">
-        <a-range-picker v-model:value="queryForm.createTime" style="width: 200px" @change="onChangeCreateTime" />
+        <a-range-picker v-model:value="queryForm.createTime" :presets="defaultTimeRanges"  style="width: 200px" @change="onChangeCreateTime" />
       </a-form-item>
       <a-form-item class="smart-query-form-item">
         <a-button type="primary" @click="searchQuery">
@@ -96,6 +96,7 @@
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import MessageSendForm from './components/message-send-form.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
+  import { defaultTimeRanges } from '/@/lib/default-time-ranges.js';
   // ---------------------------- 表格列 ----------------------------
 
   const columns = ref([

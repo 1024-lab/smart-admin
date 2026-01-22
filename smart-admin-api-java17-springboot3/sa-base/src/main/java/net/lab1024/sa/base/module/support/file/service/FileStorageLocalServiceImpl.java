@@ -78,8 +78,8 @@ public class FileStorageLocalServiceImpl implements IFileStorageService {
             // 目录不存在，新建
             directory.mkdirs();
         }
-        if (!path.endsWith("/")) {
-            path = path + "/";
+        if (!path.endsWith(File.separator)) {
+            path = path + File.separator;
         }
         FileUploadVO fileUploadVO = new FileUploadVO();
         //原文件名

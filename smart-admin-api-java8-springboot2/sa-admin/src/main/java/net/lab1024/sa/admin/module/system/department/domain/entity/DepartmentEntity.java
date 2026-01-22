@@ -36,7 +36,6 @@ public class DepartmentEntity {
     /**
      * 负责人员工 id
      */
-    @TableField(updateStrategy = FieldStrategy.NEVER)
     private Long managerId;
 
     /**

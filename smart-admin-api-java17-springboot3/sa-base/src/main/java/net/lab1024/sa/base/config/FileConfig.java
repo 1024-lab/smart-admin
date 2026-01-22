@@ -81,7 +81,7 @@ public class FileConfig implements WebMvcConfigurer {
                         StaticCredentialsProvider.create(
                                 AwsBasicCredentials.create(accessKey, secretKey)))
                 .serviceConfiguration(S3Configuration.builder()
-                        .pathStyleAccessEnabled(true)
+                        .pathStyleAccessEnabled(false)
                         .chunkedEncodingEnabled(false)
                         .build())
                 .build();

@@ -102,6 +102,7 @@
   const visibleFlag = ref(false);
   function showModal(table) {
     Object.assign(tableInfo, table);
+    tableInfo.tableName = tableInfo.tableName.toLowerCase();
     tableInfo.createTime = table.createTime ? table.createTime : new Date();
     activeKey.value = '1';
     visibleFlag.value = true;

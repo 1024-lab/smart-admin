@@ -2,6 +2,7 @@ package net.lab1024.sa.base.module.support.cache;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
+import net.lab1024.sa.base.config.CacheConfig;
 import net.lab1024.sa.base.constant.ReloadConst;
 import net.lab1024.sa.base.module.support.reload.core.annoation.SmartReload;
 import org.springframework.data.redis.cache.RedisCache;
@@ -49,7 +50,7 @@ public class RedisCacheServiceImpl implements CacheService {
         // 获取 Redis 连接
         RedisConnection connection = redisConnectionFactory.getConnection();
         // 根据指定的 key 模式获取所有匹配的键
-        Set<byte[]> keys = connection.keyCommands().keys((cacheName + ":*").getBytes());
+        Set<byte[]> keys = connection.keyCommands().keys((CacheConfig.REDIS_CACHE_PREFIX + ":" + cacheName + "*").getBytes());
 
         if (keys != null) {
             return keys.stream().map(key -> {
