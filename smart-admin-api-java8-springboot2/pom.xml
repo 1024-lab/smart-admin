@@ -52,7 +52,7 @@
         <snakeyaml.version>2.4</snakeyaml.version>
         <freemarker.version>2.3.34</freemarker.version>
         <jsoup.version>1.21.1</jsoup.version>
-        <tika.version>2.9.4</tika.version>
+        <tika.version>3.2.2</tika.version>
     </properties>
 
     <dependencyManagement>
