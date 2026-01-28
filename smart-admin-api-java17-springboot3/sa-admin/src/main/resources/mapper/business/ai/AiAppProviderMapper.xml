@@ -8,10 +8,10 @@
         t_ai_app_provider.name,
         t_ai_app_provider.base_url,
         t_ai_app_provider.key,
-        t_ai_app_provider.create_at,
+        t_ai_app_provider.create_time,
         t_ai_app_provider.create_by,
         t_ai_app_provider.create_by_name,
-        t_ai_app_provider.update_at,
+        t_ai_app_provider.update_time,
         t_ai_app_provider.update_by,
         t_ai_app_provider.update_by_name
     </sql>

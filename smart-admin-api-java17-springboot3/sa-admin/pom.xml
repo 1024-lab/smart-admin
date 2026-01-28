@@ -23,6 +23,12 @@
             <version>3.0.0</version>
         </dependency>
 
+        <!-- dify-java-client -->
+        <dependency>
+            <groupId>io.github.imfangs</groupId>
+            <artifactId>dify-java-client</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

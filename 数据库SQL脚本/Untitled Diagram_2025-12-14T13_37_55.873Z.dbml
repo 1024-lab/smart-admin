@@ -7,7 +7,7 @@ Table ai_app [headercolor: #175e7a] {
 ''' ]
 	create_by varchar(36) [ note: '创建人' ]
 	create_by_name varchar(255) [ note: '创建人姓名' ]
-	create_at datetime [ note: '创建时间' ]
+	createTime datetime [ note: '创建时间' ]
 	update_by varchar(36)
 	update_at datetime [ note: '更新时间' ]
 	update_by_name varchar(255) [ note: '更新人姓名' ]
@@ -20,7 +20,7 @@ Table ai_app_provider [headercolor: #175e7a] {
 	name varchar(36) [ note: '名称' ]
 	base_url varchar(255) [ note: 'baseUrl' ]
 	key varchar(255) [ note: '密钥' ]
-	create_at datetime [ note: '创建时间' ]
+	createTime datetime [ note: '创建时间' ]
 	create_by varchar(36) [ note: '创建人' ]
 	create_by_name varchar(255) [ note: '创建人名称' ]
 	update_at datetime [ note: '更新时间' ]
@@ -33,7 +33,7 @@ Table ai_app_provider [headercolor: #175e7a] {
 Table ai_conversations [headercolor: #175e7a] {
 	id varchar(36) [ pk, not null, unique ]
 	app_id varchar(36) [ note: '应用id' ]
-	create_at datetime [ default: '创建时间' ]
+	createTime datetime [ default: '创建时间' ]
 	create_by varchar(36) [ note: '创建人' ]
 	create_by_name varchar(255) [ note: '创建人姓名' ]
 	update_at datetime [ note: '更新时间' ]

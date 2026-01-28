@@ -32,7 +32,7 @@ public class AiAppProviderVO {
     private String configJson;
 
     @Schema(description = "创建时间")
-    private LocalDateTime createAt;
+    private LocalDateTime createTime;
 
     @Schema(description = "创建人名称")
     private String createByName;

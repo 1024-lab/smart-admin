@@ -1,6 +1,8 @@
 package net.lab1024.sa.admin.module.business.ai.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.math.BigDecimal;
@@ -88,7 +90,8 @@ public class AiModelConfigEntity {
     /**
      * 创建时间
      */
-    private LocalDateTime createAt;
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 
     /**
      * 更新人
@@ -103,7 +106,8 @@ public class AiModelConfigEntity {
     /**
      * 更新时间
      */
-    private LocalDateTime updateAt;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
     /**
      * 0=未删除, 1=已删除

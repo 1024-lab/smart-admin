@@ -10,9 +10,9 @@
         t_ai_app.app_provider_id,
         t_ai_app.create_by,
         t_ai_app.create_by_name,
-        t_ai_app.create_at,
+        t_ai_app.create_time,
         t_ai_app.update_by,
-        t_ai_app.update_at,
+        t_ai_app.update_time,
         t_ai_app.update_by_name
     </sql>
 

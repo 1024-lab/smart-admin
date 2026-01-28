@@ -6,9 +6,9 @@ CREATE TABLE IF NOT EXISTS `t_ai_app`
     `app_provider_id` VARCHAR(36) COMMENT '应用提供商id',
     `create_by`       VARCHAR(36) COMMENT '创建人',
     `create_by_name`  VARCHAR(255) COMMENT '创建人姓名',
-    `create_at`       DATETIME COMMENT '创建时间',
+    `createTime`      DATETIME COMMENT '创建时间',
     `update_by`       VARCHAR(36) COMMENT '更新人',
-    `update_at`       DATETIME COMMENT '更新时间',
+    `update_time`     DATETIME COMMENT '更新时间',
     `update_by_name`  VARCHAR(255) COMMENT '更新人姓名',
     PRIMARY KEY (`id`),
     KEY `idx_ai_app_app_provider_id` (`app_provider_id`)
@@ -21,10 +21,10 @@ CREATE TABLE IF NOT EXISTS `t_ai_app_provider`
     `name`           VARCHAR(36) COMMENT '名称',
     `base_url`       VARCHAR(255) COMMENT 'baseUrl',
     `key`            VARCHAR(255) COMMENT 'key',
-    `create_at`      DATETIME COMMENT '创建时间',
+    `createTime`     DATETIME COMMENT '创建时间',
     `create_by`      VARCHAR(36) COMMENT '创建人',
     `create_by_name` VARCHAR(255) COMMENT '创建人名称',
-    `update_at`      DATETIME COMMENT '更新时间',
+    `update_time`    DATETIME COMMENT '更新时间',
     `update_by`      VARCHAR(36) COMMENT '更新人',
     `update_by_name` VARCHAR(255) COMMENT '更新人名称',
     PRIMARY KEY (`id`)
@@ -47,10 +47,10 @@ CREATE TABLE IF NOT EXISTS `t_ai_model_config`
     `embeddings_path`  varchar(255)            DEFAULT NULL COMMENT '嵌入模型专用。附加到 Base URL 的路径。',
     `create_by`        VARCHAR(36) COMMENT '创建人',
     `create_by_name`   VARCHAR(255) COMMENT '创建人姓名',
-    `create_at`        DATETIME COMMENT '创建时间',
+    `createTime`       DATETIME COMMENT '创建时间',
     `update_by`        VARCHAR(36) COMMENT '更新人',
     `update_by_name`   VARCHAR(255) COMMENT '更新人姓名',
-    `update_at`        DATETIME COMMENT '更新时间',
+    `update_time`      DATETIME COMMENT '更新时间',
     `deleted_flag`     int(11)                 DEFAULT '0' COMMENT '0=未删除, 1=已删除',
     PRIMARY KEY (`id`)
 ) COMMENT ='模型配置表';
@@ -63,10 +63,10 @@ CREATE TABLE IF NOT EXISTS `t_ai_conversations`
     `name`           VARCHAR(255) COMMENT '名称',
     `inputs`         VARCHAR(255) COMMENT '入参',
     `summary`        VARCHAR(255) COMMENT '总结',
-    `create_at`      DATETIME COMMENT '创建时间',
+    `createTime`     DATETIME COMMENT '创建时间',
     `create_by`      VARCHAR(36) COMMENT '创建人',
     `create_by_name` VARCHAR(255) COMMENT '创建人姓名',
-    `update_at`      DATETIME COMMENT '更新时间',
+    `update_time`    DATETIME COMMENT '更新时间',
     `update_by`      VARCHAR(36) COMMENT '更新人',
     `update_by_name` VARCHAR(255) COMMENT '更新人姓名',
     PRIMARY KEY (`id`)
@@ -84,13 +84,13 @@ CREATE TABLE IF NOT EXISTS `t_ai_messages`
     `content`         TEXT COMMENT '回答',
     `create_by`       VARCHAR(36) COMMENT '创建人',
     `create_by_name`  VARCHAR(255) COMMENT '创建人姓名',
-    `create_at`       DATETIME COMMENT '创建时间',
+    `createTime`      DATETIME COMMENT '创建时间',
     `update_by`       VARCHAR(36) COMMENT '更新人',
     `update_by_name`  VARCHAR(255) COMMENT '更新人姓名',
-    `update_at`       DATETIME COMMENT '更新时间',
+    `update_time`     DATETIME COMMENT '更新时间',
     PRIMARY KEY (`id`),
     KEY `idx_ai_messages_conversation_id` (`conversation_id`),
-    KEY `idx_ai_messages_create_at` (`create_at`)
+    KEY `idx_ai_messages_createTime` (`createTime`)
 ) COMMENT ='消息表';
 
 
@@ -107,10 +107,10 @@ CREATE TABLE IF NOT EXISTS `t_ai_knowledge`
     `inputs`          VARCHAR(255) COMMENT '入参',
     `create_by`       VARCHAR(36) COMMENT '创建人',
     `create_by_name`  VARCHAR(255) COMMENT '创建人姓名',
-    `create_at`       DATETIME COMMENT '创建时间',
+    `createTime`      DATETIME COMMENT '创建时间',
     `update_by`       VARCHAR(36) COMMENT '更新人',
     `update_by_name`  VARCHAR(255) COMMENT '更新人姓名',
-    `update_at`       DATETIME COMMENT '更新时间',
+    `update_time`     DATETIME COMMENT '更新时间',
     PRIMARY KEY (`id`)
 
 ) COMMENT ='知识库';
@@ -124,13 +124,13 @@ CREATE TABLE IF NOT EXISTS `t_ai_documents`
     `name`           VARCHAR(36) COMMENT '文档名称',
     `word_count`     int(11) COMMENT '文档字数',
     `status`         varchar(20) COMMENT '状态 pending-待处理 success-成功 fail-失败',
-    `file_id`       VARCHAR(255) COMMENT '文件id',
+    `file_id`        bigint COMMENT '文件id',
     `create_by`      VARCHAR(36) COMMENT '创建人',
     `create_by_name` VARCHAR(255) COMMENT '创建人姓名',
-    `create_at`      DATETIME COMMENT '创建时间',
+    `createTime`     DATETIME COMMENT '创建时间',
     `update_by`      VARCHAR(36) COMMENT '更新人',
     `update_by_name` VARCHAR(255) COMMENT '更新人姓名',
-    `update_at`      DATETIME COMMENT '更新时间',
+    `update_time`    DATETIME COMMENT '更新时间',
     PRIMARY KEY (`id`)
 
 ) COMMENT ='文档列表';
@@ -148,10 +148,10 @@ CREATE TABLE IF NOT EXISTS `t_ai_document_segments`
     "status"         varchar(255) comment '状态 pending-待处理 processing处理中 completed成功 fail失败',
     `create_by`      VARCHAR(36) COMMENT '创建人',
     `create_by_name` VARCHAR(255) COMMENT '创建人姓名',
-    `create_at`      DATETIME COMMENT '创建时间',
+    `createTime`     DATETIME COMMENT '创建时间',
     `update_by`      VARCHAR(36) COMMENT '更新人',
     `update_by_name` VARCHAR(255) COMMENT '更新人姓名',
-    `update_at`      DATETIME COMMENT '更新时间',
+    `update_time`    DATETIME COMMENT '更新时间',
     PRIMARY KEY (`id`)
 
 ) COMMENT ='文档分块表';

@@ -14,10 +14,10 @@
         t_ai_knowledge.rerank_model,
         t_ai_knowledge.create_by,
         t_ai_knowledge.create_by_name,
-        t_ai_knowledge.create_at,
+        t_ai_knowledge.create_time,
         t_ai_knowledge.update_by,
         t_ai_knowledge.update_by_name,
-        t_ai_knowledge.update_at,
+        t_ai_knowledge.update_time,
         t_ai_knowledge.deleted_flag
     </sql>
 

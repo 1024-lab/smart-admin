@@ -17,10 +17,10 @@
         t_ai_model_config.embeddings_path,
         t_ai_model_config.create_by,
         t_ai_model_config.create_by_name,
-        t_ai_model_config.create_at,
+        t_ai_model_config.create_time,
         t_ai_model_config.update_by,
         t_ai_model_config.update_by_name,
-        t_ai_model_config.update_at,
+        t_ai_model_config.update_time,
         t_ai_model_config.deleted_flag
     </sql>
 

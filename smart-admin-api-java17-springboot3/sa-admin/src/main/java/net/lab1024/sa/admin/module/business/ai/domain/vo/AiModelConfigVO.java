@@ -54,12 +54,12 @@ public class AiModelConfigVO {
     private String createByName;
 
     @Schema(description = "创建时间")
-    private LocalDateTime createAt;
+    private LocalDateTime createTime;
 
     @Schema(description = "更新人姓名")
     private String updateByName;
 
     @Schema(description = "更新时间")
-    private LocalDateTime updateAt;
+    private LocalDateTime updateTime;
 
 }

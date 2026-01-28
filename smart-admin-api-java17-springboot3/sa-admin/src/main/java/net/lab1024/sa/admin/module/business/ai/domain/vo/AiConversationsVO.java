@@ -32,7 +32,7 @@ public class AiConversationsVO {
     private String summary;
 
     @Schema(description = "创建时间")
-    private LocalDateTime createAt;
+    private LocalDateTime createTime;
 
     @Schema(description = "创建人")
     private String createBy;

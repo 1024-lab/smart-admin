@@ -12,10 +12,10 @@
         t_ai_messages.answer,
         t_ai_messages.create_by,
         t_ai_messages.create_by_name,
-        t_ai_messages.create_at,
+        t_ai_messages.create_time,
         t_ai_messages.update_by,
         t_ai_messages.update_by_name,
-        t_ai_messages.update_at
+        t_ai_messages.update_time
     </sql>
 
     <!-- 分页查询 -->

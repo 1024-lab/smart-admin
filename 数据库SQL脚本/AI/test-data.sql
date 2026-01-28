@@ -5,7 +5,7 @@
 -- 3. 执行此脚本插入测试数据
 
 -- 1. 插入 Dify 供应商配置
-INSERT INTO t_ai_app_provider (id, name, base_url, `key`, create_at, create_by, create_by_name, update_at, update_by, update_by_name)
+INSERT INTO t_ai_app_provider (id, name, base_url, `key`, createTime, create_by, create_by_name, update_time, update_by, update_by_name)
 VALUES (
     'provider001',
     'dify',
@@ -20,7 +20,7 @@ VALUES (
 );
 
 -- 2. 插入测试应用
-INSERT INTO t_ai_app (id, name, description, app_provider_id, create_at, create_by, create_by_name, update_at, update_by, update_by_name)
+INSERT INTO t_ai_app (id, name, description, app_provider_id, createTime, create_by, create_by_name, update_time, update_by, update_by_name)
 VALUES (
     'app001',
     'Dify测试应用',

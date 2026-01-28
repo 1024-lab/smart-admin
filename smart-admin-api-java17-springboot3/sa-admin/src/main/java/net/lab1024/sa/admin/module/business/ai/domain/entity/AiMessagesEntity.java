@@ -61,7 +61,7 @@ public class AiMessagesEntity {
     /**
      * 创建时间
      */
-    private LocalDateTime createAt;
+    private LocalDateTime createTime;
 
     /**
      * 更新人
