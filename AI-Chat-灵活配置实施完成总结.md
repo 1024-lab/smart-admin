@@ -39,9 +39,9 @@
   - 支持搜索过滤
   - 显示平台标签（Dify / RAGFlow / 其他）
 
-- ✅ [ai-app-provider-api.js:51-53](smart-admin-web-javascript/src/api/business/ai-app-provider/ai-app-provider-api.js#L51-L53) - queryAll API 方法
+- ✅ [ai-app-provider-api.js:51-53](smart-admin-web-javascript/src/api/business/ai/ai-app-provider-api.js#L51-L53) - queryAll API 方法
 
-- ✅ [ai-app-form.vue](smart-admin-web-javascript/src/views/business/ai-app/ai-app-form.vue) - AI 应用表单更新
+- ✅ [ai-app-form.vue](smart-admin-web-javascript/src/views/business/ai/app/ai-app-form.vue) - AI 应用表单更新
   - 供应商选择改为下拉组件
   - 选择 Dify 时显示 API Key 输入框
   - 自动将 API Key 转换为 JSON 格式存储
@@ -256,7 +256,7 @@ public class RagflowAiChatProvider implements AiChatProvider {
 <a-tag v-else-if="provider.name === 'ragflow'" color="green">RAGFlow</a-tag>
 ```
 
-在 [ai-app-form.vue](smart-admin-web-javascript/src/views/business/ai-app/ai-app-form.vue) 添加配置表单：
+在 [ai-app-form.vue](smart-admin-web-javascript/src/views/business/ai/app/ai-app-form.vue) 添加配置表单：
 ```vue
 <a-form-item
   v-if="selectedProviderType === 'ragflow'"

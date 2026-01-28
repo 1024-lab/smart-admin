@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.knowledge.dao.AiKnowledgeDao">
+
+    <!-- 查询结果列 -->
+    <sql id="base_columns">
+        t_ai_knowledge.id,
+        t_ai_knowledge.name,
+        t_ai_knowledge.type,
+        t_ai_knowledge.description,
+        t_ai_knowledge.permission,
+        t_ai_knowledge.embedding_model,
+        t_ai_knowledge.enable_rerank,
+        t_ai_knowledge.rerank_model,
+        t_ai_knowledge.create_by,
+        t_ai_knowledge.create_by_name,
+        t_ai_knowledge.create_at,
+        t_ai_knowledge.update_by,
+        t_ai_knowledge.update_by_name,
+        t_ai_knowledge.update_at,
+        t_ai_knowledge.deleted_flag
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.knowledge.domain.vo.AiKnowledgeVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_knowledge
+        <where>
+            <!--知识库名称-->
+            <if test="queryForm.name != null and queryForm.name != ''">
+                AND INSTR(t_ai_knowledge.name,#{queryForm.name})
+            </if>
+        </where>
+    </select>
+
+    <update id="batchUpdateDeleted">
+        update t_ai_knowledge set deleted_flag = #{deletedFlag}
+        where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateDeleted">
+        update t_ai_knowledge set deleted_flag = #{deletedFlag}
+        where id = #{id}
+    </update>
+
+</mapper>

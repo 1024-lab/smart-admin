@@ -25,7 +25,7 @@
 
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import { aiAppProviderApi } from '/@/api/business/ai-app-provider/ai-app-provider-api';
+import { aiAppProviderApi } from '/src/api/business/ai/ai-app-provider-api';
 import { message } from 'ant-design-vue';
 
 const props = defineProps({

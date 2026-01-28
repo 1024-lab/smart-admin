@@ -31,57 +31,6 @@ CREATE TABLE IF NOT EXISTS `t_ai_app_provider`
 ) COMMENT ='应用提供商';
 
 
-
-CREATE TABLE IF NOT EXISTS `t_ai_runs`
-(
-    `id`                 VARCHAR(36)  NOT NULL COMMENT 'run id',
-    `conversation_id`    VARCHAR(36)  NOT NULL COMMENT '会话id',
-    `trigger_message_id` VARCHAR(36) COMMENT '触发本次run的消息id',
-    `run_name`           VARCHAR(255) NOT NULL COMMENT '运行名称',
-
-    `mode`               VARCHAR(32)  NOT NULL COMMENT '模式(workflow/multi_agent/single_agent)',
-    `status`             VARCHAR(32)  NOT NULL COMMENT '状态(queued/running/succeeded/failed/canceled)',
-
-    `current_step_id`    VARCHAR(36) COMMENT '当前/最近一步step id(关联t_ai_run_steps.id)',
-    `current_step_seq`   INT          NOT NULL DEFAULT 0 COMMENT '当前/最近一步序号(冗余便于查询/恢复)',
-
-    `state_json`         LONGTEXT COMMENT '运行时状态(JSON，用于恢复；包含各agent/node的state也可)',
-    `input`              LONGTEXT COMMENT '用户输入',
-    `output`             LONGTEXT COMMENT '最终输出',
-
-    `error_message`      VARCHAR(2048) COMMENT '错误信息',
-    `started_at`         DATETIME COMMENT '开始时间',
-    `finished_at`        DATETIME COMMENT '结束时间',
-
-    PRIMARY KEY (`id`)
-) COMMENT ='智能体运行实例(run)';
-
-CREATE TABLE IF NOT EXISTS `t_ai_run_steps`
-(
-    `id`                VARCHAR(36) NOT NULL COMMENT 'step id',
-    `run_id`            VARCHAR(36) NOT NULL COMMENT 'run id',
-
-    `seq`               INT         NOT NULL COMMENT '步骤序号(从1开始，回放靠它排序)',
-    `parent_step_id`    VARCHAR(36) COMMENT '父步骤id(可选，支持树/并行)',
-    `step_type`         VARCHAR(32) NOT NULL COMMENT '类型(thinking/retrieval/node/tool/summary)',
-    `title`             VARCHAR(255) COMMENT '展示标题(如：理解问题/查询知识库)',
-    `status`            VARCHAR(32) NOT NULL COMMENT '状态(queued/running/succeeded/failed/skipped)',
-
-    `agent_instance_id` VARCHAR(36) COMMENT '执行该步的agent实例id',
-    `node_id`           VARCHAR(64) COMMENT '工作流节点id',
-
-    `input_json`        LONGTEXT COMMENT '输入(JSON)',
-    `output_json`       LONGTEXT COMMENT '输出(JSON，可直接放章节草稿/引用/工具摘要等)',
-    `error_message`     VARCHAR(2048) COMMENT '错误信息',
-
-    `started_at`        DATETIME COMMENT '开始时间',
-    `finished_at`       DATETIME COMMENT '结束时间',
-
-    PRIMARY KEY (`id`)
-
-) COMMENT ='智能体运行步骤(过程日志)';
-
-
 -- 模型配置表
 CREATE TABLE IF NOT EXISTS `t_ai_model_config`
 (
@@ -104,8 +53,7 @@ CREATE TABLE IF NOT EXISTS `t_ai_model_config`
     `update_at`        DATETIME COMMENT '更新时间',
     `deleted_flag`     int(11)                 DEFAULT '0' COMMENT '0=未删除, 1=已删除',
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
+) COMMENT ='模型配置表';
 
 
 CREATE TABLE IF NOT EXISTS `t_ai_conversations`
@@ -123,6 +71,8 @@ CREATE TABLE IF NOT EXISTS `t_ai_conversations`
     `update_by_name` VARCHAR(255) COMMENT '更新人姓名',
     PRIMARY KEY (`id`)
 ) COMMENT ='会话表';
+
+
 
 CREATE TABLE IF NOT EXISTS `t_ai_messages`
 (
