@@ -1,9 +1,16 @@
 package net.lab1024.sa.admin.module.business.knowledge.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
+
+import cn.dev33.satoken.stp.StpUtil;
 import net.lab1024.sa.admin.module.business.knowledge.dao.AiDocumentsDao;
+import net.lab1024.sa.admin.module.business.knowledge.domain.entity.AiDocumentsEntity;
+import net.lab1024.sa.admin.module.business.knowledge.domain.form.AiDocumentsAddForm;
 import net.lab1024.sa.admin.module.business.knowledge.domain.form.AiDocumentsQueryForm;
 import net.lab1024.sa.admin.module.business.knowledge.domain.vo.AiDocumentsVO;
+import net.lab1024.sa.base.common.util.SmartBeanUtil;
 import net.lab1024.sa.base.common.util.SmartPageUtil;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.domain.PageResult;
@@ -36,6 +43,26 @@ public class AiDocumentsService {
         return SmartPageUtil.convert2PageResult(page, list);
     }
 
+    /**
+     * 上传文档
+     */
+    public ResponseDTO<String> upload(AiDocumentsAddForm addForm) {
+        AiDocumentsEntity entity = SmartBeanUtil.copy(addForm, AiDocumentsEntity.class);
+        entity.setId(UUID.randomUUID().toString());
+        entity.setStatus("pending");
+        entity.setCreateTime(LocalDateTime.now());
+        entity.setUpdateTime(LocalDateTime.now());
+
+        // 设置创建人信息
+        if (StpUtil.isLogin()) {
+            String userId = StpUtil.getLoginIdAsString();
+            entity.setCreateBy(userId);
+            entity.setUpdateBy(userId);
+        }
+
+        aiDocumentsDao.insert(entity);
+        return ResponseDTO.ok(entity.getId());
+    }
 
     /**
      * 批量删除

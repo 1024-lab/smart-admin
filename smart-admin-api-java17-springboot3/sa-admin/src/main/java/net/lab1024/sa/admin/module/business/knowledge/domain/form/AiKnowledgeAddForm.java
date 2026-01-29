@@ -31,7 +31,7 @@ public class AiKnowledgeAddForm {
 
     @Schema(description = "向量模型", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "向量模型 不能为空")
-    private String embeddingModel;
+    private Long embeddingModel;
 
     @Schema(description = "向量模型")
     @JsonDeserialize(using = DictDataDeserializer.class)

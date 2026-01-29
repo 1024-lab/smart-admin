@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.business.knowledge.controller;
 
+import net.lab1024.sa.admin.module.business.knowledge.domain.form.AiDocumentsAddForm;
 import net.lab1024.sa.admin.module.business.knowledge.domain.form.AiDocumentsQueryForm;
 import net.lab1024.sa.admin.module.business.knowledge.domain.vo.AiDocumentsVO;
 import net.lab1024.sa.admin.module.business.knowledge.service.AiDocumentsService;
@@ -39,6 +40,12 @@ public class AiDocumentsController {
         return ResponseDTO.ok(aiDocumentsService.queryPage(queryForm));
     }
 
+    @Operation(summary = "上传文档 @author Mission")
+    @PostMapping("/aiDocuments/upload")
+    @SaCheckPermission("aiDocuments:add")
+    public ResponseDTO<String> upload(@RequestBody @Valid AiDocumentsAddForm addForm) {
+        return aiDocumentsService.upload(addForm);
+    }
 
     @Operation(summary = "批量删除 @author Mission")
     @PostMapping("/aiDocuments/batchDelete")

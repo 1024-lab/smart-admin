@@ -46,3 +46,60 @@ export const aiKnowledgeApi = {
   },
 
 };
+
+export const aiDocumentsApi = {
+
+  /**
+   * 分页查询文档  @author  Mission
+   */
+  queryPage : (param) => {
+    return postRequest('/aiDocuments/queryPage', param);
+  },
+
+  /**
+   * 上传文档  @author  Mission
+   */
+  upload: (param) => {
+      return postRequest('/aiDocuments/upload', param);
+  },
+
+  /**
+   * 删除文档  @author  Mission
+   */
+  delete: (id) => {
+      return getRequest(`/aiDocuments/delete/${id}`);
+  },
+
+  /**
+   * 批量删除文档  @author  Mission
+   */
+  batchDelete: (idList) => {
+      return postRequest('/aiDocuments/batchDelete', idList);
+  },
+
+};
+
+export const aiDocumentSegmentsApi = {
+
+  /**
+   * 分页查询文档分片  @author  Mission
+   */
+  queryPage : (param) => {
+    return postRequest('/aiDocumentSegments/queryPage', param);
+  },
+
+  /**
+   * 删除文档分片  @author  Mission
+   */
+  delete: (id) => {
+      return getRequest(`/aiDocumentSegments/delete/${id}`);
+  },
+
+  /**
+   * 批量删除文档分片  @author  Mission
+   */
+  batchDelete: (idList) => {
+      return postRequest('/aiDocumentSegments/batchDelete', idList);
+  },
+
+};

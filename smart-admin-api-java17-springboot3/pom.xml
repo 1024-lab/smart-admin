@@ -54,6 +54,10 @@
         <tika.version>3.1.0</tika.version>
         <httpcomponents.version>5.5</httpcomponents.version>
         <dify-java-client.version>1.2.4</dify-java-client.version>
+        <spring-ai.version>1.1.0</spring-ai.version>
+        <milvus-sdk.version>2.4.1</milvus-sdk.version>
+        <spring-ai-alibaba.version>1.1.0.0</spring-ai-alibaba.version>
+
     </properties>
 
     <dependencyManagement>
@@ -77,6 +81,16 @@
                 <scope>import</scope>
             </dependency>
             <!--mybatis-plus BOM end-->
+
+            <!--Spring AI BOM begin-->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--Spring AI BOM end-->
 
             <dependency>
                 <groupId>org.springframework.security</groupId>
@@ -322,6 +336,37 @@
                 <groupId>org.apache.httpcomponents.client5</groupId>
                 <artifactId>httpclient5</artifactId>
                 <version>${httpcomponents.version}</version>
+            </dependency>
+
+            <!-- Spring AI Alibaba Agent Framework -->
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-agent-framework</artifactId>
+                <version>1.1.0.0-RC2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-graph-core</artifactId>
+                <version>${spring-ai-alibaba.version}</version>
+            </dependency>
+
+
+            <!-- Milvus Vector Database -->
+            <!-- Source: https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-milvus-store -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-milvus-store</artifactId>
+                <version>2.0.0-M2</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
         </dependencies>

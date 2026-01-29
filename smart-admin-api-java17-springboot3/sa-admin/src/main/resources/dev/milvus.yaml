@@ -1,0 +1,10 @@
+# Milvus 向量数据库配置
+milvus:
+  host: localhost
+  port: 19530
+
+# Spring AI 配置
+spring:
+  ai:
+    retry:
+      max-attempts: 3

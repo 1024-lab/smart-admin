@@ -17,7 +17,7 @@ public class AiKnowledgeVO {
 
 
     @Schema(description = "知识库id")
-    private String id;
+    private Long id;
 
     @Schema(description = "知识库名称")
     private String name;
@@ -32,7 +32,7 @@ public class AiKnowledgeVO {
     private String permission;
 
     @Schema(description = "向量模型")
-    private String embeddingModel;
+    private Long embeddingModel;
 
     @Schema(description = "向量模型")
     private Integer enableRerank;

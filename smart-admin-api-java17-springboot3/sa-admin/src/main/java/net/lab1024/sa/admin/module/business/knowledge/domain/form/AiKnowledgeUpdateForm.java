@@ -19,7 +19,7 @@ public class AiKnowledgeUpdateForm {
 
     @Schema(description = "知识库id", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "知识库id 不能为空")
-    private String id;
+    private Long id;
 
     @Schema(description = "知识库名称", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "知识库名称 不能为空")
@@ -35,7 +35,7 @@ public class AiKnowledgeUpdateForm {
 
     @Schema(description = "向量模型", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "向量模型 不能为空")
-    private String embeddingModel;
+    private Long embeddingModel;
 
     @Schema(description = "向量模型")
     @JsonDeserialize(using = DictDataDeserializer.class)

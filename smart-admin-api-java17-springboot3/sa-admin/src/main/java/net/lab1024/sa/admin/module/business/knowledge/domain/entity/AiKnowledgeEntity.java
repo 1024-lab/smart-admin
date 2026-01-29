@@ -21,7 +21,7 @@ public class AiKnowledgeEntity {
      * 知识库id
      */
     @TableId
-    private String id;
+    private Long id;
 
     /**
      * 知识库名称
@@ -46,7 +46,7 @@ public class AiKnowledgeEntity {
     /**
      * 向量模型
      */
-    private String embeddingModel;
+    private Long embeddingModel;
 
     /**
      * 向量模型

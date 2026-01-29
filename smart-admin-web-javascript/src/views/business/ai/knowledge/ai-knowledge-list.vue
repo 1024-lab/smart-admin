@@ -79,6 +79,7 @@
 
                 <template v-if="column.dataIndex === 'action'">
                     <div class="smart-table-operate">
+                        <a-button @click="showDocuments(record)" type="link">文档</a-button>
                         <a-button @click="showForm(record)" type="link">编辑</a-button>
                         <a-button @click="onDelete(record)" danger type="link">删除</a-button>
                     </div>
@@ -104,6 +105,7 @@
         </div>
 
         <AiKnowledgeForm  ref="formRef" @reloadList="queryData"/>
+        <DocumentDrawer ref="documentDrawerRef" />
 
     </a-card>
 </template>
@@ -118,6 +120,7 @@
     import AiKnowledgeForm from './ai-knowledge-form.vue';
     import { DICT_CODE_ENUM } from '/@/constants/support/dict-const.js';
     import DictLabel from '/@/components/support/dict-label/index.vue';
+    import DocumentDrawer from './components/document-drawer.vue';
 
     // ---------------------------- 表格列 ----------------------------
 
@@ -186,7 +189,7 @@
             title: '操作',
             dataIndex: 'action',
             fixed: 'right',
-            width: 90,
+            width: 150,
         },
     ]);
 
@@ -313,5 +316,13 @@
         } finally {
             SmartLoading.hide();
         }
+    }
+
+    // ---------------------------- 文档抽屉 ----------------------------
+
+    const documentDrawerRef = ref();
+
+    function showDocuments(record) {
+        documentDrawerRef.value.show(record);
     }
 </script>
