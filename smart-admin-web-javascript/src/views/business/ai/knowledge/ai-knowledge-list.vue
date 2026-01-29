@@ -111,7 +111,7 @@
     import { reactive, ref, onMounted } from 'vue';
     import { message, Modal } from 'ant-design-vue';
     import { SmartLoading } from '/@/components/framework/smart-loading';
-    import { aiKnowledgeApi } from '/@/api/business/ai-knowledge/ai-knowledge-api';
+    import { aiKnowledgeApi } from '/@/api/business/knowledge/ai-knowledge-api';
     import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
     import { smartSentry } from '/@/lib/smart-sentry';
     import TableOperator from '/@/components/support/table-operator/index.vue';

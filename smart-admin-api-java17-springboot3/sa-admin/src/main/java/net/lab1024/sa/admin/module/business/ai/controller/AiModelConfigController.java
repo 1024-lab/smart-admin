@@ -19,6 +19,8 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 /**
  * 模型配置表 Controller
  *
@@ -67,5 +69,11 @@ public class AiModelConfigController {
     @SaCheckPermission("aiModelConfig:delete")
     public ResponseDTO<String> batchDelete(@PathVariable Integer id) {
         return aiModelConfigService.delete(id);
+    }
+
+    @Operation(summary = "根据模型类型查询模型列表 @author Mission")
+    @GetMapping("/aiModelConfig/queryListByModelType/{modelType}")
+    public ResponseDTO<List<AiModelConfigVO>> queryListByModelType(@PathVariable String modelType) {
+        return ResponseDTO.ok(aiModelConfigService.queryListByModelType(modelType));
     }
 }

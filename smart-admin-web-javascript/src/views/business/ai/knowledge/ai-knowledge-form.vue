@@ -21,11 +21,15 @@
         <a-form-item label="描述"  name="description">
           <a-input style="width: 100%" v-model:value="form.description" placeholder="描述" />
         </a-form-item>
-        <a-form-item label="权限 private-私有 public-公开"  name="permission">
-          <a-input style="width: 100%" v-model:value="form.permission" placeholder="权限 private-私有 public-公开" />
+        <a-form-item label="权限"  name="permission">
+            <DictSelect width="100%" v-model:value="form.permission" :dict-code="DICT_CODE_ENUM.DATASET_PERMISSION || 'DATASET_PERMISSION'" placeholder="权限"/>
         </a-form-item>
         <a-form-item label="向量模型"  name="embeddingModel">
-          <DictSelect width="100%" v-model:value="form.embeddingModel" :dict-code="DICT_CODE_ENUM. || ''" placeholder="向量模型"/>
+          <a-select style="width: 100%" v-model:value="form.embeddingModel" placeholder="请选择向量模型">
+            <a-select-option v-for="model in embeddingModelList" :key="model.id" :value="model.id">
+              {{ model.modelName }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item label="向量模型"  name="enableRerank">
           <a-input-number style="width: 100%" v-model:value="form.enableRerank" placeholder="向量模型" />
@@ -48,10 +52,11 @@
   import _ from 'lodash';
   import { message } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-  import { aiKnowledgeApi } from '/@/api/business/ai-knowledge/ai-knowledge-api';
+  import { aiKnowledgeApi } from '/@/api/business/knowledge/ai-knowledge-api';
+  import { aiModelConfigApi } from '/@/api/business/ai/ai-model-config-api';
   import { smartSentry } from '/@/lib/smart-sentry';
-  import DictSelect from '/@/components/support/dict-select/index.vue';
   import { DICT_CODE_ENUM } from '/@/constants/support/dict-const.js';
+  import DictSelect from '/@/components/support/dict-select/index.vue';
 
   // ------------------------ 事件 ------------------------
 
@@ -60,6 +65,19 @@
   // ------------------------ 显示与隐藏 ------------------------
   // 是否显示
   const visibleFlag = ref(false);
+
+  // 向量模型列表
+  const embeddingModelList = ref([]);
+
+  // 加载向量模型列表
+  async function loadEmbeddingModels() {
+    try {
+      const res = await aiModelConfigApi.queryListByModelType('embedding');
+      embeddingModelList.value = res.data || [];
+    } catch (err) {
+      smartSentry.captureError(err);
+    }
+  }
 
   function show(rowData) {
     Object.assign(form, formDefault);
@@ -71,6 +89,7 @@
     //   form.status = form.status.map((e) => e.valueCode);
     // }
     visibleFlag.value = true;
+    loadEmbeddingModels();
     nextTick(() => {
       formRef.value.clearValidate();
     });

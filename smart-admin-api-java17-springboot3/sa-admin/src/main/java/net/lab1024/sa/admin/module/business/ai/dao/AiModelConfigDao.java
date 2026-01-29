@@ -40,4 +40,9 @@ public interface AiModelConfigDao extends BaseMapper<AiModelConfigEntity> {
      */
     void batchUpdateDeleted(@Param("idList")List<Integer> idList,@Param("deletedFlag")boolean deletedFlag);
 
+    /**
+     * 根据模型类型查询模型列表
+     */
+    List<AiModelConfigVO> queryListByModelType(@Param("modelType") String modelType, @Param("deletedFlag") Boolean deletedFlag);
+
 }

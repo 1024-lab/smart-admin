@@ -50,4 +50,15 @@
         where id = #{id}
     </update>
 
+    <!-- 根据模型类型查询模型列表 -->
+    <select id="queryListByModelType" resultType="net.lab1024.sa.admin.module.business.ai.domain.vo.AiModelConfigVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_model_config
+        WHERE t_ai_model_config.deleted_flag = #{deletedFlag}
+        AND t_ai_model_config.model_type = #{modelType}
+        AND t_ai_model_config.is_active = 1
+        ORDER BY t_ai_model_config.create_time DESC
+    </select>
+
 </mapper>

@@ -82,4 +82,11 @@ public class AiModelConfigService {
         aiModelConfigDao.updateDeleted(id, true);
         return ResponseDTO.ok();
     }
+
+    /**
+     * 根据模型类型查询模型列表
+     */
+    public List<AiModelConfigVO> queryListByModelType(String modelType) {
+        return aiModelConfigDao.queryListByModelType(modelType, Boolean.FALSE);
+    }
 }

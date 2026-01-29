@@ -39,7 +39,6 @@ public class AiModelConfigAddForm {
     private BigDecimal temperature;
 
     @Schema(description = "是否激活")
-    @JsonDeserialize(using = DictDataDeserializer.class)
     private Integer isActive;
 
     @Schema(description = "输出响应最大令牌数")

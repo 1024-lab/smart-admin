@@ -45,4 +45,11 @@ export const aiModelConfigApi = {
       return postRequest('/aiModelConfig/batchDelete', idList);
   },
 
+  /**
+   * 根据模型类型查询模型列表  @author  Mission
+   */
+  queryListByModelType: (modelType) => {
+      return getRequest(`/aiModelConfig/queryListByModelType/${modelType}`);
+  },
+
 };
