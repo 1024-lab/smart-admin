@@ -55,7 +55,13 @@ public class EntityVariableService extends CodeGenerateBaseVariableService {
         result.add("import com.baomidou.mybatisplus.annotation.TableName;");
 
         // 自动填充注解
-        boolean existCreateAndUpdate = fields.stream().anyMatch(e -> "create_time".equals(e.getColumnName()) || "update_time".equals(e.getColumnName()));
+        boolean existCreateAndUpdate = fields.stream().anyMatch(e ->
+                "create_time".equals(e.getColumnName())
+                        || "update_time".equals(e.getColumnName())
+                        || "create_by".equals(e.getColumnName())
+                        || "create_by_name".equals(e.getColumnName())
+                        || "update_by".equals(e.getColumnName())
+                        || "update_by_name".equals(e.getColumnName()));
         if (existCreateAndUpdate) {
             result.add("import com.baomidou.mybatisplus.annotation.FieldFill;");
             result.add("import com.baomidou.mybatisplus.annotation.TableField;");

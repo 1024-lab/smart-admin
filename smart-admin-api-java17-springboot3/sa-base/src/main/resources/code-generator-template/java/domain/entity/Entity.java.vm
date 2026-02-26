@@ -29,7 +29,19 @@ public class ${name.upperCamel}Entity {
     #if($field.columnName == "create_time")
     @TableField(fill = FieldFill.INSERT)
     #end
+    #if($field.columnName == "create_by")
+    @TableField(fill = FieldFill.INSERT)
+    #end
+    #if($field.columnName == "create_by_name")
+    @TableField(fill = FieldFill.INSERT)
+    #end
     #if($field.columnName == "update_time")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    #end
+    #if($field.columnName == "update_by")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    #end
+    #if($field.columnName == "update_by_name")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     #end
     private $field.javaType $field.fieldName;
