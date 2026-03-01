@@ -160,10 +160,10 @@
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
   import DeletedJobList from './components/deleted-job-list.vue';
-  import { TRIGGER_TYPE_ENUM } from '/@/constants/support/job-const.js';
+  import { TRIGGER_TYPE_ENUM } from '/@/constants/support/job-const';
   import JobFormModal from './components/job-form-modal.vue';
   import JobLogListModal from './components/job-log-list-modal.vue';
-  import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
+  import { SmartLoading } from '/@/components/framework/smart-loading/index';
   const activeKey = ref('1');
   const columns = ref([
     {

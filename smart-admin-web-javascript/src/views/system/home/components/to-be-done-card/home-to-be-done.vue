@@ -43,7 +43,7 @@
   import ToBeDoneModal from './to-be-done-modal.vue';
   import localKey from '/@/constants/local-storage-key-const';
   import { localRead, localSave } from '/@/utils/local-util';
-  import { useUserStore } from '/@/store/modules/system/user.js';
+  import { useUserStore } from '/@/store/modules/system/user';
   import { computed, ref, onMounted } from 'vue';
   import { Modal } from 'ant-design-vue';
 

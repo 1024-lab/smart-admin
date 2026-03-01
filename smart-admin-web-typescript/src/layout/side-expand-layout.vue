@@ -104,7 +104,7 @@
   import SideHelpDoc from './components/side-help-doc/index.vue';
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
-  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
+  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const';
   import { theme as antDesignTheme } from 'ant-design-vue';
   const appConfigStore = useAppConfigStore();
 

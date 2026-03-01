@@ -94,7 +94,7 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
-  import { defaultTimeRanges } from '/@/lib/default-time-ranges.js';
+  import { defaultTimeRanges } from '/@/lib/default-time-ranges';
 
   const showFlag = ref(false);
   const title = ref('');

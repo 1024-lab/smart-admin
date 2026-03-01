@@ -216,6 +216,7 @@ CREATE TABLE `t_dict_data` (
   `dict_id` bigint NOT NULL COMMENT '字典id',
   `data_value` varchar(500) NOT NULL COMMENT '字典项值',
   `data_label` varchar(500) NOT NULL COMMENT '字典项显示名称',
+  `data_style` varchar(500) NULL COMMENT '字典项样式'
   `remark` varchar(1000) DEFAULT NULL COMMENT '备注',
   `sort_order` int NOT NULL COMMENT '排序（越大越靠前）',
   `disabled_flag` tinyint NOT NULL DEFAULT '0' COMMENT '禁用状态',
@@ -227,10 +228,10 @@ CREATE TABLE `t_dict_data` (
 -- ----------------------------
 -- Records of t_dict_data
 -- ----------------------------
-INSERT INTO `t_dict_data` VALUES (2, 1, 'LUO_YANG', '洛阳', 'sad', 2, 0, '2025-03-27 15:52:39', '2025-03-27 20:53:21');
-INSERT INTO `t_dict_data` VALUES (3, 1, 'ZHENG_ZHOU', '郑州', '', 0, 0, '2025-03-27 18:58:16', '2025-03-27 20:53:32');
-INSERT INTO `t_dict_data` VALUES (7, 1, 'BEI_JING', '北京', '', 0, 0, '2025-03-27 20:53:45', '2025-03-27 20:53:45');
-INSERT INTO `t_dict_data` VALUES (8, 1, 'SHANG_HAI', '上海', '', 0, 0, '2025-03-27 20:53:45', '2025-03-27 20:53:45');
+INSERT INTO `t_dict_data` VALUES (2, 1, 'LUO_YANG', '洛阳', '', 'sad', 2, 0, '2025-03-27 15:52:39', '2025-03-27 20:53:21');
+INSERT INTO `t_dict_data` VALUES (3, 1, 'ZHENG_ZHOU', '郑州', '', '', 0, 0, '2025-03-27 18:58:16', '2025-03-27 20:53:32');
+INSERT INTO `t_dict_data` VALUES (7, 1, 'BEI_JING', '北京', '', '', 0, 0, '2025-03-27 20:53:45', '2025-03-27 20:53:45');
+INSERT INTO `t_dict_data` VALUES (8, 1, 'SHANG_HAI', '上海', '', '', 0, 0, '2025-03-27 20:53:45', '2025-03-27 20:53:45');
 
 
 -- ----------------------------

@@ -86,7 +86,7 @@
   import { messageApi } from '/@/api/support/message-api';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select//index.vue';
-  import { smartSentry } from '/@/lib/smart-sentry.js';
+  import { smartSentry } from '/@/lib/smart-sentry';
   import MessageDetail from './components/message-detail.vue';
 
   const columns = reactive([

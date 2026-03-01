@@ -14,7 +14,7 @@ import { useUserStore } from '/@/store/modules/system/user';
 import { decryptData, encryptData } from './encrypt';
 import { DATA_TYPE_ENUM } from '../constants/common-const';
 import _ from 'lodash';
-import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
+import LocalStorageKeyConst from '/@/constants/local-storage-key-const';
 
 // token的消息头
 const TOKEN_HEADER = 'Authorization';

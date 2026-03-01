@@ -8,7 +8,7 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import { useDictStore } from '/@/store/modules/system/dict.js';
+import { useDictStore } from '/@/store/modules/system/dict';
 
 export default {
   install: (app) => {

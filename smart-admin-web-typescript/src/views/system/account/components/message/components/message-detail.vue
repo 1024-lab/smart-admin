@@ -14,8 +14,8 @@
 </template>
 <script setup lang="ts">
   import { reactive, ref } from 'vue';
-  import { messageApi } from '/@/api/support/message-api.js';
-  import { useUserStore } from '/@/store/modules/system/user.js';
+  import { messageApi } from '/@/api/support/message-api';
+  import { useUserStore } from '/@/store/modules/system/user';
 
   const emit = defineEmits(['refresh']);
 

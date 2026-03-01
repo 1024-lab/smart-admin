@@ -40,7 +40,7 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import HeaderResetPassword from './header-reset-password-modal/index.vue';
   import { useRouter } from 'vue-router';
-  import { ACCOUNT_MENU } from '/@/views/system/account/account-menu.js';
+  import { ACCOUNT_MENU } from '/@/views/system/account/account-menu';
 
   // 头像背景颜色
   const AVATAR_BACKGROUND_COLOR_ARRAY = ['#87d068', '#00B853', '#f56a00', '#1890ff'];

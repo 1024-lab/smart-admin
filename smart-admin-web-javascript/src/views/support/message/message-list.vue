@@ -96,7 +96,7 @@
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import MessageSendForm from './components/message-send-form.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
-  import { defaultTimeRanges } from '/@/lib/default-time-ranges.js';
+  import { defaultTimeRanges } from '/@/lib/default-time-ranges';
   // ---------------------------- 表格列 ----------------------------
 
   const columns = ref([

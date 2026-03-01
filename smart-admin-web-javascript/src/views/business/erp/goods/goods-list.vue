@@ -118,7 +118,7 @@
           {{ text }}
         </template>
         <template v-if="column.dataIndex === 'place'">
-          <DictLabel :dict-code="DICT_CODE_ENUM.GOODS_PLACE" :data-value="text" />
+          <DictLabel :show-style="true" :dict-code="DICT_CODE_ENUM.GOODS_PLACE" :data-value="text" />
         </template>
         <template v-if="column.dataIndex === 'remark'">
           <span>{{ text ? text : '' }}</span>
@@ -200,7 +200,7 @@
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import _ from 'lodash';
   import SmartHeaderCell from '/@/components/support/table-header-cell/index.vue';
-  import { DICT_CODE_ENUM } from '/@/constants/support/dict-const.js';
+  import { DICT_CODE_ENUM } from '/@/constants/support/dict-const';
   import DictLabel from '/@/components/support/dict-label/index.vue';
 
   // ---------------------------- 表格列 ----------------------------

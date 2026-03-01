@@ -145,11 +145,12 @@
       title: '文件夹',
       dataIndex: 'folderType',
       ellipsis: true,
-      width: 100,
+      width: 70,
     },
     {
       title: '文件名称',
       dataIndex: 'fileName',
+      ellipsis: true,
       width: 200,
     },
     {
@@ -165,22 +166,16 @@
       width: 80,
     },
     {
-      title: '上传人',
-      dataIndex: 'creatorName',
-      ellipsis: true,
-      width: 100,
-    },
-    {
-      title: '人类型',
-      dataIndex: 'creatorUserType',
-      ellipsis: true,
-      width: 100,
-    },
-    {
       title: '上传时间',
       dataIndex: 'createTime',
       ellipsis: true,
       width: 150,
+    },
+    {
+      title: '文件Key',
+      dataIndex: 'fileKey',
+      ellipsis: true,
+      width: 100,
     },
     {
       title: '操作',

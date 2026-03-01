@@ -76,18 +76,18 @@
 </template>
 <script setup>
   import { onMounted, reactive, ref } from 'vue';
-  import { regular } from '/@/constants/regular-const.js';
+  import { regular } from '/@/constants/regular-const';
   import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
   import PositionSelect from '/@/components/system/position-select/index.vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
-  import { loginApi } from '/@/api/system/login-api.js';
-  import { useUserStore } from '/@/store/modules/system/user.js';
+  import { loginApi } from '/@/api/system/login-api';
+  import { useUserStore } from '/@/store/modules/system/user';
   import { message } from 'ant-design-vue';
-  import { smartSentry } from '/@/lib/smart-sentry.js';
+  import { smartSentry } from '/@/lib/smart-sentry';
   import { employeeApi } from '/@/api/system/employee-api';
-  import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
-  import { fileApi } from '/@/api/support/file-api.js';
-  import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const.js';
+  import { SmartLoading } from '/@/components/framework/smart-loading/index';
+  import { fileApi } from '/@/api/support/file-api';
+  import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
 
   // 组件ref
   const formRef = ref();

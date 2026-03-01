@@ -183,6 +183,7 @@
     let removePrefixTableName = tableInfo.tableName;
     if (_.startsWith(tableInfo.tableName, tablePrefix.value)) {
       removePrefixTableName = _.trimStart(removePrefixTableName, tablePrefix.value);
+      removePrefixTableName = removePrefixTableName.slice(tablePrefix.value.length);
     }
     formData.moduleName = basic && basic.moduleName ? basic.moduleName : removePrefixTableName;
     formData.moduleName = convertUpperCamel(formData.moduleName);
@@ -205,7 +206,7 @@
   function onChangeTablePrefix(e) {
     let removePrefixTableName = tableInfo.tableName;
     if (_.startsWith(tableInfo.tableName, tablePrefix.value)) {
-      removePrefixTableName = _.trim(removePrefixTableName, tablePrefix.value);
+      removePrefixTableName = tableInfo.tableName.slice(tablePrefix.value.length);
     }
     formData.moduleName = convertUpperCamel(removePrefixTableName);
   }

@@ -130,7 +130,7 @@
   import { jobApi } from '/@/api/support/job-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { smartSentry } from '/@/lib/smart-sentry';
-  import { TRIGGER_TYPE_ENUM } from '/@/constants/support/job-const.js';
+  import { TRIGGER_TYPE_ENUM } from '/@/constants/support/job-const';
   import JobLogListModal from './job-log-list-modal.vue';
   import {TABLE_ID_CONST} from "/@/constants/support/table-id-const.js";
   import TableOperator from "/@/components/support/table-operator/index.vue";

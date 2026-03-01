@@ -2,6 +2,9 @@ package net.lab1024.sa.base.module.support.dict.domain.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import net.lab1024.sa.base.common.swagger.SchemaEnum;
+import net.lab1024.sa.base.common.validator.enumeration.CheckEnum;
+import net.lab1024.sa.base.module.support.dict.constant.DictDataStyleEnum;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -28,6 +31,10 @@ public class DictDataAddForm {
     @Schema(description = "字典项显示名称", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "字典项显示名称 不能为空")
     private String dataLabel;
+
+    @SchemaEnum(value = DictDataStyleEnum.class, desc = "数据样式")
+    @CheckEnum(message = "样式参数错误", value = DictDataStyleEnum.class)
+    private String dataStyle;
 
     @Schema(description = "备注")
     private String remark;

@@ -17,14 +17,14 @@ module.exports = {
     ecmaVersion: 12, // 默认情况下，ESLint使用的是ECMAScript5语法，此处我们设置的选项是 es12
     sourceType: 'module', // 指定js导入的方式
   },
-  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', 'plugin:vue/base'],
+  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', 'plugin:vue/base', 'prettier'],
   globals: {
     defineProps: 'readonly',
     defineEmits: 'readonly',
     defineExpose: 'readonly',
     withDefaults: 'readonly',
   },
-  plugins: ['vue'],
+  plugins: ['vue', 'prettier'],
   rules: {
     'no-unused-vars': [
       'error',
@@ -62,5 +62,6 @@ module.exports = {
     ],
     // Enable vue/script-setup-uses-vars rule
     'vue/script-setup-uses-vars': 'error',
+    'prettier/prettier': 'error',
   },
 };

@@ -43,7 +43,7 @@
   import { message } from 'ant-design-vue';
   import { mergeColumn } from './smart-table-column-merge';
   import { smartSentry } from '/@/lib/smart-sentry';
-  import { useAppConfigStore } from '/@/store/modules/system/app-config.js';
+  import { useAppConfigStore } from '/@/store/modules/system/app-config';
 
   const props = defineProps({
     // 表格列数组

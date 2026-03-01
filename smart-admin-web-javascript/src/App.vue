@@ -49,7 +49,7 @@
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useSpinStore } from '/@/store/modules/system/spin';
   import { Popover, theme } from 'ant-design-vue';
-  import { themeColors } from '/@/theme/color.js';
+  import { themeColors } from '/@/theme/color';
   import SmartCopyIcon from '/@/components/framework/smart-copy-icon/index.vue';
 
   const antdLocale = computed(() => messages[useAppConfigStore().language].antdLocale);

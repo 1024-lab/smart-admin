@@ -20,22 +20,22 @@ public enum FileFolderTypeEnum implements BaseEnum {
     /**
      * 通用
      */
-    COMMON(1, FileFolderTypeEnum.FOLDER_PUBLIC + "/common/", "通用"),
+    COMMON(1, FileFolderTypeEnum.FOLDER_PRIVATE + "/common/", "通用"),
 
     /**
      * 公告
      */
-    NOTICE(2, FileFolderTypeEnum.FOLDER_PUBLIC + "/notice/", "公告"),
+    NOTICE(2, FileFolderTypeEnum.FOLDER_PRIVATE + "/notice/", "公告"),
 
     /**
      * 帮助中心
      */
-    HELP_DOC(3, FileFolderTypeEnum.FOLDER_PUBLIC + "/help-doc/", "帮助中心"),
+    HELP_DOC(3, FileFolderTypeEnum.FOLDER_PRIVATE + "/help-doc/", "帮助中心"),
 
     /**
      * 意见反馈
      */
-    FEEDBACK(4, FileFolderTypeEnum.FOLDER_PUBLIC + "/feedback/", "意见反馈"),
+    FEEDBACK(4, FileFolderTypeEnum.FOLDER_PRIVATE + "/feedback/", "意见反馈"),
 
     ;
 

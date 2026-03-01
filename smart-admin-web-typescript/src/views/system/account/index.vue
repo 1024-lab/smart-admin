@@ -21,9 +21,9 @@
 <script setup lang="ts">
   import { computed, onMounted, ref, watch } from 'vue';
   import _ from 'lodash';
-  import { ACCOUNT_MENU } from '/@/views/system/account/account-menu.js';
+  import { ACCOUNT_MENU } from '/@/views/system/account/account-menu';
   import { useRoute } from 'vue-router';
-  import { useUserStore } from '/@/store/modules/system/user.js';
+  import { useUserStore } from '/@/store/modules/system/user';
   import { theme as antDesignTheme } from 'ant-design-vue';
 
   // 菜单展示

@@ -90,10 +90,10 @@
   import { buildRoutes } from '/@/router/index';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { encryptData } from '/@/lib/encrypt';
-  import { localSave } from '/@/utils/local-util.js';
-  import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
-  import { useDictStore } from '/@/store/modules/system/dict.js';
-  import { dictApi } from '/@/api/support/dict-api.js';
+  import { localSave } from '/@/utils/local-util';
+  import LocalStorageKeyConst from '/@/constants/local-storage-key-const';
+  import { useDictStore } from '/@/store/modules/system/dict';
+  import { dictApi } from '/@/api/support/dict-api';
 
   //--------------------- 登录表单 ---------------------------------
 

@@ -15,6 +15,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3Configuration;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 import java.net.URI;
 
@@ -31,55 +32,70 @@ import java.net.URI;
 @Configuration
 public class FileConfig implements WebMvcConfigurer {
 
-    private static final String HTTPS = "https://";
-
-    private static final String HTTP = "http://";
-
     private static final String MODE_CLOUD = "cloud";
 
     private static final String MODE_LOCAL = "local";
 
-    @Value("${file.storage.cloud.region}")
-    private String region;
-
-    @Value("${file.storage.cloud.endpoint}")
-    private String endpoint;
-
-    @Value("${file.storage.cloud.bucket-name}")
-    private String bucketName;
-
-    @Value("${file.storage.cloud.access-key}")
-    private String accessKey;
-
-    @Value("${file.storage.cloud.secret-key}")
-    private String secretKey;
-
-    @Value("${file.storage.cloud.private-url-expire-seconds}")
-    private Long privateUrlExpireSeconds;
-
-    @Value("${file.storage.cloud.url-prefix}")
-    private String urlPrefix;
-
-    @Value("${file.storage.local.upload-path}")
-    private String uploadPath;
-
     @Value("${file.storage.mode}")
     private String mode;
 
+    @Value("${file.storage.cloud.region}")
+    private String cloudRegion;
+
+    @Value("${file.storage.cloud.endpoint}")
+    private String cloudEndpoint;
+
+    @Value("${file.storage.cloud.bucket-name}")
+    private String cloudBucketName;
+
+    @Value("${file.storage.cloud.access-key}")
+    private String cloudAccessKey;
+
+    @Value("${file.storage.cloud.secret-key}")
+    private String cloudSecretKey;
+
+    @Value("${file.storage.cloud.private-url-expire-seconds}")
+    private Long cloudPrivateUrlExpireSeconds;
+
+    @Value("${file.storage.cloud.public-url-prefix}")
+    private String cloudPublicUrlPrefix;
+
+    @Value("${file.storage.local.upload-path}")
+    private String localUploadPath;
+
+
     /**
-     * 初始化 云oss client 配置
-     *
-     * @return
+     * 初始化 s3 client 配置
      */
     @Bean
     @ConditionalOnProperty(prefix = "file.storage", name = {"mode"}, havingValue = MODE_CLOUD)
-    public S3Client initAmazonS3() {
+    public S3Client initS3Client() {
         return S3Client.builder()
-                .region(Region.AWS_GLOBAL)
-                .endpointOverride(URI.create((urlPrefix.startsWith(HTTPS) ? HTTPS : HTTP) + endpoint))
+                .region(Region.of(cloudRegion))
+                .endpointOverride(URI.create(cloudEndpoint))
                 .credentialsProvider(
                         StaticCredentialsProvider.create(
-                                AwsBasicCredentials.create(accessKey, secretKey)))
+                                AwsBasicCredentials.create(cloudAccessKey, cloudSecretKey)))
+                .serviceConfiguration(S3Configuration.builder()
+                        .pathStyleAccessEnabled(false)
+                        .chunkedEncodingEnabled(false)
+                        .build())
+                .build();
+    }
+
+    /**
+     * 初始化 s3 预签名
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "file.storage", name = {"mode"}, havingValue = MODE_CLOUD)
+    public S3Presigner initS3Presigner() {
+        return S3Presigner
+                .builder()
+                .region(Region.of(cloudRegion))
+                .endpointOverride(URI.create(cloudEndpoint))
+                .credentialsProvider(
+                        StaticCredentialsProvider.create(
+                                AwsBasicCredentials.create(cloudAccessKey, cloudSecretKey)))
                 .serviceConfiguration(S3Configuration.builder()
                         .pathStyleAccessEnabled(false)
                         .chunkedEncodingEnabled(false)
@@ -102,7 +118,7 @@ public class FileConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         if (MODE_LOCAL.equals(mode)) {
-            String path = uploadPath.endsWith("/") ? uploadPath : uploadPath + "/";
+            String path = localUploadPath.endsWith("/") ? localUploadPath : localUploadPath + "/";
             registry.addResourceHandler(FileStorageLocalServiceImpl.UPLOAD_MAPPING + "/**").addResourceLocations("file:" + path);
         }
     }

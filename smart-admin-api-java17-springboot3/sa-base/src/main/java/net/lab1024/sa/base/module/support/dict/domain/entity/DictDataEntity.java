@@ -41,6 +41,11 @@ public class DictDataEntity {
     private String dataLabel;
 
     /**
+     * 字典项样式
+     */
+    private String dataStyle;
+
+    /**
      * 备注
      */
     private String remark;

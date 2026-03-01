@@ -120,8 +120,8 @@ import { message } from 'ant-design-vue';
 import { reactive, ref } from 'vue';
 import { jobApi } from '/@/api/support/job-api';
 import { smartSentry } from '/@/lib/smart-sentry';
-import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
-import { TRIGGER_TYPE_ENUM } from '/@/constants/support/job-const.js';
+import { SmartLoading } from '/@/components/framework/smart-loading/index';
+import { TRIGGER_TYPE_ENUM } from '/@/constants/support/job-const';
 
 // emit
 const emit = defineEmits(['reloadList']);

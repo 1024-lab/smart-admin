@@ -42,7 +42,7 @@
   import { JAVA_FILE_LIST, LANGUAGE_LIST, JS_FILE_LIST, TS_FILE_LIST } from '../../code-generator-util';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { lineNumbersBlock } from '/@/lib/highlight-line-number';
-  import hljs from 'highlight.js';
+  import hljs from 'highlight';
   import 'highlight.js/styles/github-dark.css';
   import javascript from 'highlight.js/lib/languages/javascript';
   import typescript from 'highlight.js/lib/languages/typescript';

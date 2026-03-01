@@ -62,7 +62,7 @@
   import { useUserStore } from '/@/store/modules/system/user';
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
-  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const.js';
+  import { LAYOUT_ELEMENT_IDS } from '/@/layout/layout-const';
   import MenuLocationBreadcrumb from './components/menu-location-breadcrumb/index.vue';
   import { theme as antDesignTheme } from 'ant-design-vue';
 

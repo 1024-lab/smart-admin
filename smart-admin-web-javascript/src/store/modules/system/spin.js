@@ -8,7 +8,7 @@
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
 import { defineStore } from 'pinia';
-import { smartSentry } from '/@/lib/smart-sentry.js';
+import { smartSentry } from '/@/lib/smart-sentry';
 
 export const useSpinStore = defineStore({
   id: 'spin',

@@ -16,10 +16,10 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import Password from '/@/views/system/account/components/password/index.vue';
-  import { useUserStore } from '/@/store/modules/system/user.js';
-  import { loginApi } from '/@/api/system/login-api.js';
-  import { smartSentry } from '/@/lib/smart-sentry.js';
-  import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
+  import { useUserStore } from '/@/store/modules/system/user';
+  import { loginApi } from '/@/api/system/login-api';
+  import { smartSentry } from '/@/lib/smart-sentry';
+  import { SmartLoading } from '/@/components/framework/smart-loading/index';
 
   /**
    * 修改密码弹窗

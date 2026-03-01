@@ -20,9 +20,9 @@
 <script setup lang="ts">
   import { computed, onMounted, reactive, ref } from 'vue';
   import { message } from 'ant-design-vue';
-  import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
-  import { employeeApi } from '/@/api/system/employee-api.js';
-  import { smartSentry } from '/@/lib/smart-sentry.js';
+  import { SmartLoading } from '/@/components/framework/smart-loading/index';
+  import { employeeApi } from '/@/api/system/employee-api';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
   const emits = defineEmits(['onSuccess']);
 

@@ -62,7 +62,7 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
-  import { dataMaskingApi } from '/@/api/support/data-masking-api.js';
+  import { dataMaskingApi } from '/@/api/support/data-masking-api';
 
   //------------------------ 表格渲染 ---------------------
 

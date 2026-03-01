@@ -117,9 +117,9 @@
 </template>
 <script setup lang="ts">
   import { onMounted, reactive, ref } from 'vue';
-  import { level3ProtectApi } from '/@/api/support/level3-protect-api.js';
-  import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
-  import { smartSentry } from '/@/lib/smart-sentry.js';
+  import { level3ProtectApi } from '/@/api/support/level3-protect-api';
+  import { SmartLoading } from '/@/components/framework/smart-loading/index';
+  import { smartSentry } from '/@/lib/smart-sentry';
   import { message, Modal } from 'ant-design-vue';
 
   // 三级等保的默认值

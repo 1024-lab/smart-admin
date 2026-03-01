@@ -46,7 +46,8 @@
           <img :src="gzh" />
           <div class="qr-desc-marquee">
             <div class="marquee">
-              <span>关注：六边形工程师，分享：赚钱、代码、生活</span>
+              <span>关注：六边形工程师</span>
+              <span>分享：AI、赚钱、代码、健康</span>
             </div>
           </div>
         </div>
@@ -68,23 +69,32 @@
           </a-input-group>
         </a-form-item>
         <a-form-item name="password">
-          <a-input-password
-            v-model:value="loginForm.password"
-            autocomplete="on"
-            :type="showPassword ? 'text' : 'password'"
-            placeholder="请输入密码"
-          />
+          <a-popover placement="top">
+            <template #content>
+              <a-flex :vertical="true" justify="center" align="center">
+               <img :src="gzh" />
+               <a-typography-text type="danger">扫码关注：【六边形工程师】</a-typography-text>
+               <a-typography-text type="danger">完成问卷调查，获取登录密码</a-typography-text>
+              </a-flex>
+            </template>
+            <a-input-password
+              v-model:value="loginForm.password"
+              autocomplete="on"
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="请输入密码"
+            />
+          </a-popover>
         </a-form-item>
         <a-form-item name="captchaCode">
           <a-input class="captcha-input" v-model:value.trim="loginForm.captchaCode" placeholder="请输入验证码" />
           <img class="captcha-img" :src="captchaBase64Image" @click="getCaptcha" />
         </a-form-item>
-        <a-form-item>
-          <a-checkbox v-model:checked="rememberPwd">记住密码</a-checkbox>
-          <span> ( 账号：admin, 密码：123456)</span>
-        </a-form-item>
+
         <a-form-item>
           <div class="btn" @click="onLogin">登录</div>
+        </a-form-item>
+        <a-form-item>
+          <span>  账号：admin, 关注【六边形工程师】，参与问卷，获取密码</span>
         </a-form-item>
       </a-form>
       <div class="more">
@@ -129,10 +139,10 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import { encryptData } from '/@/lib/encrypt';
   import { h } from 'vue';
-  import { localSave } from '/@/utils/local-util.js';
-  import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
-  import { useDictStore } from '/@/store/modules/system/dict.js';
-  import {dictApi} from "/@/api/support/dict-api.js";
+  import { localSave } from '/@/utils/local-util';
+  import LocalStorageKeyConst from '/@/constants/local-storage-key-const';
+  import { useDictStore } from '/@/store/modules/system/dict';
+  import { dictApi } from '/@/api/support/dict-api';
 
   //--------------------- 登录表单 ---------------------------------
 
@@ -221,6 +231,7 @@
   //--------------------- 验证码 ---------------------------------
 
   const captchaBase64Image = ref('');
+
   async function getCaptcha() {
     try {
       let captchaResult = await loginApi.getCaptcha();
@@ -233,6 +244,7 @@
   }
 
   let refreshCaptchaInterval = null;
+
   function beginRefreshCaptchaInterval(expireSeconds) {
     if (refreshCaptchaInterval === null) {
       refreshCaptchaInterval = setInterval(getCaptcha, (expireSeconds - 5) * 1000);
@@ -258,6 +270,7 @@
   let emailCodeButtonDisabled = ref(false);
   // 定时器
   let countDownTimer = null;
+
   // 开始倒计时
   function runCountDown() {
     emailCodeButtonDisabled.value = true;

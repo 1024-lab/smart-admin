@@ -137,7 +137,7 @@
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { Modal } from 'ant-design-vue';
   import { appDefaultConfig } from '/@/config/app-config';
-  import { themeColors } from '/@/theme/color.js';
+  import { themeColors } from '/@/theme/color';
 
   // ----------------- modal 显示与隐藏 -----------------
 

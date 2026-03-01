@@ -29,7 +29,7 @@
 
 <script setup>
   import { computed, ref, watch } from 'vue';
-  import { useDictStore } from '/@/store/modules/system/dict.js';
+  import { useDictStore } from '/@/store/modules/system/dict';
 
   const props = defineProps({
     value: [Array, String, Number],

@@ -18,7 +18,7 @@ import SmartLayout from '../layout/index.vue';
 import { useUserStore } from '/@/store/modules/system/user';
 import { localClear, localRead } from '/@/utils/local-util';
 import _ from 'lodash';
-import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
+import LocalStorageKeyConst from '/@/constants/local-storage-key-const';
 
 export const router = createRouter({
   history: createWebHashHistory(),

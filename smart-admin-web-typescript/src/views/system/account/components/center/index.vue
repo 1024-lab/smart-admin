@@ -76,18 +76,18 @@
 </template>
 <script setup lang="ts">
   import { onMounted, reactive, ref } from 'vue';
-  import { regular } from '/@/constants/regular-const.js';
+  import { regular } from '/@/constants/regular-const';
   import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
   import PositionSelect from '/@/components/system/position-select/index.vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
-  import { loginApi } from '/@/api/system/login-api.js';
-  import { useUserStore } from '/@/store/modules/system/user.js';
+  import { loginApi } from '/@/api/system/login-api';
+  import { useUserStore } from '/@/store/modules/system/user';
   import { message } from 'ant-design-vue';
-  import { smartSentry } from '/@/lib/smart-sentry.js';
+  import { smartSentry } from '/@/lib/smart-sentry';
   import { employeeApi } from '/@/api/system/employee-api';
-  import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
-  import { fileApi } from '/@/api/support/file-api.js';
-  import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const.js';
+  import { SmartLoading } from '/@/components/framework/smart-loading/index';
+  import { fileApi } from '/@/api/support/file-api';
+  import { FILE_FOLDER_TYPE_ENUM } from '/@/constants/support/file-const';
 
   // 组件ref
   const formRef = ref();
@@ -234,12 +234,21 @@
 </script>
 <style lang="less" scoped>
   .center-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
     .header-title {
       font-size: 20px;
+      flex-shrink: 0;
     }
 
     .center-form-area {
       margin-top: 20px;
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+
 
       .avatar-container {
         position: relative;

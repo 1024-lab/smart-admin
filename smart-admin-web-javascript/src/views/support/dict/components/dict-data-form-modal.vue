@@ -17,6 +17,15 @@
       <a-form-item label="字典项值" name="dataValue">
         <a-input v-model:value="form.dataValue" placeholder="请输入 字典项值" />
       </a-form-item>
+      <a-form-item label="显示样式">
+        <a-select ref="dataStyleSelect" v-model:value="form.dataStyle" :allowClear="true">
+          <template v-for="item in DICT_DATA_STYLE_ENUM" :key="item.value">
+            <a-select-option :value="item.value">
+              <div :style="{ color: token[item.color] }">{{ item.desc }}({{ item.value }})</div>
+            </a-select-option>
+          </template>
+        </a-select>
+      </a-form-item>
       <a-form-item label="排序" name="sort" help="值越大越靠前">
         <a-input-number style="width: 100%" v-model:value="form.sortOrder" :min="0" :max="1000" />
       </a-form-item>
@@ -28,10 +37,14 @@
 </template>
 <script setup>
   import { ref, reactive } from 'vue';
-  import { message } from 'ant-design-vue';
+  import { message, theme } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { dictApi } from '/@/api/support/dict-api';
   import { smartSentry } from '/@/lib/smart-sentry';
+  import { DICT_DATA_STYLE_ENUM } from '/@/constants/support/dict-const';
+
+  const { useToken } = theme;
+  const { token } = useToken();
 
   // emit
   const emit = defineEmits(['reloadList']);
@@ -46,6 +59,7 @@
     sortOrder: 0,
     dataValue: '',
     dataLabel: '',
+    dataStyle: '',
     remark: '',
   };
   let form = reactive({ ...formDefault });

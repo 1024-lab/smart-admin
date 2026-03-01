@@ -12,8 +12,8 @@ import { defineStore } from 'pinia';
 import localKey from '/@/constants/local-storage-key-const';
 import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 import { MENU_TYPE_ENUM } from '/@/constants/system/menu-const';
-import { messageApi } from '/@/api/support/message-api.js';
-import { smartSentry } from '/@/lib/smart-sentry.js';
+import { messageApi } from '/@/api/support/message-api';
+import { smartSentry } from '/@/lib/smart-sentry';
 import { localRead, localSave, localRemove } from '/@/utils/local-util';
 
 

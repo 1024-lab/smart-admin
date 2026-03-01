@@ -74,9 +74,9 @@
 <script setup>
   import { computed, ref } from 'vue';
   import { BellOutlined } from '@ant-design/icons-vue';
-  import { useUserStore } from '/@/store/modules/system/user.js';
-  import { smartSentry } from '/@/lib/smart-sentry.js';
-  import { messageApi } from '/@/api/support/message-api.js';
+  import { useUserStore } from '/@/store/modules/system/user';
+  import { smartSentry } from '/@/lib/smart-sentry';
+  import { messageApi } from '/@/api/support/message-api';
   import dayjs from 'dayjs';
   import { theme } from 'ant-design-vue';
   import { useRouter } from 'vue-router';

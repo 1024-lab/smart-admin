@@ -38,6 +38,9 @@ public class DictDataVO implements Serializable {
     @Schema(description = "字典项显示名称")
     private String dataLabel;
 
+    @Schema(description = "字典项回显")
+    private String dataStyle;
+
     @Schema(description = "备注")
     private String remark;
 
