@@ -216,7 +216,7 @@ CREATE TABLE `t_dict_data` (
   `dict_id` bigint NOT NULL COMMENT '字典id',
   `data_value` varchar(500) NOT NULL COMMENT '字典项值',
   `data_label` varchar(500) NOT NULL COMMENT '字典项显示名称',
-  `data_style` varchar(500) NULL COMMENT '字典项样式'
+  `data_style` varchar(500) NULL COMMENT '字典项样式',
   `remark` varchar(1000) DEFAULT NULL COMMENT '备注',
   `sort_order` int NOT NULL COMMENT '排序（越大越靠前）',
   `disabled_flag` tinyint NOT NULL DEFAULT '0' COMMENT '禁用状态',
