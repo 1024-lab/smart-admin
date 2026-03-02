@@ -37,8 +37,8 @@ export const DICT_DATA_STYLE_ENUM = {
     desc: '信息',
     color: 'colorInfo',
   },
-  WARN: {
-    value: 'warn',
+  WARNING: {
+    value: 'warning',
     desc: '警告',
     color: 'colorWarning',
   },

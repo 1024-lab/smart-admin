@@ -66,6 +66,10 @@
       bordered
     >
       <template #bodyCell="{ record, column }">
+        <template v-if="column.dataIndex === 'dataLabel'">
+          <span v-if="record.color" :style="{ color: token[record.color] }">{{ record.dataLabel }}</span>
+          <span v-else> {{ record.dataLabel }} </span>
+        </template>
         <template v-if="column.dataIndex === 'disabledFlag'">
           <a-switch
             @change="(checked) => handleChangeDisabled(checked, record)"
@@ -89,11 +93,14 @@
   import DictDataFormModal from './dict-data-form-modal.vue';
   import { dictApi } from '/@/api/support/dict-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
-  import { Modal } from 'ant-design-vue';
-  import { message } from 'ant-design-vue';
+  import { message, Modal, theme } from 'ant-design-vue';
   import { smartSentry } from '/@/lib/smart-sentry';
   import BooleanSelect from '/@/components/framework/boolean-select/index.vue';
   import _ from 'lodash';
+  import { DICT_DATA_STYLE_ENUM } from '/@/constants/support/dict-const';
+
+  const { useToken } = theme;
+  const { token } = useToken();
 
   // 是否展示抽屉
   const visible = ref(false);
@@ -168,7 +175,7 @@
       let keywordsFilterFlag = true;
       if (keywords.value) {
         keywordsFilterFlag =
-          (item.dataValue &&_.includes(item.dataValue.toLowerCase(), keywords.value.toLowerCase())) ||
+          (item.dataValue && _.includes(item.dataValue.toLowerCase(), keywords.value.toLowerCase())) ||
           (item.dataLabel && _.includes(item.dataLabel.toLowerCase(), keywords.value.toLowerCase())) ||
           (item.remark && _.includes(item.remark.toLowerCase(), keywords.value.toLowerCase()));
       }
@@ -187,7 +194,12 @@
     try {
       tableLoading.value = true;
       let responseData = await dictApi.queryDictData(dictId.value);
-      responseData.data.map((e) => (e.enabled = !e.disabledFlag));
+      responseData.data.map((e) => {
+        e.enabled = !e.disabledFlag;
+        if (e.dataStyle) {
+          e.color = DICT_DATA_STYLE_ENUM[e.dataStyle.toUpperCase()].color;
+        }
+      });
       dictDataList.value = responseData.data;
       search();
     } catch (e) {
