@@ -20,7 +20,7 @@ public class AiModelConfigUpdateForm {
 
     @Schema(description = "id", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "id 不能为空")
-    private Integer id;
+    private Long id;
 
     @Schema(description = "厂商标识 (方便前端展示回显，实际调用主要靠 baseUrl)", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "厂商标识 (方便前端展示回显，实际调用主要靠 baseUrl) 不能为空")

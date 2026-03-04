@@ -23,8 +23,8 @@ public class AiModelConfigEntity {
     /**
      * 
      */
-    @TableId(type = IdType.AUTO)
-    private Integer id;
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
 
     /**
      * 厂商标识 (方便前端展示回显，实际调用主要靠 baseUrl)

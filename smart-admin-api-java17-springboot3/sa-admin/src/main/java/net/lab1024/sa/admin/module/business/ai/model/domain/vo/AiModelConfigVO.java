@@ -17,7 +17,7 @@ public class AiModelConfigVO {
 
 
     @Schema(description = "id")
-    private Integer id;
+    private Long id;
 
     @Schema(description = "厂商标识 (方便前端展示回显，实际调用主要靠 baseUrl)")
     private String provider;
