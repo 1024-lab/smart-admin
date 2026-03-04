@@ -8,8 +8,6 @@
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
 import menu from './system/menu-const';
-import goods from './business/erp/goods-const';
-import category from './business/erp/category-const';
 import { LOGIN_DEVICE_ENUM } from './system/login-device-const';
 import { FLAG_NUMBER_ENUM, GENDER_ENUM, USER_TYPE_ENUM } from './common-const';
 import { LAYOUT_ENUM } from './layout-const';
@@ -30,8 +28,6 @@ export default {
   LAYOUT_ENUM,
   ...loginLog,
   ...menu,
-  ...goods,
-  ...category,
   ...file,
   ...notice,
   ...enterprise,

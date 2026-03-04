@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.model.dao.AiModelConfigDao">
+
+    <!-- 查询结果列 -->
+    <sql id="base_columns">
+        t_ai_model_config.id,
+        t_ai_model_config.provider,
+        t_ai_model_config.base_url,
+        t_ai_model_config.api_key,
+        t_ai_model_config.model_name,
+        t_ai_model_config.is_active,
+        t_ai_model_config.end_point_mode_name,
+        t_ai_model_config.max_tokens,
+        t_ai_model_config.model_type,
+        t_ai_model_config.path,
+        t_ai_model_config.create_by,
+        t_ai_model_config.create_by_name,
+        t_ai_model_config.create_time,
+        t_ai_model_config.update_by,
+        t_ai_model_config.update_by_name,
+        t_ai_model_config.update_time,
+        t_ai_model_config.deleted_flag
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.model.domain.vo.AiModelConfigVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_model_config
+        <where>
+            <!--模型名称-->
+            <if test="queryForm.modelName != null and queryForm.modelName != ''">
+                AND INSTR(t_ai_model_config.model_name,#{queryForm.modelName})
+            </if>
+        </where>
+    </select>
+
+    <update id="batchUpdateDeleted">
+        update t_ai_model_config set deleted_flag = #{deletedFlag}
+        where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateDeleted">
+        update t_ai_model_config set deleted_flag = #{deletedFlag}
+        where id = #{id}
+    </update>
+
+</mapper>
