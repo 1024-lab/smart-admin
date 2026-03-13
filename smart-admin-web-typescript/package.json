@@ -65,7 +65,7 @@
     "stylelint-order": "~5.0.0",
     "terser": "~5.29.2",
     "typescript": "5.6.3",
-    "vite": "5.2.12",
+    "vite": "5.4.20",
     "vue-eslint-parser": "~9.4.2",
     "vue-tsc": "^2.1.6"
   },
