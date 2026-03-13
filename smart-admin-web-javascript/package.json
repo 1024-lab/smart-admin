@@ -35,7 +35,7 @@
     "mitt": "3.0.1",
     "nprogress": "0.2.0",
     "pinia": "2.1.7",
-    "sm-crypto": "0.3.13",
+    "sm-crypto": "0.4.0",
     "sortablejs": "1.15.0",
     "ua-parser-js": "1.0.35",
     "uuid": "^11.1.0",
