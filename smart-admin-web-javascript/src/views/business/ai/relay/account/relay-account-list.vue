@@ -34,7 +34,12 @@
 
     <a-card size="small" :bordered="false" :hoverable="true">
         <a-row class="smart-table-btn-block">
-            <div class="smart-table-operate-block"></div>
+            <div class="smart-table-operate-block">
+                <a-button @click="showAdd" type="primary">
+                    <template #icon><PlusOutlined /></template>
+                    新增
+                </a-button>
+            </div>
             <div class="smart-table-setting-block">
                 <TableOperator v-model="columns" :tableId="null" :refresh="queryData" />
             </div>
@@ -86,12 +91,14 @@
             />
         </div>
 
+        <RelayAccountAddForm ref="addRef" @reloadList="queryData" />
         <RelayAccountRechargeForm ref="rechargeRef" @reloadList="queryData" />
         <RelayAccountEditForm ref="editRef" @reloadList="queryData" />
         <RelayAccountLedgerModal ref="ledgerRef" />
     </a-card>
 </template>
 <script setup>
+    import { SearchOutlined, ReloadOutlined, PlusOutlined } from '@ant-design/icons-vue';
     import { reactive, ref, onMounted } from 'vue';
     import { message } from 'ant-design-vue';
     import { SmartLoading } from '/@/components/framework/smart-loading';
@@ -101,6 +108,7 @@
     import TableOperator from '/@/components/support/table-operator/index.vue';
     import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
     import { Modal } from 'ant-design-vue';
+    import RelayAccountAddForm from './relay-account-add-form.vue';
     import RelayAccountRechargeForm from './relay-account-recharge-form.vue';
     import RelayAccountEditForm from './relay-account-edit-form.vue';
     import RelayAccountLedgerModal from './relay-account-ledger-modal.vue';
@@ -154,6 +162,12 @@
     }
 
     onMounted(queryData);
+
+    // ---------------------------- 新增 ----------------------------
+    const addRef = ref();
+    function showAdd() {
+        addRef.value.show();
+    }
 
     // ---------------------------- 充值 ----------------------------
     const rechargeRef = ref();

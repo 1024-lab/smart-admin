@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import net.lab1024.sa.admin.module.business.ai.relay.domain.form.RelayUserAccountAddForm;
 import net.lab1024.sa.admin.module.business.ai.relay.domain.form.RelayUserAccountQueryForm;
 import net.lab1024.sa.admin.module.business.ai.relay.domain.form.RelayUserAccountRechargeForm;
 import net.lab1024.sa.admin.module.business.ai.relay.domain.form.RelayUserAccountUpdateForm;
@@ -27,6 +28,13 @@ public class RelayUserAccountController {
     @SaCheckPermission("relay:account:query")
     public ResponseDTO<PageResult<RelayUserAccountVO>> queryPage(@RequestBody @Valid RelayUserAccountQueryForm queryForm) {
         return ResponseDTO.ok(relayUserAccountAdminService.queryPage(queryForm));
+    }
+
+    @Operation(summary = "新增账户")
+    @PostMapping("/relay/account/add")
+    @SaCheckPermission("relay:account:add")
+    public ResponseDTO<String> add(@RequestBody @Valid RelayUserAccountAddForm form) {
+        return relayUserAccountAdminService.add(form);
     }
 
     @Operation(summary = "充值")

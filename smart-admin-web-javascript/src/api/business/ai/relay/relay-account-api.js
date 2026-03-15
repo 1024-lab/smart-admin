@@ -8,6 +8,10 @@ export const relayAccountApi = {
   queryPage: (param) => {
     return postRequest('/relay/account/queryPage', param);
   },
+  // 新增账户
+  add: (param) => {
+    return postRequest('/relay/account/add', param);
+  },
   // 充值
   recharge: (param) => {
     return postRequest('/relay/account/recharge', param);
