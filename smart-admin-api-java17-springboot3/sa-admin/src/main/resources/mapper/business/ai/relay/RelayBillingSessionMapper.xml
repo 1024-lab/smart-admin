@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.relay.dao.RelayBillingSessionDao">
+
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.vo.RelayBillingSessionVO">
+        SELECT
+            bs.billing_session_id,
+            bs.request_id,
+            bs.employee_id,
+            bs.token_id,
+            bs.channel_id,
+            bs.model_id,
+            bs.endpoint_type,
+            bs.preconsume_quota,
+            bs.settled_quota,
+            bs.delta_quota,
+            bs.billing_state,
+            bs.upstream_status,
+            bs.gateway_status,
+            bs.latency_ms,
+            bs.error_msg,
+            bs.settled_time,
+            bs.update_time,
+            bs.create_time,
+            m.model_name,
+            c.channel_name
+        FROM t_ai_billing_session bs
+        LEFT JOIN t_ai_model m ON bs.model_id = m.model_id
+        LEFT JOIN t_ai_channel c ON bs.channel_id = c.channel_id
+        <where>
+            <if test="queryForm.employeeId != null">
+                AND bs.employee_id = #{queryForm.employeeId}
+            </if>
+            <if test="queryForm.requestId != null and queryForm.requestId != ''">
+                AND bs.request_id = #{queryForm.requestId}
+            </if>
+            <if test="queryForm.billingState != null">
+                AND bs.billing_state = #{queryForm.billingState}
+            </if>
+            <if test="queryForm.startTime != null">
+                AND bs.create_time &gt;= #{queryForm.startTime}
+            </if>
+            <if test="queryForm.endTime != null">
+                AND bs.create_time &lt;= #{queryForm.endTime}
+            </if>
+        </where>
+        ORDER BY bs.create_time DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.relay.dao.RelayTokenDao">
+
+    <sql id="base_columns">
+        t_ai_token.token_id,
+        t_ai_token.employee_id,
+        t_ai_token.token_name,
+        t_ai_token.token_prefix,
+        t_ai_token.expires_time,
+        t_ai_token.last_used_time,
+        t_ai_token.request_count,
+        t_ai_token.disabled_flag,
+        t_ai_token.deleted_flag,
+        t_ai_token.remark,
+        t_ai_token.update_time,
+        t_ai_token.create_time
+    </sql>
+
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.vo.RelayTokenVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_token
+        <where>
+            t_ai_token.deleted_flag = 0
+            <if test="queryForm.employeeId != null">
+                AND t_ai_token.employee_id = #{queryForm.employeeId}
+            </if>
+            <if test="queryForm.tokenName != null and queryForm.tokenName != ''">
+                AND INSTR(t_ai_token.token_name, #{queryForm.tokenName})
+            </if>
+            <if test="queryForm.disabledFlag != null">
+                AND t_ai_token.disabled_flag = #{queryForm.disabledFlag}
+            </if>
+        </where>
+        ORDER BY t_ai_token.create_time DESC
+    </select>
+
+    <select id="selectByTokenHash" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.entity.RelayTokenEntity">
+        SELECT * FROM t_ai_token
+        WHERE token_hash = #{tokenHash} AND deleted_flag = 0
+        LIMIT 1
+    </select>
+
+</mapper>

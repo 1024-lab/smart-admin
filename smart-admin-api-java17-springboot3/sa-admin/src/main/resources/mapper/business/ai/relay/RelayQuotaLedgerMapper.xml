@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.relay.dao.RelayQuotaLedgerDao">
+
+    <select id="queryPageByEmployeeId" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.vo.RelayQuotaLedgerVO">
+        SELECT
+            ql.ledger_id,
+            ql.employee_id,
+            ql.token_id,
+            ql.billing_session_id,
+            ql.request_id,
+            ql.action_type,
+            ql.delta_quota,
+            ql.balance_after,
+            ql.create_time
+        FROM t_ai_quota_ledger ql
+        WHERE ql.employee_id = #{employeeId}
+        ORDER BY ql.create_time DESC
+    </select>
+
+</mapper>

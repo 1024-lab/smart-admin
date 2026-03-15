@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.relay.dao.RelayChannelDao">
+
+    <sql id="base_columns">
+        t_ai_channel.channel_id,
+        t_ai_channel.channel_name,
+        t_ai_channel.provider_type,
+        t_ai_channel.base_url,
+        t_ai_channel.api_key_mask,
+        t_ai_channel.organization,
+        t_ai_channel.priority,
+        t_ai_channel.weight,
+        t_ai_channel.timeout_ms,
+        t_ai_channel.max_retries,
+        t_ai_channel.disabled_flag,
+        t_ai_channel.deleted_flag,
+        t_ai_channel.created_by,
+        t_ai_channel.remark,
+        t_ai_channel.update_time,
+        t_ai_channel.create_time
+    </sql>
+
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.vo.RelayChannelVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_channel
+        <where>
+            t_ai_channel.deleted_flag = 0
+            <if test="queryForm.channelName != null and queryForm.channelName != ''">
+                AND INSTR(t_ai_channel.channel_name, #{queryForm.channelName})
+            </if>
+            <if test="queryForm.providerType != null and queryForm.providerType != ''">
+                AND t_ai_channel.provider_type = #{queryForm.providerType}
+            </if>
+            <if test="queryForm.disabledFlag != null">
+                AND t_ai_channel.disabled_flag = #{queryForm.disabledFlag}
+            </if>
+        </where>
+        ORDER BY t_ai_channel.priority ASC, t_ai_channel.create_time DESC
+    </select>
+
+    <select id="selectEnabledByModelAndEndpoint" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.entity.RelayChannelEntity">
+        SELECT c.*
+        FROM t_ai_channel c
+        INNER JOIN t_ai_channel_model cm ON c.channel_id = cm.channel_id AND cm.disabled_flag = 0
+        INNER JOIN t_ai_model m ON cm.model_id = m.model_id AND m.deleted_flag = 0 AND m.disabled_flag = 0
+        WHERE c.disabled_flag = 0
+          AND c.deleted_flag = 0
+          AND m.model_name = #{modelName}
+          AND (m.endpoint_type = #{endpointType} OR m.endpoint_type = 3)
+        <if test="excludeIds != null and excludeIds.size() > 0">
+            AND c.channel_id NOT IN
+            <foreach collection="excludeIds" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        ORDER BY c.priority ASC
+    </select>
+
+</mapper>

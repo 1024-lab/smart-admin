@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.relay.dao.RelayUsageLogDao">
+
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.vo.RelayUsageLogVO">
+        SELECT
+            ul.usage_log_id,
+            ul.request_id,
+            ul.billing_session_id,
+            ul.employee_id,
+            ul.token_id,
+            ul.channel_id,
+            ul.model_id,
+            ul.endpoint_type,
+            ul.stream_flag,
+            ul.prompt_tokens,
+            ul.completion_tokens,
+            ul.total_tokens,
+            ul.input_cost,
+            ul.output_cost,
+            ul.total_cost,
+            ul.preconsume_quota,
+            ul.settled_quota,
+            ul.upstream_status,
+            ul.gateway_status,
+            ul.latency_ms,
+            ul.error_msg,
+            ul.create_time,
+            m.model_name,
+            c.channel_name
+        FROM t_ai_usage_log ul
+        LEFT JOIN t_ai_model m ON ul.model_id = m.model_id
+        LEFT JOIN t_ai_channel c ON ul.channel_id = c.channel_id
+        <where>
+            <if test="queryForm.employeeId != null">
+                AND ul.employee_id = #{queryForm.employeeId}
+            </if>
+            <if test="queryForm.requestId != null and queryForm.requestId != ''">
+                AND ul.request_id = #{queryForm.requestId}
+            </if>
+            <if test="queryForm.modelId != null">
+                AND ul.model_id = #{queryForm.modelId}
+            </if>
+            <if test="queryForm.channelId != null">
+                AND ul.channel_id = #{queryForm.channelId}
+            </if>
+            <if test="queryForm.startTime != null">
+                AND ul.create_time &gt;= #{queryForm.startTime}
+            </if>
+            <if test="queryForm.endTime != null">
+                AND ul.create_time &lt;= #{queryForm.endTime}
+            </if>
+        </where>
+        ORDER BY ul.create_time DESC
+    </select>
+
+</mapper>

@@ -19,6 +19,7 @@ import message from './business/message/message-const';
 import codeGeneratorConst from './support/code-generator-const';
 import changeLogConst from './support/change-log-const';
 import jobConst from './support/job-const';
+import relayConst from './business/ai/relay-const';
 
 export default {
   FLAG_NUMBER_ENUM,
@@ -35,4 +36,5 @@ export default {
   ...codeGeneratorConst,
   ...changeLogConst,
   ...jobConst,
+  ...relayConst,
 };

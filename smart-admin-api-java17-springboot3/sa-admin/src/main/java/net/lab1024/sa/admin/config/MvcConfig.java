@@ -29,6 +29,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(adminInterceptor)
                 .excludePathPatterns(SwaggerConfig.SWAGGER_WHITELIST)
+                .excludePathPatterns("/v1/**")
                 .addPathPatterns("/**");
     }
 

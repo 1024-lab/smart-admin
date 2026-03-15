@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.relay.dao.RelayChannelModelDao">
+
+    <select id="selectByChannelId" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.entity.RelayChannelModelEntity">
+        SELECT * FROM t_ai_channel_model
+        WHERE channel_id = #{channelId}
+    </select>
+
+    <delete id="deleteByChannelId">
+        DELETE FROM t_ai_channel_model WHERE channel_id = #{channelId}
+    </delete>
+
+</mapper>

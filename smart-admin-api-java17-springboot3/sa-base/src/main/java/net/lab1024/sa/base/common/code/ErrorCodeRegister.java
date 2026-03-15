@@ -29,6 +29,13 @@ public class ErrorCodeRegister {
 
     }
 
+    /**
+     * 供其他模块注册错误码（如 sa-admin 中的业务错误码）
+     */
+    public static void registerErrorCode(Class<? extends ErrorCode> clazz, int start, int end) {
+        register(clazz, start, end);
+    }
+
 
     public static int initialize() {
         return ErrorCodeRangeContainer.initialize();

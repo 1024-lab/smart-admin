@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.relay.dao.RelayUserAccountDao">
+
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.vo.RelayUserAccountVO">
+        SELECT
+            a.employee_id,
+            a.quota_remain,
+            a.quota_used,
+            a.disabled_flag,
+            a.update_time,
+            a.create_time,
+            e.actual_name AS employee_name
+        FROM t_ai_user_account a
+        LEFT JOIN t_employee e ON a.employee_id = e.employee_id
+        <where>
+            <if test="queryForm.employeeId != null">
+                AND a.employee_id = #{queryForm.employeeId}
+            </if>
+            <if test="queryForm.employeeName != null and queryForm.employeeName != ''">
+                AND INSTR(e.actual_name, #{queryForm.employeeName})
+            </if>
+            <if test="queryForm.disabledFlag != null">
+                AND a.disabled_flag = #{queryForm.disabledFlag}
+            </if>
+        </where>
+        ORDER BY a.create_time DESC
+    </select>
+
+    <update id="preconsumeQuota">
+        UPDATE t_ai_user_account
+        SET quota_remain = quota_remain - #{amount},
+            quota_used = quota_used + #{amount}
+        WHERE employee_id = #{employeeId}
+          AND quota_remain >= #{amount}
+    </update>
+
+    <update id="restoreQuota">
+        UPDATE t_ai_user_account
+        SET quota_remain = quota_remain + #{amount},
+            quota_used = quota_used - #{amount}
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <update id="adjustQuota">
+        UPDATE t_ai_user_account
+        SET quota_remain = quota_remain + #{delta},
+            quota_used = CASE WHEN #{delta} &lt; 0 THEN quota_used - #{delta} ELSE quota_used + #{delta} END
+        WHERE employee_id = #{employeeId}
+    </update>
+
+</mapper>

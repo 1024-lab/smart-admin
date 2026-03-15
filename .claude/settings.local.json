@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "mcp__codex__codex"
+      "mcp__codex__codex",
+      "Bash(find /mnt/f/project/smart-admin -name *milvus* -o -name *ai*config*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(grep -E \"\\\\.\\(js|ts\\)$\")",
+      "Bash(xargs ls:*)"
     ]
   }
 }
