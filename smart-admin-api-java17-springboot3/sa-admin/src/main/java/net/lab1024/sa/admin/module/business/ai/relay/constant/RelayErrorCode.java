@@ -23,7 +23,8 @@ public enum RelayErrorCode implements ErrorCode {
     CHANNEL_NAME_DUPLICATE(50012, "渠道名称重复"),
     MODEL_NAME_DUPLICATE(50013, "模型名称重复"),
     ACCOUNT_NOT_FOUND(50014, "用户账户不存在"),
-    TOKEN_NOT_FOUND(50015, "Token不存在");
+    TOKEN_NOT_FOUND(50015, "Token不存在"),
+    CHANNEL_GROUP_NOT_FOUND(50016, "渠道分组不存在");
 
     static {
         ErrorCodeRegister.registerErrorCode(RelayErrorCode.class, 50001, 51000);
