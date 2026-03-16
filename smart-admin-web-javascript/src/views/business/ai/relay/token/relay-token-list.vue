@@ -9,8 +9,8 @@
     <!---------- 查询表单form begin ----------->
     <a-form class="smart-query-form">
         <a-row class="smart-query-form-row">
-            <a-form-item label="员工ID" class="smart-query-form-item">
-                <a-input-number style="width: 150px" v-model:value="queryForm.employeeId" placeholder="员工ID" />
+            <a-form-item label="员工" class="smart-query-form-item">
+                <EmployeeSelect v-model:value="queryForm.employeeId" placeholder="请选择员工" width="200px" />
             </a-form-item>
             <a-form-item label="Token名称" class="smart-query-form-item">
                 <a-input style="width: 200px" v-model:value="queryForm.tokenName" placeholder="Token名称" />
@@ -97,6 +97,7 @@
     import { smartSentry } from '/@/lib/smart-sentry';
     import TableOperator from '/@/components/support/table-operator/index.vue';
     import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
+    import EmployeeSelect from '/@/components/system/employee-select/index.vue';
     import RelayTokenForm from './relay-token-form.vue';
     import RelayTokenResultModal from './relay-token-result-modal.vue';
 

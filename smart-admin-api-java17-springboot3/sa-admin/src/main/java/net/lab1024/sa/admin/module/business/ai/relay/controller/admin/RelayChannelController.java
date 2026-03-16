@@ -31,6 +31,13 @@ public class RelayChannelController {
         return ResponseDTO.ok(relayChannelAdminService.queryPage(queryForm));
     }
 
+    @Operation(summary = "查询列表")
+    @PostMapping("/relay/channel/queryList")
+    @SaCheckPermission("relay:channel:query")
+    public ResponseDTO<List<RelayChannelVO>> queryList(@RequestBody RelayChannelQueryForm queryForm) {
+        return ResponseDTO.ok(relayChannelAdminService.queryList(queryForm));
+    }
+
     @Operation(summary = "添加渠道")
     @PostMapping("/relay/channel/add")
     @SaCheckPermission("relay:channel:add")

@@ -1,6 +1,7 @@
 package net.lab1024.sa.admin.module.business.ai.relay.service.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.annotation.Resource;
 import net.lab1024.sa.admin.module.business.ai.relay.constant.RelayErrorCode;
 import net.lab1024.sa.admin.module.business.ai.relay.dao.RelayChannelDao;
 import net.lab1024.sa.admin.module.business.ai.relay.dao.RelayChannelModelDao;
@@ -19,7 +20,6 @@ import net.lab1024.sa.base.common.util.SmartPageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.Resource;
 import java.util.List;
 
 @Service
@@ -38,6 +38,10 @@ public class RelayChannelAdminService {
         Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
         List<RelayChannelVO> list = relayChannelDao.queryPage(page, queryForm);
         return SmartPageUtil.convert2PageResult(page, list);
+    }
+
+    public List<RelayChannelVO> queryList(RelayChannelQueryForm queryForm) {
+        return relayChannelDao.queryList(queryForm);
     }
 
     public ResponseDTO<String> add(RelayChannelAddForm addForm) {
@@ -75,7 +79,6 @@ public class RelayChannelAdminService {
         entity.setTimeoutMs(updateForm.getTimeoutMs());
         entity.setMaxRetries(updateForm.getMaxRetries());
         entity.setRemark(updateForm.getRemark());
-        // API Key 为空则不更新
         String newKey = updateForm.getApiKey();
         if (newKey != null && !newKey.isBlank()) {
             entity.setApiKeyCipher(apiKeyCipher.encrypt(newKey));
@@ -110,11 +113,11 @@ public class RelayChannelAdminService {
     public ResponseDTO<String> bindModels(RelayChannelModelBindForm form) {
         relayChannelModelDao.deleteByChannelId(form.getChannelId());
         for (Long modelId : form.getModelIds()) {
-            RelayChannelModelEntity cm = new RelayChannelModelEntity();
-            cm.setChannelId(form.getChannelId());
-            cm.setModelId(modelId);
-            cm.setDisabledFlag(0);
-            relayChannelModelDao.insert(cm);
+            RelayChannelModelEntity channelModelEntity = new RelayChannelModelEntity();
+            channelModelEntity.setChannelId(form.getChannelId());
+            channelModelEntity.setModelId(modelId);
+            channelModelEntity.setDisabledFlag(0);
+            relayChannelModelDao.insert(channelModelEntity);
         }
         return ResponseDTO.ok();
     }

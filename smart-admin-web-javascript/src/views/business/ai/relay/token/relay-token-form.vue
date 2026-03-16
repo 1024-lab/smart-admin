@@ -15,8 +15,8 @@
       :destroyOnClose="true"
   >
     <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }">
-        <a-form-item label="员工ID" name="employeeId" v-if="!form.tokenId">
-          <a-input-number style="width: 100%" v-model:value="form.employeeId" placeholder="请输入员工ID" />
+        <a-form-item label="员工" name="employeeId" v-if="!form.tokenId">
+          <EmployeeSelect v-model:value="form.employeeId" placeholder="请选择员工" width="100%" :disabledFlag="0" />
         </a-form-item>
         <a-form-item label="Token名称" name="tokenName">
           <a-input style="width: 100%" v-model:value="form.tokenName" placeholder="请输入Token名称" />
@@ -55,6 +55,7 @@
   import { relayTokenApi } from '/@/api/business/ai/relay/relay-token-api';
   import { smartSentry } from '/@/lib/smart-sentry';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
+  import EmployeeSelect from '/@/components/system/employee-select/index.vue';
 
   const emits = defineEmits(['reloadList']);
   const visibleFlag = ref(false);
@@ -91,7 +92,7 @@
   let form = reactive({ ...formDefault });
 
   const rules = {
-      employeeId: [{ required: true, message: '员工ID必填' }],
+      employeeId: [{ required: true, message: '请选择员工' }],
       tokenName: [{ required: true, message: 'Token名称必填' }],
   };
 

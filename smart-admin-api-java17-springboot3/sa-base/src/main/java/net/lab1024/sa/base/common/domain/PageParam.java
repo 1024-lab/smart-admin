@@ -29,7 +29,7 @@ public class PageParam {
 
     @Schema(description = "每页数量(不能为空)", example = "10")
     @NotNull(message = "每页数量不能为空")
-    @Max(value = 500, message = "每页最大为500")
+    @Max(value = 1000, message = "每页最大为1000")
     private Long pageSize;
 
     @Schema(description = "是否查询总条数")

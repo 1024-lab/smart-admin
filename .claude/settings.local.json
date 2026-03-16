@@ -6,7 +6,8 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(grep -E \"\\\\.\\(js|ts\\)$\")",
-      "Bash(xargs ls:*)"
+      "Bash(xargs ls:*)",
+      "Bash(find \"C:\\\\Users\\\\Mission\\\\Desktop\\\\myProject\\\\smart-admin\\\\smart-admin-api-java17-springboot3\" -type d -name \"*relay*\" 2>/dev/null | head -20)"
     ]
   }
 }

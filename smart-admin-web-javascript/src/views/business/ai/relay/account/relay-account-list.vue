@@ -9,11 +9,8 @@
     <!---------- 查询表单form begin ----------->
     <a-form class="smart-query-form">
         <a-row class="smart-query-form-row">
-            <a-form-item label="员工ID" class="smart-query-form-item">
-                <a-input-number style="width: 150px" v-model:value="queryForm.employeeId" placeholder="员工ID" />
-            </a-form-item>
-            <a-form-item label="员工姓名" class="smart-query-form-item">
-                <a-input style="width: 200px" v-model:value="queryForm.employeeName" placeholder="员工姓名" />
+            <a-form-item label="员工" class="smart-query-form-item">
+                <EmployeeSelect v-model:value="queryForm.employeeId" placeholder="请选择员工" width="200px" />
             </a-form-item>
             <a-form-item label="状态" class="smart-query-form-item">
                 <SmartEnumSelect v-model:value="queryForm.disabledFlag" enumName="FLAG_NUMBER_ENUM" placeholder="请选择" width="120px" />
@@ -107,6 +104,7 @@
     import { smartSentry } from '/@/lib/smart-sentry';
     import TableOperator from '/@/components/support/table-operator/index.vue';
     import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
+    import EmployeeSelect from '/@/components/system/employee-select/index.vue';
     import { Modal } from 'ant-design-vue';
     import RelayAccountAddForm from './relay-account-add-form.vue';
     import RelayAccountRechargeForm from './relay-account-recharge-form.vue';
@@ -126,7 +124,6 @@
 
     const queryFormState = {
         employeeId: undefined,
-        employeeName: undefined,
         disabledFlag: undefined,
         pageNum: 1,
         pageSize: 10,

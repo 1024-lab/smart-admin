@@ -159,7 +159,7 @@
       let ids = result.data || [];
       if (ids.length === 0) return;
       // 查询这些模型的详细信息用于右侧展示
-      let modelResult = await relayModelApi.queryPage({ pageNum: 1, pageSize: 9999, disabledFlag: 0 });
+      let modelResult = await relayModelApi.queryPage({ pageNum: 1, pageSize: 500, disabledFlag: 0 });
       let allModels = modelResult.data.list || [];
       let idSet = new Set(ids);
       let map = new Map();

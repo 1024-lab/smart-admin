@@ -40,6 +40,25 @@
         ORDER BY t_ai_channel.priority ASC, t_ai_channel.create_time DESC
     </select>
 
+    <select id="queryList" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.vo.RelayChannelVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_channel
+        <where>
+            t_ai_channel.deleted_flag = 0
+            <if test="queryForm.channelName != null and queryForm.channelName != ''">
+                AND INSTR(t_ai_channel.channel_name, #{queryForm.channelName})
+            </if>
+            <if test="queryForm.providerType != null and queryForm.providerType != ''">
+                AND t_ai_channel.provider_type = #{queryForm.providerType}
+            </if>
+            <if test="queryForm.disabledFlag != null">
+                AND t_ai_channel.disabled_flag = #{queryForm.disabledFlag}
+            </if>
+        </where>
+        ORDER BY t_ai_channel.priority ASC, t_ai_channel.create_time DESC
+    </select>
+
     <select id="selectEnabledByModelAndEndpoint" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.entity.RelayChannelEntity">
         SELECT c.*
         FROM t_ai_channel c

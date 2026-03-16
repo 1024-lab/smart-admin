@@ -1,34 +1,38 @@
 /**
- * Relay 渠道管理 API
+ * Relay channel API
  */
 import { postRequest, getRequest } from '/@/lib/axios';
 
 export const relayChannelApi = {
-  // 分页查询
+  // Page query
   queryPage: (param) => {
     return postRequest('/relay/channel/queryPage', param);
   },
-  // 新增
+  // List query
+  queryList: (param) => {
+    return postRequest('/relay/channel/queryList', param);
+  },
+  // Add
   add: (param) => {
     return postRequest('/relay/channel/add', param);
   },
-  // 修改
+  // Update
   update: (param) => {
     return postRequest('/relay/channel/update', param);
   },
-  // 删除
+  // Delete
   delete: (channelId) => {
     return getRequest(`/relay/channel/delete/${channelId}`);
   },
-  // 启用/禁用
+  // Enable or disable
   updateDisabled: (channelId, disabledFlag) => {
     return getRequest(`/relay/channel/updateDisabled/${channelId}/${disabledFlag}`);
   },
-  // 绑定模型
+  // Bind models
   bindModels: (param) => {
     return postRequest('/relay/channel/bindModels', param);
   },
-  // 查询渠道已绑定的模型ID列表
+  // Query bound model ids
   getBoundModelIds: (channelId) => {
     return getRequest(`/relay/channel/boundModelIds/${channelId}`);
   },

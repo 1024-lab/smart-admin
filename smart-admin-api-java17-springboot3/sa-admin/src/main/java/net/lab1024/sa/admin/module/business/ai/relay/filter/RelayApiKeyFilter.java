@@ -53,30 +53,32 @@ public class RelayApiKeyFilter implements Filter {
             String tokenHash = sha256(plainToken);
             RelayTokenEntity token = relayTokenDao.selectByTokenHash(tokenHash);
             if (token == null) {
-                writeError(response, 401, "invalid_api_key", "无效的API Key");
+                writeError(response, HttpServletResponse.SC_UNAUTHORIZED, "invalid_api_key", "无效的API Key");
                 return;
             }
 
             if (token.getDisabledFlag() == 1) {
-                writeError(response, 403, "api_key_disabled", "API Key已禁用");
+                writeError(response, HttpServletResponse.SC_FORBIDDEN, "api_key_disabled", "API Key已禁用");
                 return;
             }
 
             if (token.getExpiresTime() != null && token.getExpiresTime().isBefore(LocalDateTime.now())) {
-                writeError(response, 403, "api_key_expired", "API Key已过期");
+                writeError(response, HttpServletResponse.SC_FORBIDDEN, "api_key_expired", "API Key已过期");
                 return;
             }
 
             RelayUserAccountEntity account = relayUserAccountDao.selectById(token.getEmployeeId());
             if (account == null) {
-                writeError(response, 403, "account_not_found", "用户账户不存在");
+                writeError(response, HttpServletResponse.SC_FORBIDDEN, "account_not_found", "用户账户不存在");
                 return;
             }
 
             if (account.getDisabledFlag() == 1) {
-                writeError(response, 403, "account_disabled", "账户已冻结");
+                writeError(response, HttpServletResponse.SC_FORBIDDEN, "account_disabled", "账户已冻结");
                 return;
             }
+
+            // todo 根据token表里存的channel_group 查询渠道列表，根据渠道列表和model查询可用渠道，无可用渠道 返回错误，有塞入ctx
 
             // 设置请求上下文
             RelayRequestContext ctx = new RelayRequestContext();
