@@ -28,7 +28,7 @@ import java.util.List;
 public class RelayTokenAdminService {
 
     private static final SecureRandom RANDOM = new SecureRandom();
-    private static final String TOKEN_PREFIX = "sk-sa-";
+    private static final String TOKEN_PREFIX = "yk-";
 
     @Resource
     private RelayTokenDao relayTokenDao;
@@ -52,7 +52,7 @@ public class RelayTokenAdminService {
         RANDOM.nextBytes(randomBytes);
         String randomPart = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
         String plainToken = TOKEN_PREFIX + randomPart;
-        String prefix = plainToken.substring(0, 10);
+        String prefix = TOKEN_PREFIX;
         String hash = sha256(plainToken);
 
         RelayTokenEntity entity = new RelayTokenEntity();

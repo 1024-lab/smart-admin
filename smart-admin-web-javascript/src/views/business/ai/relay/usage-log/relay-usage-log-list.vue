@@ -118,7 +118,7 @@
         { title: '总费用', dataIndex: 'totalCost', width: 100 },
         { title: '预扣额度', dataIndex: 'preconsumeQuota', width: 120, customRender: ({ text }) => text != null ? Number(text).toFixed(6) : '-' },
         { title: '结算额度', dataIndex: 'settledQuota', width: 120, customRender: ({ text }) => text != null ? Number(text).toFixed(6) : '-' },
-        { title: '耗时(ms)', dataIndex: 'latencyMs', width: 90 },
+        { title: '耗时(s)', dataIndex: 'latencyMs', width: 90, customRender: ({ text }) => text != null ? (text / 1000).toFixed(3) : '-' },
         { title: '上游状态', dataIndex: 'upstreamStatus', width: 90 },
         { title: '网关状态', dataIndex: 'gatewayStatus', width: 90 },
         { title: '错误信息', dataIndex: 'errorMsg', width: 200, ellipsis: true },

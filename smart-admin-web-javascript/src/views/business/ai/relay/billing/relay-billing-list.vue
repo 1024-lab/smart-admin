@@ -115,7 +115,7 @@
         { title: '计费状态', dataIndex: 'billingState', width: 100 },
         { title: '上游状态', dataIndex: 'upstreamStatus', width: 90 },
         { title: '网关状态', dataIndex: 'gatewayStatus', width: 90 },
-        { title: '耗时(ms)', dataIndex: 'latencyMs', width: 90 },
+        { title: '耗时(s)', dataIndex: 'latencyMs', width: 90, customRender: ({ text }) => text != null ? (text / 1000).toFixed(3) : '-' },
         { title: '错误信息', dataIndex: 'errorMsg', width: 200, ellipsis: true },
         { title: '结算时间', dataIndex: 'settledTime', width: 170, ellipsis: true },
         { title: '创建时间', dataIndex: 'createTime', width: 170, ellipsis: true },
