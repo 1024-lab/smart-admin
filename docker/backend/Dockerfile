@@ -1,33 +1,30 @@
 # ── Stage 1: Build ────────────────────────────────────────────────────────────
-FROM maven:3.9-eclipse-temurin-17 AS builder
+FROM maven:3.9.14-eclipse-temurin-17-alpine AS builder
 
 WORKDIR /build
 
+# 使用阿里云 Maven 镜像加速
+COPY docker/backend/settings.xml /root/.m2/settings.xml
+
 # 先复制 pom 文件，利用 Docker 层缓存
-COPY pom.xml .
-COPY sa-base/pom.xml sa-base/pom.xml
-COPY sa-admin/pom.xml sa-admin/pom.xml
+COPY smart-admin-api-java17-springboot3/pom.xml .
+COPY smart-admin-api-java17-springboot3/sa-base/pom.xml sa-base/pom.xml
+COPY smart-admin-api-java17-springboot3/sa-admin/pom.xml sa-admin/pom.xml
 
 RUN mvn dependency:go-offline -B -P prod || true
 
 # 复制源码并构建
-COPY sa-base sa-base
-COPY sa-admin sa-admin
+COPY smart-admin-api-java17-springboot3/sa-base sa-base
+COPY smart-admin-api-java17-springboot3/sa-admin sa-admin
 
 RUN mvn clean package -Dmaven.test.skip=true -P prod
 
 # ── Stage 2: Runtime ──────────────────────────────────────────────────────────
-FROM eclipse-temurin:17-jre-alpine
+FROM ubuntu/jre:17-24.04
 
 WORKDIR /app
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-
 COPY --from=builder /build/sa-admin/target/sa-admin-prod-*.jar app.jar
-
-RUN chown appuser:appgroup app.jar
-
-USER appuser
 
 EXPOSE 1024
 

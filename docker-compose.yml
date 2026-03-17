@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
 
   # ── MySQL ──────────────────────────────────────────────────────────────────
@@ -45,8 +43,8 @@ services:
   # ── Backend (Spring Boot) ──────────────────────────────────────────────────
   backend:
     build:
-      context: ./smart-admin-api-java17-springboot3
-      dockerfile: ../docker/backend/Dockerfile
+      context: .
+      dockerfile: docker/backend/Dockerfile
     container_name: smart-admin-backend
     restart: unless-stopped
     environment:

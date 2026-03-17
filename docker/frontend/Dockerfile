@@ -1,10 +1,11 @@
 # ── Stage 1: Build ────────────────────────────────────────────────────────────
-FROM node:18-alpine AS builder
+FROM node:20.20.1-alpine3.23 AS builder
 
 WORKDIR /app
 
 COPY smart-admin-web-javascript/package.json ./
-RUN npm install --legacy-peer-deps
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm install --legacy-peer-deps
 
 COPY smart-admin-web-javascript/ .
 RUN npm run build:prod
