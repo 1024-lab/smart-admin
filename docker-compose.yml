@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+
+  # ── MySQL ──────────────────────────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: smart-admin-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-SmartAdmin666}
+      MYSQL_DATABASE: smart_admin_v3
+      TZ: Asia/Shanghai
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pSmartAdmin666"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - smart-admin-net
+
+  # ── Redis ──────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: smart-admin-redis
+    restart: unless-stopped
+    command: redis-server --databases 16
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - smart-admin-net
+
+  # ── Backend (Spring Boot) ──────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./smart-admin-api-java17-springboot3
+      dockerfile: ../docker/backend/Dockerfile
+    container_name: smart-admin-backend
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - upload_data:/home/smart_admin_v3/upload
+      - backend_logs:/mnt/logs
+    ports:
+      - "1024:1024"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - smart-admin-net
+
+  # ── Frontend + Nginx ───────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    container_name: smart-admin-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - smart-admin-net
+
+volumes:
+  mysql_data:
+  redis_data:
+  upload_data:
+  backend_logs:
+
+networks:
+  smart-admin-net:
+    driver: bridge

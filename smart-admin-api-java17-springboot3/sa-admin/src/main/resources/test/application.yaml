@@ -12,7 +12,7 @@ project:
 
 # 项目端口和url根路径
 server:
-  port: 11024
+  port: 1024
   servlet:
     context-path: /
 
