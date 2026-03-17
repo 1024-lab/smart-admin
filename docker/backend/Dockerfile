@@ -17,7 +17,7 @@ RUN mvn dependency:go-offline -B -P prod || true
 COPY smart-admin-api-java17-springboot3/sa-base sa-base
 COPY smart-admin-api-java17-springboot3/sa-admin sa-admin
 
-RUN mvn clean package -Dmaven.test.skip=true -P prod
+RUN mvn clean package -Dmaven.test.skip=true -Dprofiles.active=prod
 
 # ── Stage 2: Runtime ──────────────────────────────────────────────────────────
 FROM ubuntu/jre:17-24.04
@@ -31,6 +31,7 @@ EXPOSE 1024
 ENTRYPOINT ["java", \
   "-server", \
   "-Xms512m", "-Xmx1024m", \
-  "-Djava.security.egd=file:/dev/./urandom", \
-  "-jar", "app.jar" \
+  "-jar", "app.jar", \
+  "--spring.profiles.active=prod", \
+  "--project.log-directory=/app/logs" \
 ]
