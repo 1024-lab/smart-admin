@@ -14,4 +14,6 @@ import java.util.List;
 public interface RelayChannelGroupDao extends BaseMapper<RelayChannelGroupEntity> {
 
     List<RelayChannelGroupVO> queryPage(Page page, @Param("queryForm") RelayChannelGroupQueryForm queryForm);
+
+    List<RelayChannelGroupVO> queryList(@Param("queryForm") RelayChannelGroupQueryForm queryForm);
 }

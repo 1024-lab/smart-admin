@@ -8,6 +8,10 @@ export const relayChannelGroupApi = {
   queryPage: (param) => {
     return postRequest('/relay/channelGroup/queryPage', param);
   },
+  // 查询列表（不分页，用于下拉选择）
+  queryList: (param) => {
+    return postRequest('/relay/channelGroup/queryList', param);
+  },
   // 新增
   add: (param) => {
     return postRequest('/relay/channelGroup/add', param);

@@ -3,6 +3,7 @@ package net.lab1024.sa.admin.module.business.ai.relay.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -27,10 +28,10 @@ public class RelayQuotaLedgerVO {
     private Integer actionType;
 
     @Schema(description = "变动额度")
-    private Long deltaQuota;
+    private BigDecimal deltaQuota;
 
     @Schema(description = "变动后余额")
-    private Long balanceAfter;
+    private BigDecimal balanceAfter;
 
     @Schema(description = "创建时间")
     private LocalDateTime createTime;

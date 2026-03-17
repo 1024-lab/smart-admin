@@ -12,6 +12,9 @@ public class RelayTokenQueryForm extends PageParam {
     @Schema(description = "员工ID")
     private Long employeeId;
 
+    @Schema(description = "渠道组ID")
+    private Long channelGroupId;
+
     @Schema(description = "Token名称")
     private String tokenName;
 

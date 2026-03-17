@@ -28,4 +28,20 @@
         ORDER BY t_ai_channel_group.create_time DESC
     </select>
 
+    <select id="queryList" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.vo.RelayChannelGroupVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_channel_group
+        <where>
+            t_ai_channel_group.deleted_flag = 0
+            <if test="queryForm.channelName != null and queryForm.channelName != ''">
+                AND INSTR(t_ai_channel_group.channel_name, #{queryForm.channelName})
+            </if>
+            <if test="queryForm.disabledFlag != null">
+                AND t_ai_channel_group.disabled_flag = #{queryForm.disabledFlag}
+            </if>
+        </where>
+        ORDER BY t_ai_channel_group.create_time DESC
+    </select>
+
 </mapper>

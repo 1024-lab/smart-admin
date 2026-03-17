@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @TableName("t_ai_model")
 public class RelayModelEntity {
 
-    @TableId(value = "model_id", type = IdType.AUTO)
+    @TableId(value = "model_id", type = IdType.ASSIGN_ID)
     private Long modelId;
 
     private String modelName;

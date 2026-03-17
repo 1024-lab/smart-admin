@@ -1,8 +1,11 @@
 package net.lab1024.sa.admin.module.business.ai.relay.domain.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Data
 public class RelayUserAccountRechargeForm {
@@ -13,5 +16,6 @@ public class RelayUserAccountRechargeForm {
 
     @Schema(description = "充值额度", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "充值额度不能为空")
-    private Long amount;
+    @DecimalMin(value = "0", inclusive = false, message = "充值额度必须大于0")
+    private BigDecimal amount;
 }

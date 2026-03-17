@@ -44,6 +44,14 @@ public class RelayChannelGroupAdminService {
         return SmartPageUtil.convert2PageResult(page, list);
     }
 
+    public List<RelayChannelGroupVO> queryList(RelayChannelGroupQueryForm queryForm) {
+        List<RelayChannelGroupVO> list = relayChannelGroupDao.queryList(queryForm);
+        for (RelayChannelGroupVO vo : list) {
+            vo.setChannelIdList(parseChannelIds(vo.getChannelIds()));
+        }
+        return list;
+    }
+
     private List<Long> parseChannelIds(String channelIds) {
         if (channelIds == null || channelIds.isBlank()) {
             return Collections.emptyList();

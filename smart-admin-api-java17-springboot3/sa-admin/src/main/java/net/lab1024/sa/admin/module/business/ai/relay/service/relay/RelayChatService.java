@@ -79,7 +79,7 @@ public class RelayChatService {
         }
 
         // 2. 估算预扣额度
-        long estimatedQuota = estimateQuota(requestBody, model);
+        BigDecimal estimatedQuota = estimateQuota(requestBody, model);
 
         // 3. 预扣
         Long billingSessionId;
@@ -168,7 +168,7 @@ public class RelayChatService {
         }
 
         // 2. 预扣
-        long estimatedQuota = estimateQuota(requestBody, model);
+        BigDecimal estimatedQuota = estimateQuota(requestBody, model);
         Long billingSessionId;
         try {
             billingSessionId = billingEngine.preconsume(
@@ -186,7 +186,7 @@ public class RelayChatService {
 
         relayStreamExecutor.execute(() -> {
             long startTime = System.currentTimeMillis();
-            Set<Long> excludeChannelIds = new HashSet<>();
+            Set<Long> excludeChannelIds = new HashSet<>();//失败的渠道
             int maxRetries = DEFAULT_MAX_RETRIES;
             String lastError = null;
             boolean settled = false;
@@ -247,7 +247,6 @@ public class RelayChatService {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("data: ")) {
-                    lastDataLine = line;
                     String data = line.substring(6).trim();
                     if ("[DONE]".equals(data)) {
                         emitter.send(SseEmitter.event().data("[DONE]"));
@@ -266,6 +265,7 @@ public class RelayChatService {
                     } catch (Exception ignored) {
                     }
                     emitter.send(SseEmitter.event().data(data));
+                    lastDataLine = line;//lastDataLine放后边，避免把[DONE]当作last
                 } else if (!line.isEmpty()) {
                     // 透传非 data 行（如 event: 等）
                     emitter.send(SseEmitter.event().data(line));
@@ -293,7 +293,7 @@ public class RelayChatService {
         }
     }
 
-    private long estimateQuota(String requestBody, RelayModelEntity model) {
+    private BigDecimal estimateQuota(String requestBody, RelayModelEntity model) {
         int estimatedInputTokens = Math.max(requestBody.length() / 4, 100);
         int estimatedOutputTokens = 2000;
         BigDecimal inputCost = model.getInputPricePerK()
@@ -302,7 +302,7 @@ public class RelayChatService {
         BigDecimal outputCost = model.getOutputPricePerK()
                 .multiply(BigDecimal.valueOf(estimatedOutputTokens))
                 .divide(BigDecimal.valueOf(1000), 6, RoundingMode.HALF_UP);
-        return inputCost.add(outputCost).setScale(0, RoundingMode.CEILING).longValue();
+        return inputCost.add(outputCost).setScale(6, RoundingMode.CEILING);
     }
 
     private String buildErrorJson(String code, String message) {

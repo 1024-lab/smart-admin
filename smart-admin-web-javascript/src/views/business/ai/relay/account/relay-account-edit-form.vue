@@ -22,7 +22,7 @@
           <a-input :value="employeeName" disabled />
         </a-form-item>
         <a-form-item label="剩余额度" name="quotaRemain">
-          <a-input-number style="width: 100%" v-model:value="form.quotaRemain" placeholder="请输入剩余额度" :min="0" />
+          <a-input-number style="width: 100%" v-model:value="form.quotaRemain" placeholder="请输入剩余额度" :min="0" :precision="6" :step="0.000001" />
         </a-form-item>
         <a-form-item label="状态" name="disabledFlag">
           <a-radio-group v-model:value="form.disabledFlag">

@@ -2,7 +2,9 @@ package net.lab1024.sa.admin.module.business.ai.relay.service.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import net.lab1024.sa.admin.module.business.ai.relay.constant.RelayErrorCode;
+import net.lab1024.sa.admin.module.business.ai.relay.dao.RelayChannelGroupDao;
 import net.lab1024.sa.admin.module.business.ai.relay.dao.RelayTokenDao;
+import net.lab1024.sa.admin.module.business.ai.relay.domain.entity.RelayChannelGroupEntity;
 import net.lab1024.sa.admin.module.business.ai.relay.domain.entity.RelayTokenEntity;
 import net.lab1024.sa.admin.module.business.ai.relay.domain.form.RelayTokenAddForm;
 import net.lab1024.sa.admin.module.business.ai.relay.domain.form.RelayTokenQueryForm;
@@ -31,6 +33,9 @@ public class RelayTokenAdminService {
     @Resource
     private RelayTokenDao relayTokenDao;
 
+    @Resource
+    private RelayChannelGroupDao relayChannelGroupDao;
+
     public PageResult<RelayTokenVO> queryPage(RelayTokenQueryForm queryForm) {
         Page<?> page = SmartPageUtil.convert2PageQuery(queryForm);
         List<RelayTokenVO> list = relayTokenDao.queryPage(page, queryForm);
@@ -38,6 +43,10 @@ public class RelayTokenAdminService {
     }
 
     public ResponseDTO<RelayTokenCreateResultVO> add(RelayTokenAddForm addForm) {
+        RelayChannelGroupEntity group = relayChannelGroupDao.selectById(addForm.getChannelGroupId());
+        if (group == null || group.getDeletedFlag() == 1 || group.getDisabledFlag() == 1) {
+            return ResponseDTO.error(RelayErrorCode.CHANNEL_GROUP_NOT_FOUND);
+        }
         // 生成随机 token
         byte[] randomBytes = new byte[32];
         RANDOM.nextBytes(randomBytes);
@@ -48,6 +57,7 @@ public class RelayTokenAdminService {
 
         RelayTokenEntity entity = new RelayTokenEntity();
         entity.setEmployeeId(addForm.getEmployeeId());
+        entity.setChannelGroupId(addForm.getChannelGroupId());
         entity.setTokenName(addForm.getTokenName());
         entity.setTokenPrefix(prefix);
         entity.setTokenHash(hash);
@@ -70,6 +80,13 @@ public class RelayTokenAdminService {
         RelayTokenEntity entity = relayTokenDao.selectById(updateForm.getTokenId());
         if (entity == null || entity.getDeletedFlag() == 1) {
             return ResponseDTO.error(RelayErrorCode.TOKEN_NOT_FOUND);
+        }
+        if (updateForm.getChannelGroupId() != null) {
+            RelayChannelGroupEntity group = relayChannelGroupDao.selectById(updateForm.getChannelGroupId());
+            if (group == null || group.getDeletedFlag() == 1 || group.getDisabledFlag() == 1) {
+                return ResponseDTO.error(RelayErrorCode.CHANNEL_GROUP_NOT_FOUND);
+            }
+            entity.setChannelGroupId(updateForm.getChannelGroupId());
         }
         if (updateForm.getTokenName() != null) {
             entity.setTokenName(updateForm.getTokenName());

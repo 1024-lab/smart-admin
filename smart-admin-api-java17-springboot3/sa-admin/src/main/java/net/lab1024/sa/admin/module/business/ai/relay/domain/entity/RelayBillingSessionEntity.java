@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -26,17 +27,17 @@ public class RelayBillingSessionEntity {
 
     private Integer endpointType;
 
-    private Long preconsumeQuota;
+    private BigDecimal preconsumeQuota;
 
-    private Long settledQuota;
+    private BigDecimal settledQuota;
 
-    private Long deltaQuota;
+    private BigDecimal deltaQuota;
 
     private Integer billingState;
 
-    private Integer upstreamStatus;
+    private Integer upstreamStatusCode;
 
-    private Integer gatewayStatus;
+    private Integer gatewayStatusCode;
 
     private Long latencyMs;
 

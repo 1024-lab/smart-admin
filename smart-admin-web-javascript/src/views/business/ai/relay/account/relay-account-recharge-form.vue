@@ -22,10 +22,10 @@
           <a-input :value="accountInfo.employeeName" disabled />
         </a-form-item>
         <a-form-item label="当前余额">
-          <a-input :value="accountInfo.quotaRemain" disabled />
+          <a-input :value="accountInfo.quotaRemain != null ? Number(accountInfo.quotaRemain).toFixed(6) : '-'" disabled />
         </a-form-item>
         <a-form-item label="充值金额" name="amount">
-          <a-input-number style="width: 100%" v-model:value="form.amount" placeholder="请输入充值金额" :min="1" :precision="2" />
+          <a-input-number style="width: 100%" v-model:value="form.amount" placeholder="请输入充值金额" :min="0.000001" :precision="6" :step="0.000001" />
         </a-form-item>
     </a-form>
 

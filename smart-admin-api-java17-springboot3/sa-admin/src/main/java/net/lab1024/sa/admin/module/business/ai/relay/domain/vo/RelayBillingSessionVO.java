@@ -3,6 +3,7 @@ package net.lab1024.sa.admin.module.business.ai.relay.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -36,13 +37,13 @@ public class RelayBillingSessionVO {
     private Integer endpointType;
 
     @Schema(description = "预扣额度")
-    private Long preconsumeQuota;
+    private BigDecimal preconsumeQuota;
 
     @Schema(description = "结算额度")
-    private Long settledQuota;
+    private BigDecimal settledQuota;
 
     @Schema(description = "差额")
-    private Long deltaQuota;
+    private BigDecimal deltaQuota;
 
     @Schema(description = "计费状态")
     private Integer billingState;

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,9 +14,9 @@ public class RelayUserAccountEntity {
     @TableId(value = "employee_id")
     private Long employeeId;
 
-    private Long quotaRemain;
+    private BigDecimal quotaRemain;
 
-    private Long quotaUsed;
+    private BigDecimal quotaUsed;
 
     private Integer disabledFlag;
 

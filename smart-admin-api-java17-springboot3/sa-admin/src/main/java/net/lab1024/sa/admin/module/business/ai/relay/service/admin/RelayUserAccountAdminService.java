@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -45,7 +46,7 @@ public class RelayUserAccountAdminService {
         RelayUserAccountEntity account = new RelayUserAccountEntity();
         account.setEmployeeId(form.getEmployeeId());
         account.setQuotaRemain(form.getQuotaRemain());
-        account.setQuotaUsed(0L);
+        account.setQuotaUsed(BigDecimal.ZERO);
         account.setDisabledFlag(0);
         relayUserAccountDao.insert(account);
         return ResponseDTO.ok();
@@ -59,11 +60,11 @@ public class RelayUserAccountAdminService {
             account = new RelayUserAccountEntity();
             account.setEmployeeId(form.getEmployeeId());
             account.setQuotaRemain(form.getAmount());
-            account.setQuotaUsed(0L);
+            account.setQuotaUsed(BigDecimal.ZERO);
             account.setDisabledFlag(0);
             relayUserAccountDao.insert(account);
         } else {
-            account.setQuotaRemain(account.getQuotaRemain() + form.getAmount());
+            account.setQuotaRemain(account.getQuotaRemain().add(form.getAmount()));
             relayUserAccountDao.updateById(account);
         }
         // 记录流水

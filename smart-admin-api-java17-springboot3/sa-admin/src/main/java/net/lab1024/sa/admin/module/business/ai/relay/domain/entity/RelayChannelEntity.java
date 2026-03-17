@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @TableName("t_ai_channel")
 public class RelayChannelEntity {
 
-    @TableId(value = "channel_id", type = IdType.AUTO)
+    @TableId(value = "channel_id", type = IdType.ASSIGN_ID)
     private Long channelId;
 
     private String channelName;

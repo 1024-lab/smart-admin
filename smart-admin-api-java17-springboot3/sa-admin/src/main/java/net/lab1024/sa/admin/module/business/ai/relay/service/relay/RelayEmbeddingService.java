@@ -65,7 +65,7 @@ public class RelayEmbeddingService {
         }
 
         // 2. 预扣
-        long estimatedQuota = estimateQuota(requestBody, model);
+        BigDecimal estimatedQuota = estimateQuota(requestBody, model);
         Long billingSessionId;
         try {
             billingSessionId = billingEngine.preconsume(
@@ -122,12 +122,12 @@ public class RelayEmbeddingService {
         return buildErrorJson("all_channels_failed", "所有渠道均不可用: " + lastError);
     }
 
-    private long estimateQuota(String requestBody, RelayModelEntity model) {
+    private BigDecimal estimateQuota(String requestBody, RelayModelEntity model) {
         int estimatedTokens = Math.max(requestBody.length() / 4, 100);
         BigDecimal cost = model.getInputPricePerK()
                 .multiply(BigDecimal.valueOf(estimatedTokens))
                 .divide(BigDecimal.valueOf(1000), 6, RoundingMode.HALF_UP);
-        return cost.setScale(0, RoundingMode.CEILING).longValue();
+        return cost.setScale(6, RoundingMode.CEILING);
     }
 
     private String buildErrorJson(String code, String message) {

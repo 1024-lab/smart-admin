@@ -114,8 +114,8 @@
     const columns = ref([
         { title: '员工ID', dataIndex: 'employeeId', width: 100 },
         { title: '员工姓名', dataIndex: 'employeeName', width: 120 },
-        { title: '剩余额度', dataIndex: 'quotaRemain', width: 120 },
-        { title: '已用额度', dataIndex: 'quotaUsed', width: 120 },
+        { title: '剩余额度', dataIndex: 'quotaRemain', width: 140, customRender: ({ text }) => text != null ? Number(text).toFixed(6) : '-' },
+        { title: '已用额度', dataIndex: 'quotaUsed', width: 140, customRender: ({ text }) => text != null ? Number(text).toFixed(6) : '-' },
         { title: '状态', dataIndex: 'disabledFlag', width: 100 },
         { title: '更新时间', dataIndex: 'updateTime', width: 170, ellipsis: true },
         { title: '创建时间', dataIndex: 'createTime', width: 170, ellipsis: true },

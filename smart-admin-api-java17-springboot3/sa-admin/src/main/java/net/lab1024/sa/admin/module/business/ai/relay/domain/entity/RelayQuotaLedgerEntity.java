@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,9 +25,9 @@ public class RelayQuotaLedgerEntity {
 
     private Integer actionType;
 
-    private Long deltaQuota;
+    private BigDecimal deltaQuota;
 
-    private Long balanceAfter;
+    private BigDecimal balanceAfter;
 
     private LocalDateTime createTime;
 }

@@ -5,6 +5,7 @@
     <sql id="base_columns">
         t_ai_token.token_id,
         t_ai_token.employee_id,
+        t_ai_token.channel_group_id,
         t_ai_token.token_name,
         t_ai_token.token_prefix,
         t_ai_token.expires_time,
@@ -14,17 +15,22 @@
         t_ai_token.deleted_flag,
         t_ai_token.remark,
         t_ai_token.update_time,
-        t_ai_token.create_time
+        t_ai_token.create_time,
+        cg.channel_name AS channel_group_name
     </sql>
 
     <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.relay.domain.vo.RelayTokenVO">
         SELECT
         <include refid="base_columns"/>
         FROM t_ai_token
+        LEFT JOIN t_ai_channel_group cg ON cg.channel_group_id = t_ai_token.channel_group_id AND cg.deleted_flag = 0
         <where>
             t_ai_token.deleted_flag = 0
             <if test="queryForm.employeeId != null">
                 AND t_ai_token.employee_id = #{queryForm.employeeId}
+            </if>
+            <if test="queryForm.channelGroupId != null">
+                AND t_ai_token.channel_group_id = #{queryForm.channelGroupId}
             </if>
             <if test="queryForm.tokenName != null and queryForm.tokenName != ''">
                 AND INSTR(t_ai_token.token_name, #{queryForm.tokenName})

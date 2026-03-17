@@ -38,7 +38,7 @@ public class BillingEngineImpl implements BillingEngine {
     @Override
     public Long preconsume(Long employeeId, Long tokenId, Long channelId,
                            Long modelId, EndpointTypeEnum endpointType,
-                           String requestId, long estimatedQuota) {
+                           String requestId, BigDecimal estimatedQuota) {
         // 原子扣减
         int rows = relayUserAccountDao.preconsumeQuota(employeeId, estimatedQuota);
         if (rows == 0) {
@@ -47,7 +47,7 @@ public class BillingEngineImpl implements BillingEngine {
 
         // 查询扣减后余额
         RelayUserAccountEntity account = relayUserAccountDao.selectById(employeeId);
-        long balanceAfter = account.getQuotaRemain();
+        BigDecimal balanceAfter = account.getQuotaRemain();
 
         // 创建计费会话
         RelayBillingSessionEntity session = new RelayBillingSessionEntity();
@@ -66,7 +66,7 @@ public class BillingEngineImpl implements BillingEngine {
         ledger.setTokenId(tokenId);
         ledger.setRequestId(requestId);
         ledger.setActionType(QuotaActionTypeEnum.PRECONSUME.getValue());
-        ledger.setDeltaQuota(-estimatedQuota);
+        ledger.setDeltaQuota(estimatedQuota.negate());
         ledger.setBalanceAfter(balanceAfter);
 
         relayBillingManager.saveBillingSessionAndLedger(session, ledger);
@@ -90,27 +90,27 @@ public class BillingEngineImpl implements BillingEngine {
                 .divide(BigDecimal.valueOf(1000), 6, RoundingMode.HALF_UP);
         BigDecimal totalCost = inputCost.add(outputCost);
 
-        // 实际额度 = totalCost 转 long（乘以倍率，这里假设 1:1 映射，单位为最小额度单位）
-        long settledQuota = totalCost.setScale(0, RoundingMode.CEILING).longValue();
+        // 实际额度 = totalCost 保留 6 位小数
+        BigDecimal settledQuota = totalCost.setScale(6, RoundingMode.HALF_UP);
 
         // 查询原始会话
         RelayBillingSessionEntity original = relayBillingSessionDao.selectById(billingSessionId);
-        long preconsumeQuota = original.getPreconsumeQuota();
-        long delta = preconsumeQuota - settledQuota;
+        BigDecimal preconsumeQuota = original.getPreconsumeQuota();
+        BigDecimal delta = preconsumeQuota.subtract(settledQuota);
 
         // 更新会话
         original.setSettledQuota(settledQuota);
         original.setDeltaQuota(delta);
         original.setBillingState(BillingStateEnum.SETTLED.getValue());
-        original.setUpstreamStatus(upstreamStatus);
-        original.setGatewayStatus(gatewayStatus);
+        original.setUpstreamStatusCode(upstreamStatus);
+        original.setGatewayStatusCode(gatewayStatus);
         original.setLatencyMs(latencyMs);
         original.setChannelId(channelId);
         original.setSettledTime(LocalDateTime.now());
 
         // 差额处理
         RelayQuotaLedgerEntity ledger = null;
-        if (delta > 0) {
+        if (delta.compareTo(BigDecimal.ZERO) > 0) {
             // 预扣多了，退还差额
             relayUserAccountDao.restoreQuota(original.getEmployeeId(), delta);
             RelayUserAccountEntity account = relayUserAccountDao.selectById(original.getEmployeeId());
@@ -122,19 +122,25 @@ public class BillingEngineImpl implements BillingEngine {
             ledger.setActionType(QuotaActionTypeEnum.SETTLE_REFUND.getValue());
             ledger.setDeltaQuota(delta);
             ledger.setBalanceAfter(account.getQuotaRemain());
-        } else if (delta < 0) {
-            // 预扣少了，补扣
-            long extraAmount = -delta;
-            relayUserAccountDao.preconsumeQuota(original.getEmployeeId(), extraAmount);
-            RelayUserAccountEntity account = relayUserAccountDao.selectById(original.getEmployeeId());
-            ledger = new RelayQuotaLedgerEntity();
-            ledger.setEmployeeId(original.getEmployeeId());
-            ledger.setTokenId(original.getTokenId());
-            ledger.setBillingSessionId(billingSessionId);
-            ledger.setRequestId(original.getRequestId());
-            ledger.setActionType(QuotaActionTypeEnum.SETTLE_EXTRA.getValue());
-            ledger.setDeltaQuota(-extraAmount);
-            ledger.setBalanceAfter(account.getQuotaRemain());
+        } else if (delta.compareTo(BigDecimal.ZERO) < 0) {
+            // 预扣少了，补扣；余额不足时跳过补扣，仅按实际预扣额结算
+            BigDecimal extraAmount = delta.abs();
+            int extraRows = relayUserAccountDao.preconsumeQuota(original.getEmployeeId(), extraAmount);
+            if (extraRows > 0) {
+                RelayUserAccountEntity account = relayUserAccountDao.selectById(original.getEmployeeId());
+                ledger = new RelayQuotaLedgerEntity();
+                ledger.setEmployeeId(original.getEmployeeId());
+                ledger.setTokenId(original.getTokenId());
+                ledger.setBillingSessionId(billingSessionId);
+                ledger.setRequestId(original.getRequestId());
+                ledger.setActionType(QuotaActionTypeEnum.SETTLE_EXTRA.getValue());
+                ledger.setDeltaQuota(extraAmount.negate());
+                ledger.setBalanceAfter(account.getQuotaRemain());
+            } else {
+                // 余额不足以补扣，结算额度退回到预扣额度，不产生额外流水
+                original.setSettledQuota(original.getPreconsumeQuota());
+                original.setDeltaQuota(BigDecimal.ZERO);
+            }
         }
 
         // 用量日志
@@ -153,18 +159,18 @@ public class BillingEngineImpl implements BillingEngine {
             return;
         }
 
-        long preconsumeQuota = original.getPreconsumeQuota();
+        BigDecimal preconsumeQuota = original.getPreconsumeQuota();
 
         // 全额退还
         relayUserAccountDao.restoreQuota(original.getEmployeeId(), preconsumeQuota);
         RelayUserAccountEntity account = relayUserAccountDao.selectById(original.getEmployeeId());
 
         // 更新会话
-        original.setSettledQuota(0L);
+        original.setSettledQuota(BigDecimal.ZERO);
         original.setDeltaQuota(preconsumeQuota);
         original.setBillingState(BillingStateEnum.REFUNDED.getValue());
-        original.setUpstreamStatus(upstreamStatus);
-        original.setGatewayStatus(gatewayStatus);
+        original.setUpstreamStatusCode(upstreamStatus);
+        original.setGatewayStatusCode(gatewayStatus);
         original.setLatencyMs(latencyMs);
         original.setErrorMsg(errorMsg);
         original.setSettledTime(LocalDateTime.now());
@@ -189,9 +195,9 @@ public class BillingEngineImpl implements BillingEngine {
         usageLog.setModelId(original.getModelId());
         usageLog.setEndpointType(original.getEndpointType());
         usageLog.setPreconsumeQuota(preconsumeQuota);
-        usageLog.setSettledQuota(0L);
-        usageLog.setUpstreamStatus(upstreamStatus);
-        usageLog.setGatewayStatus(gatewayStatus);
+        usageLog.setSettledQuota(BigDecimal.ZERO);
+        usageLog.setUpstreamStatusCode(upstreamStatus);
+        usageLog.setGatewayStatusCode(gatewayStatus);
         usageLog.setLatencyMs(latencyMs);
         usageLog.setErrorMsg(errorMsg);
 
@@ -200,7 +206,7 @@ public class BillingEngineImpl implements BillingEngine {
 
     private RelayUsageLogEntity buildUsageLog(RelayBillingSessionEntity session, UsageResult usage,
                                                BigDecimal inputCost, BigDecimal outputCost, BigDecimal totalCost,
-                                               long settledQuota, int upstreamStatus, int gatewayStatus,
+                                               BigDecimal settledQuota, int upstreamStatus, int gatewayStatus,
                                                long latencyMs, boolean streamFlag, Long channelId) {
         RelayUsageLogEntity log = new RelayUsageLogEntity();
         log.setRequestId(session.getRequestId());
@@ -219,8 +225,8 @@ public class BillingEngineImpl implements BillingEngine {
         log.setTotalCost(totalCost);
         log.setPreconsumeQuota(session.getPreconsumeQuota());
         log.setSettledQuota(settledQuota);
-        log.setUpstreamStatus(upstreamStatus);
-        log.setGatewayStatus(gatewayStatus);
+        log.setUpstreamStatusCode(upstreamStatus);
+        log.setGatewayStatusCode(gatewayStatus);
         log.setLatencyMs(latencyMs);
         return log;
     }

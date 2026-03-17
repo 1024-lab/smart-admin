@@ -19,7 +19,7 @@
           <EmployeeSelect v-model:value="form.employeeId" placeholder="请选择员工" width="100%" :disabledFlag="0" />
         </a-form-item>
         <a-form-item label="初始额度" name="quotaRemain">
-          <a-input-number style="width: 100%" v-model:value="form.quotaRemain" placeholder="请输入初始额度" :min="0" :precision="2" />
+          <a-input-number style="width: 100%" v-model:value="form.quotaRemain" placeholder="请输入初始额度" :min="0" :precision="6" :step="0.000001" />
         </a-form-item>
     </a-form>
 

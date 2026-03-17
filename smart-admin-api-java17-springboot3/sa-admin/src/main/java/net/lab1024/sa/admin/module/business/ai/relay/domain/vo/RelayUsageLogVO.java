@@ -61,10 +61,10 @@ public class RelayUsageLogVO {
     private BigDecimal totalCost;
 
     @Schema(description = "预扣额度")
-    private Long preconsumeQuota;
+    private BigDecimal preconsumeQuota;
 
     @Schema(description = "结算额度")
-    private Long settledQuota;
+    private BigDecimal settledQuota;
 
     @Schema(description = "上游状态码")
     private Integer upstreamStatus;

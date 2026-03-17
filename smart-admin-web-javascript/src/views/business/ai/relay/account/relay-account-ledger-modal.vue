@@ -18,7 +18,7 @@
       <span>员工：</span>
       <a-tag color="blue">{{ accountInfo.employeeName }} (ID: {{ accountInfo.employeeId }})</a-tag>
       <span style="margin-left: 12px">当前余额：</span>
-      <a-tag color="green">{{ accountInfo.quotaRemain }}</a-tag>
+      <a-tag color="green">{{ accountInfo.quotaRemain != null ? Number(accountInfo.quotaRemain).toFixed(6) : '-' }}</a-tag>
     </div>
 
     <a-table
@@ -35,9 +35,12 @@
           {{ $smartEnumPlugin.getDescByValue('QUOTA_ACTION_TYPE_ENUM', text) }}
         </template>
         <template v-if="column.dataIndex === 'deltaQuota'">
-          <span :style="{ color: text > 0 ? '#52c41a' : '#f5222d' }">
-            {{ text > 0 ? '+' : '' }}{{ text }}
+          <span :style="{ color: Number(text) > 0 ? '#52c41a' : '#f5222d' }">
+            {{ Number(text) > 0 ? '+' : '' }}{{ Number(text).toFixed(6) }}
           </span>
+        </template>
+        <template v-if="column.dataIndex === 'balanceAfter'">
+          {{ text != null ? Number(text).toFixed(6) : '-' }}
         </template>
       </template>
     </a-table>

@@ -16,6 +16,8 @@ public class RelayTokenEntity {
 
     private Long employeeId;
 
+    private Long channelGroupId;
+
     private String tokenName;
 
     private String tokenPrefix;

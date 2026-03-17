@@ -4,6 +4,8 @@ import net.lab1024.sa.admin.module.business.ai.relay.constant.EndpointTypeEnum;
 import net.lab1024.sa.admin.module.business.ai.relay.domain.entity.RelayModelEntity;
 import net.lab1024.sa.admin.module.business.ai.relay.provider.UsageResult;
 
+import java.math.BigDecimal;
+
 /**
  * 计费引擎接口
  */
@@ -16,7 +18,7 @@ public interface BillingEngine {
      */
     Long preconsume(Long employeeId, Long tokenId, Long channelId,
                     Long modelId, EndpointTypeEnum endpointType,
-                    String requestId, long estimatedQuota);
+                    String requestId, BigDecimal estimatedQuota);
 
     /**
      * 结算（成功场景）

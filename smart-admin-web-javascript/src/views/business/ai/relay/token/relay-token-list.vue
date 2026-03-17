@@ -12,6 +12,9 @@
             <a-form-item label="员工" class="smart-query-form-item">
                 <EmployeeSelect v-model:value="queryForm.employeeId" placeholder="请选择员工" width="200px" />
             </a-form-item>
+            <a-form-item label="渠道组" class="smart-query-form-item">
+                <RelayChannelGroupSelect v-model:value="queryForm.channelGroupId" placeholder="请选择渠道组" width="200px" />
+            </a-form-item>
             <a-form-item label="Token名称" class="smart-query-form-item">
                 <a-input style="width: 200px" v-model:value="queryForm.tokenName" placeholder="Token名称" />
             </a-form-item>
@@ -98,6 +101,7 @@
     import TableOperator from '/@/components/support/table-operator/index.vue';
     import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
     import EmployeeSelect from '/@/components/system/employee-select/index.vue';
+    import RelayChannelGroupSelect from '/@/components/business/relay/relay-channel-group-select/index.vue';
     import RelayTokenForm from './relay-token-form.vue';
     import RelayTokenResultModal from './relay-token-result-modal.vue';
 
@@ -106,6 +110,7 @@
         { title: 'Token名称', dataIndex: 'tokenName', width: 150 },
         { title: 'Token前缀', dataIndex: 'tokenPrefix', width: 150 },
         { title: '员工ID', dataIndex: 'employeeId', width: 100 },
+        { title: '渠道组', dataIndex: 'channelGroupName', width: 160 },
         { title: '过期时间', dataIndex: 'expiresTime', width: 170, ellipsis: true },
         { title: '最后使用', dataIndex: 'lastUsedTime', width: 170, ellipsis: true },
         { title: '请求次数', dataIndex: 'requestCount', width: 100 },
@@ -117,6 +122,7 @@
 
     const queryFormState = {
         employeeId: undefined,
+        channelGroupId: undefined,
         tokenName: undefined,
         disabledFlag: undefined,
         pageNum: 1,

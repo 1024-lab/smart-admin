@@ -3,6 +3,7 @@ package net.lab1024.sa.admin.module.business.ai.relay.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,10 +16,10 @@ public class RelayUserAccountVO {
     private String employeeName;
 
     @Schema(description = "剩余额度")
-    private Long quotaRemain;
+    private BigDecimal quotaRemain;
 
     @Schema(description = "已用额度")
-    private Long quotaUsed;
+    private BigDecimal quotaUsed;
 
     @Schema(description = "是否禁用")
     private Integer disabledFlag;

@@ -13,6 +13,9 @@ public class RelayTokenUpdateForm {
     @NotNull(message = "Token ID不能为空")
     private Long tokenId;
 
+    @Schema(description = "渠道组ID")
+    private Long channelGroupId;
+
     @Schema(description = "Token名称")
     private String tokenName;
 

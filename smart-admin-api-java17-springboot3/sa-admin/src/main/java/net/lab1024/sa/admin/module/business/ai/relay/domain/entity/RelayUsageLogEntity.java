@@ -43,13 +43,13 @@ public class RelayUsageLogEntity {
 
     private BigDecimal totalCost;
 
-    private Long preconsumeQuota;
+    private BigDecimal preconsumeQuota;
 
-    private Long settledQuota;
+    private BigDecimal settledQuota;
 
-    private Integer upstreamStatus;
+    private Integer upstreamStatusCode;
 
-    private Integer gatewayStatus;
+    private Integer gatewayStatusCode;
 
     private Long latencyMs;
 

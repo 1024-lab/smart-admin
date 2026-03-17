@@ -18,6 +18,9 @@
         <a-form-item label="员工" name="employeeId" v-if="!form.tokenId">
           <EmployeeSelect v-model:value="form.employeeId" placeholder="请选择员工" width="100%" :disabledFlag="0" />
         </a-form-item>
+        <a-form-item label="渠道组" name="channelGroupId">
+          <RelayChannelGroupSelect v-model:value="form.channelGroupId" placeholder="请选择渠道组" width="100%" :disabledFlag="0" />
+        </a-form-item>
         <a-form-item label="Token名称" name="tokenName">
           <a-input style="width: 100%" v-model:value="form.tokenName" placeholder="请输入Token名称" />
         </a-form-item>
@@ -56,6 +59,7 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import EmployeeSelect from '/@/components/system/employee-select/index.vue';
+  import RelayChannelGroupSelect from '/@/components/business/relay/relay-channel-group-select/index.vue';
 
   const emits = defineEmits(['reloadList']);
   const visibleFlag = ref(false);
@@ -83,6 +87,7 @@
   const formDefault = {
       tokenId: undefined,
       employeeId: undefined,
+      channelGroupId: undefined,
       tokenName: undefined,
       expiresTime: undefined,
       disabledFlag: undefined,
@@ -93,6 +98,7 @@
 
   const rules = {
       employeeId: [{ required: true, message: '请选择员工' }],
+      channelGroupId: [{ required: true, message: '请选择渠道组' }],
       tokenName: [{ required: true, message: 'Token名称必填' }],
   };
 

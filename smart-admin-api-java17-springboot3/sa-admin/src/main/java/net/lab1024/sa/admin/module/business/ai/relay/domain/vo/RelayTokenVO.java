@@ -14,6 +14,12 @@ public class RelayTokenVO {
     @Schema(description = "员工ID")
     private Long employeeId;
 
+    @Schema(description = "渠道组ID")
+    private Long channelGroupId;
+
+    @Schema(description = "渠道组名称")
+    private String channelGroupName;
+
     @Schema(description = "Token名称")
     private String tokenName;
 

@@ -14,6 +14,8 @@ import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Tag(name = "Relay-渠道分组管理")
 public class RelayChannelGroupController {
@@ -26,6 +28,13 @@ public class RelayChannelGroupController {
     @SaCheckPermission("relay:channelGroup:query")
     public ResponseDTO<PageResult<RelayChannelGroupVO>> queryPage(@RequestBody @Valid RelayChannelGroupQueryForm queryForm) {
         return ResponseDTO.ok(relayChannelGroupAdminService.queryPage(queryForm));
+    }
+
+    @Operation(summary = "查询列表")
+    @PostMapping("/relay/channelGroup/queryList")
+    @SaCheckPermission("relay:channelGroup:query")
+    public ResponseDTO<List<RelayChannelGroupVO>> queryList(@RequestBody RelayChannelGroupQueryForm queryForm) {
+        return ResponseDTO.ok(relayChannelGroupAdminService.queryList(queryForm));
     }
 
     @Operation(summary = "新增渠道分组")
