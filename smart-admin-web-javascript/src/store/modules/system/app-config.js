@@ -28,6 +28,12 @@ if (appConfigStr) {
   }
 }
 
+// 兼容历史缓存中的品牌名，避免升级后仍显示旧名称
+const legacyWebsiteNamePattern = /smart\s*-?\s*admin/i;
+if (legacyWebsiteNamePattern.test(state.websiteName || '')) {
+  state.websiteName = appDefaultConfig.websiteName;
+}
+
 /**
  * 获取初始化的语言
  */

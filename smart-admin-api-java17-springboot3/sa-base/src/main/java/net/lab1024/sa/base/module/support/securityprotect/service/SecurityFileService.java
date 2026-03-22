@@ -39,7 +39,7 @@ public class SecurityFileService {
     // 定义白名单MIME类型
     private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("application/json", "application/zip", "application/x-7z-compressed", "application/pdf", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-works", "text/csv", "audio/*", "video/*",
             // 图片类型 svg有安全隐患，所以不使用"image/*"
-            "image/jpeg", "image/png", "image/gif", "image/bmp");
+            "image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp");
 
     /**
      * 检测文件安全类型

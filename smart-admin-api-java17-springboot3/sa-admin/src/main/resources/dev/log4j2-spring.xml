@@ -105,6 +105,12 @@
         <logger name="com.alibaba.druid.filter.stat.StatFilter" level="ERROR" additivity="false">
             <AppenderRef ref="druidSlowSqlLog"/>
         </logger>
+        <logger name="net.lab1024.sa.admin.module.business.ai.merch.client.OpenAiPromptClient" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="info"/>
+            <AppenderRef ref="warn"/>
+            <AppenderRef ref="error"/>
+        </logger>
         <Root level="debug">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="debug"/>

@@ -12,7 +12,6 @@
   <div class="header-main">
     <!-- 1、logo区域 -->
     <div class="logo" @click="onGoHome">
-      <img class="logo-img" :src="logoImg" />
       <div class="title smart-logo title-light" v-if="sideMenuTheme === 'light'">{{ websiteName }}</div>
       <div class="title smart-logo title-dark" v-if="sideMenuTheme === 'dark'">{{ websiteName }}</div>
     </div>
@@ -42,7 +41,6 @@
   import { computed, ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import RecursionMenu from './recursion-menu.vue';
-  import logoImg from '/@/assets/images/logo/smart-admin-logo.png';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import HeaderAvatar from '../header-user-space/header-avatar.vue';
@@ -121,16 +119,9 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
-
-      .logo-img {
-        display: inline-block;
-        height: 30px;
-        vertical-align: middle;
-      }
       .title {
         font-size: 16px;
         font-weight: 600;
-        margin-left: 8px;
       }
       .title-light {
         color: #001529;

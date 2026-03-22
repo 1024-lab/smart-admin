@@ -12,12 +12,11 @@
 
   <!-- 1、顶部logo区域 -->
   <div class="logo" @click="onGoHome" :style="sideMenuWidth" v-if="!collapsed">
-    <img class="logo-img" :src="logoImg" />
     <div class="title smart-logo title-light" v-if="sideMenuTheme === 'light'">{{ websiteName }}</div>
     <div class="title smart-logo title-dark" v-if="sideMenuTheme === 'dark'">{{ websiteName }}</div>
   </div>
   <div class="min-logo" @click="onGoHome" v-if="collapsed">
-    <img class="logo-img" :src="logoImg" />
+    <div class="min-title">后台</div>
   </div>
 
   <!-- 2、下方菜单区域： 这里使用一个递归菜单解决 -->
@@ -30,7 +29,6 @@
   import { computed, nextTick, ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import RecursionMenu from './recursion-menu.vue';
-  import logoImg from '/@/assets/images/logo/smart-admin-logo.png';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
 
@@ -91,9 +89,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      .logo-img {
-        width: 30px;
-        height: 30px;
+      .min-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: v-bind('sideMenuTheme === "light" ? "#001529" : "#ffffff"');
       }
     }
 
@@ -109,15 +108,9 @@
       justify-content: center;
       align-items: center;
 
-      .logo-img {
-        width: 30px;
-        height: 30px;
-      }
-
       .title {
         font-size: 16px;
         font-weight: 600;
-        margin-left: 8px;
       }
       .title-light {
         color: #001529;

@@ -72,6 +72,9 @@ public interface IFileStorageService {
         if ("png".equalsIgnoreCase(fileExt)) {
             return "image/png";
         }
+        if ("webp".equalsIgnoreCase(fileExt)) {
+            return "image/webp";
+        }
         if ("html".equalsIgnoreCase(fileExt)) {
             return "text/html";
         }
@@ -92,6 +95,15 @@ public interface IFileStorageService {
         }
         if ("xml".equalsIgnoreCase(fileExt)) {
             return "text/xml";
+        }
+        if ("mp4".equalsIgnoreCase(fileExt)) {
+            return "video/mp4";
+        }
+        if ("mov".equalsIgnoreCase(fileExt)) {
+            return "video/quicktime";
+        }
+        if ("webm".equalsIgnoreCase(fileExt)) {
+            return "video/webm";
         }
         return "";
     }

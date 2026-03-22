@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.lab1024.sa.admin.module.business.ai.merch.dao.AiMerchTaskDao">
+
+    <sql id="base_columns">
+        t.task_id,
+        t.source_file_id,
+        t.source_file_key,
+        t.prompt_template,
+        t.prompt_model_id,
+        t.prompt_model_name,
+        t.image_model_id,
+        t.image_model_name,
+        t.video_model_id,
+        t.video_model_name,
+        t.generated_prompt,
+        t.prompt_status,
+        t.image_status,
+        t.video_status,
+        t.image_task_id,
+        t.video_task_id,
+        t.image_result_url,
+        t.video_result_url,
+        t.image_file_id,
+        t.image_file_key,
+        t.video_file_id,
+        t.video_file_key,
+        t.prompt_error_msg,
+        t.image_error_msg,
+        t.video_error_msg,
+        t.create_by,
+        t.create_by_name,
+        t.create_time,
+        t.update_by,
+        t.update_by_name,
+        t.update_time,
+        t.deleted_flag
+    </sql>
+
+    <select id="queryPage" resultType="net.lab1024.sa.admin.module.business.ai.merch.domain.vo.AiMerchTaskVO">
+        SELECT
+        <include refid="base_columns"/>
+        FROM t_ai_merch_task t
+        <where>
+            t.deleted_flag = 0
+            <if test="queryForm.promptStatus != null and queryForm.promptStatus != ''">
+                AND t.prompt_status = #{queryForm.promptStatus}
+            </if>
+            <if test="queryForm.imageStatus != null and queryForm.imageStatus != ''">
+                AND t.image_status = #{queryForm.imageStatus}
+            </if>
+            <if test="queryForm.videoStatus != null and queryForm.videoStatus != ''">
+                AND t.video_status = #{queryForm.videoStatus}
+            </if>
+        </where>
+        ORDER BY t.create_time DESC
+    </select>
+</mapper>

@@ -41,6 +41,16 @@
             <artifactId>spring-ai-openai</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.openai</groupId>
+            <artifactId>openai-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.volcengine</groupId>
+            <artifactId>volcengine-java-sdk-ark-runtime</artifactId>
+        </dependency>
+
         <!-- Spring AI Tika Document Reader -->
         <dependency>
             <groupId>org.springframework.ai</groupId>

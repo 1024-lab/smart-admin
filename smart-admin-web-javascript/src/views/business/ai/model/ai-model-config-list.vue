@@ -12,6 +12,13 @@
             <a-form-item label="模型名称" class="smart-query-form-item">
                 <a-input style="width: 200px" v-model:value="queryForm.modelName" placeholder="模型名称" />
             </a-form-item>
+            <a-form-item label="供应商" class="smart-query-form-item">
+                <a-select style="width: 140px" v-model:value="queryForm.provider" placeholder="全部">
+                    <a-select-option v-for="item in providerList" :key="item.value" :value="item.value">
+                        {{ item.desc }}
+                    </a-select-option>
+                </a-select>
+            </a-form-item>
             <a-form-item class="smart-query-form-item">
                 <a-button type="primary" @click="onSearch">
                     <template #icon>
@@ -66,15 +73,11 @@
             :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
         >
             <template #bodyCell="{ text, record, column }">
-
                 <template v-if="column.dataIndex === 'provider'">
-                    <DictLabel :dict-code="DICT_CODE_ENUM.MODEL_PROVIDER || 'MODEL_PROVIDER'" :data-value="text" />
+                    {{ getProviderDesc(text) }}
                 </template>
                 <template v-if="column.dataIndex === 'isActive'">
                     <DictLabel :dict-code="DICT_CODE_ENUM.YES_NO || 'YES_NO'" :data-value="text" />
-                </template>
-                <template v-if="column.dataIndex === 'modelType'">
-                    <DictLabel :dict-code="DICT_CODE_ENUM.MODEL_TYPE || 'MODEL_TYPE'" :data-value="text" />
                 </template>
 
                 <template v-if="column.dataIndex === 'action'">
@@ -113,6 +116,7 @@
     import { SmartLoading } from '/@/components/framework/smart-loading';
     import { aiModelConfigApi } from '/@/api/business/ai/model/ai-model-config-api';
     import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
+    import { AI_MODEL_PROVIDER_ENUM } from '/@/constants/business/ai/model-const';
     import { smartSentry } from '/@/lib/smart-sentry';
     import TableOperator from '/@/components/support/table-operator/index.vue';
     import AiModelConfigForm from './ai-model-config-form.vue';
@@ -121,6 +125,8 @@
 
     // ---------------------------- 表格列 ----------------------------
 
+    const providerList = Object.values(AI_MODEL_PROVIDER_ENUM);
+
     const columns = ref([
         {
             title: 'id',
@@ -128,12 +134,12 @@
             ellipsis: true,
         },
         {
-            title: '厂商标识 (方便前端展示回显，实际调用主要靠 baseUrl)',
+            title: '供应商',
             dataIndex: 'provider',
             ellipsis: true,
         },
         {
-            title: '关键配置',
+            title: 'Base URL',
             dataIndex: 'baseUrl',
             ellipsis: true,
         },
@@ -143,7 +149,7 @@
             ellipsis: true,
         },
         {
-            title: '模型名称',
+            title: '配置名称',
             dataIndex: 'modelName',
             ellipsis: true,
         },
@@ -153,23 +159,29 @@
             ellipsis: true,
         },
         {
-            title: '请求端点中模型名称',
+            title: '模型编码',
             dataIndex: 'endPointModeName',
             ellipsis: true,
         },
         {
-            title: '输出响应最大令牌数',
-            dataIndex: 'maxTokens',
+            title: '提交路径',
+            dataIndex: 'path',
             ellipsis: true,
         },
         {
-            title: '模型类型 (CHAT/EMBEDDING)',
+            title: '模型类型',
             dataIndex: 'modelType',
             ellipsis: true,
         },
         {
-            title: 'Chat模型专用。附加到 Base URL 的路径。例如OpenAi的/v1/chat/completions',
-            dataIndex: 'path',
+            title: '最大令牌',
+            dataIndex: 'maxTokens',
+            width: 100,
+            ellipsis: true,
+        },
+        {
+            title: '扩展JSON',
+            dataIndex: 'extraConfigJson',
             ellipsis: true,
         },
         {
@@ -204,6 +216,7 @@
 
     const queryFormState = {
         modelName: undefined, //模型名称
+        provider: undefined,
         pageNum: 1,
         pageSize: 10,
     };
@@ -254,6 +267,10 @@
         formRef.value.show(data);
     }
 
+    function getProviderDesc(value) {
+        return AI_MODEL_PROVIDER_ENUM[value]?.desc || value || '-';
+    }
+
     // ---------------------------- 单个删除 ----------------------------
     //确认删除
     function onDelete(data){
@@ -274,9 +291,6 @@
     async function requestDelete(data){
         SmartLoading.show();
         try {
-            let deleteForm = {
-                goodsIdList: selectedRowKeyList.value,
-            };
             await aiModelConfigApi.delete(data.id);
             message.success('删除成功');
             queryData();

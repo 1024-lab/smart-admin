@@ -62,14 +62,19 @@ public class AiModelConfigEntity {
     private Integer maxTokens;
 
     /**
-     * 模型类型 (CHAT/EMBEDDING)
+     * 模型类型
      */
     private String modelType;
 
     /**
-     * Chat模型专用。附加到 Base URL 的路径。例如OpenAi的/v1/chat/completions
+     * 提交路径
      */
     private String path;
+
+    /**
+     * 扩展配置JSON
+     */
+    private String extraConfigJson;
 
     /**
      * 创建人

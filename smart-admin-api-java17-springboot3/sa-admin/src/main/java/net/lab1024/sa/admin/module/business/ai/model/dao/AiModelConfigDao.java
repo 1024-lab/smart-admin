@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 /**
  * 模型配置表 Dao
@@ -33,11 +32,11 @@ public interface AiModelConfigDao extends BaseMapper<AiModelConfigEntity> {
     /**
      * 更新删除状态
      */
-    long updateDeleted(@Param("id")Integer id,@Param("deletedFlag")boolean deletedFlag);
+    long updateDeleted(@Param("id")Long id,@Param("deletedFlag")boolean deletedFlag);
 
     /**
      * 批量更新删除状态
      */
-    void batchUpdateDeleted(@Param("idList")List<Integer> idList,@Param("deletedFlag")boolean deletedFlag);
+    void batchUpdateDeleted(@Param("idList")List<Long> idList,@Param("deletedFlag")boolean deletedFlag);
 
 }

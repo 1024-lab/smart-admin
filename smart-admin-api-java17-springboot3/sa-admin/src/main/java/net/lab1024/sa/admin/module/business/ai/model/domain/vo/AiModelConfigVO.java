@@ -40,11 +40,14 @@ public class AiModelConfigVO {
     @Schema(description = "输出响应最大令牌数")
     private Integer maxTokens;
 
-    @Schema(description = "模型类型 (CHAT/EMBEDDING)")
+    @Schema(description = "模型类型")
     private String modelType;
 
-    @Schema(description = "Chat模型专用。附加到 Base URL 的路径。例如OpenAi的/v1/chat/completions")
+    @Schema(description = "提交路径")
     private String path;
+
+    @Schema(description = "扩展配置JSON")
+    private String extraConfigJson;
 
     @Schema(description = "创建人姓名")
     private String createByName;

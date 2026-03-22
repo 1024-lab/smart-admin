@@ -51,7 +51,7 @@ services:
       TZ: Asia/Shanghai
     volumes:
       - upload_data:/home/smart_admin_v3/upload
-      - backend_logs:/mnt/logs
+      - backend_logs:/app/logs
     ports:
       - "1024:1024"
     depends_on:

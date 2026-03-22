@@ -16,6 +16,10 @@ export const aiModelConfigApi = {
     return postRequest('/aiModelConfig/queryPage', param);
   },
 
+  queryList: (param) => {
+    return getRequest('/aiModelConfig/queryList', param);
+  },
+
   /**
    * 增加  @author  Mission
    */

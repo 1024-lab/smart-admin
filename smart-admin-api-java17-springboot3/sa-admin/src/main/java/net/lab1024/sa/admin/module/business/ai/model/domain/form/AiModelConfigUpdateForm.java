@@ -48,17 +48,16 @@ public class AiModelConfigUpdateForm {
     @NotBlank(message = "请求端点中模型名称 不能为空")
     private String endPointModeName;
 
-    @Schema(description = "输出响应最大令牌数", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "输出响应最大令牌数 不能为空")
+    @Schema(description = "输出响应最大令牌数")
     private Integer maxTokens;
 
-    @Schema(description = "模型类型 (CHAT/EMBEDDING)", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "模型类型 (CHAT/EMBEDDING) 不能为空")
-    @JsonDeserialize(using = DictDataDeserializer.class)
+    @Schema(description = "模型类型")
     private String modelType;
 
-    @Schema(description = "Chat模型专用。附加到 Base URL 的路径。例如OpenAi的/v1/chat/completions", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "Chat模型专用。附加到 Base URL 的路径。例如OpenAi的/v1/chat/completions 不能为空")
+    @Schema(description = "提交路径")
     private String path;
+
+    @Schema(description = "扩展配置JSON")
+    private String extraConfigJson;
 
 }

@@ -15,7 +15,7 @@
       </template>
       <template v-slot:description>
         <pre>
-简介：SmartAdmin使用的是SpringCache进行管理缓存，SpringCache有多种实现方式，本项目默认采用的是caffeine。
+简介：后台管理系统使用的是SpringCache进行管理缓存，SpringCache有多种实现方式，本项目默认采用的是caffeine。
 Caffeine ：
 - Caffeine是一个进程内部缓存框架，使用了Java 8最新的[StampedLock]乐观锁技术，极大提高缓存并发吞吐量，一个高性能的 Java 缓存库，被称为最快缓存。
 其他：

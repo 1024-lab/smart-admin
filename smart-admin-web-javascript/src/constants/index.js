@@ -20,6 +20,7 @@ import codeGeneratorConst from './support/code-generator-const';
 import changeLogConst from './support/change-log-const';
 import jobConst from './support/job-const';
 import relayConst from './business/ai/relay-const';
+import merchConst from './business/ai/merch-const';
 
 export default {
   FLAG_NUMBER_ENUM,
@@ -37,4 +38,5 @@ export default {
   ...changeLogConst,
   ...jobConst,
   ...relayConst,
+  ...merchConst,
 };

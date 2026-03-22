@@ -25,6 +25,10 @@ export const FILE_FOLDER_TYPE_ENUM = {
     value: 4,
     desc: '意见反馈',
   },
+  AI_MERCH: {
+    value: 5,
+    desc: 'AI带货',
+  },
 };
 export default {
   FILE_FOLDER_TYPE_ENUM,

@@ -11,11 +11,10 @@
   <div class="recursion-container" v-show="topMenu.children && topMenu.children.length > 0">
     <!-- 顶部logo区域 -->
     <div class="logo" @click="onGoHome" :style="sideMenuWidth" v-if="!collapsed">
-      <img class="logo-img" :src="logoImg" />
-      <div class="title" >{{ websiteName }}</div>
+      <div class="title">{{ websiteName }}</div>
     </div>
     <div class="min-logo" @click="onGoHome" v-if="collapsed">
-      <img class="logo-img" :src="logoImg" />
+      <div class="min-title">后台</div>
     </div>
     <!-- 次级菜单展示 -->
     <a-menu :selectedKeys="selectedKeys" theme="light" :openKeys="openKeys" mode="inline">
@@ -47,7 +46,6 @@
   import menuEmitter from './top-expand-menu-mitt';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useUserStore } from '/@/store/modules/system/user';
-  import logoImg from '/@/assets/images/logo/smart-admin-logo.png';
 
   const websiteName = computed(() => useAppConfigStore().websiteName);
   const theme = computed(() => useAppConfigStore().$state.sideMenuTheme);
@@ -147,9 +145,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    .logo-img {
-      width: 30px;
-      height: 30px;
+    .min-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: v-bind('theme === "light" ? "#001529" : "#ffffff"');
     }
   }
   .top-menu {
@@ -170,15 +169,10 @@
     width: 100%;
     z-index: 100;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     cursor: pointer;
     background-color: #001529;
-
-    .logo-img {
-      width: 30px;
-      height: 30px;
-    }
 
     .title {
       font-size: 16px;

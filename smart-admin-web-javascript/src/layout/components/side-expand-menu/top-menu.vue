@@ -11,7 +11,6 @@
   <div class="top-menu-container">
     <!-- 顶部logo区域 -->
     <div class="logo" @click="onGoHome">
-      <img class="logo-img" :src="logoImg" />
       <div class="title smart-logo">{{ websiteName }}</div>
     </div>
     <!-- 一级菜单展示 -->
@@ -37,7 +36,6 @@
   import { router } from '/@/router';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useUserStore } from '/@/store/modules/system/user';
-  import logoImg from '/@/assets/images/logo/smart-admin-logo.png';
   import menuEmitter from './side-expand-menu-mitt';
 
   const websiteName = computed(() => useAppConfigStore().websiteName);
@@ -89,14 +87,9 @@
     width: 100%;
     z-index: 100;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     cursor: pointer;
-
-    .logo-img {
-      width: 30px;
-      height: 30px;
-    }
 
     .title {
       font-size: 16px;
