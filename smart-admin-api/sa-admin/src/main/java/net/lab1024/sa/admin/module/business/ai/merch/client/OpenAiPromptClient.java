@@ -238,6 +238,8 @@ public class OpenAiPromptClient {
             }
         }
 
+        List<ResponseOutputItem> output = response.output();
+
         String outputText = response.output().stream()
                 .filter(ResponseOutputItem::isMessage)
                 .map(ResponseOutputItem::asMessage)
