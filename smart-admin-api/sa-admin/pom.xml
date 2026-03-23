@@ -63,6 +63,17 @@
             <artifactId>spring-ai-milvus-store</artifactId>
         </dependency>
 
+        <!-- Milvus langchain4j -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>

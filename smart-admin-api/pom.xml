@@ -59,6 +59,8 @@
         <spring-ai-alibaba.version>1.1.0.0</spring-ai-alibaba.version>
         <openai-java.version>4.29.0</openai-java.version>
         <volcengine-ark-runtime.version>1.0.16</volcengine-ark-runtime.version>
+        <langchain4j.version>1.12.2</langchain4j.version>
+        <langchain4j-open-ai.version>1.12.2</langchain4j-open-ai.version>
 
     </properties>
 
@@ -354,6 +356,7 @@
             </dependency>
 
 
+
             <!-- Milvus Vector Database -->
             <!-- Source: https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-milvus-store -->
             <dependency>
@@ -382,6 +385,20 @@
                 <artifactId>volcengine-java-sdk-ark-runtime</artifactId>
                 <version>${volcengine-ark-runtime.version}</version>
             </dependency>
+
+
+            <!-- langchain4j -->
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j</artifactId>
+                <version>${langchain4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-open-ai</artifactId>
+                <version>${langchain4j-open-ai.version}</version>
+            </dependency>
+
 
 
         </dependencies>
