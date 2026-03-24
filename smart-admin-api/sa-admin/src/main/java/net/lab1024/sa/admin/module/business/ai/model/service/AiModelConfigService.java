@@ -87,12 +87,14 @@ public class AiModelConfigService {
         return ResponseDTO.ok();
     }
 
-    public List<AiModelConfigOptionVO> queryList(String provider) {
+    public List<AiModelConfigOptionVO> queryList(String provider, String isActive, String modelType, String modelFeatures) {
         return aiModelConfigDao.selectList(
                 Wrappers.<AiModelConfigEntity>lambdaQuery()
                         .eq(AiModelConfigEntity::getDeletedFlag, 0)
-                        .eq(AiModelConfigEntity::getIsActive, 1)
+                        .eq(StringUtils.isNotBlank(isActive), AiModelConfigEntity::getIsActive, isActive)
                         .eq(StringUtils.isNotBlank(provider), AiModelConfigEntity::getProvider, provider)
+                        .eq(StringUtils.isNotBlank(modelType), AiModelConfigEntity::getModelType, modelType)
+                        .like(StringUtils.isNotBlank(modelFeatures), AiModelConfigEntity::getModelFeatures, modelFeatures)
                         .orderByAsc(AiModelConfigEntity::getProvider)
                         .orderByAsc(AiModelConfigEntity::getModelName)
                         .orderByDesc(AiModelConfigEntity::getUpdateTime)
@@ -102,6 +104,8 @@ public class AiModelConfigService {
             optionVO.setProvider(item.getProvider());
             optionVO.setModelName(item.getModelName());
             optionVO.setEndPointModeName(item.getEndPointModeName());
+            optionVO.setModelType(item.getModelType());
+            optionVO.setModelFeatures(item.getModelFeatures());
             return optionVO;
         }).collect(Collectors.toList());
     }

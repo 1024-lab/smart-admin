@@ -17,4 +17,10 @@ public class AiModelConfigOptionVO {
 
     @Schema(description = "模型编码")
     private String endPointModeName;
+
+    @Schema(description = "模型类型")
+    private String modelType;
+
+    @Schema(description = "能力标签（逗号分隔）")
+    private String modelFeatures;
 }

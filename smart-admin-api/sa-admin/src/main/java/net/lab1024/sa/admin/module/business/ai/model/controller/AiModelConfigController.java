@@ -46,8 +46,12 @@ public class AiModelConfigController {
 
     @Operation(summary = "查询下拉列表 @author Mission")
     @GetMapping("/aiModelConfig/queryList")
-    public ResponseDTO<List<AiModelConfigOptionVO>> queryList(@RequestParam(required = false) String provider) {
-        return ResponseDTO.ok(aiModelConfigService.queryList(provider));
+    public ResponseDTO<List<AiModelConfigOptionVO>> queryList(
+            @RequestParam(required = false) String provider,
+            @RequestParam(required = false, defaultValue = "1") String isActive,
+            @RequestParam(required = false) String modelType,
+            @RequestParam(required = false) String modelFeatures) {
+        return ResponseDTO.ok(aiModelConfigService.queryList(provider, isActive, modelType, modelFeatures));
     }
 
     @Operation(summary = "添加 @author Mission")
