@@ -119,5 +119,6 @@ public class AiModelConfigService {
 
     public AiModelConfigEntity getAiModelConfigByModelConfigId(Long modelConfigId) {
         return aiModelConfigDao.selectById(modelConfigId);
+
     }
 }

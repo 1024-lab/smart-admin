@@ -47,8 +47,11 @@ public class AiModelConfigAddForm {
     @Schema(description = "输出响应最大令牌数")
     private Integer maxTokens;
 
-    @Schema(description = "模型类型")
+    @Schema(description = "模型类型: chat/embedding/image_gen/video_gen/rerank/tts/stt")
     private String modelType;
+
+    @Schema(description = "能力标签（逗号分隔，例如 VISION,FUNCTION_CALL）")
+    private String modelFeatures;
 
     @Schema(description = "提交路径")
     private String path;

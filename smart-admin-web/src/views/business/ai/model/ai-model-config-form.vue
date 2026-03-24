@@ -41,7 +41,14 @@
           <a-input style="width: 100%" v-model:value="form.path" placeholder="可选，OpenAI 例如 /v1/chat/completions" />
         </a-form-item>
         <a-form-item label="模型类型" name="modelType">
-          <a-input style="width: 100%" v-model:value="form.modelType" placeholder="可选，例如 CHAT / IMAGE / VIDEO" />
+          <a-select style="width: 100%" v-model:value="form.modelType" placeholder="请选择模型类型">
+            <a-select-option v-for="item in MODEL_TYPE_LIST" :key="item.value" :value="item.value">
+              {{ item.label }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item v-if="form.modelType === 'chat'" label="能力标签" name="modelFeatureList">
+          <a-checkbox-group v-model:value="form.modelFeatureList" :options="MODEL_FEATURE_LIST" />
         </a-form-item>
         <a-form-item label="最大令牌" name="maxTokens">
           <a-input-number style="width: 100%" v-model:value="form.maxTokens" placeholder="可选" />
@@ -69,6 +76,7 @@
   import DictSelect from '/@/components/support/dict-select/index.vue';
   import { AI_MODEL_PROVIDER_ENUM } from '/@/constants/business/ai/model-const';
   import { DICT_CODE_ENUM } from '/@/constants/support/dict-const.js';
+  import { MODEL_TYPE_LIST, MODEL_FEATURE_LIST } from '/@/constants/business/ai/model/ai-model-config-const.js';
 
   // ------------------------ 事件 ------------------------
 
@@ -82,11 +90,11 @@
     Object.assign(form, formDefault);
     if (rowData && !_.isEmpty(rowData)) {
       Object.assign(form, rowData);
+      // 将逗号分隔的 modelFeatures 字符串还原为数组
+      if (form.modelFeatures && form.modelFeatures.length > 0) {
+        form.modelFeatureList = form.modelFeatures.split(',').filter(Boolean);
+      }
     }
-    // 使用字典时把下面这注释修改成自己的字典字段 有多个字典字段就复制多份同理修改 不然打开表单时不显示字典初始值
-    // if (form.status && form.status.length > 0) {
-    //   form.status = form.status.map((e) => e.valueCode);
-    // }
     visibleFlag.value = true;
     nextTick(() => {
       formRef.value.clearValidate();
@@ -114,6 +122,8 @@
       endPointModeName: undefined,
       path: undefined,
       modelType: undefined,
+      modelFeatures: undefined,
+      modelFeatureList: [],
       maxTokens: undefined,
       extraConfigJson: undefined,
   };
@@ -143,10 +153,17 @@
   async function save() {
     SmartLoading.show();
     try {
+      // 将能力标签数组序列化为逗号分隔字符串
+      const payload = { ...form };
+      payload.modelFeatures = form.modelFeatureList && form.modelFeatureList.length > 0
+        ? form.modelFeatureList.join(',')
+        : null;
+      delete payload.modelFeatureList;
+
       if (form.id) {
-        await aiModelConfigApi.update(form);
+        await aiModelConfigApi.update(payload);
       } else {
-        await aiModelConfigApi.add(form);
+        await aiModelConfigApi.add(payload);
       }
       message.success('操作成功');
       emits('reloadList');

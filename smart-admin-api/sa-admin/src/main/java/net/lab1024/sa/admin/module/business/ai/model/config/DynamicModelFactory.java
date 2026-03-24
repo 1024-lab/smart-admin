@@ -6,6 +6,7 @@ import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import net.lab1024.sa.admin.module.business.ai.model.constant.AiModelTypeEnum;
 import net.lab1024.sa.admin.module.business.ai.model.domain.entity.AiModelConfigEntity;
 import net.lab1024.sa.admin.module.business.ai.model.service.AiModelConfigService;
 import org.springframework.stereotype.Component;
@@ -61,13 +62,13 @@ public class DynamicModelFactory {
 
     public ChatModel getChatModelByModelConfigId(Long modelConfigId){
         AiModelConfigEntity config = aiModelConfigService.getAiModelConfigByModelConfigId(modelConfigId);
-        Assert.isTrue("chat".equals(config.getModelType()), "modelType must be chat");
+        Assert.isTrue(AiModelTypeEnum.CHAT.getCode().equals(config.getModelType()), "modelType must be chat");
         return createChatModel(config);
     }
 
     public EmbeddingModel getEmbeddingModelByModelConfigId(Long modelConfigId){
         AiModelConfigEntity config = aiModelConfigService.getAiModelConfigByModelConfigId(modelConfigId);
-        Assert.isTrue("embedding".equals(config.getModelType()), "modelType must be embedding");
+        Assert.isTrue(AiModelTypeEnum.EMBEDDING.getCode().equals(config.getModelType()), "modelType must be embedding");
         return createEmbeddingModel(config);
     }
 

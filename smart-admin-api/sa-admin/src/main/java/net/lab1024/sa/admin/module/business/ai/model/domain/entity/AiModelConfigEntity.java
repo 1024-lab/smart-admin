@@ -62,9 +62,14 @@ public class AiModelConfigEntity {
     private Integer maxTokens;
 
     /**
-     * 模型类型
+     * 模型类型: chat/embedding/image_gen/video_gen/rerank/tts/stt
      */
     private String modelType;
+
+    /**
+     * 能力标签（逗号分隔，例如 VISION,FUNCTION_CALL）
+     */
+    private String modelFeatures;
 
     /**
      * 提交路径
