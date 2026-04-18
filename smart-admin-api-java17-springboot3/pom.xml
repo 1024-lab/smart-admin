@@ -45,7 +45,7 @@
         <velocity-tools.version>3.1</velocity-tools.version>
         <sa-token.version>1.44.0</sa-token.version>
         <ip2region.version>2.7.0</ip2region.version>
-        <bcprov.version>1.80</bcprov.version>
+        <bcprov.version>1.84</bcprov.version>
         <smartdb.version>1.2.0</smartdb.version>
         <redisson.version>3.50.0</redisson.version>
         <snakeyaml.version>2.4</snakeyaml.version>
