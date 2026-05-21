@@ -7,7 +7,6 @@ import net.lab1024.sa.base.module.support.cache.CaffeineCacheServiceImpl;
 import net.lab1024.sa.base.module.support.cache.RedisCacheServiceImpl;
 import net.lab1024.sa.base.module.support.redis.CustomRedisCacheManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -40,7 +39,7 @@ public class CacheConfig {
      */
     @Bean
     @ConditionalOnProperty(prefix = "spring.cache", name = {"type"}, havingValue = REDIS_CACHE)
-    public CacheManager cacheManager() {
+    public CustomRedisCacheManager cacheManager() {
         // 使用非阻塞模式的缓存写入器，适用于大多数高并发场景
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
 
