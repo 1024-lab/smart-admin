@@ -270,7 +270,7 @@
 #end
 
 #if($deleteInfo.isSupportDelete)
-    #if($deleteInfo.deleteEnum == "Batch" || $deleteInfo.deleteEnum == "SingleAndBatch")
+    #if($deleteInfo.deleteEnum == "Single" || $deleteInfo.deleteEnum == "SingleAndBatch")
     // ---------------------------- 单个删除 ----------------------------
     //确认删除
     function onDelete(data){
@@ -291,9 +291,6 @@
     async function requestDelete(data){
         SmartLoading.show();
         try {
-            let deleteForm = {
-                goodsIdList: selectedRowKeyList.value,
-            };
             await $!{name.lowerCamel}Api.delete(data.$!{primaryKeyFieldName});
             message.success('删除成功');
             queryData();
@@ -305,7 +302,7 @@
     }
     #end
 
-    #if($deleteInfo.deleteEnum == "Single" || $deleteInfo.deleteEnum == "SingleAndBatch")
+    #if($deleteInfo.deleteEnum == "Batch" || $deleteInfo.deleteEnum == "SingleAndBatch")
     // ---------------------------- 批量删除 ----------------------------
 
     // 选择表格行
